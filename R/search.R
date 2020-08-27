@@ -42,18 +42,18 @@
 #' in \pkg{stringi}.
 #' \itemize{
 #'    \item \code{stri_*_regex} -- \pkg{ICU}'s regular expressions (regexes),
-#'         see \link{stringi-search-regex},
+#'         see \link{about_search_regex},
 #'    \item \code{stri_*_fixed} -- locale-independent byte-wise pattern matching,
-#'        see \link{stringi-search-fixed},
+#'        see \link{about_search_fixed},
 #'    \item \code{stri_*_coll} -- \pkg{ICU}'s \code{StringSearch},
 #'        locale-sensitive, Collator-based pattern search,
 #'        useful for natural language processing tasks,
-#'        see \link{stringi-search-coll},
+#'        see \link{about_search_coll},
 #'    \item \code{stri_*_charclass} -- character classes search,
 #'       e.g., Unicode General Categories or Binary Properties,
-#'        see \link{stringi-search-charclass},
+#'        see \link{about_search_charclass},
 #'    \item \code{stri_*_boundaries} -- text boundary analysis,
-#'       see \link{stringi-search-boundaries}
+#'       see \link{about_search_boundaries}
 #' }
 #'
 #' Each search engine is able to perform many search-based operations.
@@ -81,8 +81,9 @@
 #'    with strings that match a given pattern, see, e.g., \code{\link{stri_subset}}.
 #' }
 #'
-#' @name stringi-search
-#' @rdname stringi-search
+#' @name about_search
+#' @rdname about_search
+#' @aliases about_search search stringi-search
 #' @family text_boundaries
 #' @family search_regex
 #' @family search_fixed
@@ -274,7 +275,7 @@ invisible(NULL)
 #' }
 #'
 #' For information on how to define character classes
-#' in regexes, refer to \link{stringi-search-charclass}.
+#' in regexes, refer to \link{about_search_charclass}.
 #'
 #' @section Regex Functions in \pkg{stringi}:
 #'
@@ -284,7 +285,7 @@ invisible(NULL)
 #' On a syntax error, a quite informative failure message is shown.
 #'
 #' If you wish to search for a fixed pattern,
-#' refer to \link{stringi-search-coll} or \link{stringi-search-fixed}.
+#' refer to \link{about_search_coll} or \link{about_search_fixed}.
 #' They allow to perform a locale-aware text lookup,
 #' or a very fast exact-byte search, respectively.
 #'
@@ -302,8 +303,9 @@ invisible(NULL)
 #' \emph{Unicode Regular Expressions} -- Regex tutorial,
 #' \url{http://www.regular-expressions.info/unicode.html}
 #'
-#' @name stringi-search-regex
-#' @rdname stringi-search-regex
+#' @name about_search_regex
+#' @rdname about_search_regex
+#' @aliases about_search_regex search_regex stringi-search-regex
 #' @family search_regex
 #' @family stringi_general_topics
 invisible(NULL)
@@ -336,13 +338,14 @@ invisible(NULL)
 #' \item ignorable punctuation;
 #' \item ignorable case,
 #' }
-#' see also \link{stringi-search-coll}.
+#' see also \link{about_search_coll}.
 #'
 #' Note that the conversion of input data
 #' to Unicode is done as usual.
 #'
-#' @name stringi-search-fixed
-#' @rdname stringi-search-fixed
+#' @name about_search_fixed
+#' @rdname about_search_fixed
+#' @aliases about_search_fixed search_fixed stringi-search-fixed
 #' @family search_fixed
 #' @family stringi_general_topics
 invisible(NULL)
@@ -387,8 +390,9 @@ invisible(NULL)
 #' L. Werner, \emph{Efficient Text Searching in Java}, 1999,
 #' \url{http://icu-project.org/docs/papers/efficient_text_searching_in_java.html}
 #'
-#' @name stringi-search-coll
-#' @rdname stringi-search-coll
+#' @name about_search_coll
+#' @rdname about_search_coll
+#' @aliases about_search_coll search_coll stringi-search-coll
 #' @family search_coll
 #' @family locale_sensitive
 #' @family stringi_general_topics
@@ -408,7 +412,7 @@ invisible(NULL)
 #' @details
 #' All \code{stri_*_charclass} functions in \pkg{stringi} perform
 #' a single character (i.e., Unicode code point) search-based operations.
-#' You may obtain the same results using \link{stringi-search-regex}.
+#' You may obtain the same results using \link{about_search_regex}.
 #' However, these very functions aim to be faster.
 #'
 #' Character classes are defined using \pkg{ICU}'s \code{UnicodeSet}
@@ -667,8 +671,9 @@ invisible(NULL)
 #' \emph{icu::Unicodeset Class Reference} -- ICU4C API Documentation,
 #' \url{http://www.icu-project.org/apiref/icu4c/classicu_1_1UnicodeSet.html}
 #'
-#' @name stringi-search-charclass
-#' @rdname stringi-search-charclass
+#' @name about_search_charclass
+#' @rdname about_search_charclass
+#' @aliases about_search_charclass search_charclass stringi-search-charclass
 #' @family search_charclass
 #' @family stringi_general_topics
 invisible(NULL)
@@ -727,8 +732,9 @@ invisible(NULL)
 #' \emph{Boundary Analysis} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/boundaryanalysis}
 #'
-#' @name stringi-search-boundaries
-#' @rdname stringi-search-boundaries
+#' @name about_search_boundaries
+#' @rdname about_search_boundaries
+#' @aliases about_search_boundaries search_boundaries stringi-search-boundaries
 #' @family locale_sensitive
 #' @family text_boundaries
 #' @family stringi_general_topics

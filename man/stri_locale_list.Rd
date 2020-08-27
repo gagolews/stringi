@@ -22,8 +22,8 @@ See \link{stringi-locale} for more information.
 }
 \seealso{
 Other locale_management: 
+\code{\link{about_locale}},
 \code{\link{stri_locale_info}()},
-\code{\link{stri_locale_set}()},
-\code{\link{stringi-locale}}
+\code{\link{stri_locale_set}()}
 }
 \concept{locale_management}

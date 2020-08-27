@@ -4,9 +4,19 @@ R Package *stringi* Reference
 .. toctree::
     :maxdepth: 1
 
-    rapi/oper_comparison
-    rapi/oper_dollar
-    rapi/oper_plus
+    rapi/about_arguments
+    rapi/about_encoding
+    rapi/about_locale
+    rapi/about_search_boundaries
+    rapi/about_search_charclass
+    rapi/about_search_coll
+    rapi/about_search_fixed
+    rapi/about_search_regex
+    rapi/about_search
+    rapi/about_stringi
+    rapi/operator_add
+    rapi/operator_compare
+    rapi/operator_dollar
     rapi/stri_compare
     rapi/stri_count_boundaries
     rapi/stri_count
@@ -93,13 +103,3 @@ R Package *stringi* Reference
     rapi/stri_width
     rapi/stri_wrap
     rapi/stri_write_lines
-    rapi/stringi-arguments
-    rapi/stringi-encoding
-    rapi/stringi-locale
-    rapi/stringi-package
-    rapi/stringi-search-boundaries
-    rapi/stringi-search-charclass
-    rapi/stringi-search-coll
-    rapi/stringi-search-fixed
-    rapi/stringi-search-regex
-    rapi/stringi-search

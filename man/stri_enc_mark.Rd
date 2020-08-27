@@ -47,9 +47,9 @@ as given by \code{\link{Sys.getlocale}}.
 }
 \seealso{
 Other encoding_management: 
+\code{\link{about_encoding}},
 \code{\link{stri_enc_info}()},
 \code{\link{stri_enc_list}()},
-\code{\link{stri_enc_set}()},
-\code{\link{stringi-encoding}}
+\code{\link{stri_enc_set}()}
 }
 \concept{encoding_management}

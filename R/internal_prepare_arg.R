@@ -97,7 +97,9 @@
 #' please remember to copy important attributes manually
 #' or use, e.g., the subsetting operation like \code{x[] <- stri_...(x, ...)}.
 #'
-#' @name stringi-arguments
+#' @rdname about_arguments
+#' @name about_arguments
+#' @aliases arguments stringi-arguments stringi-arguments
 #' @family stringi_general_topics
 #' @family prepare_arg
 invisible(NULL)

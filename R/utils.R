@@ -254,7 +254,8 @@ stri_replace_na <- function(str, replacement = "NA")
 #' "%s='%d'" %s$% list(c("a", "b", "c"), 1)
 #' "%s='%d'" %s$% list(c("a", "b", "c"), 1:3)
 #'
-#' @rdname oper_dollar
+#' @rdname operator_dollar
+#' @aliases operator_dollar oper_dollar
 #'
 #' @usage
 #' e1 \%s$\% e2
@@ -287,6 +288,6 @@ stri_replace_na <- function(str, replacement = "NA")
 
 #' @usage
 #' e1 \%stri$\% e2
-#' @rdname oper_dollar
+#' @rdname operator_dollar
 #' @export
 `%stri$%` <- `%s$%`

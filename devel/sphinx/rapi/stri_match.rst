@@ -54,7 +54,7 @@ Arguments
 +--------------------+-------------------------------------------------------------------------------------------------------------------------------------+
 | ``mode``           | single string; one of: ``'first'`` (the default), ``'all'``, ``'last'``                                                             |
 +--------------------+-------------------------------------------------------------------------------------------------------------------------------------+
-| ``pattern, regex`` | character vector; search patterns; for more details refer to `stringi-search <stringi-search.html>`__                               |
+| ``pattern, regex`` | character vector; search patterns; for more details refer to `stringi-search <about_search.html>`__                                 |
 +--------------------+-------------------------------------------------------------------------------------------------------------------------------------+
 | ``omit_no_match``  | single logical value; if ``FALSE``, then a row with missing values will indicate that there was no match; ``stri_match_all_*`` only |
 +--------------------+-------------------------------------------------------------------------------------------------------------------------------------+
@@ -86,7 +86,7 @@ The first matrix column gives the whole match. The second one corresponds to the
 See Also
 ~~~~~~~~
 
-Other search_extract: `stri_extract_all_boundaries() <stri_extract_boundaries.html>`__, `stri_extract_all() <stri_extract.html>`__, `stringi-search <stringi-search.html>`__
+Other search_extract: `about_search <about_search.html>`__, `stri_extract_all_boundaries() <stri_extract_boundaries.html>`__, `stri_extract_all() <stri_extract.html>`__
 
 Examples
 ~~~~~~~~

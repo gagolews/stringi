@@ -43,9 +43,9 @@ An error is raised if the provided encoding is unknown to \pkg{ICU}
 }
 \seealso{
 Other encoding_management: 
+\code{\link{about_encoding}},
 \code{\link{stri_enc_list}()},
 \code{\link{stri_enc_mark}()},
-\code{\link{stri_enc_set}()},
-\code{\link{stringi-encoding}}
+\code{\link{stri_enc_set}()}
 }
 \concept{encoding_management}

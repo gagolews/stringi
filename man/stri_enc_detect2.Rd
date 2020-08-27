@@ -61,6 +61,9 @@ If you have no initial guess on the language and encoding, try with
 \seealso{
 Other locale_sensitive: 
 \code{\link{\%s<\%}()},
+\code{\link{about_locale}},
+\code{\link{about_search_boundaries}},
+\code{\link{about_search_coll}},
 \code{\link{stri_compare}()},
 \code{\link{stri_count_boundaries}()},
 \code{\link{stri_duplicated}()},
@@ -73,17 +76,14 @@ Other locale_sensitive:
 \code{\link{stri_split_boundaries}()},
 \code{\link{stri_trans_tolower}()},
 \code{\link{stri_unique}()},
-\code{\link{stri_wrap}()},
-\code{\link{stringi-locale}},
-\code{\link{stringi-search-boundaries}},
-\code{\link{stringi-search-coll}}
+\code{\link{stri_wrap}()}
 
 Other encoding_detection: 
+\code{\link{about_encoding}},
 \code{\link{stri_enc_detect}()},
 \code{\link{stri_enc_isascii}()},
 \code{\link{stri_enc_isutf16be}()},
-\code{\link{stri_enc_isutf8}()},
-\code{\link{stringi-encoding}}
+\code{\link{stri_enc_isutf8}()}
 }
 \concept{encoding_detection}
 \concept{locale_sensitive}

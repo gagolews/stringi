@@ -51,7 +51,7 @@ All the functions listed here are vectorized over ``e1`` and ``e2``.
 
 ``stri_cmp_equiv`` tests for canonical equivalence of two strings and is locale-dependent. Additionally, the ICU's Collator may be tuned up so that, e.g., the comparison is case-insensitive. To test whether two strings are not canonically equivalent, call ``stri_cmp_nequiv``.
 
-``stri_cmp_le`` tests whether the elements in the first vector are less than or equal to the corresponding elements in the second vector, ``stri_cmp_ge`` tests whether they are greater or equal, ``stri_cmp_lt`` if less, and ``stri_cmp_gt`` if greater, see also, e.g., `%s<% <oper_comparison.html>`__.
+``stri_cmp_le`` tests whether the elements in the first vector are less than or equal to the corresponding elements in the second vector, ``stri_cmp_ge`` tests whether they are greater or equal, ``stri_cmp_lt`` if less, and ``stri_cmp_gt`` if greater, see also, e.g., `%s<% <operator_compare.html>`__.
 
 ``stri_compare`` is an alias to ``stri_cmp``. They both perform exactly the same locale-dependent operation. Both functions provide a C library's ``strcmp()`` look-and-feel, see Value for details.
 
@@ -72,7 +72,7 @@ References
 See Also
 ~~~~~~~~
 
-Other locale_sensitive: `%s<%() <oper_comparison.html>`__, `stri_count_boundaries() <stri_count_boundaries.html>`__, `stri_duplicated() <stri_duplicated.html>`__, `stri_enc_detect2() <stri_enc_detect2.html>`__, `stri_extract_all_boundaries() <stri_extract_boundaries.html>`__, `stri_locate_all_boundaries() <stri_locate_boundaries.html>`__, `stri_opts_collator() <stri_opts_collator.html>`__, `stri_order() <stri_order.html>`__, `stri_sort_key() <stri_sort_key.html>`__, `stri_sort() <stri_sort.html>`__, `stri_split_boundaries() <stri_split_boundaries.html>`__, `stri_trans_tolower() <stri_trans_casemap.html>`__, `stri_unique() <stri_unique.html>`__, `stri_wrap() <stri_wrap.html>`__, `stringi-locale <stringi-locale.html>`__, `stringi-search-boundaries <stringi-search-boundaries.html>`__, `stringi-search-coll <stringi-search-coll.html>`__
+Other locale_sensitive: `%s<%() <operator_compare.html>`__, `about_locale <about_locale.html>`__, `about_search_boundaries <about_search_boundaries.html>`__, `about_search_coll <about_search_coll.html>`__, `stri_count_boundaries() <stri_count_boundaries.html>`__, `stri_duplicated() <stri_duplicated.html>`__, `stri_enc_detect2() <stri_enc_detect2.html>`__, `stri_extract_all_boundaries() <stri_extract_boundaries.html>`__, `stri_locate_all_boundaries() <stri_locate_boundaries.html>`__, `stri_opts_collator() <stri_opts_collator.html>`__, `stri_order() <stri_order.html>`__, `stri_sort_key() <stri_sort_key.html>`__, `stri_sort() <stri_sort.html>`__, `stri_split_boundaries() <stri_split_boundaries.html>`__, `stri_trans_tolower() <stri_trans_casemap.html>`__, `stri_unique() <stri_unique.html>`__, `stri_wrap() <stri_wrap.html>`__
 
 Examples
 ~~~~~~~~

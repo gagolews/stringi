@@ -125,8 +125,9 @@
 #' \url{http://www.iso.org/iso/home/standards/language_codes.htm}
 #'
 #' \emph{ISO 3166: Country Codes}, \url{http://www.iso.org/iso/country_codes}
-#' @name stringi-locale
-#' @rdname stringi-locale
+#' @name about_locale
+#' @rdname about_locale
+#' @aliases about_locale locale stringi-locale
 #' @family locale_management
 #' @family locale_sensitive
 #' @family stringi_general_topics

@@ -35,11 +35,11 @@ To deal with such issues, use, e.g., \code{\link{stri_enc_toutf8}}.
 }
 \seealso{
 Other encoding_conversion: 
+\code{\link{about_encoding}},
 \code{\link{stri_enc_fromutf32}()},
 \code{\link{stri_enc_toascii}()},
 \code{\link{stri_enc_tonative}()},
 \code{\link{stri_enc_toutf8}()},
-\code{\link{stri_encode}()},
-\code{\link{stringi-encoding}}
+\code{\link{stri_encode}()}
 }
 \concept{encoding_conversion}

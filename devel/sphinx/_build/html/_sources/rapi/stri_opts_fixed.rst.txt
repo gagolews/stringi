@@ -4,7 +4,7 @@ stri_opts_fixed: Generate a List with Fixed Pattern Search Engine's Settings
 Description
 ~~~~~~~~~~~
 
-A convenience function used to tune up the behavior of ``stri_*_fixed`` functions, see `stringi-search-fixed <stringi-search-fixed.html>`__.
+A convenience function used to tune up the behavior of ``stri_*_fixed`` functions, see `stringi-search-fixed <about_search_fixed.html>`__.
 
 Usage
 ~~~~~
@@ -27,7 +27,7 @@ Arguments
 Details
 ~~~~~~~
 
-Case-insensitive matching uses a simple, single-code point case mapping (via ICU's ``u_toupper()`` function). Full case mappings should be used whenever possible because they produce better results by working on whole strings. They also take into account the string context and the language, see `stringi-search-coll <stringi-search-coll.html>`__.
+Case-insensitive matching uses a simple, single-code point case mapping (via ICU's ``u_toupper()`` function). Full case mappings should be used whenever possible because they produce better results by working on whole strings. They also take into account the string context and the language, see `stringi-search-coll <about_search_coll.html>`__.
 
 Searching for overlapping pattern matches is available in `stri_extract_all_fixed <stri_extract.html>`__, `stri_locate_all_fixed <stri_locate.html>`__, and `stri_count_fixed <stri_count.html>`__ functions.
 
@@ -44,7 +44,7 @@ References
 See Also
 ~~~~~~~~
 
-Other search_fixed: `stringi-search-fixed <stringi-search-fixed.html>`__, `stringi-search <stringi-search.html>`__
+Other search_fixed: `about_search_fixed <about_search_fixed.html>`__, `about_search <about_search.html>`__
 
 Examples
 ~~~~~~~~

@@ -116,6 +116,6 @@ print(x)
 }
 \seealso{
 Other search_subset: 
-\code{\link{stringi-search}}
+\code{\link{about_search}}
 }
 \concept{search_subset}

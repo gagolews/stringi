@@ -87,6 +87,9 @@ duplicated(c('gro\u00df', 'GROSS', 'Gro\u00df', 'Gross'))
 \seealso{
 Other locale_sensitive: 
 \code{\link{\%s<\%}()},
+\code{\link{about_locale}},
+\code{\link{about_search_boundaries}},
+\code{\link{about_search_coll}},
 \code{\link{stri_compare}()},
 \code{\link{stri_count_boundaries}()},
 \code{\link{stri_enc_detect2}()},
@@ -99,9 +102,6 @@ Other locale_sensitive:
 \code{\link{stri_split_boundaries}()},
 \code{\link{stri_trans_tolower}()},
 \code{\link{stri_unique}()},
-\code{\link{stri_wrap}()},
-\code{\link{stringi-locale}},
-\code{\link{stringi-search-boundaries}},
-\code{\link{stringi-search-coll}}
+\code{\link{stri_wrap}()}
 }
 \concept{locale_sensitive}

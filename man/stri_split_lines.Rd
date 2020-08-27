@@ -61,20 +61,20 @@ Each match serves as a text line separator.
 }
 \seealso{
 Other search_split: 
+\code{\link{about_search}},
 \code{\link{stri_split_boundaries}()},
-\code{\link{stri_split}()},
-\code{\link{stringi-search}}
+\code{\link{stri_split}()}
 
 Other text_boundaries: 
+\code{\link{about_search_boundaries}},
+\code{\link{about_search}},
 \code{\link{stri_count_boundaries}()},
 \code{\link{stri_extract_all_boundaries}()},
 \code{\link{stri_locate_all_boundaries}()},
 \code{\link{stri_opts_brkiter}()},
 \code{\link{stri_split_boundaries}()},
 \code{\link{stri_trans_tolower}()},
-\code{\link{stri_wrap}()},
-\code{\link{stringi-search-boundaries}},
-\code{\link{stringi-search}}
+\code{\link{stri_wrap}()}
 }
 \concept{search_split}
 \concept{text_boundaries}

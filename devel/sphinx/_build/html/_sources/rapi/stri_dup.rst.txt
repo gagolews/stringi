@@ -41,7 +41,7 @@ Returns a character vector.
 See Also
 ~~~~~~~~
 
-Other join: `%s+%() <oper_plus.html>`__, `stri_flatten() <stri_flatten.html>`__, `stri_join_list() <stri_join_list.html>`__, `stri_join() <stri_join.html>`__
+Other join: `%s+%() <operator_add.html>`__, `stri_flatten() <stri_flatten.html>`__, `stri_join_list() <stri_join_list.html>`__, `stri_join() <stri_join.html>`__
 
 Examples
 ~~~~~~~~

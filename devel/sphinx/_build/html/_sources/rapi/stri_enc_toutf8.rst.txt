@@ -45,4 +45,4 @@ Returns a character vector.
 See Also
 ~~~~~~~~
 
-Other encoding_conversion: `stri_enc_fromutf32() <stri_enc_fromutf32.html>`__, `stri_enc_toascii() <stri_enc_toascii.html>`__, `stri_enc_tonative() <stri_enc_tonative.html>`__, `stri_enc_toutf32() <stri_enc_toutf32.html>`__, `stri_encode() <stri_encode.html>`__, `stringi-encoding <stringi-encoding.html>`__
+Other encoding_conversion: `about_encoding <about_encoding.html>`__, `stri_enc_fromutf32() <stri_enc_fromutf32.html>`__, `stri_enc_toascii() <stri_enc_toascii.html>`__, `stri_enc_tonative() <stri_enc_tonative.html>`__, `stri_enc_toutf32() <stri_enc_toutf32.html>`__, `stri_encode() <stri_encode.html>`__

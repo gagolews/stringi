@@ -92,9 +92,19 @@
               <p class="caption"><span class="caption-text">API Documentation</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../rapi.html">R Package <em>stringi</em> Reference</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="oper_comparison.html">oper_comparison: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oper_dollar.html">oper_dollar: C-Style Formatting with sprintf as a Binary Operator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oper_plus.html">oper_plus: Concatenate Two Character Vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_arguments.html">about_arguments: Passing Arguments to Functions in stringi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_encoding.html">about_encoding: Character Encodings and stringi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_locale.html">about_locale: Locales and stringi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_search_boundaries.html">about_search_boundaries: Text Boundary Analysis in stringi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_search_charclass.html">about_search_charclass: Character Classes in stringi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_search_coll.html">about_search_coll: Locale-Sensitive Text Searching in stringi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_search_fixed.html">about_search_fixed: Locale-Insensitive Fixed Pattern Matching in stringi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_search_regex.html">about_search_regex: Regular Expressions in stringi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_search.html">about_search: String Searching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count.html">stri_count: Count the Number of Pattern Matches</a></li>
@@ -190,16 +200,6 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_width.html">stri_width: Determine the Width of Code Points</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_wrap.html">stri_wrap: Word Wrap Text to Format Paragraphs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_write_lines.html">stri_write_lines: Write Text Lines to a Text File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stringi-arguments.html">stringi-arguments: Passing Arguments to Functions in stringi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stringi-encoding.html">stringi-encoding: Character Encodings and stringi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stringi-locale.html">stringi-locale: Locales and stringi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stringi-package.html">stringi-package: THE String Processing Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stringi-search-boundaries.html">stringi-search-boundaries: Text Boundary Analysis in stringi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stringi-search-charclass.html">stringi-search-charclass: Character Classes in stringi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stringi-search-coll.html">stringi-search-coll: Locale-Sensitive Text Searching in stringi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stringi-search-fixed.html">stringi-search-fixed: Locale-Insensitive Fixed Pattern Matching in stringi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stringi-search-regex.html">stringi-search-regex: Regular Expressions in stringi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stringi-search.html">stringi-search: String Searching</a></li>
 </ul>
 </li>
 </ul>
@@ -343,7 +343,7 @@
 <td><p>single string; one of: <code class="docutils literal notranslate"><span class="pre">'first'</span></code> (the default), <code class="docutils literal notranslate"><span class="pre">'all'</span></code>, <code class="docutils literal notranslate"><span class="pre">'last'</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pattern,</span> <span class="pre">regex</span></code></p></td>
-<td><p>character vector; search patterns; for more details refer to <a class="reference external" href="stringi-search.html">stringi-search</a></p></td>
+<td><p>character vector; search patterns; for more details refer to <a class="reference external" href="about_search.html">stringi-search</a></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">omit_no_match</span></code></p></td>
 <td><p>single logical value; if <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>, then a row with missing values will indicate that there was no match; <code class="docutils literal notranslate"><span class="pre">stri_match_all_*</span></code> only</p></td>
@@ -372,7 +372,7 @@
 </div>
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
-<p>Other search_extract: <a class="reference external" href="stri_extract_boundaries.html">stri_extract_all_boundaries()</a>, <a class="reference external" href="stri_extract.html">stri_extract_all()</a>, <a class="reference external" href="stringi-search.html">stringi-search</a></p>
+<p>Other search_extract: <a class="reference external" href="about_search.html">about_search</a>, <a class="reference external" href="stri_extract_boundaries.html">stri_extract_all_boundaries()</a>, <a class="reference external" href="stri_extract.html">stri_extract_all()</a></p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>

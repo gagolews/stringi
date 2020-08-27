@@ -287,14 +287,12 @@ stri_duplicated_any <- function(str, from_last = FALSE, fromLast = from_last, ..
 #' @title
 #' Sort Keys
 #'
-#'
 #' @description
 #' This function computes a locale-dependent 'sort key', which is an alternative
 #' character representation of the string that, when ordered in the C locale
 #' (which orders using bytes directly), will give an equivalent ordering to the
 #' original string. It is useful for enhancing algorithms that sort only in the
 #' C locale with the ability to be locale-aware.
-#'
 #'
 #' @details
 #' For more information on \pkg{ICU}'s Collator and how to tune it up

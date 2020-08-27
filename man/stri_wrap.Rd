@@ -128,6 +128,9 @@ Breaking paragraphs into lines, \emph{Software: Practice and Experience} 11(11),
 \seealso{
 Other locale_sensitive: 
 \code{\link{\%s<\%}()},
+\code{\link{about_locale}},
+\code{\link{about_search_boundaries}},
+\code{\link{about_search_coll}},
 \code{\link{stri_compare}()},
 \code{\link{stri_count_boundaries}()},
 \code{\link{stri_duplicated}()},
@@ -140,21 +143,18 @@ Other locale_sensitive:
 \code{\link{stri_sort}()},
 \code{\link{stri_split_boundaries}()},
 \code{\link{stri_trans_tolower}()},
-\code{\link{stri_unique}()},
-\code{\link{stringi-locale}},
-\code{\link{stringi-search-boundaries}},
-\code{\link{stringi-search-coll}}
+\code{\link{stri_unique}()}
 
 Other text_boundaries: 
+\code{\link{about_search_boundaries}},
+\code{\link{about_search}},
 \code{\link{stri_count_boundaries}()},
 \code{\link{stri_extract_all_boundaries}()},
 \code{\link{stri_locate_all_boundaries}()},
 \code{\link{stri_opts_brkiter}()},
 \code{\link{stri_split_boundaries}()},
 \code{\link{stri_split_lines}()},
-\code{\link{stri_trans_tolower}()},
-\code{\link{stringi-search-boundaries}},
-\code{\link{stringi-search}}
+\code{\link{stri_trans_tolower}()}
 }
 \concept{locale_sensitive}
 \concept{text_boundaries}

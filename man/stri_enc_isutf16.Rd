@@ -39,10 +39,10 @@ as both valid UTF-16LE and UTF-16BE.
 }
 \seealso{
 Other encoding_detection: 
+\code{\link{about_encoding}},
 \code{\link{stri_enc_detect2}()},
 \code{\link{stri_enc_detect}()},
 \code{\link{stri_enc_isascii}()},
-\code{\link{stri_enc_isutf8}()},
-\code{\link{stringi-encoding}}
+\code{\link{stri_enc_isutf8}()}
 }
 \concept{encoding_detection}

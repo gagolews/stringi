@@ -22,13 +22,13 @@ Usage
 Arguments
 ~~~~~~~~~
 
-+-------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``str``     | a character vector of strings to be trimmed                                                                                                                              |
-+-------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``pattern`` | a single pattern, specifying character classes that should be preserved (see `stringi-search-charclass <stringi-search-charclass.html>`__). Defaults to '``\P{Wspace}``. |
-+-------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``side``    | character [``stri_trim`` only]; defaults to ``'both'``                                                                                                                   |
-+-------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``str``     | a character vector of strings to be trimmed                                                                                                                            |
++-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``pattern`` | a single pattern, specifying character classes that should be preserved (see `stringi-search-charclass <about_search_charclass.html>`__). Defaults to '``\P{Wspace}``. |
++-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``side``    | character [``stri_trim`` only]; defaults to ``'both'``                                                                                                                 |
++-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Details
 ~~~~~~~
@@ -43,7 +43,7 @@ For replacing pattern matches with arbitrary replacement string, see `stri_repla
 
 Trimming can also be used where you would normally rely on regular expressions. For instance, you may get ``'23.5'`` out of ``'total of 23.5 bitcoins'``.
 
-For trimming white-spaces, please note the difference between Unicode binary property '``\p{Wspace}``' (more universal) and general character category '``\p{Z}``', see `stringi-search-charclass <stringi-search-charclass.html>`__.
+For trimming white-spaces, please note the difference between Unicode binary property '``\p{Wspace}``' (more universal) and general character category '``\p{Z}``', see `stringi-search-charclass <about_search_charclass.html>`__.
 
 Value
 ~~~~~
@@ -53,9 +53,9 @@ All these functions return a character vector.
 See Also
 ~~~~~~~~
 
-Other search_replace: `stri_replace_all() <stri_replace.html>`__, `stringi-search <stringi-search.html>`__
+Other search_replace: `about_search <about_search.html>`__, `stri_replace_all() <stri_replace.html>`__
 
-Other search_charclass: `stringi-search-charclass <stringi-search-charclass.html>`__, `stringi-search <stringi-search.html>`__
+Other search_charclass: `about_search_charclass <about_search_charclass.html>`__, `about_search <about_search.html>`__
 
 Examples
 ~~~~~~~~
