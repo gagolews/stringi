@@ -32,3 +32,4 @@
 ^\.vscode
 ^stringi\.Rproj$
 ^Makefile
+^stringi_.*\.tar\.gz$
