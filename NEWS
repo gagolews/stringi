@@ -3,7 +3,7 @@
 
 -------------------------------------------------------------------------------
 
-## 1.4.7 (2020-XX-XX) **devel*
+## 1.5.1 (2020-XX-XX) **devel*
 
 * [NEW FEATURE] #400: `%s$%` and `%stri$%` are now binary operators
   that call base R's `sprintf()`.
