@@ -264,7 +264,7 @@ to a portable code (again, in POSIX-like regex engines).
 
 \references{
 \emph{The Unicode Character Database} -- Unicode Standard Annex #44,
-\url{http://www.unicode.org/reports/tr44/}
+\url{https://www.unicode.org/reports/tr44/}
 
 \emph{UnicodeSet} -- ICU User Guide,
 \url{http://userguide.icu-project.org/strings/unicodeset}
@@ -275,10 +275,10 @@ to a portable code (again, in POSIX-like regex engines).
 \emph{C/POSIX Migration} -- ICU User Guide,
 \url{http://userguide.icu-project.org/posix}
 
-\emph{Unicode Script Data}, \url{http://www.unicode.org/Public/UNIDATA/Scripts.txt}
+\emph{Unicode Script Data}, \url{https://www.unicode.org/Public/UNIDATA/Scripts.txt}
 
 \emph{icu::Unicodeset Class Reference} -- ICU4C API Documentation,
-\url{http://www.icu-project.org/apiref/icu4c/classicu_1_1UnicodeSet.html}
+\url{https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/classicu_1_1UnicodeSet.html}
 }
 \seealso{
 Other search_charclass: 

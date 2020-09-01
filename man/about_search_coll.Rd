@@ -38,7 +38,7 @@ are  often much slower that those to perform fixed pattern searches.
  \url{http://userguide.icu-project.org/collation/icu-string-search-service}
 
 L. Werner, \emph{Efficient Text Searching in Java}, 1999,
-\url{http://icu-project.org/docs/papers/efficient_text_searching_in_java.html}
+\url{https://icu-project.org/docs/papers/efficient_text_searching_in_java.html}
 }
 \seealso{
 Other search_coll: 

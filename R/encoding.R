@@ -242,5 +242,5 @@
 #' \emph{Converters} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/conversion/converters}  (technical details)
 #'
-#' \emph{UTF-8, UTF-16, UTF-32 & BOM} -- ICU FAQ, \url{http://www.unicode.org/faq/utf_bom.html}
+#' \emph{UTF-8, UTF-16, UTF-32 & BOM} -- ICU FAQ, \url{https://www.unicode.org/faq/utf_bom.html}
 invisible(NULL)

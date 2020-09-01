@@ -58,7 +58,7 @@ stri_datetime_symbols(width='narrow')
 \url{http://userguide.icu-project.org/datetime/calendar}
 
 \emph{DateFormatSymbols} class -- ICU API Documentation,
-\url{http://icu-project.org/apiref/icu4c/classicu_1_1DateFormatSymbols.html}
+\url{https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/classicu_1_1DateFormatSymbols.html}
 
 \emph{Formatting Dates and Times} -- ICU User Guide,
 \url{http://userguide.icu-project.org/formatparse/datetime}

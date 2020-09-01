@@ -94,7 +94,7 @@ References
 
 *Converters* – ICU User Guide, http://userguide.icu-project.org/conversion/converters (technical details)
 
-*UTF-8, UTF-16, UTF-32 & BOM* – ICU FAQ, http://www.unicode.org/faq/utf_bom.html
+*UTF-8, UTF-16, UTF-32 & BOM* – ICU FAQ, https://www.unicode.org/faq/utf_bom.html
 
 See Also
 ~~~~~~~~

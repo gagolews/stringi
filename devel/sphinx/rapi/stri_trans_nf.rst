@@ -71,15 +71,15 @@ The ``stri_trans_nf*`` functions return a character vector of the same length as
 References
 ~~~~~~~~~~
 
-*Unicode Normalization Forms* – Unicode Standard Annex #15, http://unicode.org/reports/tr15
+*Unicode Normalization Forms* – Unicode Standard Annex #15, https://unicode.org/reports/tr15/
 
-*Unicode Format for Network Interchange* – RFC\#5198, http://tools.ietf.org/rfc/rfc5198.txt
+*Unicode Format for Network Interchange* – RFC\#5198, https://tools.ietf.org/rfc/rfc5198.txt
 
-*Character Model for the World Wide Web 1.0: Normalization* – W3C Working Draft, http://www.w3.org/TR/charmod-norm/
+*Character Model for the World Wide Web 1.0: Normalization* – W3C Working Draft, https://www.w3.org/TR/charmod-norm/
 
 *Normalization* – ICU User Guide, http://userguide.icu-project.org/transforms/normalization (technical details)
 
-*Unicode Equivalence* – Wikipedia, http://en.wikipedia.org/wiki/Unicode_equivalence
+*Unicode Equivalence* – Wikipedia, https://en.wikipedia.org/wiki/Unicode_equivalence
 
 See Also
 ~~~~~~~~

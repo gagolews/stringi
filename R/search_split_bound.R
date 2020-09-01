@@ -78,10 +78,10 @@
 #'
 #' @references
 #' \emph{Unicode Newline Guidelines} -- Unicode Technical Report #13,
-#' \url{http://www.unicode.org/standard/reports/tr13/tr13-5.html}
+#' \url{https://www.unicode.org/standard/reports/tr13/tr13-5.html}
 #'
 #' \emph{Unicode Regular Expressions} -- Unicode Technical Standard #18,
-#' \url{http://www.unicode.org/reports/tr18/}
+#' \url{https://www.unicode.org/reports/tr18/}
 #'
 #' @family search_split
 #' @family text_boundaries

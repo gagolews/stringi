@@ -49,7 +49,7 @@ References
 
 *Calendar* - ICU User Guide, http://userguide.icu-project.org/datetime/calendar
 
-*DateFormatSymbols* class – ICU API Documentation, http://icu-project.org/apiref/icu4c/classicu_1_1DateFormatSymbols.html
+*DateFormatSymbols* class – ICU API Documentation, https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/classicu_1_1DateFormatSymbols.html
 
 *Formatting Dates and Times* – ICU User Guide, http://userguide.icu-project.org/formatparse/datetime
 
