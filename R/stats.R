@@ -84,8 +84,9 @@ stri_stats_general <- function(str)
 #' is represented by a separate string.
 #'
 #' @details
-#' We use a slightly modified LaTeX Word Count algorithm taken from Kile 2.1.3,
-#' see \url{http://kile.sourceforge.net/team.php} for original contributors.
+#' We use a slightly modified LaTeX Word Count algorithm implemented in
+#' Kile 2.1.3, see
+#' \url{https://kile.sourceforge.io/team.php} for the original contributors.
 #'
 #'
 #'

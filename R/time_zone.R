@@ -79,7 +79,7 @@
 #'
 #' @references
 #' \emph{TimeZone} class -- ICU API Documentation,
-#' \url{http://www.icu-project.org/apiref/icu4c/classicu_1_1TimeZone.html}
+#' \url{https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/classicu_1_1TimeZone.html}
 #'
 #' \emph{ICU 4.8 Time Zone Names}.
 #' \url{http://site.icu-project.org/design/formatting/timezone/icu-4-8-time-zone-names}
@@ -140,7 +140,7 @@ stri_timezone_list <- function(region = NA_character_, offset = NA_integer_)
 #'
 #' @references
 #' \emph{TimeZone} class -- ICU API Documentation,
-#' \url{http://www.icu-project.org/apiref/icu4c/classicu_1_1TimeZone.html}
+#' \url{https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/classicu_1_1TimeZone.html}
 #'
 #' @examples
 #' \dontrun{

@@ -45,7 +45,7 @@ Returns a character vector.
 References
 ~~~~~~~~~~
 
-*TimeZone* class – ICU API Documentation, http://www.icu-project.org/apiref/icu4c/classicu_1_1TimeZone.html
+*TimeZone* class – ICU API Documentation, https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/classicu_1_1TimeZone.html
 
 *ICU 4.8 Time Zone Names*. http://site.icu-project.org/design/formatting/timezone/icu-4-8-time-zone-names
 

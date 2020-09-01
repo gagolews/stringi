@@ -18,7 +18,7 @@ should use to print a string with a mono-spaced font.
 }
 \details{
 The Unicode standard does not formalize the notion of a character
-width. Roughly based on \url{http://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c}
+width. Roughly based on \url{https://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c}
 and the UAX #11 we proceed as follows.
 The following code points are of width 0:
 \itemize{
@@ -49,7 +49,7 @@ stri_width(stri_trans_nfkd('\ubc1f')) # includes Hangul Jamo medial vowels and f
 }
 \references{
 \emph{East Asian Width} -- Unicode Standard Annex #11,
-\url{http://www.unicode.org/reports/tr11/}
+\url{https://www.unicode.org/reports/tr11/}
 }
 \seealso{
 Other length: 

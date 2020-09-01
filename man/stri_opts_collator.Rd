@@ -103,7 +103,7 @@ stri_cmp('above mentioned', 'above-mentioned', alternate_shifted=TRUE)
 \url{http://userguide.icu-project.org/collation/architecture}
 
 \emph{\code{icu::Collator} Class Reference} -- ICU4C API Documentation,
-\url{http://www.icu-project.org/apiref/icu4c/classicu_1_1Collator.html}
+\url{https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/classicu_1_1Collator.html}
 }
 \seealso{
 Other locale_sensitive: 

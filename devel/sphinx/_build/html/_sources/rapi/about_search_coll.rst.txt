@@ -22,7 +22,7 @@ References
 
 *ICU String Search Service* – ICU User Guide, http://userguide.icu-project.org/collation/icu-string-search-service
 
-L. Werner, *Efficient Text Searching in Java*, 1999, http://icu-project.org/docs/papers/efficient_text_searching_in_java.html
+L. Werner, *Efficient Text Searching in Java*, 1999, https://icu-project.org/docs/papers/efficient_text_searching_in_java.html
 
 See Also
 ~~~~~~~~

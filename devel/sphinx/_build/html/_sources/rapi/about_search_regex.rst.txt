@@ -249,9 +249,9 @@ References
 
 J.E.F. Friedl, *Mastering Regular Expressions*, O'Reilly, 2002
 
-*Unicode Regular Expressions* – Unicode Technical Standard #18, http://www.unicode.org/reports/tr18/
+*Unicode Regular Expressions* – Unicode Technical Standard #18, https://www.unicode.org/reports/tr18/
 
-*Unicode Regular Expressions* – Regex tutorial, http://www.regular-expressions.info/unicode.html
+*Unicode Regular Expressions* – Regex tutorial, https://www.regular-expressions.info/unicode.html
 
 See Also
 ~~~~~~~~

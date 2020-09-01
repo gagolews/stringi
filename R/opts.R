@@ -99,7 +99,7 @@
 #' \url{http://userguide.icu-project.org/collation/architecture}
 #'
 #' \emph{\code{icu::Collator} Class Reference} -- ICU4C API Documentation,
-#' \url{http://www.icu-project.org/apiref/icu4c/classicu_1_1Collator.html}
+#' \url{https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/classicu_1_1Collator.html}
 #'
 #' @examples
 #' stri_cmp('number100', 'number2')
@@ -178,7 +178,7 @@ stri_coll <- stri_opts_collator
 #' if set, uses the Unicode TR 29 definition of word boundaries;
 #' warning: Unicode word boundaries are quite different from traditional
 #' regex word boundaries. [regex flag \code{(?w)}]
-#' See \url{http://unicode.org/reports/tr29/#Word_Boundaries}
+#' See \url{https://unicode.org/reports/tr29/#Word_Boundaries}
 #' @param error_on_unknown_escapes logical;
 #' whether to generate an error on unrecognized backslash escapes;
 #' if set, fail with an error on patterns that contain backslash-escaped ASCII
@@ -203,7 +203,7 @@ stri_coll <- stri_opts_collator
 #' @references
 #' \emph{\code{enum URegexpFlag}: Constants for Regular Expression Match Modes}
 #' -- ICU4C API Documentation,
-#' \url{http://www.icu-project.org/apiref/icu4c/uregex_8h.html}
+#' \url{https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/uregex_8h.html}
 #'
 #' \emph{Regular Expressions} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/strings/regexp}
@@ -314,7 +314,7 @@ stri_opts_regex <- function(case_insensitive, comments,
 #'
 #' @references
 #' \emph{\code{ubrk.h} File Reference} -- ICU4C API Documentation,
-#' \url{http://icu-project.org/apiref/icu4c/ubrk_8h.html}
+#' \url{https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/ubrk_8h.html}
 #'
 #' \emph{Boundary Analysis} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/boundaryanalysis}

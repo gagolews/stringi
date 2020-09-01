@@ -47,7 +47,7 @@ Arguments
 +------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``unix_lines``               | logical; Unix-only line endings; when enabled, only ``U+000a`` is recognized as a line ending by '``.``', '``$``', and '``^``'.                                                                                                                                                       |
 +------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``uword``                    | logical; Unicode word boundaries; if set, uses the Unicode TR 29 definition of word boundaries; warning: Unicode word boundaries are quite different from traditional regex word boundaries. [regex flag ``(?w)``] See http://unicode.org/reports/tr29/#Word_Boundaries               |
+| ``uword``                    | logical; Unicode word boundaries; if set, uses the Unicode TR 29 definition of word boundaries; warning: Unicode word boundaries are quite different from traditional regex word boundaries. [regex flag ``(?w)``] See https://unicode.org/reports/tr29/#Word_Boundaries              |
 +------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``error_on_unknown_escapes`` | logical; whether to generate an error on unrecognized backslash escapes; if set, fail with an error on patterns that contain backslash-escaped ASCII letters without a known special meaning; otherwise, these escaped letters represent themselves                                   |
 +------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -71,7 +71,7 @@ Returns a named list object; missing settings are left with default values.
 References
 ~~~~~~~~~~
 
-*``enum URegexpFlag``: Constants for Regular Expression Match Modes* – ICU4C API Documentation, http://www.icu-project.org/apiref/icu4c/uregex_8h.html
+*``enum URegexpFlag``: Constants for Regular Expression Match Modes* – ICU4C API Documentation, https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/uregex_8h.html
 
 *Regular Expressions* – ICU User Guide, http://userguide.icu-project.org/strings/regexp
 

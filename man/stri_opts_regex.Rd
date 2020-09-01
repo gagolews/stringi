@@ -49,7 +49,7 @@ line ending by `\code{.}`, `\code{$}`, and `\code{^}`.}
 if set, uses the Unicode TR 29 definition of word boundaries;
 warning: Unicode word boundaries are quite different from traditional
 regex word boundaries. [regex flag \code{(?w)}]
-See \url{http://unicode.org/reports/tr29/#Word_Boundaries}}
+See \url{https://unicode.org/reports/tr29/#Word_Boundaries}}
 
 \item{error_on_unknown_escapes}{logical;
 whether to generate an error on unrecognized backslash escapes;
@@ -93,7 +93,7 @@ stri_detect_regex('ala', '(?i)ALA') # equivalent
 \references{
 \emph{\code{enum URegexpFlag}: Constants for Regular Expression Match Modes}
 -- ICU4C API Documentation,
-\url{http://www.icu-project.org/apiref/icu4c/uregex_8h.html}
+\url{https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/uregex_8h.html}
 
 \emph{Regular Expressions} -- ICU User Guide,
 \url{http://userguide.icu-project.org/strings/regexp}

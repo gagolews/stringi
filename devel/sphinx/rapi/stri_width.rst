@@ -23,7 +23,7 @@ Arguments
 Details
 ~~~~~~~
 
-The Unicode standard does not formalize the notion of a character width. Roughly based on http://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c and the UAX #11 we proceed as follows. The following code points are of width 0:
+The Unicode standard does not formalize the notion of a character width. Roughly based on https://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c and the UAX #11 we proceed as follows. The following code points are of width 0:
 
 -  code points with general category (see `stringi-search-charclass <about_search_charclass.html>`__) ``Me``, ``Mn``, and ``Cf``),
 
@@ -43,7 +43,7 @@ Returns an integer vector of the same length as ``str``.
 References
 ~~~~~~~~~~
 
-*East Asian Width* – Unicode Standard Annex #11, http://www.unicode.org/reports/tr11/
+*East Asian Width* – Unicode Standard Annex #11, https://www.unicode.org/reports/tr11/
 
 See Also
 ~~~~~~~~

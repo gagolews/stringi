@@ -44,7 +44,7 @@ stri_timezone_set(oldtz) # restore previous default time zone
 }
 \references{
 \emph{TimeZone} class -- ICU API Documentation,
-\url{http://www.icu-project.org/apiref/icu4c/classicu_1_1TimeZone.html}
+\url{https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/classicu_1_1TimeZone.html}
 }
 \seealso{
 Other datetime: 

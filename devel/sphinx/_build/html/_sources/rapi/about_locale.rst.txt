@@ -45,9 +45,9 @@ References
 
 *Locale* – ICU User Guide, http://userguide.icu-project.org/locale
 
-*ISO 639: Language Codes*, http://www.iso.org/iso/home/standards/language_codes.htm
+*ISO 639: Language Codes*, https://www.iso.org/iso-639-language-codes.html
 
-*ISO 3166: Country Codes*, http://www.iso.org/iso/country_codes
+*ISO 3166: Country Codes*, https://www.iso.org/iso-3166-country-codes.html
 
 See Also
 ~~~~~~~~

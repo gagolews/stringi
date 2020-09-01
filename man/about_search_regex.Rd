@@ -201,10 +201,10 @@ or a very fast exact-byte search, respectively.
 J.E.F. Friedl, \emph{Mastering Regular Expressions}, O'Reilly, 2002
 
 \emph{Unicode Regular Expressions} -- Unicode Technical Standard #18,
-\url{http://www.unicode.org/reports/tr18/}
+\url{https://www.unicode.org/reports/tr18/}
 
 \emph{Unicode Regular Expressions} -- Regex tutorial,
-\url{http://www.regular-expressions.info/unicode.html}
+\url{https://www.regular-expressions.info/unicode.html}
 }
 \seealso{
 Other search_regex: 

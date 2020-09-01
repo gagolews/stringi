@@ -76,13 +76,13 @@ References
 
 *stringi Package homepage*, https://stringi.gagolewski.com/
 
-*ICU – International Components for Unicode*, http://www.icu-project.org/
+*ICU – International Components for Unicode*, http://site.icu-project.org/
 
-*ICU4C API Documentation*, http://www.icu-project.org/apiref/icu4c/
+*ICU4C API Documentation*, https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/
 
-*The Unicode Consortium*, http://www.unicode.org/
+*The Unicode Consortium*, https://home.unicode.org/
 
-*UTF-8, a transformation format of ISO 10646* – RFC 3629, http://tools.ietf.org/html/rfc3629
+*UTF-8, a transformation format of ISO 10646* – RFC 3629, https://tools.ietf.org/html/rfc3629
 
 See Also
 ~~~~~~~~

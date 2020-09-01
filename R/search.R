@@ -298,10 +298,10 @@ invisible(NULL)
 #' J.E.F. Friedl, \emph{Mastering Regular Expressions}, O'Reilly, 2002
 #'
 #' \emph{Unicode Regular Expressions} -- Unicode Technical Standard #18,
-#' \url{http://www.unicode.org/reports/tr18/}
+#' \url{https://www.unicode.org/reports/tr18/}
 #'
 #' \emph{Unicode Regular Expressions} -- Regex tutorial,
-#' \url{http://www.regular-expressions.info/unicode.html}
+#' \url{https://www.regular-expressions.info/unicode.html}
 #'
 #' @name about_search_regex
 #' @rdname about_search_regex
@@ -388,7 +388,7 @@ invisible(NULL)
 #'  \url{http://userguide.icu-project.org/collation/icu-string-search-service}
 #'
 #' L. Werner, \emph{Efficient Text Searching in Java}, 1999,
-#' \url{http://icu-project.org/docs/papers/efficient_text_searching_in_java.html}
+#' \url{https://icu-project.org/docs/papers/efficient_text_searching_in_java.html}
 #'
 #' @name about_search_coll
 #' @rdname about_search_coll
@@ -655,7 +655,7 @@ invisible(NULL)
 #'
 #' @references
 #' \emph{The Unicode Character Database} -- Unicode Standard Annex #44,
-#' \url{http://www.unicode.org/reports/tr44/}
+#' \url{https://www.unicode.org/reports/tr44/}
 #'
 #' \emph{UnicodeSet} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/strings/unicodeset}
@@ -666,10 +666,10 @@ invisible(NULL)
 #' \emph{C/POSIX Migration} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/posix}
 #'
-#' \emph{Unicode Script Data}, \url{http://www.unicode.org/Public/UNIDATA/Scripts.txt}
+#' \emph{Unicode Script Data}, \url{https://www.unicode.org/Public/UNIDATA/Scripts.txt}
 #'
 #' \emph{icu::Unicodeset Class Reference} -- ICU4C API Documentation,
-#' \url{http://www.icu-project.org/apiref/icu4c/classicu_1_1UnicodeSet.html}
+#' \url{https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/classicu_1_1UnicodeSet.html}
 #'
 #' @name about_search_charclass
 #' @rdname about_search_charclass

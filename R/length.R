@@ -154,7 +154,7 @@ stri_isempty <- function(str)
 #'
 #' @details
 #' The Unicode standard does not formalize the notion of a character
-#' width. Roughly based on \url{http://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c}
+#' width. Roughly based on \url{https://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c}
 #' and the UAX #11 we proceed as follows.
 #' The following code points are of width 0:
 #' \itemize{
@@ -190,7 +190,7 @@ stri_isempty <- function(str)
 #'
 #' @references
 #' \emph{East Asian Width} -- Unicode Standard Annex #11,
-#' \url{http://www.unicode.org/reports/tr11/}
+#' \url{https://www.unicode.org/reports/tr11/}
 stri_width <- function(str)
 {
     .Call(C_stri_width, str)

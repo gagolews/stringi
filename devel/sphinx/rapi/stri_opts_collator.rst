@@ -79,7 +79,7 @@ References
 
 *ICU Collation Service Architecture* – ICU User Guide, http://userguide.icu-project.org/collation/architecture
 
-*``icu::Collator`` Class Reference* – ICU4C API Documentation, http://www.icu-project.org/apiref/icu4c/classicu_1_1Collator.html
+*``icu::Collator`` Class Reference* – ICU4C API Documentation, https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/classicu_1_1Collator.html
 
 See Also
 ~~~~~~~~

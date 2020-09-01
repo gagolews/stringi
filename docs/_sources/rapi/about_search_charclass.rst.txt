@@ -346,7 +346,7 @@ Therefore, a POSIX flavor of ``[:punct:]`` is more like ``[\p{P}\p{S}]`` in ICU.
 References
 ~~~~~~~~~~
 
-*The Unicode Character Database* – Unicode Standard Annex #44, http://www.unicode.org/reports/tr44/
+*The Unicode Character Database* – Unicode Standard Annex #44, https://www.unicode.org/reports/tr44/
 
 *UnicodeSet* – ICU User Guide, http://userguide.icu-project.org/strings/unicodeset
 
@@ -354,9 +354,9 @@ References
 
 *C/POSIX Migration* – ICU User Guide, http://userguide.icu-project.org/posix
 
-*Unicode Script Data*, http://www.unicode.org/Public/UNIDATA/Scripts.txt
+*Unicode Script Data*, https://www.unicode.org/Public/UNIDATA/Scripts.txt
 
-*icu::Unicodeset Class Reference* – ICU4C API Documentation, http://www.icu-project.org/apiref/icu4c/classicu_1_1UnicodeSet.html
+*icu::Unicodeset Class Reference* – ICU4C API Documentation, https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/classicu_1_1UnicodeSet.html
 
 See Also
 ~~~~~~~~

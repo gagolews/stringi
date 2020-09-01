@@ -82,7 +82,7 @@ to the ICU User Guide on Boundary Analysis.
 }
 \references{
 \emph{\code{ubrk.h} File Reference} -- ICU4C API Documentation,
-\url{http://icu-project.org/apiref/icu4c/ubrk_8h.html}
+\url{https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/ubrk_8h.html}
 
 \emph{Boundary Analysis} -- ICU User Guide,
 \url{http://userguide.icu-project.org/boundaryanalysis}

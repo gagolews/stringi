@@ -122,9 +122,9 @@
 #' \emph{Locale} -- ICU User Guide, \url{http://userguide.icu-project.org/locale}
 #'
 #' \emph{ISO 639: Language Codes},
-#' \url{http://www.iso.org/iso/home/standards/language_codes.htm}
+#' \url{https://www.iso.org/iso-639-language-codes.html}
 #'
-#' \emph{ISO 3166: Country Codes}, \url{http://www.iso.org/iso/country_codes}
+#' \emph{ISO 3166: Country Codes}, \url{https://www.iso.org/iso-3166-country-codes.html}
 #' @name about_locale
 #' @rdname about_locale
 #' @aliases about_locale locale stringi-locale

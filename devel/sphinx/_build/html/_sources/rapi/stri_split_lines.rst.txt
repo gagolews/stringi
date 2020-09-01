@@ -45,9 +45,9 @@ Value
 References
 ~~~~~~~~~~
 
-*Unicode Newline Guidelines* – Unicode Technical Report #13, http://www.unicode.org/standard/reports/tr13/tr13-5.html
+*Unicode Newline Guidelines* – Unicode Technical Report #13, https://www.unicode.org/standard/reports/tr13/tr13-5.html
 
-*Unicode Regular Expressions* – Unicode Technical Standard #18, http://www.unicode.org/reports/tr18/
+*Unicode Regular Expressions* – Unicode Technical Standard #18, https://www.unicode.org/reports/tr18/
 
 See Also
 ~~~~~~~~

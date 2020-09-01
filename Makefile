@@ -15,7 +15,7 @@ r:
 	R CMD INSTALL . --configure-args='--disable-pkg-config --enable-gcc-debug --enable-gcc-pedantic' --html
 
 r-check: r
-	Rscript -e 'devtools::check()'
+	Rscript -e 'devtools::check(cran=TRUE, remote=FALSE, manual=TRUE)'
 	make clean
 
 r-test: r
