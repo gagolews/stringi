@@ -28,7 +28,7 @@ copyright = '2020, Marek Gagolewski'
 author = 'Marek Gagolewski'
 
 # The full version, including alpha/beta/rc tags
-version = '1.5.2'  # TODO: automate
+version = '1.5.3'  # TODO: automate
 release = version
 
 github_project_url = "https://github.com/gagolews/stringi/"

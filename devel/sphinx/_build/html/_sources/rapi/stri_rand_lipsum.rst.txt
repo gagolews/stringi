@@ -11,7 +11,7 @@ Usage
 
 .. code-block:: r
 
-   stri_rand_lipsum(n_paragraphs, start_lipsum = TRUE)
+   stri_rand_lipsum(n_paragraphs, start_lipsum = TRUE, nparagraphs = n_paragraphs)
 
 Arguments
 ~~~~~~~~~
@@ -20,6 +20,8 @@ Arguments
 | ``n_paragraphs`` | single integer, number of paragraphs to generate                                         |
 +------------------+------------------------------------------------------------------------------------------+
 | ``start_lipsum`` | single logical value; should the resulting text start with *Lorem ipsum dolor sit amet*? |
++------------------+------------------------------------------------------------------------------------------+
+| ``nparagraphs``  | deprecated alias of ``n_paragraphs``                                                     |
 +------------------+------------------------------------------------------------------------------------------+
 
 Details
@@ -32,7 +34,7 @@ The current implementation is very simple: words are selected randomly from a Zi
 Value
 ~~~~~
 
-Returns a character vector of length ``nparagraphs``.
+Returns a character vector of length ``n_paragraphs``.
 
 See Also
 ~~~~~~~~

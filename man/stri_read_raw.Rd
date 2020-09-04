@@ -4,11 +4,13 @@
 \alias{stri_read_raw}
 \title{Read Text File as Raw}
 \usage{
-stri_read_raw(con)
+stri_read_raw(con, fname = con)
 }
 \arguments{
 \item{con}{name of the output file or a connection object
 (opened in the binary mode)}
+
+\item{fname}{deprecated alias of \code{con}}
 }
 \value{
 Returns a vector of type \code{raw}.

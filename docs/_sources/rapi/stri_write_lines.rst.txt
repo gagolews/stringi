@@ -15,7 +15,8 @@ Usage
      str,
      con,
      encoding = "UTF-8",
-     sep = ifelse(.Platform$OS.type == "windows", "\r\n", "\n")
+     sep = ifelse(.Platform$OS.type == "windows", "\r\n", "\n"),
+     fname = con
    )
 
 Arguments
@@ -29,6 +30,8 @@ Arguments
 | ``encoding`` | output encoding, ``NULL`` or ``''`` for the current default one            |
 +--------------+----------------------------------------------------------------------------+
 | ``sep``      | newline separator                                                          |
++--------------+----------------------------------------------------------------------------+
+| ``fname``    | deprecated alias of ``con``                                                |
 +--------------+----------------------------------------------------------------------------+
 
 Details

@@ -4,16 +4,18 @@
 \alias{stri_rand_lipsum}
 \title{A Lorem Ipsum Generator}
 \usage{
-stri_rand_lipsum(n_paragraphs, start_lipsum = TRUE)
+stri_rand_lipsum(n_paragraphs, start_lipsum = TRUE, nparagraphs = n_paragraphs)
 }
 \arguments{
 \item{n_paragraphs}{single integer, number of paragraphs to generate}
 
 \item{start_lipsum}{single logical value; should the resulting
 text start with \emph{Lorem ipsum dolor sit amet}?}
+
+\item{nparagraphs}{deprecated alias of \code{n_paragraphs}}
 }
 \value{
-Returns a character vector of length \code{nparagraphs}.
+Returns a character vector of length \code{n_paragraphs}.
 }
 \description{
 Generates (pseudo)random \emph{lorem ipsum} text consisting

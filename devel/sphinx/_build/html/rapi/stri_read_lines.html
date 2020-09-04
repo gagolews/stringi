@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>stri_read_lines: Read Text Lines from a Text File &mdash; stringi 1.5.2 documentation</title>
+  <title>stri_read_lines: Read Text Lines from a Text File &mdash; stringi 1.5.3 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                1.5.2
+                1.5.3
               </div>
             
           
@@ -289,7 +289,7 @@
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_read_lines</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_read_lines</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span> <span class="n">fname</span> <span class="o">=</span> <span class="n">con</span><span class="p">,</span> <span class="n">fallback_encoding</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -297,8 +297,8 @@
 <h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline">¶</a></h2>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 14%" />
-<col style="width: 86%" />
+<col style="width: 21%" />
+<col style="width: 79%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">con</span></code></p></td>
@@ -306,6 +306,12 @@
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">encoding</span></code></p></td>
 <td><p>single string; input encoding; <code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">''</span></code> for the current default encoding.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">fname</span></code></p></td>
+<td><p>deprecated alias of <code class="docutils literal notranslate"><span class="pre">con</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">fallback_encoding</span></code></p></td>
+<td><p>deprecated argument, no longer used</p></td>
 </tr>
 </tbody>
 </table>
