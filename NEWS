@@ -3,14 +3,7 @@
 
 -------------------------------------------------------------------------------
 
-## 1.5.3 (2020-XX-XX) **devel**
-
-* ...
-
-
--------------------------------------------------------------------------------
-
-## 1.5.2 (2020-09-01) **CRAN**
+## 1.5.3 (2020-09-04) **CRAN**
 
 * [NEW FEATURE] #400: `%s$%` and `%stri$%` are now binary operators
   that call base R's `sprintf()`.
@@ -41,13 +34,20 @@
   Use `stri_enc_detect()` or the more targeted `stri_enc_isutf8()`,
   `stri_enc_isascii()`, etc., instead.
 
+* [DEPRECATION WARNING] `stri_read_lines()`,  `stri_write_lines()`,
+  `stri_read_raw()`: use `con` argument instead of `fname` now.
+  The argument `fallback_encoding` is scheduled for removal and is no longer
+  used. `stri_read_lines()` does not support `encoding="auto"` anymore.
+
+* [DEPRECATION WARNING] `nparagraphs` in `stri_rand_lipsum()` has been renamed
+  `n_paragraphs`.
+
 * [NEW FEATURE] #398: Alternative, British spelling of function parameters
   has been introduced, e.g., `stri_opts_coll()` now supports both
   `normalization` and `normalisation`.
 
 * [NEW FEATURE] #393: `stri_read_bin()`, `stri_read_lines()`, and
   `stri_write_lines()` are no longer marked as draft API.
-  `stri_read_lines()` does not support `encoding="auto"` anymore.
 
 * [NEW FEATURE] #187: `stri_read_bin()`, `stri_read_lines()`, and
   `stri_write_lines()` now support connection objects as well.

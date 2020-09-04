@@ -131,8 +131,9 @@ stri_rand_strings <- function(n, length, pattern = "[A-Za-z0-9]")
 #' @param n_paragraphs single integer, number of paragraphs to generate
 #' @param start_lipsum single logical value; should the resulting
 #' text start with \emph{Lorem ipsum dolor sit amet}?
+#' @param nparagraphs deprecated alias of \code{n_paragraphs}
 #'
-#' @return Returns a character vector of length \code{nparagraphs}.
+#' @return Returns a character vector of length \code{n_paragraphs}.
 #'
 #' @examples
 #' cat(sapply(
@@ -142,7 +143,14 @@ stri_rand_strings <- function(n, length, pattern = "[A-Za-z0-9]")
 #'
 #' @family random
 #' @export
-stri_rand_lipsum <- function(n_paragraphs, start_lipsum = TRUE) {
+stri_rand_lipsum <- function(n_paragraphs, start_lipsum = TRUE,
+    nparagraphs=n_paragraphs)
+{
+    if (!missing(nparagraphs) && missing(n_paragraphs)) { # DEPRECATED
+        # TODO: warning
+        n_paragraphs <- nparagraphs
+    }
+
     # Whoa! A pure R function in stringi :)
     # Version 0.3-1 (Marek Gagolewski, 2014-10-16)
 

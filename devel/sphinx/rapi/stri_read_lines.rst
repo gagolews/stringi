@@ -11,16 +11,20 @@ Usage
 
 .. code-block:: r
 
-   stri_read_lines(con, encoding = NULL)
+   stri_read_lines(con, encoding = NULL, fname = con, fallback_encoding = NULL)
 
 Arguments
 ~~~~~~~~~
 
-+--------------+-------------------------------------------------------------------------------------+
-| ``con``      | name of the output file or a connection object (opened in the binary mode)          |
-+--------------+-------------------------------------------------------------------------------------+
-| ``encoding`` | single string; input encoding; ``NULL`` or ``''`` for the current default encoding. |
-+--------------+-------------------------------------------------------------------------------------+
++-----------------------+-------------------------------------------------------------------------------------+
+| ``con``               | name of the output file or a connection object (opened in the binary mode)          |
++-----------------------+-------------------------------------------------------------------------------------+
+| ``encoding``          | single string; input encoding; ``NULL`` or ``''`` for the current default encoding. |
++-----------------------+-------------------------------------------------------------------------------------+
+| ``fname``             | deprecated alias of ``con``                                                         |
++-----------------------+-------------------------------------------------------------------------------------+
+| ``fallback_encoding`` | deprecated argument, no longer used                                                 |
++-----------------------+-------------------------------------------------------------------------------------+
 
 Details
 ~~~~~~~

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>stri_read_raw: Read Text File as Raw &mdash; stringi 1.5.2 documentation</title>
+  <title>stri_read_raw: Read Text File as Raw &mdash; stringi 1.5.3 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                1.5.2
+                1.5.3
               </div>
             
           
@@ -289,7 +289,7 @@
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_read_raw</span><span class="p">(</span><span class="n">con</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_read_raw</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="n">fname</span> <span class="o">=</span> <span class="n">con</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -297,12 +297,15 @@
 <h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline">¶</a></h2>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 11%" />
-<col style="width: 89%" />
+<col style="width: 13%" />
+<col style="width: 87%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">con</span></code></p></td>
 <td><p>name of the output file or a connection object (opened in the binary mode)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">fname</span></code></p></td>
+<td><p>deprecated alias of <code class="docutils literal notranslate"><span class="pre">con</span></code></p></td>
 </tr>
 </tbody>
 </table>

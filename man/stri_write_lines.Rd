@@ -8,7 +8,8 @@ stri_write_lines(
   str,
   con,
   encoding = "UTF-8",
-  sep = ifelse(.Platform$OS.type == "windows", "\\r\\n", "\\n")
+  sep = ifelse(.Platform$OS.type == "windows", "\\r\\n", "\\n"),
+  fname = con
 )
 }
 \arguments{
@@ -21,6 +22,8 @@ stri_write_lines(
 the current default one}
 
 \item{sep}{newline separator}
+
+\item{fname}{deprecated alias of \code{con}}
 }
 \value{
 This function returns nothing noteworthy.

@@ -46,14 +46,20 @@
 #'
 #' @param con name of the output file or a connection object
 #'        (opened in the binary mode)
+#' @param fname deprecated alias of \code{con}
 #'
 #' @return
 #' Returns a vector of type \code{raw}.
 #'
 #' @family files
 #' @export
-stri_read_raw <- function(con)
+stri_read_raw <- function(con, fname = con)
 {
+    if (!missing(fname) && missing(con)) { # DEPRECATED
+        # TODO: warning
+        con <- fname
+    }
+
     if (is.character(con)) {
         con <- file(con, "rb")
         on.exit(close(con))
@@ -96,6 +102,8 @@ stri_read_raw <- function(con)
 #'        (opened in the binary mode)
 #' @param encoding single string; input encoding;
 #' \code{NULL} or \code{''} for the current default encoding.
+#' @param fname deprecated alias of \code{con}
+#' @param fallback_encoding deprecated argument, no longer used
 #'
 #' @return
 #' Returns a character vector, each text line is a separate string.
@@ -103,8 +111,18 @@ stri_read_raw <- function(con)
 #'
 #' @family files
 #' @export
-stri_read_lines <- function(con, encoding = NULL)
+stri_read_lines <- function(con, encoding = NULL,
+    fname = con, fallback_encoding = NULL)
 {
+    if (!missing(fname) && missing(con)) { # DEPRECATED
+        # TODO: warning
+        con <- fname
+    }
+
+    if (!missing(fallback_encoding)) {  # DEPRECATED
+        warning('`fallback_encoding` is no longer used and has been scheduled for removal')
+    }
+
     stopifnot(is.null(encoding) || is.character(encoding))
 
     if (is.null(encoding) || encoding == "")
@@ -140,6 +158,7 @@ stri_read_lines <- function(con, encoding = NULL)
 #' @param encoding output encoding, \code{NULL} or \code{''} for
 #' the current default one
 #' @param sep newline separator
+#' @param fname deprecated alias of \code{con}
 #'
 #' @return
 #' This function returns nothing noteworthy.
@@ -147,8 +166,15 @@ stri_read_lines <- function(con, encoding = NULL)
 #' @family files
 #' @export
 stri_write_lines <- function(str, con,
-    encoding = "UTF-8", sep = ifelse(.Platform$OS.type == "windows", "\r\n", "\n"))
+    encoding = "UTF-8",
+    sep = ifelse(.Platform$OS.type == "windows", "\r\n", "\n"),
+    fname = con)
 {
+    if (!missing(fname) && missing(con)) { # DEPRECATED
+        # TODO: warning
+        con <- fname
+    }
+
     stopifnot(is.character(sep), length(sep) == 1)
     str <- stri_join(str, sep, collapse = "")
     str <- stri_encode(str, "", encoding, to_raw = TRUE)[[1]]

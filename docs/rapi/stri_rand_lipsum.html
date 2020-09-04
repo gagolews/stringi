@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>stri_rand_lipsum: A Lorem Ipsum Generator &mdash; stringi 1.5.2 documentation</title>
+  <title>stri_rand_lipsum: A Lorem Ipsum Generator &mdash; stringi 1.5.3 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                1.5.2
+                1.5.3
               </div>
             
           
@@ -290,7 +290,7 @@
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_rand_lipsum</span><span class="p">(</span><span class="n">n_paragraphs</span><span class="p">,</span> <span class="n">start_lipsum</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_rand_lipsum</span><span class="p">(</span><span class="n">n_paragraphs</span><span class="p">,</span> <span class="n">start_lipsum</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="n">nparagraphs</span> <span class="o">=</span> <span class="n">n_paragraphs</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -308,6 +308,9 @@
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">start_lipsum</span></code></p></td>
 <td><p>single logical value; should the resulting text start with <em>Lorem ipsum dolor sit amet</em>?</p></td>
 </tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">nparagraphs</span></code></p></td>
+<td><p>deprecated alias of <code class="docutils literal notranslate"><span class="pre">n_paragraphs</span></code></p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -318,7 +321,7 @@
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
-<p>Returns a character vector of length <code class="docutils literal notranslate"><span class="pre">nparagraphs</span></code>.</p>
+<p>Returns a character vector of length <code class="docutils literal notranslate"><span class="pre">n_paragraphs</span></code>.</p>
 </div>
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>

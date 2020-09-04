@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>stri_write_lines: Write Text Lines to a Text File &mdash; stringi 1.5.2 documentation</title>
+  <title>stri_write_lines: Write Text Lines to a Text File &mdash; stringi 1.5.3 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                1.5.2
+                1.5.3
               </div>
             
           
@@ -290,7 +290,8 @@
   <span class="n">str</span><span class="p">,</span>
   <span class="n">con</span><span class="p">,</span>
   <span class="n">encoding</span> <span class="o">=</span> <span class="s">&quot;UTF-8&quot;</span><span class="p">,</span>
-  <span class="n">sep</span> <span class="o">=</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">.Platform</span><span class="o">$</span><span class="n">OS.type</span> <span class="o">==</span> <span class="s">&quot;windows&quot;</span><span class="p">,</span> <span class="s">&quot;\r\n&quot;</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">)</span>
+  <span class="n">sep</span> <span class="o">=</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">.Platform</span><span class="o">$</span><span class="n">OS.type</span> <span class="o">==</span> <span class="s">&quot;windows&quot;</span><span class="p">,</span> <span class="s">&quot;\r\n&quot;</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">),</span>
+  <span class="n">fname</span> <span class="o">=</span> <span class="n">con</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -314,6 +315,9 @@
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sep</span></code></p></td>
 <td><p>newline separator</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">fname</span></code></p></td>
+<td><p>deprecated alias of <code class="docutils literal notranslate"><span class="pre">con</span></code></p></td>
 </tr>
 </tbody>
 </table>
