@@ -39,6 +39,8 @@ src-x64/
 *.aux
 *.log
 *.out
+*.bbl
+*.blg
 cache-knitr/
 cache/
 
