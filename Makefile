@@ -35,7 +35,12 @@ rd2rst:
 	#devtools::install_github('gagolews/Rd2rst')
 	cd devel/sphinx && Rscript -e "Rd2rst::Rd2rst('stringi')" && cd ../../
 
-sphinx: r weave rd2rst
+news:
+	cd devel/sphinx && pandoc ../../NEWS -f markdown -t rst -o news.rst
+	cd devel/sphinx && pandoc ../../INSTALL -f markdown -t rst -o install.rst
+
+sphinx: r weave rd2rst news
+
 	rm -rf devel/sphinx/_build/
 	cd devel/sphinx && make html && cd ../../
 	rm -rf docs/

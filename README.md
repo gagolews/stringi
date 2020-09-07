@@ -44,8 +44,8 @@ and many more.
 with contributions from Bartłomiej Tartanus and many others.
 
 The package's API was inspired by
-Hadley Wickham's [stringr](https://cran.r-project.org/web/packages/stringr)
-package (and since 2015 *stringr* is based on *stringi*).
+Hadley Wickham's [stringr](https://stringr.tidyverse.org/)
+package (and since 2015 *stringr* powered by *stringi*).
 
 
 
