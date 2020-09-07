@@ -1,0 +1,376 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installing stringi &mdash; stringi 1.5.3 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+
+  
+  
+  
+  
+    <link rel="canonical" href="https://stringi.gagolewski.com/install.html"/>
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="What’s New in stringi" href="news.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> stringi
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.5.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Tutorial</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://stringi.gagolewski.com/_static/vignette/stringi.pdf">Tutorial (Draft)</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="rapi.html">R Package <em>stringi</em> Reference</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Other</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source code (GitHub)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Proposals</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/web/packages/stringi/">CRAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="news.html">What’s New in <em>stringi</em></a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installing <em>stringi</em></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#icu4c">ICU4C</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#c-11-support">C++11 Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#customising-the-build-process">Customising the Build Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">stringi</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Installing <em>stringi</em></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+      
+        <a href="news.html" class="btn btn-neutral float-left" title="What’s New in stringi" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installing-stringi">
+<h1>Installing <em>stringi</em><a class="headerlink" href="#installing-stringi" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>In 99.9% of cases, <em>stringi</em> can be successfully installed by simply
+calling:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;stringi&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>However, due to the overwhelming complexity of the ICU4C library, on
+which <em>stringi</em> is based, and the colourful variety of operating
+systems, their flavors, and particular setups, some users may still be
+subject to a few issues.</p>
+<p>Also, some additional build tweaks are possible to those who want a more
+customised installation.</p>
+</div>
+<div class="section" id="icu4c">
+<h2>ICU4C<a class="headerlink" href="#icu4c" title="Permalink to this headline">¶</a></h2>
+<p>The stringi package depends on the ICU4C &gt;= 55 library.</p>
+<p>If you build the package from sources and either:</p>
+<ul class="simple">
+<li><p>this requirement is not met (check out
+<a class="reference external" href="http://site.icu-project.org/download">http://site.icu-project.org/download</a>, the <code class="docutils literal notranslate"><span class="pre">libicu-devel</span></code> rpm on
+Fedora/CentOS/OpenSUSE, <code class="docutils literal notranslate"><span class="pre">libicu-dev</span></code> on Ubuntu/Debian, etc.),</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pkg-config</span></code> is fails to find appropriate build settings for
+ICU-based projects, or</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">INSTALL</span></code> is called with the
+<code class="docutils literal notranslate"><span class="pre">--configure-args='--disable-pkg-config'</span></code> argument or
+<code class="docutils literal notranslate"><span class="pre">install.packages(&quot;stringi&quot;,</span> <span class="pre">configure.args=&quot;--disable-pkg-config&quot;)</span></code>
+is executed,</p></li>
+</ul>
+<p>then the library will be built together with stringi (a custom subset of
+ICU4C 55.1 and 61.1 is shipped with the package).</p>
+<blockquote>
+<div><p>To get the most out of stringi, end users are encouraged to rely on
+our ICU4C package bundle. This guarantees maximum portability.</p>
+</div></blockquote>
+<p>If you decide to use our ICU4C bundle, then – by default – the ICU data
+library will be downloaded from one of our mirror servers. However, if
+you already have downloaded a version of <code class="docutils literal notranslate"><span class="pre">icudt*.zip</span></code> suitable for
+your platform (big/little endian), you may wish to install the package
+by calling:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">install</span><span class="o">.</span><span class="n">packages</span><span class="p">(</span><span class="s2">&quot;stringi&quot;</span><span class="p">,</span> <span class="n">configure</span><span class="o">.</span><span class="n">vars</span><span class="o">=</span><span class="s2">&quot;ICUDT_DIR=&lt;icudt_dir&gt;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Moreover, if you have <strong>absolutely no internet access</strong> on the machines
+you try to install <em>stringi</em> on, try fetching the latest development
+version of the package. It is already shipped with the <code class="docutils literal notranslate"><span class="pre">ICU</span></code> data
+archives. You can build a distributable source package that includes all
+the required ICU data files (for off-line use) by omitting some relevant
+lines in the <code class="docutils literal notranslate"><span class="pre">.Rbuildignore</span></code> file. The following command sequence
+should do the trick:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">gagolews</span><span class="o">/</span><span class="n">stringi</span><span class="o">/</span><span class="n">archive</span><span class="o">/</span><span class="n">master</span><span class="o">.</span><span class="n">zip</span> <span class="o">-</span><span class="n">O</span> <span class="n">stringi</span><span class="o">.</span><span class="n">zip</span>
+<span class="n">unzip</span> <span class="n">stringi</span><span class="o">.</span><span class="n">zip</span>
+<span class="n">sed</span> <span class="o">-</span><span class="n">i</span> <span class="s1">&#39;/\/icu..\/data/d&#39;</span> <span class="n">stringi</span><span class="o">-</span><span class="n">master</span><span class="o">/.</span><span class="n">Rbuildignore</span>
+<span class="n">R</span> <span class="n">CMD</span> <span class="n">build</span> <span class="n">stringi</span><span class="o">-</span><span class="n">master</span>
+</pre></div>
+</div>
+<p>Assuming the most recent development version of the package is numbered
+1.5.3, a file named <code class="docutils literal notranslate"><span class="pre">stringi_1.5.3.tar.gz</span></code> is created in the current
+working directory. The package can now be installed (the source bundle
+may be propagated via <code class="docutils literal notranslate"><span class="pre">scp</span></code> etc.) by executing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">R</span> <span class="n">CMD</span> <span class="n">INSTALL</span> <span class="n">stringi_1</span><span class="o">.</span><span class="mf">5.3</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+</pre></div>
+</div>
+<p>or by calling <code class="docutils literal notranslate"><span class="pre">install.packages(&quot;stringi_1.3.1.tar.gz&quot;,</span> <span class="pre">repos=NULL)</span></code>,
+from within an R session.</p>
+</div>
+<div class="section" id="c-11-support">
+<h2>C++11 Support<a class="headerlink" href="#c-11-support" title="Permalink to this headline">¶</a></h2>
+<p>For R &gt;= 3.1.0, we suggest (by default) C++11 support to build the
+package from sources. This is because older releases of ICU4C use the
+<code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">long</span></code> type in a few functions, and this is not part of the C++98
+standard. Moreover, it has become required by newer versions of ICU4C.</p>
+<p>However, if your compiler does not support C++11 or it has not been
+properly configured (check out <code class="docutils literal notranslate"><span class="pre">&lt;R_inst_dir&gt;/etc/Makeconf</span></code>) but you
+are sure it tolerates the <code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">long</span></code> type (which is very common –
+this is checked by the <code class="docutils literal notranslate"><span class="pre">configure</span></code> script anyway), you may disable the
+use of C++11 by passing the <code class="docutils literal notranslate"><span class="pre">--disable-cxx11</span></code> argument to the
+<code class="docutils literal notranslate"><span class="pre">configure</span></code> script.</p>
+</div>
+<div class="section" id="customising-the-build-process">
+<h2>Customising the Build Process<a class="headerlink" href="#customising-the-build-process" title="Permalink to this headline">¶</a></h2>
+<p>Additional features and options of the <code class="docutils literal notranslate"><span class="pre">./configure</span></code> script:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--disable-cxx11</span></code>: Disable use of C++11; if you build ICU4C from
+sources, make sure your C++ compiler supports the <code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">long</span></code> type.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--disable-icu-bundle</span></code>: Force the use of the system ICU.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--disable-pkg-config</span></code>: Disable <code class="docutils literal notranslate"><span class="pre">pkg-config</span></code> usage for finding
+ICU4C-devel; in such a case ICU4C will be compiled from sources.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--with-extra-cflags=FLAGS</span></code>: Additional C compiler flags.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--with-extra-cppflags=FLAGS</span></code>: Additional C/C++ preprocessor flags.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--with-extra-cxxflags=FLAGS</span></code>: Additional C++ compiler flags.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--with-extra-ldflags=FLAGS</span></code>: Additional linker flags.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--with-extra-libs=FLAGS</span></code>: Additional libraries to link against.</p></li>
+</ul>
+<p>Some influential environment variables:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ICUDT_DIR</span></code>: Optional directory from which an already downloaded
+ICU data archive (<code class="docutils literal notranslate"><span class="pre">icudt*.zip</span></code>) may be copied; either an absolute
+path or a path relative to <code class="docutils literal notranslate"><span class="pre">&lt;package</span> <span class="pre">source</span> <span class="pre">dir&gt;/src</span></code>; defaults to
+<code class="docutils literal notranslate"><span class="pre">icu55/data</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PKG_CONFIG_PATH</span></code>: An optional list of directories to search for
+<code class="docutils literal notranslate"><span class="pre">pkg-config</span></code>s <code class="docutils literal notranslate"><span class="pre">.pc</span></code> files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">R_HOME</span></code>: Override default directory with R installation, e.g.,
+<code class="docutils literal notranslate"><span class="pre">/usr/lib64/R</span></code>. Note that <code class="docutils literal notranslate"><span class="pre">$R_HOME/bin/R</span></code> should refer to the R
+executable.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CAT</span></code>: The <code class="docutils literal notranslate"><span class="pre">cat</span></code> command used to generate the list of source
+files to compile.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PKG_CONFIG</span></code>:The <code class="docutils literal notranslate"><span class="pre">pkg-config</span></code> command used to fetch the necessary
+compiler flags to link to and existing <code class="docutils literal notranslate"><span class="pre">libicu</span></code> installation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">STRINGI_DISABLE_CXX11</span></code>: Disable the use of C++11, see also
+<code class="docutils literal notranslate"><span class="pre">--disable-cxx11</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">STRINGI_DISABLE_PKG_CONFIG</span></code>: Force the use of the ICU bundle, see
+also <code class="docutils literal notranslate"><span class="pre">--disable-pkg-config</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">STRINGI_DISABLE_ICU_BUNDLE</span></code>: Force the use of the system ICU, see
+also <code class="docutils literal notranslate"><span class="pre">--disable-icu-bundle</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">STRINGI_CFLAGS</span></code>: see <code class="docutils literal notranslate"><span class="pre">--with-extra-cflags</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">STRINGI_CPPFLAGS</span></code>: see <code class="docutils literal notranslate"><span class="pre">--with-extra-cppflags</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">STRINGI_CXXFLAGS</span></code>: see <code class="docutils literal notranslate"><span class="pre">--with-extra-cxxflags</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">STRINGI_LDFLAGS</span></code>: see <code class="docutils literal notranslate"><span class="pre">--with-extra-ldflags</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">STRINGI_LIBS</span></code>: see <code class="docutils literal notranslate"><span class="pre">--with-extra-libs</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>We expect that with a correctly configured C++11 compiler and properly
+installed system ICU4C distribution, you should experience no problems
+with installing the package. Also, if you use our ICU4C bundle and you
+have a working internet access, all should lead to a happy ending.</p>
+<p>If you do not manage to set up a successful stringi build, do not
+hesitate to <a class="reference external" href="https://github.com/gagolews/stringi/issues">file a bug
+report</a>. However, please
+check the archived (closed) issues for similar problems experienced by
+other users — it is very likely that they have already been resolved
+successfully.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="news.html" class="btn btn-neutral float-left" title="What’s New in stringi" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Marek Gagolewski
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

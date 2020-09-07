@@ -9,8 +9,8 @@ stringi: THE String Processing Package for R
 
 
 
-Thanks to the use of the `ICU <https://www.icu-project.org>`_
-library, `stringi` fully supports a wide range
+Thanks to `ICU <https://www.icu-project.org>`_,
+`stringi` fully supports a wide range
 of `Unicode <https://www.unicode.org/>`_ standards.
 
 It gives you a multitude of functions for:
@@ -45,13 +45,19 @@ It has been released under the open source BSD-3-clause
 `license <https://raw.githubusercontent.com/gagolews/stringi/master/LICENSE>`_.
 
 The package's API was inspired by Hadley Wickham's
-`stringr <https://cran.r-project.org/web/packages/stringr/>`_ package
-(and since 2015 `stringr` is based on `stringi`).
-Moreover, Hadley suggested many new cool package features. Thanks!
+`stringr <https://stringr.tidyverse.org/>`_ package
+(and since 2015 `stringr` is powered by `stringi`).
+Moreover, Hadley suggested many new package features. Thanks!
 The contributions from Bartlomiej Tartanus and
 `many others <https://github.com/gagolews/stringi/graphs/contributors>`_
 is greatly appreciated.
 
+
+.. toctree::
+    :maxdepth: 2
+    :caption: Tutorial
+
+    Tutorial (Draft) <https://stringi.gagolewski.com/_static/vignette/stringi.pdf>
 
 
 .. toctree::
@@ -64,11 +70,13 @@ is greatly appreciated.
 
 .. toctree::
     :maxdepth: 2
-    :caption: External Links
+    :caption: Other
 
     Source code (GitHub) <https://github.com/gagolews/stringi>
     Bug Tracker and Feature Proposals <https://github.com/gagolews/stringi/issues>
     CRAN <https://cran.r-project.org/web/packages/stringi/>
+    news.rst
+    install.rst
 
 
 
