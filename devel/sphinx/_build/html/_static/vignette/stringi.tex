@@ -1,3 +1,9 @@
+% kate: indent-width 2; word-wrap-column 74
+
+% knitr::knit("stringi_v2.Rnw", tangle=TRUE)
+
+
+
 %!TEX program = XeLaTeX
 %!Rnw weave = Sweave
 
@@ -65,9 +71,11 @@ Deakin University, Australia} % \emph{and} Warsaw University of Technology}
 %% - \title{} in title case
 %% - \Plaintitle{} without LaTeX markup (if any)
 %% - \Shorttitle{} with LaTeX markup (if any), used as running title
-\title{\pkg{stringi}: Fast and Portable\\Character String Processing in \proglang{R}}
+\title{\pkg{stringi}: Fast and Portable\\Character String
+Processing in \proglang{R}}
 \Plaintitle{stringi: Fast and Portable Character String Processing in R}
-\Shorttitle{\pkg{stringi}: Fast and Portable Character String Processing in \proglang{R}}
+\Shorttitle{\pkg{stringi}: Fast and Portable Character String Processing
+in \proglang{R}}
 
 % \title in title style,
 % all titles in the BibTeX file in title style.
@@ -93,12 +101,15 @@ repertoire.
 %% - \Keywords{} with LaTeX markup, at least one required
 %% - \Plainkeywords{} without LaTeX markup (if necessary)
 %% - Should be comma-separated and in sentence case.
-\Keywords{\pkg{stringi}, character strings, text, \pkg{ICU}, Unicode, regular expressions, data cleansing, natural language processing, \proglang{R}}
-\Plainkeywords{stringi, character strings, text, ICU, Unicode, regular expressions, data cleansing, natural language processing, R}
+\Keywords{\pkg{stringi}, character strings, text, \pkg{ICU}, Unicode,
+regular expressions, data cleansing, natural language processing,
+\proglang{R}}
+\Plainkeywords{stringi, character strings, text, ICU, Unicode, regular
+expressions, data cleansing, natural language processing, R}
 
 \Address{
   \textbf{Marek Gagolewski}\\
-  School of Information Technnology\\
+  School of Information Technology\\
   Deakin University\\
   Geelong, VIC 3220, Australia\\
   %\emph{and}\\
@@ -123,22 +134,26 @@ URL \url{https://stringi.gagolewski.com}.
 }
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Introduction}\label{Sec:intro}
 
 Stringology, see \citep{stringology},
-deals with algorithms and data structures used for processing
+deals with the algorithms and data structures used for processing
 of character strings \citep{speechlangproc,szpankowski}.
 From the perspective of applied statistics and data science,
 it is worth stressing that many interesting datasets
 first come in an unstructured or contaminated form,
 for instance when fetched from different APIs or when gathered
 by means of web scraping techniques.
-Diverse data cleansing and preparation operations \citep{datacleaning,cleanr}
+Diverse data cleansing and preparation operations
+(\citealp{datacleaning,cleanr}; see also
+this paper's Section~\ref{Sec:examples} for a real-world example)
 need to be applied before an analyst can begin to enjoy
 an orderly and meaningful data frame, matrix, or spreadsheet  being finally
-at their disposal. Amongst them we may find: string concatenation,
+at their disposal.
+Amongst them we may find: string concatenation,
 substring extraction, collation, sorting, Unicode normalisation,
 transliteration, pattern matching, and date-time parsing.
 Activities related to information retrieval, computer vision,
@@ -153,28 +168,28 @@ in the data processing pipelines, see \citep{speechlangproc,genome}.
 
 % sentiment of emojis 10.1371/journal.pone.0144296
 
-% knowledge
-% like extracting and formatting numbers, parsing and manipulating date/time data
-% own/custom file formats (e.g., somewhat broken csv files)
-% reporting
-% cite knitr - report generation?
 
 
 Base \proglang{R} \citep{Rproject:home} provides a few functions for dealing
 with character strings, see \citep[Chapter~8]{Chambers2008:SoftDA}
 and Table~\ref{Tab:oldstringr}.
 However, it is the \pkg{stringr}  package \citep{Wickham2010:stringr},
-first released in November 2009, that marks the first milestone of implementing
+first released in November 2009, that marks the first milestone of
+implementing
 the idea of a ``tidier'' API for text data processing.
 In version 0.6.2 (dated 2012--12--06)
 of \pkg{stringr}'s \code{README}, we read that this package:
 \begin{quote}\it
 \begin{itemize}
-\item        processes factors and characters in the same way,
-\item        gives functions consistent names and arguments,
-\item        simplifies string operations by eliminating options that you don't need 95\% of the time,
-\item        produces outputs than can easily be used as inputs. This includes ensuring that missing inputs result in missing outputs, and zero length inputs result in zero length outputs,
-\item        completes \proglang{R}'s string handling functions with useful functions from other programming languages.
+\item processes factors and characters in the same way,
+\item gives functions consistent names and arguments,
+\item simplifies string operations by eliminating options that you
+don't need 95\% of the time,
+\item produces outputs than can easily be used as inputs.
+This includes ensuring that missing inputs result in missing outputs,
+and zero length inputs result in zero length outputs,
+\item completes \proglang{R}'s string handling functions with
+useful functions from other programming languages.
 \end{itemize}
 \end{quote}
 The list of the functions available in \pkg{stringr} at that time
@@ -214,12 +229,11 @@ is given in Table~\ref{Tab:oldstringr}.
 
 
 Nevertheless, \pkg{stringr} was developed as a set of wrappers
-around its base \proglang{R} counterparts,
-which not only limited its scope but also could cause many portability issues.
-In particular, the same code may yield different results
-on different operating systems,
-some services such as the processing of particular languages may be unavailable whatsoever, etc.
-For instance, varied versions of the
+around its base \proglang{R} counterparts, which not only limited its scope
+but also could cause many portability issues. In particular, the same code
+may yield different results on different operating systems, some services
+such as the processing of particular languages may be unavailable
+whatsoever, and so forth. For instance, varied variants of the
 \pkg{PCRE} (versions 8.x or 10.x thereof)
 pattern matching libraries may be linked to
 during compilation. On Windows, there is a custom implementation
@@ -234,7 +248,8 @@ optional.
 
 
 %
-% A call to \code{extSoftVersion()} reports on the versions of third-party software  used by \proglang{R}.
+% A call to \code{extSoftVersion()} reports on the versions of
+% third-party software  used by \proglang{R}.
 % some resources might not be unavailable/not installed
 % resources (e.g., locales) may be fetched by means of different IDs
 % not necessarily the fastest
@@ -298,7 +313,8 @@ but \code{x} marked as natively-encoded (CP-1250 in this case):
 
 
 In order to overcome such portability problems, in 2013 I have developed
-the \pkg{stringi} package (pronounced ``stringy'', IPA \textipa{[{stringi}]}).
+the \pkg{stringi} package (pronounced ``stringy'',
+IPA \textipa{[{stringi}]}).
 Its API has been designed so as to be compatible and consistent with that
 of \pkg{stringr}'s, which has already proven effective and convenient.
 All the functions have been written from scratch to
@@ -313,9 +329,11 @@ confirmed itself as robust,  production quality software.
 Interestingly, from version 1.0, \pkg{stringr} has been rewritten as a
 set of wrappers around \pkg{stringi} instead of base \proglang{R} routines;
 % \pkg{stringr} currently exports length(ls("package:stringr")) objects
-it aims to be more beginner-friendly, see \cite[Chapter~14]{GrolemundWickham2017:rdatascience}.
+it aims to be more beginner-friendly,
+see \cite[Chapter~14]{GrolemundWickham2017:rdatascience}.
 On the other hand, \pkg{stringi} provides many more
-functions (250 vs.~52); some of them are
+functions (250
+vs.~52); some of them are
 more specialised or equipped with more control parameters
 to enable fine-tuning.
 This paper describes the facilities
@@ -411,20 +429,25 @@ useful in their daily activities.
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 \medskip
 What remains is set out as follows.
+Section~\ref{Sec:examples} gives some motivational examples
+that illustrate the importance of string processing in data preparation
+activities.
 Basic string operations such as substring extraction and concatenation
 are discussed in Section~\ref{Sec:basic}.
 Section~\ref{Sec:fixed} discusses searching for fixed substrings.
-Section~\ref{Sec:regex} details pattern matching with \pkg{ICU} regular expressions.
+Section~\ref{Sec:regex} details pattern matching with \pkg{ICU} regular
+expressions.
 Section~\ref{Sec:collator} deals with the locale-aware \pkg{ICU} Collator,
 suitable for natural language processing activities.
-Section~\ref{Sec:other} introduces other operations such as text boundary analysis
+Section~\ref{Sec:other} introduces other operations such as text boundary
+analysis
 or date-time formatting and parsing.
 Section~\ref{Sec:io} details on encoding conversion and detection
 as well as Unicode normalisation.
@@ -443,7 +466,7 @@ R> library("stringi")  # load and attach the package's namespace
 \end{Schunk}
 
 \noindent
-Here we describe \pkg{stringi} 1.5.2,
+Here we describe \pkg{stringi} 1.5.3,
 which has been built against the following version of the \pkg{ICU} library:
 %Moreover, for \pkg{stringr}~packageVersion("stringr")
 
@@ -458,7 +481,7 @@ R> cat(stri_info(short=TRUE))
 
 \begin{Schunk}
 \begin{Soutput}
-stringi_1.5.2 (en_AU.UTF-8; ICU4C 61.1 [bundle]; Unicode 10.0)
+stringi_1.5.3 (en_AU.UTF-8; ICU4C 61.1 [bundle]; Unicode 10.0)
 \end{Soutput}
 \end{Schunk}
 
@@ -467,22 +490,285 @@ stringi_1.5.2 (en_AU.UTF-8; ICU4C 61.1 [bundle]; Unicode 10.0)
 \pkg{stringi} is an open source project
 distributed under the terms of the BSD-3-clause license.
 Its most recent development snapshot is available through GitHub at
-\url{https://github.com/gagolews/stringi}. The bug- and feature request tracker
-can be accessed from \url{https://github.com/gagolews/stringi/issues}.
+\url{https://github.com/gagolews/stringi}. The bug- and feature request
+tracker can be accessed from
+\url{https://github.com/gagolews/stringi/issues}.
 Moreover, its homepage -- which includes a detailed documentation
 of the package's API -- is located at \url{https://stringi.gagolewski.com/}.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\section{Motivational example: Data preparation}\label{Sec:examples}
+
+Before going into technical details on the \pkg{stringi} package itself,
+let us first demonstrate that string processing is indeed a relevant
+part of the statistical analysis workflow.
+What follows is a short case study where we prepare a web-scraped
+data set for further processing.
+
+Assume we wish to gather and analyse
+climate data for major cities around the world based on information
+downloaded from \textit{Wikipedia}.
+For each location from a given list of settlements (e.g.,
+gathered from one of the pages linked under
+\url{https://en.wikipedia.org/wiki/Lists_of_cities}),
+we would like to harvest the relevant temperature and precipitation data.
+Without harm in generality, let us focus on the city of Melbourne,
+VIC, Australia.
+
+The parsing of the city's~\textit{Wikipedia} page
+can be done by means of the functions from the
+\pkg{xml2} \citep{xml2}
+and \pkg{rvest} \citep{rvest} packages.
+
+\begin{Schunk}
+\begin{Sinput}
+R> library("xml2")
+R> library("rvest")
+\end{Sinput}
+\end{Schunk}
+
+First, we load and parse the downloaded \proglang{HTML} file.
+
+\begin{Schunk}
+\begin{Sinput}
+R> # downloaded from https://en.wikipedia.org/wiki/Melbourne on 2020-09-17,
+R> # see https://github.com/gagolews/stringi/tree/master/datasets
+R> f <- read_html("20200917_wikipedia_melbourne.html")
+\end{Sinput}
+\end{Schunk}
+
+Second, we extract all \code{<table>} elements and gather them
+in a list of \proglang{HTML} nodes, \code{all\_tables}.
+We then extract the underlying raw text data and store them in a
+character vector named \code{text\_tables}.
+
+\begin{Schunk}
+\begin{Sinput}
+R> all_tables <- html_nodes(f, "table")
+R> text_tables <- sapply(all_tables, html_text)
+R> str(text_tables, nchar.max=65, vec.len=5, strict.width="wrap") # preview
+\end{Sinput}
+\begin{Soutput}
+chr [1:45] "MelbourneVictoriaFrom top, left to right: Flinde"| __truncated__
+   "Mean max temp\n Mean min temp\n Annual rainfal"| __truncated__ "This
+   section needs additional citations for veri"| __truncated__ "Climate data
+   for Melbourne Regional Office (1991"| __truncated__ "Country of Birth
+   (2016)[178]Birthplace[N 1]\nPop"| __truncated__ ...
+\end{Soutput}
+\end{Schunk}
+
+Most~\textit{Wikipedia} pages related to particular cities
+include a table labelled as ``Climate data''.
+We need to pinpoint it amongst all the other tables.
+For this, we will rely on \pkg{stringi}'s
+\code{stri\_detect\_} \code{fixed()} function that, in the configuration
+below, is used to extract the index of the relevant table.
+
+\begin{Schunk}
+\begin{Sinput}
+R> library("stringi")
+R> (idx <- which(stringi::stri_detect_fixed(text_tables, "climate data",
++    case_insensitive=TRUE, max_count=1)))
+\end{Sinput}
+\begin{Soutput}
+[1] 4
+\end{Soutput}
+\end{Schunk}
+
+Of course, the detailed description of all the facilities
+brought by \pkg{stringi} is covered in the sequel.
+In the meantime, let us use \pkg{rvest}'s \code{html\_table()}
+to convert the above table to a data frame object.
+
+
+\begin{Schunk}
+\begin{Sinput}
+R> (x <- html_table(all_tables[[idx]], fill=TRUE))
+\end{Sinput}
+\end{Schunk}
+
+\begin{Schunk}
+\begin{Soutput}
+   Climate data for Melbourne Regional Office (1991–2015)
+1                                                   Month
+2                                     Record high °C (°F)
+3                                    Average high °C (°F)
+4                                      Daily mean °C (°F)
+5                                     Average low °C (°F)
+6                                      Record low °C (°F)
+7                            Average rainfall mm (inches)
+8                              Average rainy days (≥ 1mm)
+9                 Average afternoon relative humidity (%)
+10                            Mean monthly sunshine hours
+11             Source: Bureau of Meteorology.[85][86][87]
+   Climate data for Melbourne Regional Office (1991–2015).1 ...
+1                                                       Jan ...
+2                                               45.6(114.1) ...
+3                                                27.0(80.6) ...
+4                                                21.6(70.9) ...
+5                                                16.1(61.0) ...
+6                                                 5.5(41.9) ...
+7                                                44.2(1.74) ...
+8                                                       5.6 ...
+9                                                        47 ...
+10                                                      279 ...
+11               Source: Bureau of Meteorology.[85][86][87] ...
+   Climate data for Melbourne Regional Office (1991–2015).3
+1                                                      Year
+2                                               46.4(115.5)
+3                                                20.8(69.4)
+4                                                16.2(61.2)
+5                                                11.6(52.9)
+6                                                −2.8(27.0)
+7                                              600.9(23.66)
+8                                                      90.6
+9                                                        51
+10                                                    2,191
+11               Source: Bureau of Meteorology.[85][86][87]
+\end{Soutput}
+\end{Schunk}
+
+It is evident that this object requires some significant
+cleansing and transforming before it can be subject
+to any statistical analyses.
+First, for the sake of convenience, let us convert it
+to a character matrix so that the processing of all cells can
+be vectorised
+(a matrix in \proglang{R} is just a single ``long'' vector,
+whereas a data frame is a list of many atomic vectors).
+
+\begin{Schunk}
+\begin{Sinput}
+R> x <- as.matrix(x)
+\end{Sinput}
+\end{Schunk}
+
+The \code{as.numeric()} function (which we would soon like to use)
+may find parsing the Unicode MINUS SIGN (U+2212, ``−'') difficult,
+therefore let us call the transliterator to replace it
+(and other potentially problematic characters) with its simpler equivalent:
+
+\begin{Schunk}
+\begin{Sinput}
+R> x[, ] <- stri_trans_general(x, "Publishing-Any; Any-ASCII")
+\end{Sinput}
+\end{Schunk}
+
+Note that it is the first row that in fact gives the column names.
+Moreover, the last row just gives the data source and hence may be removed.
+
+\begin{Schunk}
+\begin{Sinput}
+R> dimnames(x) <- list(x[, 1], x[1, ])  # row, column names
+R> x <- x[2:(nrow(x)-1), 2:ncol(x)]     # skip 1st/last row and 1st column
+R> x[, c(1, ncol(x))]  # example columns
+\end{Sinput}
+\begin{Soutput}
+                                        Jan           Year
+Record high °C (°F)                     "45.6(114.1)" "46.4(115.5)"
+Average high °C (°F)                    "27.0(80.6)"  "20.8(69.4)"
+Daily mean °C (°F)                      "21.6(70.9)"  "16.2(61.2)"
+Average low °C (°F)                     "16.1(61.0)"  "11.6(52.9)"
+Record low °C (°F)                      "5.5(41.9)"   "-2.8(27.0)"
+Average rainfall mm (inches)            "44.2(1.74)"  "600.9(23.66)"
+Average rainy days (>= 1mm)             "5.6"         "90.6"
+Average afternoon relative humidity (%) "47"          "51"
+Mean monthly sunshine hours             "279"         "2,191"
+\end{Soutput}
+\end{Schunk}
+
+Commas that are used as thousands separators (commas that are surrounded
+by digits) should be dropped:
+
+\begin{Schunk}
+\begin{Sinput}
+R> x[, ] <- stri_replace_all_regex(x, "(?<=\\d),(?=\\d)", "")
+\end{Sinput}
+\end{Schunk}
+
+The numbers and alternative units in parentheses are redundant,
+therefore these should be taken care of as well:
+
+\begin{Schunk}
+\begin{Sinput}
+R> x[, ] <- stri_replace_all_regex(x,
++    "(\\d+(?:\\.\\d+)?)\\(\\d+(?:\\.\\d+)?\\)", "$1")
+R> dimnames(x)[[1]] <- stri_replace_all_fixed(dimnames(x)[[1]],
++    c(" (°F)", " (inches)"), c("", ""), vectorise_all=FALSE)
+\end{Sinput}
+\end{Schunk}
+
+At last, \code{as.numeric()} can be used to interpret the all the strings
+as numbers:
+
+\begin{Schunk}
+\begin{Sinput}
+R> x <- structure(as.numeric(x), dim=dim(x), dimnames=dimnames(x))
+R> x[, c(1, 6, ncol(x))]  # example columns
+\end{Sinput}
+\begin{Soutput}
+                                          Jan   Jun   Year
+Record high °C                           45.6  22.4   46.4
+Average high °C                          27.0  15.1   20.8
+Daily mean °C                            21.6  11.7   16.2
+Average low °C                           16.1   8.2   11.6
+Record low °C                             5.5  -2.2   -2.8
+Average rainfall mm                      44.2  49.5  600.9
+Average rainy days (>= 1mm)               5.6   8.6   90.6
+Average afternoon relative humidity (%)  47.0  61.0   51.0
+Mean monthly sunshine hours             279.0 108.0 2191.0
+\end{Soutput}
+\end{Schunk}
+
+We now have a cleansed matrix at our disposal.
+We can, for instance, compute the monthly temperature ranges:
+
+\begin{Schunk}
+\begin{Sinput}
+R> x["Record high °C", -ncol(x)]-x["Record low °C", -ncol(x)]
+\end{Sinput}
+\begin{Soutput}
+ Jan  Feb  Mar  Apr  May  Jun  Jul  Aug  Sep  Oct  Nov  Dec
+40.1 41.9 38.9 33.4 29.8 24.6 26.1 28.6 31.9 36.8 38.4 39.3
+\end{Soutput}
+\end{Schunk}
+
+\noindent
+or average daily precipitation:
+
+\begin{Schunk}
+\begin{Sinput}
+R> sum(x["Average rainfall mm", -ncol(x)]) / 365.25
+\end{Sinput}
+\begin{Soutput}
+[1] 1.6463
+\end{Soutput}
+\end{Schunk}
+
+\noindent
+and so forth.
+
+For the climate data on other cities, very similar steps are
+needed -- the whole process of scraping and cleansing data
+can quite easily be automatised, perhaps with some minor adjustments.
+The above functions are not only convenient to use, but also efficient
+and portable across different platforms.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Basic string operations}\label{Sec:basic}
 
-
-In order to get started with string processing in the \proglang{R}
-environment, we should first emphasise that the language itself
-does not provide access to any classical scalar types.
+Let us proceed with a detailed description of the most important
+facilities in the \pkg{stringi} package.
+First and foremost, we should emphasise that the  \proglang{R} language
+itself does not provide access to any classical scalar types.
 Individual character strings are  wrapped around atomic vectors
 of type \code{character}:
 
@@ -517,9 +803,9 @@ For example, let's consider the following data frame:
 
 \begin{Schunk}
 \begin{Sinput}
-R> (birth_dates <- head(
-+      # see https://github.com/gagolews/stringi/tree/master/datasets
-+      read.csv(header=TRUE, comment="#", file="birth_dates.csv"), n=3))
+R> # see https://github.com/gagolews/stringi/tree/master/datasets
+R> (birth_dates <-
++    head(read.csv(header=TRUE, comment="#", file="birth_dates.csv"), n=3))
 \end{Sinput}
 \begin{Soutput}
                Name  BirthDate
@@ -539,7 +825,7 @@ using just a single function call:
 \begin{Schunk}
 \begin{Sinput}
 R> (birth_names <- stri_split_fixed(birth_dates$Name, " ",
-+      n=2, simplify=TRUE))
++    n=2, simplify=TRUE))
 \end{Sinput}
 \begin{Soutput}
      [,1]       [,2]
@@ -622,7 +908,8 @@ R> stri_isempty(x)
 \noindent
 Note that we distinguish between an empty character vector
 (\code{character(0)}, i.e., a zero-length sequence)
-and an empty string, i.e., a string of length 0 wrapped in a vector of length~1.
+and an empty string, i.e., a string of length 0 wrapped in a vector
+of length~1.
 
 \begin{Schunk}
 \begin{Sinput}
@@ -676,7 +963,8 @@ R> stri_length(c("你好", "\u200b\u200b\u200b\u200b", "123456"))
 % \end{CJK*}
 
 \noindent
-The first string (a greeting) consists of 2 Chinese characters (U+4F60, U+597D),
+The first string (a greeting) consists of 2 Chinese characters
+(U+4F60, U+597D),
 the second is comprised of 4 zero-width spaces, and the third one
 carries 6 ASCII digits. Here are their corresponding widths:
 
@@ -913,7 +1201,8 @@ R> stri_join_list(words, sep=",", collapse="; ")
 
 \noindent
 We shall see that such lists of strings
-are generated by \code{stri_sub_all()}, \code{stri_extract_all()}, and similar functions.
+are generated by \code{stri_sub_all()}, \code{stri_extract_all()},
+and similar functions.
 
 
 
@@ -1006,14 +1295,15 @@ R> stri_sub(y, -15)           # from 15th last to end
 
 
 \paragraph{\code{stri\_sub\_all()}.}
-The \code{stri_sub()}  function is of course vectorised with respect to all its arguments
+The \code{stri_sub()}  function is of course vectorised with respect
+to all its arguments
 (the character vector, \code{from}, and \code{to} or \code{length}).
 If one of the vectors is of smaller length than the other ones,
 the recycling rule is applied as usual. For instance:
 
 \begin{Schunk}
 \begin{Sinput}
-R> stri_sub(y, c(1, 12, 18), length=4)  # different substrings of one string
+R> stri_sub(y, c(1, 12, 18), length=4) # different substrings of one string
 \end{Sinput}
 \begin{Soutput}
 [1] "spam" "spam" "spam"
@@ -1026,7 +1316,7 @@ R> stri_sub(x[c(1, 2, 4)], from=-3)    # same substrings of different strings
 \end{Soutput}
 \begin{Sinput}
 R> stri_sub(x[c(1, 2, 4)],
-+      c(-4, -2, -5))  # different substrings of different strings
++    c(-4, -2, -5))  # different substrings of different strings
 \end{Sinput}
 \begin{Soutput}
 [1] "spam"  "on"    "usage"
@@ -1041,8 +1331,8 @@ from all the strings provided:
 \begin{Schunk}
 \begin{Sinput}
 R> (z <- stri_sub_all(x[c(1, 2, 4)],
-+      from=  list(c(1, 3, 4), -2, c(1, 4)),
-+      length=list(1,           2, c(4, 3))))
++    from=  list(c(1, 3, 4), -2, c(1, 4)),
++    length=list(1,           2, c(4, 3))))
 \end{Sinput}
 \begin{Soutput}
 [[1]]
@@ -1056,7 +1346,8 @@ R> (z <- stri_sub_all(x[c(1, 2, 4)],
 \end{Soutput}
 \end{Schunk}
 
-As the number of substrings to extract from each string might vary, the result is a list
+As the number of substrings to extract from each string might vary,
+the result is a list
 of character strings. These may all be concatenated by means of the
 above-mentioned \code{stri_join_list()} function.
 
@@ -1213,14 +1504,14 @@ string:
 \begin{Schunk}
 \begin{Sinput}
 R> stri_sub_replace(c("abcde", "ABCDE"),
-+      from=c(2, 4), length=c(1, 2), replacement=c("X", "Y"))
++    from=c(2, 4), length=c(1, 2), replacement=c("X", "Y"))
 \end{Sinput}
 \begin{Soutput}
 [1] "aXcde" "ABCY"
 \end{Soutput}
 \begin{Sinput}
 R> stri_sub_replace("abcde",
-+      from=c(2, 4), length=1, replacement=c("X", "Y"))
++    from=c(2, 4), length=1, replacement=c("X", "Y"))
 \end{Sinput}
 \begin{Soutput}
 [1] "aXcde" "abcYe"
@@ -1234,22 +1525,22 @@ multiple substrings within each component of a character vector:
 \begin{Schunk}
 \begin{Sinput}
 R> stri_sub_replace_all(c("abcde", "ABCDE"),
-+      from=c(2, 4), length=1, replacement=c("X", "Y"))
++    from=c(2, 4), length=1, replacement=c("X", "Y"))
 \end{Sinput}
 \begin{Soutput}
 [1] "aXcYe" "AXCYE"
 \end{Soutput}
 \begin{Sinput}
 R> stri_sub_replace_all("abcde",
-+      from=c(2, 4), length=1, replacement=c("X", "Y"))
++    from=c(2, 4), length=1, replacement=c("X", "Y"))
 \end{Sinput}
 \begin{Soutput}
 [1] "aXcYe"
 \end{Soutput}
 \begin{Sinput}
 R> stri_sub_replace_all(c("abcde", "ABCDE"),
-+      from=list(c(2, 4), c(1, 3)), length=list(1, c(1, 2)),
-+      replacement=list("Z", c("XX", "YYYYY")))
++    from=list(c(2, 4), c(1, 3)), length=list(1, c(1, 2)),
++    replacement=list("Z", c("XX", "YYYYY")))
 \end{Sinput}
 \begin{Soutput}
 [1] "aZcZe"     "XXBYYYYYE"
@@ -1286,7 +1577,7 @@ R> print(y3)                            # y3 has been changed
 
 
 
-\clearpage
+% \clearpage
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1316,7 +1607,7 @@ operator or the \code{stri\_cmp\_eq()} function.
 
 \begin{Schunk}
 \begin{Sinput}
-R> "actg" %s===% c("ACTG", "actg", "act", NA)  # recycling rule, etc.
+R> "actg" %s===% c("ACTG", "actg", "act", NA)  # recycling rule
 \end{Sinput}
 \begin{Soutput}
 [1] FALSE  TRUE FALSE    NA
@@ -1469,11 +1760,11 @@ R> stri_count_fixed(c("abc", "def", "ghi"), c("a", "z", "h"))
 \begin{Schunk}
 \begin{Sinput}
 R> (A <- matrix(
-+      do.call(stri_paste,
-+          expand.grid(
-+              c("a", "b", "c"), c("a", "b", "c"), c("a", "b", "c")
-+          )),
-+      nrow=3))
++    do.call(stri_paste,
++      expand.grid(
++        c("a", "b", "c"), c("a", "b", "c"), c("a", "b", "c")
++      )),
++    nrow=3))
 \end{Sinput}
 \begin{Soutput}
      [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9]
@@ -1588,8 +1879,8 @@ R> mapply(stri_count_fixed, At.df, c("a", "b", "c"))
 R> x <- c("aaa", "bbb", "ccc", "abc", "cba", "aab", "bab", "acc")
 R> y <- c("a", "b", "c")
 R> structure(
-+      outer(x, y, stri_count_fixed),
-+      dimnames=list(x, y)  # add row and column names
++    outer(x, y, stri_count_fixed),
++    dimnames=list(x, y)  # add row and column names
 +  )
 \end{Sinput}
 \begin{Soutput}
@@ -1633,7 +1924,7 @@ Table~\ref{Tab:fixed_opts} gives the list of available options.
 
 
 
-First, we may turn on the simplistic\footnote{Which is not suitable
+First, we may switch on the simplistic\footnote{Which is not suitable
 for real-world NLP tasks, as it assumes
 that changing the case of a single code point always produces one and only
 one item;
@@ -1684,7 +1975,10 @@ R> stri_count_fixed("acatgacaca", "aca", overlap=TRUE)
 case-insensitive matching (defaults to \code{FALSE}) \\
 \midrule
 \code{overlap} & logical; whether to enable the detection of overlapping
-matches (defaults to \code{FALSE}) \\
+matches (defaults to \code{FALSE});
+available in \code{stri\_extract\_all\_fixed()},
+\code{stri\_locate\_all\_fixed()}, and \code{stri\_count\_fixed()}
+\\
 \bottomrule
 \end{tabularx}
 
@@ -1827,7 +2121,7 @@ last pattern match:
 
 \begin{Schunk}
 \begin{Sinput}
-R> x <- c("aga", "actg", NA, "agggAGAGAgaGAtcga", "agagagaga")
+R> x <- c("aga", "actg", NA, "ggAGAGAgaGAca", "agagagaga")
 R> stri_locate_first_fixed(x, "aga")
 \end{Sinput}
 \begin{Soutput}
@@ -1900,7 +2194,7 @@ asks for overlapping, case insensitive matches:
 \begin{Schunk}
 \begin{Sinput}
 R> stri_locate_all_fixed(x, "aga", omit_no_match=TRUE,
-+      overlap=TRUE, case_insensitive=TRUE)
++    overlap=TRUE, case_insensitive=TRUE)
 \end{Sinput}
 \begin{Soutput}
 [[1]]
@@ -1916,10 +2210,10 @@ R> stri_locate_all_fixed(x, "aga", omit_no_match=TRUE,
 
 [[4]]
      start end
-[1,]     5   7
-[2,]     7   9
-[3,]     9  11
-[4,]    11  13
+[1,]     3   5
+[2,]     5   7
+[3,]     7   9
+[4,]     9  11
 
 [[5]]
      start end
@@ -1947,14 +2241,14 @@ R> (res <- stri_extract_first_fixed(x, "aga", case_insensitive=TRUE))
 \end{Soutput}
 \begin{Sinput}
 R> identical(res, stri_sub(x,
-+      stri_locate_first_fixed(x, "aga", case_insensitive=TRUE)))
++    stri_locate_first_fixed(x, "aga", case_insensitive=TRUE)))
 \end{Sinput}
 \begin{Soutput}
 [1] TRUE
 \end{Soutput}
 \begin{Sinput}
 R> (res <- stri_extract_all_fixed(x, "aga",
-+          overlap=TRUE, case_insensitive=TRUE, omit_no_match=TRUE))
++    overlap=TRUE, case_insensitive=TRUE, omit_no_match=TRUE))
 \end{Sinput}
 \begin{Soutput}
 [[1]]
@@ -1974,8 +2268,8 @@ character(0)
 \end{Soutput}
 \begin{Sinput}
 R> identical(res, stri_sub_all(x,
-+      stri_locate_all_fixed(x, "aga",
-+          omit_no_match=TRUE, overlap=TRUE, case_insensitive=TRUE)))
++    stri_locate_all_fixed(x, "aga",
++      omit_no_match=TRUE, overlap=TRUE, case_insensitive=TRUE)))
 \end{Sinput}
 \begin{Soutput}
 [1] TRUE
@@ -1992,26 +2286,23 @@ replacement string, we can refer to \code{stri\_replace()}:
 
 \begin{Schunk}
 \begin{Sinput}
-R> x <- c("aga", "actg", NA, "agggAGAGAgaGAtcga", "agagagaga")
+R> x <- c("aga", "actg", NA, "ggAGAGAgaGAca", "agagagaga")
 R> stri_replace_first_fixed(x, "aga", "~", case_insensitive=TRUE)
 \end{Sinput}
 \begin{Soutput}
-[1] "~"               "actg"            NA                "aggg~GAgaGAtcga"
-[5] "~gagaga"
+[1] "~"           "actg"        NA            "gg~GAgaGAca" "~gagaga"
 \end{Soutput}
 \begin{Sinput}
 R> stri_replace_last_fixed(x, "aga", "~", case_insensitive=TRUE)
 \end{Sinput}
 \begin{Soutput}
-[1] "~"               "actg"            NA                "agggAGAGAg~tcga"
-[5] "agagag~"
+[1] "~"           "actg"        NA            "ggAGAGAg~ca" "agagag~"
 \end{Soutput}
 \begin{Sinput}
 R> stri_replace_all_fixed(x, "aga", "~", case_insensitive=TRUE)
 \end{Sinput}
 \begin{Soutput}
-[1] "~"             "actg"          NA              "aggg~G~GAtcga"
-[5] "~g~ga"
+[1] "~"         "actg"      NA          "gg~G~GAca" "~g~ga"
 \end{Soutput}
 \end{Schunk}
 
@@ -2028,8 +2319,8 @@ Compare the following:
 \begin{Schunk}
 \begin{Sinput}
 R> stri_replace_all_fixed("The quick brown fox jumped over the lazy dog.",
-+      c("quick", "brown",      "fox", "lazy",    "dog"),
-+      c("slow",  "yellow-ish", "hen", "spamity", "lama"))
++    c("quick", "brown",      "fox", "lazy",    "dog"),
++    c("slow",  "yellow-ish", "hen", "spamity", "lama"))
 \end{Sinput}
 \begin{Soutput}
 [1] "The slow brown fox jumped over the lazy dog."
@@ -2040,9 +2331,9 @@ R> stri_replace_all_fixed("The quick brown fox jumped over the lazy dog.",
 \end{Soutput}
 \begin{Sinput}
 R> stri_replace_all_fixed("The quick brown fox jumped over the lazy dog.",
-+      c("quick", "brown",      "fox", "lazy", "dog"),
-+      c("slow",  "yellow-ish", "hen", "spamity", "lama"),
-+      vectorise_all=FALSE)
++    c("quick", "brown",      "fox", "lazy", "dog"),
++    c("slow",  "yellow-ish", "hen", "spamity", "lama"),
++    vectorise_all=FALSE)
 \end{Sinput}
 \begin{Soutput}
 [1] "The slow yellow-ish hen jumped over the spamity lama."
@@ -2052,13 +2343,15 @@ R> stri_replace_all_fixed("The quick brown fox jumped over the lazy dog.",
 \noindent
 Here, for every string in the \textit{haystack}, we observe the vectorisation
 \textit{independently} over the \textit{needles} and replacement strings.
-Each occurrence of the 1st needle is substituted with the 1st replacement string,
-then the search is repeated for the 2nd needle in order to replace it with the 2nd corresponding string, and so forth.
+Each occurrence of the 1st needle is substituted with the 1st replacement
+string, then the search is repeated for the 2nd needle in order to replace
+it with the 2nd corresponding string, and so forth.
 
 
 \paragraph{Splitting.}
 To  split each element in the \textit{haystack} into substrings,
-where the \textit{needles} define the delimiters that separate the inputs into tokens,
+where the \textit{needles} define the delimiters that separate
+the inputs into tokens,
 we call \code{stri\_split()}:
 
 \begin{Schunk}
@@ -2084,7 +2377,8 @@ R> stri_split_fixed(x, ",")
 \end{Soutput}
 \end{Schunk}
 
-The result is a list of character vectors, as each string in the \textit{haystack}
+The result is a list of character vectors, as each string
+in the \textit{haystack}
 might be split into a possibly different number of tokens.
 
 There are also options to omit empty strings from the resulting vectors,
@@ -2140,23 +2434,26 @@ character(0)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\clearpage
+
 \section{Regular expressions}\label{Sec:regex}
 
 Regular expressions (\textit{regex}es) provide us with a concise
 grammar for defining systematic patterns which can be sought in character
 strings, in particular:
 \begin{enumerate}
-   \item specific substrings,
-   \item emojis of any kind,
-   \item standalone sequences of lower-case Latin letters (``words''),
-   \item substrings that can be interpreted as real numbers
-   (with or without fractional part, also in scientific notation),
-   \item telephone numbers,
-   \item email addresses, or
-   \item URLs.
+  \item specific substrings,
+  \item emojis of any kind,
+  \item standalone sequences of lower-case Latin letters (``words''),
+  \item substrings that can be interpreted as real numbers
+  (with or without fractional part, also in scientific notation),
+  \item telephone numbers,
+  \item email addresses, or
+  \item URLs.
 \end{enumerate}
 Theoretically, the concept of matching regular patterns
-dates back to the so-called regular languages and finite state automata \citep{kleene},
+dates back to the so-called regular languages and finite state
+automata \citep{kleene},
 see also \citep{hopcroftullman,automata}.
 Regexes in the form as we know today have already been present
 in one of the pre-Unix implementations of the command-line text
@@ -2166,19 +2463,26 @@ Base  \proglang{R} gives access to two different regex matching engines
 (via functions such as \code{gregexpr()} and \code{regexec()},
 see Table~\ref{Tab:oldstringr}):
 \begin{itemize}
-\item {ERE}\footnote{Via the \pkg{TRE} library (\url{https://github.com/laurikari/tre/}).} (\textit{extended regular expressions} that conform to the \pkg{POSIX.2-1992} standard);
+\item {ERE}\footnote{Via the \pkg{TRE} library
+(\url{https://github.com/laurikari/tre/}).}
+(\textit{extended regular expressions} that conform
+to the \pkg{POSIX.2-1992} standard);
 used by default,
-\item {PCRE}\footnote{Via the \pkg{PCRE2} library (\url{https://www.pcre.org/}).} (\textit{\proglang{Perl}-compatible regular expressions}),
+\item {PCRE}\footnote{Via the \pkg{PCRE2}
+library (\url{https://www.pcre.org/}).}
+(\textit{\proglang{Perl}-compatible regular expressions}),
 in use if \code{perl = TRUE} is set.
 \end{itemize}
-Other matchers are implemented in the \pkg{ore} (via the \pkg{Onigmo} library)
-and \pkg{re2r} (\pkg{RE2}) packages.
+Other matchers are implemented in the \pkg{ore}
+(\citealp{ore}; via the \pkg{Onigmo} library)
+and \pkg{re2r} (\citealp{re2r}; \pkg{RE2}) packages.
 % https://cran.r-project.org/web/packages/ore/index.html
 % https://github.com/qinwf/re2r
 
 
 \pkg{Stringi}, on the other hand, provides access to the regex engine
-implemented in \pkg{ICU}, which was inspired by  \code{java.util.regex}
+implemented in \pkg{ICU}, which was inspired
+by \proglang{Java}'s \pkg{util.regex}
 in \pkg{JDK 1.4}. Their syntax is mostly compatible with that of \pkg{PCRE},
 although certain advanced facets may not be supported (e.g., recursive
 patters). On the other hand, \pkg{ICU} regexes fully conform to the
@@ -2275,20 +2579,20 @@ First, let's note that the following characters have special
 meaning to the regex engine:
 \[
 \text{
-   \texttt{.}\quad
-   \textbackslash{}\quad
-   \texttt{|}\quad
-   \texttt{(}\quad
-   \texttt{)}\quad
-   \texttt{[}\quad
+  \texttt{.}\quad
+  \textbackslash{}\quad
+  \texttt{|}\quad
+  \texttt{(}\quad
+  \texttt{)}\quad
+  \texttt{[}\quad
 %    \texttt{]}
-   \texttt{\{}\quad
-   \texttt{\}}\quad
-   \texttt{\^{}}\quad
-   \texttt{\$}\quad
-   \texttt{*}\quad
-   \texttt{+}\quad
-   \texttt{?}\quad
+  \texttt{\{}\quad
+  \texttt{\}}\quad
+  \texttt{\^{}}\quad
+  \texttt{\$}\quad
+  \texttt{*}\quad
+  \texttt{+}\quad
+  \texttt{?}\quad
 }
 \]
 
@@ -2307,7 +2611,8 @@ R> stri_count_regex(x, "spam")
 
 However, this time the case insensitive mode fully
 supports Unicode matching\footnote{%
-This does not mean, though, that it considers canonically equivalent strings as equal,
+This does not mean, though, that it considers canonically
+equivalent strings as equal,
 see Section~\ref{Sec:Equivalence} for discussion and a workaround.}:
 % matching strings may be of different lengths.
 % stri_detect_regex("a\u0328", "ą")
@@ -2323,7 +2628,8 @@ R> stri_detect_regex("groß", "GROSS", case_insensitive=TRUE)
 \end{Schunk}
 
 If we wish to make a special character part of a regular expression --
-so that it is treated literally -- we have to escape it with  a backslash, ``\textbackslash''. Yet, the backlash itself
+so that it is treated literally -- we have to escape it with  a backslash,
+``\textbackslash''. Yet, the backlash itself
 has a special meaning to \proglang{R}, see \code{?Quotes},
 therefore it needs to be preceded with another backslash.
 
@@ -2437,12 +2743,12 @@ The following characters, if used within square brackets, may be treated
 non-literally:
 \[
 \text{
-   \textbackslash{}\quad
-   \texttt{[}\quad
-   \texttt{]}\quad
-   \texttt{\^{}}\quad
-    \texttt{{}-{}}\quad
-   \texttt{\&}\quad
+  \textbackslash{}\quad
+  \texttt{[}\quad
+  \texttt{]}\quad
+  \texttt{\^{}}\quad
+  \texttt{{}-{}}\quad
+  \texttt{\&}\quad
 }
 \]
 Therefore, to include them as-is in a character set, the
@@ -2733,7 +3039,7 @@ that are ignored by the regex parser:
 \begin{Schunk}
 \begin{Sinput}
 R> stri_extract_all_regex(x,
-+     "(?# match 'sp' or 'h')(sp|h)(?# and 'am')am|(?# or match 'egg')egg")
++    "(?# match 'sp' or 'h')(sp|h)(?# and 'am')am|(?# or match 'egg')egg")
 \end{Sinput}
 \begin{Soutput}
 [[1]]
@@ -2748,11 +3054,11 @@ subfragments thereof may sometimes be more readable:
 \begin{Schunk}
 \begin{Sinput}
 R> stri_extract_all_regex(x,
-+      stri_paste(
-+              "(sp|h)",   # match either 'sp' or 'h'
-+              "am",       # followed by 'am'
-+          "|",            # ... or ...
-+              "egg"       # just match 'egg'
++    stri_paste(
++        "(sp|h)",   # match either 'sp' or 'h'
++        "am",       # followed by 'am'
++      "|",            # ... or ...
++        "egg"       # just match 'egg'
 +  ))
 \end{Sinput}
 \begin{Soutput}
@@ -2807,9 +3113,9 @@ as few occurrences as possible (to still get a match).
 \begin{Sinput}
 R> x <- "sp(AM)(maps)(SP)am"
 R> stri_extract_all_regex(x,
-+      c("\\(.+\\)",    # [[1]] greedy
-+        "\\(.+?\\)",   # [[2]] lazy
-+        "\\([^)]+\\)"  # [[3]] greedy (but clever)
++    c("\\(.+\\)",    # [[1]] greedy
++      "\\(.+?\\)",   # [[2]] lazy
++      "\\([^)]+\\)"  # [[3]] greedy (but clever)
 +  ))
 \end{Sinput}
 \begin{Soutput}
@@ -2845,9 +3151,9 @@ they are needed.
 \begin{Schunk}
 \begin{Sinput}
 R> stri_extract_all_regex("12, 34.5, 678.901234, 37...629, ...",
-+      c("\\d+\\.\\d+",
-+        "\\d+\\.\\d+?",
-+        "\\d+(\\.\\d+)?"))
++    c("\\d+\\.\\d+",
++      "\\d+\\.\\d+?",
++      "\\d+(\\.\\d+)?"))
 \end{Sinput}
 \begin{Soutput}
 [[1]]
@@ -2953,7 +3259,7 @@ option is recommended.
 \begin{Schunk}
 \begin{Sinput}
 R> system.time(tryCatch({
-+      stri_detect_regex("a" %s*% 1000 %s+% "c", "(a+)+b", time_limit=1e5)
++    stri_detect_regex("a" %s*% 1000 %s+% "c", "(a+)+b", time_limit=1e5)
 +  }, error=function(e) cat("stopped.")))
 \end{Sinput}
 \begin{Soutput}
@@ -2961,7 +3267,7 @@ stopped.
 \end{Soutput}
 \begin{Soutput}
    user  system elapsed
- 22.257   0.000  22.263
+ 20.664   0.000  20.664
 \end{Soutput}
 \end{Schunk}
 
@@ -2973,18 +3279,21 @@ The \pkg{ICU} User Guide on Regular Expressions also recommends using
 which match as many times as possible but, contrary to
 the plain-greedy ones, never backtrack when they happen to consume too much data.
 
-See also the \pkg{re2r} package (a wrapper around the \pkg{RE2} library)
+See also the \pkg{re2r} package (a wrapper around the \pkg{RE2} library;
+\citealp{re2r})
 documentation and the references therein for discussion.
 
 
 
 
-
+\vbox{
 \subsection{Capture groups and references thereto}\label{Sec:Capturing}
 
 It turns out that round-bracketed subexpressions carries one additional
 characteristic: they form the so-called \textit{capture groups} that can
 be extracted separately or be referred to in other parts of the same regex.
+}
+
 
 
 \paragraph{Extracting capture group matches.}
@@ -3002,7 +3311,8 @@ R> stri_extract_all_regex(x, "(\\w+)='(.+?)'")
 \end{Sinput}
 \begin{Soutput}
 [[1]]
-[1] "name='Sir Launcelot'"   "quest='Seek the Grail'" "colour='blue'"
+[1] "name='Sir Launcelot'"   "quest='Seek the Grail'"
+[3] "colour='blue'"
 \end{Soutput}
 \begin{Sinput}
 R> stri_match_all_regex(x, "(\\w+)='(.+?)'")
@@ -3187,7 +3497,7 @@ their negated (``negative look behind/ahead'') versions.
 \begin{Schunk}
 \begin{Sinput}
 R> x <- "I like spam, spam, eggs, and spam."
-R> stri_extract_all_regex(x, "\\w+(?=[,.])")  # word that ends with ',' or '.'
+R> stri_extract_all_regex(x, "\\w+(?=[,.])") # word that ends with ',' or '.'
 \end{Sinput}
 \begin{Soutput}
 [[1]]
@@ -3484,7 +3794,7 @@ the corresponding
 (stable) ordering permutation.
 
 
-% contextual e.g. Slovak ch h c
+% contextual e.g., Slovak ch h c
 
 \begin{Schunk}
 \begin{Sinput}
@@ -3911,7 +4221,7 @@ R> stri_detect_coll("On je chladný", "chladny", strength=1, locale="sk_SK")
 
 In the sequel, we cover the functions that deal with
 text boundaries' detection, random string generation,
-date/time formatting and parsing, etc.
+date/time formatting and parsing, amongst others.
 
 
 % \color{blue}
@@ -3951,8 +4261,8 @@ For example:
 
 \begin{Schunk}
 \begin{Sinput}
-R> x <- "The\u00a0above-mentioned    features are very useful. " %s+%
-+       "My hovercraft is full of eels, spam, eggs, and spam."
+R> x <- "The\u00a0above-mentioned    features are useful. " %s+%
++    "My hovercraft is full of eels, eggs, and spam."
 R> stri_count_boundaries(x, type="sentence")  # number of sentences
 \end{Sinput}
 \begin{Soutput}
@@ -3962,13 +4272,13 @@ R> stri_count_boundaries(x, type="sentence")  # number of sentences
 R> stri_count_boundaries(x, type="word")  # number of word boundaries
 \end{Sinput}
 \begin{Soutput}
-[1] 41
+[1] 36
 \end{Soutput}
 \begin{Sinput}
 R> stri_count_words(x)                    # number of words themselves
 \end{Sinput}
 \begin{Soutput}
-[1] 17
+[1] 15
 \end{Soutput}
 \begin{Sinput}
 R> stri_extract_all_words(x)
@@ -3976,9 +4286,8 @@ R> stri_extract_all_words(x)
 \begin{Soutput}
 [[1]]
  [1] "The"        "above"      "mentioned"  "features"   "are"
- [6] "very"       "useful"     "My"         "hovercraft" "is"
-[11] "full"       "of"         "eels"       "spam"       "eggs"
-[16] "and"        "spam"
+ [6] "useful"     "My"         "hovercraft" "is"         "full"
+[11] "of"         "eels"       "eggs"       "and"        "spam"
 \end{Soutput}
 \end{Schunk}
 
@@ -3991,9 +4300,9 @@ R> stri_extract_all_words(x)
 
 The following functions can be useful when pretty-printing
 character strings or text on the console,
-dynamically generating reports (compare \pkg{knitr}'s
-\code{results = "{}asis"{}} chunk option), or creating text files
-(e.g., with \code{stri\_write\_lines()}, see Section~\ref{Sec:read_lines}).
+dynamically generating reports (e.g.,
+with \code{Sweave()} or \pkg{knitr}; see \citealp{knitr}), or creating text files
+(e.g., with \code{stri\_write\_lines()}; see Section~\ref{Sec:read_lines}).
 
 
 
@@ -4105,7 +4414,7 @@ for objects of type \code{str}.
 
 \begin{Schunk}
 \begin{Sinput}
-R> "value='%d'" %s$% 3               # equivalently: "value='%d'" %s$% list(3)
+R> "value='%d'" %s$% 3              # equivalently: "value='%d'" %s$% list(3)
 \end{Sinput}
 \begin{Soutput}
 [1] "value='3'"
@@ -4254,10 +4563,10 @@ R> stri_trans_general("groß© żółć La Niña köszönöm", "upper; latin-asc
 [1] "GROSS(C) ZOLC LA NINA KOSZONOM"
 \end{Soutput}
 \begin{Sinput}
-R> stri_trans_general("Let's go... -- that's what she said.", "any-publishing")
+R> stri_trans_general("Let's go... -- she said.", "any-publishing")
 \end{Sinput}
 \begin{Soutput}
-[1] "Let’s go… — that’s what she said."
+[1] "Let’s go… — she said."
 \end{Soutput}
 \end{Schunk}
 
@@ -4307,7 +4616,7 @@ is possible:
 \begin{Schunk}
 \begin{Sinput}
 R> stri_datetime_parse(x, "dd MMMM yyyy 'r., godz.' HH:mm:ss",
-+      locale="pl_PL", tz="Europe/Warsaw")
++    locale="pl_PL", tz="Europe/Warsaw")
 \end{Sinput}
 \begin{Soutput}
 [1] "2020-08-27 17:17:32 CEST"
@@ -4327,8 +4636,8 @@ templates can be converted with \code{stri_datetime_fstr()}:
 \begin{Schunk}
 \begin{Sinput}
 R> stri_datetime_parse(x,
-+      stri_datetime_fstr("%d %B %Y r., godz. %H:%M:%S"),
-+      locale="pl_PL", tz="Europe/Warsaw")
++    stri_datetime_fstr("%d %B %Y r., godz. %H:%M:%S"),
++    locale="pl_PL", tz="Europe/Warsaw")
 \end{Sinput}
 \begin{Soutput}
 [1] "2020-08-27 17:17:32 CEST"
@@ -4342,27 +4651,27 @@ Some more examples:
 
 \begin{Schunk}
 \begin{Sinput}
-R> stri_datetime_format(stri_datetime_now(),  # current date and time
-+      "datetime_full",                       # full format
-+      locale="de_AT", tz="Europe/Vienna")
+R> stri_datetime_format(stri_datetime_now(), # current date and time
++    "datetime_full",                        # full format
++    locale="de_AT", tz="Europe/Vienna")
 \end{Sinput}
 \begin{Soutput}
-[1] "Freitag, 4. September 2020 um 07:11:49 Mitteleuropäische Sommerzeit"
+[1] "Donnerstag, 17. September 2020 um 13:13:36 Mitteleuropäische Sommerzeit"
 \end{Soutput}
 \begin{Sinput}
 R> stri_datetime_format(
-+      stri_datetime_add(stri_datetime_now(), 1, "day"), # add 1 day to 'now'
-+      "datetime_relative_long",              # full format, relative to 'now'
-+      locale="en_NZ", tz="NZ")
++    stri_datetime_add(stri_datetime_now(), 1, "day"), # add 1 day to 'now'
++    "datetime_relative_long",              # full format, relative to 'now'
++    locale="en_NZ", tz="NZ")
 \end{Sinput}
 \begin{Soutput}
-[1] "tomorrow at 5:11:49 PM NZST"
+[1] "tomorrow at 11:13:36 PM NZST"
 \end{Soutput}
 \begin{Sinput}
 R> stri_datetime_format(
-+      stri_datetime_create(2020, 1:12, 1),   # vectorised w.r.t. all arguments
-+      "date_long",                           # date only
-+      locale="@calendar=hebrew")             # English locale, Hebrew calendar
++    stri_datetime_create(2020, 1:12, 1),   # vectorised w.r.t. all arguments
++    "date_long",                           # date only
++    locale="@calendar=hebrew")             # English locale, Hebrew calendar
 \end{Sinput}
 \begin{Soutput}
  [1] "4 Tevet 5780"    "6 Shevat 5780"   "5 Adar 5780"     "7 Nisan 5780"
@@ -4371,9 +4680,9 @@ R> stri_datetime_format(
 \end{Soutput}
 \begin{Sinput}
 R> stri_datetime_format(
-+      stri_datetime_create(2020, c(2, 8), c(4, 7)),
-+      "date_full",
-+      locale="ja_JP@calendar=japanese")      # Japanese locale and calendar
++    stri_datetime_create(2020, c(2, 8), c(4, 7)),
++    "date_full",
++    locale="ja_JP@calendar=japanese")      # Japanese locale and calendar
 \end{Sinput}
 \begin{Soutput}
 [1] "平成32年2月4日火曜日" "平成32年8月7日金曜日"
@@ -4422,14 +4731,14 @@ between 0 and 1{,}114{,}111 (or 0000${}_{16}$ and 10FFFF${}_{16}$
 in hexadecimal notation, see \url{https://www.unicode.org/charts/}).
 In particular, here are the counts of the code points in
 a few popular categories (compare Section~\ref{Sec:RegexIndividualChars}),
-such as letters, numbers, etc.
+such as letters, numbers, and the like.
 
 \begin{Schunk}
 \begin{Sinput}
 R> z <- c("\\p{L}", "\\p{Ll}", "\\p{Lu}", "\\p{N}", "\\p{P}", "\\p{S}",
-+         "\\w", "\\d", "\\s")
++    "\\w", "\\d", "\\s")
 R> structure(stri_count_regex(stri_enc_fromutf32(
-+      setdiff(1:0x10ffff, c(0xd800:0xf8ff))), z), names=z)
++    setdiff(1:0x10ffff, c(0xd800:0xf8ff))), z), names=z)
 \end{Sinput}
 \begin{Soutput}
  \\p{L} \\p{Ll} \\p{Lu}  \\p{N}  \\p{P}  \\p{S}     \\w     \\d     \\s
@@ -4594,7 +4903,7 @@ UTF-8 data.
 
 According to a report by W3Techs\footnote{See
 \url{https://w3techs.com/technologies/cross/character_encoding/ranking}.},
-as of 2020--09-04, 95.4\% of websites use UTF-8.
+as of 2020--09--17, 95.4\% of websites use UTF-8.
 Nevertheless, encountering other encodings is still quite likely.
 
 \paragraph{Reading and writing text files.}
@@ -4639,6 +4948,7 @@ First, we can read the resource in form of a raw-type vector:
 
 \begin{Schunk}
 \begin{Sinput}
+R> # see https://github.com/gagolews/stringi/tree/master/datasets
 R> x <- stri_read_raw("ES_latin1.txt")
 R> head(x)  # vector of type raw
 \end{Sinput}
@@ -4864,19 +5174,19 @@ For example, here are some timings of string concatenation:
 \begin{Sinput}
 R> x <- stri_rand_strings(length(LETTERS)*1000, 1000)
 R> microbenchmark::microbenchmark(
-+      join2=stri_join(LETTERS, x, sep="", collapse=", "),
-+      join3=stri_join(x, LETTERS, x, sep="", collapse=", "),
-+      r_paste2=paste(LETTERS, x, sep="", collapse=", "),
-+      r_paste3=paste(x, LETTERS, x, sep="", collapse=", ")
++    join2=stri_join(LETTERS, x, sep="", collapse=", "),
++    join3=stri_join(x, LETTERS, x, sep="", collapse=", "),
++    r_paste2=paste(LETTERS, x, sep="", collapse=", "),
++    r_paste3=paste(x, LETTERS, x, sep="", collapse=", ")
 +  )
 \end{Sinput}
 \begin{Soutput}
 Unit: milliseconds
      expr     min      lq    mean  median      uq     max neval
-    join2  40.822  41.308  54.693  42.604  81.871  94.722   100
-    join3  81.918  94.066  98.401  95.388 103.573 145.161   100
- r_paste2 108.930 111.723 129.644 114.045 161.575 189.563   100
- r_paste3 228.921 235.284 276.171 293.859 301.363 321.197   100
+    join2  37.713  39.040  52.593  40.208  78.734  98.048   100
+    join3  74.633  87.306  91.358  88.913  97.256 135.891   100
+ r_paste2  98.916 104.435 120.786 108.456 151.921 169.785   100
+ r_paste3 211.733 219.606 256.273 273.239 281.927 302.317   100
 \end{Soutput}
 \end{Schunk}
 
@@ -4887,23 +5197,23 @@ Another example -- timings of fixed pattern searching:
 R> x <- stri_rand_strings(100, 100000, "[actg]")
 R> y <- "acca"
 R> microbenchmark::microbenchmark(
-+      fixed=stri_locate_all_fixed(x, y),
-+      regex=stri_locate_all_regex(x, y),
-+      coll=stri_locate_all_coll(x, y),
-+      r_tre=gregexpr(y, x),
-+      r_pcre=gregexpr(y, x, perl=TRUE),
-+      r_fixed=gregexpr(y, x, fixed=TRUE)
++    fixed=stri_locate_all_fixed(x, y),
++    regex=stri_locate_all_regex(x, y),
++    coll=stri_locate_all_coll(x, y),
++    r_tre=gregexpr(y, x),
++    r_pcre=gregexpr(y, x, perl=TRUE),
++    r_fixed=gregexpr(y, x, fixed=TRUE)
 +  )
 \end{Sinput}
 \begin{Soutput}
 Unit: milliseconds
-    expr      min       lq     mean   median       uq      max neval
-   fixed   5.2353   5.3325   5.4448   5.3723   5.4856   6.8424   100
-   regex 121.0332 122.0588 122.9537 122.5455 123.4710 129.5061   100
-    coll 395.9836 397.9740 399.4649 398.9458 400.1369 414.9644   100
-   r_tre 134.5434 135.7514 136.7537 136.2900 137.2321 144.3329   100
-  r_pcre  83.3282  84.4817  85.2377  85.1256  85.6796  88.2810   100
- r_fixed  55.8149  56.2731  56.7070  56.5676  57.0615  61.2604   100
+    expr      min       lq     mean   median       uq     max neval
+   fixed   4.7318   4.9162   5.0106   5.0096   5.1076   5.515   100
+   regex 117.0966 119.6360 121.8881 121.3912 123.5901 143.964   100
+    coll 378.5757 385.3210 392.0872 392.3554 396.7838 425.230   100
+   r_tre 122.3811 125.4567 127.8202 127.6302 129.4380 138.540   100
+  r_pcre  75.6733  78.0173  79.1578  79.1838  80.0254  86.130   100
+ r_fixed  51.4335  52.7493  53.5762  53.6306  54.3305  57.827   100
 \end{Soutput}
 \end{Schunk}
 
@@ -4981,10 +5291,10 @@ Unit: milliseconds
 \bigskip
 Future work will involve the porting of \pkg{stringi} to different
 scientific/statistical computing environments, including \proglang{Python}
-with the \pkg{numpy} ecosystem,
-so as to provide Unicode-aware
+with the \pkg{NumPy} \citep{numpy} ecosystem,
+so as to provide more Unicode-aware
 alternatives to the vectorised text processing
-facilities from \pkg{pandas} \cite[Chap.~7]{pandas}.
+facilities from \code{numpy.char} and \pkg{pandas} \citep[Chap.~7]{pandas}.
 % PyICU
 Moreover, further extension of \pkg{stringi}'s API
 so as to  provide an even broader coverage of \pkg{ICU} services
