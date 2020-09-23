@@ -33,3 +33,4 @@
 ^stringi\.Rproj$
 ^Makefile
 ^stringi_.*\.tar\.gz$
+^CODE_OF_CONDUCT
