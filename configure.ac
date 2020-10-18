@@ -4,7 +4,7 @@
 
 ##### INIT ####################################################################
 
-AC_INIT(stringi, 1.4, marek@gagolewski.com)
+AC_INIT(stringi, 1.5, https://www.gagolewski.com)
 
 ICU_VERSION_NEEDED="55" # minimal version of ICU4C required to build stringi
 
