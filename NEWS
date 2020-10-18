@@ -4,17 +4,23 @@
 
 ## 1.5.4 (2020-XX-YY) **devel**
 
+* [DOCUMENTATION] A tutorial on stringi is now available at
+  https://stringi.gagolewski.com/_static/vignette/stringi.pdf
 
 * ... (to do) ..., for example:
     #25 (locate-capture groups),
     #31 (sub_index),
     #96 (split-backwards),
     #266 (width-emojis),
-    #401 (update ICU4c)
-    #405 (stri_sub match.length attrib)
+    #401 (update ICU4c),
+    #405 (stri_sub match.length attrib),
+    #408 (stri_trans_casefold)
 
 
 ## 1.5.3 (2020-09-04) **CRAN**
+
+* [DOCUMENTATION] stringi home page has moved to https://stringi.gagolewski.com
+  and now includes a comprehensive online manual.
 
 * [NEW FEATURE] #400: `%s$%` and `%stri$%` are now binary operators
   that call base R's `sprintf()`.

@@ -14,15 +14,15 @@ r:
 	Rscript -e 'roxygen2::roxygenise(roclets=c("rd", "collate", "namespace", "vignette"), load_code=roxygen2::load_installed)'
 	R CMD INSTALL . --configure-args='--disable-pkg-config --enable-gcc-debug --enable-gcc-pedantic' --html
 
-r-check: r
+check: r
 	Rscript -e 'devtools::check(cran=TRUE, remote=FALSE, manual=TRUE)'
 	make clean
 
-r-test: r
+test: r
 	Rscript -e 'options(width=120); source("devel/testthat/run_package_tests.R")'
 
 
-r-build:
+build:
 	#Rscript -e 'Rcpp::compileAttributes()'
 	Rscript -e 'roxygen2::roxygenise(roclets=c("rd", "collate", "namespace", "vignette"))'
 	R CMD INSTALL . --preclean
