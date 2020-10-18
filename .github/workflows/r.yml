@@ -19,5 +19,5 @@ jobs:
         sudo Rscript -e "install.packages(c('testthat', 'devtools'))"
     - name: Test and check R
       run: |
-        sudo make r-test
-        sudo make r-check
+        sudo make test
+        sudo make check
