@@ -4,10 +4,20 @@ What’s New in *stringi*
 1.5.4 (2020-XX-YY) **devel**
 ----------------------------
 
--  … (to do) …
+-  [DOCUMENTATION] A tutorial on stringi is now available at
+   https://stringi.gagolewski.com/_static/vignette/stringi.pdf
+
+-  … (to do) …, for example: #25 (locate-capture groups), #31
+   (sub_index), #96 (split-backwards), #266 (width-emojis), #401 (update
+   ICU4c), #405 (stri_sub match.length attrib), #408
+   (stri_trans_casefold), #406 (update manual)
 
 1.5.3 (2020-09-04) **CRAN**
 ---------------------------
+
+-  [DOCUMENTATION] stringi home page has moved to
+   https://stringi.gagolewski.com and now includes a comprehensive
+   online manual.
 
 -  [NEW FEATURE] #400: ``%s$%`` and ``%stri$%`` are now binary operators
    that call base R’s ``sprintf()``.
@@ -506,7 +516,7 @@ What’s New in *stringi*
    ``opts_fixed``, and ``opts_brkiter`` can now be supplied individually
    via ``...``. In other words, you may now simply call, e.g.,
    ``stri_detect_regex(str, pattern, case_insensitive=TRUE)`` instead of
-   ``stri_detect_regex(str, pattern,   opts_regex=stri_opts_regex(case_insensitive=TRUE))``.
+   ``stri_detect_regex(str, pattern,     opts_regex=stri_opts_regex(case_insensitive=TRUE))``.
 
 -  [NEW FEATURE] #110: Fixed pattern search engine’s settings can now be
    supplied via ``opts_fixed`` argument in ``stri_*_fixed()``, see

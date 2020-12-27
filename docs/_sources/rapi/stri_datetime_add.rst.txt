@@ -73,4 +73,3 @@ Examples
    stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units='years', locale='@calendar=hebrew')
 
    stri_datetime_add(stri_datetime_create(2016, 1, 31), 1, units='months')
-

@@ -186,25 +186,25 @@ The Unicode General Category property of a code point provides the most general 
 ``Zp``
    U+2029 PARAGRAPH SEPARATOR only.
 
-``C`` 
+``C``
    the union of Cc, Cf, Cs, Co, Cn.
 
-``L`` 
+``L``
    the union of Lu, Ll, Lt, Lm, Lo.
 
-``M`` 
+``M``
    the union of Mn, Mc, Me.
 
-``N`` 
+``N``
    the union of Nd, Nl, No.
 
-``P`` 
+``P``
    the union of Pc, Pd, Ps, Pe, Pi, Pf, Po.
 
-``S`` 
+``S``
    the union of Sm, Sc, Sk, So.
 
-``Z`` 
+``Z``
    the union of Zs, Zl, Zp
 
 Unicode Binary Properties
@@ -214,34 +214,34 @@ Each character may follow many Binary Properties at a time.
 
 Here is a comprehensive list of supported Binary Properties:
 
-``ALPHABETIC`` 
+``ALPHABETIC``
    alphabetic character.
 
 ``ASCII_HEX_DIGIT``
    a character matching the ``[0-9A-Fa-f]`` charclass.
 
-``BIDI_CONTROL`` 
+``BIDI_CONTROL``
    a format control which have specific functions in the Bidi (bidirectional text) Algorithm.
 
-``BIDI_MIRRORED`` 
+``BIDI_MIRRORED``
    a character that may change display in right-to-left text.
 
-``DASH`` 
+``DASH``
    a kind of a dash character.
 
 ``DEFAULT_IGNORABLE_CODE_POINT``
    characters that are ignorable in most text processing activities, e.g., <2060..206F, FFF0..FFFB, E0000..E0FFF>.
 
-``DEPRECATED`` 
+``DEPRECATED``
    a deprecated character according to the current Unicode standard (the usage of deprecated characters is strongly discouraged).
 
-``DIACRITIC`` 
+``DIACRITIC``
    a character that linguistically modifies the meaning of another character to which it applies.
 
-``EXTENDER`` 
+``EXTENDER``
    a character that extends the value or shape of a preceding alphabetic character, e.g., a length and iteration mark.
 
-``HEX_DIGIT`` 
+``HEX_DIGIT``
    a character commonly used for hexadecimal numbers, see also ``ASCII_HEX_DIGIT``.
 
 ``HYPHEN``

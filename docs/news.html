@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>What’s New in stringi &mdash; stringi 1.5.3 documentation</title>
+  <title>What’s New in stringi &mdash; stringi 1.5.4 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                1.5.3
+                1.5.4
               </div>
             
           
@@ -217,12 +217,20 @@
 <div class="section" id="xx-yy-devel">
 <h2>1.5.4 (2020-XX-YY) <strong>devel</strong><a class="headerlink" href="#xx-yy-devel" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>… (to do) …</p></li>
+<li><p>[DOCUMENTATION] A tutorial on stringi is now available at
+<a class="reference external" href="https://stringi.gagolewski.com/_static/vignette/stringi.pdf">https://stringi.gagolewski.com/_static/vignette/stringi.pdf</a></p></li>
+<li><p>… (to do) …, for example: #25 (locate-capture groups), #31
+(sub_index), #96 (split-backwards), #266 (width-emojis), #401 (update
+ICU4c), #405 (stri_sub match.length attrib), #408
+(stri_trans_casefold), #406 (update manual)</p></li>
 </ul>
 </div>
 <div class="section" id="cran">
 <h2>1.5.3 (2020-09-04) <strong>CRAN</strong><a class="headerlink" href="#cran" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
+<li><p>[DOCUMENTATION] stringi home page has moved to
+<a class="reference external" href="https://stringi.gagolewski.com">https://stringi.gagolewski.com</a> and now includes a comprehensive
+online manual.</p></li>
 <li><p>[NEW FEATURE] #400: <code class="docutils literal notranslate"><span class="pre">%s$%</span></code> and <code class="docutils literal notranslate"><span class="pre">%stri$%</span></code> are now binary operators
 that call base R’s <code class="docutils literal notranslate"><span class="pre">sprintf()</span></code>.</p></li>
 <li><p>[NEW FEATURE] #399: The <code class="docutils literal notranslate"><span class="pre">%s*%</span></code> and <code class="docutils literal notranslate"><span class="pre">%stri*%</span></code> operators can be
@@ -610,7 +618,7 @@ functions are now available: <code class="docutils literal notranslate"><span cl
 <code class="docutils literal notranslate"><span class="pre">opts_fixed</span></code>, and <code class="docutils literal notranslate"><span class="pre">opts_brkiter</span></code> can now be supplied individually
 via <code class="docutils literal notranslate"><span class="pre">...</span></code>. In other words, you may now simply call, e.g.,
 <code class="docutils literal notranslate"><span class="pre">stri_detect_regex(str,</span> <span class="pre">pattern,</span> <span class="pre">case_insensitive=TRUE)</span></code> instead of
-<code class="docutils literal notranslate"><span class="pre">stri_detect_regex(str,</span> <span class="pre">pattern,</span>&#160;&#160; <span class="pre">opts_regex=stri_opts_regex(case_insensitive=TRUE))</span></code>.</p></li>
+<code class="docutils literal notranslate"><span class="pre">stri_detect_regex(str,</span> <span class="pre">pattern,</span>&#160;&#160;&#160;&#160; <span class="pre">opts_regex=stri_opts_regex(case_insensitive=TRUE))</span></code>.</p></li>
 <li><p>[NEW FEATURE] #110: Fixed pattern search engine’s settings can now be
 supplied via <code class="docutils literal notranslate"><span class="pre">opts_fixed</span></code> argument in <code class="docutils literal notranslate"><span class="pre">stri_*_fixed()</span></code>, see
 <code class="docutils literal notranslate"><span class="pre">stri_opts_fixed()</span></code>. A simple (not suitable for natural language

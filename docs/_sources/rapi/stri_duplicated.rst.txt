@@ -87,4 +87,3 @@ Examples
 
    stri_duplicated(c('gro\u00df', 'GROSS', 'Gro\u00df', 'Gross'), strength=1)
    duplicated(c('gro\u00df', 'GROSS', 'Gro\u00df', 'Gross'))
-

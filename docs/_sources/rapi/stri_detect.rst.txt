@@ -105,4 +105,3 @@ Examples
       '^[0-9]+$', max_count=2)
    stri_detect_regex(c('abc', 'def', '123', 'ghi', '456', '789', 'jkl'),
       '^[0-9]+$', negate=TRUE, max_count=3)
-

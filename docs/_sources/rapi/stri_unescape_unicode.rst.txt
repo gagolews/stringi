@@ -16,9 +16,9 @@ Usage
 Arguments
 ~~~~~~~~~
 
-+---------+------------------+
-| ``str`` | character vector |
-+---------+------------------+
+======= ================
+``str`` character vector
+======= ================
 
 Details
 ~~~~~~~
@@ -47,4 +47,3 @@ Examples
 .. code-block:: r
 
    stri_unescape_unicode('a\\u0105!\\u0032\\n')
-

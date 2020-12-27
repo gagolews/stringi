@@ -16,9 +16,9 @@ Usage
 Arguments
 ~~~~~~~~~
 
-+---------+-----------------------------------+
-| ``str`` | character vector to be aggregated |
-+---------+-----------------------------------+
+======= =================================
+``str`` character vector to be aggregated
+======= =================================
 
 Details
 ~~~~~~~
@@ -34,7 +34,7 @@ Returns an integer vector with the following named elements:
 
 #. ``Lines`` - number of lines (number of non-missing strings in the vector);
 
-#. ``LinesNEmpty`` - number of lines with at least one non-\ ``WHITE_SPACE`` character;
+#. ``LinesNEmpty`` - number of lines with at least one non-``WHITE_SPACE`` character;
 
 #. ``Chars`` - total number of Unicode code points detected;
 
@@ -57,4 +57,3 @@ Examples
           'Cras vel lorem. Etiam pellentesque aliquet tellus.',
           '')
    stri_stats_general(s)
-

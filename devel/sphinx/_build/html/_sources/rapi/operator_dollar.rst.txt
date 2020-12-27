@@ -47,4 +47,3 @@ Examples
    "%s='%d'" %s$% list("value", 1:3)
    "%s='%d'" %s$% list(c("a", "b", "c"), 1)
    "%s='%d'" %s$% list(c("a", "b", "c"), 1:3)
-

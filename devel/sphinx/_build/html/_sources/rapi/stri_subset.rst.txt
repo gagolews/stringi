@@ -104,4 +104,3 @@ Examples
    x <- c('stringi R', '123', 'ID456', '')
    stri_subset_regex(x, '^[0-9]+$', negate=TRUE) <- NA
    print(x)
-

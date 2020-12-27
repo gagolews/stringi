@@ -34,9 +34,9 @@ Usage
 Arguments
 ~~~~~~~~~
 
-+---------+--------------------------------+
-| ``str`` | character vector to be encoded |
-+---------+--------------------------------+
+======= ==============================
+``str`` character vector to be encoded
+======= ==============================
 
 Details
 ~~~~~~~
@@ -93,4 +93,3 @@ Examples
 
    stri_trans_nfd('\u0105') # a with ogonek -> a, ogonek
    stri_trans_nfkc('\ufdfa') # 1 codepoint -> 18 codepoints
-

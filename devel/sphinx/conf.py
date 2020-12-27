@@ -28,7 +28,7 @@ copyright = '2020, Marek Gagolewski'
 author = 'Marek Gagolewski'
 
 # The full version, including alpha/beta/rc tags
-version = '1.5.3'  # TODO: automate
+version = '1.5.4'  # TODO: automate
 release = version
 
 github_project_url = "https://github.com/gagolews/stringi/"
@@ -48,7 +48,7 @@ extensions = [
     #'sphinx.ext.todo',
     #'sphinx.ext.coverage',
     'sphinx.ext.mathjax',
-    'sphinxcontrib.bibtex',
+    #'sphinxcontrib.bibtex',
     'sphinx_rtd_theme',
     #'numpydoc'
     #'sphinx.ext.viewcode',
@@ -102,3 +102,6 @@ html_css_files = ['css/custom.css']
 #doctest_global_setup = plot_pre_code
 
 pygments_style = 'colorful'
+
+# bibtex_bibfiles = ['bibliography.bib']
+# bibtex_default_style = 'alpha'

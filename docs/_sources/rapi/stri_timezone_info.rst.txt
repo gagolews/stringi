@@ -65,4 +65,3 @@ Examples
    sapply(c('short', 'long', 'generic_short', 'generic_long',
             'gmt_short', 'gmt_long', 'common', 'generic_location'),
      function(e) stri_timezone_info('Europe/London', display_type=e))
-

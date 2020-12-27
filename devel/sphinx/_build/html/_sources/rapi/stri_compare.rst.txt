@@ -106,4 +106,3 @@ Examples
    # phonebook collation
    stri_cmp_equiv('G\u00e4rtner', 'Gaertner', locale='de_DE@collation=phonebook', strength=1L)
    stri_cmp_equiv('G\u00e4rtner', 'Gaertner', locale='de_DE', strength=1L)
-

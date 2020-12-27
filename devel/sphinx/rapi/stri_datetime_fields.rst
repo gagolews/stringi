@@ -77,4 +77,3 @@ Examples
    stri_datetime_symbols(locale='@calendar=hebrew')$Month[
       stri_datetime_fields(stri_datetime_now(), locale='@calendar=hebrew')$Month
    ]
-

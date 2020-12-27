@@ -22,9 +22,9 @@ Usage
 Arguments
 ~~~~~~~~~
 
-+--------+-------------------------------------+
-| ``tz`` | single string; time zone identifier |
-+--------+-------------------------------------+
+====== ===================================
+``tz`` single string; time zone identifier
+====== ===================================
 
 Details
 ~~~~~~~
@@ -61,4 +61,3 @@ Examples
    stri_timezone_set(oldtz) # restore previous default time zone
 
    ## End(Not run)
-

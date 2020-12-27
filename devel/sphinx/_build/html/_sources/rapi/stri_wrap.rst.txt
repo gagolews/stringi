@@ -61,7 +61,7 @@ Details
 
 Vectorized over ``str``.
 
-If ``whitespace_only`` is ``FALSE``, then ICU's line-\ ``BreakIterator`` is used to determine text boundaries where a line break is possible. This is a locale-dependent operation. Otherwise, the breaks are only at white-spaces.
+If ``whitespace_only`` is ``FALSE``, then ICU's line-``BreakIterator`` is used to determine text boundaries where a line break is possible. This is a locale-dependent operation. Otherwise, the breaks are only at white-spaces.
 
 Note that Unicode code points may have various widths when printed on the console and that the function takes that by default into account. By changing the state of the ``use_length`` argument, this function starts to act like each code point was of width 1. This feature should rather be used with text in Latin script.
 
@@ -100,4 +100,3 @@ Examples
    cat(stri_wrap(s, 20, 0.0), sep='\n') # greedy
    cat(stri_wrap(s, 20, 2.0), sep='\n') # dynamic
    cat(stri_pad(stri_wrap(s), side='both'), sep='\n')
-

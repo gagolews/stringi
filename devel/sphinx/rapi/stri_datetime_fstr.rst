@@ -16,9 +16,9 @@ Usage
 Arguments
 ~~~~~~~~~
 
-+-------+---------------------------------------------------------+
-| ``x`` | character vector consisting of date/time format strings |
-+-------+---------------------------------------------------------+
+===== =======================================================
+``x`` character vector consisting of date/time format strings
+===== =======================================================
 
 Details
 ~~~~~~~
@@ -43,4 +43,3 @@ Examples
 .. code-block:: r
 
    stri_datetime_fstr('%Y-%m-%d %H:%M:%S')
-

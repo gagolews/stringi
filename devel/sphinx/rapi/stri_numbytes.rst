@@ -16,9 +16,9 @@ Usage
 Arguments
 ~~~~~~~~~
 
-+---------+--------------------------------------------+
-| ``str`` | character vector or an object coercible to |
-+---------+--------------------------------------------+
+======= ==========================================
+``str`` character vector or an object coercible to
+======= ==========================================
 
 Details
 ~~~~~~~
@@ -57,4 +57,3 @@ Examples
    stri_numbytes('\U7fffffff') # compare stri_length('\U7fffffff')
 
    ## End(Not run)
-

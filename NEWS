@@ -14,7 +14,7 @@
     #266 (width-emojis),
     #401 (update ICU4c),
     #405 (stri_sub match.length attrib),
-    #408 (stri_trans_casefold)
+    #408 (stri_trans_casefold),
     #406 (update manual)
 
 

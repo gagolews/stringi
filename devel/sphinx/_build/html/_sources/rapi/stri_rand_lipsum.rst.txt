@@ -50,4 +50,3 @@ Examples
       stri_wrap(stri_rand_lipsum(10), 80, simplify=FALSE),
       stri_flatten, collapse='\n'), sep='\n\n')
    cat(stri_rand_lipsum(10), sep='\n\n')
-

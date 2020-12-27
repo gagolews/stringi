@@ -79,4 +79,3 @@ Examples
    stri_count_regex(s, '.it')
    stri_count_regex('bab baab baaab', c('b.*?b', 'b.b'))
    stri_count_regex(c('stringi', '123'), '^(s|1)')
-

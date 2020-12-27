@@ -75,4 +75,3 @@ Examples
    # Fetch info on all time zones
    do.call(rbind.data.frame,
       lapply(stri_timezone_list(), function(tz) stri_timezone_info(tz)))
-

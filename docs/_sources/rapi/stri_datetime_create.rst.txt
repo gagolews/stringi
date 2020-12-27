@@ -70,4 +70,3 @@ Examples
    stri_datetime_create(5775, 8, 1, locale='@calendar=hebrew') # 1 Nisan 5775 -> 2015-03-21
    stri_datetime_create(2015, 02, 29)
    stri_datetime_create(2015, 02, 29, lenient=TRUE)
-

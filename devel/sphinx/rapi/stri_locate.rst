@@ -159,5 +159,3 @@ Examples
    # Use regex positive-lookahead to locate overlapping pattern matches:
    stri_locate_all_regex('ACAGAGACTTTAGATAGAGAAGA', '(?=AGA)')
    # note that start > end here (match of 0 length)
-
-

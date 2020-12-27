@@ -78,5 +78,3 @@ Examples
    print(x)
 
    stri_sub_replace_all('a b c', c(1, 3, 5), c(1, 3, 5), replacement=c('A', 'B', 'C'))
-
-
