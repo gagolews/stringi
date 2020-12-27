@@ -81,4 +81,3 @@ Examples
    stri_datetime_symbols(width='wide')
    stri_datetime_symbols(width='abbreviated')
    stri_datetime_symbols(width='narrow')
-

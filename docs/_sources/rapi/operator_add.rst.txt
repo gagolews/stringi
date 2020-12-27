@@ -18,11 +18,10 @@ Usage
 Arguments
 ~~~~~~~~~
 
-+--------+-----------------------------------------------------------------+
-| ``e1`` | a character vector or an object coercible to a character vector |
-+--------+-----------------------------------------------------------------+
-| ``e2`` | a character vector or an object coercible to a character vector |
-+--------+-----------------------------------------------------------------+
+====== ===============================================================
+``e1`` a character vector or an object coercible to a character vector
+``e2`` a character vector or an object coercible to a character vector
+====== ===============================================================
 
 Details
 ~~~~~~~
@@ -48,4 +47,3 @@ Examples
 
    c('abc', '123', 'xy') %s+% letters[1:6]
    'ID_' %s+% 1:5
-

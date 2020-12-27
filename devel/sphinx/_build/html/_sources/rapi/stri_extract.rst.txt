@@ -158,4 +158,3 @@ Examples
 
    stri_extract_all_fixed('abaBAba', 'Aba', case_insensitive=TRUE)
    stri_extract_all_fixed('abaBAba', 'Aba', case_insensitive=TRUE, overlap=TRUE)
-

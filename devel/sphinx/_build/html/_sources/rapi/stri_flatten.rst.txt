@@ -54,4 +54,3 @@ Examples
    stri_flatten(LETTERS, collapse=',')
    stri_flatten(stri_dup(letters[1:6], 1:3))
    stri_flatten(c(NA, '', 'A', '', 'B', NA, 'C'), collapse=',', na_empty=TRUE, omit_empty=TRUE)
-

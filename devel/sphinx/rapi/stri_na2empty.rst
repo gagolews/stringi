@@ -16,9 +16,9 @@ Usage
 Arguments
 ~~~~~~~~~
 
-+-------+--------------------+
-| ``x`` | a character vector |
-+-------+--------------------+
+===== ==================
+``x`` a character vector
+===== ==================
 
 Value
 ~~~~~
@@ -36,4 +36,3 @@ Examples
 .. code-block:: r
 
    stri_na2empty(c('a', NA, '', 'b'))
-

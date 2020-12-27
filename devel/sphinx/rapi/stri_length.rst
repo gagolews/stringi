@@ -16,9 +16,9 @@ Usage
 Arguments
 ~~~~~~~~~
 
-+---------+--------------------------------------------+
-| ``str`` | character vector or an object coercible to |
-+---------+--------------------------------------------+
+======= ==========================================
+``str`` character vector or an object coercible to
+======= ==========================================
 
 Details
 ~~~~~~~
@@ -51,4 +51,3 @@ Examples
    stri_numbytes(stri_trans_nfkd('\u0105')) # 3 bytes here but...
    stri_length(stri_trans_nfkd('\u0105')) # ...two code points (!)
    stri_count_boundaries(stri_trans_nfkd('\u0105'), type='character') # ...and one Unicode character
-

@@ -30,13 +30,13 @@ Here is a list of operators provided by the ICU User Guide on regexes.
 ``?``
    Match zero or one times. Prefer one.
 
-``{n}`` 
+``{n}``
    Match exactly n times.
 
-``{n,}`` 
+``{n,}``
    Match at least n times. Match as many times as possible.
 
-``{n,m}`` 
+``{n,m}``
    Match between n and m times. Match as many times as possible, but not more than m.
 
 ``*?``
@@ -126,7 +126,7 @@ Here is a list of meta-characters provided by the ICU User Guide on regexes.
    Match if the current position is not a word boundary.
 
 ``\cX``
-   Match a control-\ ``X`` character.
+   Match a control-``X`` character.
 
 ``\d``
    Match any character with the Unicode General Category of ``Nd`` (Number, Decimal Digit.).
@@ -158,13 +158,13 @@ Here is a list of meta-characters provided by the ICU User Guide on regexes.
 ``\n``
    Match a LINE FEED, ``\u000A``.
 
-``\N{UNICODE CHARACTER NAME}`` 
+``\N{UNICODE CHARACTER NAME}``
    Match the named character.
 
-``\p{UNICODE PROPERTY NAME}`` 
+``\p{UNICODE PROPERTY NAME}``
    Match any character with the specified Unicode Property.
 
-``\P{UNICODE PROPERTY NAME}`` 
+``\P{UNICODE PROPERTY NAME}``
    Match any character not having the specified Unicode Property.
 
 ``\Q``
@@ -194,7 +194,7 @@ Here is a list of meta-characters provided by the ICU User Guide on regexes.
 ``\W``
    Match a non-word character.
 
-``\x{hhhh}`` 
+``\x{hhhh}``
    Match the character with hex value hhhh. From one to six hex digits may be supplied.
 
 ``\xhh``

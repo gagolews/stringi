@@ -16,9 +16,9 @@ Usage
 Arguments
 ~~~~~~~~~
 
-+---------+-----------------------------------+
-| ``str`` | character vector to be aggregated |
-+---------+-----------------------------------+
+======= =================================
+``str`` character vector to be aggregated
+======= =================================
 
 Details
 ~~~~~~~
@@ -58,4 +58,3 @@ Examples
           '\\begin{small}Proin nibh augue,\\end{small} suscipit a, scelerisque sed, lacinia in, mi.',
           '')
    stri_stats_latex(s)
-

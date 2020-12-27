@@ -66,4 +66,3 @@ Examples
    stri_trim_right('r-project.org/', '\\p{P}')
    stri_trim_both(' Total of 23.5 bitcoins. ', '\\p{N}')
    stri_trim_both(' Total of 23.5 bitcoins. ', '\\p{L}')
-

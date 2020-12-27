@@ -16,13 +16,11 @@ Usage
 Arguments
 ~~~~~~~~~
 
-+---------------------+-----------------------------------------------------+
-| ``str``             | a character vector to be converted                  |
-+---------------------+-----------------------------------------------------+
-| ``is_unknown_8bit`` | a single logical value, see Details                 |
-+---------------------+-----------------------------------------------------+
-| ``validate``        | a single logical value (can be ``NA``), see Details |
-+---------------------+-----------------------------------------------------+
+=================== ===================================================
+``str``             a character vector to be converted
+``is_unknown_8bit`` a single logical value, see Details
+``validate``        a single logical value (can be ``NA``), see Details
+=================== ===================================================
 
 Details
 ~~~~~~~

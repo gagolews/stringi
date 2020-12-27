@@ -30,11 +30,10 @@ Usage
 Arguments
 ~~~~~~~~~
 
-+--------------+----------------------------------------------------+
-| ``x``        | a character vector                                 |
-+--------------+----------------------------------------------------+
-| ``na_empty`` | should missing values be treated as empty strings? |
-+--------------+----------------------------------------------------+
+============ ==================================================
+``x``        a character vector
+``na_empty`` should missing values be treated as empty strings?
+============ ==================================================
 
 Value
 ~~~~~
@@ -56,4 +55,3 @@ Examples
    stri_remove_empty(c('a', NA, '', 'b'), TRUE)
 
    stri_omit_empty_na(c('a', NA, '', 'b'))
-

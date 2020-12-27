@@ -61,4 +61,3 @@ Examples
       stri_rand_strings(n, 1, '[A-Z]'),
       stri_rand_strings(n, sample(5:11, 5, replace=TRUE), '[a-zA-Z0-9]')
    ))
-

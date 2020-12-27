@@ -44,4 +44,3 @@ Examples
 
    stri_locale_info('pl_PL')
    stri_locale_info('Pl_pL') # the same result
-

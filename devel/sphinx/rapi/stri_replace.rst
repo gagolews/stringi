@@ -169,4 +169,3 @@ Examples
         c('quick', 'brown', 'fox'), c('slow',  'black', 'bear'), vectorize_all=FALSE)
    stri_replace_all_regex('The quicker brown fox jumped over the lazy dog.',
         '\\b'%s+%c('quick', 'brown', 'fox')%s+%'\\b', c('slow',  'black', 'bear'), vectorize_all=FALSE)
-

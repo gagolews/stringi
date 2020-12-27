@@ -33,7 +33,7 @@ If ``pattern`` and ``replacement`` consist of a different number of code points,
 
 If code points in a given ``pattern`` are not unique, the last corresponding replacement code point is used.
 
-Time complexity for each string in ``str`` is O(\ ``stri_length(str)*stri_length(pattern)``).
+Time complexity for each string in ``str`` is O(``stri_length(str)*stri_length(pattern)``).
 
 Value
 ~~~~~

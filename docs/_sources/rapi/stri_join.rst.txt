@@ -64,4 +64,3 @@ Examples
    stri_join(1:13, letters, sep=',', collapse='; ')
    stri_join(c('abc', '123', 'xyz'),'###', 1:6, sep=',')
    stri_join(c('abc', '123', 'xyz'),'###', 1:6, sep=',', collapse='; ')
-

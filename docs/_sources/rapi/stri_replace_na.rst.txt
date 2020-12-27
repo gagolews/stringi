@@ -16,11 +16,10 @@ Usage
 Arguments
 ~~~~~~~~~
 
-+-----------------+--------------------------------------------+
-| ``str``         | character vector or an object coercible to |
-+-----------------+--------------------------------------------+
-| ``replacement`` | single string                              |
-+-----------------+--------------------------------------------+
+=============== ==========================================
+``str``         character vector or an object coercible to
+``replacement`` single string
+=============== ==========================================
 
 Details
 ~~~~~~~
@@ -46,4 +45,3 @@ Examples
    stri_paste(x, 1:2)                           # 'test1' NA
    paste(x, 1:2)                                # 'test 1' 'NA 2'
    stri_paste(stri_replace_na(x), 1:2, sep=' ') # 'test 1' 'NA 2'
-

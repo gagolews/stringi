@@ -70,4 +70,3 @@ Examples
    stri_count_boundaries(test2, type='character')
    stri_length(test2)
    stri_numbytes(test2)
-

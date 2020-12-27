@@ -84,4 +84,3 @@ Examples
 .. code-block:: r
 
    stri_extract_all_words('stringi: THE string processing package 123.48...')
-
