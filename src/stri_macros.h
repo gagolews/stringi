@@ -122,23 +122,23 @@
 #endif
 
 #ifndef IS_BYTES
-#define IS_BYTES(x) ((x)->sxpinfo.gp & BYTES_MASK)
+#define IS_BYTES(x) (LEVELS(x) & BYTES_MASK)
 #endif
 
 #ifndef IS_LATIN1
-#define IS_LATIN1(x) ((x)->sxpinfo.gp & LATIN1_MASK)
+#define IS_LATIN1(x) (LEVELS(x) & LATIN1_MASK)
 #endif
 
 #ifndef IS_ASCII
-#define IS_ASCII(x) ((x)->sxpinfo.gp & ASCII_MASK)
+#define IS_ASCII(x) (LEVELS(x) & ASCII_MASK)
 #endif
 
 #ifndef IS_UTF8
-#define IS_UTF8(x) ((x)->sxpinfo.gp & UTF8_MASK)
+#define IS_UTF8(x) (LEVELS(x) & UTF8_MASK)
 #endif
 
 #ifndef ENC_KNOWN
-#define ENC_KNOWN(x) ((x)->sxpinfo.gp & (LATIN1_MASK | UTF8_MASK | ASCII_MASK))
+#define ENC_KNOWN(x) (LEVELS(x) & (LATIN1_MASK | UTF8_MASK | ASCII_MASK))
 #endif
 
 #ifndef isRaw
