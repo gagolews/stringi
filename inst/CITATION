@@ -3,10 +3,10 @@ citHeader("To cite package 'stringi' in publications use:")
 citEntry(entry = "Manual",
   title = "stringi: Fast and Portable Character String Processing in R",
   author = personList(as.person("Marek Gagolewski")),
-  year = "2020",
+  year = "2021",
   url = "https://stringi.gagolewski.com/",
   textVersion =
-  paste("Gagolewski M. (2020).",
+  paste("Gagolewski M. (2021).",
         "stringi: Fast and Portable Character String Processing in R",
         "https://stringi.gagolewski.com/.")
 )
