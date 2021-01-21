@@ -47,10 +47,10 @@ It has been released under the open source BSD-3-clause
 The package's API was inspired by Hadley Wickham's
 `stringr <https://stringr.tidyverse.org/>`_ package
 (and since 2015 `stringr` is powered by `stringi`).
-Moreover, Hadley suggested many new package features. Thanks!
-The contributions from Bartlomiej Tartanus and
+Moreover, Hadley suggested quite a few new package features.
+The contributions from Bartłomiej Tartanus and
 `many others <https://github.com/gagolews/stringi/graphs/contributors>`_
-is greatly appreciated.
+is greatly appreciated. Thanks!
 
 
 .. toctree::
@@ -72,8 +72,8 @@ is greatly appreciated.
     :maxdepth: 2
     :caption: Other
 
-    Source code (GitHub) <https://github.com/gagolews/stringi>
-    Bug Tracker and Feature Proposals <https://github.com/gagolews/stringi/issues>
+    Source Code (GitHub) <https://github.com/gagolews/stringi>
+    Bug Tracker and Feature Suggestions <https://github.com/gagolews/stringi/issues>
     CRAN <https://cran.r-project.org/web/packages/stringi/>
     news.rst
     install.rst
