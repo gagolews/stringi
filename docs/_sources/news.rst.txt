@@ -1,11 +1,14 @@
 What’s New in *stringi*
 =======================
 
-1.5.4 (2020-XX-YY) **devel**
+1.5.4 (2021-XX-YY) **devel**
 ----------------------------
 
 -  [DOCUMENTATION] A tutorial on stringi is now available at
    https://stringi.gagolewski.com/_static/vignette/stringi.pdf
+
+-  [INTERNAL] #414: Use ``LEVELS(x)`` macro instead of accessing
+   ``(x)->sxpinfo.gp`` directly (@lukaszdaniel).
 
 -  … (to do) …, for example: #25 (locate-capture groups), #31
    (sub_index), #96 (split-backwards), #266 (width-emojis), #401 (update
