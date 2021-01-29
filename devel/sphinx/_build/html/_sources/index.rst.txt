@@ -75,6 +75,7 @@ is greatly appreciated. Thanks!
     Source Code (GitHub) <https://github.com/gagolews/stringi>
     Bug Tracker and Feature Suggestions <https://github.com/gagolews/stringi/issues>
     CRAN <https://cran.r-project.org/web/packages/stringi/>
+    Author's Homepage <https://www.gagolewski.com/>
     news.rst
     install.rst
 
