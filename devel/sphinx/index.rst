@@ -11,7 +11,8 @@ stringi: THE String Processing Package for R
 
 Thanks to `ICU <https://www.icu-project.org>`_,
 `stringi` fully supports a wide range
-of `Unicode <https://www.unicode.org/>`_ standards.
+of `Unicode <https://www.unicode.org/>`_ standards
+(see also `this video <https://www.youtube.com/watch?v=-n2nlPHEMG8>`_).
 
 It gives you a multitude of functions for:
 
@@ -77,6 +78,7 @@ is greatly appreciated. Thanks!
     Bug Tracker and Feature Suggestions <https://github.com/gagolews/stringi/issues>
     CRAN Entry <https://cran.r-project.org/web/packages/stringi/>
     Author's Homepage <https://www.gagolewski.com/>
+    C++ API — Rcpp Example <https://github.com/gagolews/ExampleRcppStringi>
     news.rst
     install.rst
 
