@@ -55,14 +55,15 @@ is greatly appreciated. Thanks!
 
 .. toctree::
     :maxdepth: 2
-    :caption: Tutorial
+    :caption: stringi
 
-    Tutorial (Draft) <https://stringi.gagolewski.com/_static/vignette/stringi.pdf>
+    About  <https://stringi.gagolewski.com/>
+    Paper (Draft) <https://stringi.gagolewski.com/_static/vignette/stringi.pdf>
 
 
 .. toctree::
     :maxdepth: 2
-    :caption: API Documentation
+    :caption: Reference Manual
 
     rapi.rst
 
@@ -74,7 +75,7 @@ is greatly appreciated. Thanks!
 
     Source Code (GitHub) <https://github.com/gagolews/stringi>
     Bug Tracker and Feature Suggestions <https://github.com/gagolews/stringi/issues>
-    CRAN <https://cran.r-project.org/web/packages/stringi/>
+    CRAN Entry <https://cran.r-project.org/web/packages/stringi/>
     Author's Homepage <https://www.gagolewski.com/>
     news.rst
     install.rst
