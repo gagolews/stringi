@@ -11,9 +11,10 @@
 ![RStudio CRAN mirror downloads](http://cranlogs.r-pkg.org/badges/last-day/stringi)
 
 
-> Documentation is available at https://stringi.gagolewski.com/.
+> Online reference manual is available at https://stringi.gagolewski.com/.
 
-> Tutorial is available at https://stringi.gagolewski.com/_static/vignette/stringi.pdf.
+> Paper on **stringi** (draft version — any comments are welcome)
+is available at https://stringi.gagolewski.com/_static/vignette/stringi.pdf.
 
 
 **stringi**  (pronounced “stringy”, IPA [strinɡi]) is THE *R*

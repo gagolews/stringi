@@ -4,7 +4,8 @@ What’s New in *stringi*
 1.5.4 (2021-XX-YY) **devel**
 ----------------------------
 
--  [DOCUMENTATION] A tutorial on stringi is now available at
+-  [DOCUMENTATION] A draft version of a paper on ``stringi`` is now
+   available at
    https://stringi.gagolewski.com/_static/vignette/stringi.pdf
 
 -  [INTERNAL] #414: Use ``LEVELS(x)`` macro instead of accessing
@@ -19,8 +20,8 @@ What’s New in *stringi*
 ---------------------------
 
 -  [DOCUMENTATION] stringi home page has moved to
-   https://stringi.gagolewski.com and now includes a comprehensive
-   online manual.
+   https://stringi.gagolewski.com and now includes the comprehensive
+   reference manual.
 
 -  [NEW FEATURE] #400: ``%s$%`` and ``%stri$%`` are now binary operators
    that call base R’s ``sprintf()``.
