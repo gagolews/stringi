@@ -1,7 +1,13 @@
+% makeme:
+%     build: xelatex -file-line-error -halt-on-error -shell-escape -interaction=errorstopmode ${FILE_NAME} && bibtex  ${FILE_NAME/.tex/.aux}
+
+
 % kate: indent-width 2; word-wrap-column 74
 
-% knitr::knit("stringi_v2.Rnw", tangle=TRUE)
+% knitr::knit("stringi_v3.Rnw", tangle=TRUE)
+%  remove echo=FALSE and add section titles
 
+%%% TODO: add TOC
 
 
 %!TEX program = XeLaTeX
@@ -9,9 +15,8 @@
 
 % sudo apt install latex-cjk-all
 
-\documentclass[nojss]{jss}
-% \documentclass[article]{jss}
-\usepackage[]{graphicx}\usepackage[]{color}
+%  \documentclass[nojss]{jss}
+\documentclass[nojss]{jss}\usepackage[]{graphicx}\usepackage[]{color}
 % maxwidth is the original width if it is less than linewidth
 % otherwise use linewidth (to make sure the graphics do not exceed the margin)
 \makeatletter
@@ -41,7 +46,7 @@
 % \usepackage[UTF8]{ctex}
 \usepackage{xeCJK}
 \usepackage{fontspec}
-% \usepackage{polyglossia}
+\usepackage{wasysym}
 \setCJKmainfont{Noto Sans Mono CJK SC}
 \setCJKsansfont{Noto Sans Mono CJK SC}
 \setCJKmonofont{Noto Sans Mono CJK SC}
@@ -61,7 +66,7 @@
 %\SweaveOpts{engine=R, eps=FALSE, keep.source = TRUE}
 
 
-
+\usepackage[australian]{babel}
 
 
 \author{Marek Gagolewski\\
@@ -93,9 +98,11 @@ Pattern searching, string collation and sorting, normalisation,
 transliteration, and formatting are ubiquitous in
 text mining, natural language processing, and bioinformatics.
 This paper discusses and demonstrates how and why \pkg{stringi},
-a mature \proglang{R} package for fast and portable handling of string data,
+a mature \proglang{R} package for fast and portable handling of string data
+based on the \pkg{ICU} library (International Components for Unicode),
 should be included in each statistician's or data scientist's
-repertoire.
+repertoire to complement their  numerical computing
+and data wrangling skills.
 }
 
 %% - \Keywords{} with LaTeX markup, at least one required
@@ -123,224 +130,215 @@ expressions, data cleansing, natural language processing, R}
 \begin{document}
 
 
+
+
 {\color{blue}
 This is a draft version of a paper on \pkg{stringi},
 last updated on \today.
 
 Please cite as:
-Gagolewski M (2020).
+Gagolewski M (2021).
 \textit{\pkg{stringi}: Fast and Portable Character String Processing in \proglang{R}}.
 URL \url{https://stringi.gagolewski.com}.
 }
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Introduction}\label{Sec:intro}
 
-Stringology, see \citep{stringology},
-deals with the algorithms and data structures used for processing
-of character strings \citep{speechlangproc,szpankowski}.
+Stringology \citep{stringology}
+deals with algorithms and data structures for processing
+character strings \citep{speechlangproc,szpankowski}.
 From the perspective of applied statistics and data science,
-it is worth stressing that many interesting datasets
+it is worth stressing that many interesting data sets
 first come in an unstructured or contaminated form,
-for instance when fetched from different APIs or when gathered
+for instance when they have been fetched from different APIs or gathered
 by means of web scraping techniques.
+
 Diverse data cleansing and preparation operations
 (\citealp{datacleaning,cleanr}; see also
-this paper's Section~\ref{Sec:examples} for a real-world example)
+Section~\ref{Sec:examples} below for a real-world example)
 need to be applied before an analyst can begin to enjoy
 an orderly and meaningful data frame, matrix, or spreadsheet  being finally
 at their disposal.
-Amongst them we may find: string concatenation,
-substring extraction, collation, sorting, Unicode normalisation,
-transliteration, pattern matching, and date-time parsing.
 Activities related to information retrieval, computer vision,
 bioinformatics, natural language processing, or even musicology
 can also benefit from including them
-in the data processing pipelines, see \citep{speechlangproc,genome}.
-
-
-
-
+in data processing pipeline \citep{speechlangproc,genome}.
+% This includes string concatenation,
+% substring extraction, collation, sorting, Unicode normalisation,
+% transliteration, pattern matching, and date-time parsing.
 
 
 % sentiment of emojis 10.1371/journal.pone.0144296
+Although statisticians and data analysts are usually
+very proficient in numerical computing and data wrangling,
+the awareness of how crucial text operations are in the overall
+data-oriented skill-set is yet to reach a more operational
+level. This paper aims to fill this gap.
 
+\bigskip
+Most statistical computing ecosystems provide only a basic set
+of text operations.
+In particular, base \proglang{R} \citep{Rproject:home}
+is mostly restricted to pattern matching, string concatenation,
+substring extraction, trimming, padding, wrapping,
+simple character case conversion, and string collation,
+see \citep[Chapter~8]{Chambers2008:SoftDA} and Table~\ref{Tab:oldstringr} below.
+The \pkg{stringr}  package \citep{Wickham2010:stringr},
+first released in November 2009, implemented an alternative, ``tidy''
+API for text data processing (the list of 21 functions that were
+available in \pkg{stringr} at that time is given in Table~\ref{Tab:oldstringr}).
+The early \pkg{stringr} featured a few wrappers around
+a subset of its base \proglang{R} counterparts. The latter,
+however -- up to this day -- not only is of limited scope,
+but also suffers from a number of portability
+issues; it may happen that the same code can yield different results
+on different operating systems; see Section~\ref{Sec:conclusions} for some examples.
 
+% In version 0.6.2 (dated 2012--12--06)
+% of \pkg{stringr}'s \code{README}, we read that this package:
+% \begin{quote}\it
+% \begin{itemize}
+% \item processes factors and characters in the same way,
+% \item gives functions consistent names and arguments,
+% \item simplifies string operations by eliminating options that you
+% don't need 95\% of the time,
+% \item produces outputs than can easily be used as inputs.
+% This includes ensuring that missing inputs result in missing outputs,
+% and zero length inputs result in zero length outputs,
+% \item completes \proglang{R}'s string handling functions with
+% useful functions from other programming languages.
+% % and duplicates existing API :/
+% \end{itemize}
+% \end{quote}
 
-Base \proglang{R} \citep{Rproject:home} provides a few functions for dealing
-with character strings, see \citep[Chapter~8]{Chambers2008:SoftDA}
-and Table~\ref{Tab:oldstringr}.
-However, it is the \pkg{stringr}  package \citep{Wickham2010:stringr},
-first released in November 2009, that marks the first milestone of
-implementing
-the idea of a ``tidier'' API for text data processing.
-In version 0.6.2 (dated 2012--12--06)
-of \pkg{stringr}'s \code{README}, we read that this package:
-\begin{quote}\it
-\begin{itemize}
-\item processes factors and characters in the same way,
-\item gives functions consistent names and arguments,
-\item simplifies string operations by eliminating options that you
-don't need 95\% of the time,
-\item produces outputs than can easily be used as inputs.
-This includes ensuring that missing inputs result in missing outputs,
-and zero length inputs result in zero length outputs,
-\item completes \proglang{R}'s string handling functions with
-useful functions from other programming languages.
-\end{itemize}
-\end{quote}
-The list of the functions available in \pkg{stringr} at that time
-is given in Table~\ref{Tab:oldstringr}.
-
-
-
-
-\begin{table}[t!]
-\centering
-
-\begin{tabularx}{1.0\linewidth}{p{4.8cm}p{2.5cm}X}
-\toprule
-\pkg{stringr}                                  & \bfseries Base \proglang{R}            & \bfseries Purpose \\
-\midrule
-\code{str\_c()}                                & \code{paste()}                         & join strings \\                                                          \midrule
-\code{str\_count()}                            & \code{gregexpr()}                      & count pattern matches\\                                                  \midrule
-\code{str\_detect()}                           & \code{grepl()}                         & detect pattern matches \\                                                \midrule
-\code{str\_dup()}                              &                                        & duplicate strings\\                                                      \midrule
-\code{str\_extract()}, \code{str\_extract\_all()}  &                                    & extract (first, all) pattern matches  \\                                 \midrule
-\code{str\_length()}                           & \code{nchar()}                         & compute string length \\                                                 \midrule
-\code{str\_locate()}, \code{str\_locate\_all()}& \code{regexpr()}, \code{gregexpr()}    & locate (first, all) pattern matches \\                                   \midrule
-\code{str\_match()}, \code{str\_match\_all()}   & \code{regexec()}                      & extract (first, all) matches to regex capture groups \\                  \midrule
-\code{str\_pad()}                              &                                        & add whitespaces at beginning or end\\                                    \midrule
-\code{str\_trim()}                             &                                        & remove whitespaces from beginning or end \\                              \midrule
-\code{str\_replace()}, \code{str\_replace\_all()}   & \code{sub()}, \code{gsub()}       & replace (first, all) pattern matches with a replacement string\\        \midrule
-\code{str\_split()}, \code{str\_split\_fixed()}&                                        & split up a string into  pieces \\                       \midrule
-\code{str\_sub()}, \code{`{}str\_sub<-`(){}}   & \code{substring()}                     & extract or replace substrings\\                                         \midrule
-\code{str\_wrap()}                             & \code{strwrap()}                       & split strings into text lines \\                                         \midrule
-\code{word()}                                  &                                        & extract words from a sentence \\
-\bottomrule
-\end{tabularx}
-
-\caption{\label{Tab:oldstringr} Functions in (the historical)
-\pkg{stringr} 0.6.2 and their base \proglang{R} counterparts.}
-\end{table}
-
-
-Nevertheless, \pkg{stringr} was developed as a set of wrappers
-around its base \proglang{R} counterparts, which not only limited its scope
-but also could cause many portability issues. In particular, the same code
-may yield different results on different operating systems, some services
-such as the processing of particular languages may be unavailable
-whatsoever, and so forth. For instance, varied variants of the
-\pkg{PCRE} (versions 8.x or 10.x thereof)
-pattern matching libraries may be linked to
-during compilation. On Windows, there is a custom implementation
-of \pkg{iconv} that has a set of character encoding
-IDs not fully compatible with that on GNU/Linux: to select
-the Polish locale, we are required to pass \strq{Polish\_Poland}
-to \code{Sys.setlocale()} on Windows whereas \strq{pl\_PL} on
-Linux.
-Moreover, \proglang{R} can be build against the system \pkg{ICU}
-so that it uses its Collator for comparing strings, however this is only
-optional.
-
-
-%
-% A call to \code{extSoftVersion()} reports on the versions of
-% third-party software  used by \proglang{R}.
-% some resources might not be unavailable/not installed
-% resources (e.g., locales) may be fetched by means of different IDs
-% not necessarily the fastest
-% %                      PCRE                       ICU                       TRE                     iconv
-% %        "10.34 2019-11-21"                    "66.1" "TRE 0.8.0 R_fixes (BSD)"              "glibc 2.31"
-% %
-% %        PCRE                       ICU     TRE                        iconv
-% % "8.42 2018-03-20"          "55.1"  "TRE 0.8.0 R_fixes (BSD)"  "win_iconv"
-
-
-
-
-For example, let us consider the matching
-of ``all letters'' by means of the built-in \code{gregexpr()} function
-and the \pkg{TRE} (\code{perl=FALSE})
-and \pkg{PCRE} (\code{perl=TRUE}) libraries
-using a POSIX-like and Unicode-style character set
-(see Section~\ref{Sec:regex} for more details):
-
-\begin{Schunk}
-\begin{Sinput}
-R> library("stringi")  # substring extraction with stri_sub(), see below
-R> x <- "AEZaezĄĘŻąęż"
-R> stri_sub(x, gregexpr("[[:alpha:]]", x, perl=FALSE)[[1]], length=1)
-R> stri_sub(x, gregexpr("[[:alpha:]]", x, perl=TRUE)[[1]],  length=1)
-R> stri_sub(x, gregexpr("\\p{L}", x, perl=TRUE)[[1]],       length=1)
-\end{Sinput}
-\end{Schunk}
-
-On Ubuntu Linux 20.04 (UTF-8 locale), the respective outputs are:
-
-\begin{Schunk}
-\begin{Soutput}
-[1] "A" "E" "Z" "a" "e" "z" "Ą" "Ę" "Ż" "ą" "ę" "ż"
-[1] "A" "E" "Z" "a" "e" "z"
-[1] "A" "E" "Z" "a" "e" "z" "Ą" "Ę" "Ż" "ą" "ę" "ż"
-\end{Soutput}
-\end{Schunk}
-
-On Windows, when \code{x} is marked as UTF-8, we get:
-
-\begin{Schunk}
-\begin{Soutput}
-[1] "A" "E" "Z" "a" "e" "z"
-[1] "A" "E" "Z" "a" "e" "z"
-[1] "A" "E" "Z" "a" "e" "z" "Ą" "Ę" "Ż" "ą" "ę" "ż"
-\end{Soutput}
-\end{Schunk}
-
-And again on Windows using the Polish locale
-but \code{x} marked as natively-encoded (CP-1250 in this case):
-
-\begin{Schunk}
-\begin{Soutput}
-[1] "A" "E" "Z" "a" "e" "z" "Ę" "ę"
-[1] "A" "E" "Z" "a" "e" "z" "Ą" "Ę" "Ż" "ą" "ę" "ż"
-[1] "A" "E" "Z" "a" "e" "z" "Ę" "ę"
-\end{Soutput}
-\end{Schunk}
-
-
-
-In order to overcome such portability problems, in 2013 I have developed
-the \pkg{stringi} package (pronounced ``stringy'',
-IPA \textipa{[{stringi}]}).
-Its API has been designed so as to be compatible and consistent with that
-of \pkg{stringr}'s, which has already proven effective and convenient.
-All the functions have been written from scratch to
+In order to significantly broaden the array of string processing
+operations and assure that they are portable,
+in 2013 the current author developed
+the open source \pkg{stringi} package (pronounced ``stringy'', IPA \textipa{[{stringi}]}).
+Its API was compatible with that of early \pkg{stringr}'s,
+which some users found convenient.
+However, for the processing of text in different locales,
+which are plentiful, \pkg{stringi} relies
+on \pkg{ICU} -- International Components for Unicode
+(see \url{http://site.icu-project.org/}) --
+a mature library that fully conforms with
+the Unicode standard and which provides globalisation support for
+a broad range of other software applications as well, from
+web browsers to database systems.
+Services not covered by \pkg{ICU} were implemented from scratch to
 guarantee that they are as efficient as possible.
-For the processing of text in different languages,
-which are plentiful, the \pkg{ICU} library
-(see \url{http://site.icu-project.org/}) is relied upon to assure
-full conformance to the Unicode standards.
 
-Over the years, \pkg{stringi}
-confirmed itself as robust,  production quality software.
-Interestingly, from version 1.0, \pkg{stringr} has been rewritten as a
-set of wrappers around \pkg{stringi} instead of base \proglang{R} routines;
+Over the years, \pkg{stringi} confirmed itself as robust,
+production-quality software; for many years now it has been one of the
+most often downloaded R extensions. Interestingly, in 2015 the
+aforementioned \pkg{stringr} package has been rewritten as a
+set of wrappers around some of the \pkg{stringi} functions instead of
+the base \proglang{R} ones.
 % \pkg{stringr} currently exports length(ls("package:stringr")) objects
-it aims to be more beginner-friendly,
-see \cite[Chapter~14]{GrolemundWickham2017:rdatascience}.
-On the other hand, \pkg{stringi} provides many more
-functions (250
-vs.~52); some of them are
-more specialised or equipped with more control parameters
-to enable fine-tuning.
-This paper describes the facilities
-provided by \pkg{stringi} in-depth so that the package's users
-can get the most out of them. It also demonstrates the wide range
-of tools that more advanced statisticians and data scientists may find
-useful in their daily activities.
+In Section~14.7 of \textit{R for Data Science} \citep{GrolemundWickham2017:rdatascience}
+we read: \textit{\pkg{stringr} is useful when you're learning because
+it exposes a minimal set of functions, which have been carefully picked
+to handle the most common string manipulation functions. \pkg{stringi},
+on the other hand, is designed to be comprehensive. It contains almost
+every function you might ever need: \pkg{stringi} has 250 functions to
+\pkg{stringr}'s 49}.
+
+% On the other hand, \pkg{stringi} provides many more
+% functions (length(ls("package:stringi"))
+% vs.~length(ls("package:stringr"))); some of them are
+% more specialised or equipped with more control parameters
+% to enable fine-tuning.
+
+\bigskip
+This paper describes
+the most noteworthy facilities provided by \pkg{stringi}
+that statisticians and data analysts may find useful in their daily activities.
+We demonstrate how important it is for a modern data scientist
+to be aware of the challenges
+of natural language processing in the internet era:
+how to force \code{"groß"} compare equal to \code{"GROSS"},
+make \code{"a13"} ordered before \code{"a100"}, or
+convert between \code{"GRINNING FACE"} and \code{"\smiley"} forth and back.
+As such operations are performed by the very \pkg{ICU} itself,
+we believe that what follows may be of interest
+to data-oriented practitioners employing Python, PHP, etc.,
+as the library has actively maintained bindings for many other languages.
+
+% vectorisation, deep recycling rule and when it is useful (compare section 4.2)
+% NA and empty vector handling
+
+Here is the outline of the paper.
+\begin{itemize}
+\item Section~\ref{Sec:examples} illustrates the importance of string
+processing in an example data preparation activity.
+\item Basic string operations, such as computing length and width of strings,
+string concatenation, extracting and replacing substrings, are discussed in Section~\ref{Sec:basic}.
+\item Section~\ref{Sec:fixed} discusses searching for fixed substrings:
+counting the number of matches,
+% detecting
+locating their positions,
+% extracting
+replacing them with other data,
+and splitting strings into tokens.
+We also exemplify how deep vectorisation and the recycling rule with respect
+to all parameters can be useful in different contexts.
+
+\item Section~\ref{Sec:regex} details \pkg{ICU} regular
+expressions, which are a powerful tool for matching patterns defined in
+a more abstract way, e.g., extracting numbers from text so that they can
+be processed quantitatively, identifying hyperlinks, etc.
+We show where \pkg{ICU} is different from other libraries like \pkg{PCRE};
+in particular that it allows for portable, Unicode-correct look-ups,
+for instance, involving sequences of emojis or mathematical symbols.
+
+\item Section~\ref{Sec:collator} deals with the locale-aware \pkg{ICU} Collator,
+which is  suitable for natural language processing activities; this is where we exemplify
+that text processing in different languages or regions may be governed
+by rules that can turn out surprising to users from other cultural settings.
+% We show how to specify locales so that we can exactly pinpoint
+The operations discussed include testing string equivalence (which can
+turn out useful when we scrape data that consist of non-normalised strings,
+ignorable punctuation, or accented characters) as well as arranging strings
+with regards to different linear orderings.
+
+\item Section~\ref{Sec:other} covers some other useful operations such
+as text boundary analysis (for splitting text into words or sentences),
+trimming, padding, and other formatting,
+random string generation,
+character transliteration (converting between cases and alphabets, removing diacritic
+marks, etc.) as well as
+date-time formatting and parsing in any locale (e.g., Japanese dates in a German
+\proglang{R}).
+
+\item Section~\ref{Sec:io} details on encoding conversion and detection
+(which is key when reading/writing text files that are to be transformed from/to
+different systems)
+as well as Unicode normalisation (which can be useful for removing formatting
+distinctions from text, e.g., superscripts or font variants).
+
+\item Finally, Section~\ref{Sec:conclusions} closes the paper
+with a discussion on portability issues with base R,
+the (high) performance of \pkg{stringi}, its C++ API, and
+ideas for further development.
+\end{itemize}
+
+
+
+This paper is by no means a substitute for the comprehensive yet much more technical
+and in-depth reference manual available by calling \code{help(package="stringi")},
+see also \url{https://stringi.gagolewski.com/}.
+Rather, here we explain the package's key design principles and broadly
+introduce the ideas and services that help program, correct, and optimise text processing workflows.
+
+Let us emphasise that all the below-presented illustrations,
+i.e., calls to \pkg{stringi} functions on different
+exemplary arguments together with the generated outputs, form an integral
+part of this manuscript's text. They have been included based on
+the author's experience-based belief that each "picture" (that we print
+out below using a monospaced font) is worth hundreds of words.
 
 % confirmed itself as robust,  production quality software
 % yet, new features being added $\sim$ biyearly
@@ -435,38 +433,12 @@ useful in their daily activities.
 
 
 \medskip
-What remains is set out as follows.
-Section~\ref{Sec:examples} gives some motivational examples
-that illustrate the importance of string processing in data preparation
-activities.
-Basic string operations such as substring extraction and concatenation
-are discussed in Section~\ref{Sec:basic}.
-Section~\ref{Sec:fixed} discusses searching for fixed substrings.
-Section~\ref{Sec:regex} details pattern matching with \pkg{ICU} regular
-expressions.
-Section~\ref{Sec:collator} deals with the locale-aware \pkg{ICU} Collator,
-suitable for natural language processing activities.
-Section~\ref{Sec:other} introduces other operations such as text boundary
-analysis
-or date-time formatting and parsing.
-Section~\ref{Sec:io} details on encoding conversion and detection
-as well as Unicode normalisation.
-Finally, Section~\ref{Sec:conclusions} concludes the paper.
-
-All the code chunks' outputs presented in this paper were obtained using
-\proglang{R}~4.0.2.
+All the code chunks' outputs presented in this paper were obtained in
+\proglang{R}~4.0.4.
 The \proglang{R} environment itself and all the packages used herein
 are available from CRAN at \url{https://CRAN.R-project.org/}.
-
-\begin{Schunk}
-\begin{Sinput}
-R> # install.packages("stringi")  # to download from CRAN and install
-R> library("stringi")  # load and attach the package's namespace
-\end{Sinput}
-\end{Schunk}
-
-\noindent
-Here we describe \pkg{stringi} 1.5.3,
+In particular, \code{install.packages("stringi")} can be called to
+fetch the object of our focus: here we describe \pkg{stringi} 1.5.3,
 which has been built against the following version of the \pkg{ICU} library:
 %Moreover, for \pkg{stringr}~packageVersion("stringr")
 
@@ -475,6 +447,7 @@ which has been built against the following version of the \pkg{ICU} library:
 
 \begin{Schunk}
 \begin{Sinput}
+R> library("stringi")  # load and attach the package's namespace
 R> cat(stri_info(short=TRUE))
 \end{Sinput}
 \end{Schunk}
@@ -486,25 +459,16 @@ stringi_1.5.3 (en_AU.UTF-8; ICU4C 61.1 [bundle]; Unicode 10.0)
 \end{Schunk}
 
 
-\noindent
-\pkg{stringi} is an open source project
-distributed under the terms of the BSD-3-clause license.
-Its most recent development snapshot is available through GitHub at
-\url{https://github.com/gagolews/stringi}. The bug- and feature request
-tracker can be accessed from
-\url{https://github.com/gagolews/stringi/issues}.
-Moreover, its homepage -- which includes a detailed documentation
-of the package's API -- is located at \url{https://stringi.gagolewski.com/}.
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Motivational example: Data preparation}\label{Sec:examples}
 
-Before going into technical details on the \pkg{stringi} package itself,
+Before going into details on the broad array of facilities offered by the
+\pkg{stringi} package itself,
 let us first demonstrate that string processing is indeed a relevant
-part of the statistical analysis workflow.
+part of statistical analysis workflows.
 What follows is a short case study where we prepare a web-scraped
 data set for further processing.
 
@@ -512,7 +476,7 @@ Assume we wish to gather and analyse
 climate data for major cities around the world based on information
 downloaded from \textit{Wikipedia}.
 For each location from a given list of settlements (e.g.,
-gathered from one of the pages linked under
+fetched from one of the pages linked under
 \url{https://en.wikipedia.org/wiki/Lists_of_cities}),
 we would like to harvest the relevant temperature and precipitation data.
 Without harm in generality, let us focus on the city of Melbourne,
@@ -530,17 +494,16 @@ R> library("rvest")
 \end{Sinput}
 \end{Schunk}
 
-First, we load and parse the downloaded \proglang{HTML} file.
+First, we load and parse the \proglang{HTML} file
+downloaded on 2020-09-17 (see the accompanying supplementary files):
 
 \begin{Schunk}
 \begin{Sinput}
-R> # downloaded from https://en.wikipedia.org/wiki/Melbourne on 2020-09-17,
-R> # see https://github.com/gagolews/stringi/tree/master/datasets
 R> f <- read_html("20200917_wikipedia_melbourne.html")
 \end{Sinput}
 \end{Schunk}
 
-Second, we extract all \code{<table>} elements and gather them
+Second, we extract all \code{table} elements and gather them
 in a list of \proglang{HTML} nodes, \code{all\_tables}.
 We then extract the underlying raw text data and store them in a
 character vector named \code{text\_tables}.
@@ -570,7 +533,7 @@ below, is used to extract the index of the relevant table.
 \begin{Schunk}
 \begin{Sinput}
 R> library("stringi")
-R> (idx <- which(stringi::stri_detect_fixed(text_tables, "climate data",
+R> (idx <- which(stri_detect_fixed(text_tables, "climate data",
 +    case_insensitive=TRUE, max_count=1)))
 \end{Sinput}
 \begin{Soutput}
@@ -579,7 +542,7 @@ R> (idx <- which(stringi::stri_detect_fixed(text_tables, "climate data",
 \end{Schunk}
 
 Of course, the detailed description of all the facilities
-brought by \pkg{stringi} is covered in the sequel.
+brought by \pkg{stringi} is covered below.
 In the meantime, let us use \pkg{rvest}'s \code{html\_table()}
 to convert the above table to a data frame object.
 
@@ -635,7 +598,7 @@ It is evident that this object requires some significant
 cleansing and transforming before it can be subject
 to any statistical analyses.
 First, for the sake of convenience, let us convert it
-to a character matrix so that the processing of all cells can
+to a character matrix so that the processing of all the cells can
 be vectorised
 (a matrix in \proglang{R} is just a single ``long'' vector,
 whereas a data frame is a list of many atomic vectors).
@@ -646,9 +609,9 @@ R> x <- as.matrix(x)
 \end{Sinput}
 \end{Schunk}
 
-The \code{as.numeric()} function (which we would soon like to use)
-may find parsing the Unicode MINUS SIGN (U+2212, ``−'') difficult,
-therefore let us call the transliterator to replace it
+The \code{as.numeric()} function will find the parsing of
+the Unicode MINUS SIGN (U+2212, ``−'') difficult,
+therefore let us call the transliterator first in order to replace it
 (and other potentially problematic characters) with its simpler equivalent:
 
 \begin{Schunk}
@@ -657,7 +620,7 @@ R> x[, ] <- stri_trans_general(x, "Publishing-Any; Any-ASCII")
 \end{Sinput}
 \end{Schunk}
 
-Note that it is the first row that in fact gives the column names.
+Note that it is the first row of the matrix that defines the column names.
 Moreover, the last row just gives the data source and hence may be removed.
 
 \begin{Schunk}
@@ -680,7 +643,7 @@ Mean monthly sunshine hours             "279"         "2,191"
 \end{Soutput}
 \end{Schunk}
 
-Commas that are used as thousands separators (commas that are surrounded
+Commas that are used as thousands separators (commas surrounded
 by digits) should be dropped:
 
 \begin{Schunk}
@@ -701,7 +664,7 @@ R> dimnames(x)[[1]] <- stri_replace_all_fixed(dimnames(x)[[1]],
 \end{Sinput}
 \end{Schunk}
 
-At last, \code{as.numeric()} can be used to interpret the all the strings
+At last, \code{as.numeric()} can be used to re-interpret all the strings
 as numbers:
 
 \begin{Schunk}
@@ -728,7 +691,7 @@ We can, for instance, compute the monthly temperature ranges:
 
 \begin{Schunk}
 \begin{Sinput}
-R> x["Record high °C", -ncol(x)]-x["Record low °C", -ncol(x)]
+R> x["Record high °C", -ncol(x)] - x["Record low °C", -ncol(x)]
 \end{Sinput}
 \begin{Soutput}
  Jan  Feb  Mar  Apr  May  Jun  Jul  Aug  Sep  Oct  Nov  Dec
@@ -737,7 +700,7 @@ R> x["Record high °C", -ncol(x)]-x["Record low °C", -ncol(x)]
 \end{Schunk}
 
 \noindent
-or average daily precipitation:
+or the average daily precipitation:
 
 \begin{Schunk}
 \begin{Sinput}
@@ -751,9 +714,9 @@ R> sum(x["Average rainfall mm", -ncol(x)]) / 365.25
 \noindent
 and so forth.
 
-For the climate data on other cities, very similar steps are
-needed -- the whole process of scraping and cleansing data
-can quite easily be automatised, perhaps with some minor adjustments.
+For the climate data on other cities, very similar need to be performed --
+the whole process of scraping and cleansing data
+can quite easily be automated, perhaps with some minor adjustments.
 The above functions are not only convenient to use, but also efficient
 and portable across different platforms.
 
@@ -766,9 +729,13 @@ and portable across different platforms.
 \section{Basic string operations}\label{Sec:basic}
 
 Let us proceed with a detailed description of the most important
-facilities in the \pkg{stringi} package.
+facilities in the \pkg{stringi} package that might be of interest to
+the broad statistical and data analysis audience.
+
+\subsection{Benefits of vectorisation}
+
 First and foremost, we should emphasise that the  \proglang{R} language
-itself does not provide access to any classical scalar types.
+itself does not feature any classical scalar types.
 Individual character strings are  wrapped around atomic vectors
 of type \code{character}:
 
@@ -794,18 +761,16 @@ R> length("spam")  # a character vector of length 1 - a single string
 \end{Schunk}
 
 \noindent
-Not having a separate scalar type is quite convenient
-from the practical side; the so-called
-\emph{vectorisation} strategy encourages writing of code for processing
-\textit{whole} collections of objects all at once, regardless of their size.
-For example, let's consider the following data frame:
+Not having a separate scalar type is very convenient; the so-called
+\emph{vectorisation} strategy encourages the writing of code that processes
+\textit{whole} collections of objects, all at once, regardless of their size.
+For example, let us consider the following data frame:
 
 
 \begin{Schunk}
 \begin{Sinput}
-R> # see https://github.com/gagolews/stringi/tree/master/datasets
 R> (birth_dates <-
-+    head(read.csv(header=TRUE, comment="#", file="birth_dates.csv"), n=3))
++    head(read.csv("birth_dates.csv", header=TRUE, comment.char="#"), n=3))
 \end{Sinput}
 \begin{Soutput}
                Name  BirthDate
@@ -853,7 +818,7 @@ the number of \textit{entities} in each string.
 
 
 \paragraph{Length.}
-Let's consider the following character vector:
+Let us consider the following character vector:
 
 \begin{Schunk}
 \begin{Sinput}
@@ -882,13 +847,13 @@ R> stri_length(x)
 \end{Schunk}
 
 \noindent
-\code{stri_length(x)} returns a numeric vector \code{l},
+\code{stri_length(x)} returns a numeric vector \code{s},
 with the same number of elements as \code{x}, such that, for every \code{i},
-\code{l[i]} is the length of the string \code{x[i]}.
+\code{s[i]} is the length of the string \code{x[i]}.
 Note that the 3rd element in \code{x} is an empty string, \strq{},
 hence its length is  0.
 Moreover, there is a missing (\code{NA}) value
-at index 5, so the corresponding length is \textit{undefined} as well.
+at index 5, therefore the corresponding length is \textit{undefined} as well.
 \pkg{stringi} applies this rule consistently across all its functions.
 
 
@@ -941,11 +906,11 @@ R> stri_length("")
 
 \paragraph{Width.}
 Sometimes merely knowing  the number of characters in a string is not enough.
-For instance, when preparing a formatted output (e.g., in an automatically
-generated report),
+For instance, when preparing a formatted output (e.g., in a report dynamically
+generated  with \code{Sweave()} or \pkg{knitr}; see \citealp{knitr}),
 a string's \textit{width} estimate -- an approximate number of text columns
-it occupies when printed using a mono-spaced font -- may be more informative.
-In particular, many CJK (Chinese, Japanese, Korean) or emoji
+it occupies when printed using a monospaced font -- may be more informative.
+In particular, many Chinese, Japanese, Korean, or emoji
 characters take up two text cells. Some code points, on the other hand,
 are of width 0 (e.g., the ZERO WIDTH SPACE, U+200B).
 
@@ -993,11 +958,11 @@ R> stri_width(c("你好", "\u200b\u200b\u200b\u200b", "123456"))
 
 \subsection{Joining}
 
-Below we describe the functions that are based on string concatenation.
+Below we describe the functions that are related to string concatenation.
 
 
 \paragraph{Operator \code{\%s+\%}.}
-To join (concatenate) the corresponding strings in two character vectors,
+To join  the corresponding strings in two character vectors,
 we may use the binary \code{\%s+\%} operator:
 
 \begin{Schunk}
@@ -1036,14 +1001,14 @@ character(0)
 This operator is vectorised in exactly the same manner
 as other arithmetic operators in \proglang{R}.
 In particular, the recycling rule is used if the inputs are of different
-lengths and if one of the arguments is empty, the result is a zero-length
+lengths. If one of the arguments is empty, the result is a zero-length
 vector as well. Moreover, \pkg{stringi} \textit{does} enforce the consistent
 propagation of missing values
-(unlike in the case of the built-in \code{paste()}
-function):
+(unlike the built-in \code{paste()} function):
 
 \begin{Schunk}
 \begin{Sinput}
+R> x <- c("spam", "bacon", "", "sausage", NA, "spam")
 R> x %s+% "!"
 \end{Sinput}
 \begin{Soutput}
@@ -1052,7 +1017,8 @@ R> x %s+% "!"
 \end{Schunk}
 
 \noindent
-For dealing with missing values, we may use convenience functions such as
+For dealing with missing values, we may rely on the
+convenience functions such as
 \code{stri_replace_na()}, \code{stri_omit_na()},
 and
  if additionally we would like to get rid
@@ -1103,16 +1069,16 @@ are generalised by
 
 \begin{Schunk}
 \begin{Sinput}
-R> stri_join(c("X", "Y", "Z"), 1:6, "!")  # sep="", collapse=NULL
+R> stri_join(c("X", "Y", "Z"), 1:6, "a")  # sep="", collapse=NULL
 \end{Sinput}
 \begin{Soutput}
-[1] "X1!" "Y2!" "Z3!" "X4!" "Y5!" "Z6!"
+[1] "X1a" "Y2a" "Z3a" "X4a" "Y5a" "Z6a"
 \end{Soutput}
 \begin{Sinput}
-R> stri_join(c("X", "Y", "Z"), 1:6, "+", sep=".", collapse="; ")
+R> stri_join(c("X", "Y", "Z"), 1:6, "a", sep="_", collapse=", ")
 \end{Sinput}
 \begin{Soutput}
-[1] "X.1.+; Y.2.+; Z.3.+; X.4.+; Y.5.+; Z.6.+"
+[1] "X_1_a, Y_2_a, Z_3_a, X_4_a, Y_5_a, Z_6_a"
 \end{Soutput}
 \end{Schunk}
 
@@ -1143,7 +1109,7 @@ R> outer(LETTERS[1:3], 1:5, stri_join, sep=".") # outer product
 
 
 \paragraph{Duplicating.}
-To duplicate given strings, call
+To duplicate given strings, we call
 \code{stri\_dup()} or the \code{\%s*\%} operator:
 
 
@@ -1210,11 +1176,11 @@ and similar functions.
 
 \subsection{Extracting and replacing substrings}
 
-The next group of functions deals with the extraction and replacement
+Next group of functions deals with the extraction and replacement
 of particular sequences of code points in given strings.
 
 \paragraph{Indexing vectors.}
-In order to pick a subsequence from any \proglang{R} vector,
+Recall that in order to select a subsequence from any \proglang{R} vector,
 we use the square-bracket operator\footnote{More precisely, \code{x[i]}
 is a syntactic sugar for a call to \code{`[`(x, i)}.
 Moreover, if \code{x} is a list, \code{x[[i]]} can be used to
@@ -1229,25 +1195,25 @@ indexing with a character vector is also possible.}.
 
 \begin{Schunk}
 \begin{Sinput}
-R> x[1:3] # from 1st to 3rd string
+R> x[1:3]                           # from 1st to 3rd string
 \end{Sinput}
 \begin{Soutput}
 [1] "spam"  "bacon" ""
 \end{Soutput}
 \begin{Sinput}
-R> x[c(1, length(x))] # 1st and last
+R> x[c(1, length(x))]               # 1st and last
 \end{Sinput}
 \begin{Soutput}
 [1] "spam" "spam"
 \end{Soutput}
 \begin{Sinput}
-R> x[-1]  # all but 1st
+R> x[-1]                            # all but 1st
 \end{Sinput}
 \begin{Soutput}
 [1] "bacon"   ""        "sausage" NA        "spam"
 \end{Soutput}
 \begin{Sinput}
-R> x[!stri_isempty(x) & !is.na(x)] # filtering based on a logical vector
+R> x[!stri_isempty(x) & !is.na(x)]  # filtering based on a logical vector
 \end{Sinput}
 \begin{Soutput}
 [1] "spam"    "bacon"   "sausage" "spam"
@@ -1263,19 +1229,19 @@ we can use the \code{stri\_sub()} function.
 \begin{Schunk}
 \begin{Sinput}
 R> y <- "spam, egg, spam, spam, bacon, and spam"
-R> stri_sub(y, 18)           # from 18th code point to end
+R> stri_sub(y, 18)            # from 18th code point to end
 \end{Sinput}
 \begin{Soutput}
 [1] "spam, bacon, and spam"
 \end{Soutput}
 \begin{Sinput}
-R> stri_sub(y, 12, to=15)    # from 12th to 15th code point  (inclusive)
+R> stri_sub(y, 12, to=15)     # from 12th to 15th code point (inclusive)
 \end{Sinput}
 \begin{Soutput}
 [1] "spam"
 \end{Soutput}
 \begin{Sinput}
-R> stri_sub(y, 12, length=4) # 4 code points from 12th
+R> stri_sub(y, 12, length=4)  # 4 code points from 12th
 \end{Sinput}
 \begin{Soutput}
 [1] "spam"
@@ -1294,10 +1260,10 @@ R> stri_sub(y, -15)           # from 15th last to end
 \end{Schunk}
 
 
-\paragraph{\code{stri\_sub\_all()}.}
+\paragraph{\code{stri\_sub\_all()} function.}
 The \code{stri_sub()}  function is of course vectorised with respect
 to all its arguments
-(the character vector, \code{from}, and \code{to} or \code{length}).
+(the subsetted character vector, \code{from}, and \code{to} or \code{length}).
 If one of the vectors is of smaller length than the other ones,
 the recycling rule is applied as usual. For instance:
 
@@ -1387,7 +1353,7 @@ R> stri_list2matrix(z, byrow=TRUE, fill="", n_min=5)
 \end{Schunk}
 
 
-Again, let's note that no explicit \code{for}/\code{while} loops are necessary.
+Again, let us note that no explicit \code{for}/\code{while} loops are necessary.
 For example, here is a way to extract non-consecutive substrings from each string --
 ones that consist of the first and the last letter:
 
@@ -1478,7 +1444,7 @@ R> stri_sub(c("abcdefgh", "ijklmnop"), from_to)
 \end{Schunk}
 
 \noindent
-Now let's note the difference between the above output and the following one:
+Now let us note the difference between the above output and the following one:
 
 \begin{Schunk}
 \begin{Sinput}
@@ -1498,7 +1464,7 @@ R> stri_sub_all(c("abcdefgh", "ijklmnop"), from_to)
 
 \paragraph{Replacing substrings.}
 \code{stri\_sub\_replace()} returns a version
-of a character vector with each specified chunk replaced with another
+of a character vector with each specified chunk replaced by another
 string:
 
 \begin{Schunk}
@@ -1577,7 +1543,7 @@ R> print(y3)                            # y3 has been changed
 
 
 
-% \clearpage
+\clearpage
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1590,7 +1556,7 @@ There are many situations where we are faced with testing whether two strings
 (or parts thereof)
 consist exactly of the same Unicode\footnote{All functions in \pkg{stringi}
 automatically convert all \proglang{R} strings
-to Unicode, see Section~\ref{Sec:encoding} for discussion.} code points, in the same order.
+to Unicode, see Section~\ref{Sec:encoding} for a discussion.} code points, in the same order.
 These include, for instance, matching a nucleotide sequence
 in a DNA profile and querying for system resources based on file names or UUIDs.
 Such tasks, due to their simplicity, can be performed very efficiently.
@@ -1616,9 +1582,6 @@ R> "actg" %s===% c("ACTG", "actg", "act", NA)  # recycling rule
 
 Moreover, \code{\%s!==\%} and \code{stri\_cmp\_neq()}, respectively,
 are their negations.
-
-
-\subsection{Searching for fixed strings}
 
 
 \begin{table}[t!]
@@ -1659,6 +1622,9 @@ with any search engine, e.g., we have
 \end{table}
 
 
+\subsection{Searching for fixed strings}
+
+
 
 Table~\ref{Tab:searchfuns} lists the string search functions available
 in \pkg{stringi}. Below we explain their behaviour in the context of fixed
@@ -1676,7 +1642,7 @@ see Section~\ref{Sec:regex} and Section~\ref{Sec:collator}).
 
 
 For detecting if a string contains
-a given substring  (code-pointwisely), the fast KMP \citep{KnuthETAL1977:kmp}
+a given substring  (code-pointwisely),  the fast KMP \citep{KnuthETAL1977:kmp}
 search algorithm, with worst time complexity of $O(n+p)$
 (where $n$ is the length of the string and $p$ is the length of the pattern),
 has been implemented in \pkg{stringi} (with numerous tweaks
@@ -1684,7 +1650,8 @@ for even faster matching).
 
 
 
-\paragraph{Counting matches.}
+\subsection{Counting matches}
+
 The \code{stri_count_fixed()} function counts the number of
 times a fixed pattern occurs in a given string.
 
@@ -1711,14 +1678,14 @@ R> stri_count("abcabcdefabcabcabdc", fixed="abc")
 
 
 
-\paragraph{Vectorisation.}
+\subsection{Benefits of recycling rule}
+
 All the string search functions are vectorised
 with respect to both the  \textit{haystack} and the \textit{needle} arguments
 (and, e.g., the \textit{replacement} string, if applicable).
 As usual, the shorter vector is recycled if necessary.
-The users, unaware of this rule, might find this behaviour
-unintuitive at the beginning, especially if
-something does not go the way they expect. Therefore, let us point out
+Some users, unaware of this rule, might find this behaviour
+unintuitive at the beginning. Therefore, let us enumerate
 the most useful scenarios that are possible thanks to the arguments' recycling:
 
 \begin{itemize}
@@ -1914,8 +1881,9 @@ R> stri_count_fixed(rep(x, each=length(y)), y)
 
 
 
-\paragraph{Search engine options.}
-The pattern matching engine may be tuned  by passing
+\subsection{Search engine options}
+
+The pattern matching engine may be tuned up by passing
 further arguments to the search functions (via ``\code{...}'';
 they are be redirected as-is to \code{stri_opts_fixed()}).
 Table~\ref{Tab:fixed_opts} gives the list of available options.
@@ -1988,8 +1956,9 @@ engine, see \code{stri\_opts\_fixed()}.}
 
 
 
-\paragraph{Detecting and subsetting patterns.}
-A somehow simplified version of the above task involves asking  whether
+\subsection{Detecting and subsetting patterns}
+
+A somehow simplified version of the above search task involves asking  whether
 a pattern occurs in a string at all. Such an operation can be performed
 with a call to \code{stri\_detect\_fixed()}.
 
@@ -2016,7 +1985,8 @@ R> stri_detect_fixed(x, "abc", negate=TRUE)
 
 What is more, there is an option to stop searching
 once a given number of matches has been found
-in the \code{haystack} vector (as a whole):
+in the \code{haystack} vector (as a whole),
+which can speed up the processing of larger data sets:
 
 \begin{Schunk}
 \begin{Sinput}
@@ -2079,7 +2049,9 @@ R> stri_subset_fixed(x, "abc")
 \end{Soutput}
 \end{Schunk}
 
-The above is equivalent to \code{x[stri_detect_fixed(x, "abc")]}.
+The above is equivalent to \code{x[stri_detect_fixed(x, "abc")]},
+but avoids writing \code{x} twice (convenient when \code{x}
+is generated programmatically on the fly, using some complicated expression).
 Moreover:
 
 \begin{Schunk}
@@ -2090,7 +2062,7 @@ R> stri_subset_fixed(x, "abc", omit_na=TRUE)
 [1] "abc"    "abcd"   "xyzabc" "abc"
 \end{Soutput}
 \begin{Sinput}
-R> stri_subset_fixed(x, "abc", negate=TRUE)  # all but the matches
+R> stri_subset_fixed(x, "abc", negate=TRUE)  # everything but the matches
 \end{Sinput}
 \begin{Soutput}
 [1] "def"   "uabdc" "dab"   NA
@@ -2113,7 +2085,8 @@ R> x
 
 
 
-\paragraph{Locating and extracting patterns.}
+\subsection{Locating and extracting patterns}
+
 The functions from the \code{stri_locate()} family
 aim to pinpoint the positions of the matches to a pattern.
 First, we may be interested in the location of the first or the
@@ -2227,7 +2200,7 @@ R> stri_locate_all_fixed(x, "aga", omit_no_match=TRUE,
 
 
 \medskip
-Let us recall that such kinds of ``from-to'' matrices constitute particularly
+Let us recall that ``from-to'' matrices of this kind constitute particularly
 convenient inputs to \code{stri\_sub()} and \code{stri\_sub\_all()}.
 However, if merely the extraction of the matching substrings is needed,
 we can rely on the functions from the \code{stri\_extract()} family:
@@ -2280,7 +2253,8 @@ R> identical(res, stri_sub_all(x,
 
 
 
-\paragraph{Replacing pattern occurrences.}
+\subsection{Replacing pattern occurrences}
+
 In order to replace each matching substring with a corresponding
 replacement string, we can refer to \code{stri\_replace()}:
 
@@ -2310,7 +2284,7 @@ Note that the inputs that are not part of any match are left unchanged.
 
 The function is vectorised with respect to all the three arguments
 (\textit{haystack}, \textit{needle}, \textit{replacement string}),
-with the usual recycling if necessary.
+with the usual recycling behaviour if necessary.
 If a different arguments' vectorisation scheme is required,
 we set the \code{vectorise_all} argument of \code{stri_replace_all()}
 to \code{FALSE}.
@@ -2348,7 +2322,8 @@ string, then the search is repeated for the 2nd needle in order to replace
 it with the 2nd corresponding string, and so forth.
 
 
-\paragraph{Splitting.}
+\subsection{Splitting}
+
 To  split each element in the \textit{haystack} into substrings,
 where the \textit{needles} define the delimiters that separate
 the inputs into tokens,
@@ -2444,7 +2419,7 @@ strings, in particular:
 \begin{enumerate}
   \item specific substrings,
   \item emojis of any kind,
-  \item standalone sequences of lower-case Latin letters (``words''),
+  \item stand-alone sequences of lower-case Latin letters (``words''),
   \item substrings that can be interpreted as real numbers
   (with or without fractional part, also in scientific notation),
   \item telephone numbers,
@@ -2471,7 +2446,7 @@ used by default,
 \item {PCRE}\footnote{Via the \pkg{PCRE2}
 library (\url{https://www.pcre.org/}).}
 (\textit{\proglang{Perl}-compatible regular expressions}),
-in use if \code{perl = TRUE} is set.
+in use if \code{perl=TRUE} is set.
 \end{itemize}
 Other matchers are implemented in the \pkg{ore}
 (\citealp{ore}; via the \pkg{Onigmo} library)
@@ -2491,7 +2466,8 @@ comprehensive support for Unicode.
 
 
 It is worth noting that most programming languages
-as well as advanced text editors and IDEs (including \pkg{RStudio})
+as well as advanced text editors and IDEs (including
+\pkg{Kate}, \pkg{Eclipse}, \pkg{VSCode}, and \pkg{RStudio})
 allow for finding or replacing patters with regexes.
 Therefore, they should be amongst the instruments
 at every data scientist's disposal.
@@ -2537,14 +2513,14 @@ for the regex engine.
 [regex flag \code{(?x)}] & logical; defaults to \code{FALSE}; whether to allow white spaces and comments within patterns  \\
 \midrule
 \code{dot\_all}\newline
-[regex flag \code{(?s)}] & logical; defaults to \code{FALSE}; if set, ``\code{.}'' matches line terminators, otherwise its matching stops at a line end  \\
+[regex flag \code{(?s)}] & logical; defaults to \code{FALSE}; if set, ``\code{.}'' matches line terminators; otherwise its matching stops at a line end  \\
 \midrule
 \code{literal} & logical; defaults to \code{FALSE}; whether to treat the entire pattern as a literal string; note that in most cases the code-pointwise string search facilities
 (\code{*\_fixed()} functions described in Section~\ref{Sec:fixed}) are faster
 \\
 \midrule
 \code{multi\_line}\newline
-[regex flag \code{(?m)}] & logical; defaults to \code{FALSE}; if set, ``\code{\$}'' and ``\code{\textasciicircum}'' recognise line terminators within a string, otherwise, they match only at start and end of the input \\
+[regex flag \code{(?m)}] & logical; defaults to \code{FALSE}; if set, ``\code{\$}'' and ``\code{\textasciicircum}'' recognise line terminators within a string; otherwise, they match only at start and end of the input \\
 \midrule
 \code{unix\_lines} & logical; defaults to \code{FALSE}; when enabled, only the Unix line ending, i.e., \code{U+000a}, is honoured as a terminator by ``\code{.}'', ``\code{\$}'', and ``\code{\textasciicircum}''\\
 \midrule
@@ -2575,7 +2551,7 @@ We shall begin by discussing different ways to define sets of characters.
 In this part, the length of all matching substrings will be quite
 easy to determine.
 
-First, let's note that the following characters have special
+The following characters have special
 meaning to the regex engine:
 \[
 \text{
@@ -2596,7 +2572,7 @@ meaning to the regex engine:
 }
 \]
 
-Any regular expression that does not contain the above,
+Any regular expression that does not contain the above
 behaves like a fixed pattern:
 
 \begin{Schunk}
@@ -2613,7 +2589,7 @@ However, this time the case insensitive mode fully
 supports Unicode matching\footnote{%
 This does not mean, though, that it considers canonically
 equivalent strings as equal,
-see Section~\ref{Sec:Equivalence} for discussion and a workaround.}:
+see Section~\ref{Sec:Equivalence} for a discussion and a workaround.}:
 % matching strings may be of different lengths.
 % stri_detect_regex("a\u0328", "ą")
 % stri_detect_regex("ą", "a\u0328")
@@ -2683,11 +2659,9 @@ R> stri_extract_all_regex(x, "..am", case_insensitive=TRUE)
 
 
 
-
-% \begin{ciekawostka}
 The dot's insensitivity to the newline character is motivated
 by the need to maintain the compatibility with tools such as \pkg{grep}
-(when searching within text files in a line by line manner).
+(when searching within text files in a line-by-line manner).
 This behaviour can be altered by setting the \code{dot_all} option to \code{TRUE}:
 
 \begin{Schunk}
@@ -2775,7 +2749,7 @@ R> stri_extract_all_regex(x, "[^ ][^ ][^ ]")
 \noindent
 The above matches any substring that consists of 3 non-spaces.
 
-\code{Defining Code Point Ranges.}
+\paragraph{Defining Code Point Ranges.}
 Each Unicode code point can be referenced by its unique numeric identifier,
 see Section~\ref{Sec:codepoints}  for more details.
 For instance, ``\code{a}'' is assigned code U+0061 and ``\code{z}'' is mapped to U+007A.
@@ -2812,11 +2786,13 @@ R> stri_extract_all_regex(x, "[A-Za-z0-9]")  # union of 3 code ranges
 \end{Soutput}
 \end{Schunk}
 
+Nowadays, in the processing of text in natural languages, this
+notation should rather be avoided.
 
 
 \paragraph{Using predefined character sets.}
 Each code point is assigned a unique \textit{general category},
-which can be thought of a character's class,
+which can be thought of as a character's class,
 see \citep{usa44:ucd}.
 Sets of characters from each category can be referred to,
 amongst others, by using the ``\code{\textbackslash{}p\{category\}}'' syntax:
@@ -2915,7 +2891,7 @@ The \pkg{ICU} User Guide states that in general they are not well-defined.
 
 In particular, in POSIX-like regex engines, ``\code{[:punct:]}''
 stands for the character class corresponding to the \code{ispunct()}
-function in \proglang{C} (check out \code{man 3 ispunct} on Unix-like systems).
+function in \proglang{C} (see \code{man 3 ispunct} on Unix-like systems).
 According to ISO/IEC 9899:1990 (ISO C90), \code{ispunct()} tests for
 any printing character except for the space or a character for which \code{isalnum()}
 is true.
@@ -2994,10 +2970,10 @@ R> stri_extract_all_regex(x, "spam|ham")
 \end{Soutput}
 \end{Schunk}
 
-It has a very low precedence. Therefore, if we wish to
+``\code{|}'' has a very low precedence. Therefore, if we wish to
 introduce an alternative of \textit{sub}expressions,
 we need to group them, e.g., between round brackets\footnote{Which have
-the side-effect of creating new capturing groups, see below for discussion.}:
+the side-effect of creating new capturing groups, see below for a discussion.}:
 
 \begin{Schunk}
 \begin{Sinput}
@@ -3031,8 +3007,7 @@ R> stri_extract_all_regex(x, "(algae|alga|al)")
 \end{Schunk}
 
 \paragraph{Non-grouping parentheses.}
-Some parenthesised subexpressions where the opening bracket is followed by
-the question mark have distinct meaning.
+Some parenthesised subexpressions -- those in which the opening bracket is followed by the question mark -- have a distinct meaning.
 In particular, ``\str{(?\#...)}'' denote free-format comments
 that are ignored by the regex parser:
 
@@ -3080,15 +3055,16 @@ R> stri_count_regex("Spam spam SPAMITY spAm", "(?i)spam")
 \end{Soutput}
 \end{Schunk}
 
-For more regex flags, we refer to Table~\ref{Tab:regex_opts}.
+For more regex flags, we kindly refer the reader to Table~\ref{Tab:regex_opts}.
 
 
 
 
 \subsection{Quantifiers}
 
-Oftentimes, we need to enable the matching of a variable number of
-instances of the same subexpression or make its presence totally optional.
+Oftentimes, a variable number of
+instances of the same subexpression needs to be captured
+or its presence should be made optional.
 This can be achieved with the following quantifiers:
 \begin{itemize}
 \item ``\str{?}'' matches 0 or 1 times,
@@ -3099,7 +3075,7 @@ This can be achieved with the following quantifiers:
 \item ``\str{\{n\}}'' matches exactly \str{n} times.
 \end{itemize}
 These operators are applied to the preceding atoms.
-For example, ``\str{ba+}'' is matched by
+For example, ``\str{ba+}'' captures
 \strq{ba}, \strq{baa}, \strq{baaa}, \dots{} but not \strq{b} alone.
 
 
@@ -3267,7 +3243,7 @@ stopped.
 \end{Soutput}
 \begin{Soutput}
    user  system elapsed
- 20.664   0.000  20.664
+ 31.345   0.000  31.345
 \end{Soutput}
 \end{Schunk}
 
@@ -3279,27 +3255,27 @@ The \pkg{ICU} User Guide on Regular Expressions also recommends using
 which match as many times as possible but, contrary to
 the plain-greedy ones, never backtrack when they happen to consume too much data.
 
-See also the \pkg{re2r} package (a wrapper around the \pkg{RE2} library;
-\citealp{re2r})
-documentation and the references therein for discussion.
+See also the \pkg{re2r} (a wrapper around the \pkg{RE2} library;
+\citealp{re2r}) package's
+documentation and the references therein for a discussion.
 
 
 
 
-\vbox{
 \subsection{Capture groups and references thereto}\label{Sec:Capturing}
 
 It turns out that round-bracketed subexpressions carries one additional
 characteristic: they form the so-called \textit{capture groups} that can
 be extracted separately or be referred to in other parts of the same regex.
-}
+
 
 
 
 \paragraph{Extracting capture group matches.}
-This is most evident when we use the
-capture group-sensitive versions of \code{stri\_extract()}:
-\code{stri\_match\_first\_regex()},
+The above is most evident when we use the
+versions of \code{stri\_extract()} that are sensitive to the presence
+of capture groups:
+\code{stri\_match\_first\_\-regex()},
 \code{stri\_\-match\_\-last\_\-regex()}, and
 \code{stri\_match\_all\_regex()}.
 
@@ -3331,7 +3307,7 @@ where the findings are presented in a matrix form. The first column
 gives the complete matches, the second column stores the matches to the
 first capture group, and so forth.
 
-If we just need the grouping part of ``\code(...)'', i.e.,
+If we just need the grouping part of ``\code{(...)}'', i.e.,
 without the capturing feature,
 ``\code{(?:\dots)}'' can be applied:
 
@@ -3372,7 +3348,7 @@ Matches to capture groups can also be part of the regexes themselves.
 For example, ``\code{\textbackslash{}1}'' denotes whatever
 has been consumed by the first capture group.
 
-Although, in general, parsing of \proglang{HTML} code with regexes is
+Even though, in general, parsing \proglang{HTML} code with regexes is
 not recommended, let us consider the following examples:
 
 \begin{Schunk}
@@ -3403,13 +3379,13 @@ closing \code{</tag>}.
 \bigskip
 On a side note, currently \pkg{ICU} does not support the extraction
 of names of named capture groups, see however \citep{namedCapture}
-for discussion.
+for a discussion.
 
 
 
 \subsection{Anchoring}
 
-Lastly, let us discuss ways to match a pattern
+Lastly, let us mention the ways to match a pattern
 at a given abstract position within a string.
 
 \paragraph{Matching at the beginning or end of a string.}
@@ -3457,7 +3433,7 @@ Furthermore, ``\str{\textbackslash{}b}'' matches
 at a ``word boundary``, e.g., near spaces, punctuation marks,
 or at the start/end of a string (i.e., wherever there is a transition
 between a word, ``{\str{\textbackslash{}w}}'', and a non-word character,
-``{\str{\textbackslash{}W}}'' or vice versa).
+``{\str{\textbackslash{}W}}'', or vice versa).
 
 In the two following examples we match
 all complete ``words'' that end with \strq{am} (not just any string
@@ -3490,7 +3466,7 @@ begins or ends with a match to some subexpression:
 ``\str{(?<=...)...}'' is the so-called  \textit{look-behind}, whereas
 ``\str{...(?=...)}'' denotes the \textit{look-ahead}.
 Moreover, ``\str{(?<!...)...}'' and ``\str{...(?!...)}'' are
-their negated (``negative look behind/ahead'') versions.
+their negated (``negative look-behind/ahead'') versions.
 
 
 
@@ -3533,16 +3509,16 @@ activities, especially if strings in ASCII (i.e., English) were
 involved. However, nowadays %(in the ``Internet era'')
 this does not necessarily constitute the most suitable
 approach to the processing of natural-language texts.
-In particular, a code point vs.~code point matching
-does \textit{not} take into account
-accented and conjoined letters as well as ignorable punctuation and case.
+In particular, a code-pointwise matching
+neither takes accented and conjoined letters nor ignorable punctuation and case
+into account.
 % see Section~\ref{Sec:collator} for more details and an NLP-aware solution.
 
 
 
 The \pkg{ICU} Collation Service\footnote{See the \pkg{ICU} User Guide on {Collation},
 \url{http://userguide.icu-project.org/collation}.}
-provides the basis for such string comparison activities as
+provides the basis for string comparison activities  such as
 string sorting and searching, or determining if two strings are equivalent.
 This time, though, due to its conformance to
 the Unicode Collation Algorithm \citep{uts10:collation},
@@ -3568,7 +3544,7 @@ and their various regional variants.
 A locale specifier\footnote{%
 Locale specifiers in \pkg{ICU} are platform-independent.
 This is not the case for their base-\proglang{R} counterparts, see
-\code{?locales}, e.g., we have \strq{Polish\_Poland} on Windows
+\code{help("locales")}, e.g., we have \strq{Polish\_Poland} on Windows
 vs.~\strq{pl\_PL} on Linux.}
 is of the form
 \code{"Language"}, \code{"Language_Country"}, or \code{"Language_Country_Variant"},
@@ -3626,13 +3602,13 @@ To list the available locale identifiers, we call \code{stri_locale_list()}.
 R> length(stri_locale_list())     # number of available locales
 \end{Sinput}
 \begin{Soutput}
-[1] 722
+[1] 782
 \end{Soutput}
 \begin{Sinput}
 R> sample(stri_locale_list(), 5)  # 5 random ones
 \end{Sinput}
 \begin{Soutput}
-[1] "pt_PT"  "seh_MZ" "fr_GP"  "en_RW"  "en_IO"
+[1] "nl_BQ" "pt_CH" "fi"    "en_PN" "en_IL"
 \end{Soutput}
 \end{Schunk}
 
@@ -3715,8 +3691,8 @@ In Unicode, some characters may have multiple representations.
 For instance, ``LATIN SMALL LETTER A WITH OGONEK'' (``ą'') can be stored
 as a single code point U+0105 or as a sequence
 that is comprised of the letter ``LATIN SMALL LETTER A'', U+0061, and
-the ``{COMBINING OGONEK}'', U+0328 (when rendered properly, they appear
-as if they were identical glyphs).
+the ``{COMBINING OGONEK}'', U+0328 (when rendered properly, they
+should appear as if they were identical glyphs).
 This is an example of \textit{canonical equivalence} of strings.
 
 Testing for the Unicode equivalence between strings
@@ -3863,6 +3839,8 @@ R> stri_sort(german_k_words, locale="de_DE@collation=phonebook")
 \end{Soutput}
 \end{Schunk}
 
+% TODO:  something in-between??
+
 In the latter example, where we use the German phone-book order,
 \code{"{}ö"{}} is treated as \code{"{}oe"{}}.
 
@@ -3903,7 +3881,37 @@ to some of them.
 
 % http://userguide.icu-project.org/collation - many nice examples
 
-\begin{table}[t!]
+
+\paragraph{Collation strength.}
+The Unicode Collation Algorithm \citep{uts10:collation}
+can go beyond simple canonical equivalence:
+they allow us to treat some other (depending on the context)
+differences as \textit{negligible} too.
+
+The \code{strength} option controls the Collator's ``attention to detail''.
+For instance, it can be used to make the ligature ``ff'' (U+FB00)
+compare equal to the two-letter sequence ``f{}f'':
+
+\begin{Schunk}
+\begin{Sinput}
+R> stri_cmp_equiv("\ufb00", "ff")
+\end{Sinput}
+\begin{Soutput}
+[1] FALSE
+\end{Soutput}
+\begin{Sinput}
+R> stri_cmp_equiv("\ufb00", "ff", strength=2)
+\end{Sinput}
+\begin{Soutput}
+[1] TRUE
+\end{Soutput}
+\end{Schunk}
+
+
+\clearpage
+
+
+\begin{table}[bt!]
 \centering
 
 \begin{tabularx}{1.0\linewidth}{lX}
@@ -3932,16 +3940,16 @@ after \code{"2"}; defaults to \code{FALSE} \\
 (positioned before the third level) is generated; defaults to \code{FALSE} \\
 \midrule
 \code{normalisation}      & logical; if \code{TRUE}, then an incremental
-check is performed to see whether the input data is in the FCD (``fast C or D'') form;
-if the data is not in the FCD form, the incremental NFD normalisation is performed,
+check is performed to see whether input data are in the FCD (``fast C or D'') form;
+if data are not in the FCD form, the incremental NFD normalisation is performed,
 see Section~\ref{Sec:normalisation}; defaults to \code{FALSE}   \\
 \midrule
 \code{alternate\_shifted}  & logical; if \code{FALSE} (default),
 all code points with non-ignorable primary weights are handled in the same way;
 \code{TRUE} causes the code points
-with primary weights that are equal or below the variable top value
+with primary weights that not above the variable top value
 to be ignored on the primary level and moved to the quaternary level; this can be
-used to, e.g., ignore punctuation, see examples provided \\ \midrule
+used to, e.g., ignore punctuation, see the examples provided \\ \midrule
 \code{french}             & logical; \code{TRUE} results in secondary
 weights being considered backwards, i.e., ordering according to the last accent difference
 -- nowadays only used in Canadian French; defaults to \code{FALSE} \\
@@ -3953,31 +3961,6 @@ weights being considered backwards, i.e., ordering according to the last accent 
 
 
 
-\paragraph{Collation strength.}
-The Unicode Collation Algorithm \citep{uts10:collation}
-can go beyond simple canonical equivalence
-and allow us to treat some other (depending on the context)
-differences as \textit{negligible}.
-
-The \code{strength} option controls the Collator's ``attention to detail''.
-For instance, it can be used to make the ligature ``ff'' (U+FB00)
-compare equal to the two-letter sequence ``f{}f'':
-
-\begin{Schunk}
-\begin{Sinput}
-R> stri_cmp_equiv("\ufb00", "ff")
-\end{Sinput}
-\begin{Soutput}
-[1] FALSE
-\end{Soutput}
-\begin{Sinput}
-R> stri_cmp_equiv("\ufb00", "ff", strength=2)
-\end{Sinput}
-\begin{Soutput}
-[1] TRUE
-\end{Soutput}
-\end{Schunk}
-
 
 
 Generally, four (nested) levels of inter-string differences can be distinguished:
@@ -3988,7 +3971,7 @@ there is a mismatch between base characters (e.g., \code{"a"} vs.~\code{"b"}).
 
 \item Some character accents can be considered a secondary difference
 in many languages. However, in other ones, an accented letter is considered
-a different letter.
+a unique letter.
 
 \item Distinguishing between upper- and lower case typically happens
 on the tertiary level, see, however, the \texttt{case\_level} option.
@@ -4002,7 +3985,7 @@ in the processing of Hiragana text.
 
 \end{enumerate}
 
-
+\vbox{
 \paragraph{Ignoring case.}
 Note what follows:
 
@@ -4027,6 +4010,7 @@ R> stri_unique(x, strength=2)                  # ß != ss, case insensitive
 [1] "groß"  "gross"
 \end{Soutput}
 \end{Schunk}
+}
 
 \paragraph{Ignoring some punctuation.}
 Here are some effects of changing the  \code{alternate\_shifted} option:
@@ -4100,7 +4084,7 @@ R> stri_sort(c("cote", "côte", "coté", "côté"), locale="fr_CA") # french=TRU
 
 
 \paragraph{Sorting numerals.}
-Moreover, let's note the effect of setting the \code{numeric} option on the
+Moreover, let us note the effect of setting the \code{numeric} option on the
 sorting of strings that involves numbers:
 
 \begin{Schunk}
@@ -4152,7 +4136,7 @@ differences (as in the ``a with ogonek'' example above).
 
 Apart from ignoring punctuation and case, the Unicode Standard Annex \#15 \citep{usa15:normalization}
 also discusses the so-called \textit{compatibility} equivalence of strings.
-This is a looser form of similarity; it is observed when
+This is a looser form of similarity; it is observed where
 there is the same \textit{abstract} content, yet displayed
 by means of different glyphs, for instance ``¼'' (U+00BC) vs.~``\code{1/4}''
 or ``$\mathbb{R}$'' vs.~``\proglang{R}''.
@@ -4185,10 +4169,10 @@ the \pkg{stringdist} package \citep{stringdist} might be helpful.
 
 
 
-\subsection{String searching}
+\subsection{Searching for fixed strings revisited}
 
 The \pkg{ICU} Collator can also be utilised
-when there is a need to locate the occurrences of simple textual patterns.
+where there is a need to locate the occurrences of simple textual patterns.
 All the string search functions described in Section~\ref{Sec:fixed}
 have their \code{*_coll()}-suffixed equivalents.
 Despite being slower than their \code{*_fixed()} counterparts,
@@ -4272,7 +4256,7 @@ R> stri_count_boundaries(x, type="sentence")  # number of sentences
 R> stri_count_boundaries(x, type="word")  # number of word boundaries
 \end{Sinput}
 \begin{Soutput}
-[1] 36
+[1] 33
 \end{Soutput}
 \begin{Sinput}
 R> stri_count_words(x)                    # number of words themselves
@@ -4307,8 +4291,8 @@ with \code{Sweave()} or \pkg{knitr}; see \citealp{knitr}), or creating text file
 
 
 \paragraph{Padding.}
-Strings can be padded with some character so that they are of the desired
-lengths by means of the \code{stri\_pad()} function.
+\code{stri\_pad()} pads strings with some character so that they
+reach the desired lengths.
 This can be used to centre, left-, or right-align a message
 when printed with, e.g.,  \code{cat()}.
 
@@ -4459,7 +4443,7 @@ R> stri_rand_strings(5, 2:6, "[A-Za-z]")
 R> stri_rand_strings(1, 8, "[\\p{script=Katakana}&\\p{L}]")
 \end{Sinput}
 \begin{Soutput}
-[1] "ｦグムノﾀルｿﾀ"
+[1] "ｩケメハﾃレﾂﾃ"
 \end{Soutput}
 \end{Schunk}
 
@@ -4546,9 +4530,11 @@ See the \pkg{ICU} User Guide on {General Transforms},
 R> sample(stri_trans_list(), 9)  # a few random entries
 \end{Sinput}
 \begin{Soutput}
-[1] "Kannada-Telugu"     "Devanagari-Arabic"  "Malayalam-Tamil"
-[4] "Any-uz/BGN"         "Any-Greek"          "dv-dv_Latn/BGN"
-[7] "Malayalam-Gurmukhi" "Gujr-Latn"          "Gujarati-Kannada"
+[1] "Kannada-Gurmukhi"       "Deva-Taml"
+[3] "Macedonian-Latin/BGN"   "Any-bg_Latn/BGN"
+[5] "Any-fa_FONIPA"          "Any-CanadianAboriginal"
+[7] "cs-chr"                 "Latn-Taml"
+[9] "Gujr-Arab"
 \end{Soutput}
 \end{Schunk}
 
@@ -4597,10 +4583,9 @@ R> stri_trans_general("Let's go... -- she said.", "any-publishing")
 
 \subsection{Parsing and formatting date and time}\label{Sec:datetime}
 
-In base \proglang{R}, dealing with dates and times in languages
+In base \proglang{R}, dealing with temporal data in languages
 different than the current locale is somewhat difficult.
-For instance, most of the readers of this paper
-may find the task of parsing the following Polish date problematic:
+For instance, many will find the task of parsing the following Polish date problematic:
 
 \begin{Schunk}
 \begin{Sinput}
@@ -4609,8 +4594,7 @@ R> x <- "27 sierpnia 2020 r., godz. 17:17:32"
 \end{Schunk}
 
 \pkg{stringi} connects to the \pkg{ICU} date and time
-services  so that parsing/formatting temporal data from/to any locale
-is possible:
+services  so that this becomes an easy exercise:
 
 
 \begin{Schunk}
@@ -4630,7 +4614,7 @@ Note, however, that
 See the \pkg{ICU} User Guide on {Formatting Dates and Times},
 \url{http://userguide.icu-project.org/formatparse/datetime}.
 }. For convenience,
-\code{strftime()}- and \code{strptime()}-compatible
+\code{strftime()}- and \code{strptime()}-like
 templates can be converted with \code{stri_datetime_fstr()}:
 
 \begin{Schunk}
@@ -4656,7 +4640,7 @@ R> stri_datetime_format(stri_datetime_now(), # current date and time
 +    locale="de_AT", tz="Europe/Vienna")
 \end{Sinput}
 \begin{Soutput}
-[1] "Donnerstag, 17. September 2020 um 13:13:36 Mitteleuropäische Sommerzeit"
+[1] "Montag, 15. Februar 2021 um 01:06:21 Mitteleuropäische Normalzeit"
 \end{Soutput}
 \begin{Sinput}
 R> stri_datetime_format(
@@ -4665,7 +4649,7 @@ R> stri_datetime_format(
 +    locale="en_NZ", tz="NZ")
 \end{Sinput}
 \begin{Soutput}
-[1] "tomorrow at 11:13:36 PM NZST"
+[1] "tomorrow at 1:06:21 pm NZDT"
 \end{Soutput}
 \begin{Sinput}
 R> stri_datetime_format(
@@ -4685,7 +4669,7 @@ R> stri_datetime_format(
 +    locale="ja_JP@calendar=japanese")      # Japanese locale and calendar
 \end{Sinput}
 \begin{Soutput}
-[1] "平成32年2月4日火曜日" "平成32年8月7日金曜日"
+[1] "令和2年2月4日火曜日" "令和2年8月7日金曜日"
 \end{Soutput}
 \end{Schunk}
 
@@ -4742,12 +4726,13 @@ R> structure(stri_count_regex(stri_enc_fromutf32(
 \end{Sinput}
 \begin{Soutput}
  \\p{L} \\p{Ll} \\p{Lu}  \\p{N}  \\p{P}  \\p{S}     \\w     \\d     \\s
- 125093    2063    1702    1502     770    6978  128238     590      25
+ 131241    2155    1791    1781     798    7564  134564     650      25
 \end{Soutput}
 \end{Schunk}
 
 Yet, most of the code points are still unallocated -- the Unicode
-standard is updated from time to time, e.g., the recent versions
+standard receives some updates from time to time, e.g., the
+most recent versions
 were supplemented with over 1{,}000 emojis.
 
 
@@ -4903,8 +4888,8 @@ UTF-8 data.
 
 According to a report by W3Techs\footnote{See
 \url{https://w3techs.com/technologies/cross/character_encoding/ranking}.},
-as of 2020--09--17, 95.4\% of websites use UTF-8.
-Nevertheless, encountering other encodings is still quite likely.
+as of 2021--02--15, 96.3\% of websites use UTF-8.
+Nevertheless, other encodings can still be encountered.
 
 \paragraph{Reading and writing text files.}
 If we know the encoding of a text file  in advance,
@@ -4914,7 +4899,6 @@ the data in a manner similar to the built-in \code{readLines()} function
 
 \begin{Schunk}
 \begin{Sinput}
-R> # see https://github.com/gagolews/stringi/tree/master/datasets
 R> x <- stri_read_lines("ES_latin1.txt", encoding="ISO-8859-1")
 R> head(x)  # now x is in UTF-8
 \end{Sinput}
@@ -4948,7 +4932,6 @@ First, we can read the resource in form of a raw-type vector:
 
 \begin{Schunk}
 \begin{Sinput}
-R> # see https://github.com/gagolews/stringi/tree/master/datasets
 R> x <- stri_read_raw("ES_latin1.txt")
 R> head(x)  # vector of type raw
 \end{Sinput}
@@ -5003,7 +4986,7 @@ misleading.
 \paragraph{Converting encodings.}
 Knowing the desired source and destination encoding precisely,
 \code{stri_encode()} can be called to perform the conversion.
-Contrary to the build-in \code{iconv()}, which relies
+Contrary to the built-in \code{iconv()}, which relies
 on different underlying libraries, the current function is portable
 across operating systems.
 
@@ -5112,7 +5095,7 @@ read from external sources (files, URLs) with NFC.
 Compatibility composition and decomposition normalisation forms (NFKC and
 NFKD, respectively) are also available if
 the removal of the formatting distinctions (font variants,
-subscripts, superscripts, etc.) is expected:
+subscripts, superscripts, etc.) is desired:
 
 
 \begin{Schunk}
@@ -5130,41 +5113,123 @@ R> stri_trans_nfkd("r²︷")
 
 %% -- Summary/conclusions/discussion -------------------------------------------
 
-\section{Conclusion}\label{Sec:conclusions}
+\section{Closing remarks}\label{Sec:conclusions}
+
+
 
 % Other:
 %
 % \code{stri_stats_general()}
 % \code{stri_stats_latex()}
 
-
-Over the years, many useful \proglang{R} packages related
-to text processing have been developed, see \citep{textminingr,textr}.
-Many of them are listed in the CRAN Task View
-on Natural Language Processing, see \url{%
-https://cran.r-project.org/web/views/NaturalLanguageProcessing.html}.
-At the time of writing of this paper,
-\pkg{stringi} itself has over 200 strong (direct) reverse dependencies.
-
-
-
-
-The complete documentation of the package's API
-is available at \url{https://stringi.gagolewski.com/}.
-\pkg{stringi} functions can also be accessed
-from within \proglang{C++} code.
-See the \pkg{ExampleRcppStringi} package available at
-\url{https://github.com/gagolews/ExampleRcppStringi}
-for an example using \pkg{Rcpp} \citep{rcppbook}.
+We have reviewed the key design principles and facilities available in
+\pkg{stringi}, including numerous operations
+that  help implement and optimise data processing pipelines.
+Let us stress again that many of the package features are provided by \pkg{ICU}, which
+is a platform-independent project. Hence, information
+presented above might be of interest to statisticians and data scientists
+employing different programming languages as well.
 
 
 
 
 
-Finally, it is worth stressing that functions in \pkg{stringi}
-are not wrappers around base \proglang{R} facilities.
+\paragraph{Portability issues in base \proglang{R}.}
+As we have mentioned in the introduction,
+base \proglang{R} string operations have traditionally been
+limited in scope. There also might be some issues with regards to their portability,
+reasons for which may be plentiful.
+For instance, varied variants of the
+\pkg{PCRE} (versions 8.x or 10.x thereof)
+pattern matching libraries may be linked to
+during the compilation of \proglang{R}. On Windows, there is a custom implementation
+of \pkg{iconv} that has a set of character encoding
+IDs not fully compatible with that on GNU/Linux: to select
+the Polish locale, we are required to pass \strq{Polish\_Poland}
+to \code{Sys.setlocale()} on Windows whereas \strq{pl\_PL} on
+Linux.
+Interestingly, \proglang{R} can be built against the system \pkg{ICU}
+so that it uses its Collator for comparing strings (e.g., using the ``\code{<=}''
+operator), however this is only optional and does not provide access to any
+other Unicode services.
+
+
+%
+% A call to \code{extSoftVersion()} reports on the versions of
+% third-party software  used by \proglang{R}.
+% some resources might not be unavailable/not installed
+% resources (e.g., locales) may be fetched by means of different IDs
+% not necessarily the fastest
+% %                      PCRE                       ICU                       TRE                     iconv
+% %        "10.34 2019-11-21"                    "66.1" "TRE 0.8.0 R_fixes (BSD)"              "glibc 2.31"
+% %
+% %        PCRE                       ICU     TRE                        iconv
+% % "8.42 2018-03-20"          "55.1"  "TRE 0.8.0 R_fixes (BSD)"  "win_iconv"
+
+
+
+
+For example, let us consider the matching
+of ``all letters'' by means of the built-in \code{gregexpr()} function
+and the \pkg{TRE} (\code{perl=FALSE})
+and \pkg{PCRE} (\code{perl=TRUE}) libraries
+using a POSIX-like and Unicode-style character set
+(see Section~\ref{Sec:regex} for more details):
+
+\begin{Schunk}
+\begin{Sinput}
+R> x <- "AEZaezĄĘŻąęż"  # "AEZaez\u0104\u0118\u017b\u0105\u0119\u017c"
+R> stri_sub(x, gregexpr("[[:alpha:]]", x, perl=FALSE)[[1]], length=1)
+R> stri_sub(x, gregexpr("[[:alpha:]]", x, perl=TRUE)[[1]],  length=1)
+R> stri_sub(x, gregexpr("\\p{L}", x, perl=TRUE)[[1]],       length=1)
+\end{Sinput}
+\end{Schunk}
+
+On Ubuntu Linux 20.04 (UTF-8 locale), the respective outputs are:
+
+\begin{Schunk}
+\begin{Soutput}
+[1] "A" "E" "Z" "a" "e" "z" "Ą" "Ę" "Ż" "ą" "ę" "ż"
+[1] "A" "E" "Z" "a" "e" "z"
+[1] "A" "E" "Z" "a" "e" "z" "Ą" "Ę" "Ż" "ą" "ę" "ż"
+\end{Soutput}
+\end{Schunk}
+
+On Windows, when \code{x} is marked as UTF-8
+(see Section \ref{Sec:encoding}), the current author obtained:
+
+\begin{Schunk}
+\begin{Soutput}
+[1] "A" "E" "Z" "a" "e" "z"
+[1] "A" "E" "Z" "a" "e" "z"
+[1] "A" "E" "Z" "a" "e" "z" "Ą" "Ę" "Ż" "ą" "ę" "ż"
+\end{Soutput}
+\end{Schunk}
+
+And again on Windows using the Polish locale
+but \code{x} marked as natively-encoded (CP-1250 in this case):
+
+\begin{Schunk}
+\begin{Soutput}
+[1] "A" "E" "Z" "a" "e" "z" "Ę" "ę"
+[1] "A" "E" "Z" "a" "e" "z" "Ą" "Ę" "Ż" "ą" "ę" "ż"
+[1] "A" "E" "Z" "a" "e" "z" "Ę" "ę"
+\end{Soutput}
+\end{Schunk}
+
+As we have mentioned in Section~\ref{Sec:collator},
+when \pkg{stringi} links to \pkg{ICU} built from sources
+(\code{install.pa\-ckages("stringi", configure.args="--disable-pkg-config")}),
+we are always guaranteed to get the same results on every platform.
+
+
+
+
+\paragraph{High performance of \pkg{stringi}.}
+Because of the aforementioned reasons, functions in \pkg{stringi}
+do not refer to their  base \proglang{R} counterparts.
 A vast majority of them has been written in pure
-\proglang{C} and \proglang{C++}. The operations that do not rely on \pkg{ICU}
+\proglang{C} and \proglang{C++}. What is more, the operations that do not rely on \pkg{ICU}
 services
 have been written from scratch with speed and portability in mind.
 For example, here are some timings of string concatenation:
@@ -5182,11 +5247,11 @@ R> microbenchmark::microbenchmark(
 \end{Sinput}
 \begin{Soutput}
 Unit: milliseconds
-     expr     min      lq    mean  median      uq     max neval
-    join2  37.713  39.040  52.593  40.208  78.734  98.048   100
-    join3  74.633  87.306  91.358  88.913  97.256 135.891   100
- r_paste2  98.916 104.435 120.786 108.456 151.921 169.785   100
- r_paste3 211.733 219.606 256.273 273.239 281.927 302.317   100
+     expr     min      lq    mean  median     uq    max neval
+    join2  65.047  66.854  85.585  68.081 124.24 140.66   100
+    join3 150.471 152.858 161.106 154.994 173.48 227.91   100
+ r_paste2 189.242 193.616 219.677 200.867 257.52 306.17   100
+ r_paste3 398.432 409.254 470.062 496.744 509.85 526.54   100
 \end{Soutput}
 \end{Schunk}
 
@@ -5207,15 +5272,30 @@ R> microbenchmark::microbenchmark(
 \end{Sinput}
 \begin{Soutput}
 Unit: milliseconds
-    expr      min       lq     mean   median       uq     max neval
-   fixed   4.7318   4.9162   5.0106   5.0096   5.1076   5.515   100
-   regex 117.0966 119.6360 121.8881 121.3912 123.5901 143.964   100
-    coll 378.5757 385.3210 392.0872 392.3554 396.7838 425.230   100
-   r_tre 122.3811 125.4567 127.8202 127.6302 129.4380 138.540   100
-  r_pcre  75.6733  78.0173  79.1578  79.1838  80.0254  86.130   100
- r_fixed  51.4335  52.7493  53.5762  53.6306  54.3305  57.827   100
+    expr      min       lq     mean   median       uq       max neval
+   fixed   8.5722   8.8406   9.0277   9.1003   9.1114    9.4158   100
+   regex 243.9435 251.2697 252.7098 254.0506 255.0880  264.6571   100
+    coll 934.9043 950.4080 973.5861 982.5842 990.0472 1013.1969   100
+   r_tre 285.8963 287.2784 293.8979 295.9722 296.6771  301.9577   100
+  r_pcre 194.7751 196.0178 200.3546 201.8720 202.6245  215.1482   100
+ r_fixed 109.4371 110.5815 113.2501 114.1326 114.3577  120.6593   100
 \end{Soutput}
 \end{Schunk}
+
+
+
+
+
+\pkg{stringi} functions can also be accessed
+from within \proglang{C++} code.
+Authors of statistical/data analysis software who would like to
+speed up their projects are kindly referred to the \pkg{ExampleRcppStringi}
+package available at \url{https://github.com/gagolews/ExampleRcppStringi}
+for an illustration using \pkg{Rcpp} \citep{rcppbook}.
+
+
+
+
 
 
 
@@ -5288,7 +5368,21 @@ Unit: milliseconds
 
 
 
-\bigskip
+
+
+\paragraph{Future of \pkg{stringi}.}
+Over the years, many useful \proglang{R} packages related
+to text processing have been developed, see \citep{textminingr,textr}.
+Several of them are listed in the CRAN Task View
+on Natural Language Processing, see \url{%
+https://cran.r-project.org/web/views/NaturalLanguageProcessing.html}.
+At the time of writing of this paper,
+\pkg{stringi} itself has over 200 strong (direct) reverse dependencies
+and has established itself as one of the most frequently downloaded
+\proglang{R} extension whose user base is steadily growing.
+
+
+
 Future work will involve the porting of \pkg{stringi} to different
 scientific/statistical computing environments, including \proglang{Python}
 with the \pkg{NumPy} \citep{numpy} ecosystem,
@@ -5296,9 +5390,8 @@ so as to provide more Unicode-aware
 alternatives to the vectorised text processing
 facilities from \code{numpy.char} and \pkg{pandas} \citep[Chap.~7]{pandas}.
 % PyICU
-Moreover, further extension of \pkg{stringi}'s API
-so as to  provide an even broader coverage of \pkg{ICU} services
-shall be conveyed.
+Moreover, further extension of \pkg{stringi}'s API shall be conveyed
+so as to  provide an even broader coverage of \pkg{ICU} services.
 % including number and message formatting
 
 
@@ -5309,12 +5402,21 @@ shall be conveyed.
 
 \section*{Acknowledgements}
 
-First and foremost, the author wishes to thank Hadley Wickham for coming
-up with the \pkg{stringr} package API and bringing the idea of ``tidying up''
-\proglang{R} string processing workflows.
-Also, many thanks to all the contributors who have donated their
+\pkg{stringi} is an open source project
+distributed under the terms of the BSD-3-clause license.
+Its most recent development snapshot is available through GitHub at
+\url{https://github.com/gagolews/stringi}. The bug- and feature request
+tracker can be accessed from
+\url{https://github.com/gagolews/stringi/issues}.
+Moreover, its homepage -- which includes a reference manual
+and detailed documentation of the package's API --
+is located at \url{https://stringi.gagolewski.com/}.
+
+The author wishes to thank Hadley Wickham for coming
+up with the original \pkg{stringr} package API (see Table~\ref{Tab:oldstringr}).
+Also, greatly appreciated are the contributions of all who have donated their
 time and effort (in all the possible forms: code, feature suggestions,
-ideas, criticism) to make \pkg{stringi} better --
+ideas, criticism, testing) to make \pkg{stringi} better --
 Bartek Tartanus,
 Kenneth Benoit,
 Marcin Bujarski,
@@ -5325,6 +5427,38 @@ Davis Vaughan,
 and many others,
 see \url{https://github.com/gagolews/stringi/graphs/contributors}.
 More contributions are always welcome.
+
+
+
+\begin{table}[t!]
+\centering
+
+\begin{tabularx}{1.0\linewidth}{p{4.8cm}p{2.5cm}X}
+\toprule
+\pkg{stringr}                                  & \bfseries Base \proglang{R}            & \bfseries Purpose \\
+\midrule
+\code{str\_c()}                                & \code{paste()}                         & join strings \\                                                          \midrule
+\code{str\_count()}                            & \code{gregexpr()}                      & count pattern matches\\                                                  \midrule
+\code{str\_detect()}                           & \code{grepl()}                         & detect pattern matches \\                                                \midrule
+\code{str\_dup()}                              &                                        & duplicate strings\\                                                      \midrule
+\code{str\_extract()}, \code{str\_extract\_all()}  &                                    & extract (first, all) pattern matches  \\                                 \midrule
+\code{str\_length()}                           & \code{nchar()}                         & compute string length \\                                                 \midrule
+\code{str\_locate()}, \code{str\_locate\_all()}& \code{regexpr()}, \code{gregexpr()}    & locate (first, all) pattern matches \\                                   \midrule
+\code{str\_match()}, \code{str\_match\_all()}   & \code{regexec()}                      & extract (first, all) matches to regex capture groups \\                  \midrule
+\code{str\_pad()}                              &                                        & add whitespaces at beginning or end\\                                    \midrule
+\code{str\_trim()}                             & \code{trimws()}                        & remove whitespaces from beginning or end \\                              \midrule
+\code{str\_replace()}, \code{str\_replace\_all()}   & \code{sub()}, \code{gsub()}       & replace (first, all) pattern matches with a replacement string\\        \midrule
+\code{str\_split()}, \code{str\_split\_fixed()}&  \code{strsplit()}                     & split up a string into  pieces \\                       \midrule
+\code{str\_sub()}, \code{`{}str\_sub<-`(){}}   & \code{substring()}                     & extract or replace substrings\\                                         \midrule
+\code{str\_wrap()}                             & \code{strwrap()}                       & split strings into text lines \\                                         \midrule
+\code{word()}                                  &                                        & extract words from a sentence \\
+\bottomrule
+\end{tabularx}
+
+\caption{\label{Tab:oldstringr} Functions in (the historical)
+\pkg{stringr} 0.6.2 and their base \proglang{R} counterparts.}
+\end{table}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
