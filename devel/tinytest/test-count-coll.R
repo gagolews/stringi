@@ -16,10 +16,10 @@ expect_identical(stri_count_coll("", "a"), 0L)
 
 expect_identical(stri_count_coll("aaaaa", "aa"), 2L)
 expect_identical(stri_count_coll("aaAAa-a", "aa"), 1L)
-expect_identical(stri_count_coll("aaAAa-a", "aa", opts_collator = list(strength = 1)),
+expect_identical(stri_count_coll("aaAAa-a", "aa", opts_collator = list(strength = 1, locale="en")),
     2L)
 expect_identical(stri_count_coll("aaAAa-a", "aa", opts_collator = stri_opts_collator(strength = 1,
-    alternate_shifted = TRUE)), 3L)
+    alternate_shifted = TRUE, locale="en")), 3L)
 
 expect_equivalent(stri_count_coll("aaaab", "ab"), 1L)
 expect_equivalent(stri_count_coll("bababababaab", "aab"), 1L)

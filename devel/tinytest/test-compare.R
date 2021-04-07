@@ -28,9 +28,9 @@ expect_equivalent(stri_cmp(character(0), character(0)), integer(0))
 expect_equivalent(stri_cmp(LETTERS, character(0)), integer(0))
 expect_equivalent(stri_cmp(character(0), LETTERS), integer(0))
 
-expect_equivalent(stri_cmp(LETTERS, LETTERS), rep(0L, length(LETTERS)))
-expect_equivalent(stri_cmp(letters, LETTERS), rep(-1L, length(LETTERS)))
-expect_equivalent(stri_cmp(LETTERS, letters), rep(+1L, length(LETTERS)))
+expect_equivalent(stri_cmp(LETTERS, LETTERS, locale="en"), rep(0L, length(LETTERS)))
+expect_equivalent(stri_cmp(letters, LETTERS, locale="en"), rep(-1L, length(LETTERS)))
+expect_equivalent(stri_cmp(LETTERS, letters, locale="en"), rep(+1L, length(LETTERS)))
 expect_equivalent(stri_cmp(c(NA, "a", "b"), "a"), c(NA_integer_, 0L, 1L))
 
 expect_false(stri_cmp("å̧", "å̧") == 0)
@@ -42,7 +42,7 @@ expect_true(stri_cmp("å̧", "å̧", normalization = TRUE) == 0)
 
 expect_equivalent(stri_cmp("hladny", "chladny", locale = "pl_PL"), 1L)
 expect_equivalent(stri_cmp("hladny", "chladny", locale = "sk_SK"), -1L)
-expect_equivalent(stri_cmp(letters, LETTERS, strength = 2), rep(0L, length(LETTERS)))
+expect_equivalent(stri_cmp(letters, LETTERS, strength = 2, locale="en"), rep(0L, length(LETTERS)))
 
 expect_equivalent(stri_cmp("dupa100", "dupa2"), -1)
 expect_equivalent(stri_cmp("dupa100", NA), NA_integer_)
@@ -51,7 +51,7 @@ expect_equivalent(stri_cmp("dupa100", "dupa1000"), -1)
 expect_equivalent(stri_cmp("dupa10000", "dupa1000"), 1)
 expect_equivalent(stri_cmp("dupa100", "dupa2", numeric = TRUE), 1)
 expect_equivalent(stri_cmp("above mentioned", "above-mentioned"), -1)
-expect_equivalent(stri_cmp("above mentioned", "above-mentioned", alternate_shifted = TRUE),
+expect_equivalent(stri_cmp("above mentioned", "above-mentioned", alternate_shifted = TRUE, locale="en"),
     0)
 
 expect_equivalent(stri_cmp(stri_trans_nfkd("ą"), "ą"), 0L)
@@ -103,7 +103,7 @@ expect_equivalent(stri_cmp_equiv("dupa100", "dupa2"), FALSE)
 expect_equivalent(stri_cmp_equiv("dupa100", "dupa1000"), FALSE)
 expect_equivalent(stri_cmp_equiv("dupa10000", "dupa1000"), FALSE)
 expect_equivalent(stri_cmp_equiv("above mentioned", "above-mentioned"), FALSE)
-expect_equivalent(stri_cmp_equiv("above mentioned", "above-mentioned", alternate_shifted = TRUE),
+expect_equivalent(stri_cmp_equiv("above mentioned", "above-mentioned", alternate_shifted = TRUE, locale="en"),
     TRUE)
 
 expect_equivalent(stri_cmp_equiv(stri_trans_nfkd("ą"), "ą"), TRUE)

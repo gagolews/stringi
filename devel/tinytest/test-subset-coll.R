@@ -15,9 +15,9 @@ expect_identical(stri_subset_coll(c(NA, "", "ala", "bkb"), "ala", omit_na = TRUE
 expect_identical(stri_subset_coll(c(NA, "", "ala", "bkb"), "ala", omit_na = TRUE,
     negate = TRUE), c("", "bkb"))
 
-expect_identical(stri_subset_coll(c("", "ala", "AlA"), "ala", opts_collator = stri_opts_collator(strength = 1)),
+expect_identical(stri_subset_coll(c("", "ala", "AlA"), "ala", opts_collator = stri_opts_collator(strength = 1, locale="en")),
     c("ala", "AlA"))
-expect_identical(stri_subset_coll(c("", "ala", "AlA"), "ala", strength = 1),
+expect_identical(stri_subset_coll(c("", "ala", "AlA"), "ala", strength = 1, locale="en"),
     c("ala", "AlA"))
 expect_identical(stri_subset_coll("kot lorem1", character(0)), character(0))
 expect_identical(stri_subset_coll(character(0), "ipsum 1234"), character(0))
@@ -89,6 +89,6 @@ expect_warning(stri_subset_coll(x, c("7", "8")) <- NA)
 expect_error(stri_subset_coll(x, character(0)) <- NA)
 
 x <- c("stringi R", "123", "ID456", "")
-stri_subset(x, coll = "S", strength = 1) <- NA
+stri_subset(x, coll = "S", strength = 1, locale="en") <- NA
 expect_identical(x, c(NA, "123", "ID456", ""))
 
