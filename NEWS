@@ -10,6 +10,9 @@
 * [INTERNAL] #414: Use `LEVELS(x)` macro instead of accessing `(x)->sxpinfo.gp`
     directly (@lukaszdaniel).
 
+* [BUGFIX] #415: `locale=''` was not equivalent to `locale=NULL`
+    in `stri_opts_collator()`.
+
 * ... (to do) ..., for example:
     #25 (locate-capture groups),
     #31 (sub_index),
@@ -24,7 +27,7 @@
 ## 1.5.3 (2020-09-04) **CRAN**
 
 * [DOCUMENTATION] stringi home page has moved to https://stringi.gagolewski.com
-  and now includes the comprehensive reference manual.
+  and now includes a comprehensive reference manual.
 
 * [NEW FEATURE] #400: `%s$%` and `%stri$%` are now binary operators
   that call base R's `sprintf()`.
