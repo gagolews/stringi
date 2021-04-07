@@ -56,15 +56,15 @@ library("stringr")
     suppressWarnings(expect_identical(stri_startswith_coll("", "a"), FALSE))
 
     expect_equivalent(stri_startswith_coll("ﷺﷺﷺﷺXYZﷺ", stri_paste("صلى الله ",
-        "عليه وسلمXYZ"), opts_collator = stri_opts_collator(strength = 1),
+        "عليه وسلمXYZ"), opts_collator = stri_opts_collator(strength = 1, locale="en"),
         from = 4), TRUE)
     expect_equivalent(stri_startswith_coll("ﷺﷺﷺﷺXYZﷺ", stri_paste("صلى الله ",
-        "عليه وسلمXYZ"), negate=TRUE, opts_collator = stri_opts_collator(strength = 1),
+        "عليه وسلمXYZ"), negate=TRUE, opts_collator = stri_opts_collator(strength = 1, locale="en"),
         from = 4), !TRUE)
     expect_equivalent(stri_startswith_coll(stri_paste("صلى الله ", "عليه وسلم"),
-        "ﷺ", strength = 1), TRUE)
+        "ﷺ", strength = 1, locale="en"), TRUE)
     expect_equivalent(stri_startswith_coll(stri_paste("صلى الله ", "عليه وسلمﷺ"),
-        "ﷺ", opts_collator = stri_opts_collator(strength = 1)), TRUE)
+        "ﷺ", opts_collator = stri_opts_collator(strength = 1, locale="en")), TRUE)
 
     expect_identical(stri_endswith_coll("a", NA), NA)
     expect_identical(stri_endswith_coll(NA, "a"), NA)
@@ -122,10 +122,10 @@ library("stringr")
         FALSE))
 
     expect_equivalent(stri_endswith_coll("ﷺﷺﷺﷺXYZﷺ", stri_paste("صلى الله ",
-        "عليه وسلمXYZ"), opts_collator = stri_opts_collator(strength = 1),
+        "عليه وسلمXYZ"), opts_collator = stri_opts_collator(strength = 1, locale="en"),
         to = -2), TRUE)
     expect_equivalent(stri_endswith_coll(stri_paste("صلى الله ", "عليه وسلم"),
-        "ﷺ", strength = 1), TRUE)
+        "ﷺ", strength = 1, locale="en"), TRUE)
     expect_equivalent(stri_endswith_coll(stri_paste("صلى الله ", "عليه وسلمﷺ"),
-        "ﷺ", opts_collator = stri_opts_collator(strength = 1), to = -2), TRUE)
+        "ﷺ", opts_collator = stri_opts_collator(strength = 1, locale="en"), to = -2), TRUE)
 

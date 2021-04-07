@@ -92,7 +92,7 @@ expect_equivalent(stri_unique(c("abc", "ab", "abc", "ab", "aba")), c("abc", "ab"
 expect_equivalent(stri_unique(c("abc", "aab", "aąb", "ąbc", "abć", "aąb"),
     opts_collator = list(locale = "pl_PL")), c("abc", "aab", "aąb", "ąbc",
     "abć"))
-expect_equivalent(stri_unique(c("abc", "ABC"), opts_collator = list(strength = 1)),
+expect_equivalent(stri_unique(c("abc", "ABC"), opts_collator = list(strength = 1, locale="en")),
     c("abc"))
 
 
@@ -125,7 +125,7 @@ expect_equivalent(stri_duplicated(c("abc", "ab", "abc", "ab", "aba"), TRUE),
     c(T, T, F, F, F))
 expect_equivalent(stri_duplicated(c("abc", "aab", "aąb", "ąbc", "abć", "aąb"),
     TRUE, opts_collator = list(locale = "pl_PL")), c(F, F, T, F, F, F))
-expect_equivalent(stri_duplicated(c("abc", "ABC"), FALSE, opts_collator = list(strength = 1)),
+expect_equivalent(stri_duplicated(c("abc", "ABC"), FALSE, opts_collator = list(strength = 1, locale="en")),
     c(F, T))
 
 expect_equivalent(stri_duplicated_any(character(0)), 0)
