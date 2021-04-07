@@ -1147,6 +1147,9 @@ const char* stri__prepare_arg_string_1_notNA(SEXP x, const char* argname)
  *
  * @version 0.5-1 (Marek Gagolewski, 2015-01-01)
  *    "@keyword=value" may use default locale from now; also, loc is trimmed
+ *
+ * @version 1.5.4 (Marek Gagolewski, 2021-04-07)
+ *    BUGFIX: locale='' is the default
  */
 const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowdefault, bool allowna)
 {
@@ -1158,6 +1161,11 @@ const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowde
             UNPROTECT(1);
             if (allowna) return NULL;
             else Rf_error(MSG__ARG_EXPECTED_NOT_NA, argname); // Rf_error allowed here
+        }
+        if (strlen((const char*)CHAR(STRING_ELT(loc, 0))) == 0) {
+            UNPROTECT(1);
+            if (allowdefault) return uloc_getDefault();
+            else Rf_error(MSG__LOCALE_INCORRECT_ID); // Rf_error allowed here
         }
 
         UErrorCode err = U_ZERO_ERROR;
