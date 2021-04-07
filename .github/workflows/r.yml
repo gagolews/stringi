@@ -16,7 +16,7 @@ jobs:
         sudo apt-get update
         sudo apt-get -y upgrade
         sudo apt-get -y install libcurl4-openssl-dev r-base-dev devscripts
-        sudo Rscript -e "install.packages(c('tinytest', 'roxygen2'))"
+        sudo Rscript -e "install.packages(c('tinytest', 'roxygen2', 'pkgbuild'))"
     - name: Test and check R
       run: |
         sudo make test
