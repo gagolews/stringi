@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' project.
- * Copyright (c) 2013-2020, Marek Gagolewski <https://www.gagolewski.com>
+ * Copyright (c) 2013-2021, Marek Gagolewski <https://www.gagolewski.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,6 +33,7 @@
 #include "stri_stringi.h"
 #include <unicode/ucol.h>
 #include <unicode/usearch.h>
+
 
 /**
  * Create & set up an ICU Collator
@@ -155,7 +156,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
 //      STRI__CHECKICUSTATUS_RFERROR(status, { ucol_close(col); }) // error() allowed here
 //   }
 
-    if (opt_STRENGTH != UCOL_DEFAULT) {
+    if (opt_STRENGTH != UCOL_DEFAULT_STRENGTH) {
         status = U_ZERO_ERROR;
         ucol_setAttribute(col, UCOL_STRENGTH, opt_STRENGTH, &status);
         STRI__CHECKICUSTATUS_RFERROR(status, { ucol_close(col); }) // error() allowed here

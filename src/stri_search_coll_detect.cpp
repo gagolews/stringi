@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' project.
- * Copyright (c) 2013-2020, Marek Gagolewski <https://www.gagolewski.com>
+ * Copyright (c) 2013-2021, Marek Gagolewski <https://www.gagolewski.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -104,10 +104,15 @@ SEXP stri_detect_coll(SEXP str, SEXP pattern, SEXP negate,
             if (max_count_1 > 0 && ret_tab[i]) --max_count_1;
         })
 
+        UErrorCode status;
         UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
         usearch_reset(matcher);
-        UErrorCode status = U_ZERO_ERROR;
-        ret_tab[i] = ((int)usearch_first(matcher, &status) != USEARCH_DONE);  // this is F*G slow! :-(
+
+
+
+        status = U_ZERO_ERROR;
+        ret_tab[i] = ((int)usearch_first(matcher, &status) != USEARCH_DONE);  // this is slow! :-(
+        //ret_tab[i] = ((int)usearch_search(matcher, 0, NULL, NULL, &status));  // this is slow! :-(
         if (negate_1) ret_tab[i] = !ret_tab[i];
         if (max_count_1 > 0 && ret_tab[i]) --max_count_1;
         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
