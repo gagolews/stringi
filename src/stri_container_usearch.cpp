@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' project.
- * Copyright (c) 2013-2020, Marek Gagolewski <https://www.gagolewski.com>
+ * Copyright (c) 2013-2021, Marek Gagolewski <https://www.gagolewski.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -136,8 +136,10 @@ UStringSearch* StriContainerUStringSearch::getMatcher(R_len_t i, const UChar* se
     if (!lastMatcher) {
         this->lastMatcherIndex = (i % n);
         UErrorCode status = U_ZERO_ERROR;
-        lastMatcher = usearch_openFromCollator(this->get(i).getBuffer(), this->get(i).length(),
-                                               searchStr, searchStr_len, col, NULL, &status);
+        lastMatcher = usearch_openFromCollator(
+            this->get(i).getBuffer(),
+            this->get(i).length(),
+            searchStr, searchStr_len, this->col, NULL, &status);
         STRI__CHECKICUSTATUS_THROW(status, {usearch_close(lastMatcher); lastMatcher = NULL;})
         return lastMatcher;
     }
