@@ -52,3 +52,6 @@ suppressWarnings(expect_identical(stri_extract_last_fixed("test", ""), NA_charac
 expect_identical(stri_extract_last_fixed("b!d\U00f0ffffbąde", "bąd"), "bąd")
 expect_identical(stri_extract_last_fixed("b!d\U00f0ffffbąde", "BąD", case_insensitive = TRUE),
     "bąd")
+
+expect_identical(stri_extract_last_fixed("agAGA", "aga", case_insensitive=TRUE), "AGA")
+expect_identical(stri_extract_last_regex("agAGA", "aga", case_insensitive=TRUE), "agA")

@@ -53,7 +53,7 @@
 #'
 #' \code{stri_extract}, \code{stri_extract_all}, \code{stri_extract_first},
 #' and \code{stri_extract_last} are convenience functions.
-#' They just call \code{stri_extract_*_*}, depending on the arguments used.
+#' They merely call \code{stri_extract_*_*}, depending on the arguments used.
 #'
 #' @param str character vector; strings to search in
 #' @param pattern,regex,fixed,coll,charclass character vector;
@@ -98,6 +98,9 @@
 #' \code{stri_extract_first*} and \code{stri_extract_last*}
 #' return a character vector. A \code{NA} element indicates a no-match.
 #'
+#' Note that \code{stri_extract_last_regex} searches from start to end,
+#' but skips overlapping matches, see the example below.
+#'
 #' @examples
 #' stri_extract_all('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_extract_all('Bartolini', coll='i')
@@ -127,6 +130,11 @@
 #'
 #' stri_extract_all_fixed('abaBAba', 'Aba', case_insensitive=TRUE)
 #' stri_extract_all_fixed('abaBAba', 'Aba', case_insensitive=TRUE, overlap=TRUE)
+#'
+#' # Searching for the last occurrence:
+#' # Note the difference - regex searches left to right, with no overlaps.
+#' stri_extract_last_fixed("agAGA", "aga", case_insensitive=TRUE)
+#' stri_extract_last_regex("agAGA", "aga", case_insensitive=TRUE)
 #'
 #' @family search_extract
 #'

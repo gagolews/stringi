@@ -63,6 +63,9 @@
 #' escape it with a backslash.
 #' Moreover, \code{${name}} are used for named capture groups.
 #'
+#' Note that \code{stri_replace_last_regex} searches from start to end,
+#' but skips overlapping matches, see the example below.
+#'
 #' \code{stri_replace}, \code{stri_replace_all}, \code{stri_replace_first},
 #' and \code{stri_replace_last} are convenience functions; they just call
 #' \code{stri_replace_*_*} variants, depending on the arguments used.
@@ -130,6 +133,11 @@
 #'      c('quick', 'brown', 'fox'), c('slow',  'black', 'bear'), vectorize_all=FALSE)
 #' stri_replace_all_regex('The quicker brown fox jumped over the lazy dog.',
 #'      '\\b'%s+%c('quick', 'brown', 'fox')%s+%'\\b', c('slow',  'black', 'bear'), vectorize_all=FALSE)
+#'
+#' # Searching for the last occurrence:
+#' # Note the difference - regex searches left to right, with no overlaps.
+#' stri_replace_last_fixed("agAGA", "aga", "*", case_insensitive=TRUE)
+#' stri_replace_last_regex("agAGA", "aga", "*", case_insensitive=TRUE)
 #'
 #' @family search_replace
 #' @export

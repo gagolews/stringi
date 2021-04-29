@@ -18,8 +18,6 @@
     The ICU4C bundle has been updated from version 61.1 to 69.1
     which features Unicode 13.0 and CLDR 39.
 
-* ...todo... #406 (update manual)
-
 * ...todo... #408 (stri_trans_casefold),
 
 * [INTERNAL] #414: Use `LEVELS(x)` macro instead of accessing `(x)->sxpinfo.gp`

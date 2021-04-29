@@ -116,3 +116,5 @@ expect_identical(stri_replace_last_fixed("ABCD", "ABCD", c("", "RYBA")), c("",
 expect_identical(stri_replace_last_fixed("ABCDE", "ABCDE", c("", "RYBA")), c("",
     "RYBA"))
 
+expect_identical(stri_replace_last_fixed("agAGA", "aga", "*", case_insensitive=TRUE), "ag*")
+expect_identical(stri_replace_last_regex("agAGA", "aga", "*", case_insensitive=TRUE), "*GA")
