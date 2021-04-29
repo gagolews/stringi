@@ -1,6 +1,6 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
-## All rights reserved.
+## Copyright (c) 2013-2021, Marek Gagolewski <https://www.gagolewski.com>
+
 
 # copy lib:
 libfile <- paste("stringi", SHLIB_EXT, sep="")
