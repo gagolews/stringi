@@ -1,6 +1,5 @@
 library("tinytest")
 library("stringi")
-library("stringr")
 
 
 expect_equal(mode(stri_locate_all_coll(character(0), "a")), "list")

@@ -1,9 +1,8 @@
 library("tinytest")
 library("stringi")
-library("stringr")
 
-icudt_donwload_test <- as.logical(Sys.getenv("STRINGI_icudt_donwload_test", FALSE))
-if (identical(icudt_donwload_test, TRUE)) {
+icudt_download_test <- as.logical(Sys.getenv("STRINGI_icudt_download_test", FALSE))
+if (identical(icudt_download_test, TRUE)) {
     source("R/install.R")
 
     for (href in icudt_mirrors) {

@@ -1,6 +1,6 @@
 library("tinytest")
 library("stringi")
-library("stringr")
+
 
 x1 <- c("ą", NA, "Ą", "ñ", "ṩ")  # nfc
 x2 <- c("ą", NA, "Ą", "ñ", "ṩ")  # nfd

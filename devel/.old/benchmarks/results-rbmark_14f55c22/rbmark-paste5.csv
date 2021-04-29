@@ -1,0 +1,22 @@
+# benchmark=rbmark-paste5
+# description=joins into one string four vectors consisting of words of different lengths (ASCII + Polish letters, native encoding)
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.0.2 (2013-09-25)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic
+# LC_CTYPE=pl_PL.iso-8859-2
+# nodename=eurydike
+"expr","user.self","sys.self","elapsed","user.child","sys.child","n","benchmark","git_sha","sys_sha","datetime"
+"paste(x, y, z, w, sep = ""!"", collapse = ""*"")",1.833,0.00600000000000001,1.853,0,0,100,"rbmark-paste5","1eaca8f","14f55c22","2014-04-01 13:39:10"
+"str_join(x, y, z, w, sep = ""!"", collapse = ""*"")",1.918,0.00199999999999989,1.934,0,0,100,"rbmark-paste5","1eaca8f","14f55c22","2014-04-01 13:39:10"
+"stri_join(x, y, z, w, sep = ""!"", collapse = ""*"")",1.984,0.005,2.002,0,0,100,"rbmark-paste5","1eaca8f","14f55c22","2014-04-01 13:39:10"
+"paste(x, y, z, w, sep = ""!"", collapse = ""*"")",1.86900000000001,0.001,1.883,0,0,100,"rbmark-paste5","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"str_join(x, y, z, w, sep = ""!"", collapse = ""*"")",1.911,0.004,1.931,0,0,100,"rbmark-paste5","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"stri_join(x, y, z, w, sep = ""!"", collapse = ""*"")",1.96899999999999,0.002,1.98400000000001,0,0,100,"rbmark-paste5","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"paste(x, y, z, w, sep = ""!"", collapse = ""*"")",1.86799999999999,0,1.878,0,0,100,"rbmark-paste5","dd18a15","14f55c22","2014-04-17 13:54:04"
+"str_join(x, y, z, w, sep = ""!"", collapse = ""*"")",1.898,0,1.908,0,0,100,"rbmark-paste5","dd18a15","14f55c22","2014-04-17 13:54:04"
+"stri_join(x, y, z, w, sep = ""!"", collapse = ""*"")",2.036,0,2.048,0,0,100,"rbmark-paste5","dd18a15","14f55c22","2014-04-17 13:54:04"
+"paste(x, y, z, w, sep = ""!"", collapse = ""*"")",1.95699999999999,0,1.97,0,0,100,"rbmark-paste5","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"str_join(x, y, z, w, sep = ""!"", collapse = ""*"")",1.95700000000001,0,1.971,0,0,100,"rbmark-paste5","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"stri_join(x, y, z, w, sep = ""!"", collapse = ""*"")",1.89,0,1.90000000000001,0,0,100,"rbmark-paste5","6ea2ea2","14f55c22","2014-04-17 18:43:18"

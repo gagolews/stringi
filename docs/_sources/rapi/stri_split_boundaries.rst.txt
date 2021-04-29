@@ -44,7 +44,7 @@ Vectorized over ``str`` and ``n``.
 
 If ``n`` is negative (the default), then all text pieces are extracted.
 
-Otherwise, if ``tokens_only`` is ``FALSE`` (this is the default, for compatibility with the stringr package), then ``n-1`` tokens are extracted (if possible) and the ``n``-th string gives the (non-split) remainder (see Examples). On the other hand, if ``tokens_only`` is ``TRUE``, then only full tokens (up to ``n`` pieces) are extracted.
+Otherwise, if ``tokens_only`` is ``FALSE`` (which is the default), then ``n-1`` tokens are extracted (if possible) and the ``n``-th string gives the (non-split) remainder (see Examples). On the other hand, if ``tokens_only`` is ``TRUE``, then only full tokens (up to ``n`` pieces) are extracted.
 
 For more information on text boundary analysis performed by ICU's ``BreakIterator``, see `stringi-search-boundaries <about_search_boundaries.html>`__.
 

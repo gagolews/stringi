@@ -1,0 +1,22 @@
+# benchmark=rbmark-sort2
+# description=sorts a set of words of various lengths (ASCII + Polish letters, native encoding) [already sorted]
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.0.2 (2013-09-25)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic
+# LC_CTYPE=pl_PL.iso-8859-2
+# nodename=eurydike
+"expr","user.self","sys.self","elapsed","user.child","sys.child","n","benchmark","git_sha","sys_sha","datetime"
+"stri_sort(xsort)",1.66799999999999,0.003,1.684,0,0,100,"rbmark-sort2","1eaca8f","14f55c22","2014-04-01 13:39:10"
+"stri_sort(xsort, opts_collator = NA)",1.027,0.001,1.032,0,0,100,"rbmark-sort2","1eaca8f","14f55c22","2014-04-01 13:39:10"
+"sort(xsort)",2.84,0.004,2.86099999999999,0,0,100,"rbmark-sort2","1eaca8f","14f55c22","2014-04-01 13:39:10"
+"stri_sort(xsort)",1.68600000000001,0,1.69199999999999,0,0,100,"rbmark-sort2","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"stri_sort(xsort, opts_collator = NA)",1.06700000000001,0.015,1.08800000000001,0,0,100,"rbmark-sort2","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"sort(xsort)",2.736,0.019,2.76700000000001,0,0,100,"rbmark-sort2","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"stri_sort(xsort)",1.685,0,1.693,0,0,100,"rbmark-sort2","dd18a15","14f55c22","2014-04-17 13:54:04"
+"stri_sort(xsort, opts_collator = NA)",1.075,0.001,1.08200000000001,0,0,100,"rbmark-sort2","dd18a15","14f55c22","2014-04-17 13:54:04"
+"sort(xsort)",2.756,0.001,2.76900000000001,0,0,100,"rbmark-sort2","dd18a15","14f55c22","2014-04-17 13:54:04"
+"stri_sort(xsort)",1.20100000000001,0,1.208,0,0,100,"rbmark-sort2","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"stri_sort(xsort, opts_collator = NA)",1.074,0,1.08,0,0,100,"rbmark-sort2","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"sort(xsort)",2.74299999999999,0,2.754,0,0,100,"rbmark-sort2","6ea2ea2","14f55c22","2014-04-17 18:43:18"

@@ -1,6 +1,5 @@
 library("tinytest")
 library("stringi")
-library("stringr")
 
 
 expect_true(length(stri_locale_list()) > 0)

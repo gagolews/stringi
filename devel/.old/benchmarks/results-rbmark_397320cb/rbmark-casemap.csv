@@ -1,0 +1,22 @@
+# benchmark=rbmark-casemap
+# description=joins two identical vectors consisting of words of different lengths, with a separator (ASCII + Polish letters, native encoding)
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.0.2 (2013-09-25)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic
+# LC_CTYPE=pl_PL.UTF-8
+# nodename=eurydike
+"expr","user.self","sys.self","elapsed","user.child","sys.child","n","benchmark","git_sha","sys_sha","datetime"
+"tolower(text)",0.723,0,0.725,0,0,100,"rbmark-casemap","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"toupper(text)",0.72,0,0.723,0,0,100,"rbmark-casemap","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"stri_trans_tolower(text)",0.504,0,0.506,0,0,100,"rbmark-casemap","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"stri_trans_toupper(text)",0.614,0,0.615,0,0,100,"rbmark-casemap","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"tolower(text)",0.712,0.00199999999999999,0.717,0,0,100,"rbmark-casemap","dd18a15","397320cb","2014-04-17 13:51:29"
+"toupper(text)",0.737,0,0.74,0,0,100,"rbmark-casemap","dd18a15","397320cb","2014-04-17 13:51:29"
+"stri_trans_tolower(text)",0.505,0,0.507,0,0,100,"rbmark-casemap","dd18a15","397320cb","2014-04-17 13:51:29"
+"stri_trans_toupper(text)",0.614,0,0.615,0,0,100,"rbmark-casemap","dd18a15","397320cb","2014-04-17 13:51:29"
+"tolower(text)",0.804,0.001,0.809,0,0,100,"rbmark-casemap","6ea2ea2","397320cb","2014-04-17 18:40:43"
+"toupper(text)",0.812,0.001,0.816,0,0,100,"rbmark-casemap","6ea2ea2","397320cb","2014-04-17 18:40:43"
+"stri_trans_tolower(text)",0.558,0.00199999999999999,0.561,0,0,100,"rbmark-casemap","6ea2ea2","397320cb","2014-04-17 18:40:43"
+"stri_trans_toupper(text)",0.623,0,0.625,0,0,100,"rbmark-casemap","6ea2ea2","397320cb","2014-04-17 18:40:43"

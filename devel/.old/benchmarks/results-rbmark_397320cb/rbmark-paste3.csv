@@ -1,0 +1,22 @@
+# benchmark=rbmark-paste3
+# description=joins four vectors consisting of words of different lengths, with a separator and using the recycling rule (ASCII + Polish letters, native encoding)
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.0.2 (2013-09-25)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic
+# LC_CTYPE=pl_PL.UTF-8
+# nodename=eurydike
+"expr","user.self","sys.self","elapsed","user.child","sys.child","n","benchmark","git_sha","sys_sha","datetime"
+"paste(x, y, z, w, sep = ""!"")",1.613,0.001,1.622,0,0,100,"rbmark-paste3","1eaca8f","397320cb","2014-04-01 13:37:27"
+"str_join(x, y, z, w, sep = ""!"")",1.715,0,1.724,0,0,100,"rbmark-paste3","1eaca8f","397320cb","2014-04-01 13:37:27"
+"stri_join(x, y, z, w, sep = ""!"")",1.084,0,1.09,0,0,100,"rbmark-paste3","1eaca8f","397320cb","2014-04-01 13:37:27"
+"paste(x, y, z, w, sep = ""!"")",1.615,0,1.621,0,0,100,"rbmark-paste3","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"str_join(x, y, z, w, sep = ""!"")",1.69,0,1.699,0,0,100,"rbmark-paste3","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"stri_join(x, y, z, w, sep = ""!"")",1.079,0.003,1.087,0,0,100,"rbmark-paste3","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"paste(x, y, z, w, sep = ""!"")",1.584,0.00900000000000001,1.603,0,0,100,"rbmark-paste3","dd18a15","397320cb","2014-04-17 13:51:29"
+"str_join(x, y, z, w, sep = ""!"")",1.672,0.001,1.68600000000001,0,0,100,"rbmark-paste3","dd18a15","397320cb","2014-04-17 13:51:29"
+"stri_join(x, y, z, w, sep = ""!"")",1.07100000000001,0.003,1.08,0,0,100,"rbmark-paste3","dd18a15","397320cb","2014-04-17 13:51:29"
+"paste(x, y, z, w, sep = ""!"")",1.684,0.002,1.693,0,0,100,"rbmark-paste3","6ea2ea2","397320cb","2014-04-17 18:40:43"
+"str_join(x, y, z, w, sep = ""!"")",1.795,0,1.806,0,0,100,"rbmark-paste3","6ea2ea2","397320cb","2014-04-17 18:40:43"
+"stri_join(x, y, z, w, sep = ""!"")",1.121,0,1.126,0,0,100,"rbmark-paste3","6ea2ea2","397320cb","2014-04-17 18:40:43"

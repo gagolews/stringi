@@ -1,0 +1,16 @@
+# benchmark=rbmark-sub4
+# description=Extract signle code points from a string [ASCII+Polish letters, native encoding]
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.0.2 (2013-09-25)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic
+# LC_CTYPE=pl_PL.iso-8859-2
+# nodename=eurydike
+"expr","user.self","sys.self","elapsed","user.child","sys.child","n","benchmark","git_sha","sys_sha","datetime"
+"str_sub(x, 1:250, 1:250)",0.210000000000008,0,0.211999999999989,0,0,1000,"rbmark-sub4","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"stri_sub(x, 1:250, 1:250)",0.0500000000000114,0.001,0.0509999999999877,0,0,1000,"rbmark-sub4","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"str_sub(x, 1:250, 1:250)",0.211000000000013,0,0.211999999999989,0,0,1000,"rbmark-sub4","dd18a15","14f55c22","2014-04-17 13:54:04"
+"stri_sub(x, 1:250, 1:250)",0.0510000000000161,0,0.0510000000000161,0,0,1000,"rbmark-sub4","dd18a15","14f55c22","2014-04-17 13:54:04"
+"str_sub(x, 1:250, 1:250)",0.21599999999998,0,0.217999999999989,0,0,1000,"rbmark-sub4","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"stri_sub(x, 1:250, 1:250)",0.0449999999999875,0,0.0459999999999923,0,0,1000,"rbmark-sub4","6ea2ea2","14f55c22","2014-04-17 18:43:18"

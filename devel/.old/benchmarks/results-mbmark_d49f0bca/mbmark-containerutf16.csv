@@ -1,0 +1,16 @@
+# benchmark=mbmark-containerutf16
+# description=StriContainerUTF16 [internal]
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.1.0 (2014-04-10)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic -flto
+# LC_CTYPE=pl_PL.UTF-8
+# nodename=eurydike
+"expr","min.time","q1.time","median.time","q3.time","max.time","n","benchmark","git_sha","sys_sha","datetime"
+"stringi:::.stri_test_StriContainerUTF16(ascii)",0.006563893,0.0066053305,0.0079547895,0.0094468635,0.016133942,100,"mbmark-containerutf16","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"stringi:::.stri_test_StriContainerUTF16(native)",0.046429099,0.0490665015,0.0502008465,0.07544717075,0.07882914,100,"mbmark-containerutf16","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"stringi:::.stri_test_StriContainerUTF16(utf8)",0.046402606,0.049051596,0.049964447,0.07515699675,0.080581014,100,"mbmark-containerutf16","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"stringi:::.stri_test_StriContainerUTF16(ascii)",0.006592245,0.00698541575,0.0081510135,0.01094158075,0.020188135,100,"mbmark-containerutf16","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"stringi:::.stri_test_StriContainerUTF16(native)",0.047016715,0.049159551,0.0505421385,0.07438518725,0.129340825,100,"mbmark-containerutf16","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"stringi:::.stri_test_StriContainerUTF16(utf8)",0.046988464,0.0490072805,0.050193303,0.07521530825,0.136791037,100,"mbmark-containerutf16","c86aa5b","d49f0bca","2014-08-05 10:09:16"

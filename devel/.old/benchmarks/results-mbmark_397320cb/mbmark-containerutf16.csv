@@ -1,0 +1,31 @@
+# benchmark=benchmark-containerutf16
+# description=StriContainerUTF16 [internal]
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.0.2 (2013-09-25)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic
+# LC_CTYPE=pl_PL.UTF-8
+# nodename=eurydike
+"expr","min.time","q1.time","median.time","q3.time","max.time","n","benchmark","git_sha","sys_sha","datetime"
+"stringi:::.stri_test_StriContainerUTF16(ascii)",0.016270978,0.016364862,0.0165141855,0.0165424195,0.016889382,100,"benchmark-containerutf16","93c3514","397320cb","2014-03-25 18:25:41"
+"stringi:::.stri_test_StriContainerUTF16(native)",0.054993321,0.0551859805,0.0552573915,0.05529994575,0.055544819,100,"benchmark-containerutf16","93c3514","397320cb","2014-03-25 18:25:41"
+"stringi:::.stri_test_StriContainerUTF16(utf8)",0.061453105,0.06163024375,0.0616741795,0.06172824725,0.0619374,100,"benchmark-containerutf16","93c3514","397320cb","2014-03-25 18:25:41"
+"stringi:::.stri_test_StriContainerUTF16(ascii)",0.015956553,0.01603599375,0.0160551145,0.01609560525,0.016766307,100,"benchmark-containerutf16","93c3514","397320cb","2014-03-25 18:28:46"
+"stringi:::.stri_test_StriContainerUTF16(native)",0.054701591,0.0547767395,0.05480041,0.054872826,0.055287267,100,"benchmark-containerutf16","93c3514","397320cb","2014-03-25 18:28:46"
+"stringi:::.stri_test_StriContainerUTF16(utf8)",0.054605894,0.0546610865,0.0546838495,0.054760752,0.055164482,100,"benchmark-containerutf16","93c3514","397320cb","2014-03-25 18:28:46"
+"stringi:::.stri_test_StriContainerUTF16(ascii)",0.014800353,0.01491699325,0.0149352375,0.014959819,0.016564844,100,"benchmark-containerutf16","93c3514","397320cb","2014-03-25 18:29:55"
+"stringi:::.stri_test_StriContainerUTF16(native)",0.054609567,0.0547211675,0.054771172,0.054918459,0.059002055,100,"benchmark-containerutf16","93c3514","397320cb","2014-03-25 18:29:55"
+"stringi:::.stri_test_StriContainerUTF16(utf8)",0.054587039,0.05469345625,0.0547384485,0.05483306925,0.057983558,100,"benchmark-containerutf16","93c3514","397320cb","2014-03-25 18:29:55"
+"stringi:::.stri_test_StriContainerUTF16(ascii)",0.015194953,0.015275767,0.0155216545,0.015625837,0.016446192,100,"benchmark-containerutf16","93c3514","397320cb","2014-03-25 18:33:48"
+"stringi:::.stri_test_StriContainerUTF16(native)",0.054893593,0.05544256925,0.0556000895,0.05585191275,0.066645786,100,"benchmark-containerutf16","93c3514","397320cb","2014-03-25 18:33:48"
+"stringi:::.stri_test_StriContainerUTF16(utf8)",0.054923037,0.05538793875,0.0554890165,0.055659211,0.065313559,100,"benchmark-containerutf16","93c3514","397320cb","2014-03-25 18:33:48"
+"stringi:::.stri_test_StriContainerUTF16(ascii)",0.015099359,0.015126244,0.015145387,0.01517678625,0.022521796,100,"benchmark-containerutf16","037f87f","397320cb","2014-03-28 23:00:55"
+"stringi:::.stri_test_StriContainerUTF16(native)",0.054773969,0.05488625825,0.0549151465,0.054974718,0.059957848,100,"benchmark-containerutf16","037f87f","397320cb","2014-03-28 23:00:55"
+"stringi:::.stri_test_StriContainerUTF16(utf8)",0.054824497,0.0548680825,0.054912992,0.0549752395,0.057260861,100,"benchmark-containerutf16","037f87f","397320cb","2014-03-28 23:00:55"
+"stringi:::.stri_test_StriContainerUTF16(ascii)",0.015307803,0.015964908,0.0160844125,0.01644193775,0.02249831,100,"mbmark-containerutf16","dd18a15","397320cb","2014-04-17 13:56:50"
+"stringi:::.stri_test_StriContainerUTF16(native)",0.055152482,0.05598771725,0.0563845755,0.05727275875,0.07296877,100,"mbmark-containerutf16","dd18a15","397320cb","2014-04-17 13:56:50"
+"stringi:::.stri_test_StriContainerUTF16(utf8)",0.055068558,0.0559352125,0.05631474,0.05725356075,0.072351535,100,"mbmark-containerutf16","dd18a15","397320cb","2014-04-17 13:56:50"
+"stringi:::.stri_test_StriContainerUTF16(ascii)",0.015760788,0.0158150545,0.015889338,0.01600029825,0.021486778,100,"mbmark-containerutf16","6ea2ea2","397320cb","2014-04-17 18:45:58"
+"stringi:::.stri_test_StriContainerUTF16(native)",0.056464054,0.0566900855,0.0568519095,0.05789351575,0.069439003,100,"mbmark-containerutf16","6ea2ea2","397320cb","2014-04-17 18:45:58"
+"stringi:::.stri_test_StriContainerUTF16(utf8)",0.056450607,0.056653719,0.056898536,0.05791730375,0.068368954,100,"mbmark-containerutf16","6ea2ea2","397320cb","2014-04-17 18:45:58"

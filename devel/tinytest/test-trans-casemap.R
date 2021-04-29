@@ -1,6 +1,5 @@
 library("tinytest")
 library("stringi")
-library("stringr")
 
 
 # basic tests (ASCII, border-line):

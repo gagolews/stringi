@@ -1,6 +1,5 @@
 library("tinytest")
 library("stringi")
-library("stringr")
 
 expect_identical(stri_extract_all_regex(character(0), "test"), list())
 expect_identical(stri_extract_all_regex("test", character(0)), list())
@@ -31,8 +30,6 @@ expect_identical(stri_extract(c("ab_c", "d_ef_g", "h", ""), mode = "all", regex 
     simplify = TRUE, omit_no_match = TRUE), matrix(c("ab", "d", "h", "", "c",
     "ef", "", "", "", "g", "", ""), nrow = 4))
 
-#    expect_identical(stri_extract_all_regex(c('ababab', NA, 'ab', 'ba'), 'ab'),
-#       str_extract_all(c('ababab', NA, 'ab', 'ba'), 'ab'))
 
 # ICU-bugs (#147)
 expect_identical(stri_extract_all_regex("aafoo - ICU BUG TEST, #147", "(?<=aa)foo"),
@@ -58,8 +55,6 @@ expect_identical(stri_extract_first_regex(c("ąĆć", "ąć"), "(?<=Ć)"), c("",
     NA_character_))  # match of zero length:
 
 
-expect_identical(stri_extract_first_regex(c("ababab", NA, "ab", "ba"), "ab"),
-    str_extract(c("ababab", NA, "ab", "ba"), "ab"))
 
 expect_identical(stri_extract_first_regex(c("", " "), "^.*$"), c("", " "))
 

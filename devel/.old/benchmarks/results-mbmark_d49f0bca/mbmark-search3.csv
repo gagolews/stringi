@@ -1,0 +1,24 @@
+# benchmark=mbmark-search3
+# description=counts occurences of *sie* in verses from *Pan Tadeusz* (Chap. 1-5)
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.1.0 (2014-04-10)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic -flto
+# LC_CTYPE=pl_PL.UTF-8
+# nodename=eurydike
+"expr","min.time","q1.time","median.time","q3.time","max.time","n","benchmark","git_sha","sys_sha","datetime"
+"stri_count_regex(pan_tadeusz, sie)",0.003788277,0.00417722425,0.004971981,0.00629546125,0.009681204,100,"mbmark-search3","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"stri_count_regex(pan_tadeusz, sie, list(literal = TRUE))",0.003473236,0.0039339085,0.004438823,0.006293585,0.009175543,100,"mbmark-search3","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"stri_count_fixed(pan_tadeusz, sie)",0.000756837,0.00084083525,0.000899359,0.00119105875,0.003452506,100,"mbmark-search3","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"stri_count_coll(pan_tadeusz, sie)",0.019629111,0.020683965,0.023791231,0.03390776325,0.050753554,100,"mbmark-search3","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"str_count(pan_tadeusz, sie)",0.055441463,0.06620974525,0.0716887925,0.09737667525,0.149289528,100,"mbmark-search3","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"str_count(pan_tadeusz, fixed(sie))",0.049330822,0.0575231995,0.0645144495,0.0867950705,0.16617372,100,"mbmark-search3","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"str_count(pan_tadeusz, perl(sie))",0.049275437,0.05726559225,0.065307504,0.08274545825,0.194164108,100,"mbmark-search3","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"stri_count_regex(pan_tadeusz, sie)",0.003809624,0.00403769825,0.0047199675,0.006081829,0.009641227,100,"mbmark-search3","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"stri_count_regex(pan_tadeusz, sie, list(literal = TRUE))",0.003516167,0.003825453,0.004313888,0.0063025205,0.009309528,100,"mbmark-search3","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"stri_count_fixed(pan_tadeusz, sie)",0.000750047,0.00083154725,0.001026846,0.00120381175,0.002126213,100,"mbmark-search3","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"stri_count_coll(pan_tadeusz, sie)",0.019411577,0.02068422525,0.0246433775,0.0331826905,0.048412086,100,"mbmark-search3","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"str_count(pan_tadeusz, sie)",0.053904806,0.06645721975,0.07335139,0.094455338,0.176246043,100,"mbmark-search3","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"str_count(pan_tadeusz, fixed(sie))",0.048974775,0.05683317975,0.064700092,0.082000985,0.130386547,100,"mbmark-search3","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"str_count(pan_tadeusz, perl(sie))",0.046421809,0.05763730725,0.063968372,0.078682852,0.136569595,100,"mbmark-search3","c86aa5b","d49f0bca","2014-08-05 10:09:16"

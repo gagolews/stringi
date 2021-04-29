@@ -1,0 +1,52 @@
+# benchmark=benchmark-search2
+# description=detects occurences of *sie* in verses from *Pan Tadeusz* (Chap. 1-5)
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.0.2 (2013-09-25)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic
+# LC_CTYPE=pl_PL.iso-8859-2
+# nodename=eurydike
+"expr","min.time","q1.time","median.time","q3.time","max.time","n","benchmark","git_sha","sys_sha","datetime"
+"stri_detect_regex(pan_tadeusz, sie)",0.003283238,0.00330269125,0.0033159745,0.00332948975,0.039796068,100,"benchmark-search2","6939343","14f55c22","2014-03-22 18:32:04"
+"stri_detect_regex(pan_tadeusz, sie, list(literal = TRUE))",0.003347298,0.00337995275,0.0033944385,0.0034124735,0.005542344,100,"benchmark-search2","6939343","14f55c22","2014-03-22 18:32:04"
+"stri_detect_fixed(pan_tadeusz, sie)",0.017843064,0.017882377,0.017908603,0.01797991675,0.019840116,100,"benchmark-search2","6939343","14f55c22","2014-03-22 18:32:04"
+"stri_detect_fixed(pan_tadeusz, sie, NA)",0.003868907,0.00388683175,0.0038944185,0.0039072085,0.005489279,100,"benchmark-search2","6939343","14f55c22","2014-03-22 18:32:04"
+"grepl(sie, pan_tadeusz)",0.003327188,0.003339731,0.003345537,0.0033530645,0.00400861,100,"benchmark-search2","6939343","14f55c22","2014-03-22 18:32:04"
+"grepl(sie, pan_tadeusz, perl = TRUE)",0.000913843,0.00091932375,0.000921343,0.00092499275,0.001002611,100,"benchmark-search2","6939343","14f55c22","2014-03-22 18:32:04"
+"grepl(sie, pan_tadeusz, fixed = TRUE)",0.001849127,0.00185243475,0.001853451,0.0018607645,0.001955004,100,"benchmark-search2","6939343","14f55c22","2014-03-22 18:32:04"
+"stri_detect_regex(pan_tadeusz, sie)",0.003307476,0.00333669825,0.003354242,0.0033759605,0.003685165,100,"benchmark-search2","6939343","14f55c22","2014-03-22 18:34:56"
+"stri_detect_regex(pan_tadeusz, sie, list(literal = TRUE))",0.003401897,0.00343425475,0.003455566,0.00348076625,0.003767435,100,"benchmark-search2","6939343","14f55c22","2014-03-22 18:34:56"
+"stri_detect_fixed(pan_tadeusz, sie)",0.017876875,0.01793359875,0.017965494,0.018042097,0.01864375,100,"benchmark-search2","6939343","14f55c22","2014-03-22 18:34:56"
+"stri_detect_fixed(pan_tadeusz, sie, NA)",0.003796881,0.00381565325,0.0038282855,0.003850064,0.004374313,100,"benchmark-search2","6939343","14f55c22","2014-03-22 18:34:56"
+"grepl(sie, pan_tadeusz)",0.003327567,0.0033364155,0.003343379,0.0033528865,0.003933299,100,"benchmark-search2","6939343","14f55c22","2014-03-22 18:34:56"
+"grepl(sie, pan_tadeusz, perl = TRUE)",0.000914334,0.00091827775,0.0009208145,0.0009276725,0.001044432,100,"benchmark-search2","6939343","14f55c22","2014-03-22 18:34:56"
+"grepl(sie, pan_tadeusz, fixed = TRUE)",0.001849609,0.001853788,0.0018546925,0.00185822375,0.001955342,100,"benchmark-search2","6939343","14f55c22","2014-03-22 18:34:56"
+"stri_detect_regex(pan_tadeusz, sie)",0.003264929,0.00329542025,0.0038517285,0.00469340325,0.005200458,100,"benchmark-search2","97d0df8","14f55c22","2014-03-23 23:37:29"
+"stri_detect_regex(pan_tadeusz, sie, list(literal = TRUE))",0.003328513,0.00336092225,0.0037321335,0.00476050575,0.006043351,100,"benchmark-search2","97d0df8","14f55c22","2014-03-23 23:37:29"
+"stri_detect_fixed(pan_tadeusz, sie)",0.017836676,0.017902426,0.019042953,0.02600532225,0.027086001,100,"benchmark-search2","97d0df8","14f55c22","2014-03-23 23:37:29"
+"stri_detect_fixed(pan_tadeusz, sie, NA)",0.003545739,0.0035706095,0.003697921,0.0051214205,0.005400591,100,"benchmark-search2","97d0df8","14f55c22","2014-03-23 23:37:29"
+"grepl(sie, pan_tadeusz)",0.003326347,0.0033404485,0.003387583,0.00484710925,0.005398834,100,"benchmark-search2","97d0df8","14f55c22","2014-03-23 23:37:29"
+"grepl(sie, pan_tadeusz, perl = TRUE)",0.000913093,0.0009198705,0.000935499,0.00132548525,0.00136467,100,"benchmark-search2","97d0df8","14f55c22","2014-03-23 23:37:29"
+"grepl(sie, pan_tadeusz, fixed = TRUE)",0.001851838,0.0018563995,0.001948743,0.002703117,0.002832617,100,"benchmark-search2","97d0df8","14f55c22","2014-03-23 23:37:29"
+"stri_detect_regex(pan_tadeusz, sie)",0.003319261,0.0033500035,0.0033632315,0.003382564,0.004352483,100,"benchmark-search2","be86fc8","14f55c22","2014-03-25 15:21:39"
+"stri_detect_regex(pan_tadeusz, sie, list(literal = TRUE))",0.003408594,0.00345415325,0.0034694125,0.003494925,0.004404332,100,"benchmark-search2","be86fc8","14f55c22","2014-03-25 15:21:39"
+"stri_detect_fixed(pan_tadeusz, sie)",0.017939106,0.01798648675,0.0180269145,0.0180847245,0.019018281,100,"benchmark-search2","be86fc8","14f55c22","2014-03-25 15:21:39"
+"stri_detect_fixed(pan_tadeusz, sie, NA)",0.003539522,0.00355659425,0.003566717,0.003589374,0.004657121,100,"benchmark-search2","be86fc8","14f55c22","2014-03-25 15:21:39"
+"grepl(sie, pan_tadeusz)",0.003341664,0.00335281175,0.003360664,0.0033697525,0.00412566,100,"benchmark-search2","be86fc8","14f55c22","2014-03-25 15:21:39"
+"grepl(sie, pan_tadeusz, perl = TRUE)",0.000913136,0.000920084,0.000922721,0.000926483,0.001029679,100,"benchmark-search2","be86fc8","14f55c22","2014-03-25 15:21:39"
+"grepl(sie, pan_tadeusz, fixed = TRUE)",0.001844822,0.00184821425,0.001849478,0.00185266725,0.00242437,100,"benchmark-search2","be86fc8","14f55c22","2014-03-25 15:21:39"
+"stri_detect_regex(pan_tadeusz, sie)",0.003261915,0.00328774325,0.003298087,0.00331184725,0.003801403,100,"mbmark-search2","dd18a15","14f55c22","2014-04-17 13:59:16"
+"stri_detect_regex(pan_tadeusz, sie, list(literal = TRUE))",0.003301876,0.00333205875,0.0033389425,0.00335927225,0.003607512,100,"mbmark-search2","dd18a15","14f55c22","2014-04-17 13:59:16"
+"stri_detect_fixed(pan_tadeusz, sie)",0.017782558,0.017806497,0.0178321795,0.01788605075,0.019111454,100,"mbmark-search2","dd18a15","14f55c22","2014-04-17 13:59:16"
+"stri_detect_fixed(pan_tadeusz, sie, NA)",0.003517994,0.003540323,0.0035489095,0.00357123925,0.004010947,100,"mbmark-search2","dd18a15","14f55c22","2014-04-17 13:59:16"
+"grepl(sie, pan_tadeusz)",0.003315486,0.003321897,0.003328207,0.003337203,0.003693641,100,"mbmark-search2","dd18a15","14f55c22","2014-04-17 13:59:16"
+"grepl(sie, pan_tadeusz, perl = TRUE)",0.000909515,0.00091581725,0.000918813,0.0009211595,0.001094184,100,"mbmark-search2","dd18a15","14f55c22","2014-04-17 13:59:16"
+"grepl(sie, pan_tadeusz, fixed = TRUE)",0.001848625,0.00185207775,0.0018526705,0.00185368075,0.00205415,100,"mbmark-search2","dd18a15","14f55c22","2014-04-17 13:59:16"
+"stri_detect_regex(pan_tadeusz, sie)",0.002839783,0.002864702,0.0028784395,0.00289535675,0.003668096,100,"mbmark-search2","6ea2ea2","14f55c22","2014-04-17 18:48:21"
+"stri_detect_regex(pan_tadeusz, sie, list(literal = TRUE))",0.002867506,0.002891963,0.002906066,0.00292474225,0.003350591,100,"mbmark-search2","6ea2ea2","14f55c22","2014-04-17 18:48:21"
+"stri_detect_fixed(pan_tadeusz, sie)",0.019364148,0.01967984075,0.019865959,0.02015724125,0.021728211,100,"mbmark-search2","6ea2ea2","14f55c22","2014-04-17 18:48:21"
+"stri_detect_fixed(pan_tadeusz, sie, NA)",0.003156517,0.00319679975,0.003211222,0.003242168,0.004428443,100,"mbmark-search2","6ea2ea2","14f55c22","2014-04-17 18:48:21"
+"grepl(sie, pan_tadeusz)",0.003313623,0.00332136125,0.00332594,0.00333352125,0.004109374,100,"mbmark-search2","6ea2ea2","14f55c22","2014-04-17 18:48:21"
+"grepl(sie, pan_tadeusz, perl = TRUE)",0.000915886,0.0009181545,0.000921539,0.00092461625,0.001401206,100,"mbmark-search2","6ea2ea2","14f55c22","2014-04-17 18:48:21"
+"grepl(sie, pan_tadeusz, fixed = TRUE)",0.0018441,0.00184726825,0.0018478425,0.0018563565,0.002312085,100,"mbmark-search2","6ea2ea2","14f55c22","2014-04-17 18:48:21"

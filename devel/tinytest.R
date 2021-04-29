@@ -7,7 +7,6 @@
 set.seed(123)
 library("tinytest")
 library("stringi")
-library("stringr")
 library("methods")
 
 cat(stri_info(short=TRUE), "\n")

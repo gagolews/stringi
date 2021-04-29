@@ -1,0 +1,16 @@
+# benchmark=rbmark-dup
+# description=duplicates a string (ASCII+Polish letters, native encoding)
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.0.2 (2013-09-25)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic
+# LC_CTYPE=pl_PL.iso-8859-2
+# nodename=eurydike
+"expr","user.self","sys.self","elapsed","user.child","sys.child","n","benchmark","git_sha","sys_sha","datetime"
+"str_dup(x, 10)",3.031,0.004,3.059,0,0,25,"rbmark-dup","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"stri_dup(x, 10)",0.0349999999999993,0,0.0339999999999998,0,0,25,"rbmark-dup","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"str_dup(x, 10)",3.027,0.003,3.055,0,0,25,"rbmark-dup","dd18a15","14f55c22","2014-04-17 13:54:04"
+"stri_dup(x, 10)",0.0350000000000001,0,0.0350000000000001,0,0,25,"rbmark-dup","dd18a15","14f55c22","2014-04-17 13:54:04"
+"str_dup(x, 10)",3.058,0,3.076,0,0,25,"rbmark-dup","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"stri_dup(x, 10)",0.0329999999999995,0.001,0.0350000000000001,0,0,25,"rbmark-dup","6ea2ea2","14f55c22","2014-04-17 18:43:18"

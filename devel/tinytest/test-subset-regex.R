@@ -1,6 +1,5 @@
 library("tinytest")
 library("stringi")
-library("stringr")
 
 
 expect_identical(stri_subset_regex(NA, NA), NA_character_)

@@ -1,6 +1,5 @@
 library("tinytest")
 library("stringi")
-library("stringr")
 
 
 expect_true(stri_datetime_fstr(" test123") == "' test123'")

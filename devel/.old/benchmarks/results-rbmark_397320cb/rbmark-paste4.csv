@@ -1,0 +1,26 @@
+# benchmark=rbmark-paste4
+# description=joins two vectors consisting of words of different lengths, with no separator (ASCII + Polish letters, native encoding)
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.0.2 (2013-09-25)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic
+# LC_CTYPE=pl_PL.UTF-8
+# nodename=eurydike
+"expr","user.self","sys.self","elapsed","user.child","sys.child","n","benchmark","git_sha","sys_sha","datetime"
+"paste(x, y, sep = """")",2.33,0,2.342,0,0,100,"rbmark-paste4","1eaca8f","397320cb","2014-04-01 13:37:27"
+"str_join(x, y)",2.49,0.001,2.504,0,0,100,"rbmark-paste4","1eaca8f","397320cb","2014-04-01 13:37:27"
+"stri_join(x, y)",1.349,0.003,1.36,0,0,100,"rbmark-paste4","1eaca8f","397320cb","2014-04-01 13:37:27"
+"x %+% y",1.306,0.002,1.315,0,0,100,"rbmark-paste4","1eaca8f","397320cb","2014-04-01 13:37:27"
+"paste(x, y, sep = """")",2.339,0,2.35,0,0,100,"rbmark-paste4","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"str_join(x, y)",2.454,0.001,2.468,0,0,100,"rbmark-paste4","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"stri_join(x, y)",1.388,0.002,1.399,0,0,100,"rbmark-paste4","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"x %+% y",1.313,0,1.322,0,0,100,"rbmark-paste4","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"paste(x, y, sep = """")",2.319,0.001,2.339,0,0,100,"rbmark-paste4","dd18a15","397320cb","2014-04-17 13:51:29"
+"str_join(x, y)",2.421,0.005,2.442,0,0,100,"rbmark-paste4","dd18a15","397320cb","2014-04-17 13:51:29"
+"stri_join(x, y)",1.375,0.002,1.389,0,0,100,"rbmark-paste4","dd18a15","397320cb","2014-04-17 13:51:29"
+"x %+% y",1.301,0,1.31,0,0,100,"rbmark-paste4","dd18a15","397320cb","2014-04-17 13:51:29"
+"paste(x, y, sep = """")",2.426,0.001,2.442,0,0,100,"rbmark-paste4","6ea2ea2","397320cb","2014-04-17 18:40:43"
+"str_join(x, y)",2.488,0,2.501,0,0,100,"rbmark-paste4","6ea2ea2","397320cb","2014-04-17 18:40:43"
+"stri_join(x, y)",1.441,0.002,1.452,0,0,100,"rbmark-paste4","6ea2ea2","397320cb","2014-04-17 18:40:43"
+"x %+% y",1.378,0,1.386,0,0,100,"rbmark-paste4","6ea2ea2","397320cb","2014-04-17 18:40:43"

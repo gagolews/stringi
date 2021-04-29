@@ -1,0 +1,16 @@
+# benchmark=rbmark-unique
+# description=extracts unique elements from a character vector (ASCII + Polish letters, native encoding) [random order on input]
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.0.2 (2013-09-25)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic
+# LC_CTYPE=pl_PL.iso-8859-2
+# nodename=eurydike
+"expr","user.self","sys.self","elapsed","user.child","sys.child","n","benchmark","git_sha","sys_sha","datetime"
+"stri_unique(xrand)",3.42099999999999,0.003,3.43899999999999,0,0,100,"rbmark-unique","dd18a15","14f55c22","2014-04-17 13:54:04"
+"stri_unique(xrand, opts_collator = NA)",1.846,0.001,1.85900000000001,0,0,100,"rbmark-unique","dd18a15","14f55c22","2014-04-17 13:54:04"
+"unique(xrand)",0.0560000000000116,0,0.0560000000000116,0,0,100,"rbmark-unique","dd18a15","14f55c22","2014-04-17 13:54:04"
+"stri_unique(xrand)",2.50300000000001,0,2.51599999999999,0,0,100,"rbmark-unique","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"stri_unique(xrand, opts_collator = NA)",1.77100000000002,0,1.78,0,0,100,"rbmark-unique","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"unique(xrand)",0.0490000000000066,0,0.0490000000000066,0,0,100,"rbmark-unique","6ea2ea2","14f55c22","2014-04-17 18:43:18"

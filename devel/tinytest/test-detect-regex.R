@@ -1,6 +1,5 @@
 library("tinytest")
 library("stringi")
-library("stringr")
 
 expect_identical(stri_detect_regex(NA, NA), NA)
 expect_identical(stri_detect_regex(character(0), character(0)), logical(0))

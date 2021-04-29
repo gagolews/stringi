@@ -1,6 +1,5 @@
 library("tinytest")
 library("stringi")
-library("stringr")
 
 
 s <- c("ala ma ą ñ ą kota i kotek ma alicje oraz dwie gruszeczki oraz gruby czarny pies ma kotka ale nie ma alibaby")
@@ -106,7 +105,7 @@ stri_sub(s, -1, length = 1) <- "x"
 expect_identical(s, "\U0010ffffax")
 
 
-# from stringr - sanity check:
+
 x <- "BBCDEF"
 stri_sub(x, NA, omit_na = TRUE) <- "A"
 stri_sub(x, 1, 1, omit_na = TRUE) <- NA

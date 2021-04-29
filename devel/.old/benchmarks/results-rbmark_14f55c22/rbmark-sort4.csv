@@ -1,0 +1,22 @@
+# benchmark=rbmark-sort4
+# description=sorts a set of words of various lengths (ASCII + Polish letters, native encoding) [almost sorted vector]
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.0.2 (2013-09-25)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic
+# LC_CTYPE=pl_PL.iso-8859-2
+# nodename=eurydike
+"expr","user.self","sys.self","elapsed","user.child","sys.child","n","benchmark","git_sha","sys_sha","datetime"
+"stri_sort(xalmsrt)",0.429999999999993,0,0.432000000000002,0,0,25,"rbmark-sort4","1eaca8f","14f55c22","2014-04-01 13:39:10"
+"stri_sort(xalmsrt, opts_collator = NA)",0.266999999999996,0,0.269000000000005,0,0,25,"rbmark-sort4","1eaca8f","14f55c22","2014-04-01 13:39:10"
+"sort(xalmsrt)",7.24199999999999,0.003,7.276,0,0,25,"rbmark-sort4","1eaca8f","14f55c22","2014-04-01 13:39:10"
+"stri_sort(xalmsrt)",0.418999999999983,0,0.421000000000021,0,0,25,"rbmark-sort4","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"stri_sort(xalmsrt, opts_collator = NA)",0.26400000000001,0,0.264999999999986,0,0,25,"rbmark-sort4","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"sort(xalmsrt)",7.28700000000001,0.002,7.31799999999998,0,0,25,"rbmark-sort4","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"stri_sort(xalmsrt)",0.420999999999992,0,0.423000000000002,0,0,25,"rbmark-sort4","dd18a15","14f55c22","2014-04-17 13:54:04"
+"stri_sort(xalmsrt, opts_collator = NA)",0.263000000000005,0,0.265000000000015,0,0,25,"rbmark-sort4","dd18a15","14f55c22","2014-04-17 13:54:04"
+"sort(xalmsrt)",7.23999999999998,0.003,7.27099999999999,0,0,25,"rbmark-sort4","dd18a15","14f55c22","2014-04-17 13:54:04"
+"stri_sort(xalmsrt)",0.300000000000011,0,0.301999999999992,0,0,25,"rbmark-sort4","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"stri_sort(xalmsrt, opts_collator = NA)",0.252999999999986,0,0.254999999999995,0,0,25,"rbmark-sort4","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"sort(xalmsrt)",7.24199999999999,0.001,7.27500000000001,0,0,25,"rbmark-sort4","6ea2ea2","14f55c22","2014-04-17 18:43:18"

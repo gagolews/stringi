@@ -104,9 +104,8 @@ Vectorized over \code{str}, \code{pattern}, \code{n}, and \code{omit_empty}
 (with recycling of the elements in the shorter vector if necessary).
 
 If \code{n} is negative, then all pieces are extracted.
-Otherwise, if \code{tokens_only} is \code{FALSE} (this is the default,
-for compatibility with the \pkg{stringr} package), then \code{n-1}
-tokens are extracted (if possible) and the \code{n}-th string
+Otherwise, if \code{tokens_only} is \code{FALSE} (which is the default),
+then \code{n-1} tokens are extracted (if possible) and the \code{n}-th string
 gives the remainder (see Examples).
 On the other hand, if \code{tokens_only} is \code{TRUE},
 then only full tokens (up to \code{n} pieces) are extracted.

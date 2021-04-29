@@ -1,0 +1,16 @@
+# benchmark=mbmark-regex-detect1
+# description=regex lookup for words with at least 3 consecutive digits [Latin&Polish letters, digits]
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.1.0 (2014-04-10)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic -flto
+# LC_CTYPE=pl_PL.UTF-8
+# nodename=eurydike
+"expr","min.time","q1.time","median.time","q3.time","max.time","n","benchmark","git_sha","sys_sha","datetime"
+"grepl(""[0-9]{3,}"", letdig)",0.079156178,0.08370573825,0.0933343305,0.12091931025,0.240831933,100,"mbmark-regex-detect1","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"grepl(""[0-9]{3,}"", letdig, perl = TRUE)",0.246150933,0.262054796,0.2875958515,0.35908948925,1.081170433,100,"mbmark-regex-detect1","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"stri_detect_regex(letdig, ""[0-9]{3,}"")",0.0739212,0.078308877,0.0837681755,0.10961672775,0.231671972,100,"mbmark-regex-detect1","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"grepl(""[0-9]{3,}"", letdig)",0.081935075,0.11507792975,0.1350297235,0.170387597,0.27153665,100,"mbmark-regex-detect1","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"grepl(""[0-9]{3,}"", letdig, perl = TRUE)",0.255143348,0.3573296835,0.4286394475,0.566678089,0.944459689,100,"mbmark-regex-detect1","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"stri_detect_regex(letdig, ""[0-9]{3,}"")",0.076910014,0.104765513,0.120312065,0.155742067,0.23321338,100,"mbmark-regex-detect1","c86aa5b","d49f0bca","2014-08-05 10:09:16"

@@ -1,6 +1,5 @@
 library("tinytest")
 library("stringi")
-library("stringr")
 
 
 expect_equal(stri_join_list(stri_extract_all_words(c("Lorem ipsum dolor sit amet.",
@@ -73,7 +72,9 @@ expect_equal(stri_join("bb", character(0), "aa", sep = "", collapse = "", ignore
 expect_equal(stri_join("bb", character(0), "aa", sep = "", collapse = "!", ignore_null = FALSE),
     "")
 
-#stringr tests:
+
+
+
 test <- c("a", "b", "c")
 expect_equal(stri_c(test, ignore_null = TRUE), (test))
 expect_equal(stri_c(test, sep = " ", ignore_null = TRUE), (test))

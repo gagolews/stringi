@@ -81,7 +81,7 @@ Details
 
 Vectorized over ``str``, ``pattern``, ``n``, and ``omit_empty`` (with recycling of the elements in the shorter vector if necessary).
 
-If ``n`` is negative, then all pieces are extracted. Otherwise, if ``tokens_only`` is ``FALSE`` (this is the default, for compatibility with the stringr package), then ``n-1`` tokens are extracted (if possible) and the ``n``-th string gives the remainder (see Examples). On the other hand, if ``tokens_only`` is ``TRUE``, then only full tokens (up to ``n`` pieces) are extracted.
+If ``n`` is negative, then all pieces are extracted. Otherwise, if ``tokens_only`` is ``FALSE`` (which is the default), then ``n-1`` tokens are extracted (if possible) and the ``n``-th string gives the remainder (see Examples). On the other hand, if ``tokens_only`` is ``TRUE``, then only full tokens (up to ``n`` pieces) are extracted.
 
 ``omit_empty`` is applied during the split process: if it is set to ``TRUE``, then tokens of zero length are ignored. Thus, empty strings will never appear in the resulting vector. On the other hand, if ``omit_empty`` is ``NA``, then empty tokens are substituted with missing strings.
 

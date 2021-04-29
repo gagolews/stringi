@@ -1,0 +1,28 @@
+# benchmark=mbmark-search1
+# description=detect a fixed pattern in ASCII text (144k strings)
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.1.0 (2014-04-10)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic -flto
+# LC_CTYPE=pl_PL.UTF-8
+# nodename=eurydike
+"expr","min.time","q1.time","median.time","q3.time","max.time","n","benchmark","git_sha","sys_sha","datetime"
+"stri_detect_regex(data, "",\\\""stringi\\\"","")",0.18072029,0.205433875,0.2430819205,0.3841377855,0.560389513,10,"mbmark-search1","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"stri_detect_coll(data, "",\\\""stringi\\\"","")",1.100331318,1.18934824875,1.475462646,1.8554307645,2.529325273,10,"mbmark-search1","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"stri_detect_fixed(data, "",\\\""stringi\\\"","")",0.125756031,0.140765959,0.173751028,0.183078708,0.219745316,10,"mbmark-search1","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"str_detect(data, "",\\\""stringi\\\"","")",0.430486285,0.46809036075,0.6116122655,0.68319916425,0.971794591,10,"mbmark-search1","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"str_detect(data, perl("",\\\""stringi\\\"",""))",0.145213242,0.15437631275,0.20368431,0.24691095575,0.429121578,10,"mbmark-search1","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"str_detect(data, fixed("",\\\""stringi\\\"",""))",0.112628125,0.14630360325,0.158972402,0.216133113,0.410262159,10,"mbmark-search1","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"grepl("",\\\""stringi\\\"","", data)",0.413443299,0.42499944125,0.460705796,0.837275401,1.166962451,10,"mbmark-search1","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"grepl("",\\\""stringi\\\"","", data, perl = TRUE)",0.141230989,0.1436876645,0.1535974035,0.27913911925,0.373590232,10,"mbmark-search1","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"grepl("",\\\""stringi\\\"","", data, fixed = TRUE)",0.108370316,0.11598645175,0.126294569,0.2146236565,0.314615198,10,"mbmark-search1","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"stri_detect_regex(data, "",\\\""stringi\\\"","")",0.252153867,0.341122195,0.424478157,0.57949480425,0.827010919,10,"mbmark-search1","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"stri_detect_coll(data, "",\\\""stringi\\\"","")",1.489713444,2.2027476675,2.5109669895,2.691611913,2.782287094,10,"mbmark-search1","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"stri_detect_fixed(data, "",\\\""stringi\\\"","")",0.156251175,0.178824356,0.208832709,0.2349772535,0.350783886,10,"mbmark-search1","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"str_detect(data, "",\\\""stringi\\\"","")",0.682904436,0.764195165,0.8444637305,0.92743389325,1.082431402,10,"mbmark-search1","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"str_detect(data, perl("",\\\""stringi\\\"",""))",0.231166898,0.3030942165,0.3054314245,0.35437170075,0.518932323,10,"mbmark-search1","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"str_detect(data, fixed("",\\\""stringi\\\"",""))",0.201598252,0.257643873,0.278642024,0.30274016025,0.829172227,10,"mbmark-search1","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"grepl("",\\\""stringi\\\"","", data)",0.668694715,0.8039840675,0.8251920195,1.00600941625,2.219705007,10,"mbmark-search1","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"grepl("",\\\""stringi\\\"","", data, perl = TRUE)",0.207994129,0.275417708,0.2825628385,0.377105683,0.585580093,10,"mbmark-search1","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"grepl("",\\\""stringi\\\"","", data, fixed = TRUE)",0.171774742,0.254383258,0.281199772,0.3171540065,0.687515475,10,"mbmark-search1","c86aa5b","d49f0bca","2014-08-05 10:09:16"

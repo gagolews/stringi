@@ -1,6 +1,6 @@
 library("tinytest")
 library("stringi")
-library("stringr")
+
 
 expect_true(length(stri_datetime_symbols()$Month) == 12)
 expect_true(length(stri_datetime_symbols()$Weekday) == 7)

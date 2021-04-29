@@ -1,6 +1,5 @@
 library("tinytest")
 library("stringi")
-library("stringr")
 
 # test whether we have enough ICU data
 # further services (like collator) are queried in other tests

@@ -108,7 +108,7 @@ Vectorized over ``str`` and ``pattern`` (with recycling of the elements in the s
 
 Check out `stri_match <stri_match.html>`__ for the extraction of matches to individual regex capture groups.
 
-``stri_extract``, ``stri_extract_all``, ``stri_extract_first``, and ``stri_extract_last`` are convenience functions. They just call ``stri_extract_*_*``, depending on the arguments used.
+``stri_extract``, ``stri_extract_all``, ``stri_extract_first``, and ``stri_extract_last`` are convenience functions. They merely call ``stri_extract_*_*``, depending on the arguments used.
 
 Value
 ~~~~~
@@ -118,6 +118,8 @@ For ``stri_extract_all*``, if ``simplify=FALSE`` (the default), then a list of c
 Otherwise, i.e., if ``simplify`` is not ``FALSE``, then `stri_list2matrix <stri_list2matrix.html>`__ with ``byrow=TRUE`` argument is called on the resulting object. In such a case, the function yields a character matrix with an appropriate number of rows (according to the length of ``str``, ``pattern``, etc.). Note that `stri_list2matrix <stri_list2matrix.html>`__'s ``fill`` argument is set either to an empty string or ``NA``, depending on whether ``simplify`` is ``TRUE`` or ``NA``, respectively.
 
 ``stri_extract_first*`` and ``stri_extract_last*`` return a character vector. A ``NA`` element indicates a no-match.
+
+Note that ``stri_extract_last_regex`` searches from start to end, but skips overlapping matches, see the example below.
 
 See Also
 ~~~~~~~~
@@ -158,3 +160,8 @@ Examples
 
    stri_extract_all_fixed('abaBAba', 'Aba', case_insensitive=TRUE)
    stri_extract_all_fixed('abaBAba', 'Aba', case_insensitive=TRUE, overlap=TRUE)
+
+   # Searching for the last occurrence:
+   # Note the difference - regex searches left to right, with no overlaps.
+   stri_extract_last_fixed("agAGA", "aga", case_insensitive=TRUE)
+   stri_extract_last_regex("agAGA", "aga", case_insensitive=TRUE)

@@ -1,0 +1,25 @@
+# benchmark=rbmark-lt
+# description=checks whether one string is smaller (lexicographically) than the other (ASCII+Polish letters, native encoding)
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.0.2 (2013-09-25)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic
+# LC_CTYPE=pl_PL.iso-8859-2
+# nodename=eurydike
+"expr","user.self","sys.self","elapsed","user.child","sys.child","n","benchmark","git_sha","sys_sha","datetime"
+"x < y",3.767,0.014,3.833,0,0,100,"rbmark-lt","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"stri_cmp(x, y) < 0",2.525,0.02,2.578,0,0,100,"rbmark-lt","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"stri_cmp(x, y, NA) < 0",2.576,0.02,2.625,0,0,100,"rbmark-lt","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"stri_cmp_lt(x, y)",2.381,0.013,2.414,0,0,100,"rbmark-lt","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"stri_cmp_lt(x, y, NA)",2.482,0.021,2.527,0,0,100,"rbmark-lt","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"x < y",3.658,0.003,3.68,0,0,100,"rbmark-lt","dd18a15","14f55c22","2014-04-17 13:54:04"
+"stri_cmp(x, y) < 0",2.421,0.013,2.455,0,0,100,"rbmark-lt","dd18a15","14f55c22","2014-04-17 13:54:04"
+"stri_cmp(x, y, NA) < 0",2.506,0.026,2.556,0,0,100,"rbmark-lt","dd18a15","14f55c22","2014-04-17 13:54:04"
+"stri_cmp_lt(x, y)",2.367,0.018,2.402,0,0,100,"rbmark-lt","dd18a15","14f55c22","2014-04-17 13:54:04"
+"stri_cmp_lt(x, y, NA)",2.479,0.021,2.521,0,0,100,"rbmark-lt","dd18a15","14f55c22","2014-04-17 13:54:04"
+"x < y",3.747,0,3.765,0,0,100,"rbmark-lt","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"stri_cmp(x, y) < 0",2.208,0.018,2.243,0,0,100,"rbmark-lt","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"stri_cmp(x, y, NA) < 0",2.317,0.02,2.352,0,0,100,"rbmark-lt","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"stri_cmp_lt(x, y)",2.124,0.01,2.148,0,0,100,"rbmark-lt","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"stri_cmp_lt(x, y, NA)",2.275,0.019,2.308,0,0,100,"rbmark-lt","6ea2ea2","14f55c22","2014-04-17 18:43:18"

@@ -1,0 +1,26 @@
+# benchmark=rbmark-paste6
+# description=joins two vectors consisting of words of different lengths into one string (ASCII + Polish letters, native encoding)
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.0.2 (2013-09-25)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic
+# LC_CTYPE=pl_PL.UTF-8
+# nodename=eurydike
+"expr","user.self","sys.self","elapsed","user.child","sys.child","n","benchmark","git_sha","sys_sha","datetime"
+"paste(x, y, sep = """", collapse = """")",2.835,0.001,2.851,0,0,100,"rbmark-paste6","1eaca8f","397320cb","2014-04-01 13:37:27"
+"str_join(x, y, collapse = """")",2.949,0.001,2.965,0,0,100,"rbmark-paste6","1eaca8f","397320cb","2014-04-01 13:37:27"
+"stri_join(x, y, collapse = """")",0.843000000000004,0,0.848000000000006,0,0,100,"rbmark-paste6","1eaca8f","397320cb","2014-04-01 13:37:27"
+"stri_flatten(x %+% y)",2.019,0,2.032,0,0,100,"rbmark-paste6","1eaca8f","397320cb","2014-04-01 13:37:27"
+"paste(x, y, sep = """", collapse = """")",2.813,0.003,2.831,0,0,100,"rbmark-paste6","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"str_join(x, y, collapse = """")",2.979,0.00299999999999997,2.999,0,0,100,"rbmark-paste6","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"stri_join(x, y, collapse = """")",0.840000000000003,0.001,0.846000000000004,0,0,100,"rbmark-paste6","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"stri_flatten(x %+% y)",1.985,0,1.998,0,0,100,"rbmark-paste6","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"paste(x, y, sep = """", collapse = """")",2.857,0.003,2.88199999999999,0,0,100,"rbmark-paste6","dd18a15","397320cb","2014-04-17 13:51:29"
+"str_join(x, y, collapse = """")",2.985,0.001,3.00699999999999,0,0,100,"rbmark-paste6","dd18a15","397320cb","2014-04-17 13:51:29"
+"stri_join(x, y, collapse = """")",0.838000000000008,0.001,0.846999999999994,0,0,100,"rbmark-paste6","dd18a15","397320cb","2014-04-17 13:51:29"
+"stri_flatten(x %+% y)",2.011,0.002,2.029,0,0,100,"rbmark-paste6","dd18a15","397320cb","2014-04-17 13:51:29"
+"paste(x, y, sep = """", collapse = """")",2.902,0,2.92099999999999,0,0,100,"rbmark-paste6","6ea2ea2","397320cb","2014-04-17 18:40:43"
+"str_join(x, y, collapse = """")",3.015,0,3.033,0,0,100,"rbmark-paste6","6ea2ea2","397320cb","2014-04-17 18:40:43"
+"stri_join(x, y, collapse = """")",0.850999999999999,0,0.858000000000004,0,0,100,"rbmark-paste6","6ea2ea2","397320cb","2014-04-17 18:40:43"
+"stri_flatten(x %+% y)",2.06699999999999,0.001,2.08399999999999,0,0,100,"rbmark-paste6","6ea2ea2","397320cb","2014-04-17 18:40:43"

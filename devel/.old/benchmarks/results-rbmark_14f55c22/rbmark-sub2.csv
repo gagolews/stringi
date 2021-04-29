@@ -1,0 +1,19 @@
+# benchmark=rbmark-sub2
+# description=Extract substrings at positions from 20 in verses of Pan Tadeusz
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.0.2 (2013-09-25)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic
+# LC_CTYPE=pl_PL.iso-8859-2
+# nodename=eurydike
+"expr","user.self","sys.self","elapsed","user.child","sys.child","n","benchmark","git_sha","sys_sha","datetime"
+"substring(text, 20)",0.128999999999991,0,0.129999999999995,0,0,100,"rbmark-sub2","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"str_sub(text, 20)",0.359000000000009,0,0.361999999999995,0,0,100,"rbmark-sub2","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"stri_sub(text, 20)",0.462000000000018,0,0.465000000000003,0,0,100,"rbmark-sub2","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"substring(text, 20)",0.305999999999983,0.00099999999999989,0.308999999999997,0,0,250,"rbmark-sub2","dd18a15","14f55c22","2014-04-17 13:54:04"
+"str_sub(text, 20)",0.893000000000001,0.001,0.900000000000006,0,0,250,"rbmark-sub2","dd18a15","14f55c22","2014-04-17 13:54:04"
+"stri_sub(text, 20)",1.15099999999998,0.001,1.15700000000001,0,0,250,"rbmark-sub2","dd18a15","14f55c22","2014-04-17 13:54:04"
+"substring(text, 20)",0.323000000000008,0,0.324999999999989,0,0,250,"rbmark-sub2","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"str_sub(text, 20)",0.90300000000002,0,0.909999999999997,0,0,250,"rbmark-sub2","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"stri_sub(text, 20)",1.09799999999998,0,1.10399999999998,0,0,250,"rbmark-sub2","6ea2ea2","14f55c22","2014-04-17 18:43:18"
