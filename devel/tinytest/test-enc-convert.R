@@ -1,6 +1,5 @@
 library("tinytest")
 library("stringi")
-library("stringr")
 
 
 expect_error(stri_encode("", "blahblahblah", "nosuchencoding"))

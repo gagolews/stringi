@@ -1,0 +1,25 @@
+# benchmark=rbmark-normalize
+# description=NFC, NFD, NFKC, NFKD, NKFC_Casefold (UTF-8 strings)
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.0.2 (2013-09-25)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic
+# LC_CTYPE=pl_PL.UTF-8
+# nodename=eurydike
+"expr","user.self","sys.self","elapsed","user.child","sys.child","n","benchmark","git_sha","sys_sha","datetime"
+"stri_trans_nfc(nf_c_f_kc_kf_kccf)",0.923000000000002,0.002,0.933,0,0,25,"rbmark-normalize","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"stri_trans_nfd(nf_c_f_kc_kf_kccf)",0.949999999999999,0.00800000000000001,0.969999999999999,0,0,25,"rbmark-normalize","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"stri_trans_nfkc(nf_c_f_kc_kf_kccf)",0.939999999999998,0.00199999999999999,0.948,0,0,25,"rbmark-normalize","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"stri_trans_nfkd(nf_c_f_kc_kf_kccf)",0.91,0.003,0.919,0,0,25,"rbmark-normalize","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"stri_trans_nfkc_casefold(nf_c_f_kc_kf_kccf)",1.043,0,1.048,0,0,25,"rbmark-normalize","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"stri_trans_nfc(nf_c_f_kc_kf_kccf)",0.911000000000001,0.005,0.928000000000001,0,0,25,"rbmark-normalize","dd18a15","397320cb","2014-04-17 13:51:29"
+"stri_trans_nfd(nf_c_f_kc_kf_kccf)",0.907,0.00199999999999999,0.916,0,0,25,"rbmark-normalize","dd18a15","397320cb","2014-04-17 13:51:29"
+"stri_trans_nfkc(nf_c_f_kc_kf_kccf)",0.934000000000001,0.004,0.946999999999999,0,0,25,"rbmark-normalize","dd18a15","397320cb","2014-04-17 13:51:29"
+"stri_trans_nfkd(nf_c_f_kc_kf_kccf)",0.914999999999999,0,0.922000000000001,0,0,25,"rbmark-normalize","dd18a15","397320cb","2014-04-17 13:51:29"
+"stri_trans_nfkc_casefold(nf_c_f_kc_kf_kccf)",1.036,0.002,1.047,0,0,25,"rbmark-normalize","dd18a15","397320cb","2014-04-17 13:51:29"
+"stri_trans_nfc(nf_c_f_kc_kf_kccf)",0.916999999999998,0.00199999999999999,0.925000000000001,0,0,25,"rbmark-normalize","6ea2ea2","397320cb","2014-04-17 18:40:43"
+"stri_trans_nfd(nf_c_f_kc_kf_kccf)",0.935000000000002,0,0.939,0,0,25,"rbmark-normalize","6ea2ea2","397320cb","2014-04-17 18:40:43"
+"stri_trans_nfkc(nf_c_f_kc_kf_kccf)",0.949999999999999,0.001,0.956999999999997,0,0,25,"rbmark-normalize","6ea2ea2","397320cb","2014-04-17 18:40:43"
+"stri_trans_nfkd(nf_c_f_kc_kf_kccf)",0.93,0,0.934999999999999,0,0,25,"rbmark-normalize","6ea2ea2","397320cb","2014-04-17 18:40:43"
+"stri_trans_nfkc_casefold(nf_c_f_kc_kf_kccf)",1.048,0.002,1.056,0,0,25,"rbmark-normalize","6ea2ea2","397320cb","2014-04-17 18:40:43"

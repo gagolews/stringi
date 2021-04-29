@@ -104,7 +104,7 @@ For ``stri_locate_all_*``, a list of integer matrices is returned. Each list ele
 
 ``stri_locate_first_*`` and ``stri_locate_last_*`` return an integer matrix with two columns, giving the start and end positions of the first or the last matches, respectively, and two ``NA``\ s if and only if they are not found.
 
-For ``stri_locate_*_regex``, if the match is of zero length, ``end`` will be one character less than ``start``.
+For ``stri_locate_*_regex``, if the match is of zero length, ``end`` will be one character less than ``start``. Note that ``stri_locate_last_regex`` searches from start to end, but skips overlapping matches, see the example below.
 
 See Also
 ~~~~~~~~
@@ -159,3 +159,9 @@ Examples
    # Use regex positive-lookahead to locate overlapping pattern matches:
    stri_locate_all_regex('ACAGAGACTTTAGATAGAGAAGA', '(?=AGA)')
    # note that start > end here (match of 0 length)
+
+   # Searching for the last occurrence:
+   stri_locate_last_fixed("agaga", "aga")
+   stri_locate_last_coll("agaga", "aga")
+   # note the difference - regex searches left to right, with no overlaps:
+   stri_locate_last_regex("agaga", "aga")

@@ -1,0 +1,26 @@
+# benchmark=rbmark-paste6
+# description=joins two vectors consisting of words of different lengths into one string (ASCII + Polish letters, native encoding)
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.0.2 (2013-09-25)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic
+# LC_CTYPE=pl_PL.iso-8859-2
+# nodename=eurydike
+"expr","user.self","sys.self","elapsed","user.child","sys.child","n","benchmark","git_sha","sys_sha","datetime"
+"paste(x, y, sep = """", collapse = """")",2.389,0.003,2.412,0,0,100,"rbmark-paste6","1eaca8f","14f55c22","2014-04-01 13:39:10"
+"str_join(x, y, collapse = """")",2.592,0.003,2.61499999999999,0,0,100,"rbmark-paste6","1eaca8f","14f55c22","2014-04-01 13:39:10"
+"stri_join(x, y, collapse = """")",1.741,0.005,1.76,0,0,100,"rbmark-paste6","1eaca8f","14f55c22","2014-04-01 13:39:10"
+"stri_flatten(x %+% y)",2.853,0.004,2.88,0,0,100,"rbmark-paste6","1eaca8f","14f55c22","2014-04-01 13:39:10"
+"paste(x, y, sep = """", collapse = """")",2.47200000000001,0.003,2.49199999999999,0,0,100,"rbmark-paste6","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"str_join(x, y, collapse = """")",2.506,0.001,2.52499999999999,0,0,100,"rbmark-paste6","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"stri_join(x, y, collapse = """")",1.733,0.002,1.747,0,0,100,"rbmark-paste6","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"stri_flatten(x %+% y)",2.871,0.003,2.899,0,0,100,"rbmark-paste6","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"paste(x, y, sep = """", collapse = """")",2.527,0.001,2.545,0,0,100,"rbmark-paste6","dd18a15","14f55c22","2014-04-17 13:54:04"
+"str_join(x, y, collapse = """")",2.548,0.002,2.56699999999999,0,0,100,"rbmark-paste6","dd18a15","14f55c22","2014-04-17 13:54:04"
+"stri_join(x, y, collapse = """")",1.84699999999999,0.005,1.86799999999999,0,0,100,"rbmark-paste6","dd18a15","14f55c22","2014-04-17 13:54:04"
+"stri_flatten(x %+% y)",2.92399999999999,0.002,2.947,0,0,100,"rbmark-paste6","dd18a15","14f55c22","2014-04-17 13:54:04"
+"paste(x, y, sep = """", collapse = """")",2.50700000000001,0.001,2.52500000000001,0,0,100,"rbmark-paste6","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"str_join(x, y, collapse = """")",2.504,0,2.51900000000001,0,0,100,"rbmark-paste6","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"stri_join(x, y, collapse = """")",1.667,0.001,1.67699999999999,0,0,100,"rbmark-paste6","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"stri_flatten(x %+% y)",2.80699999999999,0,2.82400000000001,0,0,100,"rbmark-paste6","6ea2ea2","14f55c22","2014-04-17 18:43:18"

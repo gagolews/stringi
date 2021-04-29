@@ -1,0 +1,22 @@
+# benchmark=mbmark-length
+# description=calculates various 'lengths' of strings (ASCII, UTF-8, Native, NA)
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.1.0 (2014-04-10)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic -flto
+# LC_CTYPE=pl_PL.UTF-8
+# nodename=eurydike
+"expr","min.time","q1.time","median.time","q3.time","max.time","n","benchmark","git_sha","sys_sha","datetime"
+"stri_length(x)",0.00156633,0.00157638825,0.001585058,0.0016140305,0.003030027,100,"mbmark-length","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"stri_isempty(x)",6.652e-06,7.55025e-06,9.5865e-06,1.302425e-05,7.7959e-05,100,"mbmark-length","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"stri_numbytes(x)",3.254e-06,3.6665e-06,4.8095e-06,6.06325e-06,1.7106e-05,100,"mbmark-length","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"nzchar(x)",8.91e-07,1.059e-06,1.2975e-06,1.91775e-06,2.1221e-05,100,"mbmark-length","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"nchar(x)",0.002152639,0.00215542725,0.0021650025,0.00220669625,0.003861187,100,"mbmark-length","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"nchar(x, ""bytes"")",3.857e-06,4.39075e-06,6.2385e-06,8.56075e-06,5.2495e-05,100,"mbmark-length","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"stri_length(x)",0.001073087,0.00107869125,0.001089745,0.00119994175,0.001860858,100,"mbmark-length","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"stri_isempty(x)",5.24e-06,5.717e-06,8.462e-06,1.32365e-05,3.9078e-05,100,"mbmark-length","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"stri_numbytes(x)",2.495e-06,3.05325e-06,4.2555e-06,5.53275e-06,1.4617e-05,100,"mbmark-length","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"nzchar(x)",6.69e-07,7.8575e-07,1.137e-06,2.13225e-06,4.292e-06,100,"mbmark-length","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"nchar(x)",0.001473971,0.00147817025,0.0014935575,0.001667781,0.002563085,100,"mbmark-length","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"nchar(x, ""bytes"")",3.031e-06,4.57275e-06,5.9195e-06,1.01225e-05,3.7602e-05,100,"mbmark-length","c86aa5b","d49f0bca","2014-08-05 10:09:16"

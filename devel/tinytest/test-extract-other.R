@@ -1,6 +1,5 @@
 library("tinytest")
 library("stringi")
-library("stringr")
 
 
 expect_identical(stri_extract_all_words("   ala ma   kota... above-mentioned    123.45...  ")[[1]],

@@ -1,6 +1,5 @@
 library("tinytest")
 library("stringi")
-library("stringr")
 
 
 expect_equivalent(stri_remove_empty(stri_na2empty(c("a", NA, "", "b"))), c("a",

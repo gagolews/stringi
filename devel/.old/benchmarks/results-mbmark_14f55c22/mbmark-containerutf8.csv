@@ -1,0 +1,31 @@
+# benchmark=benchmark-containerutf8
+# description=StriContainerUTF8 [internal]
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.0.2 (2013-09-25)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic
+# LC_CTYPE=pl_PL.iso-8859-2
+# nodename=eurydike
+"expr","min.time","q1.time","median.time","q3.time","max.time","n","benchmark","git_sha","sys_sha","datetime"
+"stringi:::.stri_test_StriContainerUTF8(ascii)",1.5829e-05,1.6771e-05,1.7122e-05,1.768425e-05,0.000125807,100,"benchmark-containerutf8","93c3514","14f55c22","2014-03-25 18:25:55"
+"stringi:::.stri_test_StriContainerUTF8(native)",0.076522749,0.07661009775,0.0766537175,0.07669756575,0.078361384,100,"benchmark-containerutf8","93c3514","14f55c22","2014-03-25 18:25:55"
+"stringi:::.stri_test_StriContainerUTF8(utf8)",8.8311e-05,9.02905e-05,9.1259e-05,9.223075e-05,0.000107176,100,"benchmark-containerutf8","93c3514","14f55c22","2014-03-25 18:25:55"
+"stringi:::.stri_test_StriContainerUTF8(ascii)",1.5635e-05,1.65695e-05,1.70195e-05,1.750725e-05,9.816e-05,100,"benchmark-containerutf8","93c3514","14f55c22","2014-03-25 18:29:00"
+"stringi:::.stri_test_StriContainerUTF8(native)",0.076839523,0.07696005775,0.0770443865,0.07754013425,0.07870998,100,"benchmark-containerutf8","93c3514","14f55c22","2014-03-25 18:29:00"
+"stringi:::.stri_test_StriContainerUTF8(utf8)",8.7767e-05,9.057575e-05,9.17295e-05,9.284475e-05,0.000112533,100,"benchmark-containerutf8","93c3514","14f55c22","2014-03-25 18:29:00"
+"stringi:::.stri_test_StriContainerUTF8(ascii)",1.5671e-05,1.67305e-05,1.70455e-05,1.75e-05,9.7796e-05,100,"benchmark-containerutf8","93c3514","14f55c22","2014-03-25 18:30:09"
+"stringi:::.stri_test_StriContainerUTF8(native)",0.076888279,0.07696927,0.0770139105,0.07705954925,0.077623033,100,"benchmark-containerutf8","93c3514","14f55c22","2014-03-25 18:30:09"
+"stringi:::.stri_test_StriContainerUTF8(utf8)",8.8652e-05,9.125625e-05,9.24015e-05,9.3773e-05,0.000109776,100,"benchmark-containerutf8","93c3514","14f55c22","2014-03-25 18:30:09"
+"stringi:::.stri_test_StriContainerUTF8(ascii)",1.5609e-05,1.615975e-05,1.66995e-05,1.718325e-05,9.7177e-05,100,"benchmark-containerutf8","93c3514","14f55c22","2014-03-25 18:34:01"
+"stringi:::.stri_test_StriContainerUTF8(native)",0.077146602,0.07724978675,0.0772871015,0.07734219975,0.077805177,100,"benchmark-containerutf8","93c3514","14f55c22","2014-03-25 18:34:01"
+"stringi:::.stri_test_StriContainerUTF8(utf8)",8.7423e-05,8.930825e-05,9.0465e-05,9.1691e-05,9.71e-05,100,"benchmark-containerutf8","93c3514","14f55c22","2014-03-25 18:34:01"
+"stringi:::.stri_test_StriContainerUTF8(ascii)",1.5772e-05,1.6712e-05,1.71185e-05,1.74945e-05,9.8387e-05,100,"benchmark-containerutf8","037f87f","14f55c22","2014-03-28 23:01:08"
+"stringi:::.stri_test_StriContainerUTF8(native)",0.077191558,0.0773059605,0.077365011,0.07750241075,0.078096163,100,"benchmark-containerutf8","037f87f","14f55c22","2014-03-28 23:01:08"
+"stringi:::.stri_test_StriContainerUTF8(utf8)",8.9242e-05,9.14135e-05,9.2201e-05,9.317625e-05,9.7786e-05,100,"benchmark-containerutf8","037f87f","14f55c22","2014-03-28 23:01:08"
+"stringi:::.stri_test_StriContainerUTF8(ascii)",1.5937e-05,1.66655e-05,1.7042e-05,1.74855e-05,9.8773e-05,100,"mbmark-containerutf8","dd18a15","14f55c22","2014-04-17 13:59:16"
+"stringi:::.stri_test_StriContainerUTF8(native)",0.077546152,0.0779383045,0.0780585165,0.078288457,0.083894597,100,"mbmark-containerutf8","dd18a15","14f55c22","2014-04-17 13:59:16"
+"stringi:::.stri_test_StriContainerUTF8(utf8)",9.0348e-05,9.287775e-05,9.3775e-05,9.515225e-05,0.000189279,100,"mbmark-containerutf8","dd18a15","14f55c22","2014-04-17 13:59:16"
+"stringi:::.stri_test_StriContainerUTF8(ascii)",1.5866e-05,1.660875e-05,1.7021e-05,1.7574e-05,9.7215e-05,100,"mbmark-containerutf8","6ea2ea2","14f55c22","2014-04-17 18:48:21"
+"stringi:::.stri_test_StriContainerUTF8(native)",0.058995569,0.059149174,0.0593973155,0.05951562075,0.061366564,100,"mbmark-containerutf8","6ea2ea2","14f55c22","2014-04-17 18:48:21"
+"stringi:::.stri_test_StriContainerUTF8(utf8)",8.7251e-05,9.0204e-05,9.102e-05,9.219525e-05,0.000111586,100,"mbmark-containerutf8","6ea2ea2","14f55c22","2014-04-17 18:48:21"

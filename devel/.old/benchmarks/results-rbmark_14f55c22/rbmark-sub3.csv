@@ -1,0 +1,19 @@
+# benchmark=rbmark-sub3
+# description=Extract first code points in verses of Pan Tadeusz
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.0.2 (2013-09-25)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic
+# LC_CTYPE=pl_PL.iso-8859-2
+# nodename=eurydike
+"expr","user.self","sys.self","elapsed","user.child","sys.child","n","benchmark","git_sha","sys_sha","datetime"
+"substring(text, 1, 1)",0.423000000000002,0,0.424999999999983,0,0,1000,"rbmark-sub3","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"str_sub(text, 1, 1)",2.22299999999998,0,2.23599999999999,0,0,1000,"rbmark-sub3","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"stri_sub(text, 1, 1)",3.369,0.001,3.387,0,0,1000,"rbmark-sub3","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"substring(text, 1, 1)",0.412000000000006,0,0.414999999999992,0,0,1000,"rbmark-sub3","dd18a15","14f55c22","2014-04-17 13:54:04"
+"str_sub(text, 1, 1)",2.179,0,2.19200000000001,0,0,1000,"rbmark-sub3","dd18a15","14f55c22","2014-04-17 13:54:04"
+"stri_sub(text, 1, 1)",3.32599999999999,0,3.34199999999998,0,0,1000,"rbmark-sub3","dd18a15","14f55c22","2014-04-17 13:54:04"
+"substring(text, 1, 1)",0.413999999999987,0,0.415999999999997,0,0,1000,"rbmark-sub3","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"str_sub(text, 1, 1)",2.17099999999999,0,2.184,0,0,1000,"rbmark-sub3","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"stri_sub(text, 1, 1)",3.084,0,3.09899999999999,0,0,1000,"rbmark-sub3","6ea2ea2","14f55c22","2014-04-17 18:43:18"

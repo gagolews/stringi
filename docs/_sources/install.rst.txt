@@ -11,20 +11,21 @@ calling:
 
    install.packages("stringi")
 
-However, due to the overwhelming complexity of the ICU4C library, on
-which *stringi* is based, and the colourful variety of operating
-systems, their flavors, and particular setups, some users may still be
-subject to a few issues.
+However, due to the overwhelming complexity of the ICU4C library, upon
+which *stringi* is based, and the colourful diversity of operating
+systems, their flavors, and particular setups, some users may still
+experience a few issues that hopefully can be resolved with the help of
+this short manual.
 
-Also, some additional build tweaks are possible to those who want a more
-customised installation.
+Also, some additional build tweaks are possible in case we require a
+more customised installation.
 
 ICU4C
 -----
 
 The stringi package depends on the ICU4C >= 55 library.
 
-If you build the package from sources and either:
+If we install the package from sources and either:
 
 -  this requirement is not met (check out
    http://site.icu-project.org/download, the ``libicu-devel`` rpm on
@@ -38,15 +39,16 @@ If you build the package from sources and either:
    ``install.packages("stringi", configure.args="--disable-pkg-config")``
    is executed,
 
-then the library will be built together with stringi (a custom subset of
-ICU4C 55.1 and 61.1 is shipped with the package).
+then ICU will be built together with stringi. A custom subset of ICU4C
+69.1 is shipped with the package. We also include ICU4C 55.1 that can be
+used as a fallback version (e.g., on older Solaris/SPARC boxes).
 
-   To get the most out of stringi, end users are encouraged to rely on
-   our ICU4C package bundle. This guarantees maximum portability.
+   To get the most out of stringi, you are strongly encouraged to rely
+   on our ICU4C package bundle. This guarantees maximum portability.
 
-If you decide to use our ICU4C bundle, then – by default – the ICU data
+If you choose to use our ICU4C bundle, then – by default – the ICU data
 library will be downloaded from one of our mirror servers. However, if
-you already have downloaded a version of ``icudt*.zip`` suitable for
+you have already downloaded a version of ``icudt*.zip`` suitable for
 your platform (big/little endian), you may wish to install the package
 by calling:
 
@@ -55,10 +57,10 @@ by calling:
    install.packages("stringi", configure.vars="ICUDT_DIR=<icudt_dir>")
 
 Moreover, if you have **absolutely no internet access** on the machines
-you try to install *stringi* on, try fetching the latest development
-version of the package. It is already shipped with the ``ICU`` data
-archives. You can build a distributable source package that includes all
-the required ICU data files (for off-line use) by omitting some relevant
+you try to install stringi on, try fetching the latest development
+version of the package, as it is shipped with the ``ICU`` data archives.
+You can build a distributable source package that includes all the
+required ICU data files (for off-line use) by omitting some relevant
 lines in the ``.Rbuildignore`` file. The following command sequence
 should do the trick:
 
@@ -70,15 +72,15 @@ should do the trick:
    R CMD build stringi-master
 
 Assuming the most recent development version of the package is numbered
-1.5.3, a file named ``stringi_1.5.3.tar.gz`` is created in the current
+1.6.1, a file named ``stringi_1.6.1.tar.gz`` is created in the current
 working directory. The package can now be installed (the source bundle
 may be propagated via ``scp`` etc.) by executing:
 
 ::
 
-   R CMD INSTALL stringi_1.5.3.tar.gz
+   R CMD INSTALL stringi_1.6.1.tar.gz
 
-or by calling ``install.packages("stringi_1.3.1.tar.gz", repos=NULL)``,
+or by calling ``install.packages("stringi_1.6.1.tar.gz", repos=NULL)``,
 from within an R session.
 
 C++11 Support
@@ -101,7 +103,7 @@ Customising the Build Process
 
 Additional features and options of the ``./configure`` script:
 
--  ``--disable-cxx11``: Disable use of C++11; if you build ICU4C from
+-  ``--disable-cxx11``: Disable C++11 use; if you build ICU4C from
    sources, make sure your C++ compiler supports the ``long long`` type.
 
 -  ``--disable-icu-bundle``: Force the use of the system ICU.
@@ -130,8 +132,8 @@ Some influential environment variables:
    ``pkg-config``\ s ``.pc`` files.
 
 -  ``R_HOME``: Override default directory with R installation, e.g.,
-   ``/usr/lib64/R``. Note that ``$R_HOME/bin/R`` should refer to the R
-   executable.
+   ``/usr/lib64/R``. Note that ``$R_HOME/bin/R`` should refer to the
+   ``R`` executable.
 
 -  ``CAT``: The ``cat`` command used to generate the list of source
    files to compile.
@@ -139,7 +141,7 @@ Some influential environment variables:
 -  ``PKG_CONFIG``:The ``pkg-config`` command used to fetch the necessary
    compiler flags to link to and existing ``libicu`` installation.
 
--  ``STRINGI_DISABLE_CXX11``: Disable the use of C++11, see also
+-  ``STRINGI_DISABLE_CXX11``: Disable C++11 flags, see also
    ``--disable-cxx11``.
 
 -  ``STRINGI_DISABLE_PKG_CONFIG``: Force the use of the ICU bundle, see
@@ -162,13 +164,12 @@ Conclusion
 ----------
 
 We expect that with a correctly configured C++11 compiler and properly
-installed system ICU4C distribution, you should experience no problems
-with installing the package. Also, if you use our ICU4C bundle and you
-have a working internet access, all should lead to a happy ending.
+installed system ICU4C distribution, you should face no problems with
+installing the package, especially if you use our ICU4C bundle and you
+have a working internet access.
 
 If you do not manage to set up a successful stringi build, do not
 hesitate to `file a bug
 report <https://github.com/gagolews/stringi/issues>`__. However, please
-check the archived (closed) issues for similar problems experienced by
-other users — it is very likely that they have already been resolved
-successfully.
+check the list of archived (closed) issues first – it is very likely
+that a solution to your problem is already there.

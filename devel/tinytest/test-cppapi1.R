@@ -1,6 +1,5 @@
 library("tinytest")
 library("stringi")
-library("stringr")
 
 if (require("Rcpp", quietly=TRUE)) {
     Rcpp::sourceCpp("test-cppapi1.cpp")

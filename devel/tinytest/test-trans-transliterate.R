@@ -1,12 +1,11 @@
 library("tinytest")
 library("stringi")
-library("stringr")
 
 
 expect_equivalent(stri_trans_general(character(0), "latin-ascii"), character(0))
 expect_equivalent(stri_trans_general("", "latin-ascii"), "")
 expect_equivalent(stri_trans_general("", NA), NA_character_)
-expect_error(str_trans_general("", "sagsgsdgsdhrherj48iur"))
+expect_error(stri_trans_general("", "sagsgsdgsdhrherj48iur"))
 
 expect_equivalent(stri_trans_general(c("groß", NA, ""), "latin-ascii"), c("gross",
     NA, ""))

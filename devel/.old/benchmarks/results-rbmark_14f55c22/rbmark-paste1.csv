@@ -1,0 +1,22 @@
+# benchmark=rbmark-paste1
+# description=collapses a long sequence of ASCII letters into a single string
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.0.2 (2013-09-25)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic
+# LC_CTYPE=pl_PL.iso-8859-2
+# nodename=eurydike
+"expr","user.self","sys.self","elapsed","user.child","sys.child","n","benchmark","git_sha","sys_sha","datetime"
+"paste(ltrs10kx, collapse = """")",4.904,0.102,5.037,0,0,100,"rbmark-paste1","1eaca8f","14f55c22","2014-04-01 13:39:10"
+"str_join(ltrs10kx, collapse = """")",6.087,0.199,6.332,0,0,100,"rbmark-paste1","1eaca8f","14f55c22","2014-04-01 13:39:10"
+"stri_join(ltrs10kx, collapse = """")",0.952,0.142,1.111,0,0,100,"rbmark-paste1","1eaca8f","14f55c22","2014-04-01 13:39:10"
+"paste(ltrs10kx, collapse = """")",4.85299999999999,0.094,4.982,0,0,100,"rbmark-paste1","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"str_join(ltrs10kx, collapse = """")",6.09,0.161,6.296,0,0,100,"rbmark-paste1","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"stri_join(ltrs10kx, collapse = """")",0.966000000000001,0.146,1.127,0,0,100,"rbmark-paste1","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"paste(ltrs10kx, collapse = """")",4.913,0.089,5.03,0,0,100,"rbmark-paste1","dd18a15","14f55c22","2014-04-17 13:54:04"
+"str_join(ltrs10kx, collapse = """")",6.383,0.182,6.643,0,0,100,"rbmark-paste1","dd18a15","14f55c22","2014-04-17 13:54:04"
+"stri_join(ltrs10kx, collapse = """")",1.017,0.136,1.167,0,0,100,"rbmark-paste1","dd18a15","14f55c22","2014-04-17 13:54:04"
+"paste(ltrs10kx, collapse = """")",4.97300000000001,0.117,5.117,0,0,100,"rbmark-paste1","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"str_join(ltrs10kx, collapse = """")",6.176,0.205,6.418,0,0,100,"rbmark-paste1","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"stri_join(ltrs10kx, collapse = """")",0.960999999999999,0.142,1.118,0,0,100,"rbmark-paste1","6ea2ea2","14f55c22","2014-04-17 18:43:18"

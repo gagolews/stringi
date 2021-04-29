@@ -115,6 +115,8 @@ However, for ``stri_replace_all*``, if ``vectorize_all`` is ``FALSE``, the each 
 
 In case of ``stri_replace_*_regex``, the replacement string may contain references to capture groups (in round parentheses). References are of the form ``$n``, where ``n`` is the number of the capture group (``$1`` denotes the first group). For the literal ``$``, escape it with a backslash. Moreover, ``${name}`` are used for named capture groups.
 
+Note that ``stri_replace_last_regex`` searches from start to end, but skips overlapping matches, see the example below.
+
 ``stri_replace``, ``stri_replace_all``, ``stri_replace_first``, and ``stri_replace_last`` are convenience functions; they just call ``stri_replace_*_*`` variants, depending on the arguments used.
 
 If you wish to remove white-spaces from the start or end of a string, see `stri_trim <stri_trim.html>`__.
@@ -169,3 +171,8 @@ Examples
         c('quick', 'brown', 'fox'), c('slow',  'black', 'bear'), vectorize_all=FALSE)
    stri_replace_all_regex('The quicker brown fox jumped over the lazy dog.',
         '\\b'%s+%c('quick', 'brown', 'fox')%s+%'\\b', c('slow',  'black', 'bear'), vectorize_all=FALSE)
+
+   # Searching for the last occurrence:
+   # Note the difference - regex searches left to right, with no overlaps.
+   stri_replace_last_fixed("agAGA", "aga", "*", case_insensitive=TRUE)
+   stri_replace_last_regex("agAGA", "aga", "*", case_insensitive=TRUE)

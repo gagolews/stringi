@@ -1,6 +1,5 @@
 library("tinytest")
 library("stringi")
-library("stringr")
 
 
 expect_identical(stri_count_regex(character(0), " "), integer(0))

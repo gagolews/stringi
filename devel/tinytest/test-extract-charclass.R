@@ -1,6 +1,5 @@
 library("tinytest")
 library("stringi")
-library("stringr")
 
 
 
@@ -33,8 +32,6 @@ expect_equivalent(stri_extract_all_charclass(c("abc", "aąb", "a1B2c3", "1ą2b3C
     "123"), "\\p{L}", merge = FALSE), list(c("a", "b", "c"), c("a", "ą", "b"),
     c("a", "B", "c"), c("ą", "b", "C"), NA_character_))
 
-#    expect_identical(stri_extract_all_charclass(c('a1b2c3', NA, '12', 'ba'), '\\p{N}', merge=FALSE),
-#       str_extract_all(c('a1b2c3', NA, '12', 'ba'), '[0-9]'))
 
 expect_identical(stri_extract(c("ab_c", "d_ef_g", "h", ""), mode = "all", charclass = "\\p{L}",
     merge = TRUE, simplify = NA), matrix(c("ab", "d", "h", NA, "c", "ef", NA,
@@ -58,8 +55,6 @@ expect_equivalent(stri_extract_first_charclass(c("abc", "ą5Ą", "a1B2c3", "123"
 expect_equivalent(stri_extract_first_charclass("    zxx\n\t \v   \n", c("\\p{WHITE_SPACE}",
     "\\P{WHITE_SPACE}")), c(" ", "z"))
 
-expect_identical(stri_extract_first_charclass(c("a1b2c3", NA, "12", "ba"), "\\p{N}"),
-    str_extract(c("a1b2c3", NA, "12", "ba"), "[0-9]"))
 
 
 expect_equal(mode(stri_extract_last_charclass(character(0), ("\\P{WHITE_SPACE}"))), "character")

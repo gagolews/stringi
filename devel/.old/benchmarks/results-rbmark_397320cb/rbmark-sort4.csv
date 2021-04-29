@@ -1,0 +1,22 @@
+# benchmark=rbmark-sort4
+# description=sorts a set of words of various lengths (ASCII + Polish letters, native encoding) [almost sorted vector]
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.0.2 (2013-09-25)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic
+# LC_CTYPE=pl_PL.UTF-8
+# nodename=eurydike
+"expr","user.self","sys.self","elapsed","user.child","sys.child","n","benchmark","git_sha","sys_sha","datetime"
+"stri_sort(xalmsrt)",0.265000000000001,0,0.266000000000005,0,0,25,"rbmark-sort4","1eaca8f","397320cb","2014-04-01 13:37:27"
+"stri_sort(xalmsrt, opts_collator = NA)",0.108000000000004,0,0.109000000000009,0,0,25,"rbmark-sort4","1eaca8f","397320cb","2014-04-01 13:37:27"
+"sort(xalmsrt)",7.928,0.00700000000000001,7.96899999999999,0,0,25,"rbmark-sort4","1eaca8f","397320cb","2014-04-01 13:37:27"
+"stri_sort(xalmsrt)",0.269999999999996,0.001,0.272000000000006,0,0,25,"rbmark-sort4","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"stri_sort(xalmsrt, opts_collator = NA)",0.119,0,0.119,0,0,25,"rbmark-sort4","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"sort(xalmsrt)",7.836,0.001,7.86500000000001,0,0,25,"rbmark-sort4","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"stri_sort(xalmsrt)",0.271999999999991,0,0.272999999999996,0,0,25,"rbmark-sort4","dd18a15","397320cb","2014-04-17 13:51:29"
+"stri_sort(xalmsrt, opts_collator = NA)",0.11999999999999,0,0.121000000000009,0,0,25,"rbmark-sort4","dd18a15","397320cb","2014-04-17 13:51:29"
+"sort(xalmsrt)",7.751,0.022,7.80699999999999,0,0,25,"rbmark-sort4","dd18a15","397320cb","2014-04-17 13:51:29"
+"stri_sort(xalmsrt)",0.167000000000002,0,0.168000000000006,0,0,25,"rbmark-sort4","6ea2ea2","397320cb","2014-04-17 18:40:43"
+"stri_sort(xalmsrt, opts_collator = NA)",0.114999999999995,0,0.115000000000009,0,0,25,"rbmark-sort4","6ea2ea2","397320cb","2014-04-17 18:40:43"
+"sort(xalmsrt)",7.91799999999999,0,7.959,0,0,25,"rbmark-sort4","6ea2ea2","397320cb","2014-04-17 18:40:43"

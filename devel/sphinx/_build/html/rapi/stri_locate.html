@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>stri_locate: Locate Occurrences of a Pattern &mdash; stringi 1.5.4 documentation</title>
   
@@ -17,9 +17,12 @@
 
   
   
+
   
   
     <link rel="canonical" href="https://stringi.gagolewski.com/rapi/stri_locate.html"/>
+  
+
   
 
   
@@ -32,7 +35,6 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -54,7 +56,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> stringi
+            <a href="../index.html" class="icon icon-home"> stringi
           
 
           
@@ -215,7 +217,7 @@
 <li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/web/packages/stringi/">CRAN Entry</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../news.html">What’s New in <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">What Is New in <em>stringi</em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Installing <em>stringi</em></a></li>
 </ul>
 
@@ -257,6 +259,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -270,7 +274,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
         
       </li>
     
@@ -279,10 +283,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="stri_match.html" class="btn btn-neutral float-right" title="stri_match: Extract Regex Pattern Matches, Together with Capture Groups" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="stri_match.html" class="btn btn-neutral float-right" title="stri_match: Extract Regex Pattern Matches, Together with Capture Groups" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
       
       
-        <a href="stri_locate_boundaries.html" class="btn btn-neutral float-left" title="stri_locate_boundaries: Locate Text Boundaries" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="stri_locate_boundaries.html" class="btn btn-neutral float-left" title="stri_locate_boundaries: Locate Text Boundaries" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
       
   </div>
   
@@ -401,7 +405,7 @@
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
 <p>For <code class="docutils literal notranslate"><span class="pre">stri_locate_all_*</span></code>, a list of integer matrices is returned. Each list element represents the results of a separate search scenario. The first column gives the start positions of the matches, and the second column gives the end positions. Moreover, you may get two <code class="docutils literal notranslate"><span class="pre">NA</span></code>s in one row for no match (if <code class="docutils literal notranslate"><span class="pre">omit_no_match</span></code> is <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>) or <code class="docutils literal notranslate"><span class="pre">NA</span></code> arguments.</p>
 <p><code class="docutils literal notranslate"><span class="pre">stri_locate_first_*</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_locate_last_*</span></code> return an integer matrix with two columns, giving the start and end positions of the first or the last matches, respectively, and two <code class="docutils literal notranslate"><span class="pre">NA</span></code>s if and only if they are not found.</p>
-<p>For <code class="docutils literal notranslate"><span class="pre">stri_locate_*_regex</span></code>, if the match is of zero length, <code class="docutils literal notranslate"><span class="pre">end</span></code> will be one character less than <code class="docutils literal notranslate"><span class="pre">start</span></code>.</p>
+<p>For <code class="docutils literal notranslate"><span class="pre">stri_locate_*_regex</span></code>, if the match is of zero length, <code class="docutils literal notranslate"><span class="pre">end</span></code> will be one character less than <code class="docutils literal notranslate"><span class="pre">start</span></code>. Note that <code class="docutils literal notranslate"><span class="pre">stri_locate_last_regex</span></code> searches from start to end, but skips overlapping matches, see the example below.</p>
 </div>
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
@@ -451,6 +455,12 @@
 <span class="c1"># Use regex positive-lookahead to locate overlapping pattern matches:</span>
 <span class="nf">stri_locate_all_regex</span><span class="p">(</span><span class="s">&#39;ACAGAGACTTTAGATAGAGAAGA&#39;</span><span class="p">,</span> <span class="s">&#39;(?=AGA)&#39;</span><span class="p">)</span>
 <span class="c1"># note that start &gt; end here (match of 0 length)</span>
+
+<span class="c1"># Searching for the last occurrence:</span>
+<span class="nf">stri_locate_last_fixed</span><span class="p">(</span><span class="s">&quot;agaga&quot;</span><span class="p">,</span> <span class="s">&quot;aga&quot;</span><span class="p">)</span>
+<span class="nf">stri_locate_last_coll</span><span class="p">(</span><span class="s">&quot;agaga&quot;</span><span class="p">,</span> <span class="s">&quot;aga&quot;</span><span class="p">)</span>
+<span class="c1"># note the difference - regex searches left to right, with no overlaps:</span>
+<span class="nf">stri_locate_last_regex</span><span class="p">(</span><span class="s">&quot;agaga&quot;</span><span class="p">,</span> <span class="s">&quot;aga&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -461,37 +471,29 @@
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="stri_match.html" class="btn btn-neutral float-right" title="stri_match: Extract Regex Pattern Matches, Together with Capture Groups" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="stri_locate_boundaries.html" class="btn btn-neutral float-left" title="stri_locate_boundaries: Locate Text Boundaries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="stri_match.html" class="btn btn-neutral float-right" title="stri_match: Extract Regex Pattern Matches, Together with Capture Groups" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="stri_locate_boundaries.html" class="btn btn-neutral float-left" title="stri_locate_boundaries: Locate Text Boundaries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, Marek Gagolewski
+        &#169; Copyright 2020, Marek Gagolewski.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

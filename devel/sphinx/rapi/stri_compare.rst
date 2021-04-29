@@ -94,6 +94,12 @@ Examples
    # also ignore diacritical differences:
    stri_cmp_equiv('hladn\u00FD', 'hladny', strength=1, locale='sk_SK')
 
+   marios <- c('Mario', 'mario', 'M\\u00e1rio', 'm\\u00e1rio')
+   stri_cmp_equiv(marios, 'mario', case_level=TRUE, strength=2L)
+   stri_cmp_equiv(marios, 'mario', case_level=TRUE, strength=1L)
+   stri_cmp_equiv(marios, 'mario', strength=1L)
+   stri_cmp_equiv(marios, 'mario', strength=2L)
+
    # non-Unicode-normalized vs normalized string:
    stri_cmp_equiv(stri_trans_nfkd('\u0105'), '\u105')
 

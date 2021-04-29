@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>stri_split: Split a String By Pattern Matches &mdash; stringi 1.5.4 documentation</title>
   
@@ -17,9 +17,12 @@
 
   
   
+
   
   
     <link rel="canonical" href="https://stringi.gagolewski.com/rapi/stri_split.html"/>
+  
+
   
 
   
@@ -32,7 +35,6 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -54,7 +56,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> stringi
+            <a href="../index.html" class="icon icon-home"> stringi
           
 
           
@@ -215,7 +217,7 @@
 <li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/web/packages/stringi/">CRAN Entry</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../news.html">What’s New in <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">What Is New in <em>stringi</em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Installing <em>stringi</em></a></li>
 </ul>
 
@@ -257,6 +259,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -270,7 +274,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
         
       </li>
     
@@ -279,10 +283,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="stri_startsendswith.html" class="btn btn-neutral float-right" title="stri_startsendswith: Determine if the Start or End of a String Matches a Pattern" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="stri_startsendswith.html" class="btn btn-neutral float-right" title="stri_startsendswith: Determine if the Start or End of a String Matches a Pattern" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
       
       
-        <a href="stri_split_lines.html" class="btn btn-neutral float-left" title="stri_split_lines: Split a String Into Text Lines" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="stri_split_lines.html" class="btn btn-neutral float-left" title="stri_split_lines: Split a String Into Text Lines" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
       
   </div>
   
@@ -383,7 +387,7 @@
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
 <p>Vectorized over <code class="docutils literal notranslate"><span class="pre">str</span></code>, <code class="docutils literal notranslate"><span class="pre">pattern</span></code>, <code class="docutils literal notranslate"><span class="pre">n</span></code>, and <code class="docutils literal notranslate"><span class="pre">omit_empty</span></code> (with recycling of the elements in the shorter vector if necessary).</p>
-<p>If <code class="docutils literal notranslate"><span class="pre">n</span></code> is negative, then all pieces are extracted. Otherwise, if <code class="docutils literal notranslate"><span class="pre">tokens_only</span></code> is <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> (this is the default, for compatibility with the stringr package), then <code class="docutils literal notranslate"><span class="pre">n-1</span></code> tokens are extracted (if possible) and the <code class="docutils literal notranslate"><span class="pre">n</span></code>-th string gives the remainder (see Examples). On the other hand, if <code class="docutils literal notranslate"><span class="pre">tokens_only</span></code> is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, then only full tokens (up to <code class="docutils literal notranslate"><span class="pre">n</span></code> pieces) are extracted.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">n</span></code> is negative, then all pieces are extracted. Otherwise, if <code class="docutils literal notranslate"><span class="pre">tokens_only</span></code> is <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> (which is the default), then <code class="docutils literal notranslate"><span class="pre">n-1</span></code> tokens are extracted (if possible) and the <code class="docutils literal notranslate"><span class="pre">n</span></code>-th string gives the remainder (see Examples). On the other hand, if <code class="docutils literal notranslate"><span class="pre">tokens_only</span></code> is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, then only full tokens (up to <code class="docutils literal notranslate"><span class="pre">n</span></code> pieces) are extracted.</p>
 <p><code class="docutils literal notranslate"><span class="pre">omit_empty</span></code> is applied during the split process: if it is set to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, then tokens of zero length are ignored. Thus, empty strings will never appear in the resulting vector. On the other hand, if <code class="docutils literal notranslate"><span class="pre">omit_empty</span></code> is <code class="docutils literal notranslate"><span class="pre">NA</span></code>, then empty tokens are substituted with missing strings.</p>
 <p>Empty search patterns are not supported. If you wish to split a string into individual characters, use, e.g., <a class="reference external" href="stri_split_boundaries.html">stri_split_boundaries(str, type=’character’)</a> for THE Unicode way.</p>
 <p><code class="docutils literal notranslate"><span class="pre">stri_split</span></code> is a convenience function. It calls either <code class="docutils literal notranslate"><span class="pre">stri_split_regex</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_split_fixed</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_split_coll</span></code>, or <code class="docutils literal notranslate"><span class="pre">stri_split_charclass</span></code>, depending on the argument used.</p>
@@ -436,37 +440,29 @@
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="stri_startsendswith.html" class="btn btn-neutral float-right" title="stri_startsendswith: Determine if the Start or End of a String Matches a Pattern" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="stri_split_lines.html" class="btn btn-neutral float-left" title="stri_split_lines: Split a String Into Text Lines" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="stri_startsendswith.html" class="btn btn-neutral float-right" title="stri_startsendswith: Determine if the Start or End of a String Matches a Pattern" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="stri_split_lines.html" class="btn btn-neutral float-left" title="stri_split_lines: Split a String Into Text Lines" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, Marek Gagolewski
+        &#169; Copyright 2020, Marek Gagolewski.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

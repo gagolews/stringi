@@ -1,0 +1,22 @@
+# benchmark=rbmark-sort1
+# description=sorts a set of words of various lengths (ASCII + Polish letters, native encoding) [random order on input]
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.0.2 (2013-09-25)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic
+# LC_CTYPE=pl_PL.iso-8859-2
+# nodename=eurydike
+"expr","user.self","sys.self","elapsed","user.child","sys.child","n","benchmark","git_sha","sys_sha","datetime"
+"stri_sort(xrand)",0.685000000000002,0,0.689,0,0,25,"rbmark-sort1","1eaca8f","14f55c22","2014-04-01 13:39:10"
+"stri_sort(xrand, opts_collator = NA)",0.333999999999996,0,0.336999999999996,0,0,25,"rbmark-sort1","1eaca8f","14f55c22","2014-04-01 13:39:10"
+"sort(xrand)",15.902,0.019,16.009,0,0,25,"rbmark-sort1","1eaca8f","14f55c22","2014-04-01 13:39:10"
+"stri_sort(xrand)",0.688000000000002,0.002,0.695999999999998,0,0,25,"rbmark-sort1","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"stri_sort(xrand, opts_collator = NA)",0.326999999999998,0,0.328999999999994,0,0,25,"rbmark-sort1","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"sort(xrand)",16.466,0.026,16.581,0,0,25,"rbmark-sort1","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"stri_sort(xrand)",0.685000000000002,0,0.687000000000012,0,0,25,"rbmark-sort1","dd18a15","14f55c22","2014-04-17 13:54:04"
+"stri_sort(xrand, opts_collator = NA)",0.328000000000003,0,0.329999999999998,0,0,25,"rbmark-sort1","dd18a15","14f55c22","2014-04-17 13:54:04"
+"sort(xrand)",16.39,0.00900000000000001,16.469,0,0,25,"rbmark-sort1","dd18a15","14f55c22","2014-04-17 13:54:04"
+"stri_sort(xrand)",0.47999999999999,0.001,0.484999999999999,0,0,25,"rbmark-sort1","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"stri_sort(xrand, opts_collator = NA)",0.328000000000003,0,0.329999999999998,0,0,25,"rbmark-sort1","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"sort(xrand)",16.729,0.004,16.812,0,0,25,"rbmark-sort1","6ea2ea2","14f55c22","2014-04-17 18:43:18"

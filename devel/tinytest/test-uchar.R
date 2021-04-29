@@ -1,6 +1,5 @@
 # library("tinytest")
 # library("stringi")
-# library("stringr")
 #
 # test_that('stri_chartype', {
 #    expect_equivalent(stri_chartype(character(0)), NULL)

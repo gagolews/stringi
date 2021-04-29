@@ -1,0 +1,22 @@
+# benchmark=rbmark-paste3
+# description=joins four vectors consisting of words of different lengths, with a separator and using the recycling rule (ASCII + Polish letters, native encoding)
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.0.2 (2013-09-25)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic
+# LC_CTYPE=pl_PL.iso-8859-2
+# nodename=eurydike
+"expr","user.self","sys.self","elapsed","user.child","sys.child","n","benchmark","git_sha","sys_sha","datetime"
+"paste(x, y, z, w, sep = ""!"")",1.219,0.002,1.23,0,0,100,"rbmark-paste3","1eaca8f","14f55c22","2014-04-01 13:39:10"
+"str_join(x, y, z, w, sep = ""!"")",1.314,0.003,1.326,0,0,100,"rbmark-paste3","1eaca8f","14f55c22","2014-04-01 13:39:10"
+"stri_join(x, y, z, w, sep = ""!"")",2.225,0.00900000000000001,2.249,0,0,100,"rbmark-paste3","1eaca8f","14f55c22","2014-04-01 13:39:10"
+"paste(x, y, z, w, sep = ""!"")",1.233,0.003,1.24300000000001,0,0,100,"rbmark-paste3","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"str_join(x, y, z, w, sep = ""!"")",1.30399999999999,0.002,1.315,0,0,100,"rbmark-paste3","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"stri_join(x, y, z, w, sep = ""!"")",2.17899999999999,0.004,2.199,0,0,100,"rbmark-paste3","e9e4dc0","14f55c22","2014-04-02 12:24:59"
+"paste(x, y, z, w, sep = ""!"")",1.33600000000001,0.002,1.348,0,0,100,"rbmark-paste3","dd18a15","14f55c22","2014-04-17 13:54:04"
+"str_join(x, y, z, w, sep = ""!"")",1.398,0.001,1.40900000000001,0,0,100,"rbmark-paste3","dd18a15","14f55c22","2014-04-17 13:54:04"
+"stri_join(x, y, z, w, sep = ""!"")",2.26799999999999,0.005,2.29299999999999,0,0,100,"rbmark-paste3","dd18a15","14f55c22","2014-04-17 13:54:04"
+"paste(x, y, z, w, sep = ""!"")",1.278,0,1.285,0,0,100,"rbmark-paste3","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"str_join(x, y, z, w, sep = ""!"")",1.36,0,1.368,0,0,100,"rbmark-paste3","6ea2ea2","14f55c22","2014-04-17 18:43:18"
+"stri_join(x, y, z, w, sep = ""!"")",2.13699999999999,0.0269999999999999,2.179,0,0,100,"rbmark-paste3","6ea2ea2","14f55c22","2014-04-17 18:43:18"

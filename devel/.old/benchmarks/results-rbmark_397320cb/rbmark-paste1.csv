@@ -1,0 +1,22 @@
+# benchmark=rbmark-paste1
+# description=collapses a long sequence of ASCII letters into a single string
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.0.2 (2013-09-25)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic
+# LC_CTYPE=pl_PL.UTF-8
+# nodename=eurydike
+"expr","user.self","sys.self","elapsed","user.child","sys.child","n","benchmark","git_sha","sys_sha","datetime"
+"paste(ltrs10kx, collapse = """")",4.813,0.044,4.877,0,0,100,"rbmark-paste1","1eaca8f","397320cb","2014-04-01 13:37:27"
+"str_join(ltrs10kx, collapse = """")",6.017,0.096,6.147,0,0,100,"rbmark-paste1","1eaca8f","397320cb","2014-04-01 13:37:27"
+"stri_join(ltrs10kx, collapse = """")",0.962000000000002,0.089,1.065,0,0,100,"rbmark-paste1","1eaca8f","397320cb","2014-04-01 13:37:27"
+"paste(ltrs10kx, collapse = """")",4.846,0.001,4.867,0,0,100,"rbmark-paste1","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"str_join(ltrs10kx, collapse = """")",6.092,0.002,6.127,0,0,100,"rbmark-paste1","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"stri_join(ltrs10kx, collapse = """")",0.966999999999999,0.113,1.093,0,0,100,"rbmark-paste1","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"paste(ltrs10kx, collapse = """")",4.878,0.096,5.004,0,0,100,"rbmark-paste1","dd18a15","397320cb","2014-04-17 13:51:29"
+"str_join(ltrs10kx, collapse = """")",5.909,0.131,6.088,0,0,100,"rbmark-paste1","dd18a15","397320cb","2014-04-17 13:51:29"
+"stri_join(ltrs10kx, collapse = """")",0.940000000000005,0.132,1.085,0,0,100,"rbmark-paste1","dd18a15","397320cb","2014-04-17 13:51:29"
+"paste(ltrs10kx, collapse = """")",5.371,0,5.393,0,0,100,"rbmark-paste1","6ea2ea2","397320cb","2014-04-17 18:40:43"
+"str_join(ltrs10kx, collapse = """")",7.356,0,7.395,0,0,100,"rbmark-paste1","6ea2ea2","397320cb","2014-04-17 18:40:43"
+"stri_join(ltrs10kx, collapse = """")",0.983000000000004,0.12,1.116,0,0,100,"rbmark-paste1","6ea2ea2","397320cb","2014-04-17 18:40:43"

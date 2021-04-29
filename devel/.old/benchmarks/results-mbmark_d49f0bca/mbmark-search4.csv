@@ -1,0 +1,24 @@
+# benchmark=mbmark-search4
+# description=finds a word at the beginning of a long string (Latin&Polish letters)
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.1.0 (2014-04-10)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic -flto
+# LC_CTYPE=pl_PL.UTF-8
+# nodename=eurydike
+"expr","min.time","q1.time","median.time","q3.time","max.time","n","benchmark","git_sha","sys_sha","datetime"
+"stri_detect_regex(str, firstword)",0.00077394,0.0008032185,0.0008230025,0.00101115375,0.001576725,100,"mbmark-search4","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"stri_detect_regex(str, firstword, list(literal = TRUE))",0.000744929,0.0007565055,0.0007749545,0.0008280505,0.001552717,100,"mbmark-search4","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"stri_detect_fixed(str, firstword)",1.6306e-05,1.746e-05,2.00845e-05,2.675175e-05,7.9267e-05,100,"mbmark-search4","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"stri_detect_coll(str, firstword)",0.00082934,0.00084294175,0.0008669885,0.000937904,0.001607527,100,"mbmark-search4","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"grepl(firstword, str)",0.001258297,0.001274464,0.001288288,0.00134737425,0.002346243,100,"mbmark-search4","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"grepl(firstword, str, perl = TRUE)",0.007266594,0.00745441275,0.007883017,0.00875467925,0.013017388,100,"mbmark-search4","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"grepl(firstword, str, fixed = TRUE)",0.001266502,0.00130882275,0.0013466325,0.00143976675,0.002462908,100,"mbmark-search4","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"stri_detect_regex(str, firstword)",0.000789011,0.00080914775,0.0008414,0.00129282825,0.00161033,100,"mbmark-search4","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"stri_detect_regex(str, firstword, list(literal = TRUE))",0.000744923,0.000758511,0.000787102,0.0010486325,0.001554448,100,"mbmark-search4","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"stri_detect_fixed(str, firstword)",1.6256e-05,1.721675e-05,2.0405e-05,2.7368e-05,6.1589e-05,100,"mbmark-search4","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"stri_detect_coll(str, firstword)",0.000834524,0.0008439945,0.0008656035,0.00139704725,0.001839826,100,"mbmark-search4","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"grepl(firstword, str)",0.001262817,0.00127283275,0.001289472,0.00157429675,0.002418961,100,"mbmark-search4","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"grepl(firstword, str, perl = TRUE)",0.00726774,0.007370275,0.0075431075,0.00954206275,0.013644113,100,"mbmark-search4","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"grepl(firstword, str, fixed = TRUE)",0.001269917,0.00130828625,0.001346804,0.00163887,0.0025089,100,"mbmark-search4","c86aa5b","d49f0bca","2014-08-05 10:09:16"

@@ -1,0 +1,24 @@
+# benchmark=mbmark-search6
+# description=does not find a long overlapping pattern in a string (Latin&Polish letters)
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.1.0 (2014-04-10)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic -flto
+# LC_CTYPE=pl_PL.UTF-8
+# nodename=eurydike
+"expr","min.time","q1.time","median.time","q3.time","max.time","n","benchmark","git_sha","sys_sha","datetime"
+"stri_detect_regex(str, olap)",0.005636453,0.005869873,0.008338488,0.0096271925,0.018340351,100,"mbmark-search6","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"stri_detect_regex(str, olap, list(literal = TRUE))",0.005581756,0.005809086,0.0082943015,0.00949706425,0.019106832,100,"mbmark-search6","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"stri_detect_fixed(str, olap)",7.4647e-05,0.000105156,0.0001248005,0.00016157325,0.000294179,100,"mbmark-search6","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"stri_detect_coll(str, olap)",0.037599314,0.04227097325,0.0587218525,0.0658533695,0.145152828,100,"mbmark-search6","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"grepl(olap, str)",0.09518204,0.103661177,0.1410364885,0.1536334205,0.287882002,100,"mbmark-search6","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"grepl(olap, str, perl = TRUE)",0.028925051,0.032270581,0.044487203,0.0501228115,0.124617389,100,"mbmark-search6","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"grepl(olap, str, fixed = TRUE)",0.001551731,0.001565459,0.00226114,0.0025509135,0.005794079,100,"mbmark-search6","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"stri_detect_regex(str, olap)",0.005644055,0.0074343075,0.008252647,0.009174485,0.016181156,100,"mbmark-search6","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"stri_detect_regex(str, olap, list(literal = TRUE))",0.005577106,0.007829158,0.0082323685,0.0091443635,0.014228073,100,"mbmark-search6","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"stri_detect_fixed(str, olap)",7.5325e-05,0.00010606725,0.000119579,0.00015247325,0.000237365,100,"mbmark-search6","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"stri_detect_coll(str, olap)",0.037591828,0.04308633875,0.0608732035,0.065738374,0.097384104,100,"mbmark-search6","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"grepl(olap, str)",0.09591056,0.107801204,0.150206863,0.1526354105,0.177885848,100,"mbmark-search6","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"grepl(olap, str, perl = TRUE)",0.028849321,0.03417532975,0.0477629435,0.0515998895,0.075712783,100,"mbmark-search6","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"grepl(olap, str, fixed = TRUE)",0.001552169,0.00224184725,0.0022669975,0.002657959,0.004105353,100,"mbmark-search6","c86aa5b","d49f0bca","2014-08-05 10:09:16"

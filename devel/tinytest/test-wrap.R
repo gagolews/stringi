@@ -1,6 +1,5 @@
 library("tinytest")
 library("stringi")
-library("stringr")
 
 expect_error(stri_wrap("what\never", normalize = FALSE))
 expect_identical(stri_wrap(""), "")
@@ -120,32 +119,3 @@ strings <- list(stri_paste("ala ma ą ñ kota i kotek ma alicje oraz dwie grusze
 #       }
 #    }
 
-
-# \t#expect_identical(stri_wrap(s, h,'d'), stri_wrap(s,h,'d'))
-# \t#expect_identical(stri_wrap(s, h,'d'), stri_wrap(s,h,'d'))
-#    #vectorized over string, method, width and spacecost
-# \texpect_identical(stri_wrap(s, h,c('g','d')),
-#                     c(stri_wrap(s,h,'g'),stri_wrap(s,h,'d')))
-#    expect_identical(stri_wrap(c(s,s)),c(stri_wrap(s),stri_wrap(s)))
-# \texpect_identical(stri_wrap(s,1:3*h),
-#                     c(stri_wrap(s,h),stri_wrap(s,2*h),stri_wrap(s,3*h)))
-# \texpect_identical(stri_wrap(s,spacec=1:2),
-#                     c(stri_wrap(s,spacec=1),stri_wrap(s,spacec=2)))
-#
-# \ts <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin
-# \tnibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel
-# \tlorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac
-# \tdiam. Quisque semper justo at risus. Donec venenatis, turpis vel
-# \thendrerit interdum, dui ligula ultricies purus, sed posuere libero dui
-# \tid orci. Nam congue, pede vitae dapibus aliquet, elit magna vulputate
-# \tarcu, vel tempus metus leo non est. Etiam sit amet lectus quis est
-# \tcongue mollis. Phasellus congue lacus eget neque. Phasellus ornare,
-# \tante vitae consectetuer consequat, purus sapien ultricies dolor, et
-# \tmollis pede metus eget nisi. Praesent sodales velit quis augue. Cras
-# \tsuscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum
-# \tmassa nibh nec erat.'
-# \th <- '25'
-# \texpect_identical(stri_wrap(s, h,'g'), str_wrap(s,h))
-#
-#    expect_warning(stri_wrap(rep(s,2),10,c('g','d','g')))
-# })

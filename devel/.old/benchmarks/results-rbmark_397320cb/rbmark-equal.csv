@@ -1,0 +1,25 @@
+# benchmark=rbmark-equal
+# description=checks whether two character vectors are equal (with recycling, ASCII+Polish letters, native encoding)
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.0.2 (2013-09-25)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic
+# LC_CTYPE=pl_PL.UTF-8
+# nodename=eurydike
+"expr","user.self","sys.self","elapsed","user.child","sys.child","n","benchmark","git_sha","sys_sha","datetime"
+"x == y",0.093,0.005,0.0990000000000002,0,0,100,"rbmark-equal","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"stri_cmp(x, y) == 0",0.444999999999999,0.001,0.449999999999999,0,0,100,"rbmark-equal","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"stri_cmp(x, y, NA) == 0",0.682,0.003,0.693,0,0,100,"rbmark-equal","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"stri_cmp_eq(x, y)",0.385,0.004,0.393000000000001,0,0,100,"rbmark-equal","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"stri_cmp_eq(x, y, NA)",0.217000000000001,0.003,0.223000000000001,0,0,100,"rbmark-equal","e9e4dc0","397320cb","2014-04-02 12:22:40"
+"x == y",0.093,0.003,0.0970000000000013,0,0,100,"rbmark-equal","dd18a15","397320cb","2014-04-17 13:51:29"
+"stri_cmp(x, y) == 0",0.433999999999999,0.004,0.444000000000001,0,0,100,"rbmark-equal","dd18a15","397320cb","2014-04-17 13:51:29"
+"stri_cmp(x, y, NA) == 0",0.663,0.004,0.670999999999999,0,0,100,"rbmark-equal","dd18a15","397320cb","2014-04-17 13:51:29"
+"stri_cmp_eq(x, y)",0.380000000000001,0.00600000000000001,0.389999999999999,0,0,100,"rbmark-equal","dd18a15","397320cb","2014-04-17 13:51:29"
+"stri_cmp_eq(x, y, NA)",0.214,0.004,0.221,0,0,100,"rbmark-equal","dd18a15","397320cb","2014-04-17 13:51:29"
+"x == y",0.097999999999999,0.002,0.101000000000001,0,0,100,"rbmark-equal","6ea2ea2","397320cb","2014-04-17 18:40:43"
+"stri_cmp(x, y) == 0",0.391999999999999,0.005,0.4,0,0,100,"rbmark-equal","6ea2ea2","397320cb","2014-04-17 18:40:43"
+"stri_cmp(x, y, NA) == 0",0.648,0.001,0.654,0,0,100,"rbmark-equal","6ea2ea2","397320cb","2014-04-17 18:40:43"
+"stri_cmp_eq(x, y)",0.343,0.002,0.347999999999999,0,0,100,"rbmark-equal","6ea2ea2","397320cb","2014-04-17 18:40:43"
+"stri_cmp_eq(x, y, NA)",0.222,0.005,0.228999999999999,0,0,100,"rbmark-equal","6ea2ea2","397320cb","2014-04-17 18:40:43"

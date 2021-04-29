@@ -1,6 +1,5 @@
 library("tinytest")
 library("stringi")
-library("stringr")
 
 
 expect_equivalent(stri_order(rep(NA, 5)), 1:5)

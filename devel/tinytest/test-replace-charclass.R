@@ -1,6 +1,5 @@
 library("tinytest")
 library("stringi")
-library("stringr")
 
 
 expect_identical(stri_replace_all_charclass(character(0), c("\\p{Z}", "\\P{Z}"),

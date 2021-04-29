@@ -1,0 +1,52 @@
+# benchmark=benchmark-search5
+# description=finds a word at the end of a long string (Latin&Polish letters)
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.0.2 (2013-09-25)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic
+# LC_CTYPE=pl_PL.iso-8859-2
+# nodename=eurydike
+"expr","min.time","q1.time","median.time","q3.time","max.time","n","benchmark","git_sha","sys_sha","datetime"
+"stri_detect_regex(str, lastword)",0.00192431,0.00193284325,0.0019376705,0.00194463625,0.002091049,100,"benchmark-search5","6939343","14f55c22","2014-03-22 18:32:04"
+"stri_detect_regex(str, lastword, list(literal = TRUE))",0.001917114,0.0019235575,0.001926242,0.00193176975,0.00214557,100,"benchmark-search5","6939343","14f55c22","2014-03-22 18:32:04"
+"stri_detect_fixed(str, lastword)",0.026613333,0.02662440275,0.026636412,0.026669899,0.028028531,100,"benchmark-search5","6939343","14f55c22","2014-03-22 18:32:04"
+"stri_detect_fixed(str, lastword, NA)",0.00259146,0.0027409965,0.002792661,0.00280243575,0.002881849,100,"benchmark-search5","6939343","14f55c22","2014-03-22 18:32:04"
+"grepl(lastword, str)",7.8394e-05,8.084225e-05,8.3552e-05,8.879025e-05,0.000110377,100,"benchmark-search5","6939343","14f55c22","2014-03-22 18:32:04"
+"grepl(lastword, str, perl = TRUE)",0.000365455,0.0003677855,0.000369641,0.000373706,0.00038112,100,"benchmark-search5","6939343","14f55c22","2014-03-22 18:32:04"
+"grepl(lastword, str, fixed = TRUE)",0.003649009,0.003651014,0.0036522795,0.0036603265,0.003752976,100,"benchmark-search5","6939343","14f55c22","2014-03-22 18:32:04"
+"stri_detect_regex(str, lastword)",0.001935581,0.0019400055,0.001944965,0.00195166025,0.002032199,100,"benchmark-search5","6939343","14f55c22","2014-03-22 18:34:56"
+"stri_detect_regex(str, lastword, list(literal = TRUE))",0.001920781,0.0019256025,0.0019278405,0.0019321095,0.001984884,100,"benchmark-search5","6939343","14f55c22","2014-03-22 18:34:56"
+"stri_detect_fixed(str, lastword)",0.026633159,0.02664080875,0.026651346,0.0266955355,0.027170711,100,"benchmark-search5","6939343","14f55c22","2014-03-22 18:34:56"
+"stri_detect_fixed(str, lastword, NA)",0.002604579,0.00262429475,0.0026825295,0.002748867,0.002940293,100,"benchmark-search5","6939343","14f55c22","2014-03-22 18:34:56"
+"grepl(lastword, str)",7.2231e-05,7.51015e-05,7.80685e-05,8.1601e-05,0.000131577,100,"benchmark-search5","6939343","14f55c22","2014-03-22 18:34:56"
+"grepl(lastword, str, perl = TRUE)",0.000365161,0.0003663005,0.000369304,0.000372428,0.000404604,100,"benchmark-search5","6939343","14f55c22","2014-03-22 18:34:56"
+"grepl(lastword, str, fixed = TRUE)",0.003651681,0.00365432575,0.0036554875,0.00366420025,0.003951423,100,"benchmark-search5","6939343","14f55c22","2014-03-22 18:34:56"
+"stri_detect_regex(str, lastword)",0.001925447,0.00193281925,0.0019391375,0.0019476675,0.002403789,100,"benchmark-search5","97d0df8","14f55c22","2014-03-23 23:37:29"
+"stri_detect_regex(str, lastword, list(literal = TRUE))",0.001918752,0.00192511275,0.001926591,0.001929923,0.002234369,100,"benchmark-search5","97d0df8","14f55c22","2014-03-23 23:37:29"
+"stri_detect_fixed(str, lastword)",0.026617229,0.02662942275,0.026639145,0.026677568,0.028518241,100,"benchmark-search5","97d0df8","14f55c22","2014-03-23 23:37:29"
+"stri_detect_fixed(str, lastword, NA)",0.002584683,0.002610292,0.002675442,0.002783593,0.002953531,100,"benchmark-search5","97d0df8","14f55c22","2014-03-23 23:37:29"
+"grepl(lastword, str)",7.056e-05,7.536775e-05,8.07775e-05,8.8967e-05,0.000141375,100,"benchmark-search5","97d0df8","14f55c22","2014-03-23 23:37:29"
+"grepl(lastword, str, perl = TRUE)",0.000365326,0.000366919,0.000370349,0.00037400375,0.000419964,100,"benchmark-search5","97d0df8","14f55c22","2014-03-23 23:37:29"
+"grepl(lastword, str, fixed = TRUE)",0.003651519,0.0036540945,0.003655641,0.0036655265,0.004190771,100,"benchmark-search5","97d0df8","14f55c22","2014-03-23 23:37:29"
+"stri_detect_regex(str, lastword)",0.001927999,0.00193607,0.0019395995,0.001949017,0.002243241,100,"benchmark-search5","be86fc8","14f55c22","2014-03-25 15:21:39"
+"stri_detect_regex(str, lastword, list(literal = TRUE))",0.001918201,0.0019243835,0.0019272695,0.00193121825,0.002022065,100,"benchmark-search5","be86fc8","14f55c22","2014-03-25 15:21:39"
+"stri_detect_fixed(str, lastword)",0.026619852,0.026666935,0.0270558495,0.02748987475,0.028302233,100,"benchmark-search5","be86fc8","14f55c22","2014-03-25 15:21:39"
+"stri_detect_fixed(str, lastword, NA)",0.002598454,0.002662827,0.00275593,0.002793971,0.002912909,100,"benchmark-search5","be86fc8","14f55c22","2014-03-25 15:21:39"
+"grepl(lastword, str)",7.7948e-05,8.279025e-05,8.63885e-05,9.240175e-05,0.000145679,100,"benchmark-search5","be86fc8","14f55c22","2014-03-25 15:21:39"
+"grepl(lastword, str, perl = TRUE)",0.000367752,0.0003701585,0.0003738395,0.00037577375,0.000463576,100,"benchmark-search5","be86fc8","14f55c22","2014-03-25 15:21:39"
+"grepl(lastword, str, fixed = TRUE)",0.003652287,0.00365441425,0.003655706,0.00366301875,0.003925473,100,"benchmark-search5","be86fc8","14f55c22","2014-03-25 15:21:39"
+"stri_detect_regex(str, lastword)",0.001935927,0.00195697025,0.0019795815,0.002005636,0.00314756,100,"mbmark-search5","dd18a15","14f55c22","2014-04-17 13:59:16"
+"stri_detect_regex(str, lastword, list(literal = TRUE))",0.001916685,0.0019254565,0.001936318,0.001994338,0.002903467,100,"mbmark-search5","dd18a15","14f55c22","2014-04-17 13:59:16"
+"stri_detect_fixed(str, lastword)",0.026611562,0.0267356925,0.026993024,0.027796933,0.046142243,100,"mbmark-search5","dd18a15","14f55c22","2014-04-17 13:59:16"
+"stri_detect_fixed(str, lastword, NA)",0.00279585,0.00293472725,0.003020245,0.003076224,0.00451357,100,"mbmark-search5","dd18a15","14f55c22","2014-04-17 13:59:16"
+"grepl(lastword, str)",7.2789e-05,9.4272e-05,0.000106952,0.00013960375,0.000206165,100,"mbmark-search5","dd18a15","14f55c22","2014-04-17 13:59:16"
+"grepl(lastword, str, perl = TRUE)",0.000367111,0.000373899,0.0003763425,0.00038181175,0.000684417,100,"mbmark-search5","dd18a15","14f55c22","2014-04-17 13:59:16"
+"grepl(lastword, str, fixed = TRUE)",0.003653623,0.00365795775,0.0036700535,0.00369477675,0.005846439,100,"mbmark-search5","dd18a15","14f55c22","2014-04-17 13:59:16"
+"stri_detect_regex(str, lastword)",0.001282512,0.001286886,0.001289249,0.0012957825,0.001477923,100,"mbmark-search5","6ea2ea2","14f55c22","2014-04-17 18:48:21"
+"stri_detect_regex(str, lastword, list(literal = TRUE))",0.001254626,0.0012570295,0.0012592575,0.00126341375,0.00140361,100,"mbmark-search5","6ea2ea2","14f55c22","2014-04-17 18:48:21"
+"stri_detect_fixed(str, lastword)",0.025159271,0.025196372,0.025219107,0.02568237875,0.02655195,100,"mbmark-search5","6ea2ea2","14f55c22","2014-04-17 18:48:21"
+"stri_detect_fixed(str, lastword, NA)",0.002186969,0.002285474,0.002360881,0.002382867,0.002800428,100,"mbmark-search5","6ea2ea2","14f55c22","2014-04-17 18:48:21"
+"grepl(lastword, str)",9.092e-05,9.6073e-05,9.8408e-05,0.000102694,0.000201575,100,"mbmark-search5","6ea2ea2","14f55c22","2014-04-17 18:48:21"
+"grepl(lastword, str, perl = TRUE)",0.000372703,0.0003736815,0.0003747835,0.0003791125,0.000407894,100,"mbmark-search5","6ea2ea2","14f55c22","2014-04-17 18:48:21"
+"grepl(lastword, str, fixed = TRUE)",0.003650191,0.00365236725,0.0036538175,0.00366595725,0.003879829,100,"mbmark-search5","6ea2ea2","14f55c22","2014-04-17 18:48:21"

@@ -1,6 +1,5 @@
 library("tinytest")
 library("stringi")
-library("stringr")
 
 
 expect_error(stri_replace_all_coll("a", "a", c("b", "d"), vectorize_all = FALSE))

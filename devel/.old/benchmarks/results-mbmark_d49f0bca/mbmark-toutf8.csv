@@ -1,0 +1,14 @@
+# benchmark=mbmark-toutf8
+# description=converts a character vector (ASCII, UTF-8, Native, NA) to UTF-8
+# platform=x86_64-redhat-linux-gnu
+# Rversion=R version 3.1.0 (2014-04-10)
+# Rexec=/usr/lib64/R/bin/R
+# CXX=g++ -m64
+# CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic -flto
+# LC_CTYPE=pl_PL.UTF-8
+# nodename=eurydike
+"expr","min.time","q1.time","median.time","q3.time","max.time","n","benchmark","git_sha","sys_sha","datetime"
+"enc2utf8(x)",0.000100951,0.00010121125,0.000108628,0.0001403125,0.000315514,100,"mbmark-toutf8","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"stri_enc_toutf8(x)",3.269e-06,4.07975e-06,8.523e-06,1.39985e-05,4.4612e-05,100,"mbmark-toutf8","c86aa5b","d49f0bca","2014-08-05 10:00:54"
+"enc2utf8(x)",0.000147505,0.000147617,0.000147789,0.00015225,0.00025518,100,"mbmark-toutf8","c86aa5b","d49f0bca","2014-08-05 10:09:16"
+"stri_enc_toutf8(x)",4.682e-06,5.18925e-06,5.561e-06,6.5785e-06,4.5146e-05,100,"mbmark-toutf8","c86aa5b","d49f0bca","2014-08-05 10:09:16"

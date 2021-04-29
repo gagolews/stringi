@@ -1,6 +1,5 @@
 library("tinytest")
 library("stringi")
-library("stringr")
 
 
 expect_identical(stri_extract_all_fixed(character(0), "test"), list())
@@ -26,8 +25,6 @@ expect_identical(stri_extract(c("a_a", "a_a_a", "a", ""), mode = "all", fixed = 
 expect_identical(stri_extract_all_fixed("abaBAba", "Aba", case_insensitive = TRUE,
     overlap = TRUE), list(c("aba", "aBA", "Aba")))
 
-#    expect_identical(stri_extract_all_fixed(c('ababab', NA, 'ab', 'ba'), 'ab'),
-#       str_extract_all(c('ababab', NA, 'ab', 'ba'), 'ab'))
 
 expect_identical(stri_extract_first_fixed(character(0), "test"), character(0))
 expect_identical(stri_extract_first_fixed("test", character(0)), character(0))
@@ -38,10 +35,6 @@ suppressWarnings(expect_identical(stri_extract_first_fixed("test", ""), NA_chara
 expect_identical(stri_extract_first_fixed("\U00f0ffffbądeb!d", "bąd"), "bąd")
 expect_identical(stri_extract_first_fixed("\U00f0ffffbądeb!d", "BąD", case_insensitive = TRUE),
     "bąd")
-
-expect_identical(stri_extract_first_fixed(c("ababab", NA, "ab", "ba"), "ab"),
-    str_extract(c("ababab", NA, "ab", "ba"), "ab"))
-
 
 expect_identical(stri_extract_last_fixed(character(0), "test"), character(0))
 expect_identical(stri_extract_last_fixed("test", character(0)), character(0))

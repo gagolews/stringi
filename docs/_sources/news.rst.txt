@@ -1,26 +1,33 @@
-What’s New in *stringi*
-=======================
+What Is New in *stringi*
+========================
 
-1.5.4 (2021-XX-YY) **devel**
+-  … (to do - future releases) … #25 (locate-capture groups), #31
+   (sub_index), #96 (split-backwards), #266 (width-emojis), #405
+   (stri_sub match.length attrib)
+
+1.6.1 (2021-XX-YY) **devel**
 ----------------------------
 
 -  [DOCUMENTATION] A draft version of a paper on ``stringi`` is now
    available at
    https://stringi.gagolewski.com/_static/vignette/stringi.pdf
 
+-  …todo… #401 (update ICU4C to 69.1), The ICU4C bundle has been updated
+   from version 61.1 to 69.1 which features Unicode 13.0 and CLDR 39.
+
+-  …todo… #408 (stri_trans_casefold),
+
 -  [INTERNAL] #414: Use ``LEVELS(x)`` macro instead of accessing
    ``(x)->sxpinfo.gp`` directly (@lukaszdaniel).
 
--  … (to do) …, for example: #25 (locate-capture groups), #31
-   (sub_index), #96 (split-backwards), #266 (width-emojis), #401 (update
-   ICU4c), #405 (stri_sub match.length attrib), #408
-   (stri_trans_casefold), #406 (update manual)
+-  [BUGFIX] #415: ``locale=''`` was not equivalent to ``locale=NULL`` in
+   ``stri_opts_collator()``.
 
 1.5.3 (2020-09-04) **CRAN**
 ---------------------------
 
 -  [DOCUMENTATION] stringi home page has moved to
-   https://stringi.gagolewski.com and now includes the comprehensive
+   https://stringi.gagolewski.com and now includes a comprehensive
    reference manual.
 
 -  [NEW FEATURE] #400: ``%s$%`` and ``%stri$%`` are now binary operators

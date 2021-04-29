@@ -1,6 +1,5 @@
 library("tinytest")
 library("stringi")
-library("stringr")
 
 
 expect_identical(colnames(stri_locate_all_boundaries("stringi")[[1]]), c("start",

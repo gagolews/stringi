@@ -1,6 +1,5 @@
 library("tinytest")
 library("stringi")
-library("stringr")
 
 expect_identical(stri_detect_fixed("a", NA), NA)
 expect_identical(stri_detect_fixed(NA, "a"), NA)

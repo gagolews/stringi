@@ -1,6 +1,5 @@
 # library("tinytest")
 # library("stringi")
-# library("stringr")
 #
 # some internal encoding tests....
 # testing disabled by default

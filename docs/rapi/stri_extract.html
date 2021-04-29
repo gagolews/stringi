@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>stri_extract: Extract Occurrences of a Pattern &mdash; stringi 1.5.4 documentation</title>
   
@@ -17,9 +17,12 @@
 
   
   
+
   
   
     <link rel="canonical" href="https://stringi.gagolewski.com/rapi/stri_extract.html"/>
+  
+
   
 
   
@@ -32,7 +35,6 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -54,7 +56,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> stringi
+            <a href="../index.html" class="icon icon-home"> stringi
           
 
           
@@ -215,7 +217,7 @@
 <li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/web/packages/stringi/">CRAN Entry</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../news.html">What’s New in <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">What Is New in <em>stringi</em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Installing <em>stringi</em></a></li>
 </ul>
 
@@ -257,6 +259,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -270,7 +274,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
         
       </li>
     
@@ -279,10 +283,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="stri_flatten.html" class="btn btn-neutral float-right" title="stri_flatten: Flatten a String" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="stri_flatten.html" class="btn btn-neutral float-right" title="stri_flatten: Flatten a String" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
       
       
-        <a href="stri_extract_boundaries.html" class="btn btn-neutral float-left" title="stri_extract_boundaries: Extract Data Between Text Boundaries" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="stri_extract_boundaries.html" class="btn btn-neutral float-left" title="stri_extract_boundaries: Extract Data Between Text Boundaries" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
       
   </div>
   
@@ -408,13 +412,14 @@
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
 <p>Vectorized over <code class="docutils literal notranslate"><span class="pre">str</span></code> and <code class="docutils literal notranslate"><span class="pre">pattern</span></code> (with recycling of the elements in the shorter vector if necessary). This allows to, for instance, search for one pattern in each given string, search for each pattern in one given string, and search for the i-th pattern within the i-th string.</p>
 <p>Check out <a class="reference external" href="stri_match.html">stri_match</a> for the extraction of matches to individual regex capture groups.</p>
-<p><code class="docutils literal notranslate"><span class="pre">stri_extract</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_extract_all</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_extract_first</span></code>, and <code class="docutils literal notranslate"><span class="pre">stri_extract_last</span></code> are convenience functions. They just call <code class="docutils literal notranslate"><span class="pre">stri_extract_*_*</span></code>, depending on the arguments used.</p>
+<p><code class="docutils literal notranslate"><span class="pre">stri_extract</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_extract_all</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_extract_first</span></code>, and <code class="docutils literal notranslate"><span class="pre">stri_extract_last</span></code> are convenience functions. They merely call <code class="docutils literal notranslate"><span class="pre">stri_extract_*_*</span></code>, depending on the arguments used.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
 <p>For <code class="docutils literal notranslate"><span class="pre">stri_extract_all*</span></code>, if <code class="docutils literal notranslate"><span class="pre">simplify=FALSE</span></code> (the default), then a list of character vectors is returned. Each list element represents the results of a different search scenario. If a pattern is not found and <code class="docutils literal notranslate"><span class="pre">omit_no_match=FALSE</span></code>, then a character vector of length 1 with single <code class="docutils literal notranslate"><span class="pre">NA</span></code> value will be generated.</p>
 <p>Otherwise, i.e., if <code class="docutils literal notranslate"><span class="pre">simplify</span></code> is not <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>, then <a class="reference external" href="stri_list2matrix.html">stri_list2matrix</a> with <code class="docutils literal notranslate"><span class="pre">byrow=TRUE</span></code> argument is called on the resulting object. In such a case, the function yields a character matrix with an appropriate number of rows (according to the length of <code class="docutils literal notranslate"><span class="pre">str</span></code>, <code class="docutils literal notranslate"><span class="pre">pattern</span></code>, etc.). Note that <a class="reference external" href="stri_list2matrix.html">stri_list2matrix</a>’s <code class="docutils literal notranslate"><span class="pre">fill</span></code> argument is set either to an empty string or <code class="docutils literal notranslate"><span class="pre">NA</span></code>, depending on whether <code class="docutils literal notranslate"><span class="pre">simplify</span></code> is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> or <code class="docutils literal notranslate"><span class="pre">NA</span></code>, respectively.</p>
 <p><code class="docutils literal notranslate"><span class="pre">stri_extract_first*</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_extract_last*</span></code> return a character vector. A <code class="docutils literal notranslate"><span class="pre">NA</span></code> element indicates a no-match.</p>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">stri_extract_last_regex</span></code> searches from start to end, but skips overlapping matches, see the example below.</p>
 </div>
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
@@ -451,6 +456,11 @@
 
 <span class="nf">stri_extract_all_fixed</span><span class="p">(</span><span class="s">&#39;abaBAba&#39;</span><span class="p">,</span> <span class="s">&#39;Aba&#39;</span><span class="p">,</span> <span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 <span class="nf">stri_extract_all_fixed</span><span class="p">(</span><span class="s">&#39;abaBAba&#39;</span><span class="p">,</span> <span class="s">&#39;Aba&#39;</span><span class="p">,</span> <span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+
+<span class="c1"># Searching for the last occurrence:</span>
+<span class="c1"># Note the difference - regex searches left to right, with no overlaps.</span>
+<span class="nf">stri_extract_last_fixed</span><span class="p">(</span><span class="s">&quot;agAGA&quot;</span><span class="p">,</span> <span class="s">&quot;aga&quot;</span><span class="p">,</span> <span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="nf">stri_extract_last_regex</span><span class="p">(</span><span class="s">&quot;agAGA&quot;</span><span class="p">,</span> <span class="s">&quot;aga&quot;</span><span class="p">,</span> <span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -461,37 +471,29 @@
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="stri_flatten.html" class="btn btn-neutral float-right" title="stri_flatten: Flatten a String" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="stri_extract_boundaries.html" class="btn btn-neutral float-left" title="stri_extract_boundaries: Extract Data Between Text Boundaries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="stri_flatten.html" class="btn btn-neutral float-right" title="stri_flatten: Flatten a String" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="stri_extract_boundaries.html" class="btn btn-neutral float-left" title="stri_extract_boundaries: Extract Data Between Text Boundaries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, Marek Gagolewski
+        &#169; Copyright 2020, Marek Gagolewski.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
