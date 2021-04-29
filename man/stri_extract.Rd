@@ -136,6 +136,9 @@ whether \code{simplify} is \code{TRUE} or \code{NA}, respectively.
 
 \code{stri_extract_first*} and \code{stri_extract_last*}
 return a character vector. A \code{NA} element indicates a no-match.
+
+Note that \code{stri_extract_last_regex} searches from start to end,
+but skips overlapping matches, see the example below.
 }
 \description{
 These functions extract all substrings matching a given pattern.
@@ -156,7 +159,7 @@ to individual regex capture groups.
 
 \code{stri_extract}, \code{stri_extract_all}, \code{stri_extract_first},
 and \code{stri_extract_last} are convenience functions.
-They just call \code{stri_extract_*_*}, depending on the arguments used.
+They merely call \code{stri_extract_*_*}, depending on the arguments used.
 }
 \examples{
 stri_extract_all('XaaaaX', regex=c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
@@ -187,6 +190,11 @@ stri_extract_all_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+'), simplify=NA)
 
 stri_extract_all_fixed('abaBAba', 'Aba', case_insensitive=TRUE)
 stri_extract_all_fixed('abaBAba', 'Aba', case_insensitive=TRUE, overlap=TRUE)
+
+# Searching for the last occurrence:
+# Note the difference - regex searches left to right, with no overlaps.
+stri_extract_last_fixed("agAGA", "aga", case_insensitive=TRUE)
+stri_extract_last_regex("agAGA", "aga", case_insensitive=TRUE)
 
 }
 \seealso{

@@ -159,3 +159,6 @@ expect_identical(dim(stringi::stri_match_last_regex(c("a", "ab", NA), "(.)")),
 expect_identical(dim(stringi::stri_match_last_regex(c("a", "ab", NA), "(.)(.)")),
     c(3L, 3L))
 
+expect_equivalent(stri_locate_last_fixed("agaga", "aga"), matrix(nrow=1, c(3, 5)))
+expect_equivalent(stri_locate_last_coll("agaga", "aga"), matrix(nrow=1, c(3, 5)))
+expect_equivalent(stri_locate_last_regex("agaga", "aga"), matrix(nrow=1, c(1, 3)))

@@ -122,6 +122,8 @@ only if they are not found.
 
 For \code{stri_locate_*_regex}, if the match is of zero length,
 \code{end} will be one character less than \code{start}.
+Note that \code{stri_locate_last_regex} searches from start to end,
+but skips overlapping matches, see the example below.
 }
 \description{
 These functions may be used, e.g., to find the indexes (positions) where
@@ -188,6 +190,11 @@ stri_locate_last_regex('XaaaaX',
 stri_locate_all_regex('ACAGAGACTTTAGATAGAGAAGA', '(?=AGA)')
 # note that start > end here (match of 0 length)
 
+# Searching for the last occurrence:
+stri_locate_last_fixed("agaga", "aga")
+stri_locate_last_coll("agaga", "aga")
+# note the difference - regex searches left to right, with no overlaps:
+stri_locate_last_regex("agaga", "aga")
 
 }
 \seealso{
