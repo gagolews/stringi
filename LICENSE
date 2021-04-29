@@ -57,8 +57,7 @@ the Free Software Foundation; either version 2 of the License, or
 
 # The ICU4C Library
 
-The files in `src/icu55/*` and `src/icu61/*` are distributed
-under the following license.
+The files in `src/icu*/` are distributed under the following license.
 
 
 ## COPYRIGHT AND PERMISSION NOTICE (ICU 58 and later)

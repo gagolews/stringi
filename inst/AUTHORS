@@ -1,17 +1,63 @@
-** stringi authors and contributors **
+# stringi authors and contributors:
 
-* Marek Gagolewski (gagolews at rexamine dot com) [aut,cre,cph]
+* Marek Gagolewski (marek at gagolewski dot com) [aut,cre,cph]
 * Bartek Tartanus [ctb]
-and others (see https://github.com/gagolews/stringi/graphs/contributors).
 
-** ICU source code contributors **
+and other contributors (see https://github.com/gagolews/stringi/graphs/contributors).
 
-The overwhelming majority of all ICU4C code has been contributed by IBM
-employees, or by people under contract to IBM. The following lists
-the contributions from non-IBMers. Except for some minor contributions,
-these are all covered by Joint Copyright Assignment letters between
-IBM and the contributors.
 
+# ICU source code contributors:
+
+ICU4C code has been contributed by Unicode, Inc.,
+and IBM employees, or by people under contract to IBM and Unicode, Inc.
+Refer to http://site.icu-project.org/ for general information on the ICU project.
+
+The following lists the contributors included in
+https://github.com/unicode-org/icu-docs/tree/main/legal/contributions,
+see also the source files in the package's src/icu*/ directories
+and https://github.com/unicode-org/icu/graphs/contributors.
+
+* Markus W. Scherer
+* Steven R. Loomis
+* @grhoten
+* Alan Liu
+* Yoshito Umaoka
+* Ram Viswanadha
+* Andy Heninger
+* Peter Edberg
+* @dougfelt
+* John Emmons
+* Shane F. Carr
+* Mark Davis
+* @keep94
+* Jeff Genovy
+* Helena Shih Chapman
+* Fredrik Roubert
+* Sanjay Ghemawat
+* Norbert Runge
+* Frank Yung-Fong Tang
+* Abhinav Gupta
+* Hugo van der Merwe
+* David Beaumont
+* Younies Mahmoud
+* Daniel Ju
+* Bertrand A. Damiba
+* Helena Shih
+* Alan Liu
+* Wilson Hsieh
+* Mohamed Eldawy
+* Laura Werner
+* Mehran Mehr
+* V. Weinstein
+* D. Goldsmith
+* Chen-Lieh Huang
+* Dominic Ludlam
+* Jonas Utterstrom
+* Yves Arrouye
+* Carl Brown
+* Robert Buck
+* Sean Hunter
+* Michael Lecuyer
 * Apple Computer
 * Open Forum of Cambodia, represented by Javier Sola
 * Software Ventures, Inc., represented by Scott Duchin
@@ -25,39 +71,10 @@ IBM and the contributors.
 * Adobe Systems Incorporated, represented by Niti Hantaweepant
 * Yahoo!, Inc., represented by Badi Kumar Sudhakaran and Tex Texin
 * Google, Inc.
-* Unicode, Inc.
-* Sanjay Ghemawat
-* Bertrand A. Damiba
-* Helena Shih
-* Alan Liu
-* Wilson Hsieh
-* Mohamed Eldawy
-* Laura Werner
-* Markus W. Scherer
-* Mehran Mehr
-* V. Weinstein
-* Mark Davis
-* John Emmons
-* D. Goldsmith
-* Chen-Lieh Huang
-* Ram Viswanadha
-* Shane Carr
-* Dominic Ludlam
-* Jonas Utterstrom
-* Yves Arrouye
-* Carl Brown
-* Robert Buck
-* Sean Hunter
-* Michael Lecuyer
 * and others
 
-for more details see:
-http://source.icu-project.org/repos/icu/icuhtml/trunk/legal/contributions/code_contributions.html
-as well as the source files in the package's src/icu55/ and src/icu61/ directories.
-See also http://site.icu-project.org/ for general information on the ICU project.
 
-
-** Unicode Character Database **
+# Unicode Character Database:
 
 UCD is provided and maintained by Unicode, Inc.
 See http://www.unicode.org/copyright.html
