@@ -15,7 +15,10 @@ What Is New in *stringi*
 -  …todo… #401 (update ICU4C to 69.1), The ICU4C bundle has been updated
    from version 61.1 to 69.1 which features Unicode 13.0 and CLDR 39.
 
--  [NEW FEATURE] #408: …todo… ``stri_trans_casefold()``,
+-  [NEW FEATURE] #408: ``stri_trans_casefold()`` performs case folding;
+   this is different from case mapping, which is locale-dependent.
+   Folding makes two pieces of text that differ only in case identical.
+   This can come in handy when comparing strings.
 
 -  [NEW FEATURE] #421: ``stri_rank()`` ranks strings in a character
    vector (e.g., for ordering data frames with regards to multiple

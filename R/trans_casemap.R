@@ -32,11 +32,11 @@
 
 
 #' @title
-#' Transform Strings with Case Mapping
+#' Transform Strings with Case Mapping or Folding
 #'
 #' @description
 #' These functions transform strings either to lower case,
-#' UPPER CASE, or to Title Case.
+#' UPPER CASE, or Title Case or perform case folding.
 #'
 #' @details
 #' Vectorized over \code{str}.
@@ -58,6 +58,10 @@
 #' of each sentence will be capitalized only.
 #' Note that according the \pkg{ICU} User Guide,
 #' the string \code{'one. two. three.'} consists of one sentence.
+#'
+#' Case folding, on the other hand, is locale-independent.
+#' Its purpose is to make two pieces of text that differ only in case identical.
+#' This may come in handy when comparing strings.
 #'
 #' For more general (but not locale dependent)
 #' text transforms refer to \code{\link{stri_trans_general}}.
@@ -91,6 +95,7 @@
 #' stri_trans_toupper(c('abc', '123', '\u0105\u0104'))
 #' stri_trans_tolower(c('AbC', '123', '\u0105\u0104'))
 #' stri_trans_totitle(c('AbC', '123', '\u0105\u0104'))
+#' stri_trans_casefold(c('AbC', '123', '\u0105\u0104'))
 #' stri_trans_totitle('cOOkiE mOnSTeR likes COOKIES. Here HE comes!') # word boundary
 #' stri_trans_totitle('cOOkiE mOnSTeR likes COOKIES. Here HE comes!', type='sentence')
 stri_trans_tolower <- function(str, locale = NULL)
@@ -105,6 +110,15 @@ stri_trans_toupper <- function(str, locale = NULL)
 {
     .Call(C_stri_trans_toupper, str, locale)
 }
+
+
+#' @export
+#' @rdname stri_trans_casemap
+stri_trans_casefold <- function(str)
+{
+    .Call(C_stri_trans_casefold, str)
+}
+
 
 
 #' @export

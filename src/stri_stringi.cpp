@@ -232,6 +232,7 @@ const R_CallMethodDef cCallMethods[] = {
     STRI__MK_CALL("C_stri_trans_totitle",                stri_trans_totitle,              2),
     STRI__MK_CALL("C_stri_trans_tolower",                stri_trans_tolower,              2),
     STRI__MK_CALL("C_stri_trans_toupper",                stri_trans_toupper,              2),
+    STRI__MK_CALL("C_stri_trans_casefold",               stri_trans_casefold,             1),
     STRI__MK_CALL("C_stri_trim_both",                    stri_trim_both,                  2),
     STRI__MK_CALL("C_stri_trim_left",                    stri_trim_left,                  2),
     STRI__MK_CALL("C_stri_trim_right",                   stri_trim_right,                 2),

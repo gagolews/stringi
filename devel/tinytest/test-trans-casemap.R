@@ -8,8 +8,7 @@ expect_equivalent(stri_trans_tolower(character(0)), character(0))
 expect_equivalent(stri_trans_tolower(""), "")
 expect_equivalent(stri_trans_tolower(NA), NA_character_)
 
-expect_equivalent(stri_trans_tolower(c("!@#aAbBcC123", NA, "")), c("!@#aabbcc123",
-    NA, ""))
+expect_equivalent(stri_trans_tolower(c("!@#aAbBcC123", NA, "")), c("!@#aabbcc123", NA, ""))
 expect_equivalent(stri_flatten(stri_trans_tolower(LETTERS)), stri_flatten(letters))
 expect_equivalent(stri_trans_tolower(LETTERS), letters)  # vectors of length 26
 expect_equivalent(stri_trans_tolower(letters), letters)  # vectors of length 26
@@ -74,3 +73,21 @@ expect_equivalent(stri_trans_totitle("GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. H
 expect_equivalent(stri_trans_totitle("GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!",
     stri_opts_brkiter(type = "sentence")), "Good-old cookie monster is watching you. Here he comes!")
 
+
+
+expect_equivalent(stri_trans_casefold(character(0)), character(0))
+expect_equivalent(stri_trans_casefold(""), "")
+expect_equivalent(stri_trans_casefold(NA), NA_character_)
+
+expect_equivalent(stri_trans_casefold(c("!@#aAbBcC123", NA, "")), c("!@#aabbcc123", NA, ""))
+expect_equivalent(stri_flatten(stri_trans_casefold(LETTERS)), stri_flatten(letters))
+expect_equivalent(stri_trans_casefold(LETTERS), letters)  # vectors of length 26
+expect_equivalent(stri_trans_casefold(letters), letters)  # vectors of length 26
+expect_equivalent(stri_trans_casefold("ALA\tLUBI\nPSA"), "ala\tlubi\npsa")
+#lower(lower(x))==lower(x)
+expect_equivalent(stri_trans_casefold(stri_trans_casefold("ALA\tLUBI\nPSA")), stri_trans_casefold("ALA\tLUBI\nPSA"))
+
+ascii_non_letters <- rawToChar(as.raw(c(1:64, 91:96, 123:127)))
+expect_equivalent(stri_trans_casefold(ascii_non_letters), ascii_non_letters)
+
+expect_equivalent(stri_trans_casefold("ąĄ"), "ąą")

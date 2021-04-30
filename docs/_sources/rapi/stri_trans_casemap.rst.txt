@@ -1,10 +1,10 @@
-stri_trans_casemap: Transform Strings with Case Mapping
-=======================================================
+stri_trans_casemap: Transform Strings with Case Mapping or Folding
+==================================================================
 
 Description
 ~~~~~~~~~~~
 
-These functions transform strings either to lower case, UPPER CASE, or to Title Case.
+These functions transform strings either to lower case, UPPER CASE, or Title Case or perform case folding.
 
 Usage
 ~~~~~
@@ -14,6 +14,8 @@ Usage
    stri_trans_tolower(str, locale = NULL)
 
    stri_trans_toupper(str, locale = NULL)
+
+   stri_trans_casefold(str)
 
    stri_trans_totitle(str, ..., opts_brkiter = NULL)
 
@@ -44,6 +46,8 @@ ICU implements full Unicode string case mappings. It is worth noting that, gener
 -  is context-sensitive (a character in the input string may map differently depending on surrounding characters).
 
 With ``stri_trans_totitle``, if ``word`` ``BreakIterator`` is used (the default), then the first letter of each word will be capitalized and the rest will be transformed to lower case. With the break iterator of type ``sentence``, the first letter of each sentence will be capitalized only. Note that according the ICU User Guide, the string ``'one. two. three.'`` consists of one sentence.
+
+Case folding, on the other hand, is locale-independent. Its purpose is to make two pieces of text that differ only in case identical. This may come in handy when comparing strings.
 
 For more general (but not locale dependent) text transforms refer to `stri_trans_general <stri_trans_general.html>`__.
 
@@ -76,5 +80,6 @@ Examples
    stri_trans_toupper(c('abc', '123', '\u0105\u0104'))
    stri_trans_tolower(c('AbC', '123', '\u0105\u0104'))
    stri_trans_totitle(c('AbC', '123', '\u0105\u0104'))
+   stri_trans_casefold(c('AbC', '123', '\u0105\u0104'))
    stri_trans_totitle('cOOkiE mOnSTeR likes COOKIES. Here HE comes!') # word boundary
    stri_trans_totitle('cOOkiE mOnSTeR likes COOKIES. Here HE comes!', type='sentence')
