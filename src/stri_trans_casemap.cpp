@@ -37,6 +37,11 @@
 #include <unicode/ucasemap.h>
 
 
+#define STRI_CASEMAP_TOLOWER   1
+#define STRI_CASEMAP_TOUPPER   2
+#define STRI_CASEMAP_CASEFOLD  3
+
+
 /**
  *  Convert case (TitleCase)
  *
@@ -134,7 +139,7 @@ SEXP stri_trans_totitle(SEXP str, SEXP opts_brkiter) {
 
 
 /**
- *  Convert case (upper, lowercase)
+ *  Convert case (upper, lowercase, fold)
  *
  *
  *  @param str character vector
@@ -172,10 +177,14 @@ SEXP stri_trans_totitle(SEXP str, SEXP opts_brkiter) {
  *
  * @version 0.6-1 (Marek Gagolewski, 2015-07-11)
  *    now this is an internal function
+ *
+ * @version 1.6.1 (Marek Gagolewski, 2021-04-30)
+ *    add casefold
 */
 SEXP stri_trans_casemap(SEXP str, int _type, SEXP locale)
 {
-    if (_type < 1 || _type > 2) Rf_error(MSG__INCORRECT_INTERNAL_ARG);
+    if (_type < 1 || _type > 3)
+        Rf_error(MSG__INCORRECT_INTERNAL_ARG);
     const char* qloc = stri__prepare_arg_locale(locale, "locale", true); /* this is R_alloc'ed */
     PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
 
@@ -195,8 +204,8 @@ SEXP stri_trans_casemap(SEXP str, int _type, SEXP locale)
 
     // STEP 1.
     // Estimate the required buffer length
-    // Notice: The resulting number of codepoints may be larger or smaller than
-    // the number before casefolding
+    // Notice: The resulting number of code points may be larger or smaller than
+    // the number before case mapping
     R_len_t bufsize = str_cont.getMaxNumBytes();
     bufsize += 10; // a small margin
     String8buf buf(bufsize);
@@ -215,23 +224,39 @@ SEXP stri_trans_casemap(SEXP str, int _type, SEXP locale)
         R_len_t str_cur_n     = str_cont.get(i).length();
         const char* str_cur_s = str_cont.get(i).c_str();
 
-        status = U_ZERO_ERROR;
         int buf_need;
-        if (_type == 1) buf_need = ucasemap_utf8ToLower(ucasemap,
-                                       buf.data(), buf.size(), (const char*)str_cur_s, str_cur_n, &status);
-        else buf_need = ucasemap_utf8ToUpper(ucasemap,
-                                                 buf.data(), buf.size(), (const char*)str_cur_s, str_cur_n, &status);
-
-        if (U_FAILURE(status)) { /* retry */
-            buf.resize(buf_need, false/*destroy contents*/);
+        bool retry = false;
+        while (true) {
             status = U_ZERO_ERROR;
-            if (_type == 1) buf_need = ucasemap_utf8ToLower(ucasemap,
-                                           buf.data(), buf.size(), (const char*)str_cur_s, str_cur_n, &status);
-            else buf_need = ucasemap_utf8ToUpper(ucasemap,
-                                                     buf.data(), buf.size(), (const char*)str_cur_s, str_cur_n, &status);
+            if (_type == STRI_CASEMAP_TOLOWER) {
+                buf_need = ucasemap_utf8ToLower(
+                    ucasemap, buf.data(), buf.size(),
+                    (const char*)str_cur_s, str_cur_n, &status
+                );
+            }
+            else if (_type == STRI_CASEMAP_TOUPPER) {
+                buf_need = ucasemap_utf8ToUpper(
+                    ucasemap, buf.data(), buf.size(),
+                    (const char*)str_cur_s, str_cur_n, &status
+                );
+            }
+            else {
+                buf_need = ucasemap_utf8FoldCase(
+                    ucasemap, buf.data(), buf.size(),
+                    (const char*)str_cur_s, str_cur_n, &status
+                );
+            }
 
-            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */}) // this shouldn't happen
-            // we do have the buffer size required to complete this op
+            if (!U_FAILURE(status)) break;
+
+            if (!retry) {
+                buf.resize(buf_need, false/*destroy contents*/);
+                // we now have the buffer size required to complete this op
+                retry = true;
+            }
+            else {
+                STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */}) // this shouldn't happen
+            }
         }
 
         SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_need, CE_UTF8));
@@ -266,7 +291,7 @@ SEXP stri_trans_casemap(SEXP str, int _type, SEXP locale)
  *    call stri_trans_casemap
 */
 SEXP stri_trans_tolower(SEXP str, SEXP locale) {
-    return stri_trans_casemap(str, 1, locale);
+    return stri_trans_casemap(str, STRI_CASEMAP_TOLOWER, locale);
 }
 
 
@@ -283,7 +308,22 @@ SEXP stri_trans_tolower(SEXP str, SEXP locale) {
  *    call stri_trans_casemap
 */
 SEXP stri_trans_toupper(SEXP str, SEXP locale) {
-    return stri_trans_casemap(str, 2, locale);
+    return stri_trans_casemap(str, STRI_CASEMAP_TOUPPER, locale);
+}
+
+
+
+/**
+ *  Case folding
+ *
+ *  @param str character vector
+ *  @return character vector
+ *
+ * @version 1.6.1 (Marek Gagolewski, 2021-04-30)
+ *    call stri_trans_casemap
+*/
+SEXP stri_trans_casefold(SEXP str) {
+    return stri_trans_casemap(str, STRI_CASEMAP_CASEFOLD, R_NilValue);
 }
 
 

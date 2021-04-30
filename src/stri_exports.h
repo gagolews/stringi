@@ -165,6 +165,7 @@ SEXP stri_trans_char(SEXP str, SEXP pattern, SEXP replacement);
 SEXP stri_trans_totitle(SEXP str, SEXP opts_brkiter=R_NilValue);
 SEXP stri_trans_tolower(SEXP str, SEXP locale=R_NilValue);
 SEXP stri_trans_toupper(SEXP str, SEXP locale=R_NilValue);
+SEXP stri_trans_casefold(SEXP str);
 
 // trans_normalization.cpp:
 SEXP stri_trans_nfc(SEXP s);
