@@ -177,6 +177,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_rand_lipsum.html">stri_rand_lipsum: A Lorem Ipsum Generator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_rand_shuffle.html">stri_rand_shuffle: Randomly Shuffle Code Points in Each String</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_rand_strings.html">stri_rand_strings: Generate Random Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_rank.html">stri_rank: Ranking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_read_lines.html">stri_read_lines: Read Text Lines from a Text File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_read_raw.html">stri_read_raw: Read Text File as Raw</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_remove_empty.html">stri_remove_empty: Remove All Empty Strings from a Character Vector</a></li>
@@ -326,7 +327,7 @@
 <div class="section" id="character-encodings-in-r">
 <h2>Character Encodings in R<a class="headerlink" href="#character-encodings-in-r" title="Permalink to this headline">¶</a></h2>
 <p>Data in memory are just bytes (small integer values) – an en<em>coding</em> is a way to represent characters with such numbers, it is a semantic ‘key’ to understand a given byte sequence. For example, in ISO-8859-2 (Central European), the value 177 represents Polish “a with ogonek”, and in ISO-8859-1 (Western European), the same value denotes the “plus-minus” sign. Thus, a character encoding is a translation scheme: we need to communicate with R somehow, relying on how it represents strings.</p>
-<p>Basically, R has a very simple encoding marking mechanism, see <a class="reference external" href="stri_enc_mark.html">stri_enc_mark</a>. There is an implicit assumption that your platform’s default (native) encoding always extends ASCII – stringi checks that whenever your native encoding is being detected automatically on ICU’s initialization and each time when you change it manually by calling <a class="reference external" href="stri_enc_set.html">stri_enc_set</a>.</p>
+<p>Overall, R has a very simple encoding marking mechanism, see <a class="reference external" href="stri_enc_mark.html">stri_enc_mark</a>. There is an implicit assumption that your platform’s default (native) encoding always extends ASCII – stringi checks that whenever your native encoding is being detected automatically on ICU’s initialization and each time when you change it manually by calling <a class="reference external" href="stri_enc_set.html">stri_enc_set</a>.</p>
 <p>Character strings in R (internally) can be declared to be in:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">UTF-8</span></code>;</p></li>

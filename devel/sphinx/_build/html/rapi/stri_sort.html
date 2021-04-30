@@ -167,6 +167,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_rand_lipsum.html">stri_rand_lipsum: A Lorem Ipsum Generator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_rand_shuffle.html">stri_rand_shuffle: Randomly Shuffle Code Points in Each String</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_rand_strings.html">stri_rand_strings: Generate Random Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_rank.html">stri_rank: Ranking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_read_lines.html">stri_read_lines: Read Text Lines from a Text File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_read_raw.html">stri_read_raw: Read Text File as Raw</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_remove_empty.html">stri_remove_empty: Remove All Empty Strings from a Character Vector</a></li>
@@ -300,7 +301,7 @@
 <h1>stri_sort: Sorting<a class="headerlink" href="#stri-sort-sorting" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>This function sorts a character vector according to the locale-dependent lexicographic order.</p>
+<p>This function sorts a character vector according to a locale-dependent lexicographic order.</p>
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
@@ -337,7 +338,7 @@
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
 <p>For more information on ICU’s Collator and how to tune it up in stringi, refer to <a class="reference external" href="stri_opts_collator.html">stri_opts_collator</a>.</p>
-<p>As usual in stringi, non-character inputs are coerced to strings, see an example below for a perhaps non-intitive behavior of lexicographic sorting on numeric inputs.</p>
+<p>As usual in stringi, non-character inputs are coerced to strings, see an example below for a somewhat non-intuitive behavior of lexicographic sorting on numeric inputs.</p>
 <p>This function uses a stable sort algorithm (STL’s <code class="docutils literal notranslate"><span class="pre">stable_sort</span></code>), which performs up to <em>N*log^2(N)</em> element comparisons, where <em>N</em> is the length of <code class="docutils literal notranslate"><span class="pre">str</span></code>.</p>
 </div>
 <div class="section" id="value">
@@ -350,7 +351,7 @@
 </div>
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
-<p>Other locale_sensitive: <a class="reference external" href="operator_compare.html">%s&lt;%()</a>, <a class="reference external" href="about_locale.html">about_locale</a>, <a class="reference external" href="about_search_boundaries.html">about_search_boundaries</a>, <a class="reference external" href="about_search_coll.html">about_search_coll</a>, <a class="reference external" href="stri_compare.html">stri_compare()</a>, <a class="reference external" href="stri_count_boundaries.html">stri_count_boundaries()</a>, <a class="reference external" href="stri_duplicated.html">stri_duplicated()</a>, <a class="reference external" href="stri_enc_detect2.html">stri_enc_detect2()</a>, <a class="reference external" href="stri_extract_boundaries.html">stri_extract_all_boundaries()</a>, <a class="reference external" href="stri_locate_boundaries.html">stri_locate_all_boundaries()</a>, <a class="reference external" href="stri_opts_collator.html">stri_opts_collator()</a>, <a class="reference external" href="stri_order.html">stri_order()</a>, <a class="reference external" href="stri_sort_key.html">stri_sort_key()</a>, <a class="reference external" href="stri_split_boundaries.html">stri_split_boundaries()</a>, <a class="reference external" href="stri_trans_casemap.html">stri_trans_tolower()</a>, <a class="reference external" href="stri_unique.html">stri_unique()</a>, <a class="reference external" href="stri_wrap.html">stri_wrap()</a></p>
+<p>Other locale_sensitive: <a class="reference external" href="operator_compare.html">%s&lt;%()</a>, <a class="reference external" href="about_locale.html">about_locale</a>, <a class="reference external" href="about_search_boundaries.html">about_search_boundaries</a>, <a class="reference external" href="about_search_coll.html">about_search_coll</a>, <a class="reference external" href="stri_compare.html">stri_compare()</a>, <a class="reference external" href="stri_count_boundaries.html">stri_count_boundaries()</a>, <a class="reference external" href="stri_duplicated.html">stri_duplicated()</a>, <a class="reference external" href="stri_enc_detect2.html">stri_enc_detect2()</a>, <a class="reference external" href="stri_extract_boundaries.html">stri_extract_all_boundaries()</a>, <a class="reference external" href="stri_locate_boundaries.html">stri_locate_all_boundaries()</a>, <a class="reference external" href="stri_opts_collator.html">stri_opts_collator()</a>, <a class="reference external" href="stri_order.html">stri_order()</a>, <a class="reference external" href="stri_rank.html">stri_rank()</a>, <a class="reference external" href="stri_sort_key.html">stri_sort_key()</a>, <a class="reference external" href="stri_split_boundaries.html">stri_split_boundaries()</a>, <a class="reference external" href="stri_trans_casemap.html">stri_trans_tolower()</a>, <a class="reference external" href="stri_unique.html">stri_unique()</a>, <a class="reference external" href="stri_wrap.html">stri_wrap()</a></p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>

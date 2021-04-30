@@ -171,3 +171,38 @@ if (getRversion() > "3.3.0") {
     expect_equivalent(radix_order(stri_sort_key(x, numeric = TRUE)), stri_order(x,
         numeric = TRUE))
 }
+
+
+x <- LETTERS
+expect_equivalent(stri_rank(x), rank(x, ties.method="min"))
+
+x <- rev(LETTERS)
+expect_equivalent(stri_rank(x), rank(x, ties.method="min"))
+
+x <- c("b", "a", "a", "b", "a", "b", "a", "b", "a")
+expect_equivalent(stri_rank(x), rank(x, ties.method="min"))
+
+x <- c("a", "a", "b", NA, "a", "b", "a", "b", "a", NA)
+r <- rank(x, ties.method="min")
+r[is.na(x)] <- NA
+expect_equivalent(stri_rank(x), r)
+
+expect_equivalent(stri_rank(character(0)), integer(0))
+
+expect_equivalent(stri_rank(NA), NA_integer_)
+
+
+expect_equivalent(stri_rank(c(NA, 1, 2)), c(NA, 1, 2))
+expect_equivalent(stri_rank(c(2, NA, 1)), c(2, NA, 1))
+expect_equivalent(stri_rank(c(NA, 1)), c(NA, 1))
+expect_equivalent(stri_rank(c(1, NA)), c(1, NA))
+
+expect_equivalent(stri_rank(c(rep(NA, 100), 1)), c(rep(NA, 100), 1))
+
+expect_equivalent(stri_rank(c(rep(NA, 100))), c(rep(NA_integer_, 100)))
+
+expect_equivalent(stri_rank(c('hladny', 'chladny'), locale='pl_PL'), c(2, 1))
+
+expect_equivalent(stri_rank(c('hladny', 'chladny'), locale='sk_SK'), c(1, 2))
+
+

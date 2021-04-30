@@ -51,6 +51,7 @@ SEXP stri_cmp_neq(SEXP e1, SEXP e2);
 // sort.cpp
 SEXP stri_sort(SEXP str, SEXP decreasing=Rf_ScalarLogical(FALSE),
                SEXP na_last=Rf_ScalarLogical(NA_LOGICAL), SEXP opts_collator=R_NilValue);
+SEXP stri_rank(SEXP str, SEXP opts_collator=R_NilValue);
 SEXP stri_order(SEXP str, SEXP decreasing=Rf_ScalarLogical(FALSE),
                 SEXP na_last=Rf_ScalarLogical(TRUE), SEXP opts_collator=R_NilValue);
 SEXP stri_sort_key(SEXP str, SEXP opts_collator=R_NilValue);

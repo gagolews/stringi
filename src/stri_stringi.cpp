@@ -154,6 +154,7 @@ const R_CallMethodDef cCallMethods[] = {
     STRI__MK_CALL("C_stri_match_all_regex",              stri_match_all_regex,            5),
     STRI__MK_CALL("C_stri_numbytes",                     stri_numbytes,                   1),
     STRI__MK_CALL("C_stri_order",                        stri_order,                      4),
+    STRI__MK_CALL("C_stri_rank",                         stri_rank,                       2),
     STRI__MK_CALL("C_stri_sort",                         stri_sort,                       4),
     STRI__MK_CALL("C_stri_sort_key",                     stri_sort_key,                   2),
     STRI__MK_CALL("C_stri_pad",                          stri_pad,                        5),

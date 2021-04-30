@@ -42,6 +42,10 @@
 #include <set>
 
 
+# define STRI_SORTRANKORDER_SORT  1
+# define STRI_SORTRANKORDER_RANK  2
+# define STRI_SORTRANKORDER_ORDER 3
+
 /** help struct for stri_order **/
 struct StriSortComparer {
     StriContainerUTF8* cont;
@@ -60,8 +64,8 @@ struct StriSortComparer {
 //      if (col) {
         UErrorCode status = U_ZERO_ERROR;
         int ret = (int)ucol_strcollUTF8(col,
-                                        cont->get(a).c_str(), cont->get(a).length(),
-                                        cont->get(b).c_str(), cont->get(b).length(), &status);
+            cont->get(a).c_str(), cont->get(a).length(),
+            cont->get(b).c_str(), cont->get(b).length(), &status);
         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
         return (decreasing)?(ret > 0):(ret < 0);
 //      }
@@ -76,14 +80,14 @@ struct StriSortComparer {
 };
 
 
-/** Generate the ordering permutation, possibly with collation [internal]
+/** Sort, rank, or generate an ordering permutation
  *
  * @param str character vector
  * @param decreasing single logical value
  * @param na_last single logical value
  * @param opts_collator passed to stri__ucol_open()
- * @param _type internal, 1 for order, 2 for sort
- * @return integer vector (permutation) or character vector
+ * @param _type internal, 2 for order, 1 for sort, 3 for rank
+ * @return integer vector (permutation/ranks) or character vector
  *
  * @version 0.1-?? (Marek Gagolewski)
  *
@@ -108,17 +112,29 @@ struct StriSortComparer {
  *
  * @version 0.6-1 (Marek Gagolewski, 2015-07-05)
  *    use stri_order, stri_sort
+ *
+ * @version 1.6.1 (Marek Gagolewski, 2021-04-30)
+ *    rank
  */
-SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
+SEXP stri_order_rank_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
                         SEXP opts_collator, int _type)
 {
     bool decr = stri__prepare_arg_logical_1_notNA(decreasing, "decreasing");
     PROTECT(na_last   = stri_prepare_arg_logical_1(na_last, "na_last"));
     PROTECT(str       = stri_prepare_arg_string(str, "str")); // prepare string argument
+    int na_last_int   = INTEGER(na_last)[0];
 
     // type is an internal arg -- check manually
-    if (_type < 1 || _type > 2)
+    if (_type < 1 || _type > 3)
         Rf_error(MSG__INCORRECT_INTERNAL_ARG);
+
+    if (
+            _type == STRI_SORTRANKORDER_RANK &&
+                (decr || na_last_int == NA_LOGICAL || !na_last_int)
+    ) {
+        // decreasing and na_last is ignored for rank
+        Rf_error(MSG__INCORRECT_INTERNAL_ARG);
+    }
 
     // call stri__ucol_open after prepare_arg:
     // if prepare_arg had failed, we would have a mem leak
@@ -131,7 +147,7 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
     R_len_t vectorize_length = LENGTH(str);
     StriContainerUTF8 str_cont(str, vectorize_length);
 
-    int na_last_int = INTEGER(na_last)[0];
+
 
     deque<int> NA_pos;
     vector<int> order(vectorize_length);
@@ -154,8 +170,26 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
 
 
     SEXP ret;
-    if (_type == 1) {
-        // order
+    if (_type == STRI_SORTRANKORDER_SORT) {
+        // sort
+        STRI__PROTECT(ret = Rf_allocVector(STRSXP, k+NA_pos.size()));
+        R_len_t j = 0;
+        if (na_last_int != NA_LOGICAL && !na_last_int) {
+            // put NAs first
+            for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
+                SET_STRING_ELT(ret, j, NA_STRING);
+        }
+
+        for (std::vector<int>::iterator it=order.begin(); it!=order.end(); ++it, ++j)
+            SET_STRING_ELT(ret, j, str_cont.toR(*it));
+
+        if (na_last_int != NA_LOGICAL && na_last_int) {
+            // put NAs last
+            for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
+                SET_STRING_ELT(ret, j, NA_STRING);
+        }
+    }
+    else if (_type == STRI_SORTRANKORDER_ORDER) {
         STRI__PROTECT(ret = Rf_allocVector(INTSXP, k+NA_pos.size()));
         int* ret_tab = INTEGER(ret);
 
@@ -175,24 +209,42 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
                 ret_tab[j] = (*it)+1; // 1-based indices
         }
     }
-    else {
-        // sort
-        STRI__PROTECT(ret = Rf_allocVector(STRSXP, k+NA_pos.size()));
-        R_len_t j = 0;
-        if (na_last_int != NA_LOGICAL && !na_last_int) {
-            // put NAs first
-            for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
-                SET_STRING_ELT(ret, j, NA_STRING);
+    else if (_type == STRI_SORTRANKORDER_RANK) {
+        // NAs are always preserved, order is increasing
+        STRI__PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
+        int* ret_tab = INTEGER(ret);
+        for (R_len_t i=0; i<vectorize_length; ++i)
+            ret_tab[i] = NA_INTEGER;
+
+        R_len_t j_first = 1;   // 1-based indices
+        R_len_t j_min = 1;
+        int last_idx = 0, cur_idx;
+        for (std::vector<int>::iterator it=order.begin(); it!=order.end(); ++it) {
+            cur_idx = *it;
+
+            if (j_first > 1) {
+                UErrorCode status = U_ZERO_ERROR;
+                if (
+                    0 != (int)ucol_strcollUTF8(
+                        col,
+                        str_cont.get(last_idx).c_str(),
+                        str_cont.get(last_idx).length(),
+                        str_cont.get(cur_idx).c_str(),
+                        str_cont.get(cur_idx).length(), &status
+                    )
+                ) {
+                    j_min = j_first;
+                }
+                // else reuse j_min == a tie.
+                STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+            }
+
+
+            ret_tab[cur_idx] = j_min;
+            last_idx = cur_idx;
+            j_first++;
         }
 
-        for (std::vector<int>::iterator it=order.begin(); it!=order.end(); ++it, ++j)
-            SET_STRING_ELT(ret, j, str_cont.toR(*it));
-
-        if (na_last_int != NA_LOGICAL && na_last_int) {
-            // put NAs last
-            for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
-                SET_STRING_ELT(ret, j, NA_STRING);
-        }
     }
 
     if (col) {
@@ -212,21 +264,6 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
 }
 
 
-/** Return an ordering permutation
- *
- * @param str character vector
- * @param decreasing single logical value
- * @param na_last single logical value
- * @param opts_collator passed to stri__ucol_open()
- * @return integer vector (permutation)
- *
- * @version 0.6-1 (Marek Gagolewski, 2015-07-05)
- *    Call stri_order_or_sort
- */
-SEXP stri_order(SEXP str, SEXP decreasing, SEXP na_last, SEXP opts_collator)
-{
-    return stri_order_or_sort(str, decreasing, na_last, opts_collator, 1);
-}
 
 
 /** Sort a character vector
@@ -238,11 +275,46 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP na_last, SEXP opts_collator)
  * @return charcter vector
  *
  * @version 0.6-1 (Marek Gagolewski, 2015-07-05)
- *    Call stri_order_or_sort
+ *    Call stri_order_rank_or_sort
  */
 SEXP stri_sort(SEXP str, SEXP decreasing, SEXP na_last, SEXP opts_collator)
 {
-    return stri_order_or_sort(str, decreasing, na_last, opts_collator, 2);
+    return stri_order_rank_or_sort(str, decreasing, na_last, opts_collator, STRI_SORTRANKORDER_SORT);
+}
+
+
+
+/** Return an ordering permutation
+ *
+ * @param str character vector
+ * @param decreasing single logical value
+ * @param na_last single logical value
+ * @param opts_collator passed to stri__ucol_open()
+ * @return integer vector (permutation)
+ *
+ * @version 0.6-1 (Marek Gagolewski, 2015-07-05)
+ *    Call stri_order_rank_or_sort
+ */
+SEXP stri_order(SEXP str, SEXP decreasing, SEXP na_last, SEXP opts_collator)
+{
+    return stri_order_rank_or_sort(str, decreasing, na_last, opts_collator, STRI_SORTRANKORDER_ORDER);
+}
+
+
+/** Rank strings
+ *
+ * @param str character vector
+ * @param opts_collator passed to stri__ucol_open()
+ * @return integer vector (ranks)
+ *
+ * @version 1.6.1 (Marek Gagolewski, 2021-04-29)
+ */
+SEXP stri_rank(SEXP str, SEXP opts_collator)
+{
+    return stri_order_rank_or_sort(str,
+        Rf_ScalarLogical(FALSE)/*decreasing*/,
+        Rf_ScalarLogical(TRUE)/*na_last*/,
+        opts_collator, STRI_SORTRANKORDER_RANK);
 }
 
 
@@ -499,6 +571,7 @@ SEXP stri_duplicated_any(SEXP str, SEXP fromLast, SEXP opts_collator)
     })
 }
 
+
 /** Compute a character sort key
  *
  * @param str character vector
@@ -506,6 +579,8 @@ SEXP stri_duplicated_any(SEXP str, SEXP fromLast, SEXP opts_collator)
  * @return character vector
  *
  * @version 1.4.7 (Davis Vaughan, 2020-07-15)
+ * @version 1.6.1 (Marek Gagolewski, 2021-04-29)
+ *          output `bytes`-encoded strings
  */
 SEXP stri_sort_key(SEXP str, SEXP opts_collator) {
     PROTECT(str = stri_prepare_arg_string(str, "str"));
@@ -557,7 +632,7 @@ SEXP stri_sort_key(SEXP str, SEXP opts_collator) {
         // which we don't want to copy into the R CHARSXP
         R_len_t key_char_size = key_size - 1;
 
-        SET_STRING_ELT(ret, i, Rf_mkCharLenCE(key_buffer.data(), key_char_size, CE_UTF8));
+        SET_STRING_ELT(ret, i, Rf_mkCharLenCE(key_buffer.data(), key_char_size, CE_BYTES));
     }
 
     if (col) {
