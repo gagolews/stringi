@@ -43,7 +43,7 @@ Character Encodings in R
 
 Data in memory are just bytes (small integer values) – an en\ *coding* is a way to represent characters with such numbers, it is a semantic 'key' to understand a given byte sequence. For example, in ISO-8859-2 (Central European), the value 177 represents Polish “a with ogonek”, and in ISO-8859-1 (Western European), the same value denotes the “plus-minus” sign. Thus, a character encoding is a translation scheme: we need to communicate with R somehow, relying on how it represents strings.
 
-Basically, R has a very simple encoding marking mechanism, see `stri_enc_mark <stri_enc_mark.html>`__. There is an implicit assumption that your platform's default (native) encoding always extends ASCII – stringi checks that whenever your native encoding is being detected automatically on ICU's initialization and each time when you change it manually by calling `stri_enc_set <stri_enc_set.html>`__.
+Overall, R has a very simple encoding marking mechanism, see `stri_enc_mark <stri_enc_mark.html>`__. There is an implicit assumption that your platform's default (native) encoding always extends ASCII – stringi checks that whenever your native encoding is being detected automatically on ICU's initialization and each time when you change it manually by calling `stri_enc_set <stri_enc_set.html>`__.
 
 Character strings in R (internally) can be declared to be in:
 

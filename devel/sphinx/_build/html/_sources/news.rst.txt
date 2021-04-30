@@ -15,13 +15,19 @@ What Is New in *stringi*
 -  …todo… #401 (update ICU4C to 69.1), The ICU4C bundle has been updated
    from version 61.1 to 69.1 which features Unicode 13.0 and CLDR 39.
 
--  …todo… #408 (stri_trans_casefold),
+-  [NEW FEATURE] #408: …todo… ``stri_trans_casefold()``,
 
--  [INTERNAL] #414: Use ``LEVELS(x)`` macro instead of accessing
-   ``(x)->sxpinfo.gp`` directly (@lukaszdaniel).
+-  [NEW FEATURE] #421: ``stri_rank()`` ranks strings in a character
+   vector (e.g., for ordering data frames with regards to multiple
+   criteria, the ranks can be passed to ``order()``, see #219).
+
+-  [BUGFIX] ``stri_sort_key()`` now outputs ``bytes``-encoded strings.
 
 -  [BUGFIX] #415: ``locale=''`` was not equivalent to ``locale=NULL`` in
    ``stri_opts_collator()``.
+
+-  [INTERNAL] #414: Use ``LEVELS(x)`` macro instead of accessing
+   ``(x)->sxpinfo.gp`` directly (@lukaszdaniel).
 
 1.5.3 (2020-09-04) **CRAN**
 ---------------------------

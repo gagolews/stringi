@@ -17,18 +17,22 @@ for default collation options}
 }
 \value{
 The result is a character vector with the same length as \code{str} that
-contains the sort keys.
+contains the sort keys. The output is marked as \code{bytes}-encoded.
 }
 \description{
-This function computes a locale-dependent 'sort key', which is an alternative
+This function computes a locale-dependent sort key, which is an alternative
 character representation of the string that, when ordered in the C locale
-(which orders using bytes directly), will give an equivalent ordering to the
-original string. It is useful for enhancing algorithms that sort only in the
-C locale with the ability to be locale-aware.
+(which orders using the underlying bytes directly), will give an equivalent
+ordering to the original string. It is useful for enhancing algorithms
+that sort only in the C locale (e.g., the \code{strcmp} function in libc)
+with the ability to be locale-aware.
 }
 \details{
 For more information on \pkg{ICU}'s Collator and how to tune it up
 in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
+
+See also \code{\link{stri_rank}} for ranking strings with a single character
+vector, i.e., generating relative sort keys.
 }
 \examples{
 stri_sort_key(c('hladny', 'chladny'), locale='pl_PL')
@@ -52,6 +56,7 @@ Other locale_sensitive:
 \code{\link{stri_locate_all_boundaries}()},
 \code{\link{stri_opts_collator}()},
 \code{\link{stri_order}()},
+\code{\link{stri_rank}()},
 \code{\link{stri_sort}()},
 \code{\link{stri_split_boundaries}()},
 \code{\link{stri_trans_tolower}()},

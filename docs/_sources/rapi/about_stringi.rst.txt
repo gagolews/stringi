@@ -4,7 +4,7 @@ about_stringi: THE String Processing Package
 Description
 ~~~~~~~~~~~
 
-stringi is THE R package for fast, correct, consistent, and convenient string/text manipulation. It gives predictable results on every platform, in each locale, and under any “native” character encoding.
+stringi is THE R package for fast, correct, consistent, and convenient string/text manipulation. It gives predictable results on every platform, in each locale, and under any native character encoding.
 
 **Keywords**: R, text processing, character strings, internationalization, localization, ICU, ICU4C, i18n, l10n, Unicode.
 
@@ -19,7 +19,7 @@ Manual pages on general topics:
 
 -  `about_encoding <about_encoding.html>`__ – character encoding issues, including information on encoding management in stringi, as well as on encoding detection and conversion.
 
--  `about_locale <about_locale.html>`__ – locale issues, including locale management and specification in stringi, and the list of locale-sensitive operations. In particular, see `stri_opts_collator <stri_opts_collator.html>`__ for a description of the string collation algorithm, which is used for string comparing, ordering, sorting, case-folding, and searching.
+-  `about_locale <about_locale.html>`__ – locale issues, including locale management and specification in stringi, and the list of locale-sensitive operations. In particular, see `stri_opts_collator <stri_opts_collator.html>`__ for a description of the string collation algorithm, which is used for string comparing, ordering, ranking, sorting, case-folding, and searching.
 
 -  `about_arguments <about_arguments.html>`__ – information on how stringi treats its functions' arguments.
 
@@ -54,7 +54,7 @@ Refer to the following:
 
 -  `stri_trans_tolower <stri_trans_casemap.html>`__ (among others) for case mapping, i.e., conversion to lower, UPPER, or Title Case, `stri_trans_nfc <stri_trans_nf.html>`__ (among others) for Unicode normalization, `stri_trans_char <stri_trans_char.html>`__ for translating individual code points, and `stri_trans_general <stri_trans_general.html>`__ for other universal yet powerful text transforms, including transliteration.
 
--  `stri_cmp <stri_compare.html>`__, `%s<% <operator_compare.html>`__, `stri_order <stri_order.html>`__, `stri_sort <stri_sort.html>`__, `stri_unique <stri_unique.html>`__, and `stri_duplicated <stri_duplicated.html>`__ for collation-based, locale-aware operations, see also `about_locale <about_locale.html>`__.
+-  `stri_cmp <stri_compare.html>`__, `%s<% <operator_compare.html>`__, `stri_order <stri_order.html>`__, `stri_sort <stri_sort.html>`__, `stri_rank <stri_rank.html>`__, `stri_unique <stri_unique.html>`__, and `stri_duplicated <stri_duplicated.html>`__ for collation-based, locale-aware operations, see also `about_locale <about_locale.html>`__.
 
 -  `stri_split_lines <stri_split_lines.html>`__ (among others) to split a string into text lines.
 
@@ -69,7 +69,7 @@ Note that each man page provides many further links to other interesting facilit
 Author(s)
 ~~~~~~~~~
 
-Marek Gagolewski, with contributions from Bartek Tartanus and many others. ICU4C was developed by IBM and others. The Unicode Character Database is due to Unicode, Inc.; see the COPYRIGHTS file for more details.
+Marek Gagolewski, with contributions from Bartek Tartanus and many others. ICU4C was developed by IBM, Unicode, Inc., and others.
 
 References
 ~~~~~~~~~~

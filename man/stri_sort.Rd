@@ -29,7 +29,7 @@ The result is a sorted version of \code{str},
 i.e., a character vector.
 }
 \description{
-This function sorts a character vector according to the locale-dependent
+This function sorts a character vector according to a locale-dependent
 lexicographic order.
 }
 \details{
@@ -37,7 +37,7 @@ For more information on \pkg{ICU}'s Collator and how to tune it up
 in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
 
 As usual in \pkg{stringi}, non-character inputs are coerced to strings,
-see an example below for a perhaps non-intitive behavior of lexicographic
+see an example below for a somewhat non-intuitive behavior of lexicographic
 sorting on numeric inputs.
 
 This function uses a stable sort algorithm (\pkg{STL}'s \code{stable_sort}),
@@ -69,6 +69,7 @@ Other locale_sensitive:
 \code{\link{stri_locate_all_boundaries}()},
 \code{\link{stri_opts_collator}()},
 \code{\link{stri_order}()},
+\code{\link{stri_rank}()},
 \code{\link{stri_sort_key}()},
 \code{\link{stri_split_boundaries}()},
 \code{\link{stri_trans_tolower}()},

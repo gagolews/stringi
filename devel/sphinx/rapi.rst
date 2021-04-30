@@ -72,6 +72,7 @@ R Package *stringi* Reference
     rapi/stri_rand_lipsum
     rapi/stri_rand_shuffle
     rapi/stri_rand_strings
+    rapi/stri_rank
     rapi/stri_read_lines
     rapi/stri_read_raw
     rapi/stri_remove_empty

@@ -36,7 +36,7 @@
 #'
 #'
 #' @description
-#' This function sorts a character vector according to the locale-dependent
+#' This function sorts a character vector according to a locale-dependent
 #' lexicographic order.
 #'
 #'
@@ -45,7 +45,7 @@
 #' in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
 #'
 #' As usual in \pkg{stringi}, non-character inputs are coerced to strings,
-#' see an example below for a perhaps non-intitive behavior of lexicographic
+#' see an example below for a somewhat non-intuitive behavior of lexicographic
 #' sorting on numeric inputs.
 #'
 #' This function uses a stable sort algorithm (\pkg{STL}'s \code{stable_sort}),
@@ -106,15 +106,15 @@ stri_sort <- function(str, decreasing = FALSE, na_last = NA, ..., opts_collator 
 #' in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
 #'
 #' As usual in \pkg{stringi}, non-character inputs are coerced to strings,
-#' see an example below for a perhaps non-intuitive behavior of lexicographic
+#' see an example below for a somewhat non-intuitive behavior of lexicographic
 #' sorting on numeric inputs.
-#'
-#'
-#'
 #'
 #' This function uses a stable sort algorithm (\pkg{STL}'s \code{stable_sort}),
 #' which performs up to \eqn{N*log^2(N)} element comparisons,
 #' where \eqn{N} is the length of \code{str}.
+#'
+#' For ordering with regards to multiple criteria (such as sorting
+#' data frames by more than 1 column), see \code{\link{stri_rank}}.
 #'
 #' @param str a character vector
 #' @param decreasing a single logical value; should the sort order
@@ -288,15 +288,19 @@ stri_duplicated_any <- function(str, from_last = FALSE, fromLast = from_last, ..
 #' Sort Keys
 #'
 #' @description
-#' This function computes a locale-dependent 'sort key', which is an alternative
+#' This function computes a locale-dependent sort key, which is an alternative
 #' character representation of the string that, when ordered in the C locale
-#' (which orders using bytes directly), will give an equivalent ordering to the
-#' original string. It is useful for enhancing algorithms that sort only in the
-#' C locale with the ability to be locale-aware.
+#' (which orders using the underlying bytes directly), will give an equivalent
+#' ordering to the original string. It is useful for enhancing algorithms
+#' that sort only in the C locale (e.g., the \code{strcmp} function in libc)
+#' with the ability to be locale-aware.
 #'
 #' @details
 #' For more information on \pkg{ICU}'s Collator and how to tune it up
 #' in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
+#'
+#' See also \code{\link{stri_rank}} for ranking strings with a single character
+#' vector, i.e., generating relative sort keys.
 #'
 #' @param str a character vector
 #' @param opts_collator a named list with \pkg{ICU} Collator's options,
@@ -306,7 +310,7 @@ stri_duplicated_any <- function(str, from_last = FALSE, fromLast = from_last, ..
 #'
 #' @return
 #' The result is a character vector with the same length as \code{str} that
-#' contains the sort keys.
+#' contains the sort keys. The output is marked as \code{bytes}-encoded.
 #'
 #' @references
 #' \emph{Collation} - ICU User Guide,
@@ -324,4 +328,59 @@ stri_sort_key <- function(str, ..., opts_collator = NULL)
     if (!missing(...))
         opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
     .Call(C_stri_sort_key, str, opts_collator)
+}
+
+
+
+#' @title
+#' Ranking
+#'
+#'
+#' @description
+#' This function ranks each string in a character vector according to a
+#' locale-dependent lexicographic order.
+#' It is a portable replacement for the base \code{xtfrm} function.
+#'
+#'
+#' @details
+#' Missing values result in missing ranks and tied observations receive
+#' the same ranks (based on min).
+#'
+#' For more information on \pkg{ICU}'s Collator and how to tune it up
+#' in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
+#'
+#' @param str a character vector
+#' @param opts_collator a named list with \pkg{ICU} Collator's options,
+#' see \code{\link{stri_opts_collator}}, \code{NULL}
+#' for default collation options
+#' @param ... additional settings for \code{opts_collator}
+#'
+#' @return
+#' The result is a vector of ranks corresponding to each
+#' string in \code{str}.
+#'
+#' @references
+#' \emph{Collation} - ICU User Guide,
+#' \url{http://userguide.icu-project.org/collation}
+#'
+#' @family locale_sensitive
+#' @export
+#' @rdname stri_rank
+#'
+#' @examples
+#' stri_rank(c('hladny', 'chladny'), locale='pl_PL')
+#' stri_rank(c('hladny', 'chladny'), locale='sk_SK')
+#'
+#' stri_rank("a" %s+% c(1, 100, 2, 101, 11, 10))  # lexicographic order
+#' stri_rank("a" %s+% c(1, 100, 2, 101, 11, 10), numeric=TRUE)
+#'
+#' # Ordering a data frame with respect to two criteria:
+#' X <- data.frame(a=c("b", NA, "b", "b", NA, "a", "a", "c"), b=runif(8))
+#' X[order(stri_rank(X$a), X$b), ]
+stri_rank <- function(str, ..., opts_collator=NULL)
+{
+    if (!missing(...))
+        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
+
+    .Call(C_stri_rank, str, opts_collator)
 }

@@ -175,6 +175,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_rand_lipsum.html">stri_rand_lipsum: A Lorem Ipsum Generator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_rand_shuffle.html">stri_rand_shuffle: Randomly Shuffle Code Points in Each String</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_rand_strings.html">stri_rand_strings: Generate Random Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_rank.html">stri_rank: Ranking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_read_lines.html">stri_read_lines: Read Text Lines from a Text File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_read_raw.html">stri_read_raw: Read Text File as Raw</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_remove_empty.html">stri_remove_empty: Remove All Empty Strings from a Character Vector</a></li>
@@ -298,7 +299,7 @@
 <h1>about_stringi: THE String Processing Package<a class="headerlink" href="#about-stringi-the-string-processing-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>stringi is THE R package for fast, correct, consistent, and convenient string/text manipulation. It gives predictable results on every platform, in each locale, and under any “native” character encoding.</p>
+<p>stringi is THE R package for fast, correct, consistent, and convenient string/text manipulation. It gives predictable results on every platform, in each locale, and under any native character encoding.</p>
 <p><strong>Keywords</strong>: R, text processing, character strings, internationalization, localization, ICU, ICU4C, i18n, l10n, Unicode.</p>
 <p><strong>Homepage</strong>: <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
 <p><strong>License</strong>: The BSD-3-clause license for the package code, the ICU license for the accompanying ICU4C distribution, and the UCD license for the Unicode Character Database. See the COPYRIGHTS and LICENSE file for more details.</p>
@@ -308,7 +309,7 @@
 <p>Manual pages on general topics:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="about_encoding.html">about_encoding</a> – character encoding issues, including information on encoding management in stringi, as well as on encoding detection and conversion.</p></li>
-<li><p><a class="reference external" href="about_locale.html">about_locale</a> – locale issues, including locale management and specification in stringi, and the list of locale-sensitive operations. In particular, see <a class="reference external" href="stri_opts_collator.html">stri_opts_collator</a> for a description of the string collation algorithm, which is used for string comparing, ordering, sorting, case-folding, and searching.</p></li>
+<li><p><a class="reference external" href="about_locale.html">about_locale</a> – locale issues, including locale management and specification in stringi, and the list of locale-sensitive operations. In particular, see <a class="reference external" href="stri_opts_collator.html">stri_opts_collator</a> for a description of the string collation algorithm, which is used for string comparing, ordering, ranking, sorting, case-folding, and searching.</p></li>
 <li><p><a class="reference external" href="about_arguments.html">about_arguments</a> – information on how stringi treats its functions’ arguments.</p></li>
 </ul>
 </div>
@@ -332,7 +333,7 @@
 <li><p><a class="reference external" href="stri_length.html">stri_length</a> (among others) for determining the number of code points in a string. See also <a class="reference external" href="stri_count_boundaries.html">stri_count_boundaries</a> for counting the number of Unicode characters and <a class="reference external" href="stri_width.html">stri_width</a> for approximating the width of a string.</p></li>
 <li><p><a class="reference external" href="stri_trim.html">stri_trim</a> (among others) for trimming characters from the beginning or/and end of a string, see also <a class="reference external" href="about_search_charclass.html">about_search_charclass</a>, and <a class="reference external" href="stri_pad.html">stri_pad</a> for padding strings so that they are of the same width. Additionally, <a class="reference external" href="stri_wrap.html">stri_wrap</a> wraps text into lines.</p></li>
 <li><p><a class="reference external" href="stri_trans_casemap.html">stri_trans_tolower</a> (among others) for case mapping, i.e., conversion to lower, UPPER, or Title Case, <a class="reference external" href="stri_trans_nf.html">stri_trans_nfc</a> (among others) for Unicode normalization, <a class="reference external" href="stri_trans_char.html">stri_trans_char</a> for translating individual code points, and <a class="reference external" href="stri_trans_general.html">stri_trans_general</a> for other universal yet powerful text transforms, including transliteration.</p></li>
-<li><p><a class="reference external" href="stri_compare.html">stri_cmp</a>, <a class="reference external" href="operator_compare.html">%s&lt;%</a>, <a class="reference external" href="stri_order.html">stri_order</a>, <a class="reference external" href="stri_sort.html">stri_sort</a>, <a class="reference external" href="stri_unique.html">stri_unique</a>, and <a class="reference external" href="stri_duplicated.html">stri_duplicated</a> for collation-based, locale-aware operations, see also <a class="reference external" href="about_locale.html">about_locale</a>.</p></li>
+<li><p><a class="reference external" href="stri_compare.html">stri_cmp</a>, <a class="reference external" href="operator_compare.html">%s&lt;%</a>, <a class="reference external" href="stri_order.html">stri_order</a>, <a class="reference external" href="stri_sort.html">stri_sort</a>, <a class="reference external" href="stri_rank.html">stri_rank</a>, <a class="reference external" href="stri_unique.html">stri_unique</a>, and <a class="reference external" href="stri_duplicated.html">stri_duplicated</a> for collation-based, locale-aware operations, see also <a class="reference external" href="about_locale.html">about_locale</a>.</p></li>
 <li><p><a class="reference external" href="stri_split_lines.html">stri_split_lines</a> (among others) to split a string into text lines.</p></li>
 <li><p><a class="reference external" href="stri_escape_unicode.html">stri_escape_unicode</a> (among others) for escaping some code points.</p></li>
 <li><p><a class="reference external" href="stri_rand_strings.html">stri_rand_strings</a>, <a class="reference external" href="stri_rand_shuffle.html">stri_rand_shuffle</a>, and <a class="reference external" href="stri_rand_lipsum.html">stri_rand_lipsum</a> for generating (pseudo)random strings.</p></li>
@@ -342,7 +343,7 @@
 </div>
 <div class="section" id="author-s">
 <h2>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this headline">¶</a></h2>
-<p>Marek Gagolewski, with contributions from Bartek Tartanus and many others. ICU4C was developed by IBM and others. The Unicode Character Database is due to Unicode, Inc.; see the COPYRIGHTS file for more details.</p>
+<p>Marek Gagolewski, with contributions from Bartek Tartanus and many others. ICU4C was developed by IBM, Unicode, Inc., and others.</p>
 </div>
 <div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>

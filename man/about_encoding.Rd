@@ -106,7 +106,7 @@ the same value denotes the ``plus-minus'' sign. Thus, a character encoding
 is a translation scheme: we need to communicate with \R somehow,
 relying on how it represents strings.
 
-Basically, \R has a very simple encoding marking mechanism,
+Overall, \R has a very simple encoding marking mechanism,
 see \code{\link{stri_enc_mark}}. There is an implicit assumption
 that your platform's default (native) encoding always extends
 ASCII -- \pkg{stringi} checks that whenever your native encoding

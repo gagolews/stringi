@@ -10,7 +10,7 @@
 \pkg{stringi} is THE R package for fast, correct, consistent,
 and convenient string/text manipulation.
 It gives predictable results on every platform, in each locale,
-and under any ``native'' character encoding.
+and under any native character encoding.
 
 \bold{Keywords}: R, text processing, character strings,
 internationalization, localization, ICU, ICU4C, i18n, l10n, Unicode.
@@ -34,7 +34,7 @@ Manual pages on general topics:
    locale-sensitive operations. In particular, see
    \code{\link{stri_opts_collator}} for a description of the string
    collation algorithm, which is used for string comparing, ordering,
-   sorting, case-folding, and searching.
+   ranking, sorting, case-folding, and searching.
 
 \item \link{about_arguments} -- information on how \pkg{stringi}
    treats its functions' arguments.
@@ -92,8 +92,8 @@ and \code{\link{stri_trans_general}} for other universal yet powerful
 text transforms, including transliteration.
 
 \item \code{\link{stri_cmp}}, \code{\link{\%s<\%}}, \code{\link{stri_order}},
-\code{\link{stri_sort}}, \code{\link{stri_unique}}, and
-\code{\link{stri_duplicated}} for collation-based,
+\code{\link{stri_sort}}, \code{\link{stri_rank}}, \code{\link{stri_unique}},
+and \code{\link{stri_duplicated}} for collation-based,
 locale-aware operations, see also \link{about_locale}.
 
 \item \code{\link{stri_split_lines}} (among others)
@@ -141,8 +141,6 @@ Other stringi_general_topics:
 \author{
 Marek Gagolewski,
 with contributions from Bartek Tartanus and many others.
-ICU4C was developed by IBM and others.
-The Unicode Character Database is due to Unicode, Inc.;
-see the COPYRIGHTS file for more details.
+ICU4C was developed by IBM, Unicode, Inc., and others.
 }
 \concept{stringi_general_topics}

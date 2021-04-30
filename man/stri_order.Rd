@@ -37,15 +37,15 @@ For more information on \pkg{ICU}'s Collator and how to tune it up
 in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
 
 As usual in \pkg{stringi}, non-character inputs are coerced to strings,
-see an example below for a perhaps non-intuitive behavior of lexicographic
+see an example below for a somewhat non-intuitive behavior of lexicographic
 sorting on numeric inputs.
-
-
-
 
 This function uses a stable sort algorithm (\pkg{STL}'s \code{stable_sort}),
 which performs up to \eqn{N*log^2(N)} element comparisons,
 where \eqn{N} is the length of \code{str}.
+
+For ordering with regards to multiple criteria (such as sorting
+data frames by more than 1 column), see \code{\link{stri_rank}}.
 }
 \examples{
 stri_order(c('hladny', 'chladny'), locale='pl_PL')
@@ -71,6 +71,7 @@ Other locale_sensitive:
 \code{\link{stri_extract_all_boundaries}()},
 \code{\link{stri_locate_all_boundaries}()},
 \code{\link{stri_opts_collator}()},
+\code{\link{stri_rank}()},
 \code{\link{stri_sort_key}()},
 \code{\link{stri_sort}()},
 \code{\link{stri_split_boundaries}()},
