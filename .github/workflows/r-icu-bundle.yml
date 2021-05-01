@@ -20,8 +20,8 @@ jobs:
         sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
         sudo apt-get -y upgrade
         sudo apt-get -y install libcurl4-openssl-dev r-base-dev devscripts
-        sudo Rscript -e "install.packages(c('tinytest', 'roxygen2', 'pkgbuild'))"
-    - name: Test and check R
+        sudo Rscript -e "install.packages(c('tinytest', 'roxygen2', 'pkgbuild', 'Rcpp'))"
+    - name: Test and check stringi
       run: |
         sudo make r-icu-bundle
         sudo make tinytest

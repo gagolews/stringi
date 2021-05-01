@@ -33,6 +33,6 @@ expect_equivalent(stri_timezone_info(tz = "Europe/Warsaw", locale = "en_GB"),
     list("Europe/Warsaw", "Central European Standard Time", "Central European Summer Time",
         "Central European Standard Time", 1, TRUE))
 
-expect_equivalent(stri_timezone_info(tz = "Asia/Kathmandu", locale = "pl_PL"),
-    list("Asia/Kathmandu", "Nepal", NA_character_, "Nepal Standard Time", 5.75,
+expect_equivalent(stri_timezone_info(tz = "Asia/Kathmandu", locale = "en_GB"),
+    list("Asia/Kathmandu", "Nepal Time", NA_character_, "Nepal Standard Time", 5.75,
         FALSE))

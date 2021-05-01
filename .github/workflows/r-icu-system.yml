@@ -15,9 +15,9 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get -y upgrade
-        sudo apt-get -y install libcurl4-openssl-dev r-base-dev devscripts libicu-dev
-        sudo Rscript -e "install.packages(c('tinytest'))"
-    - name: Test and check R
+        sudo apt-get -y install libcurl4-openssl-dev r-base-dev devscripts libicu-dev language-pack-pl
+        sudo Rscript -e "install.packages(c('tinytest', 'Rcpp'))"
+    - name: Test stringi
       run: |
-        sudo make r-icu-system
-        sudo make tinytest
+        LC_ALL="pl_PL.UTF-8" sudo make r-icu-system
+        LC_ALL="pl_PL.UTF-8" sudo make tinytest
