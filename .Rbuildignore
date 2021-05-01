@@ -1,5 +1,5 @@
 ^NEWS_TODO$
-^src/icu[0-9]+/data
+^src/icu../data
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^.*\.kdev4$

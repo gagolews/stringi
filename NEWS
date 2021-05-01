@@ -16,10 +16,10 @@
   stringi will be built against the battle-tested ICU4C 55.1.
   The update to ICU brings Unicode 13.0 and CLDR 39 support.
 
-* [GENERAL] stringi now requires R >= 3.1 (`CXX_STD=CXX11`).
-
 * [DOCUMENTATION] A draft version of a paper on `stringi` is now available at
   https://stringi.gagolewski.com/_static/vignette/stringi.pdf
+
+* [GENERAL] stringi now requires R >= 3.1 (`CXX_STD` of `CXX11` or `CXX1X`).
 
 * [NEW FEATURE] #408: `stri_trans_casefold()` performs case folding;
   this is different from case mapping, which is locale-dependent.
