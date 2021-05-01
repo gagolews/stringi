@@ -21,7 +21,7 @@ It gives you a multitude of functions for:
 * pattern searching (e.g., with ICU Java-like regular expressions),
 * collation and sorting,
 * random string generation,
-* case mapping,
+* case mapping and folding,
 * string transliteration,
 * Unicode normalisation,
 * date-time formatting and parsing,
@@ -45,9 +45,10 @@ by calling:
 It has been released under the open source BSD-3-clause
 `license <https://raw.githubusercontent.com/gagolews/stringi/master/LICENSE>`_.
 
-The package's API was inspired by Hadley Wickham's
-`stringr <https://stringr.tidyverse.org/>`_ package
-(and since 2015 `stringr` is powered by `stringi`).
+The package's API was inspired by that of the early (pre-tidyverse; v0.6.2)
+version of Hadley Wickham's
+`stringr <https://cran.r-project.org/web/packages/stringr/>`_
+package (and since the 2015 v1.0.0 `stringr` is powered by `stringi`).
 Moreover, Hadley suggested quite a few new package features.
 The contributions from Bartłomiej Tartanus and
 `many others <https://github.com/gagolews/stringi/graphs/contributors>`_

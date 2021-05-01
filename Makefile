@@ -6,9 +6,6 @@
 
 all: r
 
-#CPPFLAGS="-fopenmp -march=native -mtune=native"
-#LDFLAGS="-fopenmp"
-
 autoconf:
 	autoconf
 	Rscript -e 'roxygen2::roxygenise(roclets=c("rd", "collate", "namespace", "vignette"), load_code=roxygen2::load_installed)'
@@ -35,6 +32,10 @@ build:
 check: build
 	cd .. && R CMD check `ls -t stringi*.tar.gz | head -1` --no-manual #--as-cran
 
+check-cran: build
+	cd .. && STRINGI_DISABLE_PKG_CONFIG=1 R CMD check `ls -t stringi*.tar.gz | head -1` --as-cran
+
+
 weave:
 	cd devel/sphinx/weave && make && cd ../../../
 
@@ -56,7 +57,9 @@ sphinx: r weave rd2rst news
 	touch docs/.nojekyll
 
 clean:
-	rm -f src/*.o src/*.so src/Makevars src/uconfig_local.h \
+	find src -name '*.o' -exec rm {} \;
+	find src -name '*.so' -exec rm {} \;
+	rm -f src/Makevars src/uconfig_local.h \
 		src/install.libs.R config.log config.status src/symbols.rds
 
 purge: clean

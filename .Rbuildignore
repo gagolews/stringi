@@ -1,15 +1,15 @@
 ^NEWS_TODO$
+^src/icu[0-9]+/data
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^.*\.kdev4$
 ^\.kdev4
 ^devel
+kate-swp$
 ^src/boost
 ^src-i386
 ^src-x64
 ^src/.*\.o$
-^src/icu55/data
-^src/icu61/data
 ^src/.*\.a$
 ^src/.*\.so$
 ^src/.*\.dll$
