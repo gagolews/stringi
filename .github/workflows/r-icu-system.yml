@@ -19,5 +19,5 @@ jobs:
         sudo Rscript -e "install.packages(c('tinytest'))"
     - name: Test and check R
       run: |
-        make r-icu-system
-        make tinytest
+        sudo make r-icu-system
+        sudo make tinytest
