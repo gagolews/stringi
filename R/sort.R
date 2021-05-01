@@ -316,13 +316,13 @@ stri_duplicated_any <- function(str, from_last = FALSE, fromLast = from_last, ..
 #' \emph{Collation} - ICU User Guide,
 #' \url{http://userguide.icu-project.org/collation}
 #'
-#' @family locale_sensitive
-#' @export
-#' @rdname stri_sort_key
-#'
 #' @examples
 #' stri_sort_key(c('hladny', 'chladny'), locale='pl_PL')
 #' stri_sort_key(c('hladny', 'chladny'), locale='sk_SK')
+#'
+#' @family locale_sensitive
+#' @export
+#' @rdname stri_sort_key
 stri_sort_key <- function(str, ..., opts_collator = NULL)
 {
     if (!missing(...))
@@ -335,12 +335,10 @@ stri_sort_key <- function(str, ..., opts_collator = NULL)
 #' @title
 #' Ranking
 #'
-#'
 #' @description
 #' This function ranks each string in a character vector according to a
 #' locale-dependent lexicographic order.
 #' It is a portable replacement for the base \code{xtfrm} function.
-#'
 #'
 #' @details
 #' Missing values result in missing ranks and tied observations receive
@@ -363,10 +361,6 @@ stri_sort_key <- function(str, ..., opts_collator = NULL)
 #' \emph{Collation} - ICU User Guide,
 #' \url{http://userguide.icu-project.org/collation}
 #'
-#' @family locale_sensitive
-#' @export
-#' @rdname stri_rank
-#'
 #' @examples
 #' stri_rank(c('hladny', 'chladny'), locale='pl_PL')
 #' stri_rank(c('hladny', 'chladny'), locale='sk_SK')
@@ -377,6 +371,10 @@ stri_sort_key <- function(str, ..., opts_collator = NULL)
 #' # Ordering a data frame with respect to two criteria:
 #' X <- data.frame(a=c("b", NA, "b", "b", NA, "a", "a", "c"), b=runif(8))
 #' X[order(stri_rank(X$a), X$b), ]
+#'
+#' @family locale_sensitive
+#' @export
+#' @rdname stri_rank
 stri_rank <- function(str, ..., opts_collator=NULL)
 {
     if (!missing(...))

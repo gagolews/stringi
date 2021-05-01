@@ -41,6 +41,7 @@ stri_rank("a" \%s+\% c(1, 100, 2, 101, 11, 10), numeric=TRUE)
 # Ordering a data frame with respect to two criteria:
 X <- data.frame(a=c("b", NA, "b", "b", NA, "a", "a", "c"), b=runif(8))
 X[order(stri_rank(X$a), X$b), ]
+
 }
 \references{
 \emph{Collation} - ICU User Guide,
