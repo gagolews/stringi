@@ -83,3 +83,15 @@ make install
 Patches:
 
 * ....
+
+
+## ICU 69
+
+Much like ICU 61, but use sources.txt.
+
+ICU data files are now distributed alongside with ICU (github).
+
+Patches:
+
+* ....
+
