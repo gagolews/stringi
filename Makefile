@@ -30,11 +30,10 @@ build:
 	make clean
 
 check: build
-	cd .. && R CMD check `ls -t stringi*.tar.gz | head -1` --no-manual #--as-cran
+	cd .. && R CMD check `ls -t stringi*.tar.gz | head -1` --no-manual
 
 check-cran: build
 	cd .. && STRINGI_DISABLE_PKG_CONFIG=1 R CMD check `ls -t stringi*.tar.gz | head -1` --as-cran
-
 
 weave:
 	cd devel/sphinx/weave && make && cd ../../../
