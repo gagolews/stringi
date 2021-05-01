@@ -1,4 +1,4 @@
-name: stringi for R (ICU bundle)
+name: stringi for R (ICU bundle+check)
 
 on:
   push:
@@ -23,6 +23,6 @@ jobs:
         sudo Rscript -e "install.packages(c('tinytest', 'roxygen2', 'pkgbuild'))"
     - name: Test and check R
       run: |
-        make r-icu-bundle
-        make tinytest
-        make check
+        sudo make r-icu-bundle
+        sudo make tinytest
+        sudo make check
