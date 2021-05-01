@@ -31,55 +31,40 @@
 ## EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-# @title
-# Installation-Related Utilities [DEPRECATED]
-#
-# @description
-# These functions are responsible for checking and guaranteeing
-# that the ICU data library (icudt) is available and that \pkg{stringi}
-# is ready to use.
-#
-# These functions are deprecated and will no longer be available
-# in future \pkg{stringi} releases.
-#
-# @details
-# ICU makes use of a wide variety of data tables to provide many
-# of its services. Examples include converter mapping tables,
-# collation rules, transliteration rules, break iterator rules
-# and dictionaries, and other locale data.
-#
-# Without the ICU data library (icudt) many \pkg{stringi} features
-# will not be available. The size of icudt is approx. 10-30 MB.
-#
-# \code{stri_install_check()} tests whether some ICU services
-# are available. If this is not the case, it is most likely due to
-# unavailable ICU data library.
-#
-# \code{stri_install_icudt()} downloads and installs the ICU data library
-# specific to your platform (little/big-endian). The downloaded
-# file will be decompressed into the directory where the package has been
-# installed, see \code{\link{find.package}}, so make sure
-# you have sufficient write permissions.
-#
-# @param silent suppress diagnostic messages
-# @param check enable \code{stri_install_check()} tests
-# @param outpath path to install icudt to. If \code{NULL}, then
-# \code{file.path(path.package('stringi'), 'libs')} will be used.
-# @param inpath path to search icudt archive in.
-# If \code{NULL}, then only stringi mirror servers will be used.
-# Mainly of interest to system admins and software developers.
-#
-# @return These functions return a logical value, invisibly.
-# \code{TRUE} denotes that the requested operation has been completed
-# successfully.
-#
-# @references
-# \emph{ICU Data} -- ICU User Guide,
-# \url{http://userguide.icu-project.org/icudata}
-#
-# @examples
-# stri_install_check()
-#
+# internal functions used whilst installing stringi
+
+
+
+icudt_fname <- c(
+    little55 = "icudt55l.zip",
+    big55 = "icudt55b.zip",
+    little61 = "icudt61l.zip",
+    big61 = "icudt61b.zip",
+    little69 = "icu4c-69_1-data-bin-l.zip",
+    big69 = "icu4c-69_1-data-bin-b.zip"
+)
+
+icudt_md5ex <- c(
+    little55 = "ff345529f230cc39bb8d450af0607708",
+    big55 = "1194f0dd879d3c1c1f189cde5fd90efe",
+    little61 = "6d14e059b26606f08bad3b41eb3b5c93",
+    big61 = "45719f3208b2d67132efa620cecccb56",
+    little69 = "58ecd3e72e9d96ea2876dd89627afeb8",
+    big69 = "e86eba75d1f39be63713569dc0dc9524"
+)
+
+
+# icudt_mirrors <- c(
+# #     "https://github.com/unicode-org/icu/releases/download/release-69-1/",
+#     "https://raw.githubusercontent.com/gagolews/stringi/master/src/icu69/data/",
+#     "https://raw.githubusercontent.com/gagolews/stringi/master/src/icu61/data/",
+#     "https://raw.githubusercontent.com/gagolews/stringi/master/src/icu55/data/",
+#     "http://raw.githubusercontent.com/gagolews/stringi/master/src/icu69/data/",
+#     "http://raw.githubusercontent.com/gagolews/stringi/master/src/icu61/data/",
+#     "http://raw.githubusercontent.com/gagolews/stringi/master/src/icu55/data/"
+# )
+
+
 # @rdname stri_install
 stri_install_check <- function(silent = FALSE)
 {
@@ -115,38 +100,19 @@ stri_install_check <- function(silent = FALSE)
 }
 
 
-
-
-icudt_fname <- c(
-    little55 = "icudt55l.zip",
-    big55 = "icudt55b.zip",
-    little61 = "icudt61l.zip",
-    big61 = "icudt61b.zip")
-
-icudt_md5ex <- c(
-    little55 = "ff345529f230cc39bb8d450af0607708",
-    big55 = "1194f0dd879d3c1c1f189cde5fd90efe",
-    little61 = "6d14e059b26606f08bad3b41eb3b5c93",
-    big61 = "45719f3208b2d67132efa620cecccb56")
-
-icudt_mirrors <- c("https://raw.githubusercontent.com/gagolews/stringi/master/src/icu61/data/",
-    "https://raw.githubusercontent.com/gagolews/stringi/master/src/icu55/data/",
-    "http://raw.githubusercontent.com/gagolews/stringi/master/src/icu61/data/",
-    "http://raw.githubusercontent.com/gagolews/stringi/master/src/icu55/data/",
-    "http://www.ibspan.waw.pl/~gagolews/stringi/",
-    "http://www.gagolewski.com/software/stringi/")
-
-
-
 # @rdname stri_install
 stri_download_icudt <- function(inpath, icu_bundle_version)
 {
-
     fname <- icudt_fname[paste0(.Platform$endian, icu_bundle_version)]
 
     md5ex <- icudt_md5ex[paste0(.Platform$endian, icu_bundle_version)]
 
-    mirrors <- icudt_mirrors
+#     mirrors <- icudt_mirrors
+    mirrors <- sprintf(
+        "%s://raw.githubusercontent.com/gagolews/stringi/master/src/icu%d/data/",
+        c("https", "http"),
+        icu_bundle_version
+    )
 
     icudtzipfname <- file.path(inpath, fname)  #tempfile(fileext='.zip')
 
@@ -173,7 +139,7 @@ stri_download_icudt <- function(inpath, icu_bundle_version)
         tryCatch({
             suppressWarnings(file.remove(icudtzipfname))
             # download icudt
-            if (download.file(paste(href, fname, sep = ""), icudtzipfname, mode = "wb") !=                 0) {
+            if (download.file(paste(href, fname, sep = ""), icudtzipfname, mode = "wb") != 0) {
                 return("download error")
             }
             if (!file.exists(icudtzipfname))
@@ -219,11 +185,11 @@ stri_download_icudt <- function(inpath, icu_bundle_version)
 stri_install_icudt <- function(check = TRUE, outpath = NULL, inpath = NULL, icu_bundle_version = NULL)
 {
     # As of v1.1.3, this function is no longer exported.
-    # It was deprecated in 0.5-5.
+    # It was deprecated in v0.5-5.
 
     stopifnot(is.logical(check), length(check) == 1, !is.na(check))
     if (check && stri_install_check(TRUE)) {
-        message("icudt is already installed.")
+        message("icudt has already been installed.")
         return(invisible(TRUE))
     }
 
@@ -240,10 +206,10 @@ stri_install_icudt <- function(check = TRUE, outpath = NULL, inpath = NULL, icu_
 
     stopifnot(is.character(outpath), length(outpath) == 1, file.exists(outpath))
 
-    message("decompressing icudt archive ", icudtzipfname, " to: ", outpath)
+    message("decompressing icudt ", icudtzipfname, " to: ", outpath)
     res <- unzip(icudtzipfname, exdir = outpath, overwrite = TRUE)
     if (!is.character(res) || length(res) <= 0) {
-        message("error decompressing icudt archive")
+        message("error decompressing icudt")
         return(invisible(FALSE))
     }
 

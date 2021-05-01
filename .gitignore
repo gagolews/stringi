@@ -17,6 +17,7 @@ config.status
 .Rhistory
 .RData
 stringi.Rcheck
+*.kate-swp
 
 # compiled/precompiled files
 *.o
@@ -43,12 +44,5 @@ src-x64/
 *.blg
 cache-knitr/
 cache/
-
-# benchmark results and data
-devel/benchmarks/results*
-devel/benchmarks/figure
-devel/benchmarks/report-*.md
-devel/benchmarks/report-*.html
-devel/benchmarks/test1.csv.gz
 
 .vscode
