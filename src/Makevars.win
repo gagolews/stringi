@@ -7,15 +7,21 @@ CXX_STD=CXX11
 PKG_CPPFLAGS=-I. -Iicu69/ -Iicu69/unicode -Iicu69/common -Iicu69/i18n \
 -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION \
 -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL \
--DU_TOOLUTIL_IMPLEMENTATION -DNDEBUG -DWINVER=0x0600 -D_WIN32_WINNT=0x0600 \
+-DU_TOOLUTIL_IMPLEMENTATION -DNDEBUG -DWINVER=0x0601 -D_WIN32_WINNT=0x0601 \
 -DU_USE_STRTOD_L=0
-# 0x0600 is Windows Vista
+# 0x0600 == Windows Vista
+# 0x0601 == Windows 7
+# 0x0602 == Windows 8
+# 0x0603 == Windows 8.1
+# 0x0A00 == Windows 10
+# 0x0A00 == Windows 10
+# ICU 69 uses LOCALE_ALLOW_NEUTRAL_NAMES which is Windows 7 and later
 
-
-## There is a Cygwin bug which reports "mem alloc error" while linking
+## There is(*) a Cygwin bug which reports "mem alloc error" while linking
 ## too many .o files at once (I suppose this is the reason, at least).
 ## Thus, below we split the build process into a few parts using static libs.
 ## Voila, it's fixed.
+## (*) Have been, in 2013. Haven't tested that ever since.
 
 STRI_SOURCES_CPP=$(wildcard stri_*.cpp)
 STRI_OBJECTS=$(STRI_SOURCES_CPP:.cpp=.o)
