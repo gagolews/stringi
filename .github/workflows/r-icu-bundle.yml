@@ -26,4 +26,3 @@ jobs:
         sudo make r-icu-bundle
         sudo make tinytest
         sudo make check
-        sudo make check-cran
