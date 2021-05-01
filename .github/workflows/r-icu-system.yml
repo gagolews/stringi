@@ -15,9 +15,9 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get -y upgrade
-        sudo apt-get -y install libcurl4-openssl-dev r-base-dev devscripts
-        sudo Rscript -e "install.packages(c('tinytest', 'roxygen2', 'pkgbuild'))"
+        sudo apt-get -y install libcurl4-openssl-dev r-base-dev devscripts libicu-dev
+        sudo Rscript -e "install.packages(c('tinytest'))"
     - name: Test and check R
       run: |
-        sudo make test
-        sudo make check
+        make r-icu-system
+        make tinytest

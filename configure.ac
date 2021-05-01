@@ -959,7 +959,7 @@ AC_SUBST(ICUDT_DIR)
 AC_SUBST(ICU_BUNDLE_VERSION)
 AC_SUBST(ICUDT_ENDIANNESS)
 
-# Remember also to update the configure.win file
+# Remember to update the configure.win file too
 AC_CONFIG_FILES([src/Makevars])
 AC_CONFIG_FILES([src/uconfig_local.h])
 AC_CONFIG_FILES([src/install.libs.R])

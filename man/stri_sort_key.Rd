@@ -37,6 +37,7 @@ vector, i.e., generating relative sort keys.
 \examples{
 stri_sort_key(c('hladny', 'chladny'), locale='pl_PL')
 stri_sort_key(c('hladny', 'chladny'), locale='sk_SK')
+
 }
 \references{
 \emph{Collation} - ICU User Guide,

@@ -4976,7 +4976,7 @@ STRINGI_LIBS="${STRINGI_LIBS} ${with_extra_libs}"
 
 
 
-# Remember also to update the configure.win file
+# Remember to update the configure.win file too
 ac_config_files="$ac_config_files src/Makevars"
 
 ac_config_files="$ac_config_files src/uconfig_local.h"

@@ -1,0 +1,28 @@
+name: stringi for R (ICU bundle)
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: |
+        sudo apt-get update -qq
+        # https://cran.r-project.org/bin/linux/ubuntu/
+        sudo apt install --no-install-recommends software-properties-common dirmngr
+        sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+        sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
+        sudo apt-get -y upgrade
+        sudo apt-get -y install libcurl4-openssl-dev r-base-dev devscripts
+        sudo Rscript -e "install.packages(c('tinytest', 'roxygen2', 'pkgbuild'))"
+    - name: Test and check R
+      run: |
+        make r-icu-bundle
+        make tinytest
+        make check
