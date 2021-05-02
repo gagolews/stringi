@@ -56,13 +56,13 @@ by calling:
 
    install.packages("stringi", configure.vars="ICUDT_DIR=<icudt_dir>")
 
-Moreover, if you have **absolutely no internet access** on the machines
-you try to install stringi on, try fetching the latest development
-version of the package, as it is shipped with the ``ICU`` data archives.
-You can build a distributable source package that includes all the
-required ICU data files (for off-line use) by omitting some relevant
-lines in the ``.Rbuildignore`` file. The following command sequence
-should do the trick:
+Moreover, if you have **no internet access** on the machines you try to
+install stringi on, try fetching the latest development version of the
+package, as it is shipped with the ``ICU`` data archives. You can build
+a distributable source package that includes all the required ICU data
+files (for off-line use) by omitting some relevant lines in the
+``.Rbuildignore`` file. The following command sequence should do the
+trick:
 
 ::
 
@@ -93,23 +93,23 @@ standard. Moreover, it has become required by newer versions of ICU4C.
 
 However, if your compiler does not support C++11 or it has not been
 properly configured (check out ``<R_inst_dir>/etc/Makeconf``) but you
-are sure it tolerates the ``long long`` type (which is very common –
-this is checked by the ``configure`` script anyway), you may disable the
-use of C++11 by passing the ``--disable-cxx11`` argument to the
-``configure`` script.
+are sure it understands the ``long long`` type (which is very common –
+this is checked by the ``configure`` script anyway), you may disable
+C++11 by passing the ``--disable-cxx11`` argument to the ``configure``
+script.
 
 Customising the Build Process
 -----------------------------
 
 Additional features and options of the ``./configure`` script:
 
--  ``--disable-cxx11``: Disable C++11 use; if you build ICU4C from
-   sources, make sure your C++ compiler supports the ``long long`` type.
+-  ``--disable-cxx11``: Disable C++11; if you build ICU4C from sources,
+   make sure your C++ compiler supports the ``long long`` type.
 
--  ``--disable-icu-bundle``: Force the use of the system ICU.
+-  ``--disable-icu-bundle``: Enforce system ICU.
 
--  ``--disable-pkg-config``: Disable ``pkg-config`` usage for finding
-   ICU4C-devel; in such a case ICU4C will be compiled from sources.
+-  ``--disable-pkg-config``: Disable ``pkg-config``; ICU4C will be
+   compiled from sources.
 
 -  ``--with-extra-cflags=FLAGS``: Additional C compiler flags.
 
@@ -123,17 +123,15 @@ Additional features and options of the ``./configure`` script:
 
 Some influential environment variables:
 
--  ``ICUDT_DIR``: Optional directory from which an already downloaded
-   ICU data archive (``icudt*.zip``) may be copied; either an absolute
-   path or a path relative to ``<package source dir>/src``; defaults to
-   ``icu55/data``.
+-  ``ICUDT_DIR``: Optional directory with an already downloaded ICU data
+   archive (``icudt*.zip``); either an absolute path or a path relative
+   to ``<package source dir>/src``; defaults to ``icuXX/data``.
 
 -  ``PKG_CONFIG_PATH``: An optional list of directories to search for
    ``pkg-config``\ s ``.pc`` files.
 
--  ``R_HOME``: Override default directory with R installation, e.g.,
-   ``/usr/lib64/R``. Note that ``$R_HOME/bin/R`` should refer to the
-   ``R`` executable.
+-  ``R_HOME``: Override the R directory, e.g., ``/usr/lib64/R``. Note
+   that ``$R_HOME/bin/R`` point to the R executable.
 
 -  ``CAT``: The ``cat`` command used to generate the list of source
    files to compile.
@@ -141,14 +139,14 @@ Some influential environment variables:
 -  ``PKG_CONFIG``:The ``pkg-config`` command used to fetch the necessary
    compiler flags to link to and existing ``libicu`` installation.
 
--  ``STRINGI_DISABLE_CXX11``: Disable C++11 flags, see also
+-  ``STRINGI_DISABLE_CXX11``: Disable C++11, see also
    ``--disable-cxx11``.
 
--  ``STRINGI_DISABLE_PKG_CONFIG``: Force the use of the ICU bundle, see
-   also ``--disable-pkg-config``.
+-  ``STRINGI_DISABLE_PKG_CONFIG``: Compile ICU from sources, see also
+   ``--disable-pkg-config``.
 
--  ``STRINGI_DISABLE_ICU_BUNDLE``: Force the use of the system ICU, see
-   also ``--disable-icu-bundle``.
+-  ``STRINGI_DISABLE_ICU_BUNDLE``: Enforce system ICU, see also
+   ``--disable-icu-bundle``.
 
 -  ``STRINGI_CFLAGS``: see ``--with-extra-cflags``.
 
@@ -172,4 +170,4 @@ If you do not manage to set up a successful stringi build, do not
 hesitate to `file a bug
 report <https://github.com/gagolews/stringi/issues>`__. However, please
 check the list of archived (closed) issues first – it is very likely
-that a solution to your problem is already there.
+that a solution to your problem has already been posted.

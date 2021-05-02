@@ -229,11 +229,17 @@
 <div class="section" id="xx-yy-devel">
 <h2>1.6.1 (2021-XX-YY) <strong>devel</strong><a class="headerlink" href="#xx-yy-devel" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
+<li><p>[GENERAL] #401: stringi is now bundled with ICU4C 69.1 (upgraded from
+61.1), which is used on most Windows and OS X builds as well as on
+*nix systems not equipped with system ICU. However, if the C++11
+support is disabled, stringi will be built against the battle-tested
+ICU4C 55.1. The update to ICU brings Unicode 13.0 and CLDR 39
+support.</p></li>
 <li><p>[DOCUMENTATION] A draft version of a paper on <code class="docutils literal notranslate"><span class="pre">stringi</span></code> is now
 available at
 <a class="reference external" href="https://stringi.gagolewski.com/_static/vignette/stringi.pdf">https://stringi.gagolewski.com/_static/vignette/stringi.pdf</a></p></li>
-<li><p>…todo… #401 (update ICU4C to 69.1), The ICU4C bundle has been updated
-from version 61.1 to 69.1 which features Unicode 13.0 and CLDR 39.</p></li>
+<li><p>[GENERAL] stringi now requires R &gt;= 3.1 (<code class="docutils literal notranslate"><span class="pre">CXX_STD</span></code> of <code class="docutils literal notranslate"><span class="pre">CXX11</span></code> or
+<code class="docutils literal notranslate"><span class="pre">CXX1X</span></code>).</p></li>
 <li><p>[NEW FEATURE] #408: <code class="docutils literal notranslate"><span class="pre">stri_trans_casefold()</span></code> performs case folding;
 this is different from case mapping, which is locale-dependent.
 Folding makes two pieces of text that differ only in case identical.
@@ -954,7 +960,7 @@ milestone 0.1.</p></li>
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2020, Marek Gagolewski.
+        &#169; Copyright 2013-2021, Marek Gagolewski.
 
     </p>
   </div>

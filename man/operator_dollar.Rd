@@ -12,9 +12,9 @@ e1 \%s$\% e2
 e1 \%stri$\% e2
 }
 \arguments{
-\item{e1}{a single format string, see \code{\link{sprintf}} for syntax}
+\item{e1}{format strings, see \code{\link{sprintf}} for syntax}
 
-\item{e2}{a list of arguments to be passed to \code{\link{sprintf}}
+\item{e2}{a list of atomic vectors to be passed to \code{\link{sprintf}}
 or a single atomic vector}
 }
 \value{
@@ -25,10 +25,13 @@ Provides access to base R's \code{\link{sprintf}} in form of a binary
 operator in a way similar to Python's \code{\%} overloaded for strings.
 }
 \details{
-Vectorized over \code{e2}.
+Vectorized over \code{e1} and \code{e2}.
 
 \code{e1 \%s$\% atomic_vector} is equivalent to
 \code{e1 \%s$\% list(atomic_vector)}.
+
+Note that \code{\link{sprintf}} takes field width in bytes,
+not Unicode code points. See Examples for a workaround.
 }
 \examples{
 "value='\%d'" \%s$\% 3
@@ -37,5 +40,9 @@ Vectorized over \code{e2}.
 "\%s='\%d'" \%s$\% list("value", 1:3)
 "\%s='\%d'" \%s$\% list(c("a", "b", "c"), 1)
 "\%s='\%d'" \%s$\% list(c("a", "b", "c"), 1:3)
+
+# sprintf field width:
+cat(sprintf("\%6s\%6s\%6s", "-", c("asc", "ąść", "abcdefg"), "-"), sep="\n")
+cat(sprintf("\%6s\%s\%6s", "-", stringi::stri_pad(c("asc", "ąść", "abcdefg"), 6), "-"), sep="\n")
 
 }

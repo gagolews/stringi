@@ -30,6 +30,9 @@
   (e.g., for ordering data frames with regards to multiple criteria,
   the ranks can be passed to `order()`, see #219).
 
+* [NEW FEATURE] `%s$%` and `%stri$%` are now vectorised with respect to
+  both arguments.
+
 * [BUGFIX] `stri_sort_key()` now outputs `bytes`-encoded strings.
 
 * [BUGFIX] #415: `locale=''` was not equivalent to `locale=NULL`

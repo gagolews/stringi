@@ -24,15 +24,15 @@ import IPython.sphinxext
 # -- Project information -----------------------------------------------------
 
 project = 'stringi'
-copyright = '2020, Marek Gagolewski'
+copyright = '2013-2021, Marek Gagolewski'
 author = 'Marek Gagolewski'
 
 # The full version, including alpha/beta/rc tags
-version = '1.5.4'  # TODO: automate
+version = '1.6.1'  # TODO: automate
 release = version
 
 github_project_url = "https://github.com/gagolews/stringi/"
-
+html_baseurl = "https://stringi.gagolewski.com/"
 
 # -- General configuration ---------------------------------------------------
 
@@ -66,7 +66,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 todo_include_todos = True
 
-source_suffix = ['.rst']
+source_suffix = ['.rst']  # TODO: if need be, you can also use MyST in the future
 
 
 # https://www.sphinx-doc.org/en/master/usage/extensions/autosummary.html
@@ -85,7 +85,6 @@ html_show_sourcelink = False
 
 
 html_theme_options = {
-    'canonical_url': 'https://stringi.gagolewski.com/',
     'prev_next_buttons_location': 'both',
     #'style_nav_header_background': '#ff704d',
     #'display_github': True,

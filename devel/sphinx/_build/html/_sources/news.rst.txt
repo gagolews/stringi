@@ -8,12 +8,19 @@ What Is New in *stringi*
 1.6.1 (2021-XX-YY) **devel**
 ----------------------------
 
+-  [GENERAL] #401: stringi is now bundled with ICU4C 69.1 (upgraded from
+   61.1), which is used on most Windows and OS X builds as well as on
+   \*nix systems not equipped with system ICU. However, if the C++11
+   support is disabled, stringi will be built against the battle-tested
+   ICU4C 55.1. The update to ICU brings Unicode 13.0 and CLDR 39
+   support.
+
 -  [DOCUMENTATION] A draft version of a paper on ``stringi`` is now
    available at
    https://stringi.gagolewski.com/_static/vignette/stringi.pdf
 
--  …todo… #401 (update ICU4C to 69.1), The ICU4C bundle has been updated
-   from version 61.1 to 69.1 which features Unicode 13.0 and CLDR 39.
+-  [GENERAL] stringi now requires R >= 3.1 (``CXX_STD`` of ``CXX11`` or
+   ``CXX1X``).
 
 -  [NEW FEATURE] #408: ``stri_trans_casefold()`` performs case folding;
    this is different from case mapping, which is locale-dependent.

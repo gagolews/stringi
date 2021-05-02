@@ -4,6 +4,8 @@
 
 .PHONY:  r check build clean purge sphinx test
 
+PKGNAME="stringi"
+
 all: r
 
 autoconf:
@@ -20,27 +22,28 @@ r-icu-bundle:
 	R CMD INSTALL . --configure-args='--disable-pkg-config'
 
 tinytest:
-	Rscript -e 'options(width=120); source("devel/tinytest.R")'
+	Rscript -e 'source("devel/tinytest.R")'
 
 test: r tinytest
 
 build:
-	cd .. && R CMD INSTALL stringi --preclean --html
-	cd .. && R CMD build stringi
+	cd .. && R CMD INSTALL ${PKGNAME} --preclean --html
+	cd .. && R CMD build ${PKGNAME}
 	make clean
 
 check: build
-	cd .. && R CMD check `ls -t stringi*.tar.gz | head -1` --no-manual
+	cd .. && R CMD check `ls -t ${PKGNAME}*.tar.gz | head -1` --no-manual
 
 check-cran: build
-	cd .. && STRINGI_DISABLE_PKG_CONFIG=1 R CMD check `ls -t stringi*.tar.gz | head -1` --as-cran
+	cd .. && STRINGI_DISABLE_PKG_CONFIG=1 R CMD check `ls -t ${PKGNAME}*.tar.gz | head -1` --as-cran
 
 weave:
 	cd devel/sphinx/weave && make && cd ../../../
 
 rd2rst:
 	# https://github.com/gagolews/Rd2rst
-	cd devel/sphinx && Rscript -e "Rd2rst::Rd2rst('stringi')" && cd ../../
+	# TODO: if need be, you can also use MyST in the future
+	cd devel/sphinx && Rscript -e "Rd2rst::Rd2rst('${PKGNAME}')" && cd ../../
 
 news:
 	cd devel/sphinx && pandoc ../../NEWS -f markdown -t rst -o news.rst
@@ -56,11 +59,12 @@ sphinx: r weave rd2rst news
 	touch docs/.nojekyll
 
 clean:
-	find src -name '*.o' -exec rm {} \;
-	find src -name '*.so' -exec rm {} \;
+	rm -f src/*.o src/*.so  # will not remove src/icuXY/*/*.o
 	rm -f src/Makevars src/uconfig_local.h \
 		src/install.libs.R config.log config.status src/symbols.rds
 
 purge: clean
+	find src -name '*.o' -exec rm {} \;
+	find src -name '*.so' -exec rm {} \;
 	rm -f man/*.Rd
 	rm -fr autom4te.cache
