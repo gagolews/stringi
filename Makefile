@@ -26,10 +26,12 @@ tinytest:
 
 test: r tinytest
 
+# install:
+# 	cd .. && R CMD INSTALL ${PKGNAME} --preclean --html
+# 	make clean
+
 build:
-	cd .. && R CMD INSTALL ${PKGNAME} --preclean --html
 	cd .. && R CMD build ${PKGNAME}
-	make clean
 
 check: build
 	cd .. && R CMD check `ls -t ${PKGNAME}*.tar.gz | head -1` --no-manual
