@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>What Is New in stringi &mdash; stringi 1.5.4 documentation</title>
+  <title>What Is New in stringi &mdash; stringi 1.6.1 documentation</title>
   
 
   
@@ -20,10 +20,9 @@
 
   
   
-    <link rel="canonical" href="https://stringi.gagolewski.com/news.html"/>
-  
 
   
+    <link rel="canonical" href="https://stringi.gagolewski.com/news.html" />
 
   
   <!--[if lt IE 9]>
@@ -66,7 +65,7 @@
             
             
               <div class="version">
-                1.5.4
+                1.6.1
               </div>
             
           
@@ -247,6 +246,8 @@ This can come in handy when comparing strings.</p></li>
 <li><p>[NEW FEATURE] #421: <code class="docutils literal notranslate"><span class="pre">stri_rank()</span></code> ranks strings in a character
 vector (e.g., for ordering data frames with regards to multiple
 criteria, the ranks can be passed to <code class="docutils literal notranslate"><span class="pre">order()</span></code>, see #219).</p></li>
+<li><p>[NEW FEATURE] <code class="docutils literal notranslate"><span class="pre">%s$%</span></code> and <code class="docutils literal notranslate"><span class="pre">%stri$%</span></code> are now vectorised with
+respect to both arguments.</p></li>
 <li><p>[BUGFIX] <code class="docutils literal notranslate"><span class="pre">stri_sort_key()</span></code> now outputs <code class="docutils literal notranslate"><span class="pre">bytes</span></code>-encoded strings.</p></li>
 <li><p>[BUGFIX] #415: <code class="docutils literal notranslate"><span class="pre">locale=''</span></code> was not equivalent to <code class="docutils literal notranslate"><span class="pre">locale=NULL</span></code> in
 <code class="docutils literal notranslate"><span class="pre">stri_opts_collator()</span></code>.</p></li>
