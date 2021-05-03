@@ -11,7 +11,9 @@
    f <- gsub("@ICUDT_DIR@", "icu69/data", f, fixed = TRUE);
    f <- gsub("@ICU_BUNDLE_VERSION@", "69", f, fixed = TRUE);
    f <- gsub("@ICUDT_ENDIANNESS@", .Platform$endian, f, fixed = TRUE);
-   writeLines(f, fout);
+   con <- file(fout, "wb")  # LF line ending
+   writeLines(f, con);
+   close(con)
 ' `
 
 "${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" -e '
@@ -22,5 +24,7 @@
    f <- gsub("@ICUDT_DIR@", "icu69/data", f, fixed = TRUE);
    f <- gsub("@ICU_BUNDLE_VERSION@", "69", f, fixed = TRUE);
    f <- gsub("@ICUDT_ENDIANNESS@", .Platform$endian, f, fixed = TRUE);
-   writeLines(f, fout);
+   con <- file(fout, "wb")  # LF line ending
+   writeLines(f, con);
+   close(con)
 ' `

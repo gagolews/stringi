@@ -1043,6 +1043,3 @@ echo "    CXXFLAGS=${CXXFLAGS}"
 echo "    LDFLAGS=${LDFLAGS}"
 echo "    LIBS=${LIBS}"
 echo ""
-
-
-# EOF. :)
