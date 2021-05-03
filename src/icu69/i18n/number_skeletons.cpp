@@ -177,6 +177,9 @@ Notation stem_to_object::notation(skeleton::StemEnum stem) {
             return Notation::simple();
         default:
             UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+            return Notation::simple();
+#endif
     }
 }
 
@@ -190,6 +193,9 @@ MeasureUnit stem_to_object::unit(skeleton::StemEnum stem) {
             return MeasureUnit::getPermille();
         default:
             UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+            return MeasureUnit();
+#endif
     }
 }
 
@@ -205,6 +211,9 @@ Precision stem_to_object::precision(skeleton::StemEnum stem) {
             return Precision::currency(UCURR_USAGE_CASH);
         default:
             UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+            return Precision::integer();
+#endif
     }
 }
 
@@ -234,6 +243,9 @@ UNumberFormatRoundingMode stem_to_object::roundingMode(skeleton::StemEnum stem) 
             return UNUM_ROUND_UNNECESSARY;
         default:
             UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+            return UNUM_ROUND_CEILING;
+#endif
     }
 }
 
@@ -786,6 +798,9 @@ skeleton::parseStem(const StringSegment& segment, const UCharsTrie& stemTrie, Se
 
         default:
             UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+            return STATE_SCALE;
+#endif
     }
 }
 
@@ -1338,7 +1353,7 @@ bool blueprint_helpers::parseFracSigOption(const StringSegment& segment, MacroPr
         // @, @@, @@@
         maxSig = minSig;
     }
-    UNumberRoundingPriority priority;
+    UNumberRoundingPriority priority = UNUM_ROUNDING_PRIORITY_RELAXED;
     if (offset < segment.length()) {
         if (maxSig == -1) {
             // The wildcard character is not allowed with the priority annotation

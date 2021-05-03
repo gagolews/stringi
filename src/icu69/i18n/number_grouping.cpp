@@ -48,6 +48,9 @@ Grouper Grouper::forStrategy(UNumberGroupingStrategy grouping) {
         return {3, 3, 1, grouping};
     default:
         UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+        return {-1, -1, -1, grouping};
+#endif /* U_STRINGI_PATCHES */
     }
 }
 

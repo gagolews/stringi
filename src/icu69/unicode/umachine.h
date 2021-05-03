@@ -96,7 +96,7 @@
 #    define U_ATTRIBUTE_DEPRECATED __attribute__ ((deprecated))
 /**
  * \def U_ATTRIBUTE_DEPRECATED
- * This is used for Visual C++ specific attributes 
+ * This is used for Visual C++ specific attributes
  * @internal
  */
 #elif defined(_MSC_VER) && (_MSC_VER >= 1400)
@@ -113,7 +113,11 @@
 /** Obsolete/same as U_CAPI; was used to declare a function as a draft public ICU C API  */
 #define U_DRAFT  U_CAPI
 /** This is used to declare a function as a deprecated public ICU C API  */
+#ifdef U_STRINGI_PATCHES
+#define U_DEPRECATED U_CAPI
+#else /* !U_STRINGI_PATCHES */
 #define U_DEPRECATED U_CAPI U_ATTRIBUTE_DEPRECATED
+#endif /* U_STRINGI_PATCHES */
 /** Obsolete/same as U_CAPI; was used to declare a function as an obsolete public ICU C API  */
 #define U_OBSOLETE U_CAPI
 /** Obsolete/same as U_CAPI; was used to declare a function as an internal ICU C API  */
@@ -470,7 +474,7 @@ typedef int32_t UChar32;
  * This value is intended for sentinel values for APIs that
  * (take or) return single code points (UChar32).
  * It is outside of the Unicode code point range 0..0x10ffff.
- * 
+ *
  * For example, a "done" or "error" value in a new API
  * could be indicated with U_SENTINEL.
  *

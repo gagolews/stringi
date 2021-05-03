@@ -50,6 +50,9 @@ UBool ConstrainedFieldPosition::matchesField(int32_t category, int32_t field) co
         return fCategory == category && fField == field;
     default:
         UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+        return FALSE;
+#endif
     }
 }
 

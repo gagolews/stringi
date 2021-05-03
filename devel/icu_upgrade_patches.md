@@ -87,13 +87,43 @@ Patches:
 
 ## ICU 69
 
+USE `#ifdef U_STRINGI_PATCHES`  - make diff between git commits (first, current)
+
 Much like ICU 61, but use sources.txt.
 
 ICU data files are now distributed alongside with ICU (github).
 
-Patches:
+```bash
+FILES=(
+    common/putil.cpp
+    common/rbbitblb.cpp
+    common/ubiditransform.cpp
+    common/ucnv2022.cpp
+    common/ucurr.cpp
+    common/uloc.cpp
+    i18n/decNumber.cpp
+    i18n/decNumber.h
+    i18n/double-conversion-utils.h
+    i18n/number_grouping.cpp
+    i18n/ucal.cpp
+    i18n/ucol_sit.cpp
+    i18n/windtfmt.cpp
+    i18n/winnmfmt.cpp
+    unicode/umachine.h
+)
 
-* ....
+mkdir -p ~/R/stringi/devel/icu61diffs/unicode
+mkdir -p ~/R/stringi/devel/icu61diffs/common
+mkdir -p ~/R/stringi/devel/icu61diffs/i18n
+
+for f in ${FILES[@]}; do
+    diff -u  -d  -b -B -Z /tmp/stringi-d268f16043fb6de40901e2eab31b39f1ecdcd3f3/src/icu61/$f ~/R/stringi/src/icu61/$f > ~/R/stringi/devel/icu61diffs/$f.diff
+done
+```
+
+
+
+
 
 Warning: Found the following significant warnings:
   icu69/common/uidna.cpp:514:17: warning: 'uidna_toASCII_69_stringi' is deprecated [-Wdeprecated-declarations]

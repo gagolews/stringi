@@ -531,6 +531,9 @@ static int32_t getRunFromLogicalIndex(UBiDi *pBiDi, int32_t logicalIndex) {
     }
     /* we should never get here */
     UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+    return 0;
+#endif
 }
 
 /*

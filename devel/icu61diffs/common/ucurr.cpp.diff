@@ -1,0 +1,11 @@
+--- /tmp/stringi-d268f16043fb6de40901e2eab31b39f1ecdcd3f3/src/icu61/common/ucurr.cpp	2018-04-21 00:45:30.000000000 +1000
++++ /home/gagolews/R/stringi/src/icu61/common/ucurr.cpp	2020-01-06 10:44:41.177966984 +1100
+@@ -420,7 +420,7 @@
+         if (len > (int32_t)(sizeof(id)-1)) {
+             len = (sizeof(id)-1);
+         }
+-        uprv_strncpy(id, _id, len);
++        uprv_strncpy(id, _id, ULOC_FULLNAME_CAPACITY); //len+1); Marek
+         id[len] = 0;
+         u_memcpy(iso, _iso, ISO_CURRENCY_CODE_LENGTH);
+         iso[ISO_CURRENCY_CODE_LENGTH] = 0;

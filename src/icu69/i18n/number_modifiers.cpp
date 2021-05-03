@@ -93,6 +93,9 @@ bool ConstantAffixModifier::containsField(Field field) const {
     (void)field;
     // This method is not currently used.
     UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+    return false;
+#endif
 }
 
 void ConstantAffixModifier::getParameters(Parameters& output) const {
@@ -182,6 +185,9 @@ bool SimpleModifier::containsField(Field field) const {
     (void)field;
     // This method is not currently used.
     UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+    return false;
+#endif
 }
 
 void SimpleModifier::getParameters(Parameters& output) const {
