@@ -245,6 +245,9 @@ bool MutablePatternModifier::containsField(Field field) const {
     (void)field;
     // This method is not currently used.
     UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+    return false;
+#endif
 }
 
 void MutablePatternModifier::getParameters(Parameters& output) const {
@@ -257,6 +260,9 @@ bool MutablePatternModifier::semanticallyEquivalent(const Modifier& other) const
     (void)other;
     // This method is not currently used.
     UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+    return false;
+#endif
 }
 
 int32_t MutablePatternModifier::insertPrefix(FormattedStringBuilder& sb, int position, UErrorCode& status) {
@@ -325,12 +331,18 @@ UnicodeString MutablePatternModifier::getSymbol(AffixPatternType type) const {
             return UnicodeString(u"\uFFFD");
         default:
             UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+    return UnicodeString(u"\uFFFD");
+#endif
     }
 }
 
 UnicodeString MutablePatternModifier::toUnicodeString() const {
     // Never called by AffixUtils
     UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+    return UnicodeString(u"\uFFFD");
+#endif
 }
 
 #endif /* #if !UCONFIG_NO_FORMATTING */

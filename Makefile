@@ -37,7 +37,7 @@ check: build
 	cd .. && R CMD check `ls -t ${PKGNAME}*.tar.gz | head -1` --no-manual
 
 check-cran: build
-	cd .. && STRINGI_DISABLE_PKG_CONFIG=1 R CMD check `ls -t ${PKGNAME}*.tar.gz | head -1` --as-cran
+	cd .. && STRINGI_DISABLE_PKG_CONFIG=1 R_DEFAULT_INTERNET_TIMEOUT=240 _R_CHECK_CRAN_INCOMING_REMOTE_=FALSE R CMD check `ls -t ${PKGNAME}*.tar.gz | head -1` --as-cran
 
 weave:
 	cd devel/sphinx/weave && make && cd ../../../

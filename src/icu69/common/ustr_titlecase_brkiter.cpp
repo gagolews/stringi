@@ -33,6 +33,11 @@
 #include "ucase.h"
 #include "ucasemap_imp.h"
 
+#ifdef U_STRINGI_PATCHES
+// #include "unicode/unistr.h"
+#include "unicode/uchriter.h"
+#endif
+
 U_NAMESPACE_BEGIN
 
 /**
@@ -42,7 +47,11 @@ U_NAMESPACE_BEGIN
  */
 class WholeStringBreakIterator : public BreakIterator {
 public:
-    WholeStringBreakIterator() : BreakIterator(), length(0) {}
+    WholeStringBreakIterator() : BreakIterator(),
+#ifdef U_STRINGI_PATCHES
+        stringi_dummy_retval_for_getText(nullptr, 0),
+#endif
+        length(0) {}
     ~WholeStringBreakIterator() U_OVERRIDE;
     UBool operator==(const BreakIterator&) const U_OVERRIDE;
     WholeStringBreakIterator *clone() const U_OVERRIDE;
@@ -67,6 +76,9 @@ public:
     WholeStringBreakIterator &refreshInputText(UText *input, UErrorCode &errorCode) U_OVERRIDE;
 
 private:
+#ifdef U_STRINGI_PATCHES
+    UCharCharacterIterator stringi_dummy_retval_for_getText;
+#endif
     int32_t length;
 };
 
@@ -76,8 +88,13 @@ WholeStringBreakIterator::~WholeStringBreakIterator() {}
 UBool WholeStringBreakIterator::operator==(const BreakIterator&) const { return FALSE; }
 WholeStringBreakIterator *WholeStringBreakIterator::clone() const { return nullptr; }
 
+
+
 CharacterIterator &WholeStringBreakIterator::getText() const {
     UPRV_UNREACHABLE;  // really should not be called
+#ifdef U_STRINGI_PATCHES
+    return (CharacterIterator&)stringi_dummy_retval_for_getText;
+#endif
 }
 UText *WholeStringBreakIterator::getUText(UText * /*fillIn*/, UErrorCode &errorCode) const {
     if (U_SUCCESS(errorCode)) {

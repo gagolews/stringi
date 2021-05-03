@@ -720,6 +720,9 @@ UBool RegexMatcher::find(UErrorCode &status) {
                 return FALSE;
         }
         UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+            break;
+#endif
 
     case START_START:
         // Matches are only possible at the start of the input string
@@ -768,6 +771,9 @@ UBool RegexMatcher::find(UErrorCode &status) {
             }
         }
         UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+            break;
+#endif
 
     case START_STRING:
     case START_CHAR:
@@ -800,6 +806,9 @@ UBool RegexMatcher::find(UErrorCode &status) {
            }
         }
         UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+            break;
+#endif
 
     case START_LINE:
         {
@@ -883,6 +892,9 @@ UBool RegexMatcher::find(UErrorCode &status) {
     }
 
     UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+    return FALSE;
+#endif
 }
 
 
@@ -994,6 +1006,9 @@ UBool RegexMatcher::findUsingChunk(UErrorCode &status) {
                 return FALSE;
         }
         UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+        return FALSE;
+#endif
 
     case START_START:
         // Matches are only possible at the start of the input string
@@ -1036,6 +1051,9 @@ UBool RegexMatcher::findUsingChunk(UErrorCode &status) {
         }
     }
     UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+    break;
+#endif
 
     case START_STRING:
     case START_CHAR:
@@ -1065,6 +1083,9 @@ UBool RegexMatcher::findUsingChunk(UErrorCode &status) {
         }
     }
     UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+        return FALSE;
+#endif
 
     case START_LINE:
     {
@@ -1139,6 +1160,9 @@ UBool RegexMatcher::findUsingChunk(UErrorCode &status) {
     }
 
     UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+    return FALSE;
+#endif
 }
 
 

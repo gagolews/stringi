@@ -842,8 +842,13 @@ Calendar::operator=(const Calendar &right)
         fNextStamp               = right.fNextStamp;
         uprv_strncpy(validLocale, right.validLocale, sizeof(validLocale));
         uprv_strncpy(actualLocale, right.actualLocale, sizeof(actualLocale));
+#ifdef U_STRINGI_PATCHES
+        validLocale[sizeof(validLocale)-1] = 0;
+        actualLocale[sizeof(actualLocale)-1] = 0;
+#else //!U_STRINGI_PATCHES
         validLocale[sizeof(validLocale)-1] = 0;
         actualLocale[sizeof(validLocale)-1] = 0;
+#endif // U_STRINGI_PATCHES
     }
 
     return *this;

@@ -37,7 +37,7 @@
 #error U_USER_ATOMICS and U_USER_MUTEX_H are not supported
 #endif
 
-// Export an explicit template instantiation of std::atomic<int32_t>. 
+// Export an explicit template instantiation of std::atomic<int32_t>.
 // When building DLLs for Windows this is required as it is used as a data member of the exported SharedObject class.
 // See digitlst.h, pluralaffix.h, datefmt.h, and others for similar examples.
 //
@@ -46,13 +46,17 @@
 #if defined(__clang__) || defined(_MSC_VER)
   #if defined(__clang__)
     // Suppress the warning that the explicit instantiation after explicit specialization has no effect.
-    #pragma clang diagnostic push
-    #pragma clang diagnostic ignored "-Winstantiation-after-specialization"
+// #ifndef U_STRINGI_PATCHES
+//     #pragma clang diagnostic push
+//     #pragma clang diagnostic ignored "-Winstantiation-after-specialization"
+// #endif
   #endif
 template struct U_COMMON_API std::atomic<int32_t>;
 template struct U_COMMON_API std::atomic<std::mutex *>;
   #if defined(__clang__)
-    #pragma clang diagnostic pop
+// #ifndef U_STRINGI_PATCHES
+//     #pragma clang diagnostic pop
+// #endif
   #endif
 #elif defined(__GNUC__)
 // For GCC this class is already exported/visible, so no need for U_COMMON_API.

@@ -87,6 +87,9 @@ UChar32 codePointFromValidUTF8(const uint8_t *cpStart, const uint8_t *cpLimit) {
         return ((c&7)<<18) | ((cpStart[1]&0x3f)<<12) | ((cpStart[2]&0x3f)<<6) | (cpStart[3]&0x3f);
     default:
         UPRV_UNREACHABLE;  // Should not occur.
+#ifdef U_STRINGI_PATCHES
+        return c;
+#endif
     }
 }
 

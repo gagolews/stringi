@@ -578,6 +578,9 @@ CollationBuilder::getSpecialResetPosition(const UnicodeString &str,
         return 0;
     default:
         UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+        ce = rootElements.getLastTertiaryCE();
+#endif
     }
 
     int32_t index = findOrInsertNodeForRootCE(ce, strength, errorCode);

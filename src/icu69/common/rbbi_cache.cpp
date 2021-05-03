@@ -75,6 +75,9 @@ UBool RuleBasedBreakIterator::DictionaryCache::following(int32_t fromPos, int32_
         }
     }
     UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+    return TRUE;
+#endif
 }
 
 
@@ -115,6 +118,9 @@ UBool RuleBasedBreakIterator::DictionaryCache::preceding(int32_t fromPos, int32_
         }
     }
     UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+    return TRUE;
+#endif
 }
 
 void RuleBasedBreakIterator::DictionaryCache::populateDictionary(int32_t startPos, int32_t endPos,

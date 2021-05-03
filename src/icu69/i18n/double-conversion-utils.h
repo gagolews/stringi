@@ -40,21 +40,43 @@
 #include <cstdlib>
 #include <cstring>
 
+
 // ICU PATCH: Use U_ASSERT instead of <assert.h>
 #include "uassert.h"
 #ifndef DOUBLE_CONVERSION_ASSERT
 #define DOUBLE_CONVERSION_ASSERT(condition)         \
     U_ASSERT(condition);
 #endif
-#ifndef DOUBLE_CONVERSION_UNIMPLEMENTED
-#define DOUBLE_CONVERSION_UNIMPLEMENTED() (abort())
-#endif
+
 #ifndef DOUBLE_CONVERSION_NO_RETURN
 #ifdef _MSC_VER
 #define DOUBLE_CONVERSION_NO_RETURN __declspec(noreturn)
 #else
 #define DOUBLE_CONVERSION_NO_RETURN __attribute__((noreturn))
 #endif
+#endif
+
+
+
+#ifdef U_STRINGI_PATCHES
+#define USE_RINTERNALS
+#define R_NO_REMAP
+#include <R.h>
+#ifndef DOUBLE_CONVERSION_UNIMPLEMENTED
+#define DOUBLE_CONVERSION_UNIMPLEMENTED() (Rf_error("Internal error in ICU: DOUBLE_CONVERSION_UNIMPLEMENTED"))
+#endif
+#ifndef DOUBLE_CONVERSION_UNREACHABLE
+#ifdef _MSC_VER
+void DOUBLE_CONVERSION_NO_RETURN abort_noreturn();
+inline void abort_noreturn() { (Rf_error("Internal error in ICU: DOUBLE_CONVERSION_NO_RETURN")); }
+#define DOUBLE_CONVERSION_UNREACHABLE()   (abort_noreturn())
+#else
+#define DOUBLE_CONVERSION_UNREACHABLE()   (Rf_error("Internal error in ICU: DOUBLE_CONVERSION_UNREACHABLE"))
+#endif
+#endif
+#else /* !U_STRINGI_PATCHES */
+#ifndef DOUBLE_CONVERSION_UNIMPLEMENTED
+#define DOUBLE_CONVERSION_UNIMPLEMENTED() (abort())
 #endif
 #ifndef DOUBLE_CONVERSION_UNREACHABLE
 #ifdef _MSC_VER
@@ -65,6 +87,9 @@ inline void abort_noreturn() { abort(); }
 #define DOUBLE_CONVERSION_UNREACHABLE()   (abort())
 #endif
 #endif
+#endif /* U_STRINGI_PATCHES */
+
+
 
 // Not all compilers support __has_attribute and combining a check for both
 // ifdef and __has_attribute on the same preprocessor line isn't portable.

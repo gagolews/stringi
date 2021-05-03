@@ -20,7 +20,7 @@
 /* ------------------------------------------------------------------ */
 
 /* Modified version, for use from within ICU.
- *    Renamed public functions, to avoid an unwanted export of the 
+ *    Renamed public functions, to avoid an unwanted export of the
  *    standard names from the ICU library.
  *
  *    Use ICU's uprv_malloc() and uprv_free()
@@ -64,7 +64,11 @@
   /* that the structure will be immediately followed by extra space,  */
   /* as required.  DECNUMDIGITS is always >0.                         */
   #if !defined(DECNUMDIGITS)
+#ifdef U_STRINGI_PATCHES
+    #define DECNUMDIGITS 4
+#else /* !U_STRINGI_PATCHES */
     #define DECNUMDIGITS 1
+#endif /* U_STRINGI_PATCHES */
   #endif
 
   /* The size (integer data type) of each unit is determined by the   */

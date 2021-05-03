@@ -525,7 +525,7 @@ static int32_t getShortestSubtagLength(const char *localeID) {
 U_CAPI const char * U_EXPORT2
 locale_getKeywordsStart(const char *localeID) {
     const char *result = NULL;
-    if((result = uprv_strchr(localeID, '@')) != NULL) {
+    if ((result = (uprv_strchr(localeID, '@'))) != NULL) {
         return result;
     }
 #if (U_CHARSET_FAMILY == U_EBCDIC_FAMILY)
@@ -536,7 +536,7 @@ locale_getKeywordsStart(const char *localeID) {
         static const uint8_t ebcdicSigns[] = { 0x7C, 0x44, 0x66, 0x80, 0xAC, 0xAE, 0xAF, 0xB5, 0xEC, 0xEF, 0x00 };
         const uint8_t *charToFind = ebcdicSigns;
         while(*charToFind) {
-            if((result = uprv_strchr(localeID, *charToFind)) != NULL) {
+            if ((result = (uprv_strchr(localeID, *charToFind))) != NULL) {
                 return result;
             }
             charToFind++;

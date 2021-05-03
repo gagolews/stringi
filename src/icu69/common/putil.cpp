@@ -126,6 +126,12 @@
 #   include <sys/neutrino.h>
 #endif
 
+#ifdef U_STRINGI_PATCHES
+#ifdef USE_WINDOWS_LOCALE_API
+#include <windows.h>
+#include <winnls.h>
+#endif
+#endif /* U_STRINGI_PATCHES */
 
 /*
  * Only include langinfo.h if we have a way to get the codeset. If we later
@@ -2081,9 +2087,14 @@ getCodepageFromPOSIXID(const char *localeName, char * buffer, int32_t buffCapaci
 
     if (localeName != NULL && (name = (uprv_strchr(localeName, '.'))) != NULL) {
         size_t localeCapacity = uprv_min(sizeof(localeBuf), (name-localeName)+1);
+#ifdef U_STRINGI_PATCHES
+        uprv_strncpy(localeBuf, localeName, localeCapacity-1);
+        name = uprv_strncpy(buffer, name+1, buffCapacity-1);
+#else /* !U_STRINGI_PATCHES */
         uprv_strncpy(localeBuf, localeName, localeCapacity);
-        localeBuf[localeCapacity-1] = 0; /* ensure NULL termination */
         name = uprv_strncpy(buffer, name+1, buffCapacity);
+#endif /* U_STRINGI_PATCHES */
+        localeBuf[localeCapacity-1] = 0; /* ensure NULL termination */
         buffer[buffCapacity-1] = 0; /* ensure NULL termination */
         if ((variant = const_cast<char *>(uprv_strchr(name, '@'))) != NULL) {
             *variant = 0;

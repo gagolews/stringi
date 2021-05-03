@@ -152,6 +152,9 @@ Field AffixUtils::getFieldForType(AffixPatternType type) {
             return {UFIELD_CATEGORY_NUMBER, UNUM_CURRENCY_FIELD};
         default:
             UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+            return {UFIELD_CATEGORY_NUMBER, UNUM_CURRENCY_FIELD};
+#endif
     }
 }
 
@@ -415,6 +418,9 @@ AffixTag AffixUtils::nextToken(AffixTag tag, const UnicodeString &patternString,
             return makeTag(offset, TYPE_CURRENCY_OVERFLOW, STATE_BASE, 0);
         default:
             UPRV_UNREACHABLE;
+#ifdef U_STRINGI_PATCHES
+            return {-1};
+#endif
     }
 }
 

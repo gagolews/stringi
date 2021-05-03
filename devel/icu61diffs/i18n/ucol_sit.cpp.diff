@@ -1,0 +1,50 @@
+--- /tmp/stringi-d268f16043fb6de40901e2eab31b39f1ecdcd3f3/src/icu61/i18n/ucol_sit.cpp	2018-04-21 00:45:30.000000000 +1000
++++ /home/gagolews/R/stringi/src/icu61/i18n/ucol_sit.cpp	2019-02-15 20:26:07.352449432 +1100
+@@ -392,35 +392,35 @@
+     // locale
+     if(s->locale[0] == 0) {
+         // first the language
+-        uprv_strcat(s->locale, s->locElements[UCOL_SIT_LANGUAGE]);
++        uprv_strncat(s->locale, s->locElements[UCOL_SIT_LANGUAGE], loc3066Capacity-1);
+         // then the script, if present
+         if(*(s->locElements[UCOL_SIT_SCRIPT])) {
+-            uprv_strcat(s->locale, "_");
+-            uprv_strcat(s->locale, s->locElements[UCOL_SIT_SCRIPT]);
++            uprv_strncat(s->locale, "_", loc3066Capacity-1);
++            uprv_strncat(s->locale, s->locElements[UCOL_SIT_SCRIPT], loc3066Capacity-1);
+         }
+         // then the region, if present
+         if(*(s->locElements[UCOL_SIT_REGION])) {
+-            uprv_strcat(s->locale, "_");
+-            uprv_strcat(s->locale, s->locElements[UCOL_SIT_REGION]);
++            uprv_strncat(s->locale, "_", loc3066Capacity-1);
++            uprv_strncat(s->locale, s->locElements[UCOL_SIT_REGION], loc3066Capacity-1);
+         } else if(*(s->locElements[UCOL_SIT_VARIANT])) { // if there is a variant, we need an underscore
+-            uprv_strcat(s->locale, "_");
++            uprv_strncat(s->locale, "_", loc3066Capacity-1);
+         }
+         // add variant, if there
+         if(*(s->locElements[UCOL_SIT_VARIANT])) {
+-            uprv_strcat(s->locale, "_");
+-            uprv_strcat(s->locale, s->locElements[UCOL_SIT_VARIANT]);
++            uprv_strncat(s->locale, "_", loc3066Capacity-1);
++            uprv_strncat(s->locale, s->locElements[UCOL_SIT_VARIANT], loc3066Capacity-1);
+         }
+ 
+         // if there is a collation keyword, add that too
+         if(*(s->locElements[UCOL_SIT_KEYWORD])) {
+-            uprv_strcat(s->locale, collationKeyword);
+-            uprv_strcat(s->locale, s->locElements[UCOL_SIT_KEYWORD]);
++            uprv_strncat(s->locale, collationKeyword, loc3066Capacity-1);
++            uprv_strncat(s->locale, s->locElements[UCOL_SIT_KEYWORD], loc3066Capacity-1);
+         }
+ 
+         // if there is a provider keyword, add that too
+         if(*(s->locElements[UCOL_SIT_PROVIDER])) {
+-            uprv_strcat(s->locale, providerKeyword);
+-            uprv_strcat(s->locale, s->locElements[UCOL_SIT_PROVIDER]);
++            uprv_strncat(s->locale, providerKeyword, loc3066Capacity-1);
++            uprv_strncat(s->locale, s->locElements[UCOL_SIT_PROVIDER], loc3066Capacity-1);
+         }
+     }
+ }
