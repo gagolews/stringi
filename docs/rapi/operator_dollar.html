@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>operator_dollar: C-Style Formatting with sprintf as a Binary Operator &mdash; stringi 1.5.4 documentation</title>
+  <title>operator_dollar: C-Style Formatting with sprintf as a Binary Operator &mdash; stringi 1.6.1 documentation</title>
   
 
   
@@ -20,10 +20,9 @@
 
   
   
-    <link rel="canonical" href="https://stringi.gagolewski.com/rapi/operator_dollar.html"/>
-  
 
   
+    <link rel="canonical" href="https://stringi.gagolewski.com/rapi/operator_dollar.html" />
 
   
   <!--[if lt IE 9]>
@@ -66,7 +65,7 @@
             
             
               <div class="version">
-                1.5.4
+                1.6.1
               </div>
             
           
@@ -313,23 +312,24 @@
 <h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline">¶</a></h2>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
+<col style="width: 9%" />
+<col style="width: 91%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">e1</span></code></p></td>
-<td><p>a single format string, see <code class="docutils literal notranslate"><span class="pre">sprintf</span></code> for syntax</p></td>
+<td><p>format strings, see <code class="docutils literal notranslate"><span class="pre">sprintf</span></code> for syntax</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">e2</span></code></p></td>
-<td><p>a list of arguments to be passed to <code class="docutils literal notranslate"><span class="pre">sprintf</span></code> or a single atomic vector</p></td>
+<td><p>a list of atomic vectors to be passed to <code class="docutils literal notranslate"><span class="pre">sprintf</span></code> or a single atomic vector</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
-<p>Vectorized over <code class="docutils literal notranslate"><span class="pre">e2</span></code>.</p>
+<p>Vectorized over <code class="docutils literal notranslate"><span class="pre">e1</span></code> and <code class="docutils literal notranslate"><span class="pre">e2</span></code>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">e1</span> <span class="pre">%s$%</span> <span class="pre">atomic_vector</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">e1</span> <span class="pre">%s$%</span> <span class="pre">list(atomic_vector)</span></code>.</p>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">sprintf</span></code> takes field width in bytes, not Unicode code points. See Examples for a workaround.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
@@ -343,6 +343,10 @@
 <span class="s">&quot;%s=&#39;%d&#39;&quot;</span> <span class="o">%s$%</span> <span class="nf">list</span><span class="p">(</span><span class="s">&quot;value&quot;</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)</span>
 <span class="s">&quot;%s=&#39;%d&#39;&quot;</span> <span class="o">%s$%</span> <span class="nf">list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">),</span> <span class="m">1</span><span class="p">)</span>
 <span class="s">&quot;%s=&#39;%d&#39;&quot;</span> <span class="o">%s$%</span> <span class="nf">list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">),</span> <span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)</span>
+
+<span class="c1"># sprintf field width:</span>
+<span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%6s%6s%6s&quot;</span><span class="p">,</span> <span class="s">&quot;-&quot;</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;asc&quot;</span><span class="p">,</span> <span class="s">&quot;ąść&quot;</span><span class="p">,</span> <span class="s">&quot;abcdefg&quot;</span><span class="p">),</span> <span class="s">&quot;-&quot;</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
+<span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%6s%s%6s&quot;</span><span class="p">,</span> <span class="s">&quot;-&quot;</span><span class="p">,</span> <span class="n">stringi</span><span class="o">::</span><span class="nf">stri_pad</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;asc&quot;</span><span class="p">,</span> <span class="s">&quot;ąść&quot;</span><span class="p">,</span> <span class="s">&quot;abcdefg&quot;</span><span class="p">),</span> <span class="m">6</span><span class="p">),</span> <span class="s">&quot;-&quot;</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
