@@ -2,8 +2,8 @@ What Is New in *stringi*
 ========================
 
 -  … (to do - future releases) … #25 (locate-capture groups), #31
-   (sub_index), #96 (split-backwards), #266 (width-emojis), #405
-   (stri_sub match.length attrib)
+   (sub_index), #96 (split-backwards), #405 (stri_sub match.length
+   attrib)
 
 1.6.1 (2021-XX-YY) **devel**
 ----------------------------
@@ -30,6 +30,8 @@ What Is New in *stringi*
 -  [NEW FEATURE] #421: ``stri_rank()`` ranks strings in a character
    vector (e.g., for ordering data frames with regards to multiple
    criteria, the ranks can be passed to ``order()``, see #219).
+
+-  [NEW FEATURE] #266: ``stri_width()`` now supports emojis.
 
 -  [NEW FEATURE] ``%s$%`` and ``%stri$%`` are now vectorised with
    respect to both arguments.

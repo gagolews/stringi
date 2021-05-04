@@ -23,7 +23,7 @@ Arguments
 Details
 ~~~~~~~
 
-The Unicode standard does not formalize the notion of a character width. Roughly based on https://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c and the UAX #11 we proceed as follows. The following code points are of width 0:
+The Unicode standard does not formalize the notion of a character width. Roughly based on https://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c, https://github.com/nodejs/node/blob/master/src/node_i18n.cc, and UAX #11 we proceed as follows. The following code points are of width 0:
 
 -  code points with general category (see `stringi-search-charclass <about_search_charclass.html>`__) ``Me``, ``Mn``, and ``Cf``),
 
@@ -33,7 +33,11 @@ The Unicode standard does not formalize the notion of a character width. Roughly
 
 -  ZERO WIDTH SPACE (U+200B),
 
-Characters with the ``UCHAR_EAST_ASIAN_WIDTH`` enumerable property equal to ``U_EA_FULLWIDTH`` or ``U_EA_WIDE`` are of width 2. SOFT HYPHEN (U+00AD) (for compatibility with ``nchar``) as well as any other characters have width 1.
+Characters with the ``UCHAR_EAST_ASIAN_WIDTH`` enumerable property equal to ``U_EA_FULLWIDTH`` or ``U_EA_WIDE`` are of width 2.
+
+Most emojis and characters with general category So (other symbols) are of width 2.
+
+SOFT HYPHEN (U+00AD) (for compatibility with ``nchar``) as well as any other characters have width 1.
 
 Value
 ~~~~~
@@ -57,6 +61,7 @@ Examples
 
    stri_width(LETTERS[1:5])
    stri_width(stri_trans_nfkd('\u0105'))
+   stri_width(stri_trans_nfkd('\U0001F606'))
    stri_width( # Full-width equivalents of ASCII characters:
       stri_enc_fromutf32(as.list(c(0x3000, 0xFF01:0xFF5E)))
    )

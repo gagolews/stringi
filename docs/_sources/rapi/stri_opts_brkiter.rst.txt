@@ -30,7 +30,7 @@ Arguments
 ~~~~~~~~~
 
 +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``type``               | single string; either the break iterator type, one of ``character``, ``line_break``, ``sentence``, ``word``; or a custom set of ICU break iteration rules. see `stringi-search-boundaries <about_search_boundaries.html>`__ |
+| ``type``               | single string; either the break iterator type, one of ``character``, ``line_break``, ``sentence``, ``word``, or a custom set of ICU break iteration rules; see `stringi-search-boundaries <about_search_boundaries.html>`__ |
 +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``locale``             | single string, ``NULL`` or ``''`` for default locale                                                                                                                                                                        |
 +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
