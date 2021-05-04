@@ -90,8 +90,8 @@ Encoding(x1) <- "latin1"
 Encoding(x2) <- "latin1"
 expect_identical(stri_replace_all_regex(x1, x1, x2), "\u00E6")
 
-expect_identical(stri_replace_all_regex("X\uD852\uDF62X", c("\uD852\uDF62", "\uD852\uDF63", "X"), ""),
-    c("XX", "X\uD852\uDF62X", "\uD852\uDF62"))
+expect_identical(stri_replace_all_regex("X\U00024B62X", c("\U00024B62", "\U00024B63", "X"), ""),
+    c("XX", "X\U00024B62X", "\U00024B62"))
 
 expect_identical(stri_replace_all_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*", "\u0108"), c("\u0108\u0105\u0108\u0108\u0107\u0108",
     "\u0108\u0105\u0108\u0107\u0108"))  # match of zero length

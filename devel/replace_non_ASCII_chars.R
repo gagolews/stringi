@@ -18,7 +18,7 @@ for (f in srcfiles) {
         cat(sprintf('%s\n', f))
 
         cf2 <- stri_encode(cf, "UTF-8", "UTF-8")
-        cf2 <- stri_trans_general(cf2, "[^\\u0000-\\u007f] Any-Hex")
-#         cat(cf2, file=f)
+        cf2 <- stri_trans_general(cf2, "[^\\u0000-\\u007f] Any-Hex/C")
+#         cat(cf2, file=f)  # !!!!!!!!!!!!!!!
     }
 }
