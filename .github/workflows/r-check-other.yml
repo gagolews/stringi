@@ -70,9 +70,13 @@ jobs:
           sessioninfo::session_info(pkgs, include_base = TRUE)
         shell: Rscript {0}
 
-      - name: Install and Test
+      - name: Install
         run: |
           install.packages(".", repos=NULL, type="source")
+        shell: Rscript {0}
+
+      - name: Test
+        run: |
           source("devel/tinytest.R")
         shell: Rscript {0}
 

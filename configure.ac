@@ -196,7 +196,7 @@ with_extra_libs="${with_extra_libs} ${STRINGI_LIBS}"
 
 MSG_CONFIG_FAIL="
 *** *********************************************************************
-*** stringi cannot be built.
+*** stringi cannot be built with these settings in place.
 *** See the INSTALL file for the solutions to the most common problems.
 *** Moreover, explore the list of open and closed issues at
 *** https://github.com/gagolews/stringi/issues/
@@ -251,6 +251,7 @@ else
     echo "*** Support for R < 3.1 is deprecated."
     echo "*** Whatever follows, comes with no warranty."
     # TODO: exit 1 (Depends: R (>= 3.1))
+    # TODO: echo "${MSG_CONFIG_FAIL}"
     # TODO: in the distant future, support only R >= 3.4
 
     if test "x$enable_cxx11" = "xyes"; then
@@ -471,7 +472,7 @@ while true; do
 
         if test ! -f "${PKG_CONFIG}"; then
             echo "*** pkg-config cannot be found"
-            echo "${MSG_CONFIG_FAIL}"
+            #echo "${MSG_CONFIG_FAIL}"
             return 1 # go back immediately
         fi
 
@@ -480,8 +481,8 @@ while true; do
         if ! `"${PKG_CONFIG}" --exists icu-i18n icu-uc`; then
             # pkg config doesn't know about icu-i18n
             AC_MSG_RESULT(no)
-            echo "*** pkg-config cannot detect ICU4C-devel libraries installed"
-            echo "${MSG_CONFIG_FAIL}"
+            echo "*** pkg-config did not detect ICU4C-devel libraries installed"
+            #echo "${MSG_CONFIG_FAIL}"
             return 1 # nothing more to do
         fi
 
@@ -497,7 +498,7 @@ while true; do
             AC_MSG_RESULT(no)
             echo "*** ICU4C ${ICU_VERSION} has been detected"
             echo "*** Minimal requirements, i.e., ICU4C >= ${ICU_VERSION_NEEDED}, are not met"
-            echo "${MSG_CONFIG_FAIL}"
+            #echo "${MSG_CONFIG_FAIL}"
             return 1 # you may quit querying pkg-config here
         fi
         AC_MSG_RESULT(yes) # detected version of ICU4C is sufficient
@@ -547,7 +548,7 @@ while true; do
         ],[
             AC_MSG_RESULT([no])
             echo "*** This version of ICU4C cannot be used."
-            echo "${MSG_CONFIG_FAIL}"
+            #echo "${MSG_CONFIG_FAIL}"
             return 1
         ])
 
@@ -567,7 +568,7 @@ while true; do
         ],[
             AC_MSG_RESULT([no])
             echo "*** This version of ICU4C cannot be used."
-            echo "${MSG_CONFIG_FAIL}"
+            #echo "${MSG_CONFIG_FAIL}"
             return 1
         ])
 
@@ -690,7 +691,7 @@ while true; do
         ],[
             AC_MSG_RESULT([no])
             echo "*** The available ICU4C cannot be used."
-            echo "${MSG_CONFIG_FAIL}"
+            #echo "${MSG_CONFIG_FAIL}"
             return 1
         ])
 
@@ -875,11 +876,11 @@ while true; do
                     AC_MSG_RESULT([no])
                     echo "*** The ICU4C bundle cannot be built."
                     if test "x$enable_cxx11" = "xyes"; then
-                    disable_cxx11
-                    continue
+                        disable_cxx11
+                        continue
                     else
-                    echo "${MSG_CONFIG_FAIL}"
-                    exit 1
+                        echo "${MSG_CONFIG_FAIL}"
+                        exit 1
                     fi
                 ])
             ])
@@ -925,9 +926,12 @@ if test $ICU_FOUND = 0; then
         if (identical(FALSE,stri_download_icudt(\"${ICUDT_DIR}\",${ICU_BUNDLE_VERSION}))) \
             stop(\"Stopping on error\")"
     if test $? -ne 0; then
+        echo "*** *********************************************************************"
+        echo "*** stringi cannot be built."
         echo "*** Failed to download the ICU data library (icudt). Stopping now."
         echo "*** For build environments that have no internet access,"
         echo "*** see the INSTALL file for a workaround."
+        echo "*** *********************************************************************"
         exit 1
     fi
 fi
@@ -960,9 +964,11 @@ AC_SUBST(STRINGI_ICU_STUBDATA_SOURCES_C)
 
 if test $ICU_FOUND = 0; then
     if test $enable_icu_bundle = "no"; then
+        echo "*** *********************************************************************"
         echo "*** Failed to configure package build with forced system ICU usage"
         echo "*** Consider installing, e.g., libicu-devel (RHEL, Fedora) or libicu-dev (Debian, Ubuntu)"
         echo "*** together with pkg-config"
+        echo "${MSG_CONFIG_FAIL}"
         exit 1
     fi
 

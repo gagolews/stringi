@@ -8,7 +8,7 @@ set.seed(123)
 library("tinytest")
 library("stringi")
 library("methods")
-
+options(encoding="utf-8")  # e.g., on Windows
 cat(stri_info(short=TRUE), "\n")
 testWarnings <- TRUE
 
@@ -24,3 +24,4 @@ if (testWarnings) {
 }
 
 rm(testWarnings)
+cat(stri_info(short=TRUE), "\n")
