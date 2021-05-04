@@ -62,7 +62,7 @@ expect_identical(stri_detect_regex("***aafoo*** - ICU BUG TEST", "(?<=aa)foo"),
     TRUE)
 expect_identical(stri_detect_regex("***a\u0105foo*** - ICU BUG TEST", "(?<=a\u0105)foo"),
     TRUE)
-expect_identical(stri_detect_regex("***a\uD840\uDC00foo*** - ICU BUG TEST", "(?<=a\uD840\uDC00)foo"),
+expect_identical(stri_detect_regex("***a\U00020000foo*** - ICU BUG TEST", "(?<=a\U00020000)foo"),
     TRUE)
 
 

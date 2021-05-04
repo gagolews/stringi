@@ -48,5 +48,5 @@ expect_identical(stri_count_regex(c("lalal", "12l34l56", "\u0105\u00F3l\u0142"),
 expect_equivalent(stri_count_regex("aaaab", "ab"), 1L)
 expect_equivalent(stri_count_regex("bababababaab", "aab"), 1L)
 
-expect_identical(stri_count_regex("X\uD852\uDF62\uD852\uDF63\uD852\uDF64X", c("\uD852\uDF62", "\uD852\uDF63", "\uD852\uDF64",
+expect_identical(stri_count_regex("X\U00024B62\U00024B63\U00024B64X", c("\U00024B62", "\U00024B63", "\U00024B64",
     "X")), c(1L, 1L, 1L, 2L))

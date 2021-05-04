@@ -32,7 +32,7 @@ expect_equivalent(stri_locate_all_fixed("abbabbab", "ab"), list(matrix(c(1, 4,
 expect_equivalent(stri_locate_all_fixed("\u0105a", "\u0105a"), list(matrix(c(1, 2))))
 expect_equivalent(stri_locate_all_fixed(stri_trans_nfkd("\u0105a"), "\u0105a"), list(matrix(c(NA_integer_,
     NA_integer_))))
-expect_equivalent(stri_locate_all_fixed("\uD83C\uDCA0a", "a"), list(matrix(c(2, 2))))
+expect_equivalent(stri_locate_all_fixed("\U0001F0A0a", "a"), list(matrix(c(2, 2))))
 
 suppressWarnings(expect_equivalent(stri_locate_all_fixed("", ""), list(matrix(c(NA,
     NA_integer_)))))
@@ -119,7 +119,7 @@ expect_warning(expect_equivalent(stri_locate_first_fixed("\u0105a", "\u0105a", o
 expect_equivalent(stri_locate_first_fixed("\u0105a", "\u0105a"), matrix(c(1, 2)))
 expect_equivalent(stri_locate_first_fixed(stri_trans_nfkd("\u0105a"), "\u0105a"), matrix(c(NA_integer_,
     NA)))
-expect_equivalent(stri_locate_first_fixed("\uD83C\uDCA0a", "a"), matrix(c(2, 2)))
+expect_equivalent(stri_locate_first_fixed("\U0001F0A0a", "a"), matrix(c(2, 2)))
 
 # According to UnicodeData.txt, there are characters x for which numbytes(x) != numbytes(u_toupper(x))
 expect_equivalent(stri_locate_first_fixed("aIO", "a\u0131o", case_insensitive = TRUE),
@@ -252,7 +252,7 @@ expect_equivalent(stri_locate_last_fixed("1-1-2-33--2", "-32"), matrix(c(NA_inte
 expect_equivalent(stri_locate_last_fixed("\u0105a", "\u0105a"), matrix(c(1, 2)))
 expect_equivalent(stri_locate_last_fixed(stri_trans_nfkd("\u0105a"), "\u0105a"), matrix(c(NA_integer_,
     NA)))
-expect_equivalent(stri_locate_last_fixed("\uD83C\uDCA0a", "a"), matrix(c(2, 2)))
+expect_equivalent(stri_locate_last_fixed("\U0001F0A0a", "a"), matrix(c(2, 2)))
 
 expect_warning(expect_equivalent(stri_locate_last_fixed("", ""), matrix(c(NA,
     NA_integer_))))

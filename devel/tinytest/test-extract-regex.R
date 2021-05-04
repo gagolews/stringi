@@ -36,7 +36,7 @@ expect_identical(stri_extract_all_regex("aafoo - ICU BUG TEST, #147", "(?<=aa)fo
     list("foo"))
 expect_identical(stri_extract_all_regex("a\u0105foo - ICU BUG TEST, #147", "(?<=a\u0105)foo"),
     list("foo"))
-expect_identical(stri_extract_all_regex("a\uD840\uDC00foo - ICU BUG TEST, #147", "(?<=a\uD840\uDC00)foo"),
+expect_identical(stri_extract_all_regex("a\U00020000foo - ICU BUG TEST, #147", "(?<=a\U00020000)foo"),
     list("foo"))
 
 expect_identical(stri_extract_first_regex(character(0), "test"), character(0))
