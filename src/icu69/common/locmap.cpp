@@ -20,7 +20,7 @@
  *
  *  Date        Name        Description
  *  3/11/97     aliu        Fixed off-by-one bug in assignment operator. Added
- *                          setId() method and safety check against 
+ *                          setId() method and safety check against
  *                          MAX_ID_LENGTH.
  * 04/23/99     stephen     Added C wrapper for convertToPosix.
  * 09/18/00     george      Removed the memory leaks.
@@ -118,7 +118,7 @@ static const ILcidPosixElement locmap_ ## id [] =
 // Keep static locale variables inside the function so that
 // it can be created properly during static init.
 //
-// Note: This table should be updated periodically. Check the [MS-LCID] Windows Language Code Identifier 
+// Note: This table should be updated periodically. Check the [MS-LCID] Windows Language Code Identifier
 //       (LCID) Reference defined at https://msdn.microsoft.com/en-us/library/cc233965.aspx
 //
 //       Microsoft is moving away from LCID in favor of locale name as of Vista.  This table needs to be
@@ -132,7 +132,7 @@ static const ILcidPosixElement locmap_ ## id [] =
 ////////////////////////////////////////////
 */
 
-// TODO: For Windows ideally this table would be a list of exceptions rather than a complete list as 
+// TODO: For Windows ideally this table would be a list of exceptions rather than a complete list as
 // LocaleNameToLCID and LCIDToLocaleName provide 90% of these.
 
 ILCID_POSIX_ELEMENT_ARRAY(0x0436, af, af_ZA)
@@ -524,7 +524,7 @@ ILCID_POSIX_SUBTABLE(nl) {
 /* The "no" locale split into nb and nn.  By default in ICU, "no" is nb.*/
 // TODO: Not all of these are needed on Windows, but I don't know how ICU treats preferred ones here.
 ILCID_POSIX_SUBTABLE(no) {
-    {0x14,   "no"},     /* really nb_NO - actually Windows differentiates between neutral (no region) and specific (with region) */ 
+    {0x14,   "no"},     /* really nb_NO - actually Windows differentiates between neutral (no region) and specific (with region) */
     {0x7c14, "nb"},     /* really nb */
     {0x0414, "nb_NO"},  /* really nb_NO. Keep first in the 414 list. */
     {0x0414, "no_NO"},  /* really nb_NO */
@@ -1029,6 +1029,7 @@ getPosixID(const ILcidPosixMap *this_0, uint32_t hostID)
 //
 /////////////////////////////////////
 */
+#ifndef U_STRINGI_PATCHES
 #if U_PLATFORM_HAS_WIN32_API && UCONFIG_USE_WINDOWS_LCID_MAPPING_API
 /*
  * Various language tags needs to be changed:
@@ -1047,6 +1048,7 @@ getPosixID(const ILcidPosixMap *this_0, uint32_t hostID)
     }
 
 #endif
+#endif  // !U_STRINGI_PATCHES
 
 U_CAPI int32_t
 uprv_convertToPosix(uint32_t hostid, char *posixID, int32_t posixIDCapacity, UErrorCode* status)
@@ -1102,8 +1104,36 @@ uprv_convertToPosix(uint32_t hostid, char *posixID, int32_t posixIDCapacity, UEr
                     break;
                 }
             }
+
+#ifdef U_STRINGI_PATCHES
+// warning: 'char* strcat(char*, const char*)' accessing 4 or more bytes at offsets 0 and 3 may overlap 1 byte at offset 3 [-Wrestrict]
+            /*
+            * Various language tags needs to be changed:
+            * quz -> qu
+            * prs -> fa
+            */
+            if (tmpLen >= 3) {
+                if (locName[0] == 'q' && locName[1] == 'u' && locName[2] == 'z') {
+//                     locName[2] = 0;
+//                     uprv_strcat(locName, locName+3);
+                    for (i = 2; i < LOCALE_NAME_MAX_LENGTH-1; i++)
+                        locName[i] = locName[i+1];
+                    locName[LOCALE_NAME_MAX_LENGTH-1] = 0;
+                } else if (locName[0] == 'p' && locName[1] == 'r' && locName[2] == 's') {
+                    locName[0] = 'f'; locName[1] = 'a';
+//                     locName[2] = 0;
+//                     uprv_strcat(locName, locName+3);
+                    for (i = 2; i < LOCALE_NAME_MAX_LENGTH-1; i++)
+                        locName[i] = locName[i+1];
+                    locName[LOCALE_NAME_MAX_LENGTH-1] = 0;
+                }
+
+            }
+#else  // !U_STRINGI_PATCHES
             // TODO: Need to understand this better, why isn't it an alias?
             FIX_LANGUAGE_ID_TAG(locName, tmpLen);
+#endif
+
             pPosixID = locName;
         }
     }
@@ -1273,7 +1303,7 @@ uprv_convertToLCID(const char *langID, const char* posixID, UErrorCode* status)
 
         mid = (high+low) >> 1; /*Finds median*/
 
-        if (mid == oldmid) 
+        if (mid == oldmid)
             break;
 
         compVal = uprv_strcmp(langID, gPosixIDmap[mid].regionMaps->posixID);
