@@ -34,22 +34,22 @@ expect_identical(stri_dup(LETTERS[1:4], 1:2), c("A", "BB", "C", "DD"))
 expect_warning(stri_dup(LETTERS[1:3], 1:2))
 
 # UTF-8
-expect_identical(stri_dup("香", 1:2), c("香", "香香"))
+expect_identical(stri_dup("\u9999", 1:2), c("\u9999", "\u9999\u9999"))
 expect_identical(stri_dup("\0209999", 2), "\0209999\0209999")
 
-expect_identical(stri_dup(enc2native("ą"), 1:2), c("ą", "ąą"))
+expect_identical(stri_dup(enc2native("\u0105"), 1:2), c("\u0105", "\u0105\u0105"))
 
 
 # Other 8-bit encodings
 if (!stri_info()$ICU.UTF8) {
     suppressMessages(oldenc <- stri_enc_set("latin2"))
-    expect_identical(stri_dup("\xa1\xb1", 2), "ĄąĄą")
+    expect_identical(stri_dup("\xa1\xb1", 2), "\u0104\u0105\u0104\u0105")
     suppressMessages(stri_enc_set(oldenc))
 }
 
 if (!stri_info()$ICU.UTF8) {
     suppressMessages(oldenc <- stri_enc_set("cp1250"))
-    expect_identical(stri_dup("\xa5\xb9", 2), "ĄąĄą")
+    expect_identical(stri_dup("\xa5\xb9", 2), "\u0104\u0105\u0104\u0105")
     suppressMessages(stri_enc_set(oldenc))
     #expect_warning(stri_dup('\xa5\xb9', 2)) #only in utf-8
 }

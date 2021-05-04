@@ -137,11 +137,11 @@ expect_identical(stri_paste(NULL, c("a", "b"), sep = " ", ignore_null = TRUE),
 
 expect_identical(stri_join(NA_character_, LETTERS), rep(NA_character_, length(LETTERS)))
 expect_identical(stri_join(LETTERS, NA_character_), rep(NA_character_, length(LETTERS)))
-expect_identical(stri_join(c("ą", "Ą")), c("ą", "Ą"))
-expect_identical(stri_join(c("ą", "Ą"), collapse = ""), c("ąĄ"))
-expect_identical(stri_join(c("ą", "Ą"), collapse = "!!!!!"), c("ą!!!!!Ą"))
-expect_identical(stri_join(enc2native(c("ą", "Ą"))), c("ą", "Ą"))
-expect_identical(stri_join(enc2native(c("ą", "Ą"))), enc2native(c("ą", "Ą")))
+expect_identical(stri_join(c("\u0105", "\u0104")), c("\u0105", "\u0104"))
+expect_identical(stri_join(c("\u0105", "\u0104"), collapse = ""), c("\u0105\u0104"))
+expect_identical(stri_join(c("\u0105", "\u0104"), collapse = "!!!!!"), c("\u0105!!!!!\u0104"))
+expect_identical(stri_join(enc2native(c("\u0105", "\u0104"))), c("\u0105", "\u0104"))
+expect_identical(stri_join(enc2native(c("\u0105", "\u0104"))), enc2native(c("\u0105", "\u0104")))
 expect_identical(stri_join(LETTERS, letters, collapse = ""), paste(LETTERS, letters,
     sep = "", collapse = ""))
 expect_identical(stri_join(LETTERS, letters, collapse = "!"), paste(LETTERS,

@@ -90,7 +90,7 @@ expect_identical(stri_count_fixed(s, "co"), 1:3 * 6L)
 expect_identical(stri_count_fixed(s, "rem"), 1:3 * 2L)
 s <- c("abababab babab abab bbaba", "a")
 expect_identical(stri_count_fixed(s, "bab"), c(5L, 0L))
-expect_identical(stri_count_fixed(c("lalal", "12l34l56", "ąólł"), "l"), 3:1)
+expect_identical(stri_count_fixed(c("lalal", "12l34l56", "\u0105\u00F3l\u0142"), "l"), 3:1)
 
 expect_equivalent(stri_count_fixed(c("AaaaaaaA", "AAAA"), "a", case_insensitive = TRUE,
     overlap = TRUE), c(8, 4))

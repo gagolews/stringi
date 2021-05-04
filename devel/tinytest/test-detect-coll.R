@@ -16,10 +16,10 @@ expect_identical(stri_detect_coll(c("ab", "cab", "ccccab", "aaaabaaaa"), "ab"),
 expect_identical(stri_detect_coll(c("ala", "", "", "bbb"), c("ala", "bbb")),
     c(TRUE, FALSE, FALSE, TRUE))
 
-expect_identical(stri_detect_coll(c("Lorem\n123", " ", "kota", "4\tą"), c(" ",
-    "\tą")), c(F, F, F, T))
+expect_identical(stri_detect_coll(c("Lorem\n123", " ", "kota", "4\t\u0105"), c(" ",
+    "\t\u0105")), c(F, F, F, T))
 expect_warning(stri_detect_coll(rep("asd", 5), rep("a", 2)))
-expect_identical(stri_detect_coll("Ąą", stri_trans_nfkd("Ąą")), TRUE)
+expect_identical(stri_detect_coll("\u0104\u0105", stri_trans_nfkd("\u0104\u0105")), TRUE)
 expect_equivalent(stri_detect_coll("aaaab", "ab"), TRUE)
 expect_equivalent(stri_detect_coll("bababababaab", "aab"), TRUE)
 

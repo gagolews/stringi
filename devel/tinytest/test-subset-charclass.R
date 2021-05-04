@@ -23,13 +23,13 @@ expect_identical(stri_subset_charclass(c(NA, "", "ala", "bkb"), "[a]", omit_na =
 
 expect_identical(stri_subset_charclass(c("a", "ab", "abc", "1234"), "\\p{L}"),
     c("a", "ab", "abc"))
-expect_identical(stri_subset_charclass("aąbc", c("\\p{L}", "\\p{Ll}", "\\p{Lu}")),
-    rep("aąbc", 2))
-expect_identical(stri_subset_charclass("aąbc", c("\\p{l}", "\\p{ll}", "\\p{lu}")),
-    rep("aąbc", 2))
-expect_identical(stri_subset_charclass("aąbc", c("\\P{l}", "\\P{ll}", "\\P{lu}")),
-    "aąbc")
-expect_identical(stri_subset_charclass("aąbc", c("\\p{AlPh_a  bEtic}")), "aąbc")
+expect_identical(stri_subset_charclass("a\u0105bc", c("\\p{L}", "\\p{Ll}", "\\p{Lu}")),
+    rep("a\u0105bc", 2))
+expect_identical(stri_subset_charclass("a\u0105bc", c("\\p{l}", "\\p{ll}", "\\p{lu}")),
+    rep("a\u0105bc", 2))
+expect_identical(stri_subset_charclass("a\u0105bc", c("\\P{l}", "\\P{ll}", "\\P{lu}")),
+    "a\u0105bc")
+expect_identical(stri_subset_charclass("a\u0105bc", c("\\p{AlPh_a  bEtic}")), "a\u0105bc")
 expect_identical(stri_subset_charclass("", "\\p{L}"), character(0))
 
 expect_identical(stri_subset_charclass(NA, NA, omit_na = TRUE), character(0))

@@ -30,11 +30,11 @@ suppressWarnings(expect_identical(stri_detect_regex(LETTERS[1:2], LETTERS[1:5]),
 suppressWarnings(expect_identical(stri_detect_regex(LETTERS[1:4], LETTERS[1:5]),
     c(T, T, T, T, F)))
 
-expect_identical(stri_detect_regex(c("ąĆć", "ąć"), "Ć*"), c(TRUE, TRUE))  # match of zero length
-expect_identical(stri_detect_regex(c("ąĆć", "ąć"), "(?<=Ć)"), c(TRUE, FALSE))  # match of zero length:
+expect_identical(stri_detect_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*"), c(TRUE, TRUE))  # match of zero length
+expect_identical(stri_detect_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "(?<=\u0106)"), c(TRUE, FALSE))  # match of zero length:
 
 
-s <- c("Lorem", "123", " ", " ", "kota", "4\tą")
+s <- c("Lorem", "123", " ", " ", "kota", "4\t\u0105")
 p <- c("[[:alpha:]]+", "[[:blank:]]+")
 expect_identical(stri_detect_regex(s, p), c(T, F, F, T, T, T))
 expect_identical(stri_detect_regex("Lo123\trem", c("[[:alpha:]]", "[4-9]+")),
@@ -47,7 +47,7 @@ expect_identical(stri_detect_regex("aaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaa"), TRUE
 expect_identical(stri_detect_regex("aaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaa"), TRUE)
 expect_identical(stri_detect_regex("aaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaa"), TRUE)
 
-expect_equivalent(stri_detect_regex("ąąąąąąąb", "ą+b$"), TRUE)
+expect_equivalent(stri_detect_regex("\u0105\u0105\u0105\u0105\u0105\u0105\u0105b", "\u0105+b$"), TRUE)
 
 expect_equivalent(stri_detect_regex("aaaab", "ab"), TRUE)
 expect_equivalent(stri_detect_regex("bababababaab", "aab"), TRUE)
@@ -60,9 +60,9 @@ expect_equivalent(stri_detect_regex("caacbacacb", "(a+b)+"), FALSE)
 # ICU-bugs (#147)
 expect_identical(stri_detect_regex("***aafoo*** - ICU BUG TEST", "(?<=aa)foo"),
     TRUE)
-expect_identical(stri_detect_regex("***aąfoo*** - ICU BUG TEST", "(?<=aą)foo"),
+expect_identical(stri_detect_regex("***a\u0105foo*** - ICU BUG TEST", "(?<=a\u0105)foo"),
     TRUE)
-expect_identical(stri_detect_regex("***a𠀀foo*** - ICU BUG TEST", "(?<=a𠀀)foo"),
+expect_identical(stri_detect_regex("***a\uD840\uDC00foo*** - ICU BUG TEST", "(?<=a\uD840\uDC00)foo"),
     TRUE)
 
 

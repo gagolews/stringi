@@ -34,21 +34,21 @@ expect_identical(stri_split_boundaries("", opts_brkiter = stri_opts_brkiter(type
     list(character(0)))
 expect_identical(stri_split_boundaries("    \t\n   ", opts_brkiter = stri_opts_brkiter(type = "word",
     skip_word_none = TRUE)), list(character(0)))
-expect_identical(stri_split_boundaries("ąąą", opts_brkiter = stri_opts_brkiter(type = "word")),
-    list("ąąą"))
+expect_identical(stri_split_boundaries("\u0105\u0105\u0105", opts_brkiter = stri_opts_brkiter(type = "word")),
+    list("\u0105\u0105\u0105"))
 expect_identical(stri_split_boundaries("aaa", opts_brkiter = stri_opts_brkiter(type = "line")),
     list("aaa"))
 expect_identical(stri_split_boundaries("aaa", opts_brkiter = stri_opts_brkiter(type = "sentence")),
     list("aaa"))
-expect_identical(stri_split_boundaries(stri_trans_nfkd("aą"), type = "chara")[[1]],
-    stri_trans_nfkd(c("a", "ą")))
+expect_identical(stri_split_boundaries(stri_trans_nfkd("a\u0105"), type = "chara")[[1]],
+    stri_trans_nfkd(c("a", "\u0105")))
 
 
 expect_identical(stri_split_boundaries("   aaa bbb ccc ddd   ", opts_brkiter = stri_opts_brkiter(type = "word",
     skip_word_none = TRUE)), list(c("aaa", "bbb", "ccc", "ddd")))
 
-expect_identical(stri_split_boundaries("   ąąą ĆĆĆ ć ĈĈĈĈ   ", opts_brkiter = stri_opts_brkiter(type = "word",
-    skip_word_none = TRUE)), list(c("ąąą", "ĆĆĆ", "ć", "ĈĈĈĈ")))
+expect_identical(stri_split_boundaries("   \u0105\u0105\u0105 \u0106\u0106\u0106 \u0107 \u0108\u0108\u0108\u0108   ", opts_brkiter = stri_opts_brkiter(type = "word",
+    skip_word_none = TRUE)), list(c("\u0105\u0105\u0105", "\u0106\u0106\u0106", "\u0107", "\u0108\u0108\u0108\u0108")))
 
 expect_identical(stri_split_boundaries("   aaa bbb ccc ddd   ", n = 3, opts_brkiter = stri_opts_brkiter(type = "word",
     skip_word_none = TRUE)), list(c("aaa", "bbb", "ccc ddd   ")))

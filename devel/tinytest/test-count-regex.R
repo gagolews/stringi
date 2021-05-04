@@ -16,8 +16,8 @@ expect_identical(stri_count_regex(c("", " ", "     "), "^.*$"), c(1L, 1L, 1L))
 expect_identical(stri_count_regex(c("", " ", "     "), "^.+$"), c(0L, 1L, 1L))
 expect_identical(stri_count_regex(c("", " ", "     "), ".*"), c(1L, 2L, 2L))  # ???????? Java has this too :/
 
-expect_identical(stri_count_regex(c("ąĆć", "ąć"), "Ć*"), c(4L, 3L))  # match of zero length
-expect_identical(stri_count_regex(c("ąĆć", "ąć"), "(?<=Ć)"), c(1L, 0L))  # match of zero length:
+expect_identical(stri_count_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*"), c(4L, 3L))  # match of zero length
+expect_identical(stri_count_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "(?<=\u0106)"), c(1L, 0L))  # match of zero length:
 
 s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin
 nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel
@@ -44,9 +44,9 @@ expect_identical(stri_count_regex(s, " [[a-z]]*\\. Phasellus (ph|or|co)"), 1:3 *
     3L)
 s <- c("abababab babab abab bbaba", "a")
 expect_identical(stri_count_regex(s, "bab"), c(5L, 0L))
-expect_identical(stri_count_regex(c("lalal", "12l34l56", "ąólł"), "l"), 3:1)
+expect_identical(stri_count_regex(c("lalal", "12l34l56", "\u0105\u00F3l\u0142"), "l"), 3:1)
 expect_equivalent(stri_count_regex("aaaab", "ab"), 1L)
 expect_equivalent(stri_count_regex("bababababaab", "aab"), 1L)
 
-expect_identical(stri_count_regex("X𤭢𤭣𤭤X", c("𤭢", "𤭣", "𤭤",
+expect_identical(stri_count_regex("X\uD852\uDF62\uD852\uDF63\uD852\uDF64X", c("\uD852\uDF62", "\uD852\uDF63", "\uD852\uDF64",
     "X")), c(1L, 1L, 1L, 2L))

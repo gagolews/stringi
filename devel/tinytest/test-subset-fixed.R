@@ -21,10 +21,10 @@ expect_identical(stri_subset_fixed(character(0), "ipsum 1234"), character(0))
 expect_identical(stri_subset_fixed(character(0), character(0)), character(0))
 expect_identical(stri_subset_fixed(c("ab", "cab", "ccccab", "aaaabaaaa"), "ab"),
     c("ab", "cab", "ccccab", "aaaabaaaa"))
-expect_identical(stri_subset_fixed(c("Lorem\n123", " ", "kota", "4\tą"), c(" ",
-    "\tą")), "4\tą")
+expect_identical(stri_subset_fixed(c("Lorem\n123", " ", "kota", "4\t\u0105"), c(" ",
+    "\t\u0105")), "4\t\u0105")
 expect_warning(stri_subset_fixed(rep("asd", 5), rep("a", 2)))
-expect_identical(stri_subset_fixed("Ąą", stri_trans_nfkd("Ąą")), character(0))
+expect_identical(stri_subset_fixed("\u0104\u0105", stri_trans_nfkd("\u0104\u0105")), character(0))
 expect_equivalent(stri_subset_fixed("aaaab", "ab"), "aaaab")
 expect_equivalent(stri_subset_fixed("bababababaab", "aab"), "bababababaab")
 expect_equivalent(stri_subset_fixed(c("a", "b", "aa", "bb"), c("a", "b")), c("a",

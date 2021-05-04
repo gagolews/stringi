@@ -25,7 +25,7 @@ expect_equivalent(stri_unescape_unicode(letters), letters)
 
 expect_warning(stri_unescape_unicode("\\Uffffffff"))
 
-s <- c("abcą􀀀", "abc'\a\n\\n")
+s <- c("abc\u0105\uDBC0\uDC00", "abc'\a\n\\n")
 expect_equivalent(stri_unescape_unicode(stri_escape_unicode(s)), s)
 
 expect_warning(stri_unescape_unicode("\\ugisdo"))

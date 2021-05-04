@@ -24,13 +24,13 @@ expect_error(stri_extract_all_charclass("", "\\P{WHITE_SPACE}", NA)[[1]])
 
 expect_equivalent(stri_extract_all_charclass(NA, "\\P{WHITE_SPACE}")[[1]], NA_character_)
 
-expect_equivalent(stri_extract_all_charclass(c("abc", "aąb", "a1B2c3", "1ą2b3C",
-    "123"), "\\p{L}", merge = TRUE), list("abc", "aąb", c("a", "B", "c"), c("ą",
+expect_equivalent(stri_extract_all_charclass(c("abc", "a\u0105b", "a1B2c3", "1\u01052b3C",
+    "123"), "\\p{L}", merge = TRUE), list("abc", "a\u0105b", c("a", "B", "c"), c("\u0105",
     "b", "C"), NA_character_))
 
-expect_equivalent(stri_extract_all_charclass(c("abc", "aąb", "a1B2c3", "1ą2b3C",
-    "123"), "\\p{L}", merge = FALSE), list(c("a", "b", "c"), c("a", "ą", "b"),
-    c("a", "B", "c"), c("ą", "b", "C"), NA_character_))
+expect_equivalent(stri_extract_all_charclass(c("abc", "a\u0105b", "a1B2c3", "1\u01052b3C",
+    "123"), "\\p{L}", merge = FALSE), list(c("a", "b", "c"), c("a", "\u0105", "b"),
+    c("a", "B", "c"), c("\u0105", "b", "C"), NA_character_))
 
 
 expect_identical(stri_extract(c("ab_c", "d_ef_g", "h", ""), mode = "all", charclass = "\\p{L}",
@@ -49,8 +49,8 @@ expect_equivalent(stri_extract_first_charclass(NA, ("\\P{WHITE_SPACE}")), NA_cha
 expect_equivalent(stri_extract_first_charclass("abc", c("\\p{L}", "\\p{Z}", "\\p{P}")),
     c("a", NA_character_, NA_character_))
 
-expect_equivalent(stri_extract_first_charclass(c("abc", "ą5Ą", "a1B2c3", "123"),
-    "\\p{L}"), c("a", "ą", "a", NA_character_))
+expect_equivalent(stri_extract_first_charclass(c("abc", "\u01055\u0104", "a1B2c3", "123"),
+    "\\p{L}"), c("a", "\u0105", "a", NA_character_))
 
 expect_equivalent(stri_extract_first_charclass("    zxx\n\t \v   \n", c("\\p{WHITE_SPACE}",
     "\\P{WHITE_SPACE}")), c(" ", "z"))
@@ -65,8 +65,8 @@ expect_equivalent(stri_extract_last_charclass(NA, ("\\P{WHITE_SPACE}")), NA_char
 expect_equivalent(stri_extract_last_charclass("abc", c("\\p{L}", "\\p{Z}", "\\p{P}")),
     c("c", NA_character_, NA_character_))
 
-expect_equivalent(stri_extract_last_charclass(c("abc", "5ą", "a1B2c3", "123"),
-    "\\p{L}"), c("c", "ą", "c", NA_character_))
+expect_equivalent(stri_extract_last_charclass(c("abc", "5\u0105", "a1B2c3", "123"),
+    "\\p{L}"), c("c", "\u0105", "c", NA_character_))
 
 expect_equivalent(stri_extract_last_charclass("    yzx\n\t \v   \n", c("\\p{WHITE_SPACE}",
     "\\P{WHITE_SPACE}")), c("\n", "x"))

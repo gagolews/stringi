@@ -70,17 +70,17 @@ expect_identical(stri_replace_all_regex(c("a", "b", "c", "d"), c("[ac]", "[bd]")
 
 if (!stri_info()$ICU.UTF8) {
     suppressMessages(origenc <- stri_enc_set("latin2"))
-    expect_identical(stri_replace_all_regex(iconv("ąść", "UTF-8", "latin2"),
-        iconv("ąść", "UTF-8", "latin2"), iconv("ęłź", "UTF-8", "latin2")),
-        "ęłź")  # output is always UTF-8
+    expect_identical(stri_replace_all_regex(iconv("\u0105\u015B\u0107", "UTF-8", "latin2"),
+        iconv("\u0105\u015B\u0107", "UTF-8", "latin2"), iconv("\u0119\u0142\u017A", "UTF-8", "latin2")),
+        "\u0119\u0142\u017A")  # output is always UTF-8
     suppressMessages(stri_enc_set(origenc))
 }
 
 if (!stri_info()$ICU.UTF8) {
     suppressMessages(origenc <- stri_enc_set("cp1250"))
-    expect_identical(stri_replace_all_regex(iconv("ąść", "UTF-8", "cp1250"),
-        iconv("ąść", "UTF-8", "cp1250"), iconv("ęłź", "UTF-8", "cp1250")),
-        "ęłź")  # output is always UTF-8
+    expect_identical(stri_replace_all_regex(iconv("\u0105\u015B\u0107", "UTF-8", "cp1250"),
+        iconv("\u0105\u015B\u0107", "UTF-8", "cp1250"), iconv("\u0119\u0142\u017A", "UTF-8", "cp1250")),
+        "\u0119\u0142\u017A")  # output is always UTF-8
     suppressMessages(stri_enc_set(origenc))
 }
 
@@ -88,15 +88,15 @@ x1 <- rawToChar(as.raw(198))
 x2 <- rawToChar(as.raw(230))
 Encoding(x1) <- "latin1"
 Encoding(x2) <- "latin1"
-expect_identical(stri_replace_all_regex(x1, x1, x2), "æ")
+expect_identical(stri_replace_all_regex(x1, x1, x2), "\u00E6")
 
-expect_identical(stri_replace_all_regex("X𤭢X", c("𤭢", "𤭣", "X"), ""),
-    c("XX", "X𤭢X", "𤭢"))
+expect_identical(stri_replace_all_regex("X\uD852\uDF62X", c("\uD852\uDF62", "\uD852\uDF63", "X"), ""),
+    c("XX", "X\uD852\uDF62X", "\uD852\uDF62"))
 
-expect_identical(stri_replace_all_regex(c("ąĆć", "ąć"), "Ć*", "Ĉ"), c("ĈąĈĈćĈ",
-    "ĈąĈćĈ"))  # match of zero length
-expect_identical(stri_replace_all_regex(c("ąĆć", "ąć"), "(?<=Ć)", "Ĉ"),
-    c("ąĆĈć", "ąć"))  # match of zero length:
+expect_identical(stri_replace_all_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*", "\u0108"), c("\u0108\u0105\u0108\u0108\u0107\u0108",
+    "\u0108\u0105\u0108\u0107\u0108"))  # match of zero length
+expect_identical(stri_replace_all_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "(?<=\u0106)", "\u0108"),
+    c("\u0105\u0106\u0108\u0107", "\u0105\u0107"))  # match of zero length:
 
 
 expect_identical(stri_replace_first_regex("abc!def!ghi", "(\\p{L})\\p{L}{2}",
@@ -118,10 +118,10 @@ expect_identical(stri_replace_first_regex(NA, NA, NA), NA_character_)
 
 
 
-expect_identical(stri_replace_first_regex(c("ąĆć", "ąć"), "Ć*", "Ĉ"),
-    c("ĈąĆć", "Ĉąć"))  # match of zero length
-expect_identical(stri_replace_first_regex(c("ąĆć", "ąć"), "(?<=Ć)", "Ĉ"),
-    c("ąĆĈć", "ąć"))  # match of zero length:
+expect_identical(stri_replace_first_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*", "\u0108"),
+    c("\u0108\u0105\u0106\u0107", "\u0108\u0105\u0107"))  # match of zero length
+expect_identical(stri_replace_first_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "(?<=\u0106)", "\u0108"),
+    c("\u0105\u0106\u0108\u0107", "\u0105\u0107"))  # match of zero length:
 expect_identical(stri_replace_first_regex("", "^.*$", "hey!"), "hey!")
 expect_identical(stri_replace_first_regex("  ", "^.*$", "hey!"), "hey!")
 
@@ -145,10 +145,10 @@ expect_identical(stri_replace_last_regex(NA, "A", NA), NA_character_)
 expect_identical(stri_replace_last_regex("A", NA, NA), NA_character_)
 expect_identical(stri_replace_last_regex(NA, NA, NA), NA_character_)
 
-expect_identical(stri_replace_last_regex(c("ąĆć", "ąć"), "Ć*", "Ĉ"), c("ąĆćĈ",
-    "ąćĈ"))  # match of zero length
-expect_identical(stri_replace_last_regex(c("ąĆć", "ąć"), "(?<=Ć)", "Ĉ"),
-    c("ąĆĈć", "ąć"))  # match of zero length:
+expect_identical(stri_replace_last_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*", "\u0108"), c("\u0105\u0106\u0107\u0108",
+    "\u0105\u0107\u0108"))  # match of zero length
+expect_identical(stri_replace_last_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "(?<=\u0106)", "\u0108"),
+    c("\u0105\u0106\u0108\u0107", "\u0105\u0107"))  # match of zero length:
 
 expect_identical(stri_replace_last_regex("", "^.*$", "hey!"), "hey!")
 expect_identical(stri_replace_last_regex("  ", "^.*$", "hey!"), "hey!")

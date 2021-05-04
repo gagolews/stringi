@@ -44,7 +44,7 @@ expect_equivalent(stri_startswith_charclass("a", "[b]", c(-1000, 0, 2)), c(FALSE
 
 expect_equivalent(stri_startswith_charclass("bababababaab", "[b]", from = c(1,
     2, 3)), c(T, F, T))
-expect_equivalent(stri_startswith_charclass("ąĄąĄą", "[\\u0105]", from = c(1,
+expect_equivalent(stri_startswith_charclass("\u0105\u0104\u0105\u0104\u0105", "[\\u0105]", from = c(1,
     2, 3, 100, -3)), c(T, F, T, F, T))
 expect_equivalent(stri_startswith_charclass("a", "\\p{Wspace}", c(-1, 1, -2,
     2, 0)), c(F, F, F, F, F))
@@ -67,7 +67,7 @@ expect_identical(stri_endswith_charclass(c("aba", "cab", "ccccab", "abaabaaaa"),
 
 expect_equivalent(stri_endswith_charclass("aaaabababbab", "[b]", to = c(-1, -2,
     -3)), c(T, F, T))
-expect_equivalent(stri_endswith_charclass("ąĄąĄą", "[\\u0105]", to = c(-1,
+expect_equivalent(stri_endswith_charclass("\u0105\u0104\u0105\u0104\u0105", "[\\u0105]", to = c(-1,
     -2, -3, -100, 3, 1)), c(T, F, T, F, T, T))
 expect_equivalent(stri_endswith_charclass("a", "\\p{Wspace}", c(-1, 1, -2, 2,
     0)), c(F, F, F, F, F))

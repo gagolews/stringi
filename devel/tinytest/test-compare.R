@@ -10,10 +10,10 @@ expect_identical("a" %stri===% c("a", "b"), c(TRUE, FALSE))
 expect_identical("a" %stri!=% c("b", "a"), c(TRUE, FALSE))
 expect_identical("a" %stri!==% c("b", "a"), c(TRUE, FALSE))
 
-expect_identical("ą" %stri==% stri_trans_nfkd("ą"), TRUE)
-expect_identical("ą" %stri===% stri_trans_nfkd("ą"), FALSE)
-expect_identical("ą" %stri!=% stri_trans_nfkd("ą"), FALSE)
-expect_identical("ą" %stri!==% stri_trans_nfkd("ą"), TRUE)
+expect_identical("\u0105" %stri==% stri_trans_nfkd("\u0105"), TRUE)
+expect_identical("\u0105" %stri===% stri_trans_nfkd("\u0105"), FALSE)
+expect_identical("\u0105" %stri!=% stri_trans_nfkd("\u0105"), FALSE)
+expect_identical("\u0105" %stri!==% stri_trans_nfkd("\u0105"), TRUE)
 
 expect_identical("b" %stri<% c("a", "b", "c"), c(FALSE, FALSE, TRUE))
 expect_identical("b" %stri<=% c("a", "b", "c"), c(FALSE, TRUE, TRUE))
@@ -32,11 +32,11 @@ expect_equivalent(stri_cmp(letters, LETTERS, locale="en"), rep(-1L, length(LETTE
 expect_equivalent(stri_cmp(LETTERS, letters, locale="en"), rep(+1L, length(LETTERS)))
 expect_equivalent(stri_cmp(c(NA, "a", "b"), "a"), c(NA_integer_, 0L, 1L))
 
-expect_false(stri_cmp("å̧", "å̧") == 0)
-expect_true(stri_cmp("å̧", "å̧", normalisation = TRUE) == 0)
-expect_true(stri_cmp("å̧", "å̧", normalization = TRUE) == 0)
+expect_false(stri_cmp("\u00E5\u0327", "a\u0327\u030A") == 0)
+expect_true(stri_cmp("\u00E5\u0327", "a\u0327\u030A", normalisation = TRUE) == 0)
+expect_true(stri_cmp("\u00E5\u0327", "a\u0327\u030A", normalization = TRUE) == 0)
 
-#expect_warning(stri_cmp('å\u0327', 'a\u0327\u030A', nrmaliztion=FALSE)) # DEPRECATED!
+#expect_warning(stri_cmp('\u00E5\u0327', 'a\u0327\u030A', nrmaliztion=FALSE)) # DEPRECATED!
 
 
 expect_equivalent(stri_cmp("hladny", "chladny", locale = "pl_PL"), 1L)
@@ -53,7 +53,7 @@ expect_equivalent(stri_cmp("above mentioned", "above-mentioned"), -1)
 expect_equivalent(stri_cmp("above mentioned", "above-mentioned", alternate_shifted = TRUE, locale="en"),
     0)
 
-expect_equivalent(stri_cmp(stri_trans_nfkd("ą"), "ą"), 0L)
+expect_equivalent(stri_cmp(stri_trans_nfkd("\u0105"), "\u0105"), 0L)
 
 expect_error(stri_cmp("above mentioned", "above-mentioned", opts_collator = stri_opts_collator(alternate_shifted = NA)))
 expect_error(stri_cmp("above mentioned", "above-mentioned", opts_collator = stri_opts_collator(strength = NA)))
@@ -105,7 +105,7 @@ expect_equivalent(stri_cmp_equiv("above mentioned", "above-mentioned"), FALSE)
 expect_equivalent(stri_cmp_equiv("above mentioned", "above-mentioned", alternate_shifted = TRUE, locale="en"),
     TRUE)
 
-expect_equivalent(stri_cmp_equiv(stri_trans_nfkd("ą"), "ą"), TRUE)
+expect_equivalent(stri_cmp_equiv(stri_trans_nfkd("\u0105"), "\u0105"), TRUE)
 
 
 
@@ -125,4 +125,4 @@ expect_equivalent(stri_cmp_eq("dupa100", "dupa1000"), FALSE)
 expect_equivalent(stri_cmp_eq("dupa10000", "dupa1000"), FALSE)
 expect_equivalent(stri_cmp_eq("above mentioned", "above-mentioned"), FALSE)
 
-expect_equivalent(stri_cmp_eq(stri_trans_nfkd("ą"), "ą"), FALSE)
+expect_equivalent(stri_cmp_eq(stri_trans_nfkd("\u0105"), "\u0105"), FALSE)
