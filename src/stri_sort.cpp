@@ -209,7 +209,7 @@ SEXP stri_order_rank_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
                 ret_tab[j] = (*it)+1; // 1-based indices
         }
     }
-    else if (_type == STRI_SORTRANKORDER_RANK) {
+    else {       // (_type == STRI_SORTRANKORDER_RANK)
         // NAs are always preserved, order is increasing
         STRI__PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
         int* ret_tab = INTEGER(ret);
@@ -244,7 +244,6 @@ SEXP stri_order_rank_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
             last_idx = cur_idx;
             j_first++;
         }
-
     }
 
     if (col) {
