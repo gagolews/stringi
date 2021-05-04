@@ -4,7 +4,6 @@
     #25 (locate-capture groups),
     #31 (sub_index),
     #96 (split-backwards),
-    #266 (width-emojis),
     #405 (stri_sub match.length attrib)
 
 
@@ -29,6 +28,8 @@
 * [NEW FEATURE] #421: `stri_rank()` ranks strings in a character vector
   (e.g., for ordering data frames with regards to multiple criteria,
   the ranks can be passed to `order()`, see #219).
+
+* [NEW FEATURE] #266: `stri_width()` now supports emojis.
 
 * [NEW FEATURE] `%s$%` and `%stri$%` are now vectorised with respect to
   both arguments.

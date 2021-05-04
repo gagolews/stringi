@@ -234,20 +234,27 @@ SEXP stri_isempty(SEXP str)
 /** Get width of a single character
  *
  * inspired by http://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c
+ * and https://github.com/nodejs/node/blob/master/src/node_i18n.cc
+ * but with extras
  *
  * @version ?? init
  *
  * @version 1.2.1 (Marek Gagolewski, 2018-04-20)
  *    add Variation Selectors support (width 0)
  *
+ * @version 1.6.1 (Marek Gagolewski, 2021-05-04)
+ *    emoji support etc.
+ *
  * @param c code point
  * @return 0, 1, or 2
  */
-int stri__width_char(UChar32 c) {
+int stri__width_char(UChar32 c)
+{
     if (c == (UChar32)0x00AD) return 1; /* SOFT HYPHEN  */
     if (c == (UChar32)0x200B) return 0; /* ZERO WIDTH SPACE */
 
     /* GC: Me, Mn, Cf, Cc -> width = 0 */
+    /* GC: v1.6.1 Sk -> width = 0 */
     if (U_GET_GC_MASK(c) &
             (U_GC_MN_MASK | U_GC_ME_MASK | U_GC_CF_MASK | U_GC_CC_MASK))
         return 0;
@@ -264,8 +271,36 @@ int stri__width_char(UChar32 c) {
     /* Characters with the \code{UCHAR_EAST_ASIAN_WIDTH} enumerable property
        equal to \code{U_EA_FULLWIDTH} or \code{U_EA_WIDE} are of width 2. */
     int width = (int)u_getIntPropertyValue(c, UCHAR_EAST_ASIAN_WIDTH);
+
+#if U_ICU_VERSION_MAJOR_NUM>=57
+    // UCHAR_EMOJI_* is ICU >= 57
+    if (
+        u_hasBinaryProperty(c, UCHAR_EMOJI_MODIFIER)
+    ) {
+        return 0;
+    }
+#endif
+
     if (width == U_EA_FULLWIDTH || width == U_EA_WIDE)
         return 2;
+
+    if (width == U_EA_AMBIGUOUS)
+        return 2;
+
+    /* GC: v1.6.1 So -> width = 2 */
+    if (U_GET_GC_MASK(c) & (U_GC_SO_MASK))
+        return 2;
+
+    /* GC: v1.6.1 Sk -> width = 0 */
+    if (U_GET_GC_MASK(c) & (U_GC_SK_MASK))
+        return 0;
+
+
+#if U_ICU_VERSION_MAJOR_NUM>=57
+    // UCHAR_EMOJI_* is ICU >= 57
+    if (width == U_EA_NEUTRAL && u_hasBinaryProperty(c, UCHAR_EMOJI_PRESENTATION))
+        return 2;
+#endif
 
     /*  any other characters have width 1 */
     return 1;
@@ -277,18 +312,60 @@ int stri__width_char(UChar32 c) {
  * @param str_cur_s string
  * @param str_cur_n number of bytes in str_cur_s
  * @return width
+ *
+ * @version 1.6.1 (Marek Gagolewski)
+ *    most in https://unicode.org/Public/emoji/13.1/emoji-test.txt of width=2
  */
-int stri__width_string(const char* str_cur_s, int str_cur_n) {
+int stri__width_string(const char* str_cur_s, int str_cur_n)
+{
     int cur_width = 0;
 
-    UChar32 c;
+    UChar32 p;      // previous
+    UChar32 c = 0;  // current
     R_len_t j = 0;
     while (j < str_cur_n) {
+        p = c;
         U8_NEXT(str_cur_s, j, str_cur_n, c);
         if (c < 0)
             throw StriException(MSG__INVALID_UTF8);
-        else
+        else {
+#if U_ICU_VERSION_MAJOR_NUM>=57
+            // UCHAR_EMOJI_* is ICU >= 57
+            if (
+                j > 0 && p == 0x200D /* ZERO WIDTH JOINER */ && (
+                    u_hasBinaryProperty(c, UCHAR_EMOJI_MODIFIER) ||
+                    u_hasBinaryProperty(c, UCHAR_EMOJI_PRESENTATION) ||
+                    c == 0x2640 /* FEMALE */ ||
+                    c == 0x2642 /* MALE */ ||
+                    c == 0x26A7 /* TRANSGENDER */ ||
+                    c == 0x2695 /* HEALTH */ ||
+                    c == 0x2696 /* JUDGE */ ||
+                    c == 0x1F5E8 /* SPEECH */ ||
+                    c == 0x1F32B /* CLOUDS */ ||
+                    c == 0x2708 /* PLANE */ ||
+                    c == 0x2764 /* HEART */ ||
+                    c == 0x2744 /* SNOWFLAKE */ ||
+                    c == 0x2620 /* SKULL AND CROSSBONES */
+                )
+            ) {
+                // emoji sequence - ignore (display might not support it)
+                cur_width += 0;
+            }
+            else if (
+                j > 0 && (p >= 0x1F1E6 && p <= 0x1F1FF)
+                && (c >= 0x1F1E6 && c <= 0x1F1FF)
+            ) {
+                // E2.0 flag (p counted as of width=2 already)
+                cur_width += 0;
+                c = 0;  // allow the next flag to be recognised
+            }
+            else {
+                cur_width += stri__width_char(c);
+            }
+#else // U_ICU_VERSION_MAJOR_NUM < 57 - no emoji support
             cur_width += stri__width_char(c);
+#endif
+        }
     }
 
     return cur_width;

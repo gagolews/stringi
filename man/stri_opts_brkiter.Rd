@@ -21,8 +21,8 @@ stri_opts_brkiter(
 }
 \arguments{
 \item{type}{single string; either the break iterator type, one of \code{character},
-\code{line_break}, \code{sentence}, \code{word};
-or a custom set of ICU break iteration rules.
+\code{line_break}, \code{sentence}, \code{word},
+or a custom set of ICU break iteration rules;
 see \link{stringi-search-boundaries}}
 
 \item{locale}{single string, \code{NULL} or \code{''} for default locale}
