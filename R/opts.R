@@ -277,8 +277,8 @@ stri_opts_regex <- function(case_insensitive, comments,
 #' to the ICU User Guide on Boundary Analysis.
 #'
 #' @param type single string; either the break iterator type, one of \code{character},
-#' \code{line_break}, \code{sentence}, \code{word};
-#' or a custom set of ICU break iteration rules.
+#' \code{line_break}, \code{sentence}, \code{word},
+#' or a custom set of ICU break iteration rules;
 #' see \link{stringi-search-boundaries}
 #' @param locale single string, \code{NULL} or \code{''} for default locale
 #' @param skip_word_none logical; perform no action for 'words' that
