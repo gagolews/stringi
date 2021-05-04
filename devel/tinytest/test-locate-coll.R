@@ -20,13 +20,13 @@ expect_equivalent(as.integer(stri_locate_all_coll("?", "[a-z]")[[1]]), c(NA_inte
 expect_equivalent(as.integer(stri_locate_all_coll("?", "[a-z]", omit_no_match = TRUE)[[1]]),
     integer(0))
 
-expect_equivalent(stri_locate_all_coll("1aąa", "ą"), list(matrix(c(3, 3))))
+expect_equivalent(stri_locate_all_coll("1a\u0105a", "\u0105"), list(matrix(c(3, 3))))
 expect_equivalent(stri_locate_all_coll("aaa", "aa"), list(matrix(c(1, 2))))
 
-expect_equivalent(stri_locate_all_coll("ąa", "ąa"), list(matrix(c(1, 2))))
-expect_equivalent(stri_locate_all_coll(stri_trans_nfkd("ąa"), "ąa"), list(matrix(c(1,
+expect_equivalent(stri_locate_all_coll("\u0105a", "\u0105a"), list(matrix(c(1, 2))))
+expect_equivalent(stri_locate_all_coll(stri_trans_nfkd("\u0105a"), "\u0105a"), list(matrix(c(1,
     3))))
-expect_equivalent(stri_locate_all_coll("🂠a", "a"), list(matrix(c(2, 2))))
+expect_equivalent(stri_locate_all_coll("\uD83C\uDCA0a", "a"), list(matrix(c(2, 2))))
 
 suppressWarnings(expect_equivalent(stri_locate_all_coll("", ""), list(matrix(c(NA,
     NA_integer_)))))
@@ -49,16 +49,16 @@ expect_warning(expect_equivalent(stri_locate_first_coll(NA, ""), matrix(c(NA_int
 expect_equivalent(stri_locate_first_coll("", NA), matrix(c(NA_integer_, NA_integer_)))
 expect_equivalent(stri_locate_first_coll(NA, NA), matrix(c(NA_integer_, NA_integer_)))
 
-expect_equivalent(stri_locate_first_coll("1aąa", "ą"), matrix(c(3, 3)))
+expect_equivalent(stri_locate_first_coll("1a\u0105a", "\u0105"), matrix(c(3, 3)))
 expect_equivalent(stri_locate_first_coll("aaa", "aa"), matrix(c(1, 2)))
 expect_equivalent(stri_locate_first_coll("aa1a12aa123", "123"), matrix(c(9, 11)))
 expect_equivalent(stri_locate_first_coll("1-1-2-33--2", "-32"), matrix(c(NA_integer_,
     NA_integer_)))
 
-expect_equivalent(stri_locate_first_coll("ąa", "ąa"), matrix(c(1, 2)))
-expect_equivalent(stri_locate_first_coll(stri_trans_nfkd("ąa"), "ąa"), matrix(c(1,
+expect_equivalent(stri_locate_first_coll("\u0105a", "\u0105a"), matrix(c(1, 2)))
+expect_equivalent(stri_locate_first_coll(stri_trans_nfkd("\u0105a"), "\u0105a"), matrix(c(1,
     3)))
-expect_equivalent(stri_locate_first_coll("🂠a", "a"), matrix(c(2, 2)))
+expect_equivalent(stri_locate_first_coll("\uD83C\uDCA0a", "a"), matrix(c(2, 2)))
 
 expect_warning(expect_equivalent(stri_locate_first_coll("", ""), matrix(c(NA,
     NA_integer_))))
@@ -82,19 +82,19 @@ expect_warning(expect_equivalent(stri_locate_last_coll(NA, ""), matrix(c(NA,
 expect_equivalent(stri_locate_last_coll("", NA), matrix(c(NA, NA_integer_)))
 expect_equivalent(stri_locate_last_coll(NA, NA), matrix(c(NA, NA_integer_)))
 
-expect_equivalent(stri_locate_last_coll("1aąa", "ą"), matrix(c(3, 3)))
+expect_equivalent(stri_locate_last_coll("1a\u0105a", "\u0105"), matrix(c(3, 3)))
 #overlapping pattern
 expect_equivalent(stri_locate_last_coll("aaa", "aa"), matrix(c(2, 3)))
 expect_equivalent(stri_locate_last_coll("aa1a12aa123", "123"), matrix(c(9, 11)))
 expect_equivalent(stri_locate_last_coll("1-1-2-33--2", "-32"), matrix(c(NA_integer_,
     NA_integer_)))
 
-expect_equivalent(stri_locate_last_coll("ąa", "ąa"), matrix(c(1, 2)))
-expect_equivalent(stri_locate_last_coll(stri_trans_nfkd("ąa"), "ąa"), matrix(c(1,
+expect_equivalent(stri_locate_last_coll("\u0105a", "\u0105a"), matrix(c(1, 2)))
+expect_equivalent(stri_locate_last_coll(stri_trans_nfkd("\u0105a"), "\u0105a"), matrix(c(1,
     3)))
-expect_equivalent(stri_locate_last_coll("🂠a", "a"), matrix(c(2, 2)))
+expect_equivalent(stri_locate_last_coll("\uD83C\uDCA0a", "a"), matrix(c(2, 2)))
 #additional test for overlapping patterns
-expect_equivalent(stri_locate_last_coll(stri_trans_nfkd("ąaąaąa"), "ąaąa"),
+expect_equivalent(stri_locate_last_coll(stri_trans_nfkd("\u0105a\u0105a\u0105a"), "\u0105a\u0105a"),
     matrix(c(4, 9)))
 
 expect_warning(expect_equivalent(stri_locate_last_coll("", ""), matrix(c(NA,

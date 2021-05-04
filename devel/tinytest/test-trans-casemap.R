@@ -19,7 +19,7 @@ expect_equivalent(stri_trans_tolower(stri_trans_tolower("ALA\tLUBI\nPSA")), stri
 ascii_non_letters <- rawToChar(as.raw(c(1:64, 91:96, 123:127)))
 expect_equivalent(stri_trans_tolower(ascii_non_letters), ascii_non_letters)
 
-expect_equivalent(stri_trans_tolower("ąĄ", "pl_PL"), "ąą")
+expect_equivalent(stri_trans_tolower("\u0105\u0104", "pl_PL"), "\u0105\u0105")
 
 
 # basic tests (ASCII, border-line):
@@ -39,11 +39,11 @@ expect_equivalent(stri_trans_toupper(stri_trans_toupper("ala\tlubi\npsa")), stri
 ascii_non_letters <- rawToChar(as.raw(c(1:64, 91:96, 123:127)))
 expect_equivalent(stri_trans_toupper(ascii_non_letters), ascii_non_letters)
 
-expect_equivalent(stri_trans_toupper("ąĄ", "pl_PL"), "ĄĄ")
+expect_equivalent(stri_trans_toupper("\u0105\u0104", "pl_PL"), "\u0104\u0104")
 
-expect_equivalent(stri_trans_toupper("ß", "de_DE"), "SS")
+expect_equivalent(stri_trans_toupper("\u00DF", "de_DE"), "SS")
 expect_equivalent(stri_trans_toupper("i", "en_US"), "I")
-expect_equivalent(stri_trans_toupper("i", "tr_TR"), "İ")
+expect_equivalent(stri_trans_toupper("i", "tr_TR"), "\u0130")
 
 
 # basic tests (ASCII, border-line):
@@ -60,7 +60,7 @@ expect_equivalent(stri_trans_totitle(letters), LETTERS)
 expect_equivalent(stri_trans_totitle(stri_flatten(letters)), stri_flatten(c("A",
     letters[-1])))
 
-expect_equivalent(stri_trans_totitle("ąĄ"), "Ąą")
+expect_equivalent(stri_trans_totitle("\u0105\u0104"), "\u0104\u0105")
 
 expect_equivalent(stri_trans_totitle("ala   ma   kota"), "Ala   Ma   Kota")
 expect_equivalent(stri_trans_totitle("ala\tma\tkota"), "Ala\tMa\tKota")
@@ -90,4 +90,4 @@ expect_equivalent(stri_trans_casefold(stri_trans_casefold("ALA\tLUBI\nPSA")), st
 ascii_non_letters <- rawToChar(as.raw(c(1:64, 91:96, 123:127)))
 expect_equivalent(stri_trans_casefold(ascii_non_letters), ascii_non_letters)
 
-expect_equivalent(stri_trans_casefold("ąĄ"), "ąą")
+expect_equivalent(stri_trans_casefold("\u0105\u0104"), "\u0105\u0105")

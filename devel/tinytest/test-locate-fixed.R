@@ -20,19 +20,19 @@ expect_equivalent(as.integer(stri_locate_all_fixed("?", "[a-z]")[[1]]), c(NA_int
 expect_equivalent(as.integer(stri_locate_all_fixed("?", "[a-z]", omit_no_match = TRUE)[[1]]),
     integer(0))
 
-expect_equivalent(stri_locate_all_fixed("ąąą", "ąą", overlap = TRUE), list(matrix(c(1,
+expect_equivalent(stri_locate_all_fixed("\u0105\u0105\u0105", "\u0105\u0105", overlap = TRUE), list(matrix(c(1,
     2, 2, 3), byrow = TRUE, ncol = 2)))
-expect_equivalent(stri_locate_all_fixed("1aąa", "ą"), list(matrix(c(3, 3))))
+expect_equivalent(stri_locate_all_fixed("1a\u0105a", "\u0105"), list(matrix(c(3, 3))))
 expect_equivalent(stri_locate_all_fixed("aaa", "aa"), list(matrix(c(1, 2))))
 expect_equivalent(stri_locate_all_fixed("aaa", "a"), list(matrix(rep(1:3, 2),
     ncol = 2)))
 expect_equivalent(stri_locate_all_fixed("abbabbab", "ab"), list(matrix(c(1, 4,
     7, 2, 5, 8), ncol = 2)))
 
-expect_equivalent(stri_locate_all_fixed("ąa", "ąa"), list(matrix(c(1, 2))))
-expect_equivalent(stri_locate_all_fixed(stri_trans_nfkd("ąa"), "ąa"), list(matrix(c(NA_integer_,
+expect_equivalent(stri_locate_all_fixed("\u0105a", "\u0105a"), list(matrix(c(1, 2))))
+expect_equivalent(stri_locate_all_fixed(stri_trans_nfkd("\u0105a"), "\u0105a"), list(matrix(c(NA_integer_,
     NA_integer_))))
-expect_equivalent(stri_locate_all_fixed("🂠a", "a"), list(matrix(c(2, 2))))
+expect_equivalent(stri_locate_all_fixed("\uD83C\uDCA0a", "a"), list(matrix(c(2, 2))))
 
 suppressWarnings(expect_equivalent(stri_locate_all_fixed("", ""), list(matrix(c(NA,
     NA_integer_)))))
@@ -80,7 +80,7 @@ for (val in c(FALSE, TRUE)) {
     expect_equivalent(stri_locate_first_fixed("abcdef", "abcdef", case_insensitive = val),
         matrix(c(1, 6)))
 
-    expect_equivalent(stri_locate_first_fixed("1aąa", "ą", case_insensitive = val),
+    expect_equivalent(stri_locate_first_fixed("1a\u0105a", "\u0105", case_insensitive = val),
         matrix(c(3, 3)))
     expect_equivalent(stri_locate_first_fixed("aaaaaa", "a", case_insensitive = val),
         matrix(c(1, 1)))
@@ -114,25 +114,25 @@ for (val in c(FALSE, TRUE)) {
         matrix(c(NA_integer_, NA_integer_)))
 }
 
-expect_warning(expect_equivalent(stri_locate_first_fixed("ąa", "ąa", overlap = TRUE),
+expect_warning(expect_equivalent(stri_locate_first_fixed("\u0105a", "\u0105a", overlap = TRUE),
     matrix(c(1, 2))))
-expect_equivalent(stri_locate_first_fixed("ąa", "ąa"), matrix(c(1, 2)))
-expect_equivalent(stri_locate_first_fixed(stri_trans_nfkd("ąa"), "ąa"), matrix(c(NA_integer_,
+expect_equivalent(stri_locate_first_fixed("\u0105a", "\u0105a"), matrix(c(1, 2)))
+expect_equivalent(stri_locate_first_fixed(stri_trans_nfkd("\u0105a"), "\u0105a"), matrix(c(NA_integer_,
     NA)))
-expect_equivalent(stri_locate_first_fixed("🂠a", "a"), matrix(c(2, 2)))
+expect_equivalent(stri_locate_first_fixed("\uD83C\uDCA0a", "a"), matrix(c(2, 2)))
 
 # According to UnicodeData.txt, there are characters x for which numbytes(x) != numbytes(u_toupper(x))
-expect_equivalent(stri_locate_first_fixed("aIO", "aıo", case_insensitive = TRUE),
+expect_equivalent(stri_locate_first_fixed("aIO", "a\u0131o", case_insensitive = TRUE),
     matrix(c(1, 3)))
-expect_equivalent(stri_locate_first_fixed("aIOoo", "aıo", case_insensitive = TRUE),
+expect_equivalent(stri_locate_first_fixed("aIOoo", "a\u0131o", case_insensitive = TRUE),
     matrix(c(1, 3)))
-expect_equivalent(stri_locate_first_fixed("aaaIOoo", "aıo", case_insensitive = TRUE),
+expect_equivalent(stri_locate_first_fixed("aaaIOoo", "a\u0131o", case_insensitive = TRUE),
     matrix(c(3, 5)))
-expect_equivalent(stri_locate_first_fixed("ııı", "i", case_insensitive = TRUE),
+expect_equivalent(stri_locate_first_fixed("\u0131\u0131\u0131", "i", case_insensitive = TRUE),
     matrix(c(1, 1)))
-expect_equivalent(stri_locate_first_fixed("ąıą", "I", case_insensitive = TRUE),
+expect_equivalent(stri_locate_first_fixed("\u0105\u0131\u0105", "I", case_insensitive = TRUE),
     matrix(c(2, 2)))
-expect_equivalent(stri_locate_first_fixed("ıąıııąı", "iIi", case_insensitive = TRUE),
+expect_equivalent(stri_locate_first_fixed("\u0131\u0105\u0131\u0131\u0131\u0105\u0131", "iIi", case_insensitive = TRUE),
     matrix(c(3, 5)))
 
 expect_warning(expect_equivalent(stri_locate_first_fixed("", ""), matrix(c(NA,
@@ -229,30 +229,30 @@ for (val in c(FALSE, TRUE)) {
 }
 
 # According to UnicodeData.txt, there are characters x for which numbytes(x) != numbytes(u_toupper(x))
-expect_equivalent(stri_locate_last_fixed("aIO", "aıo", case_insensitive = TRUE),
+expect_equivalent(stri_locate_last_fixed("aIO", "a\u0131o", case_insensitive = TRUE),
     matrix(c(1, 3)))
-expect_equivalent(stri_locate_last_fixed("aIOoo", "aıo", case_insensitive = TRUE),
+expect_equivalent(stri_locate_last_fixed("aIOoo", "a\u0131o", case_insensitive = TRUE),
     matrix(c(1, 3)))
-expect_equivalent(stri_locate_last_fixed("aaaIOoo", "aıo", case_insensitive = TRUE),
+expect_equivalent(stri_locate_last_fixed("aaaIOoo", "a\u0131o", case_insensitive = TRUE),
     matrix(c(3, 5)))
-expect_equivalent(stri_locate_last_fixed("ııı", "i", case_insensitive = TRUE),
+expect_equivalent(stri_locate_last_fixed("\u0131\u0131\u0131", "i", case_insensitive = TRUE),
     matrix(c(3, 3)))
-expect_equivalent(stri_locate_last_fixed("ąıą", "I", case_insensitive = TRUE),
+expect_equivalent(stri_locate_last_fixed("\u0105\u0131\u0105", "I", case_insensitive = TRUE),
     matrix(c(2, 2)))
-expect_equivalent(stri_locate_last_fixed("ıąıııąı", "iIi", case_insensitive = TRUE),
+expect_equivalent(stri_locate_last_fixed("\u0131\u0105\u0131\u0131\u0131\u0105\u0131", "iIi", case_insensitive = TRUE),
     matrix(c(3, 5)))
 
-expect_equivalent(stri_locate_last_fixed("1aąa", "ą"), matrix(c(3, 3)))
+expect_equivalent(stri_locate_last_fixed("1a\u0105a", "\u0105"), matrix(c(3, 3)))
 #overlapping pattern
 expect_equivalent(stri_locate_last_fixed("aaa", "aa"), matrix(c(2, 3)))
 expect_equivalent(stri_locate_last_fixed("aa1a12aa123", "123"), matrix(c(9, 11)))
 expect_equivalent(stri_locate_last_fixed("1-1-2-33--2", "-32"), matrix(c(NA_integer_,
     NA_integer_)))
 
-expect_equivalent(stri_locate_last_fixed("ąa", "ąa"), matrix(c(1, 2)))
-expect_equivalent(stri_locate_last_fixed(stri_trans_nfkd("ąa"), "ąa"), matrix(c(NA_integer_,
+expect_equivalent(stri_locate_last_fixed("\u0105a", "\u0105a"), matrix(c(1, 2)))
+expect_equivalent(stri_locate_last_fixed(stri_trans_nfkd("\u0105a"), "\u0105a"), matrix(c(NA_integer_,
     NA)))
-expect_equivalent(stri_locate_last_fixed("🂠a", "a"), matrix(c(2, 2)))
+expect_equivalent(stri_locate_last_fixed("\uD83C\uDCA0a", "a"), matrix(c(2, 2)))
 
 expect_warning(expect_equivalent(stri_locate_last_fixed("", ""), matrix(c(NA,
     NA_integer_))))

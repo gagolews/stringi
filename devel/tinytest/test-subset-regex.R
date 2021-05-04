@@ -28,8 +28,8 @@ expect_identical(stri_subset_regex(c("ala", "", "", "bbb"), c("ala", "bbb")),
 expect_identical(stri_subset_regex(c("a", "b", NA, "aaa", ""), c("a")), c("a",
     NA, "aaa"))
 
-expect_identical(stri_subset_regex(c("ąĆć", "ąć"), "Ć*"), c("ąĆć", "ąć"))  # match of zero length
-expect_identical(stri_subset_regex(c("ąĆć", "ąć"), "(?<=Ć)"), "ąĆć")  # match of zero length:
+expect_identical(stri_subset_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*"), c("\u0105\u0106\u0107", "\u0105\u0107"))  # match of zero length
+expect_identical(stri_subset_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "(?<=\u0106)"), "\u0105\u0106\u0107")  # match of zero length:
 expect_identical(stri_subset_regex(c("", " ", "  "), "^.*$"), c("", " ", "  "))
 expect_identical(stri_subset_regex(c("", " ", "  "), "^.+$"), c(" ", "  "))
 expect_identical(stri_subset_regex("a", c("a", "b", "c")), "a")
@@ -43,7 +43,7 @@ suppressWarnings(expect_identical(stri_subset_regex(LETTERS[1:2], LETTERS[1:5]),
 suppressWarnings(expect_identical(stri_subset_regex(LETTERS[1:4], LETTERS[1:5]),
     LETTERS[1:4]))
 
-s <- c("Lorem", "123", " ", " ", "kota", "4\tą")
+s <- c("Lorem", "123", " ", " ", "kota", "4\t\u0105")
 p <- c("[[:alpha:]]+", "[[:blank:]]+")
 expect_identical(stri_subset_regex(s, p, omit_na = TRUE), s[c(T, F, F, T, T,
     T)])
@@ -59,7 +59,7 @@ expect_identical(stri_subset_regex("aaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaa"), "aaa
 expect_identical(stri_subset_regex("aaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaa"), "aaaaaaaaaaaaaaa")
 expect_identical(stri_subset_regex("aaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaa"), "aaaaaaaaaaaaaaaa")
 
-expect_equivalent(stri_subset_regex("ąąąąąąąb", "ą+b$"), "ąąąąąąąb")
+expect_equivalent(stri_subset_regex("\u0105\u0105\u0105\u0105\u0105\u0105\u0105b", "\u0105+b$"), "\u0105\u0105\u0105\u0105\u0105\u0105\u0105b")
 
 expect_equivalent(stri_subset_regex("aaaab", "ab"), "aaaab")
 expect_equivalent(stri_subset_regex("bababababaab", "aab"), "bababababaab")

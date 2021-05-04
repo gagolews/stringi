@@ -2,7 +2,7 @@ library("tinytest")
 library("stringi")
 
 
-s <- c("ala ma ą ñ ą kota i kotek ma alicje oraz dwie gruszeczki oraz gruby czarny pies ma kotka ale nie ma alibaby")
+s <- c("ala ma \u0105 \u00F1 \u0105 kota i kotek ma alicje oraz dwie gruszeczki oraz gruby czarny pies ma kotka ale nie ma alibaby")
 expect_identical(stri_sub(s), s)
 expect_identical(stri_sub("12", 1, 2), "12")
 expect_identical(stri_sub("12", 2, 2), "2")
@@ -25,12 +25,12 @@ expect_identical(stri_sub(s, matrix(1:6, ncol = 2)), stri_sub(s, 1:3, 4:6))
 expect_warning(stri_sub(s, matrix(1:6, ncol = 2), to = -1))
 expect_identical(stri_sub(s, length = -1:1), c("", "", "a"))
 
-expect_identical(stri_sub("ąĄăĂā", 1:5, 1:5), stri_extract_all_regex("ąĄăĂā",
+expect_identical(stri_sub("\u0105\u0104\u0103\u0102\u0101", 1:5, 1:5), stri_extract_all_regex("\u0105\u0104\u0103\u0102\u0101",
     ".")[[1]])
-expect_identical(stri_sub("ąĄăĂā", 3, 4), "ăĂ")
-expect_identical(stri_sub("ąĄăĂā", 3, -2), "ăĂ")
+expect_identical(stri_sub("\u0105\u0104\u0103\u0102\u0101", 3, 4), "\u0103\u0102")
+expect_identical(stri_sub("\u0105\u0104\u0103\u0102\u0101", 3, -2), "\u0103\u0102")
 
-expect_identical(stri_sub("ąĄăĂā", 5:1, 5:1), rev(stri_extract_all_regex("ąĄăĂā",
+expect_identical(stri_sub("\u0105\u0104\u0103\u0102\u0101", 5:1, 5:1), rev(stri_extract_all_regex("\u0105\u0104\u0103\u0102\u0101",
     ".")[[1]]))
 
 expect_identical(stri_sub("abcde", 1:5, 1:5), stri_extract_all_regex("abcde",
@@ -81,26 +81,26 @@ expect_identical({
     s
 }, character(0))
 
-s <- "\U0010ffffaą"
+s <- "\U0010ffffa\u0105"
 stri_sub(s, 2, 2) <- "x"
-expect_identical(s, "\U0010ffffxą")
-s <- "\U0010ffffaą"
+expect_identical(s, "\U0010ffffx\u0105")
+s <- "\U0010ffffa\u0105"
 stri_sub(s, 3, 3) <- "x"
 expect_identical(s, "\U0010ffffax")
-s <- "\U0010ffffaą"
+s <- "\U0010ffffa\u0105"
 stri_sub(s, 9, 9) <- "x"
-expect_identical(s, "\U0010ffffaąx")
-s <- "\U0010ffffaą"
+expect_identical(s, "\U0010ffffa\u0105x")
+s <- "\U0010ffffa\u0105"
 stri_sub(s, 0, 0) <- "x"
-expect_identical(s, "x\U0010ffffaą")
+expect_identical(s, "x\U0010ffffa\u0105")
 
-s <- "\U0010ffffaą"
+s <- "\U0010ffffa\u0105"
 stri_sub(s, -3, length = 1) <- "x"
-expect_identical(s, "xaą")
-s <- "\U0010ffffaą"
+expect_identical(s, "xa\u0105")
+s <- "\U0010ffffa\u0105"
 stri_sub(s, -2, length = 1) <- "x"
-expect_identical(s, "\U0010ffffxą")
-s <- "\U0010ffffaą"
+expect_identical(s, "\U0010ffffx\u0105")
+s <- "\U0010ffffa\u0105"
 stri_sub(s, -1, length = 1) <- "x"
 expect_identical(s, "\U0010ffffax")
 
@@ -131,60 +131,60 @@ s <- c("a;b", "c:d")
 stri_sub(s, stri_locate_first_fixed(s, ";")) <- c("_", NA)
 expect_identical(s, c("a_b", NA))
 
-s <- "Ćaą"
+s <- "\u0106a\u0105"
 stri_sub(s, 0, to = 0) <- "x"
-expect_identical(s, "xĆaą")
-s <- "Ćaą"
+expect_identical(s, "x\u0106a\u0105")
+s <- "\u0106a\u0105"
 stri_sub(s, 1, to = 0) <- "x"
-expect_identical(s, "xĆaą")
-s <- "Ćaą"
+expect_identical(s, "x\u0106a\u0105")
+s <- "\u0106a\u0105"
 stri_sub(s, 2, to = 0) <- "x"
-expect_identical(s, "Ćxaą")
-s <- "Ćaą"
+expect_identical(s, "\u0106xa\u0105")
+s <- "\u0106a\u0105"
 stri_sub(s, 3, to = 0) <- "x"
-expect_identical(s, "Ćaxą")
-s <- "Ćaą"
+expect_identical(s, "\u0106ax\u0105")
+s <- "\u0106a\u0105"
 stri_sub(s, 3, to = 2) <- "x"
-expect_identical(s, "Ćaxą")
-s <- "Ćaą"
+expect_identical(s, "\u0106ax\u0105")
+s <- "\u0106a\u0105"
 stri_sub(s, 4, to = 0) <- "x"
-expect_identical(s, "Ćaąx")
+expect_identical(s, "\u0106a\u0105x")
 
-s <- "Ćaą"
+s <- "\u0106a\u0105"
 stri_sub(s, 0, length = 0) <- "x"
-expect_identical(s, "xĆaą")
-s <- "Ćaą"
+expect_identical(s, "x\u0106a\u0105")
+s <- "\u0106a\u0105"
 stri_sub(s, 1, length = 0) <- "x"
-expect_identical(s, "xĆaą")
-s <- "Ćaą"
+expect_identical(s, "x\u0106a\u0105")
+s <- "\u0106a\u0105"
 stri_sub(s, 2, length = 0) <- "x"
-expect_identical(s, "Ćxaą")
-s <- "Ćaą"
+expect_identical(s, "\u0106xa\u0105")
+s <- "\u0106a\u0105"
 stri_sub(s, 3, length = 0) <- "x"
-expect_identical(s, "Ćaxą")
-s <- "Ćaą"
+expect_identical(s, "\u0106ax\u0105")
+s <- "\u0106a\u0105"
 stri_sub(s, 4, length = 0) <- "x"
-expect_identical(s, "Ćaąx")
+expect_identical(s, "\u0106a\u0105x")
 
-s <- "Ćaą"
+s <- "\u0106a\u0105"
 stri_sub(s, -3, to = 0) <- "x"
-expect_identical(s, "xĆaą")
-s <- "Ćaą"
+expect_identical(s, "x\u0106a\u0105")
+s <- "\u0106a\u0105"
 stri_sub(s, -2, to = 0) <- "x"
-expect_identical(s, "Ćxaą")
-s <- "Ćaą"
+expect_identical(s, "\u0106xa\u0105")
+s <- "\u0106a\u0105"
 stri_sub(s, -1, to = 0) <- "x"
-expect_identical(s, "Ćaxą")
+expect_identical(s, "\u0106ax\u0105")
 
-s <- "Ćaą"
+s <- "\u0106a\u0105"
 stri_sub(s, -3, length = 0) <- "x"
-expect_identical(s, "xĆaą")
-s <- "Ćaą"
+expect_identical(s, "x\u0106a\u0105")
+s <- "\u0106a\u0105"
 stri_sub(s, -2, length = 0) <- "x"
-expect_identical(s, "Ćxaą")
-s <- "Ćaą"
+expect_identical(s, "\u0106xa\u0105")
+s <- "\u0106a\u0105"
 stri_sub(s, -1, length = 0) <- "x"
-expect_identical(s, "Ćaxą")
+expect_identical(s, "\u0106ax\u0105")
 
 expect_identical(stri_sub_replace("abc", omit_na = TRUE, value = c("def", "",
     NA)), c("def", "", "abc"))
@@ -212,17 +212,17 @@ expect_identical(stri_sub_replace(x, stri_locate_last_regex(x, "[0-9]+"), omit_n
 expect_equivalent(stri_sub("as", from = -c(1, 2, 1)), c("s", "as", "s"))
 expect_equivalent(stri_sub("as", from = -c(1, 2, 3, 2, 1)), c("s", "as", "as",
     "as", "s"))
-expect_equivalent(stri_sub("ąś", from = -c(1, 2, 1)), c("ś", "ąś", "ś"))
-expect_equivalent(stri_sub("ąś", from = -c(1, 2, 3, 2, 1)), c("ś", "ąś",
-    "ąś", "ąś", "ś"))
+expect_equivalent(stri_sub("\u0105\u015B", from = -c(1, 2, 1)), c("\u015B", "\u0105\u015B", "\u015B"))
+expect_equivalent(stri_sub("\u0105\u015B", from = -c(1, 2, 3, 2, 1)), c("\u015B", "\u0105\u015B",
+    "\u0105\u015B", "\u0105\u015B", "\u015B"))
 
 expect_identical(stri_sub("as", from = c(4, 3, 2)), c("", "", "s"))
-expect_identical(stri_sub("ąś", from = c(4, 3, 2)), c("", "", "ś"))
+expect_identical(stri_sub("\u0105\u015B", from = c(4, 3, 2)), c("", "", "\u015B"))
 
 expect_equivalent(stri_sub("as", from = -c(1, 2, 3, 4, 3, 4, 3, 2, 1)), c("s",
     "as", "as", "as", "as", "as", "as", "as", "s"))
-expect_equivalent(stri_sub("ąś", from = -c(1, 2, 3, 4, 3, 4, 3, 2, 1)), c("ś",
-    "ąś", "ąś", "ąś", "ąś", "ąś", "ąś", "ąś", "ś"))
+expect_equivalent(stri_sub("\u0105\u015B", from = -c(1, 2, 3, 4, 3, 4, 3, 2, 1)), c("\u015B",
+    "\u0105\u015B", "\u0105\u015B", "\u0105\u015B", "\u0105\u015B", "\u0105\u015B", "\u0105\u015B", "\u0105\u015B", "\u015B"))
 
 expect_equivalent({
     x <- "as"
@@ -230,14 +230,14 @@ expect_equivalent({
     x
 }, c("a*", "*", "*", "*", "a*"))
 expect_equivalent({
-    x <- "ąś"
+    x <- "\u0105\u015B"
     stri_sub(x, from = -c(1, 2, 3, 2, 1)) <- "*"
     x
-}, c("ą*", "*", "*", "*", "ą*"))
+}, c("\u0105*", "*", "*", "*", "\u0105*"))
 
-stri_sub("ąś", to = -c(1, 2, 4, 2, 1))
+stri_sub("\u0105\u015B", to = -c(1, 2, 4, 2, 1))
 
-s <- "tißć„óóþ”µć„"
+s <- "ti\u00DF\u0107\u201E\u00F3\u00F3\u00FE\u201D\u00B5\u0107\u201E"
 idx <- 1:8
 expect_equivalent(sapply(idx, function(x) stri_sub(s, from = -c(6, x)))[2, ],
     stri_sub(s, from = -idx))
@@ -310,57 +310,57 @@ expect_identical(stri_sub_replace_all("a", to = NA, value = "", omit_na = TRUE),
 expect_identical(stri_sub_replace_all("a", to = NA, value = "", omit_na = FALSE),
     NA_character_)
 
-expect_identical(stri_sub_replace_all("\U0010ffffaąb", 0, length = 0, value = "*"),
-    "*\U0010ffffaąb")
-expect_identical(stri_sub_replace_all("\U0010ffffaąb", 1, length = 0, value = "*"),
-    "*\U0010ffffaąb")
-expect_identical(stri_sub_replace_all("\U0010ffffaąb", 1, length = 1, value = "*"),
-    "*aąb")
-expect_identical(stri_sub_replace_all("\U0010ffffaąb", 2, length = 0, value = "*"),
-    "\U0010ffff*aąb")
-expect_identical(stri_sub_replace_all("\U0010ffffaąb", 2, length = 1, value = "*"),
-    "\U0010ffff*ąb")
-expect_identical(stri_sub_replace_all("\U0010ffffaąb", 3, length = 0, value = "*"),
-    "\U0010ffffa*ąb")
-expect_identical(stri_sub_replace_all("\U0010ffffaąb", 3, length = 1, value = "*"),
+expect_identical(stri_sub_replace_all("\U0010ffffa\u0105b", 0, length = 0, value = "*"),
+    "*\U0010ffffa\u0105b")
+expect_identical(stri_sub_replace_all("\U0010ffffa\u0105b", 1, length = 0, value = "*"),
+    "*\U0010ffffa\u0105b")
+expect_identical(stri_sub_replace_all("\U0010ffffa\u0105b", 1, length = 1, value = "*"),
+    "*a\u0105b")
+expect_identical(stri_sub_replace_all("\U0010ffffa\u0105b", 2, length = 0, value = "*"),
+    "\U0010ffff*a\u0105b")
+expect_identical(stri_sub_replace_all("\U0010ffffa\u0105b", 2, length = 1, value = "*"),
+    "\U0010ffff*\u0105b")
+expect_identical(stri_sub_replace_all("\U0010ffffa\u0105b", 3, length = 0, value = "*"),
+    "\U0010ffffa*\u0105b")
+expect_identical(stri_sub_replace_all("\U0010ffffa\u0105b", 3, length = 1, value = "*"),
     "\U0010ffffa*b")
-expect_identical(stri_sub_replace_all("\U0010ffffaąb", 4, length = 0, value = "*"),
-    "\U0010ffffaą*b")
-expect_identical(stri_sub_replace_all("\U0010ffffaąb", 4, length = 1, value = "*"),
-    "\U0010ffffaą*")
-expect_identical(stri_sub_replace_all("\U0010ffffaąb", 5, length = 0, value = "*"),
-    "\U0010ffffaąb*")
-expect_identical(stri_sub_replace_all("\U0010ffffaąb", 500, length = 650, value = "*"),
-    "\U0010ffffaąb*")
+expect_identical(stri_sub_replace_all("\U0010ffffa\u0105b", 4, length = 0, value = "*"),
+    "\U0010ffffa\u0105*b")
+expect_identical(stri_sub_replace_all("\U0010ffffa\u0105b", 4, length = 1, value = "*"),
+    "\U0010ffffa\u0105*")
+expect_identical(stri_sub_replace_all("\U0010ffffa\u0105b", 5, length = 0, value = "*"),
+    "\U0010ffffa\u0105b*")
+expect_identical(stri_sub_replace_all("\U0010ffffa\u0105b", 500, length = 650, value = "*"),
+    "\U0010ffffa\u0105b*")
 
-expect_identical(stri_sub_replace_all("\U0010ffffaąb", from = list(1, 1, 2,
+expect_identical(stri_sub_replace_all("\U0010ffffa\u0105b", from = list(1, 1, 2,
     2, 3, 3, 4, 4, 5), length = list(0, 1, 0, 1, 0, 1, 0, 1, 0), value = "*"),
-    stri_sub_replace("\U0010ffffaąb", from = c(1, 1, 2, 2, 3, 3, 4, 4, 5), length = c(0,
+    stri_sub_replace("\U0010ffffa\u0105b", from = c(1, 1, 2, 2, 3, 3, 4, 4, 5), length = c(0,
         1, 0, 1, 0, 1, 0, 1, 0), value = "*"))
-expect_identical(stri_sub_replace_all("\U0010ffffaąb", from = list(1, 1, 2,
+expect_identical(stri_sub_replace_all("\U0010ffffa\u0105b", from = list(1, 1, 2,
     2, 3, 3, 4, 4, 5), length = list(0, 1, 0, 1, 0, 1, 0, 1, 0), value = "\U0010ffffa"),
-    stri_sub_replace("\U0010ffffaąb", from = c(1, 1, 2, 2, 3, 3, 4, 4, 5), length = c(0,
+    stri_sub_replace("\U0010ffffa\u0105b", from = c(1, 1, 2, 2, 3, 3, 4, 4, 5), length = c(0,
         1, 0, 1, 0, 1, 0, 1, 0), value = "\U0010ffffa"))
-expect_identical(stri_sub_replace_all("\U0010ffffaąb", from = list(1, 1, 2,
-    2, 3, 3, 4, 4, 5), length = list(0, 1, 0, 1, 0, 1, 0, 1, 0), value = "ą\U0010ffffauiyughdfugie54yughk5re"),
-    stri_sub_replace("\U0010ffffaąb", from = c(1, 1, 2, 2, 3, 3, 4, 4, 5), length = c(0,
-        1, 0, 1, 0, 1, 0, 1, 0), value = "ą\U0010ffffauiyughdfugie54yughk5re"))
-expect_identical(stri_sub_replace_all("\U0010ffffaąb", from = list(-5, -4, -4,
+expect_identical(stri_sub_replace_all("\U0010ffffa\u0105b", from = list(1, 1, 2,
+    2, 3, 3, 4, 4, 5), length = list(0, 1, 0, 1, 0, 1, 0, 1, 0), value = "\u0105\U0010ffffauiyughdfugie54yughk5re"),
+    stri_sub_replace("\U0010ffffa\u0105b", from = c(1, 1, 2, 2, 3, 3, 4, 4, 5), length = c(0,
+        1, 0, 1, 0, 1, 0, 1, 0), value = "\u0105\U0010ffffauiyughdfugie54yughk5re"))
+expect_identical(stri_sub_replace_all("\U0010ffffa\u0105b", from = list(-5, -4, -4,
     -3, -3, -2, -2, -1, -1), length = list(0, 1, 0, 1, 0, 1, 0, 1, 0), value = "\U0010ffffah5ru5n\U0010ffffa\U0010ffffa\U0010ffffa"),
-    stri_sub_replace("\U0010ffffaąb", from = c(-5, -4, -4, -3, -3, -2, -2, -1,
+    stri_sub_replace("\U0010ffffa\u0105b", from = c(-5, -4, -4, -3, -3, -2, -2, -1,
         -1), length = c(0, 1, 0, 1, 0, 1, 0, 1, 0), value = "\U0010ffffah5ru5n\U0010ffffa\U0010ffffa\U0010ffffa"))
 
-expect_identical(stri_sub_replace_all("\U0010ffffaąbĈ", c(2, 4), length = 1,
-    value = ""), "\U0010ffffąĈ")
+expect_identical(stri_sub_replace_all("\U0010ffffa\u0105b\u0108", c(2, 4), length = 1,
+    value = ""), "\U0010ffff\u0105\u0108")
 
-expect_identical(stri_sub_replace_all("\U0010ffffaąbĈ", c(2, 4), length = 1,
-    value = list("", "\U0010ffff", "ą")), c("\U0010ffffąĈ", "\U0010ffff\U0010ffffą\U0010ffffĈ",
-    "\U0010ffffąąąĈ"))
+expect_identical(stri_sub_replace_all("\U0010ffffa\u0105b\u0108", c(2, 4), length = 1,
+    value = list("", "\U0010ffff", "\u0105")), c("\U0010ffff\u0105\u0108", "\U0010ffff\U0010ffff\u0105\U0010ffff\u0108",
+    "\U0010ffff\u0105\u0105\u0105\u0108"))
 
 
-expect_identical(stri_sub_replace_all("\U0010ffffaąbĈ", c(2, 4), length = 1,
-    value = list(c("", "\U0010ffff"), c("ą", "gasgas"))), c("\U0010ffffą\U0010ffffĈ",
-    "\U0010ffffąągasgasĈ"))
+expect_identical(stri_sub_replace_all("\U0010ffffa\u0105b\u0108", c(2, 4), length = 1,
+    value = list(c("", "\U0010ffff"), c("\u0105", "gasgas"))), c("\U0010ffff\u0105\U0010ffff\u0108",
+    "\U0010ffff\u0105\u0105gasgas\u0108"))
 
 expect_warning(stri_sub_replace_all("abc", 1, 1, value = list(c("", ""))))
 

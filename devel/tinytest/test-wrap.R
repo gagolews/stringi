@@ -27,30 +27,30 @@ expect_identical(stri_wrap("test      all", 0), c("test", "all"))
 expect_identical(stri_wrap("test      all", 0, normalize = FALSE), c("test     ",
     "all"))
 
-expect_identical(stri_wrap("훈훈 훈훈 abcd", 5, 2), c("훈훈", "훈훈",
+expect_identical(stri_wrap("\uD6C8\uD6C8 \uD6C8\uD6C8 abcd", 5, 2), c("\uD6C8\uD6C8", "\uD6C8\uD6C8",
     "abcd"))
-expect_identical(stri_wrap("훈훈 훈훈 abcd", 5, 2, use_length = TRUE), c("훈훈 훈훈",
+expect_identical(stri_wrap("\uD6C8\uD6C8 \uD6C8\uD6C8 abcd", 5, 2, use_length = TRUE), c("\uD6C8\uD6C8 \uD6C8\uD6C8",
     "abcd"))
-expect_identical(stri_wrap("훈 a", 5, 2, prefix = "훈"), c("훈훈", "훈a"))
-expect_identical(stri_wrap("훈 a", 5, 2, prefix = "훈", use_length = TRUE),
-    c("훈훈 a"))
+expect_identical(stri_wrap("\uD6C8 a", 5, 2, prefix = "\uD6C8"), c("\uD6C8\uD6C8", "\uD6C8a"))
+expect_identical(stri_wrap("\uD6C8 a", 5, 2, prefix = "\uD6C8", use_length = TRUE),
+    c("\uD6C8\uD6C8 a"))
 
 
 #non breaking spaces....
 expect_equivalent(stri_wrap("abc def", 5), c("abc", "def"))
-expect_equivalent(stri_wrap("abc def", 5), "abc def")
-expect_equivalent(stri_wrap("abc def", 5), "abc def")
-expect_equivalent(stri_wrap("abc def", 5), "abc def")
-expect_equivalent(stri_wrap("abc⁠def", 5), "abc⁠def")
+expect_equivalent(stri_wrap("abc\u00A0def", 5), "abc\u00A0def")
+expect_equivalent(stri_wrap("abc\u2007def", 5), "abc\u2007def")
+expect_equivalent(stri_wrap("abc\u202Fdef", 5), "abc\u202Fdef")
+expect_equivalent(stri_wrap("abc\u2060def", 5), "abc\u2060def")
 
-expect_equivalent(stri_wrap("ab­de abc­def", 5), c("ab­de", "abc­", "def"))
+expect_equivalent(stri_wrap("ab\u00ADde abc\u00ADdef", 5), c("ab\u00ADde", "abc\u00AD", "def"))
 
 #soft hyphens....
 
-expect_identical(stri_wrap(stri_paste(rep("ąąąąą", 5), collapse = " "),
-    12), c("ąąąąą ąąąąą", "ąąąąą ąąąąą", "ąąąąą"))
-expect_identical(stri_wrap(stri_paste(rep("ąąąąą", 5), collapse = " "),
-    12, cost = -1), c("ąąąąą ąąąąą", "ąąąąą ąąąąą", "ąąąąą"))
+expect_identical(stri_wrap(stri_paste(rep("\u0105\u0105\u0105\u0105\u0105", 5), collapse = " "),
+    12), c("\u0105\u0105\u0105\u0105\u0105 \u0105\u0105\u0105\u0105\u0105", "\u0105\u0105\u0105\u0105\u0105 \u0105\u0105\u0105\u0105\u0105", "\u0105\u0105\u0105\u0105\u0105"))
+expect_identical(stri_wrap(stri_paste(rep("\u0105\u0105\u0105\u0105\u0105", 5), collapse = " "),
+    12, cost = -1), c("\u0105\u0105\u0105\u0105\u0105 \u0105\u0105\u0105\u0105\u0105", "\u0105\u0105\u0105\u0105\u0105 \u0105\u0105\u0105\u0105\u0105", "\u0105\u0105\u0105\u0105\u0105"))
 
 expect_identical(stri_wrap("aaa bb cc ddddd", 6, cost = 2), c("aaa", "bb cc",
     "ddddd"))  # wikipedia
@@ -81,7 +81,7 @@ expect_identical(stri_wrap(c("AAA BBB", "CCC DDD"), exdent = 1, indent = 2, init
     prefix = "!", cost = 2, width = 6), c(">  AAA", "! BBB", "!  CCC", "! DDD"))
 
 
-strings <- list(stri_paste("ala ma ą ñ kota i kotek ma alicje oraz dwie gruszeczki oraz ",
+strings <- list(stri_paste("ala ma \u0105 \u00F1 kota i kotek ma alicje oraz dwie gruszeczki oraz ",
     "gruby czarny pies ma kotka ale nie ma alibaby"), stri_c(stri_rand_strings(1000,
     runif(1000, 2, 12), "[\\p{script=latin}&\\p{Ll}]"), stri_dup(" ", runif(1000,
     1, 5)), sep = "", collapse = ""), stri_paste("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id ",

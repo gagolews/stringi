@@ -22,8 +22,7 @@ Uses \pkg{ICU} facilities to un-escape Unicode character sequences.
 
 The following ASCII standard escapes are recognized:
 \code{\\a}, \code{\\b}, \code{\\t}, \code{\\n}, \code{\\v}, \code{\\?},
-\code{\\e},
-\code{\\f}, \code{\\r}, \code{\"}, \code{\'}, \code{\\\\}.
+\code{\\e}, \code{\\f}, \code{\\r}, \code{\"}, \code{\'}, \code{\\\\}.
 
 Moreover, the function understands the following ones:
 \code{\\uXXXX} (4 hex digits),

@@ -13,17 +13,17 @@ expect_identical(stri_startswith_coll(character(0), "ipsum 1234"), logical(0))
 expect_identical(stri_startswith_coll(character(0), character(0)), logical(0))
 expect_identical(stri_startswith_coll(c("ab", "cab", "ccccab", "abaabaaaa"),
     "ab"), c(T, F, F, T))
-expect_identical(stri_startswith_coll(c("Lorem\n123", " ", "kota", "\tą4"),
-    c(" ", "\tą")), c(F, F, F, T))
+expect_identical(stri_startswith_coll(c("Lorem\n123", " ", "kota", "\t\u01054"),
+    c(" ", "\t\u0105")), c(F, F, F, T))
 expect_warning(stri_startswith_coll(rep("asd", 5), rep("a", 2)))
-expect_identical(stri_startswith_coll("Ąą", stri_trans_nfkd("Ąą")), TRUE)
+expect_identical(stri_startswith_coll("\u0104\u0105", stri_trans_nfkd("\u0104\u0105")), TRUE)
 expect_equivalent(stri_startswith_coll("aaaab", "ab"), FALSE)
 expect_equivalent(stri_startswith_coll("bababababaab", "bab"), TRUE)
 expect_equivalent(stri_startswith_coll("bababababaab", "bab", from = c(1, 2,
     3)), c(T, F, T))
-expect_equivalent(stri_startswith_coll("ąĄąĄą", "ąĄą", from = c(1, 2,
+expect_equivalent(stri_startswith_coll("\u0105\u0104\u0105\u0104\u0105", "\u0105\u0104\u0105", from = c(1, 2,
     3, 100, -3)), c(T, F, T, F, T))
-expect_equivalent(stri_startswith("ąĄąĄą", coll = "ąĄą", from = c(1,
+expect_equivalent(stri_startswith("\u0105\u0104\u0105\u0104\u0105", coll = "\u0105\u0104\u0105", from = c(1,
     2, 3, 100, -3)), c(T, F, T, F, T))
 expect_equivalent(stri_startswith_coll("a", "agsdgsjgidjso", c(-1, 1, -2, 2,
     0)), c(F, F, F, F, F))
@@ -54,16 +54,16 @@ suppressWarnings(expect_identical(stri_startswith_coll("", ""), NA))
 suppressWarnings(expect_identical(stri_startswith_coll("a", ""), NA))
 suppressWarnings(expect_identical(stri_startswith_coll("", "a"), FALSE))
 
-expect_equivalent(stri_startswith_coll("ﷺﷺﷺﷺXYZﷺ", stri_paste("صلى الله ",
-    "عليه وسلمXYZ"), opts_collator = stri_opts_collator(strength = 1, locale="en"),
+expect_equivalent(stri_startswith_coll("\uFDFA\uFDFA\uFDFA\uFDFAXYZ\uFDFA", stri_paste("\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ",
+    "\u0639\u0644\u064A\u0647 \u0648\u0633\u0644\u0645XYZ"), opts_collator = stri_opts_collator(strength = 1, locale="en"),
     from = 4), TRUE)
-expect_equivalent(stri_startswith_coll("ﷺﷺﷺﷺXYZﷺ", stri_paste("صلى الله ",
-    "عليه وسلمXYZ"), negate=TRUE, opts_collator = stri_opts_collator(strength = 1, locale="en"),
+expect_equivalent(stri_startswith_coll("\uFDFA\uFDFA\uFDFA\uFDFAXYZ\uFDFA", stri_paste("\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ",
+    "\u0639\u0644\u064A\u0647 \u0648\u0633\u0644\u0645XYZ"), negate=TRUE, opts_collator = stri_opts_collator(strength = 1, locale="en"),
     from = 4), !TRUE)
-expect_equivalent(stri_startswith_coll(stri_paste("صلى الله ", "عليه وسلم"),
-    "ﷺ", strength = 1, locale="en"), TRUE)
-expect_equivalent(stri_startswith_coll(stri_paste("صلى الله ", "عليه وسلمﷺ"),
-    "ﷺ", opts_collator = stri_opts_collator(strength = 1, locale="en")), TRUE)
+expect_equivalent(stri_startswith_coll(stri_paste("\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ", "\u0639\u0644\u064A\u0647 \u0648\u0633\u0644\u0645"),
+    "\uFDFA", strength = 1, locale="en"), TRUE)
+expect_equivalent(stri_startswith_coll(stri_paste("\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ", "\u0639\u0644\u064A\u0647 \u0648\u0633\u0644\u0645\uFDFA"),
+    "\uFDFA", opts_collator = stri_opts_collator(strength = 1, locale="en")), TRUE)
 
 expect_identical(stri_endswith_coll("a", NA), NA)
 expect_identical(stri_endswith_coll(NA, "a"), NA)
@@ -78,16 +78,16 @@ expect_identical(stri_endswith_coll(character(0), "ipsum 1234"), logical(0))
 expect_identical(stri_endswith_coll(character(0), character(0)), logical(0))
 expect_identical(stri_endswith_coll(c("ab", "cab", "ccccab", "abaabaaaa"), "ab"),
     c(T, T, T, F))
-expect_identical(stri_endswith_coll(c("Lorem\n123", " ", "kota", "4\tą"), c(" ",
-    "\tą")), c(F, F, F, T))
+expect_identical(stri_endswith_coll(c("Lorem\n123", " ", "kota", "4\t\u0105"), c(" ",
+    "\t\u0105")), c(F, F, F, T))
 expect_warning(stri_endswith_coll(rep("asd", 5), rep("a", 2)))
-expect_identical(stri_endswith_coll("Ąą", stri_trans_nfkd("Ąą")), TRUE)
+expect_identical(stri_endswith_coll("\u0104\u0105", stri_trans_nfkd("\u0104\u0105")), TRUE)
 expect_equivalent(stri_endswith_coll("aaaab", "ab"), TRUE)
 expect_equivalent(stri_endswith_coll("bababababaab", "bab", to = c(-1, -2, -3,
     -4, 4, 3)), c(F, F, F, T, F, T))
-expect_equivalent(stri_endswith_coll("ąĄąĄąĄąĄąĄĄą", "ąĄą", to = c(-1,
+expect_equivalent(stri_endswith_coll("\u0105\u0104\u0105\u0104\u0105\u0104\u0105\u0104\u0105\u0104\u0104\u0105", "\u0105\u0104\u0105", to = c(-1,
     -2, -3, -4, 4, 3)), c(F, F, F, T, F, T))
-expect_equivalent(stri_endswith("ąĄąĄąĄąĄąĄĄą", coll = "ąĄą",
+expect_equivalent(stri_endswith("\u0105\u0104\u0105\u0104\u0105\u0104\u0105\u0104\u0105\u0104\u0104\u0105", coll = "\u0105\u0104\u0105",
     to = c(-1, -2, -3, -4, 4, 3)), c(F, F, F, T, F, T))
 
 expect_equivalent(stri_endswith_coll("aba", "a", c(-1, -1e+08, 0, 1e+07)), c(T,
@@ -120,11 +120,11 @@ expect_equivalent(stri_endswith_coll("ab", "b", c(-1000, 0, 4)), c(FALSE, FALSE,
 expect_equivalent(stri_endswith_coll("a", "b", c(-1000, 0, 4)), c(FALSE, FALSE,
     FALSE))
 
-expect_equivalent(stri_endswith_coll("ﷺﷺﷺﷺXYZﷺ", stri_paste("صلى الله ",
-    "عليه وسلمXYZ"), opts_collator = stri_opts_collator(strength = 1, locale="en"),
+expect_equivalent(stri_endswith_coll("\uFDFA\uFDFA\uFDFA\uFDFAXYZ\uFDFA", stri_paste("\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ",
+    "\u0639\u0644\u064A\u0647 \u0648\u0633\u0644\u0645XYZ"), opts_collator = stri_opts_collator(strength = 1, locale="en"),
     to = -2), TRUE)
-expect_equivalent(stri_endswith_coll(stri_paste("صلى الله ", "عليه وسلم"),
-    "ﷺ", strength = 1, locale="en"), TRUE)
-expect_equivalent(stri_endswith_coll(stri_paste("صلى الله ", "عليه وسلمﷺ"),
-    "ﷺ", opts_collator = stri_opts_collator(strength = 1, locale="en"), to = -2), TRUE)
+expect_equivalent(stri_endswith_coll(stri_paste("\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ", "\u0639\u0644\u064A\u0647 \u0648\u0633\u0644\u0645"),
+    "\uFDFA", strength = 1, locale="en"), TRUE)
+expect_equivalent(stri_endswith_coll(stri_paste("\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ", "\u0639\u0644\u064A\u0647 \u0648\u0633\u0644\u0645\uFDFA"),
+    "\uFDFA", opts_collator = stri_opts_collator(strength = 1, locale="en"), to = -2), TRUE)
 

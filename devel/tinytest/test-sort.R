@@ -55,8 +55,8 @@ expect_equivalent(stri_sort(rev(LETTERS)), LETTERS)
 expect_equivalent(stri_sort(rev(letters)), letters)
 expect_equivalent(stri_sort(c("abc", "aab", "baa", "ab", "aba")), c("aab", "ab",
     "aba", "abc", "baa"))
-expect_equivalent(stri_sort(c("abc", "aab", "aąb", "ąbc", "abć"), opts_collator = list(locale = "pl_PL")),
-    c("aab", "aąb", "abc", "abć", "ąbc"))
+expect_equivalent(stri_sort(c("abc", "aab", "a\u0105b", "\u0105bc", "ab\u0107"), opts_collator = list(locale = "pl_PL")),
+    c("aab", "a\u0105b", "abc", "ab\u0107", "\u0105bc"))
 expect_equivalent(stri_sort(c("abc", "aab", NA, "ab", "aba"), na_last = TRUE),
     c("aab", "ab", "aba", "abc", NA))
 expect_equivalent(stri_sort(c("abc", "aab", NA, "ab", "aba"), na_last = NA),
@@ -85,12 +85,12 @@ expect_equivalent(stri_unique(c("b", NA, "a", NA)), c("b", NA, "a"))
 expect_equivalent(stri_unique(rep(letters, 10)), letters)
 expect_equivalent(stri_unique(rep(letters, each = 10)), letters)
 expect_equivalent(stri_unique(rev(LETTERS)), rev(LETTERS))
-expect_equivalent(stri_unique(c("ą", stri_trans_nfd("ą"))), "ą")
+expect_equivalent(stri_unique(c("\u0105", stri_trans_nfd("\u0105"))), "\u0105")
 expect_equivalent(stri_unique(c("abc", "ab", "abc", "ab", "aba")), c("abc", "ab",
     "aba"))
-expect_equivalent(stri_unique(c("abc", "aab", "aąb", "ąbc", "abć", "aąb"),
-    opts_collator = list(locale = "pl_PL")), c("abc", "aab", "aąb", "ąbc",
-    "abć"))
+expect_equivalent(stri_unique(c("abc", "aab", "a\u0105b", "\u0105bc", "ab\u0107", "a\u0105b"),
+    opts_collator = list(locale = "pl_PL")), c("abc", "aab", "a\u0105b", "\u0105bc",
+    "ab\u0107"))
 expect_equivalent(stri_unique(c("abc", "ABC"), opts_collator = list(strength = 1, locale="en")),
     c("abc"))
 
@@ -103,10 +103,10 @@ expect_equivalent(stri_duplicated(rep(letters, 10)), c(rep(FALSE, length(letters
 expect_equivalent(stri_duplicated(rep(letters, each = 10)), rep(c(F, rep(T, 9)),
     length(letters)))
 expect_equivalent(stri_duplicated(rev(LETTERS)), rep(FALSE, length(letters)))
-expect_equivalent(stri_duplicated(c("ą", stri_trans_nfd("ą"))), c(F, T))
+expect_equivalent(stri_duplicated(c("\u0105", stri_trans_nfd("\u0105"))), c(F, T))
 expect_equivalent(stri_duplicated(c("abc", "ab", "abc", "ab", "aba")), c(F, F,
     T, T, F))
-expect_equivalent(stri_duplicated(c("abc", "aab", "aąb", "ąbc", "abć", "aąb"),
+expect_equivalent(stri_duplicated(c("abc", "aab", "a\u0105b", "\u0105bc", "ab\u0107", "a\u0105b"),
     opts_collator = list(locale = "pl_PL")), c(F, F, F, F, F, T))
 
 expect_equivalent(stri_duplicated(character(0), TRUE), logical(0))
@@ -118,11 +118,11 @@ expect_equivalent(stri_duplicated(rep(letters, 10), TRUE), c(rep(TRUE, length(le
 expect_equivalent(stri_duplicated(rep(letters, each = 10), TRUE), rep(c(rep(T,
     9), F), length(letters)))
 expect_equivalent(stri_duplicated(rev(LETTERS), TRUE), rep(FALSE, length(letters)))
-expect_equivalent(stri_duplicated(c("ą", stri_trans_nfd("ą")), TRUE), c(T,
+expect_equivalent(stri_duplicated(c("\u0105", stri_trans_nfd("\u0105")), TRUE), c(T,
     F))
 expect_equivalent(stri_duplicated(c("abc", "ab", "abc", "ab", "aba"), TRUE),
     c(T, T, F, F, F))
-expect_equivalent(stri_duplicated(c("abc", "aab", "aąb", "ąbc", "abć", "aąb"),
+expect_equivalent(stri_duplicated(c("abc", "aab", "a\u0105b", "\u0105bc", "ab\u0107", "a\u0105b"),
     TRUE, opts_collator = list(locale = "pl_PL")), c(F, F, T, F, F, F))
 expect_equivalent(stri_duplicated(c("abc", "ABC"), FALSE, opts_collator = list(strength = 1, locale="en")),
     c(F, T))
@@ -133,10 +133,10 @@ expect_equivalent(stri_duplicated_any(c("b", NA, "a", NA)), 4)
 expect_equivalent(stri_duplicated_any(rep(letters, 10)), length(letters) + 1)
 expect_equivalent(stri_duplicated_any(rep(letters, each = 10)), 2)
 expect_equivalent(stri_duplicated_any(rev(LETTERS)), 0)
-expect_equivalent(stri_duplicated_any(c("ą", stri_trans_nfd("ą"))), 2)
+expect_equivalent(stri_duplicated_any(c("\u0105", stri_trans_nfd("\u0105"))), 2)
 expect_equivalent(stri_duplicated_any(c("abc", "ab", "abc", "ab", "aba")), 3)
-expect_equivalent(stri_duplicated_any(c("abc", "aab", "aąb", "ąbc", "abć",
-    "aąb"), opts_collator = list(locale = "pl_PL")), 6)
+expect_equivalent(stri_duplicated_any(c("abc", "aab", "a\u0105b", "\u0105bc", "ab\u0107",
+    "a\u0105b"), opts_collator = list(locale = "pl_PL")), 6)
 
 expect_equivalent(stri_duplicated_any(character(0), TRUE), 0)
 expect_equivalent(stri_duplicated_any(NA, TRUE), 0)
@@ -146,11 +146,11 @@ expect_equivalent(stri_duplicated_any(rep(letters, 10), TRUE), length(letters) *
 expect_equivalent(stri_duplicated_any(rep(letters, each = 10), TRUE), length(letters) *
     10 - 1)
 expect_equivalent(stri_duplicated_any(rev(LETTERS), TRUE), 0)
-expect_equivalent(stri_duplicated_any(c("ą", stri_trans_nfd("ą")), TRUE), 1)
+expect_equivalent(stri_duplicated_any(c("\u0105", stri_trans_nfd("\u0105")), TRUE), 1)
 expect_equivalent(stri_duplicated_any(c("abc", "ab", "abc", "ab", "aba"), TRUE),
     2)
-expect_equivalent(stri_duplicated_any(c("abc", "aab", "aąb", "ąbc", "abć",
-    "aąb"), TRUE, opts_collator = list(locale = "pl_PL")), 3)
+expect_equivalent(stri_duplicated_any(c("abc", "aab", "a\u0105b", "\u0105bc", "ab\u0107",
+    "a\u0105b"), TRUE, opts_collator = list(locale = "pl_PL")), 3)
 
 if (getRversion() > "3.3.0") {
     radix_order <- function(x) order(x, method = "radix")
@@ -163,7 +163,7 @@ if (getRversion() > "3.3.0") {
     expect_equivalent(radix_order(stri_sort_key(x, locale = "en_US")), stri_order(x,
         locale = "en_US"))
 
-    x <- c("abc", "aab", "aąb", "ąbc", "abć")
+    x <- c("abc", "aab", "a\u0105b", "\u0105bc", "ab\u0107")
     expect_equivalent(radix_order(stri_sort_key(x, locale = "pl_PL")), stri_order(x,
         locale = "pl_PL"))
 

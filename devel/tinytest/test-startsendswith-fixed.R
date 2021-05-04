@@ -15,12 +15,12 @@ expect_identical(stri_startswith_fixed(character(0), "ipsum 1234"), logical(0))
 expect_identical(stri_startswith_fixed(character(0), character(0)), logical(0))
 expect_identical(stri_startswith_fixed(c("ab", "cab", "ccccab", "abaabaaaa"),
     "ab"), c(T, F, F, T))
-expect_identical(stri_startswith_fixed(c("Lorem\n123", " ", "kota", "\tą4"),
-    c(" ", "\tą")), c(F, F, F, T))
-expect_identical(stri_startswith_fixed(c("Lorem\n123", " ", "kota", "\tą4"),
-    c(" ", "\tą"), negate=TRUE), !c(F, F, F, T))
+expect_identical(stri_startswith_fixed(c("Lorem\n123", " ", "kota", "\t\u01054"),
+    c(" ", "\t\u0105")), c(F, F, F, T))
+expect_identical(stri_startswith_fixed(c("Lorem\n123", " ", "kota", "\t\u01054"),
+    c(" ", "\t\u0105"), negate=TRUE), !c(F, F, F, T))
 expect_warning(stri_startswith_fixed(rep("asd", 5), rep("a", 2)))
-expect_identical(stri_startswith_fixed("Ąą", stri_trans_nfkd("Ąą")), FALSE)
+expect_identical(stri_startswith_fixed("\u0104\u0105", stri_trans_nfkd("\u0104\u0105")), FALSE)
 expect_equivalent(stri_startswith_fixed("aba", "abab"), FALSE)
 expect_equivalent(stri_startswith_fixed("aba", "abab", case_insensitive = TRUE),
     FALSE)
@@ -33,9 +33,9 @@ expect_equivalent(stri_startswith_fixed("bababababaab", "bab", from = c(1, 2,
     3)), c(T, F, T))
 expect_equivalent(stri_startswith_fixed("bababababaab", "BAB", case_insensitive = TRUE,
     from = c(1, 2, 3)), c(T, F, T))
-expect_equivalent(stri_startswith_fixed("ąĄąĄą", "ąĄą", from = c(1, 2,
+expect_equivalent(stri_startswith_fixed("\u0105\u0104\u0105\u0104\u0105", "\u0105\u0104\u0105", from = c(1, 2,
     3, 100, -3)), c(T, F, T, F, T))
-expect_equivalent(stri_startswith("ąĄąĄą", fixed = "ąĄą", from = c(1,
+expect_equivalent(stri_startswith("\u0105\u0104\u0105\u0104\u0105", fixed = "\u0105\u0104\u0105", from = c(1,
     2, 3, 100, -3)), c(T, F, T, F, T))
 expect_equivalent(stri_startswith_fixed("a", "agsdgsjgidjso", c(-1, 1, -2, 2,
     0)), c(F, F, F, F, F))
@@ -61,11 +61,11 @@ for (val in c(FALSE, TRUE)) {
     expect_equivalent(stri_startswith_fixed("a", "b", c(-1000, 0, 2), case_insensitive = val),
         c(FALSE, FALSE, FALSE))
 
-    expect_equivalent(stri_startswith_fixed("ĆĄĆĄĆ", "ĆĄĆ", from = c(1,
+    expect_equivalent(stri_startswith_fixed("\u0106\u0104\u0106\u0104\u0106", "\u0106\u0104\u0106", from = c(1,
         2, 3, 100, -3), case_insensitive = val), c(T, F, T, F, T))
-    expect_equivalent(stri_startswith_fixed("ĆĄĆĄĆ", "ĆĄĆ", from = c(1,
+    expect_equivalent(stri_startswith_fixed("\u0106\u0104\u0106\u0104\u0106", "\u0106\u0104\u0106", from = c(1,
         2, 3, 100, -3), case_insensitive = val, negate = TRUE), !c(T, F, T, F, T))
-    expect_equivalent(stri_startswith("ĆĄĆĄĆ", fixed = "ĆĄĆ", from = c(1,
+    expect_equivalent(stri_startswith("\u0106\u0104\u0106\u0104\u0106", fixed = "\u0106\u0104\u0106", from = c(1,
         2, 3, 100, -3), case_insensitive = val), c(T, F, T, F, T))
 }
 
@@ -87,10 +87,10 @@ expect_identical(stri_endswith_fixed(character(0), "ipsum 1234"), logical(0))
 expect_identical(stri_endswith_fixed(character(0), character(0)), logical(0))
 expect_identical(stri_endswith_fixed(c("ab", "cab", "ccccab", "abaabaaaa"), "ab"),
     c(T, T, T, F))
-expect_identical(stri_endswith_fixed(c("Lorem\n123", " ", "kota", "4\tą"), c(" ",
-    "\tą")), c(F, F, F, T))
+expect_identical(stri_endswith_fixed(c("Lorem\n123", " ", "kota", "4\t\u0105"), c(" ",
+    "\t\u0105")), c(F, F, F, T))
 expect_warning(stri_endswith_fixed(rep("asd", 5), rep("a", 2)))
-expect_identical(stri_endswith_fixed("Ąą", stri_trans_nfkd("Ąą")), FALSE)
+expect_identical(stri_endswith_fixed("\u0104\u0105", stri_trans_nfkd("\u0104\u0105")), FALSE)
 expect_equivalent(stri_endswith_fixed("bababababaab", "bab", to = c(-1, -2, -3,
     -4, 4, 3)), c(F, F, F, T, F, T))
 expect_equivalent(stri_endswith_fixed("aaaab", "ab"), TRUE)
@@ -141,10 +141,10 @@ for (val in c(FALSE, TRUE)) {
     expect_equivalent(stri_endswith_fixed("a", "b", c(-1000, 0, 4), case_insensitive = val),
         c(FALSE, FALSE, FALSE))
 
-    expect_equivalent(stri_endswith_fixed("ĆĄĆĄĆĄĆĄĆĄĄĆ", "ĆĄĆ",
+    expect_equivalent(stri_endswith_fixed("\u0106\u0104\u0106\u0104\u0106\u0104\u0106\u0104\u0106\u0104\u0104\u0106", "\u0106\u0104\u0106",
         to = c(-1, -2, -3, -4, 4, 3), case_insensitive = val), c(F, F, F, T,
         F, T))
-    expect_equivalent(stri_endswith("ĆĄĆĄĆĄĆĄĆĄĄĆ", fixed = "ĆĄĆ",
+    expect_equivalent(stri_endswith("\u0106\u0104\u0106\u0104\u0106\u0104\u0106\u0104\u0106\u0104\u0104\u0106", fixed = "\u0106\u0104\u0106",
         to = c(-1, -2, -3, -4, 4, 3), case_insensitive = val), c(F, F, F, T,
         F, T))
 }

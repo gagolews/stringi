@@ -12,7 +12,7 @@ expect_equivalent(stri_trim_both("A \t\n"), "A")
 expect_equivalent(stri_trim_both("     A"), "A")
 expect_equivalent(stri_trim_both(" \t"), "")
 expect_equivalent(stri_trim_both("\n"), "")
-expect_equivalent(stri_trim_both(" \t ą \n "), "ą")
+expect_equivalent(stri_trim_both(" \t \u0105 \n "), "\u0105")
 
 expect_equivalent(stri_trim_both(LETTERS), LETTERS)
 
@@ -31,7 +31,7 @@ expect_equivalent(stri_trim_left("A     "), "A     ")
 expect_equivalent(stri_trim_left("     A"), "A")
 expect_equivalent(stri_trim_left(" \t"), "")
 expect_equivalent(stri_trim_left("\n"), "")
-expect_equivalent(stri_trim_left(" \t ą \n "), "ą \n ")
+expect_equivalent(stri_trim_left(" \t \u0105 \n "), "\u0105 \n ")
 
 expect_equivalent(stri_trim_left(LETTERS), LETTERS)
 
@@ -50,7 +50,7 @@ expect_equivalent(stri_trim_right("A  \n   "), "A")
 expect_equivalent(stri_trim_right("    \n A"), "    \n A")
 expect_equivalent(stri_trim_right("\t "), "")
 expect_equivalent(stri_trim_right("\n"), "")
-expect_equivalent(stri_trim_right(" \t ą \n "), " \t ą")
+expect_equivalent(stri_trim_right(" \t \u0105 \n "), " \t \u0105")
 
 expect_equivalent(stri_trim_right(LETTERS), LETTERS)
 

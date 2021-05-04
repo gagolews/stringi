@@ -2,7 +2,7 @@ library("tinytest")
 library("stringi")
 
 
-x <- c("a", rep("ą", 4))
+x <- c("a", rep("\u0105", 4))
 Encoding(x) <- c("", "bytes", "UTF-8", "unknown", "latin1")
 expect_equivalent(stri_enc_mark(x), c("ASCII", "bytes", "UTF-8", "native", "latin1"))
 

@@ -28,10 +28,10 @@ expect_identical(stri_subset_coll(c("ala", "", "", "bbb"), c("ala", "bbb")),
 expect_identical(stri_subset_coll(c("a", "b", NA, "aaa", ""), c("a")), c("a",
     NA, "aaa"))
 
-expect_identical(stri_subset_coll(c("Lorem\n123", " ", "kota", "4\tą"), c(" ",
-    "\tą")), "4\tą")
+expect_identical(stri_subset_coll(c("Lorem\n123", " ", "kota", "4\t\u0105"), c(" ",
+    "\t\u0105")), "4\t\u0105")
 expect_warning(stri_subset_coll(rep("asd", 5), rep("a", 2)))
-expect_identical(stri_subset_coll("Ąą", stri_trans_nfkd("Ąą")), "Ąą")
+expect_identical(stri_subset_coll("\u0104\u0105", stri_trans_nfkd("\u0104\u0105")), "\u0104\u0105")
 expect_equivalent(stri_subset_coll("aaaab", "ab"), "aaaab")
 expect_equivalent(stri_subset_coll("bababababaab", "aab"), "bababababaab")
 

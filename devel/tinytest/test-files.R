@@ -6,7 +6,7 @@ library("stringi")
 fname <- tempfile()
 
 n <- 96283
-for (text in list(c("ala", "aląĄąĄĘŻ", "es8 ug8es jgiose"), stri_rand_strings(n,
+for (text in list(c("ala", "al\u0105\u0104\u0105\u0104\u0118\u017B", "es8 ug8es jgiose"), stri_rand_strings(n,
     sample(80, n, replace = TRUE)))) {
 
     stri_write_lines(text, fname, "utf16")
