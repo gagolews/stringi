@@ -1,12 +1,8 @@
 What Is New in *stringi*
 ========================
 
--  … (to do - future releases) … #25 (locate-capture groups), #31
-   (sub_index), #96 (split-backwards), #405 (stri_sub match.length
-   attrib)
-
-1.6.1 (2021-XX-YY) **devel**
-----------------------------
+1.6.1 (2021-05-05)
+------------------
 
 -  [GENERAL] #401: stringi is now bundled with ICU4C 69.1 (upgraded from
    61.1), which is used on most Windows and OS X builds as well as on
@@ -44,8 +40,10 @@ What Is New in *stringi*
 -  [INTERNAL] #414: Use ``LEVELS(x)`` macro instead of accessing
    ``(x)->sxpinfo.gp`` directly (@lukaszdaniel).
 
-1.5.3 (2020-09-04) **CRAN**
----------------------------
+.. _section-1:
+
+1.5.3 (2020-09-04)
+------------------
 
 -  [DOCUMENTATION] stringi home page has moved to
    https://stringi.gagolewski.com and now includes a comprehensive
@@ -110,10 +108,10 @@ What Is New in *stringi*
 -  [BUGFIX] ``stri_wrap()`` did not honour ``indent`` correctly when
    ``use_width`` was ``TRUE``.
 
-.. _cran-1:
+.. _section-2:
 
-1.4.6 (2020-02-17) **CRAN**
----------------------------
+1.4.6 (2020-02-17)
+------------------
 
 -  [BACKWARD INCOMPATIBILITY] #369: ``stri_c()`` now returns an empty
    string when input is empty and ``collapse`` is set.
@@ -124,17 +122,17 @@ What Is New in *stringi*
 -  [DOCUMENTATION] #372: documented arguments not in ``\usage`` in
    documentation object ``stri_datetime_format``: ``...``
 
-.. _cran-2:
+.. _section-3:
 
-1.4.5 (2020-01-11) **CRAN**
----------------------------
+1.4.5 (2020-01-11)
+------------------
 
 -  [BUGFIX] #366: fix for #363 required ICU >= 55 .
 
-.. _cran-3:
+.. _section-4:
 
-1.4.4 (2020-01-06) **CRAN**
----------------------------
+1.4.4 (2020-01-06)
+------------------
 
 -  [BUGFIX] #348: Avoid copying 0 bytes to a nil-buffer in
    ``stri_sub_all()``.
@@ -150,10 +148,10 @@ What Is New in *stringi*
 -  [BUGFIX] #363: Status of ``RegexMatcher`` is now checked after its
    use.
 
-.. _cran-4:
+.. _section-5:
 
-1.4.3 (2019-03-12) **CRAN**
----------------------------
+1.4.3 (2019-03-12)
+------------------
 
 -  [NEW FEATURE] #30: New function ``stri_sub_all()`` - a version of
    ``stri_sub()`` accepting list ``from``/``to``/``length`` arguments
@@ -178,10 +176,10 @@ What Is New in *stringi*
 -  [WARNFIX] #205: ``configure.ac`` is now included in the source
    bundle.
 
-.. _cran-5:
+.. _section-6:
 
-1.3.1 (2019-02-10) **CRAN**
----------------------------
+1.3.1 (2019-02-10)
+------------------
 
 -  [BACKWARD INCOMPATIBILITY] #335: A fix to #314 prevented (by design)
    the use of the system ICU if the library had been compiled with
@@ -217,10 +215,10 @@ What Is New in *stringi*
    ``stri_split_regex()`` and ``stri_count_fixed()``) used to raise too
    many warnings on empty search patters.
 
-.. _cran-6:
+.. _section-7:
 
-1.2.4 (2018-07-20) **CRAN**
----------------------------
+1.2.4 (2018-07-20)
+------------------
 
 -  [BUGFIX] #314: Testing ``U_CHARSET_IS_UTF8`` in ``./configure`` when
    using ``pkg-build``.
@@ -230,10 +228,10 @@ What Is New in *stringi*
    ``windows-release`` and ``windows-oldrel``). (reverted in version
    1.3.1, the ``winbuilder`` errors were caused by a build chain bug).
 
-.. _cran-7:
+.. _section-8:
 
-1.2.3 (2018-05-16) **CRAN**
----------------------------
+1.2.3 (2018-05-16)
+------------------
 
 -  [BUGFIX] #296: Fixed the behaviour of the ``./configure`` script on
    CentOS 6.
@@ -241,10 +239,10 @@ What Is New in *stringi*
 -  [BUGFIX] Fixed broken Windows build by updating the ``icudt`` mirror
    list.
 
-.. _cran-8:
+.. _section-9:
 
-1.2.2 (2018-05-01) **CRAN**
----------------------------
+1.2.2 (2018-05-01)
+------------------
 
 -  [GENERAL] #193: stringi is now bundled with ICU4C 61.1, which is used
    on most Windows and OS X builds as well as on \*nix systems not
@@ -272,19 +270,19 @@ What Is New in *stringi*
    ``icu55/common/cstring.h:38:63`` and ``icu55/i18n/windtfmt.cpp`` in
    the ICU4C 55.1 bundle.
 
-.. _cran-9:
+.. _section-10:
 
-1.1.7 (2018-03-06) **CRAN**
----------------------------
+1.1.7 (2018-03-06)
+------------------
 
 -  [BUGFIX] Fixed ICU4C 55.1 generating some *significant warnings*
    (``icu55/i18n/winnmfmt.cpp``) and *suppressing important diagnostics*
    (``src/icu55/i18n/decNumber.c``).
 
-.. _cran-10:
+.. _section-11:
 
-1.1.6 (2017-11-10) **CRAN**
----------------------------
+1.1.6 (2017-11-10)
+------------------
 
 -  [WINDOWS SPECIFIC] #270: Strings marked with ``latin1`` encoding are
    now converted internally to UTF-8 using the WINDOWS-1252 codec. This
@@ -299,10 +297,10 @@ What Is New in *stringi*
 -  [BUGFIX] Fixed unPROTECTed variable names and stack imbalances as
    reported by ``rchk``.
 
-.. _cran-11:
+.. _section-12:
 
-1.1.5 (2017-04-07) **CRAN**
----------------------------
+1.1.5 (2017-04-07)
+------------------
 
 -  [GENERAL] stringi now requires ICU4C >= 52.
 
@@ -318,10 +316,10 @@ What Is New in *stringi*
 
 -  [BUILD TIME, BUGFIX] #254: ``dir.exists()`` is R >= 3.2.
 
-.. _cran-12:
+.. _section-13:
 
-1.1.3 (2017-03-21) **CRAN**
----------------------------
+1.1.3 (2017-03-21)
+------------------
 
 -  [REMOVE DEPRECATED] ``stri_install_check()`` and
    ``stri_install_icudt()`` marked as deprecated in stringi 0.5-5 are no
@@ -346,17 +344,17 @@ What Is New in *stringi*
    deprecated as of ICU 58.2, stringi code has been upgraded
    accordingly.
 
-.. _cran-13:
+.. _section-14:
 
-1.1.2 (2016-09-30) **CRAN**
----------------------------
+1.1.2 (2016-09-30)
+------------------
 
 -  [BUGFIX] ``round()``, ``snprintf()`` is not C++98.
 
-.. _cran-14:
+.. _section-15:
 
-1.1.1 (2016-05-25) **CRAN**
----------------------------
+1.1.1 (2016-05-25)
+------------------
 
 -  [BUGFIX] #214: Allow a regex pattern like ``.*`` to match an empty
    string.
@@ -379,10 +377,10 @@ What Is New in *stringi*
    a list of character vectors. Useful in conjunction with, e.g.,
    ``stri_extract_all_regex()``, ``stri_extract_all_words()``, etc.
 
-.. _cran-15:
+.. _section-16:
 
-1.0-1 (2015-10-22) **CRAN**
----------------------------
+1.0-1 (2015-10-22)
+------------------
 
 -  [GENERAL] #88: C API is now available for use in, e.g., Rcpp
    packages, see https://github.com/gagolews/ExampleRcppStringi for an
@@ -395,10 +393,10 @@ What Is New in *stringi*
 -  [BUGFIX] #180: ``stri_c()`` warned incorrectly (recycling rule) when
    using more than two elements.
 
-.. _cran-16:
+.. _section-17:
 
-0.5-5 (2015-06-28) **CRAN**
----------------------------
+0.5-5 (2015-06-28)
+------------------
 
 -  [BACKWARD INCOMPATIBILITY] ``stri_install_check()`` and
    ``stri_install_icudt()`` are now deprecated. From now on they are
@@ -427,10 +425,10 @@ What Is New in *stringi*
 -  [NEW FEATURE] ``stri_info()`` now also gives information about which
    version of ICU4C is in use (system or bundle).
 
-.. _cran-17:
+.. _section-18:
 
-0.5-2 (2015-06-21) **CRAN**
----------------------------
+0.5-2 (2015-06-21)
+------------------
 
 -  [BACKWARD INCOMPATIBILITY] The second argument to ``stri_pad_*()``
    has been renamed ``width``.
@@ -518,15 +516,15 @@ What Is New in *stringi*
 -  [BUGFIX] #154: Dates and other objects with a custom class attribute
    were not coerced to the character type correctly.
 
--  [BUGFIX] Force ICU ``u_init()`` call on stringi dynlib load.
+-  [BUGFIX] Force ICU ``u_init()`` call on the stringi dynlib load.
 
--  [BUGFIX] #157: Many overfull hboxes in the package PDF manual have
-   been corrected.
+-  [BUGFIX] #157: Many overfull ``hbox``\ es in the package PDF manual
+   have been corrected.
 
-.. _cran-18:
+.. _section-19:
 
-0.4-1 (2014-12-11) **CRAN**
----------------------------
+0.4-1 (2014-12-11)
+------------------
 
 -  [IMPORTANT CHANGE] ``n_max`` argument in ``stri_split_*()`` has been
    renamed ``n``.
@@ -599,10 +597,10 @@ What Is New in *stringi*
    others, the ICU ``UnicodeString``. This setting also caused some
    ``ASAN`` sanity check failures within ICU code.
 
-.. _cran-19:
+.. _section-20:
 
-0.3-1 (2014-11-06) **CRAN**
----------------------------
+0.3-1 (2014-11-06)
+------------------
 
 -  [IMPORTANT CHANGE] #87: ``%>%`` overlapped with the pipe operator
    from the ``magrittr`` package; now each operator like ``%>%`` has
@@ -676,26 +674,26 @@ What Is New in *stringi*
 -  [DOCUMENTATION] Significant extensions/clean ups in the stringi
    manual.
 
-.. _cran-20:
+.. _section-21:
 
-0.2-5 (2014-05-16) **CRAN**
----------------------------
+0.2-5 (2014-05-16)
+------------------
 
--  icudt-dependent examples are no longer run if ``icudt`` is not
-   available (this was reverted in a future version though).
+-  Some examples are no longer run if ``icudt`` is not available (this
+   was reverted in a future version though).
 
-.. _cran-21:
+.. _section-22:
 
-0.2-4 (2014-05-15) **CRAN**
----------------------------
+0.2-4 (2014-05-15)
+------------------
 
 -  [BUGFIX] Fixed issues with loading of misaligned addresses in
    ``stri_*_fixed()``.
 
-.. _cran-22:
+.. _section-23:
 
-0.2-3 (2014-05-14) **CRAN**
----------------------------
+0.2-3 (2014-05-14)
+------------------
 
 -  [IMPORTANT CHANGE] ``stri_cmp*()`` now do not allow for passing
    ``opts_collator=NA``. From now on, ``stri_cmp_eq()``,
@@ -725,7 +723,7 @@ What Is New in *stringi*
 
 -  [NEW FUNCTION] ``stri_trans_general()`` and ``stri_trans_list()``
    give access to ICU’s ``Transliterator``: they may be used to perform
-   some generic text transforms, like Unicode normalization, case
+   some generic text transforms, like Unicode normalisation, case
    folding, etc.
 
 -  [NEW FUNCTION ``stri_split_boundaries()`` uses ICU’s
@@ -792,11 +790,11 @@ What Is New in *stringi*
    backward-compatibility). It may be used to, e.g., replace sequences
    of white spaces with a single space.
 
--  [NEW FEATURE] ``stri_enc_toutf8()`` now has a new ``validate`` arg
-   (defaults to ``FALSE`` for backward-compatibility). It may be used in
-   a (rare) case where a user wants to fix an invalid UTF-8 byte
-   sequence. ``stri_length()`` (among others) now detects invalid UTF-8
-   byte sequences.
+-  [NEW FEATURE] ``stri_enc_toutf8()`` now has a new ``validate``
+   argument (which defaults to ``FALSE`` for backward-compatibility). It
+   may be used in a (rare) case where a user wants to fix an invalid
+   UTF-8 byte sequence. ``stri_length()`` (among others) now detects
+   invalid UTF-8 byte sequences.
 
 -  [NEW FEATURE] All binary operators ``%???%`` now also have aliases
    ``%stri???%``.
@@ -827,17 +825,19 @@ What Is New in *stringi*
 -  [BUGFIX] ``stri_sort()`` did not guarantee to return strings in
    UTF-8.
 
-.. _cran-23:
+.. _section-24:
 
-0.1-25 (2014-03-12) **CRAN**
-----------------------------
+0.1-25 (2014-03-12)
+-------------------
 
 -  LICENSE tweaks.
 
--  Initial CRAN release.
+-  First CRAN release.
 
-0.1-24 (2014-03-11) **devel**
------------------------------
+.. _section-25:
+
+0.1-24 (2014-03-11)
+-------------------
 
 -  Fixed bugs detected with ``ASAN`` and ``UBSAN``, e.g., fixed
    ``CharClass::gcmask`` type (``enum`` -> ``uint32_t``) (reported by
@@ -845,13 +845,13 @@ What Is New in *stringi*
 
 -  Fixed array over-runs detected with ``valgrind`` in ``string8.h``.
 
--  Fixed unitialised class fields in ``StriContainerUTF8`` (reported by
-   ``valgrind``).
+-  Fixed uninitialised class fields in ``StriContainerUTF8`` (reported
+   by ``valgrind``).
 
-.. _devel-1:
+.. _section-26:
 
-0.1-23 (2014-03-11) **devel**
------------------------------
+0.1-23 (2014-03-11)
+-------------------
 
 -  License changed to BSD-3-clause, COPYRIGHTS updated.
 
@@ -860,10 +860,10 @@ What Is New in *stringi*
 
 -  New functions: ``stri_install_check()``, ``stri_install_icudt()``.
 
-.. _devel-2:
+.. _section-27:
 
-0.1-22 (2014-02-20) **devel**
------------------------------
+0.1-22 (2014-02-20)
+-------------------
 
 -  System ICU is used on systems which do have one (version >= 50
    needed). ICU is auto-detected with ``pkg-config`` in ``./configure``.
@@ -873,47 +873,47 @@ What Is New in *stringi*
 -  ``icudt52b`` (custom subset) is now shipped with stringi (for
    big-endian, ASCII systems).
 
-.. _devel-3:
+.. _section-28:
 
-0.1-21 (2014-02-19) **devel**
------------------------------
+0.1-21 (2014-02-19)
+-------------------
 
 -  Fixed some issues on Solaris while preparing stringi for CRAN
    submission.
 
-.. _devel-4:
+.. _section-29:
 
-0.1-20 (2014-02-17) **devel**
------------------------------
+0.1-20 (2014-02-17)
+-------------------
 
--  ICU4C 52.1 sources included (common, i18n, stubdata + icu52dt.dat
+-  ICU4C 52.1 sources included (common, i18n, stubdata + ``icu52dt.dat``
    loaded dynamically). Compilation via Makevars.
 
 -  stringi does not depend on any external libraries anymore.
 
-.. _devel-5:
+.. _section-30:
 
-0.1-11 (2013-11-16) **devel**
------------------------------
+0.1-11 (2013-11-16)
+-------------------
 
 -  ICU4C is now statically linked on Windows.
 
 -  First OS X binary build.
 
--  The package is being intensively tested by our students @ Warsaw
+-  The package is being intensively tested by our students at Warsaw
    University of Technology.
 
-.. _devel-6:
+.. _section-31:
 
-0.1-10 (2013-11-13) **devel**
------------------------------
+0.1-10 (2013-11-13)
+-------------------
 
 -  Using ``pkg-config`` via ``./configure`` to look for ICU4C libs.
 
-.. _devel-7:
+.. _section-32:
 
-0.1-6 (2013-07-05) **devel**
-----------------------------
+0.1-6 (2013-07-05)
+------------------
 
 -  First Windows binary build.
 
@@ -922,9 +922,9 @@ What Is New in *stringi*
 -  By now we have implemented most of the functionality scheduled for
    milestone 0.1.
 
-.. _devel-8:
+.. _section-33:
 
-0.1-1 (2013-01-05) **devel**
-----------------------------
+0.1-1 (2013-01-05)
+------------------
 
--  The stringi project has been established on GitHub.
+-  The stringi project has been started.
