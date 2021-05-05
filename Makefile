@@ -57,7 +57,7 @@ sphinx: r weave rd2rst news
 	mkdir docs/
 	cp -rf devel/sphinx/_build/html/* docs/
 	cp devel/CNAME.tpl docs/CNAME
-	touch .nojekyll
+	touch docs/.nojekyll
 
 clean:
 	rm -f src/*.o src/*.so  # will not remove src/icuXY/*/*.o
