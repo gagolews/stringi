@@ -30,8 +30,6 @@ expect_equal(stri_join_list(stri_extract_all_regex(c("R is OK.", "123 456", "Hey
     "\\p{L}+", omit_no_match = TRUE), " ", " -- "), c("R is OK -- Hey"))
 
 
-# warning('testthat completely ignores warnings :( -- if this is turned into an error, we are OK')
-
 # we have many specialized functions for join, e.g.
 # flatten with sep
 # flatten with no sep
@@ -140,8 +138,6 @@ expect_identical(stri_join(LETTERS, NA_character_), rep(NA_character_, length(LE
 expect_identical(stri_join(c("\u0105", "\u0104")), c("\u0105", "\u0104"))
 expect_identical(stri_join(c("\u0105", "\u0104"), collapse = ""), c("\u0105\u0104"))
 expect_identical(stri_join(c("\u0105", "\u0104"), collapse = "!!!!!"), c("\u0105!!!!!\u0104"))
-expect_identical(stri_join(enc2native(c("\u0105", "\u0104"))), c("\u0105", "\u0104"))
-expect_identical(stri_join(enc2native(c("\u0105", "\u0104"))), enc2native(c("\u0105", "\u0104")))
 expect_identical(stri_join(LETTERS, letters, collapse = ""), paste(LETTERS, letters,
     sep = "", collapse = ""))
 expect_identical(stri_join(LETTERS, letters, collapse = "!"), paste(LETTERS,

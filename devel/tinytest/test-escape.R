@@ -11,7 +11,8 @@ expect_equivalent(stri_escape_unicode(NA), NA_character_)
 expect_equivalent(stri_escape_unicode(letters), letters)
 #expect_equivalent(stri_escape_unicode('abc\u0105\U00100000'), 'abc\\u0105\\U00100000')
 expect_equivalent(stri_escape_unicode("abc'\a\n\\n"), "abc\\'\\a\\n\\\\n")
-expect_error(stri_escape_unicode("\U0fffffff"))
+
+# expect_error(stri_escape_unicode("\U0fffffff"))  !NDEBUG only
 
 
 

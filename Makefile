@@ -1,7 +1,6 @@
 # Copyright (c) 2013-2021, Marek Gagolewski <https://www.gagolewski.com>
 
 
-
 .PHONY:  r check build clean purge sphinx test
 
 PKGNAME="stringi"
@@ -58,7 +57,7 @@ sphinx: r weave rd2rst news
 	mkdir docs/
 	cp -rf devel/sphinx/_build/html/* docs/
 	cp devel/CNAME.tpl docs/CNAME
-	touch docs/.nojekyll
+	touch .nojekyll
 
 clean:
 	rm -f src/*.o src/*.so  # will not remove src/icuXY/*/*.o

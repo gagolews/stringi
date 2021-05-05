@@ -30,6 +30,7 @@ kate-swp$
 ^\.gitignore$
 ^\.travis\.yml$
 ^\.vscode
+^\.nojekyll
 ^stringi\.Rproj$
 ^Makefile
 ^stringi_.*\.tar\.gz$

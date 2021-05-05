@@ -1,7 +1,7 @@
-# Roxygen-generated man pages
-# man/*.Rd
+# Roxygen-generated man pages:
+## man/*.Rd -- we *do* want them in the repository.
 
-# Autoconf
+# Autoconf/configure:
 src/symbols.rds
 src/Makevars
 src/install.libs.R
@@ -11,15 +11,20 @@ config.log
 config.status
 .lineno
 
-# R/RStudio files:
+
+# Local development environment:
+*.kdev4
+.kdev4
 *.Rproj
 .Rproj.user
 .Rhistory
 .RData
 stringi.Rcheck
 *.kate-swp
+.vscode
 
-# compiled/precompiled files
+
+# Compiled files:
 *.o
 *.so
 *.dll
@@ -27,14 +32,12 @@ stringi.Rcheck
 src-i386/
 src-x64/
 
-# backup files
+
+# Backup and temporary files:
 *~
 *.backup
 *.bak
-
-# KDevelop project files:
-*.kdev4
-.kdev4
+*.tmp
 
 # LaTeX/knitr dust:
 *.aux
@@ -44,5 +47,3 @@ src-x64/
 *.blg
 cache-knitr/
 cache/
-
-.vscode
