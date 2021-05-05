@@ -10,11 +10,11 @@ stringi: THE String Processing Package for R
 
 
 Thanks to `ICU <https://www.icu-project.org>`_,
-`stringi` fully supports a wide range
+*stringi* fully supports a wide range
 of `Unicode <https://www.unicode.org/>`_ standards
 (see also `this video <https://www.youtube.com/watch?v=-n2nlPHEMG8>`_).
 
-It gives you a multitude of functions for:
+*stringi* gives you plenty of functions for:
 
 * string concatenation, padding, wrapping,
 * substring extraction,
@@ -28,7 +28,7 @@ It gives you a multitude of functions for:
 
 and many more.
 
-`stringi` is among the most often downloaded `R <https://r-project.org/>`_
+*stringi* is among the most often downloaded `R <https://r-project.org/>`_
 packages. |downloads1| |downloads2|
 
 You can obtain it from `CRAN <https://cran.r-project.org/web/packages/stringi/>`_
@@ -41,14 +41,14 @@ by calling:
 
 
 
-`stringi`'s source code is hosted on `GitHub <https://github.com/gagolews/stringi>`_.
-It has been released under the open source BSD-3-clause
+*stringi*'s source code is hosted on `GitHub <https://github.com/gagolews/stringi>`_.
+It is distributed under the open source BSD-3-clause
 `license <https://raw.githubusercontent.com/gagolews/stringi/master/LICENSE>`_.
 
 The package's API was inspired by that of the early (pre-tidyverse; v0.6.2)
 version of Hadley Wickham's
 `stringr <https://cran.r-project.org/web/packages/stringr/>`_
-package (and since the 2015 v1.0.0 `stringr` is powered by `stringi`).
+package (and since the 2015 v1.0.0 *stringr* is powered by *stringi*).
 Moreover, Hadley suggested quite a few new package features.
 The contributions from Bartłomiej Tartanus and
 `many others <https://github.com/gagolews/stringi/graphs/contributors>`_

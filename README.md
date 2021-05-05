@@ -61,8 +61,8 @@ package (and since the 2015 v1.0.0 *stringr* is powered by *stringi*).
 [INSTALL](https://raw.githubusercontent.com/gagolews/stringi/master/INSTALL)
 file for more details)
 
-**License**: *stringi*'s source code is licensed under the open source
-BSD-3-clause, for more details see the
+**License**: *stringi*'s source code is distributed under the open source
+BSD-3-clause license, for more details see the
 [LICENSE](https://raw.githubusercontent.com/gagolews/stringi/master/LICENSE) file.
 
 This *git* repository also contains a custom subset of *ICU4C* source code
