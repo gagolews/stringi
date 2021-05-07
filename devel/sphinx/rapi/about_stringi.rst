@@ -21,7 +21,7 @@ Manual pages on general topics:
 
 -  `about_locale <about_locale.html>`__ – locale issues, including locale management and specification in stringi, and the list of locale-sensitive operations. In particular, see `stri_opts_collator <stri_opts_collator.html>`__ for a description of the string collation algorithm, which is used for string comparing, ordering, ranking, sorting, case-folding, and searching.
 
--  `about_arguments <about_arguments.html>`__ – information on how stringi treats its functions' arguments.
+-  `about_arguments <about_arguments.html>`__ – information on how stringi handles the arguments passed to its function.
 
 Facilities available
 ~~~~~~~~~~~~~~~~~~~~
@@ -62,7 +62,7 @@ Refer to the following:
 
 -  `stri_rand_strings <stri_rand_strings.html>`__, `stri_rand_shuffle <stri_rand_shuffle.html>`__, and `stri_rand_lipsum <stri_rand_lipsum.html>`__ for generating (pseudo)random strings.
 
--  DRAFT API: `stri_read_raw <stri_read_raw.html>`__, `stri_read_lines <stri_read_lines.html>`__, and `stri_write_lines <stri_write_lines.html>`__ for reading and writing text files.
+-  `stri_read_raw <stri_read_raw.html>`__, `stri_read_lines <stri_read_lines.html>`__, and `stri_write_lines <stri_write_lines.html>`__ for reading and writing text files.
 
 Note that each man page provides many further links to other interesting facilities and topics.
 

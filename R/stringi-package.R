@@ -64,7 +64,7 @@
 #'    ranking, sorting, case-folding, and searching.
 #'
 #' \item \link{about_arguments} -- information on how \pkg{stringi}
-#'    treats its functions' arguments.
+#'    handles the arguments passed to its function.
 #' }
 #'
 #'
@@ -132,7 +132,7 @@
 #' \item \code{\link{stri_rand_strings}}, \code{\link{stri_rand_shuffle}},
 #' and \code{\link{stri_rand_lipsum}} for generating (pseudo)random strings.
 #'
-#' \item DRAFT API: \code{\link{stri_read_raw}},
+#' \item \code{\link{stri_read_raw}},
 #' \code{\link{stri_read_lines}}, and  \code{\link{stri_write_lines}}
 #' for reading and writing text files.
 #' }
