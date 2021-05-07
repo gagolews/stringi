@@ -14,19 +14,37 @@ Thanks to `ICU <https://www.icu-project.org>`_,
 of `Unicode <https://www.unicode.org/>`_ standards
 (see also `this video <https://www.youtube.com/watch?v=-n2nlPHEMG8>`_).
 
-*stringi* gives you plenty of functions for:
+.. code-block:: r
 
-* string concatenation, padding, wrapping,
-* substring extraction,
+    stri_extract_all(regex="\\p{Emoji}",
+        c("歡迎 欢迎! Χαίρετε! Bienvenidos! 😃❤🌍", "spam, spam, 🥓, 🍳, and spam"))
+    ## [[1]]
+    ## [1] "😃" "❤"  "🌍"
+    ##
+    ## [[2]]
+    ## [1] "🥓" "🍳"
+
+    stri_count_fixed("ACATGAACGGGTACACACTG", "ACA", overlap=TRUE)
+    ## [1] 3
+
+    stri_sort(c("cudný", "chladný", "hladný", "čudný"), locale="sk_SK")
+    ## [1] "cudný"   "čudný"   "hladný"  "chladný"
+
+
+*stringi* gives you plenty of functions related to data cleansing,
+information extraction, and natural language processing:
+
+* string concatenation, padding, wrapping, and substring extraction,
 * pattern searching (e.g., with ICU Java-like regular expressions),
-* collation and sorting,
+* collation, sorting, and ranking,
 * random string generation,
-* case mapping and folding,
-* string transliteration,
+* string transliteration, case mapping and folding,
 * Unicode normalisation,
 * date-time formatting and parsing,
 
 and many more.
+
+
 
 *stringi* is among the most often downloaded `R <https://r-project.org/>`_
 packages. |downloads1| |downloads2|
@@ -53,6 +71,30 @@ Moreover, Hadley suggested quite a few new package features.
 The contributions from Bartłomiej Tartanus and
 `many others <https://github.com/gagolews/stringi/graphs/contributors>`_
 is greatly appreciated. Thanks!
+
+..  COMMENT
+    This should be part of some other section maybe.
+
+    Base R functions are not suitable for natural language processing.
+    In fact, Unicode should be part of every major platform/programming
+    environment/application now. Still teaching only the K&R char* strings
+    is too English-centric (as the early computer era was dominated by the US).
+    https://en.wikipedia.org/wiki/List_of_languages_by_total_number_of_speakers:
+    English ~1350 million speakers (but only 370 are native)
+    Mandarin Chinese 1120 billion (920 native
+    Hindi 600 billion
+    Spanish 540
+    Arabic 270
+    Some languages (Python 3, PERL?, ..) switched to Unicode already;
+    ICU takes you one step further
+    36% of the world population use the Latin alphabet https://en.wikipedia.org/wiki/Latin_script
+    Why would I use stringi over stringr? Using stringr you use stringi already.
+    It's not about the API, it's about correctness.
+    TODO: stringb
+    stringi is not tidyverse
+
+
+
 
 
 .. toctree::
