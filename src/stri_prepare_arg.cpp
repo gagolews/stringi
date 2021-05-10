@@ -63,7 +63,7 @@ SEXP stri_prepare_arg_list(SEXP x, const char* argname)
  *
  * If the object cannot be coerced, then an error will be generated
  *
- * WARNING: this fuction is allowed to call the error() function.
+ * WARNING: this function is allowed to call the error() function.
  * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
  *
  * @param x a list /  raw vector / character vector
@@ -104,7 +104,7 @@ SEXP stri_prepare_arg_list_raw(SEXP x, const char* argname)
  *
  * If the object cannot be coerced, then an error will be generated
  *
- * WARNING: this fuction is allowed to call the error() function.
+ * WARNING: this function is allowed to call the error() function.
  * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
  *
  * @param x a list of integer vectors / integer vector
@@ -160,7 +160,7 @@ SEXP stri_prepare_arg_list_integer(SEXP x, const char* argname)
  *
  * If the object cannot be coerced, then an error will be generated
  *
- * WARNING: this fuction is allowed to call the error() function.
+ * WARNING: this function is allowed to call the error() function.
  * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
  *
  * @param x a list of strings
@@ -205,7 +205,7 @@ SEXP stri_prepare_arg_list_string(SEXP x, const char* argname)
  *
  * If the object cannot be coerced, then an error will be generated
  *
- * WARNING: this fuction is allowed to call the error() function.
+ * WARNING: this function is allowed to call the error() function.
  * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
  *
  *
@@ -278,7 +278,7 @@ SEXP stri_prepare_arg_string(SEXP x, const char* argname)
  *
  * If the object cannot be coerced, then an error will be generated
  *
- * WARNING: this fuction is allowed to call the error() function.
+ * WARNING: this function is allowed to call the error() function.
  * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
  *
  *
@@ -350,7 +350,7 @@ SEXP stri_prepare_arg_double(SEXP x, const char* argname)
  *
  * If the object cannot be coerced, then an error will be generated
  *
- * WARNING: this fuction is allowed to call the error() function.
+ * WARNING: this function is allowed to call the error() function.
  * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
  *
  *
@@ -397,7 +397,7 @@ SEXP stri_prepare_arg_POSIXct(SEXP x, const char* argname)
  *
  * If the object cannot be coerced, then an error will be generated
  *
- * WARNING: this fuction is allowed to call the error() function.
+ * WARNING: this function is allowed to call the error() function.
  * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
  *
  *
@@ -469,7 +469,7 @@ SEXP stri_prepare_arg_integer(SEXP x, const char* argname)
  *
  * If the object cannot be coerced, then an error will be generated
  *
- * WARNING: this fuction is allowed to call the error() function.
+ * WARNING: this function is allowed to call the error() function.
  * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
  *
  *
@@ -541,7 +541,7 @@ SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
  *
  * If the object cannot be coerced, then an error will be generated
  *
- * WARNING: this fuction is allowed to call the error() function.
+ * WARNING: this function is allowed to call the error() function.
  * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
  *
  *
@@ -610,7 +610,7 @@ SEXP stri_prepare_arg_raw(SEXP x, const char* argname)
  * If there are 0 elements -> error
  * If there are >1 elements -> warning
  *
- * WARNING: this fuction is allowed to call the error() function.
+ * WARNING: this function is allowed to call the error() function.
  * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
  *
  *
@@ -701,7 +701,7 @@ SEXP stri_prepare_arg_string_1(SEXP x, const char* argname)
  * If there are 0 elements -> error
  * If there are >1 elements -> warning
  *
- * WARNING: this fuction is allowed to call the error() function.
+ * WARNING: this function is allowed to call the error() function.
  * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
  *
  *
@@ -788,7 +788,7 @@ SEXP stri_prepare_arg_double_1(SEXP x, const char* argname)
  * If there are 0 elements -> error
  * If there are >1 elements -> warning
  *
- * WARNING: this fuction is allowed to call the error() function.
+ * WARNING: this function is allowed to call the error() function.
  * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
  *
  *
@@ -875,7 +875,7 @@ SEXP stri_prepare_arg_integer_1(SEXP x, const char* argname)
  * If there are 0 elements -> error
  * If there are >1 elements -> warning
  *
- * WARNING: this fuction is allowed to call the error() function.
+ * WARNING: this function is allowed to call the error() function.
  * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
  *
  *
@@ -965,7 +965,7 @@ SEXP stri_prepare_arg_logical_1(SEXP x, const char* argname)
  * If there are 0 elements -> error
  * If there are >1 elements -> warning
  *
- * WARNING: this fuction is allowed to call the error() function.
+ * WARNING: this function is allowed to call the error() function.
  * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
  *
  *
@@ -989,12 +989,37 @@ bool stri__prepare_arg_logical_1_notNA(SEXP x, const char* argname)
 }
 
 
+
+/** Prepare logical argument - one value, can be NA
+ *
+ * If there are 0 elements -> error
+ * If there are >1 elements -> warning
+ *
+ * WARNING: this function is allowed to call the error() function.
+ * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
+ *
+ *
+ * @param x R object to be checked/coerced
+ * @param argname argument name (message formatting)
+ * @return int value, test (xval == NA_LOGICAL)
+ *
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-10)
+ */
+int stri__prepare_arg_logical_1_NA(SEXP x, const char* argname)
+{
+    PROTECT(x = stri_prepare_arg_logical_1(x, argname));
+    int xval = LOGICAL(x)[0];
+    UNPROTECT(1);
+    return xval;
+}
+
+
 /** Prepare integer argument - one value, not NA
  *
  * If there are 0 elements -> error
  * If there are >1 elements -> warning
  *
- * WARNING: this fuction is allowed to call the error() function.
+ * WARNING: this function is allowed to call the error() function.
  * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
  *
  *
@@ -1018,12 +1043,36 @@ int stri__prepare_arg_integer_1_notNA(SEXP x, const char* argname)
 }
 
 
+/** Prepare integer argument - one value, can be NA
+ *
+ * If there are 0 elements -> error
+ * If there are >1 elements -> warning
+ *
+ * WARNING: this function is allowed to call the error() function.
+ * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
+ *
+ *
+ * @param x R object to be checked/coerced
+ * @param argname argument name (message formatting)
+ * @return an integer value, test (xval == NA_INTEGER)
+ *
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-10)
+ */
+int stri__prepare_arg_integer_1_NA(SEXP x, const char* argname)
+{
+    PROTECT(x = stri_prepare_arg_integer_1(x, argname));
+    int xval = INTEGER(x)[0];
+    UNPROTECT(1);
+    return (int)xval;
+}
+
+
 /** Prepare double argument - one value, not NA
  *
  * If there are 0 elements -> error
  * If there are >1 elements -> warning
  *
- * WARNING: this fuction is allowed to call the error() function.
+ * WARNING: this function is allowed to call the error() function.
  * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
  *
  *
@@ -1043,6 +1092,30 @@ double stri__prepare_arg_double_1_notNA(SEXP x, const char* argname)
     UNPROTECT(1);
     if (ISNA(xval))
         Rf_error(MSG__ARG_EXPECTED_NOT_NA, argname); // allowed here
+    return (double)xval;
+}
+
+
+/** Prepare double argument - one value, can be NA
+ *
+ * If there are 0 elements -> error
+ * If there are >1 elements -> warning
+ *
+ * WARNING: this function is allowed to call the error() function.
+ * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
+ *
+ *
+ * @param x R object to be checked/coerced
+ * @param argname argument name (message formatting)
+ * @return a double value, test (ISNA(xval))
+ *
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-10)
+ */
+double stri__prepare_arg_double_1_NA(SEXP x, const char* argname)
+{
+    PROTECT(x = stri_prepare_arg_double_1(x, argname));
+    double xval = REAL(x)[0];
+    UNPROTECT(1);
     return (double)xval;
 }
 
@@ -1085,7 +1158,7 @@ const char* stri__copy_string_Ralloc(SEXP x, const char* argname)
  * If there are 0 elements -> error
  * If there are >1 elements -> warning
  *
- * WARNING: this fuction is allowed to call the error() function.
+ * WARNING: this function is allowed to call the error() function.
  * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
  *
  *
@@ -1121,7 +1194,7 @@ const char* stri__prepare_arg_string_1_notNA(SEXP x, const char* argname)
  * If the \code{loc} argument is incorrect, the an error is generated.
  * If something goes wrong, a warning is given.
  *
- * WARNING: this fuction is allowed to call the error() function.
+ * WARNING: this function is allowed to call the error() function.
  * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
  *
  *
@@ -1222,7 +1295,7 @@ const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowde
  * If the \code{tz} argument is incorrect, then an error is generated.
  * If something goes wrong, a warning is given.
  *
- * WARNING: this fuction is allowed to call the error() function.
+ * WARNING: this function is allowed to call the error() function.
  * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
  *
  *
@@ -1282,7 +1355,7 @@ TimeZone* stri__prepare_arg_timezone(SEXP tz, const char* argname, bool allowdef
  * If the \code{enc} argument is incorrect, the an error is generated.
  * If something goes wrong, a warning is given.
  *
- * WARNING: this fuction is allowed to call the error() function.
+ * WARNING: this function is allowed to call the error() function.
  * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
  *
  *

@@ -12,9 +12,10 @@ stri_flatten(str, collapse = "", na_empty = FALSE, omit_empty = FALSE)
 \item{collapse}{a single string denoting the separator}
 
 \item{na_empty}{single logical value; should missing values
-in \code{str} be treated as empty strings?}
+in \code{str} be treated as empty strings (\code{TRUE})
+or be omitted whatsoever (\code{NA})?}
 
-\item{omit_empty}{single logical value; should missing values
+\item{omit_empty}{single logical value; should empty strings
 in \code{str} be omitted?}
 }
 \value{
@@ -41,6 +42,7 @@ stri_flatten(LETTERS)
 stri_flatten(LETTERS, collapse=',')
 stri_flatten(stri_dup(letters[1:6], 1:3))
 stri_flatten(c(NA, '', 'A', '', 'B', NA, 'C'), collapse=',', na_empty=TRUE, omit_empty=TRUE)
+stri_flatten(c(NA, '', 'A', '', 'B', NA, 'C'), collapse=',', na_empty=NA)
 
 }
 \seealso{

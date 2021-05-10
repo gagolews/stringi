@@ -39,4 +39,11 @@ expect_identical(stri_flatten(c(NA, "", "A", "", "B", NA, "C"), na_empty = TRUE,
     omit_empty = TRUE), "ABC")
 expect_identical(stri_flatten(c(NA, "", "A", "", "B", NA, "C"), collapse = ",",
     na_empty = TRUE, omit_empty = TRUE), "A,B,C")
-
+expect_identical(stri_flatten(c(NA, "", "A", "", "B", NA, "C"), collapse = ",",
+    na_empty = NA, omit_empty = TRUE), "A,B,C")
+expect_identical(stri_flatten(c(NA, "", "A", "", "B", NA, "C"), collapse = ",",
+    na_empty = NA, omit_empty = FALSE), ",A,,B,C")
+expect_identical(stri_flatten(c(NA, "", "A", "", "B", NA, "C"), collapse = "",
+    na_empty = NA, omit_empty = TRUE), "ABC")
+expect_identical(stri_flatten(c(NA, "", "A", "", "B", NA, "C"), collapse = "",
+    na_empty = NA, omit_empty = FALSE), "ABC")
