@@ -14,7 +14,7 @@ stri_paste(..., sep = "", collapse = NULL, ignore_null = FALSE)
 }
 \arguments{
 \item{...}{character vectors (or objects coercible to character vectors)
-which corresponding elements are to be concatenated}
+whose corresponding elements are to be concatenated}
 
 \item{sep}{a single string; separates terms}
 

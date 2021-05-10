@@ -723,8 +723,11 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse, SEXP ignore_null)
  *
  * @version 1.2.1 (Marek Gagolewski, 2018-04-20)
  *    na_empty arg added
+ *
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-10)
+ *    #428 na_empty=NA support
  */
-SEXP stri_flatten_noressep(SEXP str, bool na_empty)
+SEXP stri_flatten_noressep(SEXP str, int na_empty)
 {
     PROTECT(str = stri_prepare_arg_string(str, "str"));
     R_len_t str_length = LENGTH(str);
@@ -740,7 +743,7 @@ SEXP stri_flatten_noressep(SEXP str, bool na_empty)
     R_len_t nchar = 0;
     for (int i=0; i<str_length; ++i) {
         if (str_cont.isNA(i)) {
-            if (na_empty) {
+            if (na_empty == NA_LOGICAL || na_empty) {
                 nchar += 0; // ignore
             }
             else {
@@ -803,11 +806,14 @@ SEXP stri_flatten_noressep(SEXP str, bool na_empty)
  * @version 1.2.1 (Marek Gagolewski, 2018-04-20)
  *    na_empty, omit_empty arg added
  *
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-10)
+ *    #428 na_empty=NA support
+ *
  */
 SEXP stri_flatten(SEXP str, SEXP collapse, SEXP na_empty, SEXP omit_empty) // a.k.a. C_stri_flatten_withressep
 {
     PROTECT(collapse = stri_prepare_arg_string_1(collapse, "collapse"));
-    bool na_empty_1 = stri__prepare_arg_logical_1_notNA(na_empty, "na_empty");
+    int na_empty_1 = stri__prepare_arg_logical_1_NA(na_empty, "na_empty");
     bool omit_empty_1 = stri__prepare_arg_logical_1_notNA(omit_empty, "omit_empty");
 
     if (STRING_ELT(collapse, 0) == NA_STRING) {
@@ -840,7 +846,9 @@ SEXP stri_flatten(SEXP str, SEXP collapse, SEXP na_empty, SEXP omit_empty) // a.
     R_len_t nbytes = 0;
     for (int i=0; i<str_length; ++i) {
         if (str_cont.isNA(i)) {
-            if (na_empty_1) {
+            if (na_empty_1 == NA_LOGICAL) {
+                nbytes += 0;  // do nothing
+            } else if (na_empty_1) {
                 nbytes += ((i>0 && !omit_empty_1)?collapse_nbytes:0);
             }
             else {
@@ -859,6 +867,9 @@ SEXP stri_flatten(SEXP str, SEXP collapse, SEXP na_empty, SEXP omit_empty) // a.
     R_len_t cur = 0;
     bool already_started = false;
     for (int i=0; i<str_length; ++i) {
+        if (na_empty_1 == NA_LOGICAL && str_cont.isNA(i))
+            continue;
+
         if (omit_empty_1 && (str_cont.isNA(i) || str_cont.get(i).length() == 0))
             continue;
 

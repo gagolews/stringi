@@ -161,7 +161,7 @@ stri_dup <- function(str, times)
 #' always in UTF-8.
 #'
 #' @param ... character vectors (or objects coercible to character vectors)
-#' which corresponding elements are to be concatenated
+#' whose corresponding elements are to be concatenated
 #' @param sep a single string; separates terms
 #' @param collapse a single string or \code{NULL}; an optional
 #' results separator
@@ -218,8 +218,9 @@ stri_paste <- stri_join
 #' @param str a vector of strings to be coerced to character
 #' @param collapse a single string denoting the separator
 #' @param na_empty single logical value; should missing values
-#' in \code{str} be treated as empty strings?
-#' @param omit_empty single logical value; should missing values
+#' in \code{str} be treated as empty strings (\code{TRUE})
+#' or be omitted whatsoever (\code{NA})?
+#' @param omit_empty single logical value; should empty strings
 #' in \code{str} be omitted?
 #'
 #' @return
@@ -231,6 +232,7 @@ stri_paste <- stri_join
 #' stri_flatten(LETTERS, collapse=',')
 #' stri_flatten(stri_dup(letters[1:6], 1:3))
 #' stri_flatten(c(NA, '', 'A', '', 'B', NA, 'C'), collapse=',', na_empty=TRUE, omit_empty=TRUE)
+#' stri_flatten(c(NA, '', 'A', '', 'B', NA, 'C'), collapse=',', na_empty=NA)
 #'
 #' @export
 #' @family join
