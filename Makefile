@@ -38,21 +38,23 @@ check: build
 check-cran: build
 	cd .. && STRINGI_DISABLE_PKG_CONFIG=1 R_DEFAULT_INTERNET_TIMEOUT=240 _R_CHECK_CRAN_INCOMING_REMOTE_=FALSE R CMD check `ls -t ${PKGNAME}*.tar.gz | head -1` --as-cran
 
-weave:
-	cd devel/sphinx/weave && make && cd ../../../
 
-rd2rst:
-	# https://github.com/gagolews/Rd2rst
-	# TODO: if need be, you can also use MyST in the future
-	cd devel/sphinx && Rscript -e "Rd2rst::Rd2rst('${PKGNAME}')" && cd ../../
+############## Rd2rst: https://github.com/gagolews/Rd2rst ######################
+
+rd2myst:
+	cd devel/sphinx && Rscript -e "Rd2rst::Rd2myst('${PKGNAME}')"
 
 news:
-	cd devel/sphinx && pandoc ../../NEWS -f markdown -t rst -o news.rst
-	cd devel/sphinx && pandoc ../../INSTALL -f markdown -t rst -o install.rst
+	cd devel/sphinx && cp ../../NEWS news.md
+	cd devel/sphinx && cp ../../INSTALL install.md
 
-sphinx: r weave rd2rst news
+weave-examples:
+	cd devel/sphinx/rapi && Rscript -e "Rd2rst::weave_examples('${PKGNAME}', '.')"
+	devel/sphinx/fix-code-blocks.sh devel/sphinx/rapi
+
+sphinx: r rd2myst news weave-examples
 	rm -rf devel/sphinx/_build/
-	cd devel/sphinx && make html && cd ../../
+	cd devel/sphinx && make html
 	rm -rf docs/
 	mkdir docs/
 	cp -rf devel/sphinx/_build/html/* docs/
@@ -60,13 +62,19 @@ sphinx: r weave rd2rst news
 	touch docs/.nojekyll
 	touch .nojekyll
 
+
+################################################################################
+
 clean:
 	rm -f src/*.o src/*.so  # will not remove src/icuXY/*/*.o
 	rm -f src/Makevars src/uconfig_local.h \
-		src/install.libs.R config.log config.status src/symbols.rds
+	    src/install.libs.R config.log config.status src/symbols.rds
+	rm -rf devel/sphinx/_build/
 
 purge: clean
 	find src -name '*.o' -exec rm {} \;
 	find src -name '*.so' -exec rm {} \;
-	rm -f man/*.Rd
 	rm -fr autom4te.cache
+	rm -f man/*.Rd
+	rm -rf devel/sphinx/rapi/
+	rm -rf docs/
