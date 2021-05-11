@@ -8,7 +8,7 @@ Description
 
 ``stri_timezone_get`` gets the current default time zone.
 
-For more information on time zone representation in ICU and stringi, refer to `stri_timezone_list <stri_timezone_list.html>`__.
+For more information on time zone representation in ICU and stringi, refer to `stri_timezone_list`_.
 
 Usage
 ~~~~~
@@ -46,9 +46,9 @@ References
 See Also
 ~~~~~~~~
 
-Other datetime: `stri_datetime_add() <stri_datetime_add.html>`__, `stri_datetime_create() <stri_datetime_create.html>`__, `stri_datetime_fields() <stri_datetime_fields.html>`__, `stri_datetime_format() <stri_datetime_format.html>`__, `stri_datetime_fstr() <stri_datetime_fstr.html>`__, `stri_datetime_now() <stri_datetime_now.html>`__, `stri_datetime_symbols() <stri_datetime_symbols.html>`__, `stri_timezone_info() <stri_timezone_info.html>`__, `stri_timezone_list() <stri_timezone_list.html>`__
+Other datetime: `stri_datetime_add()`_, `stri_datetime_create()`_, `stri_datetime_fields()`_, `stri_datetime_format()`_, `stri_datetime_fstr()`_, `stri_datetime_now()`_, `stri_datetime_symbols()`_, `stri_timezone_info()`_, `stri_timezone_list()`_
 
-Other timezone: `stri_timezone_info() <stri_timezone_info.html>`__, `stri_timezone_list() <stri_timezone_list.html>`__
+Other timezone: `stri_timezone_info()`_, `stri_timezone_list()`_
 
 Examples
 ~~~~~~~~
@@ -61,3 +61,14 @@ Examples
    stri_timezone_set(oldtz) # restore previous default time zone
 
    ## End(Not run)
+
+.. _stri_timezone_list: stri_timezone_list.html
+.. _stri_datetime_add(): stri_datetime_add.html
+.. _stri_datetime_create(): stri_datetime_create.html
+.. _stri_datetime_fields(): stri_datetime_fields.html
+.. _stri_datetime_format(): stri_datetime_format.html
+.. _stri_datetime_fstr(): stri_datetime_fstr.html
+.. _stri_datetime_now(): stri_datetime_now.html
+.. _stri_datetime_symbols(): stri_datetime_symbols.html
+.. _stri_timezone_info(): stri_timezone_info.html
+.. _stri_timezone_list(): stri_timezone_list.html

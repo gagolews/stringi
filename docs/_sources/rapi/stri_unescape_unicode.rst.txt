@@ -39,7 +39,7 @@ Returns a character vector. If an escape sequence is ill-formed, result will be 
 See Also
 ~~~~~~~~
 
-Other escape: `stri_escape_unicode() <stri_escape_unicode.html>`__
+Other escape: `stri_escape_unicode()`_
 
 Examples
 ~~~~~~~~
@@ -47,3 +47,5 @@ Examples
 .. code-block:: r
 
    stri_unescape_unicode('a\\u0105!\\u0032\\n')
+
+.. _stri_escape_unicode(): stri_escape_unicode.html

@@ -4,12 +4,12 @@ about_search_charclass: Character Classes in stringi
 Description
 ~~~~~~~~~~~
 
-Here we describe how character classes (sets) can be specified in the stringi package. These are useful for defining search patterns (note that the ICU regex engine uses the same scheme for denoting character classes) or, e.g., generating random code points with `stri_rand_strings <stri_rand_strings.html>`__.
+Here we describe how character classes (sets) can be specified in the stringi package. These are useful for defining search patterns (note that the ICU regex engine uses the same scheme for denoting character classes) or, e.g., generating random code points with `stri_rand_strings`_.
 
 Details
 ~~~~~~~
 
-All ``stri_*_charclass`` functions in stringi perform a single character (i.e., Unicode code point) search-based operations. You may obtain the same results using `about_search_regex <about_search_regex.html>`__. However, these very functions aim to be faster.
+All ``stri_*_charclass`` functions in stringi perform a single character (i.e., Unicode code point) search-based operations. You may obtain the same results using `about_search_regex`_. However, these very functions aim to be faster.
 
 Character classes are defined using ICU's ``UnicodeSet`` patterns. Below we briefly summarize their syntax. For more details refer to the bibliographic References below.
 
@@ -361,6 +361,18 @@ References
 See Also
 ~~~~~~~~
 
-Other search_charclass: `about_search <about_search.html>`__, `stri_trim_both() <stri_trim.html>`__
+Other search_charclass: `about_search`_, `stri_trim_both()`_
 
-Other stringi_general_topics: `about_arguments <about_arguments.html>`__, `about_encoding <about_encoding.html>`__, `about_locale <about_locale.html>`__, `about_search_boundaries <about_search_boundaries.html>`__, `about_search_coll <about_search_coll.html>`__, `about_search_fixed <about_search_fixed.html>`__, `about_search_regex <about_search_regex.html>`__, `about_search <about_search.html>`__, `about_stringi <about_stringi.html>`__
+Other stringi_general_topics: `about_arguments`_, `about_encoding`_, `about_locale`_, `about_search_boundaries`_, `about_search_coll`_, `about_search_fixed`_, `about_search_regex`_, `about_search`_, `about_stringi`_
+
+.. _stri_rand_strings: stri_rand_strings.html
+.. _about_search_regex: about_search_regex.html
+.. _about_search: about_search.html
+.. _stri_trim_both(): stri_trim.html
+.. _about_arguments: about_arguments.html
+.. _about_encoding: about_encoding.html
+.. _about_locale: about_locale.html
+.. _about_search_boundaries: about_search_boundaries.html
+.. _about_search_coll: about_search_coll.html
+.. _about_search_fixed: about_search_fixed.html
+.. _about_stringi: about_stringi.html

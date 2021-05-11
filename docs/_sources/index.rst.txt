@@ -90,7 +90,7 @@ is greatly appreciated. Thanks!
     36% of the world population use the Latin alphabet https://en.wikipedia.org/wiki/Latin_script
     Why would I use stringi over stringr? Using stringr you use stringi already.
     It's not about the API, it's about correctness.
-    TODO: stringb
+    TODO: stringx
     stringi is not tidyverse
 
 

@@ -311,8 +311,8 @@
 <h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline">¶</a></h2>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 16%" />
-<col style="width: 84%" />
+<col style="width: 11%" />
+<col style="width: 89%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p></td>
@@ -322,17 +322,17 @@
 <td><p>a single string denoting the separator</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">na_empty</span></code></p></td>
-<td><p>single logical value; should missing values in <code class="docutils literal notranslate"><span class="pre">str</span></code> be treated as empty strings?</p></td>
+<td><p>single logical value; should missing values in <code class="docutils literal notranslate"><span class="pre">str</span></code> be treated as empty strings (<code class="docutils literal notranslate"><span class="pre">TRUE</span></code>) or be omitted whatsoever (<code class="docutils literal notranslate"><span class="pre">NA</span></code>)?</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">omit_empty</span></code></p></td>
-<td><p>single logical value; should missing values in <code class="docutils literal notranslate"><span class="pre">str</span></code> be omitted?</p></td>
+<td><p>single logical value; should empty strings in <code class="docutils literal notranslate"><span class="pre">str</span></code> be omitted?</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">stri_flatten(str,</span> <span class="pre">collapse='XXX')</span></code> call is equivalent to <code class="docutils literal notranslate"><span class="pre">paste(str,</span> <span class="pre">collapse='XXX',</span> <span class="pre">sep='')</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">stri_flatten(str,</span> <span class="pre">collapse='XXX')</span></code> call is equivalent to <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/paste.html">paste(str, collapse=’XXX’, sep=’’)</a>.</p>
 <p>If you wish to use some more fancy (e.g., differing) separators between flattened strings, call <a class="reference external" href="stri_join.html">stri_join(str, separators, collapse=’’)</a>.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">str</span></code> is not empty, then a single string is returned. If <code class="docutils literal notranslate"><span class="pre">collapse</span></code> has length &gt; 1, then only the first string will be used.</p>
 </div>
@@ -350,6 +350,7 @@
 <span class="nf">stri_flatten</span><span class="p">(</span><span class="kc">LETTERS</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
 <span class="nf">stri_flatten</span><span class="p">(</span><span class="nf">stri_dup</span><span class="p">(</span><span class="kc">letters</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">],</span> <span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">))</span>
 <span class="nf">stri_flatten</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;B&#39;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="s">&#39;C&#39;</span><span class="p">),</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&#39;,&#39;</span><span class="p">,</span> <span class="n">na_empty</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">omit_empty</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="nf">stri_flatten</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;B&#39;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="s">&#39;C&#39;</span><span class="p">),</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&#39;,&#39;</span><span class="p">,</span> <span class="n">na_empty</span><span class="o">=</span><span class="kc">NA</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

@@ -1,6 +1,12 @@
 What Is New in *stringi*
 ========================
 
+1.6.2 (2021-XX-XX)
+------------------
+
+-  [NEW FEATURE] #428: In ``stri_flatten``, ``na_empty=NA`` now means
+   that missing values are to be omitted.
+
 1.6.1 (2021-05-05)
 ------------------
 

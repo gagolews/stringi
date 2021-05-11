@@ -45,7 +45,7 @@ Returns a character vector.
 See Also
 ~~~~~~~~
 
-Other join: `%s+%() <operator_add.html>`__, `stri_dup() <stri_dup.html>`__, `stri_flatten() <stri_flatten.html>`__, `stri_join() <stri_join.html>`__
+Other join: `%s+%()`_, `stri_dup()`_, `stri_flatten()`_, `stri_join()`_
 
 Examples
 ~~~~~~~~
@@ -74,3 +74,8 @@ Examples
          omit_no_match=TRUE
       ),
    sep=',', collapse='; ')
+
+.. _%s+%(): operator_add.html
+.. _stri_dup(): stri_dup.html
+.. _stri_flatten(): stri_flatten.html
+.. _stri_join(): stri_join.html

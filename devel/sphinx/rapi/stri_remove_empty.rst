@@ -43,7 +43,7 @@ Returns a character vector.
 See Also
 ~~~~~~~~
 
-Other utils: `stri_list2matrix() <stri_list2matrix.html>`__, `stri_na2empty() <stri_na2empty.html>`__, `stri_replace_na() <stri_replace_na.html>`__
+Other utils: `stri_list2matrix()`_, `stri_na2empty()`_, `stri_replace_na()`_
 
 Examples
 ~~~~~~~~
@@ -55,3 +55,7 @@ Examples
    stri_remove_empty(c('a', NA, '', 'b'), TRUE)
 
    stri_omit_empty_na(c('a', NA, '', 'b'))
+
+.. _stri_list2matrix(): stri_list2matrix.html
+.. _stri_na2empty(): stri_na2empty.html
+.. _stri_replace_na(): stri_replace_na.html

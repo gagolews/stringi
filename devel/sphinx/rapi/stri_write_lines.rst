@@ -37,7 +37,7 @@ Arguments
 Details
 ~~~~~~~
 
-It is a substitute for the R ``writeLines`` function, with the ability to easily re-encode the output.
+It is a substitute for the R `writeLines`_ function, with the ability to easily re-encode the output.
 
 We suggest using the UTF-8 encoding for all text files: thus, it is the default one for the output.
 
@@ -49,4 +49,8 @@ This function returns nothing noteworthy.
 See Also
 ~~~~~~~~
 
-Other files: `stri_read_lines() <stri_read_lines.html>`__, `stri_read_raw() <stri_read_raw.html>`__
+Other files: `stri_read_lines()`_, `stri_read_raw()`_
+
+.. _writeLines: https://stat.ethz.ch/R-manual/R-patched/library/base/html/writeLines.html
+.. _stri_read_lines(): stri_read_lines.html
+.. _stri_read_raw(): stri_read_raw.html

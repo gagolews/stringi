@@ -18,16 +18,16 @@ Usage
 Arguments
 ~~~~~~~~~
 
-+------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``locale`` | single string of the form ``Language``, ``Language_Country``, or ``Language_Country_Variant``, e.g., ``'en_US'``, see `stri_locale_list <stri_locale_list.html>`__. |
-+------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+| ``locale`` | single string of the form ``Language``, ``Language_Country``, or ``Language_Country_Variant``, e.g., ``'en_US'``, see `stri_locale_list`_. |
++------------+--------------------------------------------------------------------------------------------------------------------------------------------+
 
 Details
 ~~~~~~~
 
-See `stringi-locale <about_locale.html>`__ for more information on the effect of changing the default locale.
+See `stringi-locale`_ for more information on the effect of changing the default locale.
 
-``stri_locale_get`` is the same as `stri_locale_info(NULL)$Name <stri_locale_info.html>`__.
+``stri_locale_get`` is the same as `stri_locale_info(NULL)$Name`_.
 
 Value
 ~~~~~
@@ -39,7 +39,7 @@ Value
 See Also
 ~~~~~~~~
 
-Other locale_management: `about_locale <about_locale.html>`__, `stri_locale_info() <stri_locale_info.html>`__, `stri_locale_list() <stri_locale_list.html>`__
+Other locale_management: `about_locale`_, `stri_locale_info()`_, `stri_locale_list()`_
 
 Examples
 ~~~~~~~~
@@ -55,3 +55,10 @@ Examples
    stri_locale_set(oldloc) # restore the previous default locale
 
    ## End(Not run)
+
+.. _stri_locale_list: stri_locale_list.html
+.. _stringi-locale: about_locale.html
+.. _stri_locale_info(NULL)$Name: stri_locale_info.html
+.. _about_locale: about_locale.html
+.. _stri_locale_info(): stri_locale_info.html
+.. _stri_locale_list(): stri_locale_list.html

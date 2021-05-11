@@ -23,7 +23,7 @@ Arguments
 Details
 ~~~~~~~
 
-This function is independent of the way R marks encodings in character strings (see `Encoding <../../base/html/Encoding.html>`__ and `stringi-encoding <about_encoding.html>`__).
+This function is independent of the way R marks encodings in character strings (see `Encoding`_ and `stringi-encoding`_).
 
 Value
 ~~~~~
@@ -33,7 +33,7 @@ Returns a logical vector. The i-th element indicates whether the i-th string cor
 See Also
 ~~~~~~~~
 
-Other encoding_detection: `about_encoding <about_encoding.html>`__, `stri_enc_detect2() <stri_enc_detect2.html>`__, `stri_enc_detect() <stri_enc_detect.html>`__, `stri_enc_isutf16be() <stri_enc_isutf16.html>`__, `stri_enc_isutf8() <stri_enc_isutf8.html>`__
+Other encoding_detection: `about_encoding`_, `stri_enc_detect2()`_, `stri_enc_detect()`_, `stri_enc_isutf16be()`_, `stri_enc_isutf8()`_
 
 Examples
 ~~~~~~~~
@@ -42,3 +42,11 @@ Examples
 
    stri_enc_isascii(letters[1:3])
    stri_enc_isascii('\u0105\u0104')
+
+.. _Encoding: ../../base/html/Encoding.html
+.. _stringi-encoding: about_encoding.html
+.. _about_encoding: about_encoding.html
+.. _stri_enc_detect2(): stri_enc_detect2.html
+.. _stri_enc_detect(): stri_enc_detect.html
+.. _stri_enc_isutf16be(): stri_enc_isutf16.html
+.. _stri_enc_isutf8(): stri_enc_isutf8.html

@@ -27,7 +27,7 @@ Details
 
 Vectorized over ``str`` and ``filter_angle_brackets``.
 
-For a character vector input, merging all text lines via `stri_flatten(str, collapse='\n') <stri_flatten.html>`__ might be needed if ``str`` has been obtained via a call to ``readLines`` and in fact represents an image of a single text file.
+For a character vector input, merging all text lines via `stri_flatten(str, collapse='\n')`_ might be needed if ``str`` has been obtained via a call to ``readLines`` and in fact represents an image of a single text file.
 
 This is, at best, an imprecise operation using statistics and heuristics. Because of this, detection works best if you supply at least a few hundred bytes of character data that is mostly in a single language. However, because the detection only looks at a limited amount of the input data, some of the returned character sets may fail to handle all of the input data. Note that in some cases, the language can be determined along with the encoding.
 
@@ -35,7 +35,7 @@ Several different techniques are used for character set detection. For multi-byt
 
 The detection process can be configured to optionally ignore HTML or XML style markup (using ICU's internal facilities), which can interfere with the detection process by changing the statistics.
 
-This function should most often be used for byte-marked input strings, especially after loading them from text files and before the main conversion with `stri_encode <stri_encode.html>`__. The input encoding is of course not taken into account here, even if marked.
+This function should most often be used for byte-marked input strings, especially after loading them from text files and before the main conversion with `stri_encode`_. The input encoding is of course not taken into account here, even if marked.
 
 The following table shows all the encodings that can be detected:
 
@@ -126,7 +126,7 @@ References
 See Also
 ~~~~~~~~
 
-Other encoding_detection: `about_encoding <about_encoding.html>`__, `stri_enc_detect2() <stri_enc_detect2.html>`__, `stri_enc_isascii() <stri_enc_isascii.html>`__, `stri_enc_isutf16be() <stri_enc_isutf16.html>`__, `stri_enc_isutf8() <stri_enc_isutf8.html>`__
+Other encoding_detection: `about_encoding`_, `stri_enc_detect2()`_, `stri_enc_isascii()`_, `stri_enc_isutf16be()`_, `stri_enc_isutf8()`_
 
 Examples
 ~~~~~~~~
@@ -138,3 +138,11 @@ Examples
    stri_enc_detect(f)
 
    ## End(Not run)
+
+.. _stri_flatten(str, collapse='\n'): stri_flatten.html
+.. _stri_encode: stri_encode.html
+.. _about_encoding: about_encoding.html
+.. _stri_enc_detect2(): stri_enc_detect2.html
+.. _stri_enc_isascii(): stri_enc_isascii.html
+.. _stri_enc_isutf16be(): stri_enc_isutf16.html
+.. _stri_enc_isutf8(): stri_enc_isutf8.html

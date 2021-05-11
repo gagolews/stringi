@@ -25,11 +25,11 @@ Arguments
 Details
 ~~~~~~~
 
-If ``is_unknown_8bit`` is set to ``FALSE`` (the default), then R encoding marks are used, see `stri_enc_mark <stri_enc_mark.html>`__. Bytes-marked strings will cause the function to fail.
+If ``is_unknown_8bit`` is set to ``FALSE`` (the default), then R encoding marks are used, see `stri_enc_mark`_. Bytes-marked strings will cause the function to fail.
 
 If a string is in UTF-8 and has a byte order mark (BOM), then the BOM will be silently removed from the output string.
 
-If the default encoding is UTF-8, see `stri_enc_get <stri_enc_set.html>`__, then strings marked with ``native`` are – for efficiency reasons – returned as-is, i.e., with unchanged markings. A similar behavior is observed when calling ``enc2utf8``.
+If the default encoding is UTF-8, see `stri_enc_get`_, then strings marked with ``native`` are – for efficiency reasons – returned as-is, i.e., with unchanged markings. A similar behavior is observed when calling `enc2utf8`_.
 
 For ``is_unknown_8bit=TRUE``, if a string is declared to be neither in ASCII nor in UTF-8, then all byte codes > 127 are replaced with the Unicode REPLACEMENT CHARACTER (\Ufffd). Note that the REPLACEMENT CHARACTER may be interpreted as Unicode missing value for single characters. Here a ``bytes``-marked string is assumed to use an 8-bit encoding that extends the ASCII map.
 
@@ -43,4 +43,14 @@ Returns a character vector.
 See Also
 ~~~~~~~~
 
-Other encoding_conversion: `about_encoding <about_encoding.html>`__, `stri_enc_fromutf32() <stri_enc_fromutf32.html>`__, `stri_enc_toascii() <stri_enc_toascii.html>`__, `stri_enc_tonative() <stri_enc_tonative.html>`__, `stri_enc_toutf32() <stri_enc_toutf32.html>`__, `stri_encode() <stri_encode.html>`__
+Other encoding_conversion: `about_encoding`_, `stri_enc_fromutf32()`_, `stri_enc_toascii()`_, `stri_enc_tonative()`_, `stri_enc_toutf32()`_, `stri_encode()`_
+
+.. _stri_enc_mark: stri_enc_mark.html
+.. _stri_enc_get: stri_enc_set.html
+.. _enc2utf8: https://stat.ethz.ch/R-manual/R-patched/library/base/html/Encoding.html
+.. _about_encoding: about_encoding.html
+.. _stri_enc_fromutf32(): stri_enc_fromutf32.html
+.. _stri_enc_toascii(): stri_enc_toascii.html
+.. _stri_enc_tonative(): stri_enc_tonative.html
+.. _stri_enc_toutf32(): stri_enc_toutf32.html
+.. _stri_encode(): stri_encode.html

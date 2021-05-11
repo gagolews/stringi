@@ -54,13 +54,13 @@ Arguments
 +--------------------+-------------------------------------------------------------------------------------------------------------------------------------+
 | ``mode``           | single string; one of: ``'first'`` (the default), ``'all'``, ``'last'``                                                             |
 +--------------------+-------------------------------------------------------------------------------------------------------------------------------------+
-| ``pattern, regex`` | character vector; search patterns; for more details refer to `stringi-search <about_search.html>`__                                 |
+| ``pattern, regex`` | character vector; search patterns; for more details refer to `stringi-search`_                                                      |
 +--------------------+-------------------------------------------------------------------------------------------------------------------------------------+
 | ``omit_no_match``  | single logical value; if ``FALSE``, then a row with missing values will indicate that there was no match; ``stri_match_all_*`` only |
 +--------------------+-------------------------------------------------------------------------------------------------------------------------------------+
 | ``cg_missing``     | single string to be used if a capture group match is unavailable                                                                    |
 +--------------------+-------------------------------------------------------------------------------------------------------------------------------------+
-| ``opts_regex``     | a named list with ICU Regex settings, see `stri_opts_regex <stri_opts_regex.html>`__; ``NULL`` for default settings                 |
+| ``opts_regex``     | a named list with ICU Regex settings, see `stri_opts_regex`_; ``NULL`` for default settings                                         |
 +--------------------+-------------------------------------------------------------------------------------------------------------------------------------+
 
 Details
@@ -72,7 +72,7 @@ If no pattern match is detected and ``omit_no_match=FALSE``, then ``NA``\ s are 
 
 Please note: ICU regex engine currently does not fully support named capture groups.
 
-``stri_match``, ``stri_match_all``, ``stri_match_first``, and ``stri_match_last`` are convenience functions. They just call ``stri_match_*_regex`` and were provided for consistency with other string searching functions' wrappers, see, among others, `stri_extract <stri_extract.html>`__.
+``stri_match``, ``stri_match_all``, ``stri_match_first``, and ``stri_match_last`` are convenience functions. They just call ``stri_match_*_regex`` and were provided for consistency with other string searching functions' wrappers, see, among others, `stri_extract`_.
 
 Value
 ~~~~~
@@ -86,7 +86,7 @@ The first matrix column gives the whole match. The second one corresponds to the
 See Also
 ~~~~~~~~
 
-Other search_extract: `about_search <about_search.html>`__, `stri_extract_all_boundaries() <stri_extract_boundaries.html>`__, `stri_extract_all() <stri_extract.html>`__
+Other search_extract: `about_search`_, `stri_extract_all_boundaries()`_, `stri_extract_all()`_
 
 Examples
 ~~~~~~~~
@@ -114,3 +114,10 @@ Examples
    stri_match_all_regex('ACAGAGACTTTAGATAGAGAAGA', '(?=(([ACGT])[ACGT]\\2))')[[1]][,2]
    # Compare the above to:
    stri_extract_all_regex('ACAGAGACTTTAGATAGAGAAGA', '([ACGT])[ACGT]\\1')
+
+.. _stringi-search: about_search.html
+.. _stri_opts_regex: stri_opts_regex.html
+.. _stri_extract: stri_extract.html
+.. _about_search: about_search.html
+.. _stri_extract_all_boundaries(): stri_extract_boundaries.html
+.. _stri_extract_all(): stri_extract.html

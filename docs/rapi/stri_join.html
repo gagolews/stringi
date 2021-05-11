@@ -299,7 +299,7 @@
 <h1>stri_join: Concatenate Character Vectors<a class="headerlink" href="#stri-join-concatenate-character-vectors" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>These are the stringi’s equivalents of the built-in <code class="docutils literal notranslate"><span class="pre">paste</span></code> function. <code class="docutils literal notranslate"><span class="pre">stri_c</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_paste</span></code> are aliases for <code class="docutils literal notranslate"><span class="pre">stri_join</span></code>.</p>
+<p>These are the stringi’s equivalents of the built-in <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/paste.html">paste</a> function. <code class="docutils literal notranslate"><span class="pre">stri_c</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_paste</span></code> are aliases for <code class="docutils literal notranslate"><span class="pre">stri_join</span></code>.</p>
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
@@ -320,7 +320,7 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">...</span></code></p></td>
-<td><p>character vectors (or objects coercible to character vectors) which corresponding elements are to be concatenated</p></td>
+<td><p>character vectors (or objects coercible to character vectors) whose corresponding elements are to be concatenated</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sep</span></code></p></td>
 <td><p>a single string; separates terms</p></td>
@@ -340,7 +340,7 @@
 <p>Unless <code class="docutils literal notranslate"><span class="pre">collapse</span></code> is <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, the result will be a single string. Otherwise, you get a character vector of length equal to the length of the longest argument.</p>
 <p>If any of the arguments in ‘<code class="docutils literal notranslate"><span class="pre">...</span></code>’ is a vector of length 0 (not to be confused with vectors of empty strings) and <code class="docutils literal notranslate"><span class="pre">ignore_null</span></code> is <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>, then you will get a 0-length character vector in result.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">collapse</span></code> or <code class="docutils literal notranslate"><span class="pre">sep</span></code> has length greater than 1, then only the first string will be used.</p>
-<p>In case where there are missing values in any of the input vectors, <code class="docutils literal notranslate"><span class="pre">NA</span></code> is set to the corresponding element. Note that this behavior is different from <code class="docutils literal notranslate"><span class="pre">paste</span></code>, which treats missing values as ordinary strings like <code class="docutils literal notranslate"><span class="pre">'NA'</span></code>. Moreover, as usual in stringi, the resulting strings are always in UTF-8.</p>
+<p>In case where there are missing values in any of the input vectors, <code class="docutils literal notranslate"><span class="pre">NA</span></code> is set to the corresponding element. Note that this behavior is different from <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/paste.html">paste</a>, which treats missing values as ordinary strings like <code class="docutils literal notranslate"><span class="pre">'NA'</span></code>. Moreover, as usual in stringi, the resulting strings are always in UTF-8.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>

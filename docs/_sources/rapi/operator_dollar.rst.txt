@@ -4,7 +4,7 @@ operator_dollar: C-Style Formatting with sprintf as a Binary Operator
 Description
 ~~~~~~~~~~~
 
-Provides access to base R's ``sprintf`` in form of a binary operator in a way similar to Python's ``%`` overloaded for strings.
+Provides access to base R's `sprintf`_ in form of a binary operator in a way similar to Python's ``%`` overloaded for strings.
 
 Usage
 ~~~~~
@@ -18,11 +18,11 @@ Usage
 Arguments
 ~~~~~~~~~
 
-+--------+--------------------------------------------------------------------------------+
-| ``e1`` | format strings, see ``sprintf`` for syntax                                     |
-+--------+--------------------------------------------------------------------------------+
-| ``e2`` | a list of atomic vectors to be passed to ``sprintf`` or a single atomic vector |
-+--------+--------------------------------------------------------------------------------+
++--------+-------------------------------------------------------------------------------+
+| ``e1`` | format strings, see `sprintf`_ for syntax                                     |
++--------+-------------------------------------------------------------------------------+
+| ``e2`` | a list of atomic vectors to be passed to `sprintf`_ or a single atomic vector |
++--------+-------------------------------------------------------------------------------+
 
 Details
 ~~~~~~~
@@ -31,7 +31,7 @@ Vectorized over ``e1`` and ``e2``.
 
 ``e1 %s$% atomic_vector`` is equivalent to ``e1 %s$% list(atomic_vector)``.
 
-Note that ``sprintf`` takes field width in bytes, not Unicode code points. See Examples for a workaround.
+Note that `sprintf`_ takes field width in bytes, not Unicode code points. See Examples for a workaround.
 
 Value
 ~~~~~
@@ -53,3 +53,5 @@ Examples
    # sprintf field width:
    cat(sprintf("%6s%6s%6s", "-", c("asc", "ąść", "abcdefg"), "-"), sep="\n")
    cat(sprintf("%6s%s%6s", "-", stringi::stri_pad(c("asc", "ąść", "abcdefg"), 6), "-"), sep="\n")
+
+.. _sprintf: https://stat.ethz.ch/R-manual/R-patched/library/base/html/sprintf.html

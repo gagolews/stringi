@@ -34,7 +34,7 @@ Returns a character vector.
 See Also
 ~~~~~~~~
 
-Other utils: `stri_list2matrix() <stri_list2matrix.html>`__, `stri_na2empty() <stri_na2empty.html>`__, `stri_remove_empty() <stri_remove_empty.html>`__
+Other utils: `stri_list2matrix()`_, `stri_na2empty()`_, `stri_remove_empty()`_
 
 Examples
 ~~~~~~~~
@@ -45,3 +45,7 @@ Examples
    stri_paste(x, 1:2)                           # 'test1' NA
    paste(x, 1:2)                                # 'test 1' 'NA 2'
    stri_paste(stri_replace_na(x), 1:2, sep=' ') # 'test 1' 'NA 2'
+
+.. _stri_list2matrix(): stri_list2matrix.html
+.. _stri_na2empty(): stri_na2empty.html
+.. _stri_remove_empty(): stri_remove_empty.html

@@ -23,7 +23,7 @@ Arguments
 Details
 ~~~~~~~
 
-An error is raised if the provided encoding is unknown to ICU (see `stri_enc_list <stri_enc_list.html>`__ for more details).
+An error is raised if the provided encoding is unknown to ICU (see `stri_enc_list`_ for more details).
 
 Value
 ~~~~~
@@ -49,4 +49,10 @@ Returns a list with the following components:
 See Also
 ~~~~~~~~
 
-Other encoding_management: `about_encoding <about_encoding.html>`__, `stri_enc_list() <stri_enc_list.html>`__, `stri_enc_mark() <stri_enc_mark.html>`__, `stri_enc_set() <stri_enc_set.html>`__
+Other encoding_management: `about_encoding`_, `stri_enc_list()`_, `stri_enc_mark()`_, `stri_enc_set()`_
+
+.. _stri_enc_list: stri_enc_list.html
+.. _about_encoding: about_encoding.html
+.. _stri_enc_list(): stri_enc_list.html
+.. _stri_enc_mark(): stri_enc_mark.html
+.. _stri_enc_set(): stri_enc_set.html

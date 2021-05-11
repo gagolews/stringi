@@ -24,15 +24,15 @@ Usage
 Arguments
 ~~~~~~~~~
 
-+--------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``str``                                    | character vector; strings to search in                                                                                                                                                                                                               |
-+--------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``...``                                    | supplementary arguments passed to the underlying functions, including additional settings for ``opts_collator``, ``opts_regex``, ``opts_fixed``, and so on                                                                                           |
-+--------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``pattern, regex, fixed, coll, charclass`` | character vector; search patterns; for more details refer to `stringi-search <about_search.html>`__                                                                                                                                                  |
-+--------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``opts_collator, opts_fixed, opts_regex``  | a named list used to tune up the search engine's settings; see `stri_opts_collator <stri_opts_collator.html>`__, `stri_opts_fixed <stri_opts_fixed.html>`__, and `stri_opts_regex <stri_opts_regex.html>`__, respectively; ``NULL`` for the defaults |
-+--------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++--------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``str``                                    | character vector; strings to search in                                                                                                                                    |
++--------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``...``                                    | supplementary arguments passed to the underlying functions, including additional settings for ``opts_collator``, ``opts_regex``, ``opts_fixed``, and so on                |
++--------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``pattern, regex, fixed, coll, charclass`` | character vector; search patterns; for more details refer to `stringi-search`_                                                                                            |
++--------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``opts_collator, opts_fixed, opts_regex``  | a named list used to tune up the search engine's settings; see `stri_opts_collator`_, `stri_opts_fixed`_, and `stri_opts_regex`_, respectively; ``NULL`` for the defaults |
++--------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Details
 ~~~~~~~
@@ -51,7 +51,7 @@ All the functions return an integer vector.
 See Also
 ~~~~~~~~
 
-Other search_count: `about_search <about_search.html>`__, `stri_count_boundaries() <stri_count_boundaries.html>`__
+Other search_count: `about_search`_, `stri_count_boundaries()`_
 
 Examples
 ~~~~~~~~
@@ -79,3 +79,10 @@ Examples
    stri_count_regex(s, '.it')
    stri_count_regex('bab baab baaab', c('b.*?b', 'b.b'))
    stri_count_regex(c('stringi', '123'), '^(s|1)')
+
+.. _stringi-search: about_search.html
+.. _stri_opts_collator: stri_opts_collator.html
+.. _stri_opts_fixed: stri_opts_fixed.html
+.. _stri_opts_regex: stri_opts_regex.html
+.. _about_search: about_search.html
+.. _stri_count_boundaries(): stri_count_boundaries.html

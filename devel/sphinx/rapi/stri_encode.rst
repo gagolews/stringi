@@ -4,7 +4,7 @@ stri_encode: Convert Strings Between Given Encodings
 Description
 ~~~~~~~~~~~
 
-These functions convert strings between encodings. They aim to serve as a more portable and faster replacement for R's own ``iconv``.
+These functions convert strings between encodings. They aim to serve as a more portable and faster replacement for R's own `iconv`_.
 
 Usage
 ~~~~~
@@ -18,24 +18,24 @@ Usage
 Arguments
 ~~~~~~~~~
 
-+------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``str``    | a character vector, a raw vector, or a list of ``raw`` vectors to be converted                                                                                                                         |
-+------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``from``   | input encoding: ``NULL`` or ``''`` for the default encoding or internal encoding marks' usage (see Details); otherwise, a single string with encoding name, see `stri_enc_list <stri_enc_list.html>`__ |
-+------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``to``     | target encoding: ``NULL`` or ``''`` for default encoding (see `stri_enc_get <stri_enc_set.html>`__), or a single string with encoding name                                                             |
-+------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``to_raw`` | a single logical value; indicates whether a list of raw vectors rather than a character vector should be returned                                                                                      |
-+------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``str``    | a character vector, a raw vector, or a list of ``raw`` vectors to be converted                                                                                                   |
++------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``from``   | input encoding: ``NULL`` or ``''`` for the default encoding or internal encoding marks' usage (see Details); otherwise, a single string with encoding name, see `stri_enc_list`_ |
++------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``to``     | target encoding: ``NULL`` or ``''`` for default encoding (see `stri_enc_get`_), or a single string with encoding name                                                            |
++------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``to_raw`` | a single logical value; indicates whether a list of raw vectors rather than a character vector should be returned                                                                |
++------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Details
 ~~~~~~~
 
 ``stri_conv`` is an alias for ``stri_encode``.
 
-Refer to `stri_enc_list <stri_enc_list.html>`__ for the list of supported encodings and `stringi-encoding <about_encoding.html>`__ for a general discussion.
+Refer to `stri_enc_list`_ for the list of supported encodings and `stringi-encoding`_ for a general discussion.
 
-If ``from`` is either missing, ``''``, or ``NULL``, and if ``str`` is a character vector then the marked encodings are used (see `stri_enc_mark <stri_enc_mark.html>`__) – in such a case ``bytes``-declared strings are disallowed. Otherwise, i.e., if ``str`` is a ``raw``-type vector or a list of raw vectors, we assume that the input encoding is the current default encoding as given by `stri_enc_get <stri_enc_set.html>`__.
+If ``from`` is either missing, ``''``, or ``NULL``, and if ``str`` is a character vector then the marked encodings are used (see `stri_enc_mark`_) – in such a case ``bytes``-declared strings are disallowed. Otherwise, i.e., if ``str`` is a ``raw``-type vector or a list of raw vectors, we assume that the input encoding is the current default encoding as given by `stri_enc_get`_.
 
 However, if ``from`` is given explicitly, the internal encoding declarations are always ignored.
 
@@ -43,7 +43,7 @@ For ``to_raw=FALSE``, the output strings always have the encodings marked accord
 
 Note that some issues might occur if ``to`` indicates, e.g, UTF-16 or UTF-32, as the output strings may have embedded NULs. In such cases, please use ``to_raw=TRUE`` and consider specifying a byte order marker (BOM) for portability reasons (e.g., set ``UTF-16`` or ``UTF-32`` which automatically adds the BOMs).
 
-Note that ``stri_encode(as.raw(data), 'encodingname')`` is a clever substitute for ``rawToChar``.
+Note that ``stri_encode(as.raw(data), 'encodingname')`` is a clever substitute for `rawToChar`_.
 
 In the current version of stringi, if an incorrect code point is found on input, it is replaced with the default (for that target encoding) 'missing/erroneous' character (with a warning), e.g., the SUBSTITUTE character (U+001A) or the REPLACEMENT one (U+FFFD). Occurrences thereof can be located in the output string to diagnose the problematic sequences, e.g., by calling: ``stri_locate_all_regex(converted_string, '[\ufffd\u001a]'``.
 
@@ -64,4 +64,17 @@ References
 See Also
 ~~~~~~~~
 
-Other encoding_conversion: `about_encoding <about_encoding.html>`__, `stri_enc_fromutf32() <stri_enc_fromutf32.html>`__, `stri_enc_toascii() <stri_enc_toascii.html>`__, `stri_enc_tonative() <stri_enc_tonative.html>`__, `stri_enc_toutf32() <stri_enc_toutf32.html>`__, `stri_enc_toutf8() <stri_enc_toutf8.html>`__
+Other encoding_conversion: `about_encoding`_, `stri_enc_fromutf32()`_, `stri_enc_toascii()`_, `stri_enc_tonative()`_, `stri_enc_toutf32()`_, `stri_enc_toutf8()`_
+
+.. _iconv: https://stat.ethz.ch/R-manual/R-patched/library/base/html/iconv.html
+.. _stri_enc_list: stri_enc_list.html
+.. _stri_enc_get: stri_enc_set.html
+.. _stringi-encoding: about_encoding.html
+.. _stri_enc_mark: stri_enc_mark.html
+.. _rawToChar: https://stat.ethz.ch/R-manual/R-patched/library/base/html/rawConversion.html
+.. _about_encoding: about_encoding.html
+.. _stri_enc_fromutf32(): stri_enc_fromutf32.html
+.. _stri_enc_toascii(): stri_enc_toascii.html
+.. _stri_enc_tonative(): stri_enc_tonative.html
+.. _stri_enc_toutf32(): stri_enc_toutf32.html
+.. _stri_enc_toutf8(): stri_enc_toutf8.html

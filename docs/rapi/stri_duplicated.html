@@ -327,8 +327,8 @@
 <h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline">¶</a></h2>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 12%" />
-<col style="width: 88%" />
+<col style="width: 15%" />
+<col style="width: 85%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p></td>
@@ -352,7 +352,7 @@
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
 <p>Missing values are regarded as equal.</p>
-<p>Unlike <code class="docutils literal notranslate"><span class="pre">duplicated</span></code> and <code class="docutils literal notranslate"><span class="pre">anyDuplicated</span></code>, these functions test for canonical equivalence of strings (and not whether the strings are just bytewise equal) Such operations are locale-dependent. Hence, <code class="docutils literal notranslate"><span class="pre">stri_duplicated</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_duplicated_any</span></code> are significantly slower (but much better suited for natural language processing) than their base R counterparts.</p>
+<p>Unlike <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/duplicated.html">duplicated</a> and <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/duplicated.html">anyDuplicated</a>, these functions test for canonical equivalence of strings (and not whether the strings are just bytewise equal) Such operations are locale-dependent. Hence, <code class="docutils literal notranslate"><span class="pre">stri_duplicated</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_duplicated_any</span></code> are significantly slower (but much better suited for natural language processing) than their base R counterparts.</p>
 <p>See also <a class="reference external" href="stri_unique.html">stri_unique</a> for extracting unique elements.</p>
 </div>
 <div class="section" id="value">

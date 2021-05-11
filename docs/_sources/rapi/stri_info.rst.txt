@@ -31,12 +31,15 @@ Otherwise, a list with the following components is returned:
 
 -  ``ICU.version`` – ICU library version used;
 
--  ``Locale`` – contains information on default locale, as returned by `stri_locale_info <stri_locale_info.html>`__;
+-  ``Locale`` – contains information on default locale, as returned by `stri_locale_info`_;
 
 -  ``Charset.internal`` – fixed at ``c('UTF-8', 'UTF-16')``;
 
--  ``Charset.native`` – information on the default encoding, as returned by `stri_enc_info <stri_enc_info.html>`__;
+-  ``Charset.native`` – information on the default encoding, as returned by `stri_enc_info`_;
 
 -  ``ICU.system`` – logical; ``TRUE`` indicates that the system ICU libs are used, otherwise ICU was built together with stringi;
 
 -  ``ICU.UTF8`` – logical; ``TRUE`` if the internal ``U_CHARSET_IS_UTF8`` flag is defined and set.
+
+.. _stri_locale_info: stri_locale_info.html
+.. _stri_enc_info: stri_enc_info.html

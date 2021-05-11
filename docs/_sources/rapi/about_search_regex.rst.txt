@@ -9,9 +9,9 @@ A regular expression is a pattern describing, possibly in a very abstract way, a
 Details
 ~~~~~~~
 
-All ``stri_*_regex`` functions in stringi use the ICU regex engine. Its settings may be tuned up (for example to perform case-insensitive search) via the `stri_opts_regex <stri_opts_regex.html>`__ function.
+All ``stri_*_regex`` functions in stringi use the ICU regex engine. Its settings may be tuned up (for example to perform case-insensitive search) via the `stri_opts_regex`_ function.
 
-Regular expression patterns in ICU are quite similar in form and behavior to Perl's regexes. Their implementation is loosely inspired by JDK 1.4 ``java.util.regex``. ICU Regular Expressions conform to the Unicode Technical Standard #18 (see References section) and its features are summarized in the ICU User Guide (see below). A good general introduction to regexes is (Friedl, 2002). Some general topics are also covered in the R manual, see `regex <../../base/html/regex.html>`__.
+Regular expression patterns in ICU are quite similar in form and behavior to Perl's regexes. Their implementation is loosely inspired by JDK 1.4 ``java.util.regex``. ICU Regular Expressions conform to the Unicode Technical Standard #18 (see References section) and its features are summarized in the ICU User Guide (see below). A good general introduction to regexes is (Friedl, 2002). Some general topics are also covered in the R manual, see `regex`_.
 
 ICU Regex Operators at a Glance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -76,7 +76,7 @@ Here is a list of operators provided by the ICU User Guide on regexes.
    Match between n and m times. Possessive Match.
 
 ``(...)``
-   Capturing parentheses. Range of input that matched the parenthesized sub-expression is available after the match, see `stri_match <stri_match.html>`__.
+   Capturing parentheses. Range of input that matched the parenthesized sub-expression is available after the match, see `stri_match`_.
 
 ``(?:...)``
    Non-capturing parentheses. Groups the included pattern, but does not provide capturing of matching text. Somewhat more efficient than capturing parentheses.
@@ -103,10 +103,10 @@ Here is a list of operators provided by the ICU User Guide on regexes.
    Named capture group. The ``<angle brackets>`` are literal - they appear in the pattern.
 
 ``(?ismwx-ismwx:...)``
-   Flag settings. Evaluate the parenthesized expression with the specified flags enabled or ``-``\ disabled, see also `stri_opts_regex <stri_opts_regex.html>`__.
+   Flag settings. Evaluate the parenthesized expression with the specified flags enabled or ``-``\ disabled, see also `stri_opts_regex`_.
 
 ``(?ismwx-ismwx)``
-   Flag settings. Change the flag settings. Changes apply to the portion of the pattern following the setting. For example, ``(?i)`` changes to a case insensitive match, see also `stri_opts_regex <stri_opts_regex.html>`__.
+   Flag settings. Change the flag settings. Changes apply to the portion of the pattern following the setting. For example, ``(?i)`` changes to a case insensitive match, see also `stri_opts_regex`_.
 
 ICU Regex Meta-characters at a Glance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -120,7 +120,7 @@ Here is a list of meta-characters provided by the ICU User Guide on regexes.
    Match at the beginning of the input. Differs from ``^``. in that ``\A`` will not match after a new line within the input.
 
 ``\b``
-   Match if the current position is a word boundary. Boundaries occur at the transitions between word (``\w``) and non-word (``\W``) characters, with combining marks ignored. For better word boundaries, see ICU Boundary Analysis, e.g., `stri_extract_all_words <stri_extract_boundaries.html>`__.
+   Match if the current position is a word boundary. Boundaries occur at the transitions between word (``\w``) and non-word (``\W``) characters, with combining marks ignored. For better word boundaries, see ICU Boundary Analysis, e.g., `stri_extract_all_words`_.
 
 ``\B``
    Match if the current position is not a word boundary.
@@ -219,7 +219,7 @@ Here is a list of meta-characters provided by the ICU User Guide on regexes.
    Match any one character from the set.
 
 ``.``
-   Match any character except for - by default - newline, compare `stri_opts_regex <stri_opts_regex.html>`__.
+   Match any character except for - by default - newline, compare `stri_opts_regex`_.
 
 ``^``
    Match at the beginning of a line.
@@ -233,14 +233,14 @@ Here is a list of meta-characters provided by the ICU User Guide on regexes.
 ``\``
    [inside sets] Quotes the following character. Characters that must be quoted to be treated as literals are ``[ ] \``; Characters that may need to be quoted, depending on the context are ``- &``.
 
-For information on how to define character classes in regexes, refer to `about_search_charclass <about_search_charclass.html>`__.
+For information on how to define character classes in regexes, refer to `about_search_charclass`_.
 
 Regex Functions in stringi
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Note that if a given regex ``pattern`` is empty, then all the functions in stringi give ``NA`` in result and generate a warning. On a syntax error, a quite informative failure message is shown.
 
-If you wish to search for a fixed pattern, refer to `about_search_coll <about_search_coll.html>`__ or `about_search_fixed <about_search_fixed.html>`__. They allow to perform a locale-aware text lookup, or a very fast exact-byte search, respectively.
+If you wish to search for a fixed pattern, refer to `about_search_coll`_ or `about_search_fixed`_. They allow to perform a locale-aware text lookup, or a very fast exact-byte search, respectively.
 
 References
 ~~~~~~~~~~
@@ -256,6 +256,21 @@ J.E.F. Friedl, *Mastering Regular Expressions*, O'Reilly, 2002
 See Also
 ~~~~~~~~
 
-Other search_regex: `about_search <about_search.html>`__, `stri_opts_regex() <stri_opts_regex.html>`__
+Other search_regex: `about_search`_, `stri_opts_regex()`_
 
-Other stringi_general_topics: `about_arguments <about_arguments.html>`__, `about_encoding <about_encoding.html>`__, `about_locale <about_locale.html>`__, `about_search_boundaries <about_search_boundaries.html>`__, `about_search_charclass <about_search_charclass.html>`__, `about_search_coll <about_search_coll.html>`__, `about_search_fixed <about_search_fixed.html>`__, `about_search <about_search.html>`__, `about_stringi <about_stringi.html>`__
+Other stringi_general_topics: `about_arguments`_, `about_encoding`_, `about_locale`_, `about_search_boundaries`_, `about_search_charclass`_, `about_search_coll`_, `about_search_fixed`_, `about_search`_, `about_stringi`_
+
+.. _stri_opts_regex: stri_opts_regex.html
+.. _regex: ../../base/html/regex.html
+.. _stri_match: stri_match.html
+.. _stri_extract_all_words: stri_extract_boundaries.html
+.. _about_search_charclass: about_search_charclass.html
+.. _about_search_coll: about_search_coll.html
+.. _about_search_fixed: about_search_fixed.html
+.. _about_search: about_search.html
+.. _stri_opts_regex(): stri_opts_regex.html
+.. _about_arguments: about_arguments.html
+.. _about_encoding: about_encoding.html
+.. _about_locale: about_locale.html
+.. _about_search_boundaries: about_search_boundaries.html
+.. _about_stringi: about_stringi.html

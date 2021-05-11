@@ -29,9 +29,9 @@ Arguments
 Details
 ~~~~~~~
 
-This aims to be a substitute for the ``readLines`` function, with the ability to re-encode the input file in a much more robust way, and split the text into lines with `stri_split_lines1 <stri_split_lines.html>`__ (which conforms with the Unicode guidelines for newline markers).
+This aims to be a substitute for the `readLines`_ function, with the ability to re-encode the input file in a much more robust way, and split the text into lines with `stri_split_lines1`_ (which conforms with the Unicode guidelines for newline markers).
 
-The function calls `stri_read_raw <stri_read_raw.html>`__, `stri_encode <stri_encode.html>`__, and `stri_split_lines1 <stri_split_lines.html>`__, in this order.
+The function calls `stri_read_raw`_, `stri_encode`_, and `stri_split_lines1`_, in this order.
 
 Because of the way this function is currently implemented, maximal file size cannot exceed ~0.67 GB.
 
@@ -43,4 +43,11 @@ Returns a character vector, each text line is a separate string. The output is a
 See Also
 ~~~~~~~~
 
-Other files: `stri_read_raw() <stri_read_raw.html>`__, `stri_write_lines() <stri_write_lines.html>`__
+Other files: `stri_read_raw()`_, `stri_write_lines()`_
+
+.. _readLines: https://stat.ethz.ch/R-manual/R-patched/library/base/html/readLines.html
+.. _stri_split_lines1: stri_split_lines.html
+.. _stri_read_raw: stri_read_raw.html
+.. _stri_encode: stri_encode.html
+.. _stri_read_raw(): stri_read_raw.html
+.. _stri_write_lines(): stri_write_lines.html

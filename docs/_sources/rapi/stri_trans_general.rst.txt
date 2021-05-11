@@ -24,18 +24,18 @@ Usage
 Arguments
 ~~~~~~~~~
 
-+---------+-------------------------------------------------------------------------------------------+
-| ``str`` | character vector                                                                          |
-+---------+-------------------------------------------------------------------------------------------+
-| ``id``  | a single string with transform identifier, see `stri_trans_list <stri_trans_list.html>`__ |
-+---------+-------------------------------------------------------------------------------------------+
++---------+-------------------------------------------------------------------+
+| ``str`` | character vector                                                  |
++---------+-------------------------------------------------------------------+
+| ``id``  | a single string with transform identifier, see `stri_trans_list`_ |
++---------+-------------------------------------------------------------------+
 
 Details
 ~~~~~~~
 
 ICU Transforms were mainly designed to transliterate characters from one script to another (for example, from Greek to Latin, or Japanese Katakana to Latin). However, these services are also capable of handling a much broader range of tasks. In particular, the Transforms include pre-built transformations for case conversions, for normalization conversions, for the removal of given characters, and also for a variety of language and script transliterations. Transforms can be chained together to perform a series of operations and each step of the process can use a UnicodeSet to restrict the characters that are affected.
 
-To get the list of available transforms, call `stri_trans_list <stri_trans_list.html>`__.
+To get the list of available transforms, call `stri_trans_list`_.
 
 Note that transliterators are often combined in sequence to achieve a desired transformation. This is analogous to the composition of mathematical functions. For example, given a script that converts lowercase ASCII characters from Latin script to Katakana script, it is convenient to first (1) separate input base characters and accents, and then (2) convert uppercase to lowercase. To achieve this, a compound transform can be specified as follows: ``NFKD; Lower; Latin-Katakana;``
 
@@ -52,7 +52,7 @@ References
 See Also
 ~~~~~~~~
 
-Other transform: `stri_trans_char() <stri_trans_char.html>`__, `stri_trans_list() <stri_trans_list.html>`__, `stri_trans_nfc() <stri_trans_nf.html>`__, `stri_trans_tolower() <stri_trans_casemap.html>`__
+Other transform: `stri_trans_char()`_, `stri_trans_list()`_, `stri_trans_nfc()`_, `stri_trans_tolower()`_
 
 Examples
 ~~~~~~~~
@@ -68,3 +68,9 @@ Examples
    stri_trans_general('\u2620', 'any-name') # character name
    stri_trans_general('\\N{latin small letter a}', 'name-any') # decode name
    stri_trans_general('\u2620', 'hex') # to hex
+
+.. _stri_trans_list: stri_trans_list.html
+.. _stri_trans_char(): stri_trans_char.html
+.. _stri_trans_list(): stri_trans_list.html
+.. _stri_trans_nfc(): stri_trans_nf.html
+.. _stri_trans_tolower(): stri_trans_casemap.html

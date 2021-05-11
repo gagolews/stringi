@@ -30,11 +30,11 @@ Arguments
 ~~~~~~~~~
 
 +-------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``time``    | an object of class ``POSIXct`` or an object coercible to                                                                                                              |
+| ``time``    | an object of class `POSIXct`_ or an object coercible to                                                                                                               |
 +-------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``format``  | single string, see Details; see also `stri_datetime_fstr <stri_datetime_fstr.html>`__                                                                                 |
+| ``format``  | single string, see Details; see also `stri_datetime_fstr`_                                                                                                            |
 +-------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``tz``      | ``NULL`` or ``''`` for the default time zone or a single string with a timezone identifier, see `stri_timezone_list <stri_timezone_list.html>`__                      |
+| ``tz``      | ``NULL`` or ``''`` for the default time zone or a single string with a timezone identifier, see `stri_timezone_list`_                                                 |
 +-------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``locale``  | ``NULL`` or ``''`` for default locale, or a single string with locale identifier; a non-Gregorian calendar may be specified by setting the ``@calendar=name`` keyword |
 +-------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -48,7 +48,7 @@ Details
 
 Vectorized over ``time`` or ``str``.
 
-By default, ``stri_datetime_format`` (for the sake of compatibility with the ``strftime`` function, but unlike ``format.POSIXst``) formats a date/time object using the current default time zone.
+By default, ``stri_datetime_format`` (for the sake of compatibility with the `strftime`_ function, but unlike ``format.POSIXst``) formats a date/time object using the current default time zone.
 
 ``format`` may be one of ``DT_STYLE`` or ``DT_relative_STYLE``, where ``DT`` is equal to ``date``, ``time``, or ``datetime``, and ``STYLE`` is equal to ``full``, ``long``, ``medium``, or ``short``. This gives a locale-dependent date and/or time format. Note that currently ICU does not support ``relative`` ``time`` formats, so this flag is currently ignored in such a context.
 
@@ -265,7 +265,7 @@ Value
 
 ``stri_datetime_format`` returns a character vector.
 
-``stri_datetime_parse`` returns an object of class ``POSIXct``.
+``stri_datetime_parse`` returns an object of class `POSIXct`_.
 
 References
 ~~~~~~~~~~
@@ -275,7 +275,7 @@ References
 See Also
 ~~~~~~~~
 
-Other datetime: `stri_datetime_add() <stri_datetime_add.html>`__, `stri_datetime_create() <stri_datetime_create.html>`__, `stri_datetime_fields() <stri_datetime_fields.html>`__, `stri_datetime_fstr() <stri_datetime_fstr.html>`__, `stri_datetime_now() <stri_datetime_now.html>`__, `stri_datetime_symbols() <stri_datetime_symbols.html>`__, `stri_timezone_get() <stri_timezone_set.html>`__, `stri_timezone_info() <stri_timezone_info.html>`__, `stri_timezone_list() <stri_timezone_list.html>`__
+Other datetime: `stri_datetime_add()`_, `stri_datetime_create()`_, `stri_datetime_fields()`_, `stri_datetime_fstr()`_, `stri_datetime_now()`_, `stri_datetime_symbols()`_, `stri_timezone_get()`_, `stri_timezone_info()`_, `stri_timezone_list()`_
 
 Examples
 ~~~~~~~~
@@ -286,3 +286,17 @@ Examples
    stri_datetime_parse(c('2015-02-28', '2015-02-29'), 'yyyy-MM-dd', lenient=TRUE)
    stri_datetime_parse('19 lipca 2015', 'date_long', locale='pl_PL')
    stri_datetime_format(stri_datetime_now(), 'datetime_relative_medium')
+
+.. _POSIXct: https://stat.ethz.ch/R-manual/R-patched/library/base/html/DateTimeClasses.html
+.. _stri_datetime_fstr: stri_datetime_fstr.html
+.. _stri_timezone_list: stri_timezone_list.html
+.. _strftime: https://stat.ethz.ch/R-manual/R-patched/library/base/html/strptime.html
+.. _stri_datetime_add(): stri_datetime_add.html
+.. _stri_datetime_create(): stri_datetime_create.html
+.. _stri_datetime_fields(): stri_datetime_fields.html
+.. _stri_datetime_fstr(): stri_datetime_fstr.html
+.. _stri_datetime_now(): stri_datetime_now.html
+.. _stri_datetime_symbols(): stri_datetime_symbols.html
+.. _stri_timezone_get(): stri_timezone_set.html
+.. _stri_timezone_info(): stri_timezone_info.html
+.. _stri_timezone_list(): stri_timezone_list.html
