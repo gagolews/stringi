@@ -33,7 +33,7 @@ Returns a logical vector of the same length as ``str``.
 See Also
 ~~~~~~~~
 
-Other length: `stri_length() <stri_length.html>`__, `stri_numbytes() <stri_numbytes.html>`__, `stri_width() <stri_width.html>`__
+Other length: `stri_length()`_, `stri_numbytes()`_, `stri_width()`_
 
 Examples
 ~~~~~~~~
@@ -43,3 +43,7 @@ Examples
    stri_isempty(letters[1:3])
    stri_isempty(c(',', '', 'abc', '123', '\u0105\u0104'))
    stri_isempty(character(1))
+
+.. _stri_length(): stri_length.html
+.. _stri_numbytes(): stri_numbytes.html
+.. _stri_width(): stri_width.html

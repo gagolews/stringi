@@ -25,11 +25,11 @@ Details
 
 The Unicode standard does not formalize the notion of a character width. Roughly based on https://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c, https://github.com/nodejs/node/blob/master/src/node_i18n.cc, and UAX #11 we proceed as follows. The following code points are of width 0:
 
--  code points with general category (see `stringi-search-charclass <about_search_charclass.html>`__) ``Me``, ``Mn``, and ``Cf``),
+-  code points with general category (see `stringi-search-charclass`_) ``Me``, ``Mn``, and ``Cf``),
 
--  ``C0`` and ``C1`` control codes (general category ``Cc``) - for compatibility with the ``nchar`` function,
+-  ``C0`` and ``C1`` control codes (general category ``Cc``) - for compatibility with the `nchar`_ function,
 
--  Hangul Jamo medial vowels and final consonants (code points with enumerable property ``UCHAR_HANGUL_SYLLABLE_TYPE`` equal to ``U_HST_VOWEL_JAMO`` or ``U_HST_TRAILING_JAMO``; note that applying the NFC normalization with `stri_trans_nfc <stri_trans_nf.html>`__ is encouraged),
+-  Hangul Jamo medial vowels and final consonants (code points with enumerable property ``UCHAR_HANGUL_SYLLABLE_TYPE`` equal to ``U_HST_VOWEL_JAMO`` or ``U_HST_TRAILING_JAMO``; note that applying the NFC normalization with `stri_trans_nfc`_ is encouraged),
 
 -  ZERO WIDTH SPACE (U+200B),
 
@@ -37,7 +37,7 @@ Characters with the ``UCHAR_EAST_ASIAN_WIDTH`` enumerable property equal to ``U_
 
 Most emojis and characters with general category So (other symbols) are of width 2.
 
-SOFT HYPHEN (U+00AD) (for compatibility with ``nchar``) as well as any other characters have width 1.
+SOFT HYPHEN (U+00AD) (for compatibility with `nchar`_) as well as any other characters have width 1.
 
 Value
 ~~~~~
@@ -52,7 +52,7 @@ References
 See Also
 ~~~~~~~~
 
-Other length: `stri_isempty() <stri_isempty.html>`__, `stri_length() <stri_length.html>`__, `stri_numbytes() <stri_numbytes.html>`__
+Other length: `stri_isempty()`_, `stri_length()`_, `stri_numbytes()`_
 
 Examples
 ~~~~~~~~
@@ -66,3 +66,10 @@ Examples
       stri_enc_fromutf32(as.list(c(0x3000, 0xFF01:0xFF5E)))
    )
    stri_width(stri_trans_nfkd('\ubc1f')) # includes Hangul Jamo medial vowels and final consonants
+
+.. _stringi-search-charclass: about_search_charclass.html
+.. _nchar: https://stat.ethz.ch/R-manual/R-patched/library/base/html/nchar.html
+.. _stri_trans_nfc: stri_trans_nf.html
+.. _stri_isempty(): stri_isempty.html
+.. _stri_length(): stri_length.html
+.. _stri_numbytes(): stri_numbytes.html

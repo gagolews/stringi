@@ -23,7 +23,7 @@ Arguments
 Details
 ~~~~~~~
 
-All code points greater than 127 are replaced with the ASCII SUBSTITUTE CHARACTER (0x1A). R encoding declarations are always used to determine which encoding is assumed for each input, see `stri_enc_mark <stri_enc_mark.html>`__. If ill-formed byte sequences are found in UTF-8 byte streams, a warning is generated.
+All code points greater than 127 are replaced with the ASCII SUBSTITUTE CHARACTER (0x1A). R encoding declarations are always used to determine which encoding is assumed for each input, see `stri_enc_mark`_. If ill-formed byte sequences are found in UTF-8 byte streams, a warning is generated.
 
 A ``bytes``-marked string is assumed to be in an 8-bit encoding extending the ASCII map (a common assumption in R itself).
 
@@ -37,4 +37,12 @@ Returns a character vector.
 See Also
 ~~~~~~~~
 
-Other encoding_conversion: `about_encoding <about_encoding.html>`__, `stri_enc_fromutf32() <stri_enc_fromutf32.html>`__, `stri_enc_tonative() <stri_enc_tonative.html>`__, `stri_enc_toutf32() <stri_enc_toutf32.html>`__, `stri_enc_toutf8() <stri_enc_toutf8.html>`__, `stri_encode() <stri_encode.html>`__
+Other encoding_conversion: `about_encoding`_, `stri_enc_fromutf32()`_, `stri_enc_tonative()`_, `stri_enc_toutf32()`_, `stri_enc_toutf8()`_, `stri_encode()`_
+
+.. _stri_enc_mark: stri_enc_mark.html
+.. _about_encoding: about_encoding.html
+.. _stri_enc_fromutf32(): stri_enc_fromutf32.html
+.. _stri_enc_tonative(): stri_enc_tonative.html
+.. _stri_enc_toutf32(): stri_enc_toutf32.html
+.. _stri_enc_toutf8(): stri_enc_toutf8.html
+.. _stri_encode(): stri_encode.html

@@ -4,7 +4,7 @@ stri_stats_latex: Statistics for a Character Vector Containing LaTeX Commands
 Description
 ~~~~~~~~~~~
 
-This function gives LaTeX-oriented statistics for a character vector, e.g., obtained by loading a text file with the ``readLines`` function, where each text line is represented by a separate string.
+This function gives LaTeX-oriented statistics for a character vector, e.g., obtained by loading a text file with the `readLines`_ function, where each text line is represented by a separate string.
 
 Usage
 ~~~~~
@@ -47,7 +47,7 @@ Returns an integer vector with the following named elements:
 See Also
 ~~~~~~~~
 
-Other stats: `stri_stats_general() <stri_stats_general.html>`__
+Other stats: `stri_stats_general()`_
 
 Examples
 ~~~~~~~~
@@ -58,3 +58,6 @@ Examples
           '\\begin{small}Proin nibh augue,\\end{small} suscipit a, scelerisque sed, lacinia in, mi.',
           '')
    stri_stats_latex(s)
+
+.. _readLines: https://stat.ethz.ch/R-manual/R-patched/library/base/html/readLines.html
+.. _stri_stats_general(): stri_stats_general.html

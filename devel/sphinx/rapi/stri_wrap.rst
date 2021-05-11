@@ -51,9 +51,9 @@ Arguments
 +---------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``whitespace_only`` | single logical value; allow breaks only at white-spaces? if ``FALSE``, ICU's line break iterator is used to split text into words, which is suitable for natural language processing                                                                         |
 +---------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``use_length``      | single logical value; should the number of code points be used instead of the total code point width (see `stri_width <stri_width.html>`__)?                                                                                                                 |
+| ``use_length``      | single logical value; should the number of code points be used instead of the total code point width (see `stri_width`_)?                                                                                                                                    |
 +---------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``locale``          | ``NULL`` or ``''`` for text boundary analysis following the conventions of the default locale, or a single string with locale identifier, see `stringi-locale <about_locale.html>`__                                                                         |
+| ``locale``          | ``NULL`` or ``''`` for text boundary analysis following the conventions of the default locale, or a single string with locale identifier, see `stringi-locale`_                                                                                              |
 +---------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Details
@@ -67,7 +67,7 @@ Note that Unicode code points may have various widths when printed on the consol
 
 If ``normalize`` is ``FALSE``, then multiple white spaces between the word boundaries are preserved within each wrapped line. In such a case, none of the strings can contain ``\r``, ``\n``, or other new line characters, otherwise you will get an error. You should split the input text into lines or, for example, substitute line breaks with spaces before applying this function.
 
-If ``normalize`` is ``TRUE``, then all consecutive white space (ASCII space, horizontal TAB, CR, LF) sequences are replaced with single ASCII spaces before actual string wrapping. Moreover, `stri_split_lines <stri_split_lines.html>`__ and `stri_trans_nfc <stri_trans_nf.html>`__ is called on the input character vector. This is for compatibility with ``strwrap``.
+If ``normalize`` is ``TRUE``, then all consecutive white space (ASCII space, horizontal TAB, CR, LF) sequences are replaced with single ASCII spaces before actual string wrapping. Moreover, `stri_split_lines`_ and `stri_trans_nfc`_ is called on the input character vector. This is for compatibility with `strwrap`_.
 
 The greedy algorithm (for ``cost_exponent`` being non-positive) provides a very simple way for word wrapping. It always puts as many words in each line as possible. This method – contrary to the dynamic algorithm – does not minimize the number of space left at the end of every line. The dynamic algorithm (a.k.a. Knuth's word wrapping algorithm) is more complex, but it returns text wrapped in a more aesthetic way. This method minimizes the squared (by default, see ``cost_exponent``) number of spaces (raggedness) at the end of each line, so the text is mode arranged evenly. Note that the cost of printing the last line is always zero.
 
@@ -84,9 +84,9 @@ D.E. Knuth, M.F. Plass, Breaking paragraphs into lines, *Software: Practice and 
 See Also
 ~~~~~~~~
 
-Other locale_sensitive: `%s<%() <operator_compare.html>`__, `about_locale <about_locale.html>`__, `about_search_boundaries <about_search_boundaries.html>`__, `about_search_coll <about_search_coll.html>`__, `stri_compare() <stri_compare.html>`__, `stri_count_boundaries() <stri_count_boundaries.html>`__, `stri_duplicated() <stri_duplicated.html>`__, `stri_enc_detect2() <stri_enc_detect2.html>`__, `stri_extract_all_boundaries() <stri_extract_boundaries.html>`__, `stri_locate_all_boundaries() <stri_locate_boundaries.html>`__, `stri_opts_collator() <stri_opts_collator.html>`__, `stri_order() <stri_order.html>`__, `stri_rank() <stri_rank.html>`__, `stri_sort_key() <stri_sort_key.html>`__, `stri_sort() <stri_sort.html>`__, `stri_split_boundaries() <stri_split_boundaries.html>`__, `stri_trans_tolower() <stri_trans_casemap.html>`__, `stri_unique() <stri_unique.html>`__
+Other locale_sensitive: `%s<%()`_, `about_locale`_, `about_search_boundaries`_, `about_search_coll`_, `stri_compare()`_, `stri_count_boundaries()`_, `stri_duplicated()`_, `stri_enc_detect2()`_, `stri_extract_all_boundaries()`_, `stri_locate_all_boundaries()`_, `stri_opts_collator()`_, `stri_order()`_, `stri_rank()`_, `stri_sort_key()`_, `stri_sort()`_, `stri_split_boundaries()`_, `stri_trans_tolower()`_, `stri_unique()`_
 
-Other text_boundaries: `about_search_boundaries <about_search_boundaries.html>`__, `about_search <about_search.html>`__, `stri_count_boundaries() <stri_count_boundaries.html>`__, `stri_extract_all_boundaries() <stri_extract_boundaries.html>`__, `stri_locate_all_boundaries() <stri_locate_boundaries.html>`__, `stri_opts_brkiter() <stri_opts_brkiter.html>`__, `stri_split_boundaries() <stri_split_boundaries.html>`__, `stri_split_lines() <stri_split_lines.html>`__, `stri_trans_tolower() <stri_trans_casemap.html>`__
+Other text_boundaries: `about_search_boundaries`_, `about_search`_, `stri_count_boundaries()`_, `stri_extract_all_boundaries()`_, `stri_locate_all_boundaries()`_, `stri_opts_brkiter()`_, `stri_split_boundaries()`_, `stri_split_lines()`_, `stri_trans_tolower()`_
 
 Examples
 ~~~~~~~~
@@ -100,3 +100,30 @@ Examples
    cat(stri_wrap(s, 20, 0.0), sep='\n') # greedy
    cat(stri_wrap(s, 20, 2.0), sep='\n') # dynamic
    cat(stri_pad(stri_wrap(s), side='both'), sep='\n')
+
+.. _stri_width: stri_width.html
+.. _stringi-locale: about_locale.html
+.. _stri_split_lines: stri_split_lines.html
+.. _stri_trans_nfc: stri_trans_nf.html
+.. _strwrap: https://stat.ethz.ch/R-manual/R-patched/library/base/html/strwrap.html
+.. _%s<%(): operator_compare.html
+.. _about_locale: about_locale.html
+.. _about_search_boundaries: about_search_boundaries.html
+.. _about_search_coll: about_search_coll.html
+.. _stri_compare(): stri_compare.html
+.. _stri_count_boundaries(): stri_count_boundaries.html
+.. _stri_duplicated(): stri_duplicated.html
+.. _stri_enc_detect2(): stri_enc_detect2.html
+.. _stri_extract_all_boundaries(): stri_extract_boundaries.html
+.. _stri_locate_all_boundaries(): stri_locate_boundaries.html
+.. _stri_opts_collator(): stri_opts_collator.html
+.. _stri_order(): stri_order.html
+.. _stri_rank(): stri_rank.html
+.. _stri_sort_key(): stri_sort_key.html
+.. _stri_sort(): stri_sort.html
+.. _stri_split_boundaries(): stri_split_boundaries.html
+.. _stri_trans_tolower(): stri_trans_casemap.html
+.. _stri_unique(): stri_unique.html
+.. _about_search: about_search.html
+.. _stri_opts_brkiter(): stri_opts_brkiter.html
+.. _stri_split_lines(): stri_split_lines.html

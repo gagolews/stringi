@@ -4,7 +4,7 @@ about_search_fixed: Locale-Insensitive Fixed Pattern Matching in stringi
 Description
 ~~~~~~~~~~~
 
-String searching facilities described here provide a way to locate a specific sequence of bytes in a string. The search engine's settings may be tuned up (for example to perform case-insensitive search) via a call to the `stri_opts_fixed <stri_opts_fixed.html>`__ function.
+String searching facilities described here provide a way to locate a specific sequence of bytes in a string. The search engine's settings may be tuned up (for example to perform case-insensitive search) via a call to the `stri_opts_fixed`_ function.
 
 Byte Compare
 ~~~~~~~~~~~~
@@ -21,13 +21,25 @@ Be aware that, for natural language processing, fixed pattern searching might no
 
 #. ignorable case,
 
-see also `about_search_coll <about_search_coll.html>`__.
+see also `about_search_coll`_.
 
 Note that the conversion of input data to Unicode is done as usual.
 
 See Also
 ~~~~~~~~
 
-Other search_fixed: `about_search <about_search.html>`__, `stri_opts_fixed() <stri_opts_fixed.html>`__
+Other search_fixed: `about_search`_, `stri_opts_fixed()`_
 
-Other stringi_general_topics: `about_arguments <about_arguments.html>`__, `about_encoding <about_encoding.html>`__, `about_locale <about_locale.html>`__, `about_search_boundaries <about_search_boundaries.html>`__, `about_search_charclass <about_search_charclass.html>`__, `about_search_coll <about_search_coll.html>`__, `about_search_regex <about_search_regex.html>`__, `about_search <about_search.html>`__, `about_stringi <about_stringi.html>`__
+Other stringi_general_topics: `about_arguments`_, `about_encoding`_, `about_locale`_, `about_search_boundaries`_, `about_search_charclass`_, `about_search_coll`_, `about_search_regex`_, `about_search`_, `about_stringi`_
+
+.. _stri_opts_fixed: stri_opts_fixed.html
+.. _about_search_coll: about_search_coll.html
+.. _about_search: about_search.html
+.. _stri_opts_fixed(): stri_opts_fixed.html
+.. _about_arguments: about_arguments.html
+.. _about_encoding: about_encoding.html
+.. _about_locale: about_locale.html
+.. _about_search_boundaries: about_search_boundaries.html
+.. _about_search_charclass: about_search_charclass.html
+.. _about_search_regex: about_search_regex.html
+.. _about_stringi: about_stringi.html

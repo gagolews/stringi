@@ -41,7 +41,7 @@ Returns a character vector.
 See Also
 ~~~~~~~~
 
-Other join: `%s+%() <operator_add.html>`__, `stri_flatten() <stri_flatten.html>`__, `stri_join_list() <stri_join_list.html>`__, `stri_join() <stri_join.html>`__
+Other join: `%s+%()`_, `stri_flatten()`_, `stri_join_list()`_, `stri_join()`_
 
 Examples
 ~~~~~~~~
@@ -52,3 +52,8 @@ Examples
    stri_dup(c('a', NA, 'ba'), 4)
    stri_dup(c('abc', 'pqrst'), c(4, 2))
    "a" %s*% 5
+
+.. _%s+%(): operator_add.html
+.. _stri_flatten(): stri_flatten.html
+.. _stri_join_list(): stri_join_list.html
+.. _stri_join(): stri_join.html

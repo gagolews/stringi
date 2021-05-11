@@ -23,9 +23,9 @@ Arguments
 Details
 ~~~~~~~
 
-Often, this is not the function you would normally use in your string processing activities. See `stri_length <stri_length.html>`__ instead.
+Often, this is not the function you would normally use in your string processing activities. See `stri_length`_ instead.
 
-For 8-bit encoded strings, this is the same as `stri_length <stri_length.html>`__. For UTF-8 strings, the returned values may be greater than the number of code points, as UTF-8 is not a fixed-byte encoding: one code point may be encoded by 1-4 bytes (according to the current Unicode standard).
+For 8-bit encoded strings, this is the same as `stri_length`_. For UTF-8 strings, the returned values may be greater than the number of code points, as UTF-8 is not a fixed-byte encoding: one code point may be encoded by 1-4 bytes (according to the current Unicode standard).
 
 Missing values are handled properly.
 
@@ -41,7 +41,7 @@ Returns an integer vector of the same length as ``str``.
 See Also
 ~~~~~~~~
 
-Other length: `stri_isempty() <stri_isempty.html>`__, `stri_length() <stri_length.html>`__, `stri_width() <stri_width.html>`__
+Other length: `stri_isempty()`_, `stri_length()`_, `stri_width()`_
 
 Examples
 ~~~~~~~~
@@ -57,3 +57,8 @@ Examples
    stri_numbytes('\U7fffffff') # compare stri_length('\U7fffffff')
 
    ## End(Not run)
+
+.. _stri_length: stri_length.html
+.. _stri_isempty(): stri_isempty.html
+.. _stri_length(): stri_length.html
+.. _stri_width(): stri_width.html

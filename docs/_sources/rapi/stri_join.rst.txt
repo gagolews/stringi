@@ -4,7 +4,7 @@ stri_join: Concatenate Character Vectors
 Description
 ~~~~~~~~~~~
 
-These are the stringi's equivalents of the built-in ``paste`` function. ``stri_c`` and ``stri_paste`` are aliases for ``stri_join``.
+These are the stringi's equivalents of the built-in `paste`_ function. ``stri_c`` and ``stri_paste`` are aliases for ``stri_join``.
 
 Usage
 ~~~~~
@@ -21,7 +21,7 @@ Arguments
 ~~~~~~~~~
 
 +-----------------+-------------------------------------------------------------------------------------------------------------------+
-| ``...``         | character vectors (or objects coercible to character vectors) which corresponding elements are to be concatenated |
+| ``...``         | character vectors (or objects coercible to character vectors) whose corresponding elements are to be concatenated |
 +-----------------+-------------------------------------------------------------------------------------------------------------------+
 | ``sep``         | a single string; separates terms                                                                                  |
 +-----------------+-------------------------------------------------------------------------------------------------------------------+
@@ -41,7 +41,7 @@ If any of the arguments in '``...``' is a vector of length 0 (not to be confused
 
 If ``collapse`` or ``sep`` has length greater than 1, then only the first string will be used.
 
-In case where there are missing values in any of the input vectors, ``NA`` is set to the corresponding element. Note that this behavior is different from ``paste``, which treats missing values as ordinary strings like ``'NA'``. Moreover, as usual in stringi, the resulting strings are always in UTF-8.
+In case where there are missing values in any of the input vectors, ``NA`` is set to the corresponding element. Note that this behavior is different from `paste`_, which treats missing values as ordinary strings like ``'NA'``. Moreover, as usual in stringi, the resulting strings are always in UTF-8.
 
 Value
 ~~~~~
@@ -51,7 +51,7 @@ Returns a character vector.
 See Also
 ~~~~~~~~
 
-Other join: `%s+%() <operator_add.html>`__, `stri_dup() <stri_dup.html>`__, `stri_flatten() <stri_flatten.html>`__, `stri_join_list() <stri_join_list.html>`__
+Other join: `%s+%()`_, `stri_dup()`_, `stri_flatten()`_, `stri_join_list()`_
 
 Examples
 ~~~~~~~~
@@ -64,3 +64,9 @@ Examples
    stri_join(1:13, letters, sep=',', collapse='; ')
    stri_join(c('abc', '123', 'xyz'),'###', 1:6, sep=',')
    stri_join(c('abc', '123', 'xyz'),'###', 1:6, sep=',', collapse='; ')
+
+.. _paste: https://stat.ethz.ch/R-manual/R-patched/library/base/html/paste.html
+.. _%s+%(): operator_add.html
+.. _stri_dup(): stri_dup.html
+.. _stri_flatten(): stri_flatten.html
+.. _stri_join_list(): stri_join_list.html

@@ -4,7 +4,7 @@ stri_stats_general: General Statistics for a Character Vector
 Description
 ~~~~~~~~~~~
 
-This function gives general statistics for a character vector, e.g., obtained by loading a text file with the ``readLines`` or `stri_read_lines <stri_read_lines.html>`__ function, where each text line' is represented by a separate string.
+This function gives general statistics for a character vector, e.g., obtained by loading a text file with the `readLines`_ or `stri_read_lines`_ function, where each text line' is represented by a separate string.
 
 Usage
 ~~~~~
@@ -45,7 +45,7 @@ Returns an integer vector with the following named elements:
 See Also
 ~~~~~~~~
 
-Other stats: `stri_stats_latex() <stri_stats_latex.html>`__
+Other stats: `stri_stats_latex()`_
 
 Examples
 ~~~~~~~~
@@ -57,3 +57,7 @@ Examples
           'Cras vel lorem. Etiam pellentesque aliquet tellus.',
           '')
    stri_stats_general(s)
+
+.. _readLines: https://stat.ethz.ch/R-manual/R-patched/library/base/html/readLines.html
+.. _stri_read_lines: stri_read_lines.html
+.. _stri_stats_latex(): stri_stats_latex.html

@@ -59,7 +59,7 @@ Note that many W3C Specifications recommend using NFC for all content, because t
 
 As usual in stringi, if the input character vector is in the native encoding, it will be automatically converted to UTF-8.
 
-For more general text transforms refer to `stri_trans_general <stri_trans_general.html>`__.
+For more general text transforms refer to `stri_trans_general`_.
 
 Value
 ~~~~~
@@ -84,7 +84,7 @@ References
 See Also
 ~~~~~~~~
 
-Other transform: `stri_trans_char() <stri_trans_char.html>`__, `stri_trans_general() <stri_trans_general.html>`__, `stri_trans_list() <stri_trans_list.html>`__, `stri_trans_tolower() <stri_trans_casemap.html>`__
+Other transform: `stri_trans_char()`_, `stri_trans_general()`_, `stri_trans_list()`_, `stri_trans_tolower()`_
 
 Examples
 ~~~~~~~~
@@ -93,3 +93,9 @@ Examples
 
    stri_trans_nfd('\u0105') # a with ogonek -> a, ogonek
    stri_trans_nfkc('\ufdfa') # 1 codepoint -> 18 codepoints
+
+.. _stri_trans_general: stri_trans_general.html
+.. _stri_trans_char(): stri_trans_char.html
+.. _stri_trans_general(): stri_trans_general.html
+.. _stri_trans_list(): stri_trans_list.html
+.. _stri_trans_tolower(): stri_trans_casemap.html

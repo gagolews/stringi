@@ -23,11 +23,11 @@ Arguments
 Details
 ~~~~~~~
 
-See `stri_enc_fromutf32 <stri_enc_fromutf32.html>`__ for a dual operation.
+See `stri_enc_fromutf32`_ for a dual operation.
 
-This function is roughly equivalent to a vectorized call to ``utf8ToInt(enc2utf8(str))``. If you want a list of raw vectors on output, use `stri_encode <stri_encode.html>`__.
+This function is roughly equivalent to a vectorized call to `utf8ToInt(enc2utf8(str))`_. If you want a list of raw vectors on output, use `stri_encode`_.
 
-Unlike ``utf8ToInt``, if ill-formed UTF-8 byte sequences are detected, a corresponding element is set to NULL and a warning is generated. To deal with such issues, use, e.g., `stri_enc_toutf8 <stri_enc_toutf8.html>`__.
+Unlike ``utf8ToInt``, if ill-formed UTF-8 byte sequences are detected, a corresponding element is set to NULL and a warning is generated. To deal with such issues, use, e.g., `stri_enc_toutf8`_.
 
 Value
 ~~~~~
@@ -37,4 +37,15 @@ Returns a list of integer vectors. Missing values are converted to ``NULL``\ s.
 See Also
 ~~~~~~~~
 
-Other encoding_conversion: `about_encoding <about_encoding.html>`__, `stri_enc_fromutf32() <stri_enc_fromutf32.html>`__, `stri_enc_toascii() <stri_enc_toascii.html>`__, `stri_enc_tonative() <stri_enc_tonative.html>`__, `stri_enc_toutf8() <stri_enc_toutf8.html>`__, `stri_encode() <stri_encode.html>`__
+Other encoding_conversion: `about_encoding`_, `stri_enc_fromutf32()`_, `stri_enc_toascii()`_, `stri_enc_tonative()`_, `stri_enc_toutf8()`_, `stri_encode()`_
+
+.. _stri_enc_fromutf32: stri_enc_fromutf32.html
+.. _utf8ToInt(enc2utf8(str)): https://stat.ethz.ch/R-manual/R-patched/library/base/html/utf8Conversion.html
+.. _stri_encode: stri_encode.html
+.. _stri_enc_toutf8: stri_enc_toutf8.html
+.. _about_encoding: about_encoding.html
+.. _stri_enc_fromutf32(): stri_enc_fromutf32.html
+.. _stri_enc_toascii(): stri_enc_toascii.html
+.. _stri_enc_tonative(): stri_enc_tonative.html
+.. _stri_enc_toutf8(): stri_enc_toutf8.html
+.. _stri_encode(): stri_encode.html

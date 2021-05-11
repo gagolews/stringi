@@ -43,7 +43,7 @@ Returns a character vector.
 See Also
 ~~~~~~~~
 
-Other transform: `stri_trans_general() <stri_trans_general.html>`__, `stri_trans_list() <stri_trans_list.html>`__, `stri_trans_nfc() <stri_trans_nf.html>`__, `stri_trans_tolower() <stri_trans_casemap.html>`__
+Other transform: `stri_trans_general()`_, `stri_trans_list()`_, `stri_trans_nfc()`_, `stri_trans_tolower()`_
 
 Examples
 ~~~~~~~~
@@ -53,3 +53,8 @@ Examples
    stri_trans_char('id.123', '.', '_')
    stri_trans_char('babaab', 'ab', '01')
    stri_trans_char('GCUACGGAGCUUCGGAGCUAG', 'ACGT', 'TGCA')
+
+.. _stri_trans_general(): stri_trans_general.html
+.. _stri_trans_list(): stri_trans_list.html
+.. _stri_trans_nfc(): stri_trans_nf.html
+.. _stri_trans_tolower(): stri_trans_casemap.html

@@ -52,6 +52,17 @@ References
 See Also
 ~~~~~~~~
 
-Other search_split: `about_search <about_search.html>`__, `stri_split_boundaries() <stri_split_boundaries.html>`__, `stri_split() <stri_split.html>`__
+Other search_split: `about_search`_, `stri_split_boundaries()`_, `stri_split()`_
 
-Other text_boundaries: `about_search_boundaries <about_search_boundaries.html>`__, `about_search <about_search.html>`__, `stri_count_boundaries() <stri_count_boundaries.html>`__, `stri_extract_all_boundaries() <stri_extract_boundaries.html>`__, `stri_locate_all_boundaries() <stri_locate_boundaries.html>`__, `stri_opts_brkiter() <stri_opts_brkiter.html>`__, `stri_split_boundaries() <stri_split_boundaries.html>`__, `stri_trans_tolower() <stri_trans_casemap.html>`__, `stri_wrap() <stri_wrap.html>`__
+Other text_boundaries: `about_search_boundaries`_, `about_search`_, `stri_count_boundaries()`_, `stri_extract_all_boundaries()`_, `stri_locate_all_boundaries()`_, `stri_opts_brkiter()`_, `stri_split_boundaries()`_, `stri_trans_tolower()`_, `stri_wrap()`_
+
+.. _about_search: about_search.html
+.. _stri_split_boundaries(): stri_split_boundaries.html
+.. _stri_split(): stri_split.html
+.. _about_search_boundaries: about_search_boundaries.html
+.. _stri_count_boundaries(): stri_count_boundaries.html
+.. _stri_extract_all_boundaries(): stri_extract_boundaries.html
+.. _stri_locate_all_boundaries(): stri_locate_boundaries.html
+.. _stri_opts_brkiter(): stri_opts_brkiter.html
+.. _stri_trans_tolower(): stri_trans_casemap.html
+.. _stri_wrap(): stri_wrap.html

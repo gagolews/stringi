@@ -25,7 +25,7 @@ Details
 
 This operation may result in non-Unicode-normalized strings and may give peculiar outputs in case of bidirectional strings.
 
-See also `stri_reverse <stri_reverse.html>`__ for reversing the order of code points.
+See also `stri_reverse`_ for reversing the order of code points.
 
 Value
 ~~~~~
@@ -35,7 +35,7 @@ Returns a character vector.
 See Also
 ~~~~~~~~
 
-Other random: `stri_rand_lipsum() <stri_rand_lipsum.html>`__, `stri_rand_strings() <stri_rand_strings.html>`__
+Other random: `stri_rand_lipsum()`_, `stri_rand_strings()`_
 
 Examples
 ~~~~~~~~
@@ -45,3 +45,7 @@ Examples
    stri_rand_shuffle(c('abcdefghi', '0123456789'))
    # you can do better than this with stri_rand_strings:
    stri_rand_shuffle(rep(stri_paste(letters, collapse=''), 10))
+
+.. _stri_reverse: stri_reverse.html
+.. _stri_rand_lipsum(): stri_rand_lipsum.html
+.. _stri_rand_strings(): stri_rand_strings.html

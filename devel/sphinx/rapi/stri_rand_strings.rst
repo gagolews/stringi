@@ -16,13 +16,13 @@ Usage
 Arguments
 ~~~~~~~~~
 
-+-------------+-------------------------------------------------------------------------------------------------------------------------------------+
-| ``n``       | single integer, number of observations                                                                                              |
-+-------------+-------------------------------------------------------------------------------------------------------------------------------------+
-| ``length``  | integer vector, desired string lengths                                                                                              |
-+-------------+-------------------------------------------------------------------------------------------------------------------------------------+
-| ``pattern`` | character vector specifying character classes to draw elements from, see `stringi-search-charclass <about_search_charclass.html>`__ |
-+-------------+-------------------------------------------------------------------------------------------------------------------------------------+
++-------------+------------------------------------------------------------------------------------------------------+
+| ``n``       | single integer, number of observations                                                               |
++-------------+------------------------------------------------------------------------------------------------------+
+| ``length``  | integer vector, desired string lengths                                                               |
++-------------+------------------------------------------------------------------------------------------------------+
+| ``pattern`` | character vector specifying character classes to draw elements from, see `stringi-search-charclass`_ |
++-------------+------------------------------------------------------------------------------------------------------+
 
 Details
 ~~~~~~~
@@ -41,7 +41,7 @@ Returns a character vector.
 See Also
 ~~~~~~~~
 
-Other random: `stri_rand_lipsum() <stri_rand_lipsum.html>`__, `stri_rand_shuffle() <stri_rand_shuffle.html>`__
+Other random: `stri_rand_lipsum()`_, `stri_rand_shuffle()`_
 
 Examples
 ~~~~~~~~
@@ -61,3 +61,7 @@ Examples
       stri_rand_strings(n, 1, '[A-Z]'),
       stri_rand_strings(n, sample(5:11, 5, replace=TRUE), '[a-zA-Z0-9]')
    ))
+
+.. _stringi-search-charclass: about_search_charclass.html
+.. _stri_rand_lipsum(): stri_rand_lipsum.html
+.. _stri_rand_shuffle(): stri_rand_shuffle.html

@@ -25,7 +25,7 @@ Details
 
 Note that this operation may result in non-Unicode-normalized strings and may give peculiar outputs for bidirectional strings.
 
-See also `stri_rand_shuffle <stri_rand_shuffle.html>`__ for a random permutation of code points.
+See also `stri_rand_shuffle`_ for a random permutation of code points.
 
 Value
 ~~~~~
@@ -40,3 +40,5 @@ Examples
    stri_reverse(c('123', 'abc d e f'))
    stri_reverse('ZXY (\u0105\u0104123$^).')
    stri_reverse(stri_trans_nfd('\u0105')) == stri_trans_nfd('\u0105') # A, ogonek -> agonek, A
+
+.. _stri_rand_shuffle: stri_rand_shuffle.html

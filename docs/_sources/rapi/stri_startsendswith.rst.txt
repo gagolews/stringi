@@ -58,21 +58,21 @@ Usage
 Arguments
 ~~~~~~~~~
 
-+-------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``str``                             | character vector                                                                                                                                                                                        |
-+-------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``...``                             | supplementary arguments passed to the underlying functions, including additional settings for ``opts_collator``, ``opts_fixed``, and so on.                                                             |
-+-------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``pattern, fixed, coll, charclass`` | character vector defining search patterns; for more details refer to `stringi-search <about_search.html>`__                                                                                             |
-+-------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``from``                            | integer vector                                                                                                                                                                                          |
-+-------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``negate``                          | single logical value; whether a no-match to a pattern is rather of interest                                                                                                                             |
-+-------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``to``                              | integer vector                                                                                                                                                                                          |
-+-------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``opts_collator, opts_fixed``       | a named list used to tune up the search engine's settings; see `stri_opts_collator <stri_opts_collator.html>`__ and `stri_opts_fixed <stri_opts_fixed.html>`__, respectively; ``NULL`` for the defaults |
-+-------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++-------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``str``                             | character vector                                                                                                                                     |
++-------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``...``                             | supplementary arguments passed to the underlying functions, including additional settings for ``opts_collator``, ``opts_fixed``, and so on.          |
++-------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``pattern, fixed, coll, charclass`` | character vector defining search patterns; for more details refer to `stringi-search`_                                                               |
++-------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``from``                            | integer vector                                                                                                                                       |
++-------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``negate``                          | single logical value; whether a no-match to a pattern is rather of interest                                                                          |
++-------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``to``                              | integer vector                                                                                                                                       |
++-------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``opts_collator, opts_fixed``       | a named list used to tune up the search engine's settings; see `stri_opts_collator`_ and `stri_opts_fixed`_, respectively; ``NULL`` for the defaults |
++-------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Details
 ~~~~~~~
@@ -87,11 +87,11 @@ Indexes given by ``from`` or ``to`` are of course 1-based, i.e., an index 1 deno
 
 For negative indexes in ``from`` or ``to``, counting starts at the end of the string. For instance, index -1 denotes the last code point in the string.
 
-If you wish to test for a pattern match at an arbitrary position in ``str``, use `stri_detect <stri_detect.html>`__.
+If you wish to test for a pattern match at an arbitrary position in ``str``, use `stri_detect`_.
 
 ``stri_startswith`` and ``stri_endswith`` are convenience functions. They call either ``stri_*_fixed``, ``stri_*_coll``, or ``stri_*_charclass``, depending on the argument used. Relying on these underlying functions directly will make your code run slightly faster.
 
-Note that testing for a pattern match at the start or end of a string has not been implemented separately for regex patterns. For that you may use the '``^``' and '``$``' meta-characters, see `stringi-search-regex <about_search_regex.html>`__.
+Note that testing for a pattern match at the start or end of a string has not been implemented separately for regex patterns. For that you may use the '``^``' and '``$``' meta-characters, see `stringi-search-regex`_.
 
 Value
 ~~~~~
@@ -101,7 +101,7 @@ Each function returns a logical vector.
 See Also
 ~~~~~~~~
 
-Other search_detect: `about_search <about_search.html>`__, `stri_detect() <stri_detect.html>`__
+Other search_detect: `about_search`_, `stri_detect()`_
 
 Examples
 ~~~~~~~~
@@ -117,3 +117,11 @@ Examples
    pat <- stri_paste('\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ',
                      '\u0639\u0644\u064a\u0647 \u0648\u0633\u0644\u0645XYZ')
    stri_endswith_coll('\ufdfa\ufdfa\ufdfaXYZ', pat, strength=1)
+
+.. _stringi-search: about_search.html
+.. _stri_opts_collator: stri_opts_collator.html
+.. _stri_opts_fixed: stri_opts_fixed.html
+.. _stri_detect: stri_detect.html
+.. _stringi-search-regex: about_search_regex.html
+.. _about_search: about_search.html
+.. _stri_detect(): stri_detect.html

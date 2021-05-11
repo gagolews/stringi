@@ -23,7 +23,7 @@ Arguments
 Details
 ~~~~~~~
 
-For non-printable and certain special (well-known, see also R man page `Quotes <../../base/html/Quotes.html>`__) ASCII characters the following (also recognized in R) convention is used. We get ``\a``, ``\b``, ``\t``, ``\n``, ``\v``, ``\f``, ``\r``, ``\"``, ``\'``, ``\\`` or either \\uXXXX (4 hex digits) or \\UXXXXXXXX (8 hex digits) otherwise.
+For non-printable and certain special (well-known, see also R man page `Quotes`_) ASCII characters the following (also recognized in R) convention is used. We get ``\a``, ``\b``, ``\t``, ``\n``, ``\v``, ``\f``, ``\r``, ``\"``, ``\'``, ``\\`` or either \\uXXXX (4 hex digits) or \\UXXXXXXXX (8 hex digits) otherwise.
 
 As usual, any input string is converted to Unicode before executing the escape process.
 
@@ -35,7 +35,7 @@ Returns a character vector.
 See Also
 ~~~~~~~~
 
-Other escape: `stri_unescape_unicode() <stri_unescape_unicode.html>`__
+Other escape: `stri_unescape_unicode()`_
 
 Examples
 ~~~~~~~~
@@ -43,3 +43,6 @@ Examples
 .. code-block:: r
 
    stri_escape_unicode('a\u0105!')
+
+.. _Quotes: ../../base/html/Quotes.html
+.. _stri_unescape_unicode(): stri_unescape_unicode.html

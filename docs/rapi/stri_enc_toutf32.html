@@ -323,7 +323,7 @@
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
 <p>See <a class="reference external" href="stri_enc_fromutf32.html">stri_enc_fromutf32</a> for a dual operation.</p>
-<p>This function is roughly equivalent to a vectorized call to <code class="docutils literal notranslate"><span class="pre">utf8ToInt(enc2utf8(str))</span></code>. If you want a list of raw vectors on output, use <a class="reference external" href="stri_encode.html">stri_encode</a>.</p>
+<p>This function is roughly equivalent to a vectorized call to <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/utf8Conversion.html">utf8ToInt(enc2utf8(str))</a>. If you want a list of raw vectors on output, use <a class="reference external" href="stri_encode.html">stri_encode</a>.</p>
 <p>Unlike <code class="docutils literal notranslate"><span class="pre">utf8ToInt</span></code>, if ill-formed UTF-8 byte sequences are detected, a corresponding element is set to NULL and a warning is generated. To deal with such issues, use, e.g., <a class="reference external" href="stri_enc_toutf8.html">stri_enc_toutf8</a>.</p>
 </div>
 <div class="section" id="value">

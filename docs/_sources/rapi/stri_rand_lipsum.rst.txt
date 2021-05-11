@@ -39,7 +39,7 @@ Returns a character vector of length ``n_paragraphs``.
 See Also
 ~~~~~~~~
 
-Other random: `stri_rand_shuffle() <stri_rand_shuffle.html>`__, `stri_rand_strings() <stri_rand_strings.html>`__
+Other random: `stri_rand_shuffle()`_, `stri_rand_strings()`_
 
 Examples
 ~~~~~~~~
@@ -50,3 +50,6 @@ Examples
       stri_wrap(stri_rand_lipsum(10), 80, simplify=FALSE),
       stri_flatten, collapse='\n'), sep='\n\n')
    cat(stri_rand_lipsum(10), sep='\n\n')
+
+.. _stri_rand_shuffle(): stri_rand_shuffle.html
+.. _stri_rand_strings(): stri_rand_strings.html

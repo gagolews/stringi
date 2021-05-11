@@ -22,15 +22,15 @@ Usage
 Arguments
 ~~~~~~~~~
 
-+------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``str``          | character vector                                                                                                                                                                     |
-+------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``locale``       | ``NULL`` or ``''`` for case mapping following the conventions of the default locale, or a single string with locale identifier, see `stringi-locale <about_locale.html>`__.          |
-+------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``...``          | additional settings for ``opts_brkiter``                                                                                                                                             |
-+------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``opts_brkiter`` | a named list with ICU BreakIterator's settings, see `stri_opts_brkiter <stri_opts_brkiter.html>`__; ``NULL`` for default break iterator, i.e., ``word``; ``stri_trans_totitle`` only |
-+------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``str``          | character vector                                                                                                                                           |
++------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``locale``       | ``NULL`` or ``''`` for case mapping following the conventions of the default locale, or a single string with locale identifier, see `stringi-locale`_.     |
++------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``...``          | additional settings for ``opts_brkiter``                                                                                                                   |
++------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``opts_brkiter`` | a named list with ICU BreakIterator's settings, see `stri_opts_brkiter`_; ``NULL`` for default break iterator, i.e., ``word``; ``stri_trans_totitle`` only |
++------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Details
 ~~~~~~~
@@ -49,7 +49,7 @@ With ``stri_trans_totitle``, if ``word`` ``BreakIterator`` is used (the default)
 
 Case folding, on the other hand, is locale-independent. Its purpose is to make two pieces of text that differ only in case identical. This may come in handy when comparing strings.
 
-For more general (but not locale dependent) text transforms refer to `stri_trans_general <stri_trans_general.html>`__.
+For more general (but not locale dependent) text transforms refer to `stri_trans_general`_.
 
 Value
 ~~~~~
@@ -64,11 +64,11 @@ References
 See Also
 ~~~~~~~~
 
-Other locale_sensitive: `%s<%() <operator_compare.html>`__, `about_locale <about_locale.html>`__, `about_search_boundaries <about_search_boundaries.html>`__, `about_search_coll <about_search_coll.html>`__, `stri_compare() <stri_compare.html>`__, `stri_count_boundaries() <stri_count_boundaries.html>`__, `stri_duplicated() <stri_duplicated.html>`__, `stri_enc_detect2() <stri_enc_detect2.html>`__, `stri_extract_all_boundaries() <stri_extract_boundaries.html>`__, `stri_locate_all_boundaries() <stri_locate_boundaries.html>`__, `stri_opts_collator() <stri_opts_collator.html>`__, `stri_order() <stri_order.html>`__, `stri_rank() <stri_rank.html>`__, `stri_sort_key() <stri_sort_key.html>`__, `stri_sort() <stri_sort.html>`__, `stri_split_boundaries() <stri_split_boundaries.html>`__, `stri_unique() <stri_unique.html>`__, `stri_wrap() <stri_wrap.html>`__
+Other locale_sensitive: `%s<%()`_, `about_locale`_, `about_search_boundaries`_, `about_search_coll`_, `stri_compare()`_, `stri_count_boundaries()`_, `stri_duplicated()`_, `stri_enc_detect2()`_, `stri_extract_all_boundaries()`_, `stri_locate_all_boundaries()`_, `stri_opts_collator()`_, `stri_order()`_, `stri_rank()`_, `stri_sort_key()`_, `stri_sort()`_, `stri_split_boundaries()`_, `stri_unique()`_, `stri_wrap()`_
 
-Other transform: `stri_trans_char() <stri_trans_char.html>`__, `stri_trans_general() <stri_trans_general.html>`__, `stri_trans_list() <stri_trans_list.html>`__, `stri_trans_nfc() <stri_trans_nf.html>`__
+Other transform: `stri_trans_char()`_, `stri_trans_general()`_, `stri_trans_list()`_, `stri_trans_nfc()`_
 
-Other text_boundaries: `about_search_boundaries <about_search_boundaries.html>`__, `about_search <about_search.html>`__, `stri_count_boundaries() <stri_count_boundaries.html>`__, `stri_extract_all_boundaries() <stri_extract_boundaries.html>`__, `stri_locate_all_boundaries() <stri_locate_boundaries.html>`__, `stri_opts_brkiter() <stri_opts_brkiter.html>`__, `stri_split_boundaries() <stri_split_boundaries.html>`__, `stri_split_lines() <stri_split_lines.html>`__, `stri_wrap() <stri_wrap.html>`__
+Other text_boundaries: `about_search_boundaries`_, `about_search`_, `stri_count_boundaries()`_, `stri_extract_all_boundaries()`_, `stri_locate_all_boundaries()`_, `stri_opts_brkiter()`_, `stri_split_boundaries()`_, `stri_split_lines()`_, `stri_wrap()`_
 
 Examples
 ~~~~~~~~
@@ -83,3 +83,32 @@ Examples
    stri_trans_casefold(c('AbC', '123', '\u0105\u0104'))
    stri_trans_totitle('cOOkiE mOnSTeR likes COOKIES. Here HE comes!') # word boundary
    stri_trans_totitle('cOOkiE mOnSTeR likes COOKIES. Here HE comes!', type='sentence')
+
+.. _stringi-locale: about_locale.html
+.. _stri_opts_brkiter: stri_opts_brkiter.html
+.. _stri_trans_general: stri_trans_general.html
+.. _%s<%(): operator_compare.html
+.. _about_locale: about_locale.html
+.. _about_search_boundaries: about_search_boundaries.html
+.. _about_search_coll: about_search_coll.html
+.. _stri_compare(): stri_compare.html
+.. _stri_count_boundaries(): stri_count_boundaries.html
+.. _stri_duplicated(): stri_duplicated.html
+.. _stri_enc_detect2(): stri_enc_detect2.html
+.. _stri_extract_all_boundaries(): stri_extract_boundaries.html
+.. _stri_locate_all_boundaries(): stri_locate_boundaries.html
+.. _stri_opts_collator(): stri_opts_collator.html
+.. _stri_order(): stri_order.html
+.. _stri_rank(): stri_rank.html
+.. _stri_sort_key(): stri_sort_key.html
+.. _stri_sort(): stri_sort.html
+.. _stri_split_boundaries(): stri_split_boundaries.html
+.. _stri_unique(): stri_unique.html
+.. _stri_wrap(): stri_wrap.html
+.. _stri_trans_char(): stri_trans_char.html
+.. _stri_trans_general(): stri_trans_general.html
+.. _stri_trans_list(): stri_trans_list.html
+.. _stri_trans_nfc(): stri_trans_nf.html
+.. _about_search: about_search.html
+.. _stri_opts_brkiter(): stri_opts_brkiter.html
+.. _stri_split_lines(): stri_split_lines.html

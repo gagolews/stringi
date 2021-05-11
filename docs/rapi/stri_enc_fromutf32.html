@@ -323,7 +323,7 @@
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
 <p>UTF-32 is a 32-bit encoding where each Unicode code point corresponds to exactly one integer value.</p>
-<p>This function is a vectorized version of <code class="docutils literal notranslate"><span class="pre">intToUtf8</span></code>. As usual in stringi, it returns character strings in UTF-8. See <a class="reference external" href="stri_enc_toutf32.html">stri_enc_toutf32</a> for a dual operation.</p>
+<p>This function is a vectorized version of <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/utf8Conversion.html">intToUtf8</a>. As usual in stringi, it returns character strings in UTF-8. See <a class="reference external" href="stri_enc_toutf32.html">stri_enc_toutf32</a> for a dual operation.</p>
 <p>If an ill-defined code point is given, a warning is generated and the corresponding string is set to <code class="docutils literal notranslate"><span class="pre">NA</span></code>. Note that <code class="docutils literal notranslate"><span class="pre">0</span></code>s are not allowed in <code class="docutils literal notranslate"><span class="pre">vec</span></code>, as they are used internally to mark the end of a string (in the C API).</p>
 <p>See also <a class="reference external" href="stri_encode.html">stri_encode</a> for decoding arbitrary byte sequences from any given encoding.</p>
 </div>

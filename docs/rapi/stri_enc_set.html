@@ -312,8 +312,8 @@
 <h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline">¶</a></h2>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 7%" />
-<col style="width: 93%" />
+<col style="width: 8%" />
+<col style="width: 92%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">enc</span></code></p></td>
@@ -325,7 +325,7 @@
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">stri_enc_get</span></code> is the same as <a class="reference external" href="stri_enc_info.html">stri_enc_info(NULL)$Name.friendly</a>.</p>
-<p>Note that changing the default encoding may have undesired consequences. Unless you are an expert user and you know what you are doing, <code class="docutils literal notranslate"><span class="pre">stri_enc_set</span></code> should only be used if ICU fails to detect your system’s encoding correctly (while testing stringi we only encountered such a situation on a very old Solaris machine). Note that ICU tries to match the encoding part of the <code class="docutils literal notranslate"><span class="pre">LC_CTYPE</span></code> category as given by <code class="docutils literal notranslate"><span class="pre">Sys.getlocale</span></code>.</p>
+<p>Note that changing the default encoding may have undesired consequences. Unless you are an expert user and you know what you are doing, <code class="docutils literal notranslate"><span class="pre">stri_enc_set</span></code> should only be used if ICU fails to detect your system’s encoding correctly (while testing stringi we only encountered such a situation on a very old Solaris machine). Note that ICU tries to match the encoding part of the <code class="docutils literal notranslate"><span class="pre">LC_CTYPE</span></code> category as given by <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/locales.html">Sys.getlocale</a>.</p>
 <p>If you set a default encoding that is neither a superset of ASCII, nor an 8-bit encoding, a warning will be generated, see <a class="reference external" href="about_encoding.html">stringi-encoding</a> for discussion.</p>
 <p><code class="docutils literal notranslate"><span class="pre">stri_enc_set</span></code> has no effect if the system ICU assumes that the default charset is always UTF-8 (i.e., where the internal <code class="docutils literal notranslate"><span class="pre">U_CHARSET_IS_UTF8</span></code> is defined and set to 1), see <a class="reference external" href="stri_info.html">stri_info</a>.</p>
 </div>

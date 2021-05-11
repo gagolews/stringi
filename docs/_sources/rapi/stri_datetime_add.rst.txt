@@ -25,7 +25,7 @@ Arguments
 ~~~~~~~~~
 
 +------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``time``   | an object of class ``POSIXct`` or an object coercible to                                                                                                              |
+| ``time``   | an object of class `POSIXct`_ or an object coercible to                                                                                                               |
 +------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``value``  | integer vector; signed number of units to add to ``time``                                                                                                             |
 +------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -46,7 +46,7 @@ Note that, e.g., January, 31 + 1 month = February, 28 or 29.
 Value
 ~~~~~
 
-Both functions return an object of class ``POSIXct``.
+Both functions return an object of class `POSIXct`_.
 
 The replacement version of ``stri_datetime_add`` modifies the state of the ``time`` object.
 
@@ -58,7 +58,7 @@ References
 See Also
 ~~~~~~~~
 
-Other datetime: `stri_datetime_create() <stri_datetime_create.html>`__, `stri_datetime_fields() <stri_datetime_fields.html>`__, `stri_datetime_format() <stri_datetime_format.html>`__, `stri_datetime_fstr() <stri_datetime_fstr.html>`__, `stri_datetime_now() <stri_datetime_now.html>`__, `stri_datetime_symbols() <stri_datetime_symbols.html>`__, `stri_timezone_get() <stri_timezone_set.html>`__, `stri_timezone_info() <stri_timezone_info.html>`__, `stri_timezone_list() <stri_timezone_list.html>`__
+Other datetime: `stri_datetime_create()`_, `stri_datetime_fields()`_, `stri_datetime_format()`_, `stri_datetime_fstr()`_, `stri_datetime_now()`_, `stri_datetime_symbols()`_, `stri_timezone_get()`_, `stri_timezone_info()`_, `stri_timezone_list()`_
 
 Examples
 ~~~~~~~~
@@ -73,3 +73,14 @@ Examples
    stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units='years', locale='@calendar=hebrew')
 
    stri_datetime_add(stri_datetime_create(2016, 1, 31), 1, units='months')
+
+.. _POSIXct: https://stat.ethz.ch/R-manual/R-patched/library/base/html/DateTimeClasses.html
+.. _stri_datetime_create(): stri_datetime_create.html
+.. _stri_datetime_fields(): stri_datetime_fields.html
+.. _stri_datetime_format(): stri_datetime_format.html
+.. _stri_datetime_fstr(): stri_datetime_fstr.html
+.. _stri_datetime_now(): stri_datetime_now.html
+.. _stri_datetime_symbols(): stri_datetime_symbols.html
+.. _stri_timezone_get(): stri_timezone_set.html
+.. _stri_timezone_info(): stri_timezone_info.html
+.. _stri_timezone_list(): stri_timezone_list.html

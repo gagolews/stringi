@@ -302,7 +302,7 @@
 </div>
 <div class="section" id="coercion-of-arguments">
 <h2>Coercion of Arguments<a class="headerlink" href="#coercion-of-arguments" title="Permalink to this headline">¶</a></h2>
-<p>When a character vector argument is expected, factors and other vectors coercible to characters vectors are silently converted with <code class="docutils literal notranslate"><span class="pre">as.character</span></code>, otherwise an error is generated. Coercion from a list of non-atomic vectors each of length 1 issues a warning.</p>
+<p>When a character vector argument is expected, factors and other vectors coercible to characters vectors are silently converted with <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/character.html">as.character</a>, otherwise an error is generated. Coercion from a list of non-atomic vectors each of length 1 issues a warning.</p>
 <p>When a logical, numeric, or integer vector argument is expected, factors are converted with <code class="docutils literal notranslate"><span class="pre">as.*(as.character(...))</span></code>, and other coercible vectors are converted with <code class="docutils literal notranslate"><span class="pre">as.*</span></code>, otherwise an error is generated.</p>
 </div>
 <div class="section" id="vectorization">
@@ -319,7 +319,7 @@
 </div>
 <div class="section" id="preserving-input-objects-attributes">
 <h2>Preserving Input Objects’ Attributes<a class="headerlink" href="#preserving-input-objects-attributes" title="Permalink to this headline">¶</a></h2>
-<p>Generally, all our functions drop input objects’ attributes (e.g., <code class="docutils literal notranslate"><span class="pre">names</span></code>, <code class="docutils literal notranslate"><span class="pre">dim</span></code>, etc.). This is generally because of advanced vectorization and for efficiency reasons. Thus, if arguments’ preserving is needed, please remember to copy important attributes manually or use, e.g., the subsetting operation like <code class="docutils literal notranslate"><span class="pre">x[]</span> <span class="pre">&lt;-</span> <span class="pre">stri_...(x,</span> <span class="pre">...)</span></code>.</p>
+<p>Generally, all our functions drop input objects’ attributes (e.g., <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/names.html">names</a>, <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/dim.html">dim</a>, etc.). This is generally because of advanced vectorization and for efficiency reasons. Thus, if arguments’ preserving is needed, please remember to copy important attributes manually or use, e.g., the subsetting operation like <code class="docutils literal notranslate"><span class="pre">x[]</span> <span class="pre">&lt;-</span> <span class="pre">stri_...(x,</span> <span class="pre">...)</span></code>.</p>
 </div>
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
