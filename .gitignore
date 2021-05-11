@@ -47,3 +47,6 @@ src-x64/
 *.blg
 cache-knitr/
 cache/
+
+# Sphinx documentation
+devel/sphinx/_build
