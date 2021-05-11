@@ -109,7 +109,7 @@ is greatly appreciated. Thanks!
     :maxdepth: 2
     :caption: Reference Manual
 
-    rapi.rst
+    rapi.md
 
 
 
@@ -122,8 +122,8 @@ is greatly appreciated. Thanks!
     CRAN Entry <https://cran.r-project.org/web/packages/stringi/>
     Author's Homepage <https://www.gagolewski.com/>
     C++ API — Rcpp Example <https://github.com/gagolews/ExampleRcppStringi>
-    news.rst
-    install.rst
+    news.md
+    install.md
 
 
 
