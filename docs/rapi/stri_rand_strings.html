@@ -345,12 +345,12 @@
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_rand_strings</span><span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="m">10</span><span class="p">)</span> <span class="c1"># 5 strings of length 10</span>
-<span class="c1">## [1] &quot;PdVAn3EiTK&quot; &quot;qCORygJjPU&quot; &quot;JcXpqgjCf8&quot; &quot;pDB2lXHUcR&quot; &quot;1brLwVcQvM&quot;</span>
+<span class="c1">## [1] &quot;2PzJ2MIIs3&quot; &quot;waRPNU17Tc&quot; &quot;JeBHpAbRo2&quot; &quot;8Zi2eay05t&quot; &quot;Y8tHzhhdyz&quot;</span>
 <span class="nf">stri_rand_strings</span><span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="nf">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span> <span class="c1"># 5 strings of random lengths</span>
-<span class="c1">## [1] &quot;NN&quot;     &quot;FBfjEs&quot; &quot;yS5p9&quot;  &quot;Z&quot;      &quot;GczQ&quot;</span>
+<span class="c1">## [1] &quot;jg6Dd6h4&quot;   &quot;9vTp13T&quot;    &quot;J&quot;          &quot;ObUT&quot;       &quot;B8BVkYDBKP&quot;</span>
 <span class="nf">stri_rand_strings</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="s">&#39;[\\p{script=latin}&amp;\\p{Ll}]&#39;</span><span class="p">)</span> <span class="c1"># small letters from the Latin script</span>
-<span class="c1">##  [1] &quot;ʟᶌȿƌṝ&quot;  &quot;ĥɨɪꭅʠ&quot;  &quot;ṣuỹꭄǡ&quot;  &quot;ɀȧoｚʇ&quot; &quot;ęǭŧƍṵ&quot;  &quot;ɴṓꭎꝛʄ&quot;  &quot;ꬸɨⱥḕꜩ&quot;  &quot;yḽꭙꬲɳ&quot; </span>
-<span class="c1">##  [9] &quot;ｘɭṭᶄɖ&quot; &quot;ẏȑǥỳᴎ&quot;</span>
+<span class="c1">##  [1] &quot;ťřǽꬱɦ&quot; &quot;ęᵻɪᵻð&quot; &quot;ȑʊĥʕʒ&quot; &quot;ᶓṯꝭꝉᴆ&quot; &quot;ýᴓőƃƫ&quot; &quot;ǐꭄᵳꝏɷ&quot; &quot;ĸᴊŧꜱᴙ&quot; &quot;ṯoꜰʁḣ&quot; &quot;ṻhḻꝁꝩ&quot;</span>
+<span class="c1">## [10] &quot;ŭǻɥǻꝅ&quot;</span>
 <span class="c1"># generate n random passwords of length in [8, 14]</span>
 <span class="c1"># consisting of at least one digit, small and big ASCII letter:</span>
 <span class="n">n</span> <span class="o">&lt;-</span> <span class="m">10</span>
@@ -360,8 +360,9 @@
    <span class="nf">stri_rand_strings</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="s">&#39;[A-Z]&#39;</span><span class="p">),</span>
    <span class="nf">stri_rand_strings</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nf">sample</span><span class="p">(</span><span class="m">5</span><span class="o">:</span><span class="m">11</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">),</span> <span class="s">&#39;[a-zA-Z0-9]&#39;</span><span class="p">)</span>
 <span class="p">))</span>
-<span class="c1">##  [1] &quot;loT90D1AzoS&quot; &quot;jgBjMNYKV2g&quot; &quot;An9kwrW7&quot;    &quot;KdaSd101&quot;    &quot;GtpofX1D0&quot;  </span>
-<span class="c1">##  [6] &quot;iOFGaZKQS8h&quot; &quot;JGuWSH3ThMZ&quot; &quot;6z0CQF0F&quot;    &quot;O7nBGkQ4&quot;    &quot;H5RKJwtZp&quot;</span>
+<span class="c1">##  [1] &quot;AJ1mlvDxIEE&quot;    &quot;hlLHis6clZg&quot;    &quot;FGZrhdFBNFb9d8&quot; &quot;rcd6itHW5OCVe&quot; </span>
+<span class="c1">##  [5] &quot;WF6aIg7kLy4Qf&quot;  &quot;1nymoCi1IqW&quot;    &quot;8ghXnxUw8Hg&quot;    &quot;jCfE3frbQ1RJLz&quot;</span>
+<span class="c1">##  [9] &quot;qo0qjUKKqjvBM&quot;  &quot;N5Sd01ZZE2bQs&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -383,7 +384,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-11 18:00:25.
+        Last updated on 2021-05-13 14:21:57.
       </span>
 
     </p>

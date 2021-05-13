@@ -54,7 +54,7 @@ Returns a named list object. Omitted `skip_*` values act as they have been set t
 
 *`ubrk.h` File Reference* -- ICU4C API Documentation, <https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/ubrk_8h.html>
 
-*Boundary Analysis* -- ICU User Guide, <http://userguide.icu-project.org/boundaryanalysis>
+*Boundary Analysis* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/boundaryanalysis/>
 
 ## See Also
 

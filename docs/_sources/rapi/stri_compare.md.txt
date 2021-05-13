@@ -58,7 +58,7 @@ All the other functions return a logical vector that indicates whether a given r
 
 ## References
 
-*Collation* - ICU User Guide, <http://userguide.icu-project.org/collation>
+*Collation* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/collation/>
 
 ## See Also
 

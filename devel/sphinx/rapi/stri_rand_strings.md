@@ -41,12 +41,12 @@ Other random: [`stri_rand_lipsum()`,](stri_rand_lipsum.md) `stri_rand_shuffle()`
 
 ```r
 stri_rand_strings(5, 10) # 5 strings of length 10
-## [1] "PdVAn3EiTK" "qCORygJjPU" "JcXpqgjCf8" "pDB2lXHUcR" "1brLwVcQvM"
+## [1] "2PzJ2MIIs3" "waRPNU17Tc" "JeBHpAbRo2" "8Zi2eay05t" "Y8tHzhhdyz"
 stri_rand_strings(5, sample(1:10, 5, replace=TRUE)) # 5 strings of random lengths
-## [1] "NN"     "FBfjEs" "yS5p9"  "Z"      "GczQ"
+## [1] "jg6Dd6h4"   "9vTp13T"    "J"          "ObUT"       "B8BVkYDBKP"
 stri_rand_strings(10, 5, '[\\p{script=latin}&\\p{Ll}]') # small letters from the Latin script
-##  [1] "ʟᶌȿƌṝ"  "ĥɨɪꭅʠ"  "ṣuỹꭄǡ"  "ɀȧoｚʇ" "ęǭŧƍṵ"  "ɴṓꭎꝛʄ"  "ꬸɨⱥḕꜩ"  "yḽꭙꬲɳ" 
-##  [9] "ｘɭṭᶄɖ" "ẏȑǥỳᴎ"
+##  [1] "ťřǽꬱɦ" "ęᵻɪᵻð" "ȑʊĥʕʒ" "ᶓṯꝭꝉᴆ" "ýᴓőƃƫ" "ǐꭄᵳꝏɷ" "ĸᴊŧꜱᴙ" "ṯoꜰʁḣ" "ṻhḻꝁꝩ"
+## [10] "ŭǻɥǻꝅ"
 # generate n random passwords of length in [8, 14]
 # consisting of at least one digit, small and big ASCII letter:
 n <- 10
@@ -56,6 +56,7 @@ stri_rand_shuffle(stri_paste(
    stri_rand_strings(n, 1, '[A-Z]'),
    stri_rand_strings(n, sample(5:11, 5, replace=TRUE), '[a-zA-Z0-9]')
 ))
-##  [1] "loT90D1AzoS" "jgBjMNYKV2g" "An9kwrW7"    "KdaSd101"    "GtpofX1D0"  
-##  [6] "iOFGaZKQS8h" "JGuWSH3ThMZ" "6z0CQF0F"    "O7nBGkQ4"    "H5RKJwtZp"
+##  [1] "AJ1mlvDxIEE"    "hlLHis6clZg"    "FGZrhdFBNFb9d8" "rcd6itHW5OCVe" 
+##  [5] "WF6aIg7kLy4Qf"  "1nymoCi1IqW"    "8ghXnxUw8Hg"    "jCfE3frbQ1RJLz"
+##  [9] "qo0qjUKKqjvBM"  "N5Sd01ZZE2bQs"
 ```

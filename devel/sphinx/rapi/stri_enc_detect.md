@@ -82,7 +82,7 @@ The guesses are ordered by decreasing confidence.
 
 ## References
 
-*Character Set Detection* -- ICU User Guide, <http://userguide.icu-project.org/conversion/detection>
+*Character Set Detection* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/conversion/detection.html>
 
 ## See Also
 
@@ -94,24 +94,7 @@ Other encoding\_detection: [`about_encoding`](about_encoding.md), [`stri_enc_det
 
 
 ```r
-## Not run: 
-f <- rawToChar(readBin('test.txt', 'raw', 100000))
-## Warning in file(con, "rb"): cannot open file 'test.txt': No such file or
-## directory
-## Error in file(con, "rb"): cannot open the connection
-stri_enc_detect(f)
-## [[1]]
-##      Encoding Language Confidence
-## 1  ISO-8859-1       en       0.58
-## 2  ISO-8859-2       ro       0.18
-## 3       UTF-8                0.15
-## 4  ISO-8859-9       tr       0.15
-## 5    UTF-16BE                0.10
-## 6    UTF-16LE                0.10
-## 7   Shift_JIS       ja       0.10
-## 8     GB18030       zh       0.10
-## 9      EUC-JP       ja       0.10
-## 10     EUC-KR       ko       0.10
-## 11       Big5       zh       0.10
-## End(Not run)
+## Not run:
+## f <- rawToChar(readBin('test.txt', 'raw', 100000))
+## stri_enc_detect(f)
 ```

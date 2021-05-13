@@ -147,8 +147,8 @@ stri_replace_all_regex('123|456|789', '(\\p{N}).(\\p{N})', '$2-$1')
 ## [1] "3-1|6-4|9-7"
 stri_replace_all_regex(c('stringi R', 'REXAMINE', '123'), '( R|R.)', ' r ')
 ## [1] "stringi r " " r XAMINE"  "123"
+# named capture groups are available since ICU 55
 ## Not run: 
-# named capture groups available since ICU 55
 stri_replace_all_regex('words 123 and numbers 456',
    '(?<numbers>[0-9]+)', '!${numbers}!')
 ## [1] "words !123! and numbers !456!"

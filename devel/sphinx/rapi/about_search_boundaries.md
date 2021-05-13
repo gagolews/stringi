@@ -34,7 +34,7 @@ For technical details on different classes of text boundaries refer to the <span
 
 ## References
 
-*Boundary Analysis* -- ICU User Guide, <http://userguide.icu-project.org/boundaryanalysis>
+*Boundary Analysis* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/boundaryanalysis/>
 
 ## See Also
 

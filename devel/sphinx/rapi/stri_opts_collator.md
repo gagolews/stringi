@@ -59,9 +59,9 @@ Returns a named list object; missing settings are left with default values.
 
 ## References
 
-*Collation* -- ICU User Guide, <http://userguide.icu-project.org/collation>
+*Collation* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/collation/>
 
-*ICU Collation Service Architecture* -- ICU User Guide, <http://userguide.icu-project.org/collation/architecture>
+*ICU Collation Service Architecture* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/collation/architecture.html>
 
 *`icu::Collator` Class Reference* -- ICU4C API Documentation, <https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/classicu_1_1Collator.html>
 

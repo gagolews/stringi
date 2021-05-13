@@ -65,7 +65,7 @@ a backslash in order to remove its special meaning.
 A malformed pattern always results in an error.
 
 Set expressions at a glance
-(according to \url{http://userguide.icu-project.org/strings/regexp}):
+(according to \url{https://unicode-org.github.io/icu/userguide/strings/regexp.html}):
 
 
 Some examples:
@@ -267,13 +267,13 @@ to a portable code (again, in POSIX-like regex engines).
 \url{https://www.unicode.org/reports/tr44/}
 
 \emph{UnicodeSet} -- ICU User Guide,
-\url{http://userguide.icu-project.org/strings/unicodeset}
+\url{https://unicode-org.github.io/icu/userguide/strings/unicodeset.html}
 
 \emph{Properties} -- ICU User Guide,
-\url{http://userguide.icu-project.org/strings/properties}
+\url{https://unicode-org.github.io/icu/userguide/strings/properties.html}
 
 \emph{C/POSIX Migration} -- ICU User Guide,
-\url{http://userguide.icu-project.org/posix}
+\url{https://unicode-org.github.io/icu/userguide/icu/posix.html}
 
 \emph{Unicode Script Data}, \url{https://www.unicode.org/Public/UNIDATA/Scripts.txt}
 

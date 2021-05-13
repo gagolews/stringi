@@ -21,7 +21,7 @@ to perform case-insensitive search) via the
 
 
 Regular expression patterns in \pkg{ICU} are quite similar in form and
-behavior to Perl's regexes.  Their implementation is loosely inspired
+behavior to Perl's regexes. Their implementation is loosely inspired
 by JDK 1.4 \code{java.util.regex}.
 \pkg{ICU} Regular Expressions conform to the Unicode Technical Standard #18
 (see References section) and its features are summarized in
@@ -196,7 +196,7 @@ or a very fast exact-byte search, respectively.
 
 \references{
 \emph{Regular expressions} -- ICU User Guide,
- \url{http://userguide.icu-project.org/strings/regexp}
+\url{https://unicode-org.github.io/icu/userguide/strings/regexp.html}
 
 J.E.F. Friedl, \emph{Mastering Regular Expressions}, O'Reilly, 2002
 

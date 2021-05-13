@@ -30,7 +30,7 @@ The result is a character vector with the same length as `str` that contains the
 
 ## References
 
-*Collation* - ICU User Guide, <http://userguide.icu-project.org/collation>
+*Collation* - ICU User Guide, <https://unicode-org.github.io/icu/userguide/collation/>
 
 ## See Also
 

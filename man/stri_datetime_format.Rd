@@ -206,7 +206,7 @@ stri_datetime_format(stri_datetime_now(), 'datetime_relative_medium')
 }
 \references{
 \emph{Formatting Dates and Times} - ICU User Guide,
-\url{http://userguide.icu-project.org/formatparse/datetime}
+\url{https://unicode-org.github.io/icu/userguide/format_parse/datetime/}
 }
 \seealso{
 Other datetime: 

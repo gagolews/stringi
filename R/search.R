@@ -121,7 +121,7 @@ invisible(NULL)
 #'
 #'
 #' Regular expression patterns in \pkg{ICU} are quite similar in form and
-#' behavior to Perl's regexes.  Their implementation is loosely inspired
+#' behavior to Perl's regexes. Their implementation is loosely inspired
 #' by JDK 1.4 \code{java.util.regex}.
 #' \pkg{ICU} Regular Expressions conform to the Unicode Technical Standard #18
 #' (see References section) and its features are summarized in
@@ -293,7 +293,7 @@ invisible(NULL)
 #'
 #' @references
 #' \emph{Regular expressions} -- ICU User Guide,
-#'  \url{http://userguide.icu-project.org/strings/regexp}
+#' \url{https://unicode-org.github.io/icu/userguide/strings/regexp.html}
 #'
 #' J.E.F. Friedl, \emph{Mastering Regular Expressions}, O'Reilly, 2002
 #'
@@ -380,12 +380,12 @@ invisible(NULL)
 #' in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
 #'
 #' Please note that \pkg{ICU}'s \code{StringSearch}-based functions
-#' are  often much slower that those to perform fixed pattern searches.
+#' are often much slower that those to perform fixed pattern searches.
 #'
 #'
 #' @references
 #' \emph{ICU String Search Service} -- ICU User Guide,
-#'  \url{http://userguide.icu-project.org/collation/icu-string-search-service}
+#' \url{https://unicode-org.github.io/icu/userguide/collation/string-search.html}
 #'
 #' L. Werner, \emph{Efficient Text Searching in Java}, 1999,
 #' \url{https://icu-project.org/docs/papers/efficient_text_searching_in_java.html}
@@ -462,7 +462,7 @@ invisible(NULL)
 #' A malformed pattern always results in an error.
 #'
 #' Set expressions at a glance
-#' (according to \url{http://userguide.icu-project.org/strings/regexp}):
+#' (according to \url{https://unicode-org.github.io/icu/userguide/strings/regexp.html}):
 #'
 #'
 #' Some examples:
@@ -658,13 +658,13 @@ invisible(NULL)
 #' \url{https://www.unicode.org/reports/tr44/}
 #'
 #' \emph{UnicodeSet} -- ICU User Guide,
-#' \url{http://userguide.icu-project.org/strings/unicodeset}
+#' \url{https://unicode-org.github.io/icu/userguide/strings/unicodeset.html}
 #'
 #' \emph{Properties} -- ICU User Guide,
-#' \url{http://userguide.icu-project.org/strings/properties}
+#' \url{https://unicode-org.github.io/icu/userguide/strings/properties.html}
 #'
 #' \emph{C/POSIX Migration} -- ICU User Guide,
-#' \url{http://userguide.icu-project.org/posix}
+#' \url{https://unicode-org.github.io/icu/userguide/icu/posix.html}
 #'
 #' \emph{Unicode Script Data}, \url{https://www.unicode.org/Public/UNIDATA/Scripts.txt}
 #'
@@ -730,7 +730,7 @@ invisible(NULL)
 #'
 #' @references
 #' \emph{Boundary Analysis} -- ICU User Guide,
-#' \url{http://userguide.icu-project.org/boundaryanalysis}
+#' \url{https://unicode-org.github.io/icu/userguide/boundaryanalysis/}
 #'
 #' @name about_search_boundaries
 #' @rdname about_search_boundaries

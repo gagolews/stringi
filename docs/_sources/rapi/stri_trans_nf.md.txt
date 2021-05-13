@@ -70,7 +70,7 @@ The `stri_trans_nf*` functions return a character vector of the same length as i
 
 *Character Model for the World Wide Web 1.0: Normalization* -- W3C Working Draft, <https://www.w3.org/TR/charmod-norm/>
 
-*Normalization* -- ICU User Guide, <http://userguide.icu-project.org/transforms/normalization> (technical details)
+*Normalization* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/transforms/normalization/> (technical details)
 
 *Unicode Equivalence* -- Wikipedia, <https://en.wikipedia.org/wiki/Unicode_equivalence>
 

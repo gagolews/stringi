@@ -41,7 +41,7 @@ stri_sort_key(c('hladny', 'chladny'), locale='sk_SK')
 }
 \references{
 \emph{Collation} - ICU User Guide,
-\url{http://userguide.icu-project.org/collation}
+\url{https://unicode-org.github.io/icu/userguide/collation/}
 }
 \seealso{
 Other locale_sensitive: 

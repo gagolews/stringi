@@ -53,7 +53,7 @@ to the \pkg{ICU} User Guide, see below.
 }
 \references{
 \emph{Boundary Analysis} -- ICU User Guide,
-\url{http://userguide.icu-project.org/boundaryanalysis}
+\url{https://unicode-org.github.io/icu/userguide/boundaryanalysis/}
 }
 \seealso{
 Other locale_sensitive: 

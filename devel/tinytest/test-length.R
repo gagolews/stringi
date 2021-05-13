@@ -53,3 +53,12 @@ expect_true(all(stri_width( # Hangul Jamo 0-width stuff
 stri_enc_fromutf32(as.list(0x1160:0x11ff))) == 0))
 expect_equivalent(stri_width(stri_trans_nfkd("\ubc1f")), 2L)
 
+
+expect_equivalent(stri_width("\u005E"), 1L) # \N{CIRCUMFLEX ACCENT}
+expect_equivalent(stri_width("\u0060"), 1L) # \N{GRAVE ACCENT}
+# expect_equivalent(stri_width("\u02DC"), 1L) # \N{SMALL TILDE}
+# expect_equivalent(stri_width("\u00AF"), 1L) # \N{MACRON}
+expect_equivalent(stri_width("\u2081"), 1L) # \\N{SUBSCRIPT ONE}
+expect_equivalent(stri_width("\u03C9"), 1L) # \\N{GREEK SMALL LETTER OMEGA}
+expect_equivalent(stri_width("\u0425"), 1L) # \\N{CYRILLIC CAPITAL LETTER HA}
+expect_equivalent(stri_width("\u00DF"), 1L) # \\N{LATIN SMALL LETTER SHARP S}

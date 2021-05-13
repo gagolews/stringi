@@ -90,7 +90,7 @@
 #' -- W3C Working Draft, \url{https://www.w3.org/TR/charmod-norm/}
 #'
 #' \emph{Normalization} -- ICU User Guide,
-#'    \url{http://userguide.icu-project.org/transforms/normalization}
+#'    \url{https://unicode-org.github.io/icu/userguide/transforms/normalization/}
 #'    (technical details)
 #'
 #' \emph{Unicode Equivalence} -- Wikipedia,

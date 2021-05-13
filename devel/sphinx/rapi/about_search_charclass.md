@@ -28,7 +28,7 @@ Any character may be preceded by a backslash in order to remove its special mean
 
 A malformed pattern always results in an error.
 
-Set expressions at a glance (according to <http://userguide.icu-project.org/strings/regexp>):
+Set expressions at a glance (according to <https://unicode-org.github.io/icu/userguide/strings/regexp.html>):
 
 Some examples:
 
@@ -428,11 +428,11 @@ Therefore, a POSIX flavor of `[:punct:]` is more like `[\p{P}\p{S}]` in <span cl
 
 *The Unicode Character Database* -- Unicode Standard Annex \#44, <https://www.unicode.org/reports/tr44/>
 
-*UnicodeSet* -- ICU User Guide, <http://userguide.icu-project.org/strings/unicodeset>
+*UnicodeSet* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/strings/unicodeset.html>
 
-*Properties* -- ICU User Guide, <http://userguide.icu-project.org/strings/properties>
+*Properties* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/strings/properties.html>
 
-*C/POSIX Migration* -- ICU User Guide, <http://userguide.icu-project.org/posix>
+*C/POSIX Migration* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/icu/posix.html>
 
 *Unicode Script Data*, <https://www.unicode.org/Public/UNIDATA/Scripts.txt>
 

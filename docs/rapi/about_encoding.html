@@ -310,7 +310,7 @@
 </div>
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
-<p>‘Hundreds of encodings have been developed over the years, each for small groups of languages and for special purposes. As a result, the interpretation of text, input, sorting, display, and storage depends on the knowledge of all the different types of character sets and their encodings. Programs have been written to handle either one single encoding at a time and switch between them, or to convert between external and internal encodings.’</p>
+<p>Quoting the ICU User Guide, ‘Hundreds of encodings have been developed over the years, each for small groups of languages and for special purposes. As a result, the interpretation of text, input, sorting, display, and storage depends on the knowledge of all the different types of character sets and their encodings. Programs have been written to handle either one single encoding at a time and switch between them, or to convert between external and internal encodings.’</p>
 <p>‘Unicode provides a single character set that covers the major languages of the world, and a small number of machine-friendly encoding forms and schemes to fit the needs of existing applications and protocols. It is designed for best interoperability with both ASCII and ISO-8859-1 (the most widely used character sets) to make it easier for Unicode to be used in almost all applications and protocols’ (see the ICU User Guide).</p>
 <p>The Unicode Standard determines the way to map any possible character to a numeric value – a so-called code point. Such code points, however, have to be stored somehow in computer’s memory. The Unicode Standard encodes characters in the range U+0000..U+10FFFF, which amounts to a 21-bit code space. Depending on the encoding form (UTF-8, UTF-16, or UTF-32), each character will then be represented either as a sequence of one to four 8-bit bytes, one or two 16-bit code units, or a single 32-bit integer (compare the ICU FAQ).</p>
 <p>Unicode can be thought of as a superset of the spectrum of characters supported by any given code page.</p>
@@ -335,7 +335,7 @@
 </ul>
 <p>Moreover, there are two other cases:</p>
 <ul class="simple">
-<li><p>ASCII – for strings consisting only of byte codes not greater than 127;-</p></li>
+<li><p>ASCII – for strings consisting only of byte codes not greater than 127;</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">native</span></code> (a.k.a. <code class="docutils literal notranslate"><span class="pre">unknown</span></code> in <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/Encoding.html"><code class="docutils literal notranslate"><span class="pre">Encoding</span></code></a>; quite a misleading name: no explicit encoding mark) – for strings that are assumed to be in your platform’s native (default) encoding. This can represent UTF-8 if you are an OS X user, or some 8-bit Windows code page, for example. The native encoding used by <span style="font-family: Courier New, Courier; color: #666666;"><strong>R</strong></span> may be determined by examining the LC_CTYPE category, see <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/locales.html"><code class="docutils literal notranslate"><span class="pre">Sys.getlocale</span></code></a>.</p></li>
 </ul>
 <p>Intuitively, “native” strings result from reading a string from stdin (e.g., keyboard input). This makes sense: your operating system works in some encoding and provides <span style="font-family: Courier New, Courier; color: #666666;"><strong>R</strong></span> with some data.</p>
@@ -357,9 +357,9 @@
 </div>
 <div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
-<p><em>Unicode Basics</em> – ICU User Guide, <a class="reference external" href="http://userguide.icu-project.org/unicode">http://userguide.icu-project.org/unicode</a></p>
-<p><em>Conversion</em> – ICU User Guide, <a class="reference external" href="http://userguide.icu-project.org/conversion">http://userguide.icu-project.org/conversion</a></p>
-<p><em>Converters</em> – ICU User Guide, <a class="reference external" href="http://userguide.icu-project.org/conversion/converters">http://userguide.icu-project.org/conversion/converters</a> (technical details)</p>
+<p><em>Unicode Basics</em> – ICU User Guide, <a class="reference external" href="https://unicode-org.github.io/icu/userguide/icu/unicode.html">https://unicode-org.github.io/icu/userguide/icu/unicode.html</a></p>
+<p><em>Conversion</em> – ICU User Guide, <a class="reference external" href="https://unicode-org.github.io/icu/userguide/conversion/">https://unicode-org.github.io/icu/userguide/conversion/</a></p>
+<p><em>Converters</em> – ICU User Guide, <a class="reference external" href="https://unicode-org.github.io/icu/userguide/conversion/converters.html">https://unicode-org.github.io/icu/userguide/conversion/converters.html</a> (technical details)</p>
 <p><em>UTF-8, UTF-16, UTF-32 &amp; BOM</em> – ICU FAQ, <a class="reference external" href="https://www.unicode.org/faq/utf_bom.html">https://www.unicode.org/faq/utf_bom.html</a></p>
 </div>
 <div class="section" id="see-also">
@@ -387,7 +387,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-11 18:00:25.
+        Last updated on 2021-05-13 14:21:57.
       </span>
 
     </p>

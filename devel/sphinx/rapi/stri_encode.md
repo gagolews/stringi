@@ -43,13 +43,11 @@ Because of the way this function is currently implemented, maximal size of a sin
 
 ## Value
 
-If `to_raw` is `FALSE`, then a character vector with encoded strings (and appropriate encoding marks) is returned. Otherwise, a list of raw vectors is produced.
+If `to_raw` is `FALSE`, then a character vector with encoded strings (and appropriate encoding marks) is returned. Otherwise, a list of vectors of type raw is produced.
 
 ## References
 
-*Conversion* -- ICU User Guide, <http://userguide.icu-project.org/conversion>
-
-*Converters* -- ICU User Guide, <http://userguide.icu-project.org/conversion/converters> (technical details)
+*Conversion* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/conversion/>
 
 ## See Also
 

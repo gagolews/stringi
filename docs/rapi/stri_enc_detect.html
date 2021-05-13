@@ -453,7 +453,7 @@
 </div>
 <div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
-<p><em>Character Set Detection</em> – ICU User Guide, <a class="reference external" href="http://userguide.icu-project.org/conversion/detection">http://userguide.icu-project.org/conversion/detection</a></p>
+<p><em>Character Set Detection</em> – ICU User Guide, <a class="reference external" href="https://unicode-org.github.io/icu/userguide/conversion/detection.html">https://unicode-org.github.io/icu/userguide/conversion/detection.html</a></p>
 </div>
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
@@ -461,26 +461,9 @@
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">## Not run: </span>
-<span class="n">f</span> <span class="o">&lt;-</span> <span class="nf">rawToChar</span><span class="p">(</span><span class="nf">readBin</span><span class="p">(</span><span class="s">&#39;test.txt&#39;</span><span class="p">,</span> <span class="s">&#39;raw&#39;</span><span class="p">,</span> <span class="m">100000</span><span class="p">))</span>
-<span class="c1">## Warning in file(con, &quot;rb&quot;): cannot open file &#39;test.txt&#39;: No such file or</span>
-<span class="c1">## directory</span>
-<span class="c1">## Error in file(con, &quot;rb&quot;): cannot open the connection</span>
-<span class="nf">stri_enc_detect</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-<span class="c1">## [[1]]</span>
-<span class="c1">##      Encoding Language Confidence</span>
-<span class="c1">## 1  ISO-8859-1       en       0.58</span>
-<span class="c1">## 2  ISO-8859-2       ro       0.18</span>
-<span class="c1">## 3       UTF-8                0.15</span>
-<span class="c1">## 4  ISO-8859-9       tr       0.15</span>
-<span class="c1">## 5    UTF-16BE                0.10</span>
-<span class="c1">## 6    UTF-16LE                0.10</span>
-<span class="c1">## 7   Shift_JIS       ja       0.10</span>
-<span class="c1">## 8     GB18030       zh       0.10</span>
-<span class="c1">## 9      EUC-JP       ja       0.10</span>
-<span class="c1">## 10     EUC-KR       ko       0.10</span>
-<span class="c1">## 11       Big5       zh       0.10</span>
-<span class="c1">## End(Not run)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">## Not run:</span>
+<span class="c1">## f &lt;- rawToChar(readBin(&#39;test.txt&#39;, &#39;raw&#39;, 100000))</span>
+<span class="c1">## stri_enc_detect(f)</span>
 </pre></div>
 </div>
 </div>
@@ -502,7 +485,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-11 18:00:25.
+        Last updated on 2021-05-13 14:21:57.
       </span>
 
     </p>

@@ -39,7 +39,7 @@ Returns a character vector.
 
 ## References
 
-*General Transforms* -- ICU User Guide, <http://userguide.icu-project.org/transforms/general>
+*General Transforms* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/transforms/general/>
 
 ## See Also
 
@@ -67,6 +67,6 @@ stri_trans_general('\u2620', 'any-name') # character name
 ## [1] "\\N{SKULL AND CROSSBONES}"
 stri_trans_general('\\N{latin small letter a}', 'name-any') # decode name
 ## [1] "a"
-stri_trans_general('\u2620', 'hex') # to hex
+stri_trans_general('\u2620', 'hex/c') # to hex
 ## [1] "\\u2620"
 ```

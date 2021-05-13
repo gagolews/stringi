@@ -102,15 +102,14 @@ IBM424 \tab Hebrew \cr
 }
 }
 \examples{
-\dontrun{
-f <- rawToChar(readBin('test.txt', 'raw', 100000))
-stri_enc_detect(f)
-}
+## Not run:
+## f <- rawToChar(readBin('test.txt', 'raw', 100000))
+## stri_enc_detect(f)
 
 }
 \references{
 \emph{Character Set Detection} -- ICU User Guide,
-\url{http://userguide.icu-project.org/conversion/detection}
+\url{https://unicode-org.github.io/icu/userguide/conversion/detection.html}
 }
 \seealso{
 Other encoding_detection: 

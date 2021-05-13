@@ -3,10 +3,24 @@
 
 ## 1.6.2 (2021-XX-XX)
 
-* [NEW FEATURE] #428: In `stri_flatten`, `na_empty=NA` now means that missing
-  values are to be omitted.
+* [NEW FEATURE] #428: In `stri_flatten`, `na_empty=NA` now omits missing values.
 
-* [BUGFIX] TODO: #430 md5sum?
+* [NEW FEATURE] ......TODO: #425: The outputs of `stri_enc_list()`, `stri_locale_list()`,
+  `stri_timezone_list()`, and `stri_trans_list()` are now sorted.
+
+* [BUGFIX] .....TODO: #431: check for `std::max_align_t` vs. `max_align_t`.
+...error: ‘max_align_t’ is not a member of ‘std’ with -std=gnu++11
+
+* [BUGFIX] ......TODO: #354: ALTREP vectors and CHARSXPs were not copied,
+  and thus could have been gc'd in the meanwhile.
+        TODO check alloc (RF_alloc) in #396 and #395 too?)
+
+* [BUGFIX] .....TODO: #429: `stri_width()` misclassified the width of certain
+  code points (including grave accent, Eszett, etc.).
+
+* [BUGFIX] .....TODO: #430: md5sum? ... need more data ...
+
+* [BUGFIX] .....TODO: #415 icu collator case level.....
 
 
 ## 1.6.1 (2021-05-05)

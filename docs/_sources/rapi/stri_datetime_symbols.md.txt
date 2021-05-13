@@ -38,11 +38,11 @@ Returns a list with the following named components:
 
 ## References
 
-*Calendar* - ICU User Guide, <http://userguide.icu-project.org/datetime/calendar>
+*Calendar* - ICU User Guide, <https://unicode-org.github.io/icu/userguide/datetime/calendar/>
 
 *DateFormatSymbols* class -- ICU API Documentation, <https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/classicu_1_1DateFormatSymbols.html>
 
-*Formatting Dates and Times* -- ICU User Guide, <http://userguide.icu-project.org/formatparse/datetime>
+*Formatting Dates and Times* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/format_parse/datetime/>
 
 ## See Also
 

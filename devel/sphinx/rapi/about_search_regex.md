@@ -308,7 +308,7 @@ If you wish to search for a fixed pattern, refer to [about\_search\_coll](about_
 
 ## References
 
-*Regular expressions* -- ICU User Guide, <http://userguide.icu-project.org/strings/regexp>
+*Regular expressions* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/strings/regexp.html>
 
 J.E.F. Friedl, *Mastering Regular Expressions*, O\'Reilly, 2002
 

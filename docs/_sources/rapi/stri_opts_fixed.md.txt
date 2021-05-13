@@ -30,7 +30,7 @@ Returns a named list object.
 
 ## References
 
-*C/POSIX Migration* -- ICU User Guide, <http://userguide.icu-project.org/posix#case_mappings>
+*C/POSIX Migration* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/icu/posix.html>
 
 ## See Also
 

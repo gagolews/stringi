@@ -30,7 +30,7 @@ The result is a vector of ranks corresponding to each string in `str`.
 
 ## References
 
-*Collation* - ICU User Guide, <http://userguide.icu-project.org/collation>
+*Collation* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/collation/>
 
 ## See Also
 
@@ -54,12 +54,12 @@ stri_rank("a" %s+% c(1, 100, 2, 101, 11, 10), numeric=TRUE)
 X <- data.frame(a=c("b", NA, "b", "b", NA, "a", "a", "c"), b=runif(8))
 X[order(stri_rank(X$a), X$b), ]
 ##      a         b
-## 6    a 0.6393453
-## 7    a 0.7105272
-## 3    b 0.1820790
-## 1    b 0.4494384
-## 4    b 0.8805338
-## 8    c 0.9033495
-## 5 <NA> 0.7652541
-## 2 <NA> 0.8798254
+## 7    a 0.3920680
+## 6    a 0.8211923
+## 3    b 0.6216912
+## 4    b 0.8049087
+## 1    b 0.9776553
+## 8    c 0.7155077
+## 2 <NA> 0.3709058
+## 5 <NA> 0.5526152
 ```

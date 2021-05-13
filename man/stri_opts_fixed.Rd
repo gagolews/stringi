@@ -39,7 +39,7 @@ stri_detect_fixed('ala', 'ALA', case_insensitive=TRUE) # equivalent
 }
 \references{
 \emph{C/POSIX Migration} -- ICU User Guide,
-\url{http://userguide.icu-project.org/posix#case_mappings}
+\url{https://unicode-org.github.io/icu/userguide/icu/posix.html}
 }
 \seealso{
 Other search_fixed: 

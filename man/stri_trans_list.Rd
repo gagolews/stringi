@@ -16,7 +16,7 @@ tasks.
 }
 \references{
 \emph{General Transforms} -- ICU User Guide,
-\url{http://userguide.icu-project.org/transforms/general}
+\url{https://unicode-org.github.io/icu/userguide/transforms/general/}
 }
 \seealso{
 Other transform: 
