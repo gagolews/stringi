@@ -77,8 +77,8 @@ stri_sub(s, -5, length=4)
 (stri_sub(s, -6, length=5) <- '.')
 ## [1] "."
 (stri_sub(s, 1, 1:3) <- 1:2)
-## Warning in `stri_sub<-`(`*tmp*`, 1, 1:3, value = 1:2): longer object length is not a
-## multiple of shorter object length
+## Warning in `stri_sub<-`(`*tmp*`, 1, 1:3, value = 1:2): longer object length is
+## not a multiple of shorter object length
 ## [1] 1 2
 x <- c('12 3456 789', 'abc', '', NA, '667')
 stri_sub(x, stri_locate_first_regex(x, '[0-9]+')) # see stri_extract_first

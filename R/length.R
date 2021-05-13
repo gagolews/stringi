@@ -150,7 +150,7 @@ stri_isempty <- function(str)
 #'
 #' @description
 #' Approximates the number of text columns the `cat()` function
-#' should use to print a string with a mono-spaced font.
+#' might use to print a string using a mono-spaced font.
 #'
 #' @details
 #' The Unicode standard does not formalize the notion of a character

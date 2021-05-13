@@ -2,7 +2,7 @@
 
 ## Description
 
-Approximates the number of text columns the \'cat()\' function should use to print a string with a mono-spaced font.
+Approximates the number of text columns the \'cat()\' function might use to print a string using a mono-spaced font.
 
 ## Usage
 

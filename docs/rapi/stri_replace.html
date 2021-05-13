@@ -437,7 +437,8 @@
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_replace_all_charclass</span><span class="p">(</span><span class="s">&#39;aaaa&#39;</span><span class="p">,</span> <span class="s">&#39;[a]&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="n">merge</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">))</span>
 <span class="c1">## Warning in stri_replace_all_charclass(&quot;aaaa&quot;, &quot;[a]&quot;, &quot;b&quot;, merge = c(TRUE, :</span>
-<span class="c1">## argument `merge` should be a single logical value; only the first element is used</span>
+<span class="c1">## argument `merge` should be a single logical value; only the first element is</span>
+<span class="c1">## used</span>
 <span class="c1">## [1] &quot;b&quot;</span>
 <span class="nf">stri_replace_all_charclass</span><span class="p">(</span><span class="s">&#39;a\nb\tc   d&#39;</span><span class="p">,</span> <span class="s">&#39;\\p{WHITE_SPACE}&#39;</span><span class="p">,</span> <span class="s">&#39; &#39;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;a b c   d&quot;</span>
@@ -510,7 +511,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-13 17:36:06.
+        Last updated on 2021-05-13 18:45:13.
       </span>
 
     </p>
