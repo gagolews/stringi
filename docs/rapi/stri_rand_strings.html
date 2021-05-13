@@ -345,12 +345,12 @@
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_rand_strings</span><span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="m">10</span><span class="p">)</span> <span class="c1"># 5 strings of length 10</span>
-<span class="c1">## [1] &quot;f5JiwJcGRF&quot; &quot;aKuWY4XL7e&quot; &quot;ImzEkvnWqd&quot; &quot;BKp8jGXRVO&quot; &quot;xZw0S5Bc6O&quot;</span>
+<span class="c1">## [1] &quot;HmPsw2WtYS&quot; &quot;xSgZ6tF2Kx&quot; &quot;tgdzehXaH9&quot; &quot;xtgn1TlDJE&quot; &quot;8PPM98ESGr&quot;</span>
 <span class="nf">stri_rand_strings</span><span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="nf">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span> <span class="c1"># 5 strings of random lengths</span>
-<span class="c1">## [1] &quot;W2Rbso9G&quot;  &quot;WwcV0BOzG&quot; &quot;W4szMnGeF&quot; &quot;l1o8uGR6O&quot; &quot;RSJTj4Dbh&quot;</span>
+<span class="c1">## [1] &quot;tNf5N&quot;     &quot;HoRoonR&quot;   &quot;kdi0T&quot;     &quot;DNbL6F&quot;    &quot;fPm6QztsA&quot;</span>
 <span class="nf">stri_rand_strings</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="s">&#39;[\\p{script=latin}&amp;\\p{Ll}]&#39;</span><span class="p">)</span> <span class="c1"># small letters from the Latin script</span>
-<span class="c1">##  [1] &quot;ŷᴢʆꝶƙ&quot;  &quot;ꝕᵷḏḧᴚ&quot;  &quot;ᶎᶕƈỿꞁ&quot;  &quot;ꝼȅꜰᴏm&quot;  &quot;əểnꝋŵ&quot;  &quot;ƭᶄẚɭĝ&quot;  &quot;ｇȼƛᴏǯ&quot; &quot;ʈꝗąꞷẗ&quot; </span>
-<span class="c1">##  [9] &quot;ꬼꝋkᴄᶑ&quot;  &quot;ꭚɜꭌŝɇ&quot;</span>
+<span class="c1">##  [1] &quot;ņẇɪẍɚ&quot;  &quot;ƞꜷđᴓᵹ&quot;  &quot;ḻɢᴣﬀᴟ&quot;  &quot;ꬵꭆṉʛŝ&quot;  &quot;ꭕɉðꭣỡ&quot;  &quot;ŕᶔﬀḧʗ&quot;  &quot;ẁəɑǖɽ&quot;  &quot;ｏŧďŕẵ&quot;</span>
+<span class="c1">##  [9] &quot;ṗꬶẝỹᶀ&quot;  &quot;ẑꝯꜽｌᴀ&quot;</span>
 <span class="c1"># generate n random passwords of length in [8, 14]</span>
 <span class="c1"># consisting of at least one digit, small and big ASCII letter:</span>
 <span class="n">n</span> <span class="o">&lt;-</span> <span class="m">10</span>
@@ -360,9 +360,9 @@
    <span class="nf">stri_rand_strings</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="s">&#39;[A-Z]&#39;</span><span class="p">),</span>
    <span class="nf">stri_rand_strings</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nf">sample</span><span class="p">(</span><span class="m">5</span><span class="o">:</span><span class="m">11</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">),</span> <span class="s">&#39;[a-zA-Z0-9]&#39;</span><span class="p">)</span>
 <span class="p">))</span>
-<span class="c1">##  [1] &quot;yAaX6IPY7FfV2w&quot; &quot;xQRGZ2UDbXV8V&quot;  &quot;v8eJ5dHa5R&quot;     &quot;DeMbx59QjjO&quot;   </span>
-<span class="c1">##  [5] &quot;jPU6ys2Y&quot;       &quot;AkHL2gqELDmg27&quot; &quot;JI2MbN0ODlDpf&quot;  &quot;qqkhp8W7DE&quot;    </span>
-<span class="c1">##  [9] &quot;D7fFdnTG7Ni&quot;    &quot;a0DENj5a&quot;</span>
+<span class="c1">##  [1] &quot;3hGsaJNqZTaGw&quot;  &quot;wJGmtzJcuPS4&quot;   &quot;k0MsQHEx9bOZeV&quot; &quot;FTAJ1Dgf2A&quot;    </span>
+<span class="c1">##  [5] &quot;8LxJPujoHhc&quot;    &quot;uNkX3Ygc2QThO&quot;  &quot;O9oTfpCn3X2G&quot;   &quot;aidxJ0jyFFDfOA&quot;</span>
+<span class="c1">##  [9] &quot;TKGrmAlP2W&quot;     &quot;sffGLWZ7vKw&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -384,7 +384,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-13 14:59:02.
+        Last updated on 2021-05-13 17:36:06.
       </span>
 
     </p>

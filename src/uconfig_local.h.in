@@ -59,8 +59,23 @@
 #endif
 
 
+#ifdef __cplusplus
+#ifdef STRINGI_MAX_ALIGN_T_STD
+/* #431: Check for std::max_align_t
 
-
+GCC Bug 56019 - max_align_t should be in std namespace
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=56019
+*/
+#include <stddef.h>
+extern "C++"
+{
+    namespace std
+    {
+        using ::max_align_t;
+    }
+}
+#endif
+#endif
 
 /* localtime_r is not a C++98 nor C99 function: it is POSIX.  Solaris has
    it, but only for C (thanks to Kurt Hornik for pointing this out) */

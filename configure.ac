@@ -305,6 +305,10 @@ else
     ICUDT_DIR_FORCE="no"
 fi
 
+
+
+### AUXILIARY FUNCTIONS ########################################################
+
 disable_cxx11() {
     echo "*** Trying with C++11 compiler disabled."
     enable_cxx11="no"
@@ -323,7 +327,15 @@ disable_cxx11() {
     unset ac_cv_cxx_namespaces
     unset ac_cv_cxx_have_stl
     unset ac_cv_objext
+    return 0
 }
+
+
+
+
+
+
+################################################################################
 
 while true; do
     # if C++11 support is enabled, we'll try it first;
@@ -385,9 +397,10 @@ while true; do
     ])
 
 
-
-    ##### Checking whether the C++ compiler supports the long long type and STL
-
+    # Basic C++ compiler checks: are long long type and stl data structures
+    # available? These are absolutely needed to compile ICU>=55.
+    #
+    # If this is the case, return 0
     check_cpp() {
         AC_LANG(C++)
         AC_PROG_CXX
@@ -440,15 +453,12 @@ while true; do
             return 1
         ])
 
-
-        CPP_OK=1
         return 0
     }  # end check_cpp()
 
-    CPP_OK=0
-    check_cpp
+    ##### Checking whether the C++ compiler supports the long long type etc.
 
-    if test $CPP_OK = 0; then
+    if ! check_cpp; then
         if test "x$enable_cxx11" = "xyes"; then
             disable_cxx11
             continue
@@ -460,13 +470,11 @@ while true; do
 
     ##### CHECK FOR ICU4C ##########################################################
 
-    ##### 1. Get settings from pkg-config or system
-    # Note that according to
-    # https://unicode-org.github.io/icu/userguide/icu/howtouseicu.html,
-    # icu-config is deprecated and no longer recommended for production use.
-
-
     detect_icu_with_pkg_config() {
+        # Note that according to
+        # https://unicode-org.github.io/icu/userguide/icu/howtouseicu.html,
+        # icu-config is deprecated and no longer recommended for production use.
+
         # Retrieve pkg-config's path
         AC_PATH_PROG(PKG_CONFIG, pkg-config, no,
                 [$PATH:/usr/local/bin:/bin:/usr/bin:ext/bin:ext:/sw/bin:/opt/bin]) # auto-detect
@@ -517,6 +525,7 @@ while true; do
 
         return 0
     }  # end detect_icu_with_pkg_config()
+
 
     check_icu_with_pkg_config() {
         CPPFLAGS="${CPPFLAGS} ${ICU_CPPFLAGS}"
@@ -748,38 +757,12 @@ while true; do
         ], [
             AC_MSG_RESULT([no])
             echo "*** The available ICU4C cannot be used."
-            echo "${MSG_CONFIG_FAIL}"
+            #echo "${MSG_CONFIG_FAIL}"
             return 1
         ])
 
-        ICU_FOUND=1 # DONE
         return 0
     }  # end check_icu_with_pkg_config()
-
-
-    ICU_FOUND=0
-
-    if test $ICU_FOUND = 0; then
-        if test $enable_pkg_config = "no"; then
-            # Use of pkg-config disabled, nothing to do
-            echo "*** System ICU4C has been disabled."
-        else
-            OLD_CPPFLAGS=$CPPFLAGS
-            OLD_LDFLAGS=$LDFLAGS
-            OLD_LIBS=$LIBS
-            if ! detect_icu_with_pkg_config; then
-                echo "*** Trying with 'standard' fallback flags"
-                # (#238, #220) trying "standard" fallback flags
-                ICU_CPPFLAGS=""
-                ICU_LDFLAGS=""
-                ICU_LIBS="-licui18n -licuuc -licudata"
-            fi
-            check_icu_with_pkg_config
-            CPPFLAGS=$OLD_CPPFLAGS
-            LDFLAGS=$OLD_LDFLAGS
-            LIBS=$OLD_LIBS
-        fi
-    fi
 
 
     check_flags_icu_bundle() {
@@ -814,13 +797,7 @@ while true; do
                 ],[
                     AC_MSG_RESULT([no])
                     echo "*** The ICU bundle cannot be built."
-                    if test "x$enable_cxx11" = "xyes"; then
-                        disable_cxx11
-                        continue
-                    else
-                        echo "${MSG_CONFIG_FAIL}"
-                        exit 1
-                    fi
+                    return 1
                 ])
             ])
         fi
@@ -845,13 +822,7 @@ while true; do
             ],[
                 AC_MSG_RESULT([no])
                 echo "*** The ICU4C bundle cannot be built."
-                if test "x$enable_cxx11" = "xyes"; then
-                    disable_cxx11
-                    continue
-                else
-                    echo "${MSG_CONFIG_FAIL}"
-                    exit 1
-                fi
+                return 1
             ])
         ])
 
@@ -865,6 +836,7 @@ while true; do
                 AC_MSG_RESULT([yes])
             ],[
                 AC_MSG_RESULT([no])
+                old_with_extra_cxxflags="${with_extra_cxxflags}"
                 with_extra_cxxflags="${with_extra_cxxflags} -D_XPG6"
                 CXXFLAGS="${CXXFLAGS} -D_XPG6"
                 AC_MSG_CHECKING([whether we may compile src/icu${ICU_BUNDLE_VERSION}/i18n/number_affixutils.cpp with -D_XPG6])
@@ -875,46 +847,139 @@ while true; do
                     AC_MSG_RESULT([yes])
                 ],[
                     AC_MSG_RESULT([no])
+                    with_extra_cxxflags="${old_with_extra_cxxflags}"
                     echo "*** The ICU4C bundle cannot be built."
-                    if test "x$enable_cxx11" = "xyes"; then
-                        disable_cxx11
-                        continue
-                    else
-                        echo "${MSG_CONFIG_FAIL}"
-                        exit 1
-                    fi
+                    return 1
                 ])
             ])
+
+        fi
+
+        if test ${ICU_BUNDLE_VERSION} -ge 69; then
+
+            AC_MSG_CHECKING(whether alignof(std::max_align_t) is available)
+            AC_LINK_IFELSE([AC_LANG_SOURCE([
+                #include <iostream>
+                #include <cstddef>
+                int main() {
+                    std::cout << alignof(std::max_align_t) << std::endl;
+                    return 0;
+                }
+            ])],
+            [
+                AC_MSG_RESULT([yes])
+            ],[
+                AC_MSG_RESULT([no])
+                old_with_extra_cxxflags="${with_extra_cxxflags}"
+                with_extra_cxxflags="${with_extra_cxxflags} -DSTRINGI_MAX_ALIGN_T_STD"
+                CXXFLAGS="${CXXFLAGS} -D_XPG6"
+                AC_MSG_CHECKING(whether alignof(::max_align_t) is available)
+                AC_LINK_IFELSE([AC_LANG_SOURCE([
+                    #include <iostream>
+                    #include <cstddef>
+
+                    #ifdef __cplusplus
+                    #include <stddef.h>
+                    extern "C++"
+                    {
+                        namespace std
+                        {
+                            using ::max_align_t;
+                        }
+                    }
+                    #endif
+
+                    int main() {
+                        std::cout << alignof(std::max_align_t) << std::endl;
+                        return 0;
+                    }
+                ])],
+                [
+                    AC_MSG_RESULT([yes])
+                ],[
+                    AC_MSG_RESULT([no])
+                    with_extra_cxxflags="${old_with_extra_cxxflags}"
+                    echo "*** The ICU4C bundle cannot be built."
+                    return 1
+                ])
+            ])
+
         fi
 
         return 0
     }  # end check_flags_icu_bundle()
 
-    if test $ICU_FOUND = 0; then
-        if test $enable_icu_bundle = "no"; then
-            echo "*** Failed to configure package build with forced system ICU usage."
-            echo "*** Consider installing, e.g., libicu-devel (RedHat, Fedora) or libicu-dev (Debian, Ubuntu)"
-            echo "*** together with pkg-config."
-            if test "x$enable_cxx11" = "xyes"; then
-                disable_cxx11
-                continue
-            else
-                echo "${MSG_CONFIG_FAIL}"
-                exit 1
-            fi
-        fi
 
-        OLD_CFLAGS=$CFLAGS
-        OLD_CXXFLAGS=$CXXFLAGS
+
+    ICU_FOUND=0
+    if test $enable_pkg_config = "no"; then
+        # Use of pkg-config disabled, nothing to do
+        echo "*** System ICU4C has been disabled."
+    else
         OLD_CPPFLAGS=$CPPFLAGS
+        OLD_LDFLAGS=$LDFLAGS
         OLD_LIBS=$LIBS
-        check_flags_icu_bundle
-        CFLAGS=$OLD_CFLAGS
-        CXXFLAGS=$OLD_CXXFLAGS
+        if ! detect_icu_with_pkg_config; then
+            echo "*** Trying with 'standard' fallback flags"
+            # (#238, #220) trying "standard" fallback flags
+            ICU_CPPFLAGS=""
+            ICU_LDFLAGS=""
+            ICU_LIBS="-licui18n -licuuc -licudata"
+        fi
+        if check_icu_with_pkg_config; then
+            ICU_FOUND=1  # success
+        fi
         CPPFLAGS=$OLD_CPPFLAGS
+        LDFLAGS=$OLD_LDFLAGS
+        LIBS=$OLD_LIBS
     fi
 
-    break # if we reach this point, we have found an okay config
+
+    if test $ICU_FOUND = 1; then
+        break  # all set!
+    fi
+
+    if test $enable_icu_bundle = "no"; then
+        echo "*** Failed to configure package build with forced system ICU usage."
+        echo "*** Consider installing, e.g., libicu-devel (RedHat, Fedora) or libicu-dev (Debian, Ubuntu)"
+        echo "*** together with pkg-config."
+        if test "x$enable_cxx11" = "xyes"; then
+            disable_cxx11
+            continue
+        else
+            echo "${MSG_CONFIG_FAIL}"
+            exit 1
+        fi
+    fi
+
+    echo "*** Using the ICU ${ICU_BUNDLE_VERSION} bundle."
+
+    ICU_BUNDLE_OK=0
+    OLD_CFLAGS=$CFLAGS
+    OLD_CXXFLAGS=$CXXFLAGS
+    OLD_CPPFLAGS=$CPPFLAGS
+    OLD_LIBS=$LIBS
+    if check_flags_icu_bundle; then
+        ICU_BUNDLE_OK=1  # success
+    fi
+    CFLAGS=$OLD_CFLAGS
+    CXXFLAGS=$OLD_CXXFLAGS
+    CPPFLAGS=$OLD_CPPFLAGS
+
+
+    if test $ICU_BUNDLE_OK = 1; then
+        break  # all set!
+    fi
+
+    echo "*** Failed to configure package build with the ICU bundle usage."
+    if test "x$enable_cxx11" = "xyes"; then
+        disable_cxx11
+        continue
+    else
+        echo "${MSG_CONFIG_FAIL}"
+        exit 1
+    fi
+
 done # end while
 
 ###### DOWNLOAD ICUDT (IF NEEDED) ##############################################
