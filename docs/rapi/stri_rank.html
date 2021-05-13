@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.1
+                1.6.2
               </div>
             
           
@@ -359,15 +359,15 @@
 <span class="c1"># Ordering a data frame with respect to two criteria:</span>
 <span class="n">X</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">),</span> <span class="n">b</span><span class="o">=</span><span class="nf">runif</span><span class="p">(</span><span class="m">8</span><span class="p">))</span>
 <span class="n">X</span><span class="p">[</span><span class="nf">order</span><span class="p">(</span><span class="nf">stri_rank</span><span class="p">(</span><span class="n">X</span><span class="o">$</span><span class="n">a</span><span class="p">),</span> <span class="n">X</span><span class="o">$</span><span class="n">b</span><span class="p">),</span> <span class="p">]</span>
-<span class="c1">##      a         b</span>
-<span class="c1">## 7    a 0.3920680</span>
-<span class="c1">## 6    a 0.8211923</span>
-<span class="c1">## 3    b 0.6216912</span>
-<span class="c1">## 4    b 0.8049087</span>
-<span class="c1">## 1    b 0.9776553</span>
-<span class="c1">## 8    c 0.7155077</span>
-<span class="c1">## 2 &lt;NA&gt; 0.3709058</span>
-<span class="c1">## 5 &lt;NA&gt; 0.5526152</span>
+<span class="c1">##      a          b</span>
+<span class="c1">## 7    a 0.49545428</span>
+<span class="c1">## 6    a 0.50992992</span>
+<span class="c1">## 1    b 0.07629792</span>
+<span class="c1">## 3    b 0.42492544</span>
+<span class="c1">## 4    b 0.87540627</span>
+<span class="c1">## 8    c 0.07672819</span>
+<span class="c1">## 5 &lt;NA&gt; 0.06144096</span>
+<span class="c1">## 2 &lt;NA&gt; 0.47204805</span>
 </pre></div>
 </div>
 </div>
@@ -389,7 +389,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-13 14:21:57.
+        Last updated on 2021-05-13 14:59:02.
       </span>
 
     </p>

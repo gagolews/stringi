@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.1
+                1.6.2
               </div>
             
           
@@ -345,12 +345,12 @@
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_rand_strings</span><span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="m">10</span><span class="p">)</span> <span class="c1"># 5 strings of length 10</span>
-<span class="c1">## [1] &quot;2PzJ2MIIs3&quot; &quot;waRPNU17Tc&quot; &quot;JeBHpAbRo2&quot; &quot;8Zi2eay05t&quot; &quot;Y8tHzhhdyz&quot;</span>
+<span class="c1">## [1] &quot;f5JiwJcGRF&quot; &quot;aKuWY4XL7e&quot; &quot;ImzEkvnWqd&quot; &quot;BKp8jGXRVO&quot; &quot;xZw0S5Bc6O&quot;</span>
 <span class="nf">stri_rand_strings</span><span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="nf">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span> <span class="c1"># 5 strings of random lengths</span>
-<span class="c1">## [1] &quot;jg6Dd6h4&quot;   &quot;9vTp13T&quot;    &quot;J&quot;          &quot;ObUT&quot;       &quot;B8BVkYDBKP&quot;</span>
+<span class="c1">## [1] &quot;W2Rbso9G&quot;  &quot;WwcV0BOzG&quot; &quot;W4szMnGeF&quot; &quot;l1o8uGR6O&quot; &quot;RSJTj4Dbh&quot;</span>
 <span class="nf">stri_rand_strings</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="s">&#39;[\\p{script=latin}&amp;\\p{Ll}]&#39;</span><span class="p">)</span> <span class="c1"># small letters from the Latin script</span>
-<span class="c1">##  [1] &quot;ťřǽꬱɦ&quot; &quot;ęᵻɪᵻð&quot; &quot;ȑʊĥʕʒ&quot; &quot;ᶓṯꝭꝉᴆ&quot; &quot;ýᴓőƃƫ&quot; &quot;ǐꭄᵳꝏɷ&quot; &quot;ĸᴊŧꜱᴙ&quot; &quot;ṯoꜰʁḣ&quot; &quot;ṻhḻꝁꝩ&quot;</span>
-<span class="c1">## [10] &quot;ŭǻɥǻꝅ&quot;</span>
+<span class="c1">##  [1] &quot;ŷᴢʆꝶƙ&quot;  &quot;ꝕᵷḏḧᴚ&quot;  &quot;ᶎᶕƈỿꞁ&quot;  &quot;ꝼȅꜰᴏm&quot;  &quot;əểnꝋŵ&quot;  &quot;ƭᶄẚɭĝ&quot;  &quot;ｇȼƛᴏǯ&quot; &quot;ʈꝗąꞷẗ&quot; </span>
+<span class="c1">##  [9] &quot;ꬼꝋkᴄᶑ&quot;  &quot;ꭚɜꭌŝɇ&quot;</span>
 <span class="c1"># generate n random passwords of length in [8, 14]</span>
 <span class="c1"># consisting of at least one digit, small and big ASCII letter:</span>
 <span class="n">n</span> <span class="o">&lt;-</span> <span class="m">10</span>
@@ -360,9 +360,9 @@
    <span class="nf">stri_rand_strings</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="s">&#39;[A-Z]&#39;</span><span class="p">),</span>
    <span class="nf">stri_rand_strings</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nf">sample</span><span class="p">(</span><span class="m">5</span><span class="o">:</span><span class="m">11</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">),</span> <span class="s">&#39;[a-zA-Z0-9]&#39;</span><span class="p">)</span>
 <span class="p">))</span>
-<span class="c1">##  [1] &quot;AJ1mlvDxIEE&quot;    &quot;hlLHis6clZg&quot;    &quot;FGZrhdFBNFb9d8&quot; &quot;rcd6itHW5OCVe&quot; </span>
-<span class="c1">##  [5] &quot;WF6aIg7kLy4Qf&quot;  &quot;1nymoCi1IqW&quot;    &quot;8ghXnxUw8Hg&quot;    &quot;jCfE3frbQ1RJLz&quot;</span>
-<span class="c1">##  [9] &quot;qo0qjUKKqjvBM&quot;  &quot;N5Sd01ZZE2bQs&quot;</span>
+<span class="c1">##  [1] &quot;yAaX6IPY7FfV2w&quot; &quot;xQRGZ2UDbXV8V&quot;  &quot;v8eJ5dHa5R&quot;     &quot;DeMbx59QjjO&quot;   </span>
+<span class="c1">##  [5] &quot;jPU6ys2Y&quot;       &quot;AkHL2gqELDmg27&quot; &quot;JI2MbN0ODlDpf&quot;  &quot;qqkhp8W7DE&quot;    </span>
+<span class="c1">##  [9] &quot;D7fFdnTG7Ni&quot;    &quot;a0DENj5a&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -384,7 +384,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-13 14:21:57.
+        Last updated on 2021-05-13 14:59:02.
       </span>
 
     </p>

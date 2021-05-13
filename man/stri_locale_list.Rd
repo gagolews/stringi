@@ -20,6 +20,10 @@ during the resource request.
 
 See \link{stringi-locale} for more information.
 }
+\examples{
+stri_locale_list()
+
+}
 \seealso{
 Other locale_management: 
 \code{\link{about_locale}},

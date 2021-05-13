@@ -115,9 +115,14 @@ stri_trans_general <- function(str, id)
 #' \emph{General Transforms} -- ICU User Guide,
 #' \url{https://unicode-org.github.io/icu/userguide/transforms/general/}
 #'
+#' @examples
+#' stri_trans_list()
+#'
 #' @family transform
 #' @export
 stri_trans_list <- function()
 {
-    .Call(C_stri_trans_list)
+    stri_sort(
+        .Call(C_stri_trans_list), locale="en_US", numeric=TRUE, strength=1
+    )
 }
