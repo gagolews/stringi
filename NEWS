@@ -11,17 +11,21 @@
 * [NEW FEATURE] #425: The outputs of `stri_enc_list()`, `stri_locale_list()`,
   `stri_timezone_list()`, and `stri_trans_list()` are now sorted.
 
-* [BUGFIX] .....TODO: #431: check for `std::max_align_t` vs. `max_align_t`.
-...error: ‘max_align_t’ is not a member of ‘std’ with -std=gnu++11
+* [BUGFIX] #429: `stri_width()` misclassified the width of certain
+  code points (including grave accent, Eszett, etc.);
+  General category Sk (Symbol, modifier) is no longer of width 0,
+  UCHAR_EAST_ASIAN_WIDTH of U_EA_AMBIGUOUS is no longer of width 2.
+
+* [BUGFIX] .....TODO: #431: Pre-4.9.0 GCC has `::max_align_t`,
+  but not `std::max_align_t`.
+
+* [BUGFIX] .....TODO: #430: md5sum? ... need more data ...
 
 * [BUGFIX] ......TODO: #354: ALTREP vectors and CHARSXPs were not copied,
   and thus could have been gc'd in the meanwhile.
         TODO check alloc (RF_alloc) in #396 and #395 too?)
 
-* [BUGFIX] .....TODO: #429: `stri_width()` misclassified the width of certain
-  code points (including grave accent, Eszett, etc.).
 
-* [BUGFIX] .....TODO: #430: md5sum? ... need more data ...
 
 * [BUGFIX] .....TODO: #415 icu collator case level.....
 

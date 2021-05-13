@@ -124,7 +124,8 @@ Other search\_replace: [`about_search`](about_search.md), `stri_trim_both()`
 ```r
 stri_replace_all_charclass('aaaa', '[a]', 'b', merge=c(TRUE, FALSE))
 ## Warning in stri_replace_all_charclass("aaaa", "[a]", "b", merge = c(TRUE, :
-## argument `merge` should be a single logical value; only the first element is used
+## argument `merge` should be a single logical value; only the first element is
+## used
 ## [1] "b"
 stri_replace_all_charclass('a\nb\tc   d', '\\p{WHITE_SPACE}', ' ')
 ## [1] "a b c   d"

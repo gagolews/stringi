@@ -56,9 +56,19 @@ expect_equivalent(stri_width(stri_trans_nfkd("\ubc1f")), 2L)
 
 expect_equivalent(stri_width("\u005E"), 1L) # \N{CIRCUMFLEX ACCENT}
 expect_equivalent(stri_width("\u0060"), 1L) # \N{GRAVE ACCENT}
+expect_equivalent(stri_width("\u0302"), 0L) # \N{COMBINING CIRCUMFLEX ACCENT}
+expect_equivalent(stri_width("\u0300"), 0L) # \N{COMBINING GRAVE ACCENT}
 # expect_equivalent(stri_width("\u02DC"), 1L) # \N{SMALL TILDE}
 # expect_equivalent(stri_width("\u00AF"), 1L) # \N{MACRON}
 expect_equivalent(stri_width("\u2081"), 1L) # \\N{SUBSCRIPT ONE}
 expect_equivalent(stri_width("\u03C9"), 1L) # \\N{GREEK SMALL LETTER OMEGA}
 expect_equivalent(stri_width("\u0425"), 1L) # \\N{CYRILLIC CAPITAL LETTER HA}
 expect_equivalent(stri_width("\u00DF"), 1L) # \\N{LATIN SMALL LETTER SHARP S}
+expect_equivalent(stri_width("a"), 1L) # \\N{LATIN SMALL LETTER SHARP S}
+
+expect_equivalent(stri_width("\U0001F600"), 2L) # grinning face
+expect_equivalent(stri_width("\U0001F3F4\U000E0067\U000E0062\U000E0065\U000E006E\U000E0067\U000E007F"), 2L) # flag: England
+expect_equivalent(stri_width("\U0001F3F3\uFE0F\u200D\U0001F308"), 2L) # rainbow flag
+
+expect_equivalent(stri_width("\u0061\u0328\u0061\u0302\u0065\u0300"), 3L)  # a with combining ogonek etc.
+

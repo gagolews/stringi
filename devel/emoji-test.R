@@ -20,4 +20,4 @@ y <- data.frame(
     name=x[, 2])
 
 y_tab <- knitr::kable(y[order(y[, "width"]), ], row.names=FALSE)
-cat(y_tab, sep="\n", file="/tmp/emoji.txt")
+cat(y_tab, sep="\n", file="devel/delme-width-emoji.txt")

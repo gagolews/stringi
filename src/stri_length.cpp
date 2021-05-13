@@ -231,6 +231,11 @@ SEXP stri_isempty(SEXP str)
 }
 
 
+#ifdef DEBUG
+//#define DEBUG_STRI_WIDTH
+#endif
+
+
 /** Get width of a single character
  *
  * inspired by http://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c
@@ -245,16 +250,46 @@ SEXP stri_isempty(SEXP str)
  * @version 1.6.1 (Marek Gagolewski, 2021-05-04)
  *    emoji support etc.
  *
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-13)
+ *    bugfixes
+ *
  * @param c code point
  * @return 0, 1, or 2
  */
 int stri__width_char(UChar32 c)
 {
+    /* Characters with the \code{UCHAR_EAST_ASIAN_WIDTH} enumerable property
+       equal to \code{U_EA_FULLWIDTH} or \code{U_EA_WIDE} are of width 2. */
+    int width = (int)u_getIntPropertyValue(c, UCHAR_EAST_ASIAN_WIDTH);
+
+#ifdef DEBUG_STRI_WIDTH
+//     Rscript -e 'stringi::stri_width("\u005E\u0060\u2081\u03C9\u0425\u00DF")'
+    Rprintf(
+        "c=%08x MN=%d ME=%d CF=%d CC=%d SO=%d SK=%d EMOJI_MOD=%d EMOJI_PRES=%d h1=%d h2=%d w=%d\n", (int)c,
+        0!=(U_GET_GC_MASK(c) & U_GC_MN_MASK),
+        0!=(U_GET_GC_MASK(c) & U_GC_ME_MASK),
+        0!=(U_GET_GC_MASK(c) & U_GC_CF_MASK),
+        0!=(U_GET_GC_MASK(c) & U_GC_CC_MASK),
+        0!=(U_GET_GC_MASK(c) & U_GC_SO_MASK),
+        0!=(U_GET_GC_MASK(c) & U_GC_SK_MASK),
+        0!=u_hasBinaryProperty(c, UCHAR_EMOJI_MODIFIER),
+        0!=u_hasBinaryProperty(c, UCHAR_EMOJI_PRESENTATION),
+        u_getIntPropertyValue(c, UCHAR_HANGUL_SYLLABLE_TYPE) == U_HST_VOWEL_JAMO,
+        u_getIntPropertyValue(c, UCHAR_HANGUL_SYLLABLE_TYPE) == U_HST_TRAILING_JAMO,
+        (int)width
+    );
+//      U_EA_NEUTRAL,   0/*[N]*/
+//      U_EA_AMBIGUOUS, 1/*[A]*/
+//      U_EA_HALFWIDTH, 2/*[H]*/
+//      U_EA_FULLWIDTH, 3/*[F]*/
+//      U_EA_NARROW,    4/*[Na]*/
+//      U_EA_WIDE,      5/*[W]*/
+#endif
+
     if (c == (UChar32)0x00AD) return 1; /* SOFT HYPHEN  */
     if (c == (UChar32)0x200B) return 0; /* ZERO WIDTH SPACE */
 
     /* GC: Me, Mn, Cf, Cc -> width = 0 */
-    /* GC: v1.6.1 Sk -> width = 0 */
     if (U_GET_GC_MASK(c) &
             (U_GC_MN_MASK | U_GC_ME_MASK | U_GC_CF_MASK | U_GC_CC_MASK))
         return 0;
@@ -268,10 +303,6 @@ int stri__width_char(UChar32 c)
     if (c >= (UChar32)0xFE00 && c <= (UChar32)0xFE0F)
         return 0;
 
-    /* Characters with the \code{UCHAR_EAST_ASIAN_WIDTH} enumerable property
-       equal to \code{U_EA_FULLWIDTH} or \code{U_EA_WIDE} are of width 2. */
-    int width = (int)u_getIntPropertyValue(c, UCHAR_EAST_ASIAN_WIDTH);
-
 #if U_ICU_VERSION_MAJOR_NUM>=57
     // UCHAR_EMOJI_* is ICU >= 57
     if (
@@ -284,16 +315,25 @@ int stri__width_char(UChar32 c)
     if (width == U_EA_FULLWIDTH || width == U_EA_WIDE)
         return 2;
 
-    if (width == U_EA_AMBIGUOUS)
-        return 2;
+    /* v1.6.1 had U_EA_AMBIGUOUS set to 2, this was not a good idea
+    if (width == U_EA_AMBIGUOUS) return 2;
+    // 'a' is narrow
+    // 'a with ogonek' is neutral
+    // 'Eszett' is ambiguous
+    // 'grave accent' is narrow
+    */
 
-    /* GC: v1.6.1 So -> width = 2 */
+    /* v1.6.1 GC=So -> width = 2 */
     if (U_GET_GC_MASK(c) & (U_GC_SO_MASK))
         return 2;
 
-    /* GC: v1.6.1 Sk -> width = 0 */
-    if (U_GET_GC_MASK(c) & (U_GC_SK_MASK))
-        return 0;
+    /*
+    v1.6.1 had GC=Sk of width = 0
+    but there are exceptions:
+    \u005E \N{CIRCUMFLEX ACCENT}   ^  is Sk
+    \u0060 \N{GRAVE ACCENT}        `  is Sk
+    generally, it's not a good idea
+    */
 
 
 #if U_ICU_VERSION_MAJOR_NUM>=57
@@ -315,6 +355,9 @@ int stri__width_char(UChar32 c)
  *
  * @version 1.6.1 (Marek Gagolewski)
  *    most in https://unicode.org/Public/emoji/13.1/emoji-test.txt of width=2
+ *
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-13)
+ *    bugfixes
  */
 int stri__width_string(const char* str_cur_s, int str_cur_n)
 {
