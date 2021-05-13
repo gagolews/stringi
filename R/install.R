@@ -78,11 +78,11 @@ stri_install_check <- function(silent = FALSE)
             message(stri_info(TRUE))  # this may also throw an error
 
         if (length(stri_enc_list()) <= 0)
-            stop("encodings unsupported")
+            stop("no encodings are supported")
         if (length(stri_locale_list()) <= 0)
-            stop("locales unsupported")
+            stop("no locales are supported")
         if (length(stri_trans_list()) <= 0)
-            stop("transliterators unsupported")
+            stop("no transliterators are supported")
         TRUE
     }, error = function(e) {
         FALSE
@@ -119,11 +119,18 @@ stri_download_icudt <- function(inpath, icu_bundle_version)
     if (file.exists(icudtzipfname)) {
         md5ob <- tools::md5sum(icudtzipfname)
         if (is.na(md5ob)) {
-            message("error checking md5sum for icudt")
+            message(
+                sprintf("error checking md5sum for %s", icudtzipfname)
+            )
             return(invisible(FALSE))
         }
         if (md5ob != md5ex) {
-            message("md5sum mismatch for icudt")
+            message(sprintf(
+                "md5sum mismatch for %s (%s vs. %s)",
+                icudtzipfname,
+                as.character(md5ob),
+                as.character(md5ex)
+            ))
             return(invisible(FALSE))
         }
         message("icudt already downloaded")
@@ -139,17 +146,27 @@ stri_download_icudt <- function(inpath, icu_bundle_version)
         tryCatch({
             suppressWarnings(file.remove(icudtzipfname))
             # download icudt
-            if (download.file(paste(href, fname, sep = ""), icudtzipfname, mode = "wb") != 0) {
+            if (
+                download.file(
+                    paste(href, fname, sep = ""), icudtzipfname, mode = "wb"
+                ) != 0
+            ) {
                 return("download error")
             }
-            if (!file.exists(icudtzipfname))
+            if (!file.exists(icudtzipfname)) {
                 return("download error")
+            }
             md5ob <- tools::md5sum(icudtzipfname)
             if (is.na(md5ob)) {
-                return("error checking md5sum")
+                return(sprintf("error checking md5sum for %s", icudtzipfname))
             }
             if (md5ob != md5ex) {
-                return("md5sum mismatch")
+                return(sprintf(
+                    "md5sum mismatch for %s (%s vs. %s)",
+                    icudtzipfname,
+                    as.character(md5ob),
+                    as.character(md5ex)
+                ))
             }
             TRUE
         }, error = function(e) as.character(e))
@@ -176,7 +193,7 @@ stri_download_icudt <- function(inpath, icu_bundle_version)
         return(invisible(FALSE))
     }
 
-    message("icudt fetch successful")
+    message("icudt has been downloaded successfully")
     return(icudtzipfname)
 }
 
@@ -189,7 +206,7 @@ stri_install_icudt <- function(check = TRUE, outpath = NULL, inpath = NULL, icu_
 
     stopifnot(is.logical(check), length(check) == 1, !is.na(check))
     if (check && stri_install_check(TRUE)) {
-        message("icudt has already been installed.")
+        message("icudt has already been installed")
         return(invisible(TRUE))
     }
 
