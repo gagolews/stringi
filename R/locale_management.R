@@ -48,11 +48,16 @@
 #' Returns a character vector with locale identifiers
 #' that are known to \pkg{ICU}.
 #'
+#' @examples
+#' stri_locale_list()
+#'
 #' @family locale_management
 #' @export
 stri_locale_list <- function()
 {
-    .Call(C_stri_locale_list)
+    stri_sort(
+        .Call(C_stri_locale_list), locale="en_US", numeric=TRUE, strength=1
+    )
 }
 
 

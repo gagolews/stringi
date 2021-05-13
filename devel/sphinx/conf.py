@@ -17,7 +17,7 @@ html_title = project
 html_short_title = project
 
 # The full version, including alpha/beta/rc tags
-version = '1.6.1'  # TODO: automate
+version = '1.6.2'  # TODO: automate
 release = version
 
 github_project_url = "https://github.com/gagolews/stringi/"

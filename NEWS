@@ -3,9 +3,12 @@
 
 ## 1.6.2 (2021-XX-XX)
 
+* [BACKWARD INCOMPATIBILITY] In `stri_enc_list()`,
+  `simplify` now defaults to `TRUE`.
+
 * [NEW FEATURE] #428: In `stri_flatten`, `na_empty=NA` now omits missing values.
 
-* [NEW FEATURE] ......TODO: #425: The outputs of `stri_enc_list()`, `stri_locale_list()`,
+* [NEW FEATURE] #425: The outputs of `stri_enc_list()`, `stri_locale_list()`,
   `stri_timezone_list()`, and `stri_trans_list()` are now sorted.
 
 * [BUGFIX] .....TODO: #431: check for `std::max_align_t` vs. `max_align_t`.

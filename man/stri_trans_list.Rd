@@ -14,6 +14,10 @@ Returns a list of available text transform identifiers.
 Each of them may be used in \code{\link{stri_trans_general}}
 tasks.
 }
+\examples{
+stri_trans_list()
+
+}
 \references{
 \emph{General Transforms} -- ICU User Guide,
 \url{https://unicode-org.github.io/icu/userguide/transforms/general/}

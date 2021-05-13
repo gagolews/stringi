@@ -4,20 +4,20 @@
 \alias{stri_enc_list}
 \title{List Known Character Encodings}
 \usage{
-stri_enc_list(simplify = FALSE)
+stri_enc_list(simplify = TRUE)
 }
 \arguments{
 \item{simplify}{single logical value; return a character vector or a
 list of character vectors?}
 }
 \value{
-If \code{simplify} is \code{FALSE} (the default), a list of
- character vectors is returned. Each list element represents a unique
- character encoding. The \code{name} attribute gives the \pkg{ICU} Canonical
- Name of an encoding family. The elements (character vectors) are
- its aliases.
+If \code{simplify} is \code{FALSE}, a list of
+character vectors is returned. Each list element represents a unique
+character encoding. The \code{name} attribute gives the \pkg{ICU} Canonical
+Name of an encoding family. The elements (character vectors) are
+its aliases.
 
-If \code{simplify} is \code{TRUE}, then the resulting list
+If \code{simplify} is \code{TRUE} (the default), then the resulting list
 is coerced to a character vector and sorted, and returned with
 removed duplicated entries.
 }
@@ -26,10 +26,15 @@ Gives the list of encodings that are supported by \pkg{ICU}.
 }
 \details{
 Apart from given encoding identifiers and their aliases,
-some other specifiers might be additionally available.
+some other specifiers might additionally be available.
 This is due to the fact that \pkg{ICU} tries to normalize
 converter names. For instance, \code{'UTF8'} is also valid,
 see \link{stringi-encoding} for more information.
+}
+\examples{
+stri_enc_list()
+stri_enc_list(FALSE)
+
 }
 \seealso{
 Other encoding_management: 

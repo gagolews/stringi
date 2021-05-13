@@ -39,7 +39,7 @@
 #'
 #' @details
 #' Apart from given encoding identifiers and their aliases,
-#' some other specifiers might be additionally available.
+#' some other specifiers might additionally be available.
 #' This is due to the fact that \pkg{ICU} tries to normalize
 #' converter names. For instance, \code{'UTF8'} is also valid,
 #' see \link{stringi-encoding} for more information.
@@ -47,27 +47,43 @@
 #' @param simplify single logical value; return a character vector or a
 #' list of character vectors?
 #'
-#' @return If \code{simplify} is \code{FALSE} (the default), a list of
-#'  character vectors is returned. Each list element represents a unique
-#'  character encoding. The \code{name} attribute gives the \pkg{ICU} Canonical
-#'  Name of an encoding family. The elements (character vectors) are
-#'  its aliases.
+#' @return If \code{simplify} is \code{FALSE}, a list of
+#' character vectors is returned. Each list element represents a unique
+#' character encoding. The \code{name} attribute gives the \pkg{ICU} Canonical
+#' Name of an encoding family. The elements (character vectors) are
+#' its aliases.
 #'
-#' If \code{simplify} is \code{TRUE}, then the resulting list
+#' If \code{simplify} is \code{TRUE} (the default), then the resulting list
 #' is coerced to a character vector and sorted, and returned with
 #' removed duplicated entries.
 #'
+#' @examples
+#' stri_enc_list()
+#' stri_enc_list(FALSE)
+#'
 #' @family encoding_management
 #' @export
-stri_enc_list <- function(simplify = FALSE)
+stri_enc_list <- function(simplify=TRUE)
 {
-    simplify <- !identical(simplify, FALSE)
+    simplify <- isTRUE(simplify)
 
     ret <- .Call(C_stri_enc_list)
-    if (simplify)
-        return(stri_sort(unique(unlist(ret))))  # @TODO: use stri_unique
-    else
-        return(ret)
+    if (simplify) {
+        stri_sort(
+            unique(unlist(ret)),
+            locale="en_US", numeric=TRUE, strength=1
+        )
+    } else {
+        lapply(
+            ret[
+                stri_order(
+                    names(ret), locale="en_US", numeric=TRUE, strength=1
+                )
+            ],
+            stri_sort,
+            locale="en_US", numeric=TRUE, strength=1
+        )
+    }
 }
 
 

@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.1
+                1.6.2
               </div>
             
           
@@ -196,6 +196,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#value">Value</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#references">References</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#see-also">See Also</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="stri_trans_nf.html">stri_trans_nf: Perform or Check For Unicode Normalization</a></li>
@@ -317,6 +318,348 @@
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>Other transform: <a class="reference internal" href="stri_trans_char.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_char()</span></code>,</span></a> <a class="reference internal" href="stri_trans_general.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_general()</span></code>,</span></a> <a class="reference internal" href="stri_trans_nf.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_nfc()</span></code>,</span></a> <code class="docutils literal notranslate"><span class="pre">stri_trans_tolower()</span></code></p>
 </div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_trans_list</span><span class="p">()</span>
+<span class="c1">##   [1] &quot;Accents-Any&quot;                  &quot;am_FONIPA-am&quot;                </span>
+<span class="c1">##   [3] &quot;am-am_FONIPA&quot;                 &quot;am-am_Latn/BGN&quot;              </span>
+<span class="c1">##   [5] &quot;am-ar&quot;                        &quot;am-chr&quot;                      </span>
+<span class="c1">##   [7] &quot;am-fa&quot;                        &quot;Amharic-Latin/BGN&quot;           </span>
+<span class="c1">##   [9] &quot;Any-Accents&quot;                  &quot;Any-am&quot;                      </span>
+<span class="c1">##  [11] &quot;Any-am_FONIPA&quot;                &quot;Any-am_Latn/BGN&quot;             </span>
+<span class="c1">##  [13] &quot;Any-Any&quot;                      &quot;Any-ar&quot;                      </span>
+<span class="c1">##  [15] &quot;Any-ar_Latn/BGN&quot;              &quot;Any-Arab&quot;                    </span>
+<span class="c1">##  [17] &quot;Any-Arabic&quot;                   &quot;Any-Armenian&quot;                </span>
+<span class="c1">##  [19] &quot;Any-Armn&quot;                     &quot;Any-az/BGN&quot;                  </span>
+<span class="c1">##  [21] &quot;Any-be_Latn/BGN&quot;              &quot;Any-Beng&quot;                    </span>
+<span class="c1">##  [23] &quot;Any-Bengali&quot;                  &quot;Any-bg_Latn/BGN&quot;             </span>
+<span class="c1">##  [25] &quot;Any-blt_FONIPA&quot;               &quot;Any-Bopo&quot;                    </span>
+<span class="c1">##  [27] &quot;Any-Bopomofo&quot;                 &quot;Any-CanadianAboriginal&quot;      </span>
+<span class="c1">##  [29] &quot;Any-Cans&quot;                     &quot;Any-ch_FONIPA&quot;               </span>
+<span class="c1">##  [31] &quot;Any-chr&quot;                      &quot;Any-chr_FONIPA&quot;              </span>
+<span class="c1">##  [33] &quot;Any-cs_FONIPA&quot;                &quot;Any-cy_FONIPA&quot;               </span>
+<span class="c1">##  [35] &quot;Any-Cyrillic&quot;                 &quot;Any-Cyrl&quot;                    </span>
+<span class="c1">##  [37] &quot;Any-Deva&quot;                     &quot;Any-Devanagari&quot;              </span>
+<span class="c1">##  [39] &quot;Any-dsb_FONIPA&quot;               &quot;Any-dv_Latn/BGN&quot;             </span>
+<span class="c1">##  [41] &quot;Any-el_Latn/BGN&quot;              &quot;Any-eo_FONIPA&quot;               </span>
+<span class="c1">##  [43] &quot;Any-es_419_FONIPA&quot;            &quot;Any-es_FONIPA&quot;               </span>
+<span class="c1">##  [45] &quot;Any-Ethi&quot;                     &quot;Any-Ethiopic&quot;                </span>
+<span class="c1">##  [47] &quot;Any-fa&quot;                       &quot;Any-fa_FONIPA&quot;               </span>
+<span class="c1">##  [49] &quot;Any-fa_Latn/BGN&quot;              &quot;Any-FCC&quot;                     </span>
+<span class="c1">##  [51] &quot;Any-FCD&quot;                      &quot;Any-Geor&quot;                    </span>
+<span class="c1">##  [53] &quot;Any-Georgian&quot;                 &quot;Any-Greek&quot;                   </span>
+<span class="c1">##  [55] &quot;Any-Greek/UNGEGN&quot;             &quot;Any-Grek&quot;                    </span>
+<span class="c1">##  [57] &quot;Any-Grek/UNGEGN&quot;              &quot;Any-Gujarati&quot;                </span>
+<span class="c1">##  [59] &quot;Any-Gujr&quot;                     &quot;Any-Gurmukhi&quot;                </span>
+<span class="c1">##  [61] &quot;Any-Guru&quot;                     &quot;Any-ha_NE&quot;                   </span>
+<span class="c1">##  [63] &quot;Any-Hang&quot;                     &quot;Any-Hangul&quot;                  </span>
+<span class="c1">##  [65] &quot;Any-Hans&quot;                     &quot;Any-Hant&quot;                    </span>
+<span class="c1">##  [67] &quot;Any-he_Latn/BGN&quot;              &quot;Any-Hebr&quot;                    </span>
+<span class="c1">##  [69] &quot;Any-Hebrew&quot;                   &quot;Any-Hex&quot;                     </span>
+<span class="c1">##  [71] &quot;Any-Hex/C&quot;                    &quot;Any-Hex/Java&quot;                </span>
+<span class="c1">##  [73] &quot;Any-Hex/Perl&quot;                 &quot;Any-Hex/Unicode&quot;             </span>
+<span class="c1">##  [75] &quot;Any-Hex/XML&quot;                  &quot;Any-Hex/XML10&quot;               </span>
+<span class="c1">##  [77] &quot;Any-Hira&quot;                     &quot;Any-Hiragana&quot;                </span>
+<span class="c1">##  [79] &quot;Any-hy_AREVMDA_FONIPA&quot;        &quot;Any-hy_FONIPA&quot;               </span>
+<span class="c1">##  [81] &quot;Any-hy_Latn/BGN&quot;              &quot;Any-ia_FONIPA&quot;               </span>
+<span class="c1">##  [83] &quot;Any-Jamo&quot;                     &quot;Any-ka_Latn/BGN&quot;             </span>
+<span class="c1">##  [85] &quot;Any-ka_Latn/BGN_1981&quot;         &quot;Any-Kana&quot;                    </span>
+<span class="c1">##  [87] &quot;Any-Kannada&quot;                  &quot;Any-Katakana&quot;                </span>
+<span class="c1">##  [89] &quot;Any-kk_FONIPA&quot;                &quot;Any-kk_Latn/BGN&quot;             </span>
+<span class="c1">##  [91] &quot;Any-Knda&quot;                     &quot;Any-ky_FONIPA&quot;               </span>
+<span class="c1">##  [93] &quot;Any-ky_Latn/BGN&quot;              &quot;Any-la_FONIPA&quot;               </span>
+<span class="c1">##  [95] &quot;Any-Latin&quot;                    &quot;Any-Latn&quot;                    </span>
+<span class="c1">##  [97] &quot;Any-Lower&quot;                    &quot;Any-Malayalam&quot;               </span>
+<span class="c1">##  [99] &quot;Any-mk_Latn/BGN&quot;              &quot;Any-Mlym&quot;                    </span>
+<span class="c1">## [101] &quot;Any-mn_Latn/BGN&quot;              &quot;Any-mn_Latn/MNS&quot;             </span>
+<span class="c1">## [103] &quot;Any-my&quot;                       &quot;Any-my_FONIPA&quot;               </span>
+<span class="c1">## [105] &quot;Any-my_Latn&quot;                  &quot;Any-Name&quot;                    </span>
+<span class="c1">## [107] &quot;Any-NFC&quot;                      &quot;Any-NFD&quot;                     </span>
+<span class="c1">## [109] &quot;Any-NFKC&quot;                     &quot;Any-NFKD&quot;                    </span>
+<span class="c1">## [111] &quot;Any-Null&quot;                     &quot;Any-nv_FONIPA&quot;               </span>
+<span class="c1">## [113] &quot;Any-Oriya&quot;                    &quot;Any-Orya&quot;                    </span>
+<span class="c1">## [115] &quot;Any-pl_FONIPA&quot;                &quot;Any-ps_Latn/BGN&quot;             </span>
+<span class="c1">## [117] &quot;Any-Publishing&quot;               &quot;Any-Remove&quot;                  </span>
+<span class="c1">## [119] &quot;Any-rm_FONIPA_SURSILV&quot;        &quot;Any-ro_FONIPA&quot;               </span>
+<span class="c1">## [121] &quot;Any-ru&quot;                       &quot;Any-ru_Latn/BGN&quot;             </span>
+<span class="c1">## [123] &quot;Any-sat_FONIPA&quot;               &quot;Any-si_FONIPA&quot;               </span>
+<span class="c1">## [125] &quot;Any-si_Latn&quot;                  &quot;Any-sk_FONIPA&quot;               </span>
+<span class="c1">## [127] &quot;Any-sr_Latn/BGN&quot;              &quot;Any-Syrc&quot;                    </span>
+<span class="c1">## [129] &quot;Any-Syriac&quot;                   &quot;Any-ta_FONIPA&quot;               </span>
+<span class="c1">## [131] &quot;Any-Tamil&quot;                    &quot;Any-Taml&quot;                    </span>
+<span class="c1">## [133] &quot;Any-Telu&quot;                     &quot;Any-Telugu&quot;                  </span>
+<span class="c1">## [135] &quot;Any-Thaa&quot;                     &quot;Any-Thaana&quot;                  </span>
+<span class="c1">## [137] &quot;Any-Thai&quot;                     &quot;Any-Title&quot;                   </span>
+<span class="c1">## [139] &quot;Any-tk/BGN&quot;                   &quot;Any-ug_FONIPA&quot;               </span>
+<span class="c1">## [141] &quot;Any-uk_Latn/BGN&quot;              &quot;Any-und_FONIPA&quot;              </span>
+<span class="c1">## [143] &quot;Any-und_FONXSAMP&quot;             &quot;Any-Upper&quot;                   </span>
+<span class="c1">## [145] &quot;Any-ur&quot;                       &quot;Any-uz_Cyrl&quot;                 </span>
+<span class="c1">## [147] &quot;Any-uz_Latn&quot;                  &quot;Any-uz/BGN&quot;                  </span>
+<span class="c1">## [149] &quot;Any-vec_FONIPA&quot;               &quot;Any-xh_FONIPA&quot;               </span>
+<span class="c1">## [151] &quot;Any-yo_BJ&quot;                    &quot;Any-zh&quot;                      </span>
+<span class="c1">## [153] &quot;Any-zu_FONIPA&quot;                &quot;ar-ar_Latn/BGN&quot;              </span>
+<span class="c1">## [155] &quot;Arab-Latn&quot;                    &quot;Arabic-Latin&quot;                </span>
+<span class="c1">## [157] &quot;Arabic-Latin/BGN&quot;             &quot;Armenian-Latin&quot;              </span>
+<span class="c1">## [159] &quot;Armenian-Latin/BGN&quot;           &quot;Armn-Latn&quot;                   </span>
+<span class="c1">## [161] &quot;ASCII-Latin&quot;                  &quot;az_Cyrl-az/BGN&quot;              </span>
+<span class="c1">## [163] &quot;az-Lower&quot;                     &quot;az-Title&quot;                    </span>
+<span class="c1">## [165] &quot;az-Upper&quot;                     &quot;Azerbaijani-Latin/BGN&quot;       </span>
+<span class="c1">## [167] &quot;be-be_Latn/BGN&quot;               &quot;Belarusian-Latin/BGN&quot;        </span>
+<span class="c1">## [169] &quot;Beng-Arab&quot;                    &quot;Beng-Deva&quot;                   </span>
+<span class="c1">## [171] &quot;Beng-Gujr&quot;                    &quot;Beng-Guru&quot;                   </span>
+<span class="c1">## [173] &quot;Beng-Knda&quot;                    &quot;Beng-Latn&quot;                   </span>
+<span class="c1">## [175] &quot;Beng-Mlym&quot;                    &quot;Beng-Orya&quot;                   </span>
+<span class="c1">## [177] &quot;Beng-Taml&quot;                    &quot;Beng-Telu&quot;                   </span>
+<span class="c1">## [179] &quot;Beng-ur&quot;                      &quot;Bengali-Arabic&quot;              </span>
+<span class="c1">## [181] &quot;Bengali-Devanagari&quot;           &quot;Bengali-Gujarati&quot;            </span>
+<span class="c1">## [183] &quot;Bengali-Gurmukhi&quot;             &quot;Bengali-Kannada&quot;             </span>
+<span class="c1">## [185] &quot;Bengali-Latin&quot;                &quot;Bengali-Malayalam&quot;           </span>
+<span class="c1">## [187] &quot;Bengali-Oriya&quot;                &quot;Bengali-Tamil&quot;               </span>
+<span class="c1">## [189] &quot;Bengali-Telugu&quot;               &quot;bg-bg_Latn/BGN&quot;              </span>
+<span class="c1">## [191] &quot;blt-blt_FONIPA&quot;               &quot;Bopo-Latn&quot;                   </span>
+<span class="c1">## [193] &quot;Bopomofo-Latin&quot;               &quot;Bulgarian-Latin/BGN&quot;         </span>
+<span class="c1">## [195] &quot;Burmese-Latin&quot;                &quot;CanadianAboriginal-Latin&quot;    </span>
+<span class="c1">## [197] &quot;Cans-Latn&quot;                    &quot;ch-am&quot;                       </span>
+<span class="c1">## [199] &quot;ch-ar&quot;                        &quot;ch-ch_FONIPA&quot;                </span>
+<span class="c1">## [201] &quot;ch-chr&quot;                       &quot;ch-fa&quot;                       </span>
+<span class="c1">## [203] &quot;chr-chr_FONIPA&quot;               &quot;cs_FONIPA-ja&quot;                </span>
+<span class="c1">## [205] &quot;cs_FONIPA-ko&quot;                 &quot;cs-am&quot;                       </span>
+<span class="c1">## [207] &quot;cs-ar&quot;                        &quot;cs-chr&quot;                      </span>
+<span class="c1">## [209] &quot;cs-cs_FONIPA&quot;                 &quot;cs-fa&quot;                       </span>
+<span class="c1">## [211] &quot;cs-ja&quot;                        &quot;cs-ko&quot;                       </span>
+<span class="c1">## [213] &quot;cy-cy_FONIPA&quot;                 &quot;Cyrillic-Latin&quot;              </span>
+<span class="c1">## [215] &quot;Cyrl-Latn&quot;                    &quot;de-ASCII&quot;                    </span>
+<span class="c1">## [217] &quot;Deva-Arab&quot;                    &quot;Deva-Beng&quot;                   </span>
+<span class="c1">## [219] &quot;Deva-Gujr&quot;                    &quot;Deva-Guru&quot;                   </span>
+<span class="c1">## [221] &quot;Deva-Knda&quot;                    &quot;Deva-Latn&quot;                   </span>
+<span class="c1">## [223] &quot;Deva-Mlym&quot;                    &quot;Deva-Orya&quot;                   </span>
+<span class="c1">## [225] &quot;Deva-Taml&quot;                    &quot;Deva-Telu&quot;                   </span>
+<span class="c1">## [227] &quot;Deva-ur&quot;                      &quot;Devanagari-Arabic&quot;           </span>
+<span class="c1">## [229] &quot;Devanagari-Bengali&quot;           &quot;Devanagari-Gujarati&quot;         </span>
+<span class="c1">## [231] &quot;Devanagari-Gurmukhi&quot;          &quot;Devanagari-Kannada&quot;          </span>
+<span class="c1">## [233] &quot;Devanagari-Latin&quot;             &quot;Devanagari-Malayalam&quot;        </span>
+<span class="c1">## [235] &quot;Devanagari-Oriya&quot;             &quot;Devanagari-Tamil&quot;            </span>
+<span class="c1">## [237] &quot;Devanagari-Telugu&quot;            &quot;Digit-Tone&quot;                  </span>
+<span class="c1">## [239] &quot;dsb-dsb_FONIPA&quot;               &quot;dv-dv_Latn/BGN&quot;              </span>
+<span class="c1">## [241] &quot;el-el_Latn/BGN&quot;               &quot;el-Lower&quot;                    </span>
+<span class="c1">## [243] &quot;el-Title&quot;                     &quot;el-Upper&quot;                    </span>
+<span class="c1">## [245] &quot;eo-am&quot;                        &quot;eo-ar&quot;                       </span>
+<span class="c1">## [247] &quot;eo-chr&quot;                       &quot;eo-eo_FONIPA&quot;                </span>
+<span class="c1">## [249] &quot;eo-fa&quot;                        &quot;es_419-am&quot;                   </span>
+<span class="c1">## [251] &quot;es_419-ar&quot;                    &quot;es_419-chr&quot;                  </span>
+<span class="c1">## [253] &quot;es_419-fa&quot;                    &quot;es_419-ja&quot;                   </span>
+<span class="c1">## [255] &quot;es_419-zh&quot;                    &quot;es_FONIPA-am&quot;                </span>
+<span class="c1">## [257] &quot;es_FONIPA-es_419_FONIPA&quot;      &quot;es_FONIPA-ja&quot;                </span>
+<span class="c1">## [259] &quot;es_FONIPA-zh&quot;                 &quot;es-am&quot;                       </span>
+<span class="c1">## [261] &quot;es-ar&quot;                        &quot;es-chr&quot;                      </span>
+<span class="c1">## [263] &quot;es-es_FONIPA&quot;                 &quot;es-fa&quot;                       </span>
+<span class="c1">## [265] &quot;es-ja&quot;                        &quot;es-zh&quot;                       </span>
+<span class="c1">## [267] &quot;Ethi-Latn&quot;                    &quot;Ethiopic-Latin&quot;              </span>
+<span class="c1">## [269] &quot;fa-fa_FONIPA&quot;                 &quot;fa-fa_Latn/BGN&quot;              </span>
+<span class="c1">## [271] &quot;Fullwidth-Halfwidth&quot;          &quot;Geor-Latn&quot;                   </span>
+<span class="c1">## [273] &quot;Georgian-Latin&quot;               &quot;Georgian-Latin/BGN&quot;          </span>
+<span class="c1">## [275] &quot;Greek-Latin&quot;                  &quot;Greek-Latin/BGN&quot;             </span>
+<span class="c1">## [277] &quot;Greek-Latin/UNGEGN&quot;           &quot;Grek-Latn&quot;                   </span>
+<span class="c1">## [279] &quot;Grek-Latn/UNGEGN&quot;             &quot;Gujarati-Arabic&quot;             </span>
+<span class="c1">## [281] &quot;Gujarati-Bengali&quot;             &quot;Gujarati-Devanagari&quot;         </span>
+<span class="c1">## [283] &quot;Gujarati-Gurmukhi&quot;            &quot;Gujarati-Kannada&quot;            </span>
+<span class="c1">## [285] &quot;Gujarati-Latin&quot;               &quot;Gujarati-Malayalam&quot;          </span>
+<span class="c1">## [287] &quot;Gujarati-Oriya&quot;               &quot;Gujarati-Tamil&quot;              </span>
+<span class="c1">## [289] &quot;Gujarati-Telugu&quot;              &quot;Gujr-Arab&quot;                   </span>
+<span class="c1">## [291] &quot;Gujr-Beng&quot;                    &quot;Gujr-Deva&quot;                   </span>
+<span class="c1">## [293] &quot;Gujr-Guru&quot;                    &quot;Gujr-Knda&quot;                   </span>
+<span class="c1">## [295] &quot;Gujr-Latn&quot;                    &quot;Gujr-Mlym&quot;                   </span>
+<span class="c1">## [297] &quot;Gujr-Orya&quot;                    &quot;Gujr-Taml&quot;                   </span>
+<span class="c1">## [299] &quot;Gujr-Telu&quot;                    &quot;Gujr-ur&quot;                     </span>
+<span class="c1">## [301] &quot;Gurmukhi-Arabic&quot;              &quot;Gurmukhi-Bengali&quot;            </span>
+<span class="c1">## [303] &quot;Gurmukhi-Devanagari&quot;          &quot;Gurmukhi-Gujarati&quot;           </span>
+<span class="c1">## [305] &quot;Gurmukhi-Kannada&quot;             &quot;Gurmukhi-Latin&quot;              </span>
+<span class="c1">## [307] &quot;Gurmukhi-Malayalam&quot;           &quot;Gurmukhi-Oriya&quot;              </span>
+<span class="c1">## [309] &quot;Gurmukhi-Tamil&quot;               &quot;Gurmukhi-Telugu&quot;             </span>
+<span class="c1">## [311] &quot;Guru-Arab&quot;                    &quot;Guru-Beng&quot;                   </span>
+<span class="c1">## [313] &quot;Guru-Deva&quot;                    &quot;Guru-Gujr&quot;                   </span>
+<span class="c1">## [315] &quot;Guru-Knda&quot;                    &quot;Guru-Latn&quot;                   </span>
+<span class="c1">## [317] &quot;Guru-Mlym&quot;                    &quot;Guru-Orya&quot;                   </span>
+<span class="c1">## [319] &quot;Guru-Taml&quot;                    &quot;Guru-Telu&quot;                   </span>
+<span class="c1">## [321] &quot;Guru-ur&quot;                      &quot;ha-ha_NE&quot;                    </span>
+<span class="c1">## [323] &quot;Halfwidth-Fullwidth&quot;          &quot;Han-Latin&quot;                   </span>
+<span class="c1">## [325] &quot;Han-Latin/Names&quot;              &quot;Hang-Latn&quot;                   </span>
+<span class="c1">## [327] &quot;Hangul-Latin&quot;                 &quot;Hani-Latn&quot;                   </span>
+<span class="c1">## [329] &quot;Hans-Hant&quot;                    &quot;Hant-Hans&quot;                   </span>
+<span class="c1">## [331] &quot;he-he_Latn/BGN&quot;               &quot;Hebr-Latn&quot;                   </span>
+<span class="c1">## [333] &quot;Hebrew-Latin&quot;                 &quot;Hebrew-Latin/BGN&quot;            </span>
+<span class="c1">## [335] &quot;Hex-Any&quot;                      &quot;Hex-Any/C&quot;                   </span>
+<span class="c1">## [337] &quot;Hex-Any/Java&quot;                 &quot;Hex-Any/Perl&quot;                </span>
+<span class="c1">## [339] &quot;Hex-Any/Unicode&quot;              &quot;Hex-Any/XML&quot;                 </span>
+<span class="c1">## [341] &quot;Hex-Any/XML10&quot;                &quot;Hira-Kana&quot;                   </span>
+<span class="c1">## [343] &quot;Hira-Latn&quot;                    &quot;Hiragana-Katakana&quot;           </span>
+<span class="c1">## [345] &quot;Hiragana-Latin&quot;               &quot;hy_AREVMDA-am&quot;               </span>
+<span class="c1">## [347] &quot;hy_AREVMDA-ar&quot;                &quot;hy_AREVMDA-chr&quot;              </span>
+<span class="c1">## [349] &quot;hy_AREVMDA-fa&quot;                &quot;hy_AREVMDA-hy_AREVMDA_FONIPA&quot;</span>
+<span class="c1">## [351] &quot;hy-am&quot;                        &quot;hy-ar&quot;                       </span>
+<span class="c1">## [353] &quot;hy-chr&quot;                       &quot;hy-fa&quot;                       </span>
+<span class="c1">## [355] &quot;hy-hy_FONIPA&quot;                 &quot;hy-hy_Latn/BGN&quot;              </span>
+<span class="c1">## [357] &quot;ia-am&quot;                        &quot;ia-ar&quot;                       </span>
+<span class="c1">## [359] &quot;ia-chr&quot;                       &quot;ia-fa&quot;                       </span>
+<span class="c1">## [361] &quot;ia-ia_FONIPA&quot;                 &quot;IPA-XSampa&quot;                  </span>
+<span class="c1">## [363] &quot;it-am&quot;                        &quot;it-ja&quot;                       </span>
+<span class="c1">## [365] &quot;ja_Hrkt-ja_Latn/BGN&quot;          &quot;ja_Latn-ko&quot;                  </span>
+<span class="c1">## [367] &quot;ja_Latn-ru&quot;                   &quot;Jamo-Latin&quot;                  </span>
+<span class="c1">## [369] &quot;Jamo-Latn&quot;                    &quot;ka-ka_Latn/BGN&quot;              </span>
+<span class="c1">## [371] &quot;ka-ka_Latn/BGN_1981&quot;          &quot;Kana-Hira&quot;                   </span>
+<span class="c1">## [373] &quot;Kana-Latn&quot;                    &quot;Kannada-Arabic&quot;              </span>
+<span class="c1">## [375] &quot;Kannada-Bengali&quot;              &quot;Kannada-Devanagari&quot;          </span>
+<span class="c1">## [377] &quot;Kannada-Gujarati&quot;             &quot;Kannada-Gurmukhi&quot;            </span>
+<span class="c1">## [379] &quot;Kannada-Latin&quot;                &quot;Kannada-Malayalam&quot;           </span>
+<span class="c1">## [381] &quot;Kannada-Oriya&quot;                &quot;Kannada-Tamil&quot;               </span>
+<span class="c1">## [383] &quot;Kannada-Telugu&quot;               &quot;Katakana-Hiragana&quot;           </span>
+<span class="c1">## [385] &quot;Katakana-Latin&quot;               &quot;Katakana-Latin/BGN&quot;          </span>
+<span class="c1">## [387] &quot;Kazakh-Latin/BGN&quot;             &quot;Kirghiz-Latin/BGN&quot;           </span>
+<span class="c1">## [389] &quot;kk-am&quot;                        &quot;kk-ar&quot;                       </span>
+<span class="c1">## [391] &quot;kk-chr&quot;                       &quot;kk-fa&quot;                       </span>
+<span class="c1">## [393] &quot;kk-kk_FONIPA&quot;                 &quot;kk-kk_Latn/BGN&quot;              </span>
+<span class="c1">## [395] &quot;Knda-Arab&quot;                    &quot;Knda-Beng&quot;                   </span>
+<span class="c1">## [397] &quot;Knda-Deva&quot;                    &quot;Knda-Gujr&quot;                   </span>
+<span class="c1">## [399] &quot;Knda-Guru&quot;                    &quot;Knda-Latn&quot;                   </span>
+<span class="c1">## [401] &quot;Knda-Mlym&quot;                    &quot;Knda-Orya&quot;                   </span>
+<span class="c1">## [403] &quot;Knda-Taml&quot;                    &quot;Knda-Telu&quot;                   </span>
+<span class="c1">## [405] &quot;Knda-ur&quot;                      &quot;ko-ko_Latn/BGN&quot;              </span>
+<span class="c1">## [407] &quot;Korean-Latin/BGN&quot;             &quot;ky-am&quot;                       </span>
+<span class="c1">## [409] &quot;ky-ar&quot;                        &quot;ky-chr&quot;                      </span>
+<span class="c1">## [411] &quot;ky-fa&quot;                        &quot;ky-ky_FONIPA&quot;                </span>
+<span class="c1">## [413] &quot;ky-ky_Latn/BGN&quot;               &quot;la-la_FONIPA&quot;                </span>
+<span class="c1">## [415] &quot;Latin-Arabic&quot;                 &quot;Latin-Armenian&quot;              </span>
+<span class="c1">## [417] &quot;Latin-ASCII&quot;                  &quot;Latin-Bengali&quot;               </span>
+<span class="c1">## [419] &quot;Latin-Bopomofo&quot;               &quot;Latin-CanadianAboriginal&quot;    </span>
+<span class="c1">## [421] &quot;Latin-Cyrillic&quot;               &quot;Latin-Devanagari&quot;            </span>
+<span class="c1">## [423] &quot;Latin-Ethiopic&quot;               &quot;Latin-Georgian&quot;              </span>
+<span class="c1">## [425] &quot;Latin-Greek&quot;                  &quot;Latin-Greek/UNGEGN&quot;          </span>
+<span class="c1">## [427] &quot;Latin-Gujarati&quot;               &quot;Latin-Gurmukhi&quot;              </span>
+<span class="c1">## [429] &quot;Latin-Hangul&quot;                 &quot;Latin-Hebrew&quot;                </span>
+<span class="c1">## [431] &quot;Latin-Hiragana&quot;               &quot;Latin-Jamo&quot;                  </span>
+<span class="c1">## [433] &quot;Latin-Kannada&quot;                &quot;Latin-Katakana&quot;              </span>
+<span class="c1">## [435] &quot;Latin-Malayalam&quot;              &quot;Latin-NumericPinyin&quot;         </span>
+<span class="c1">## [437] &quot;Latin-Oriya&quot;                  &quot;Latin-Russian/BGN&quot;           </span>
+<span class="c1">## [439] &quot;Latin-Syriac&quot;                 &quot;Latin-Tamil&quot;                 </span>
+<span class="c1">## [441] &quot;Latin-Telugu&quot;                 &quot;Latin-Thaana&quot;                </span>
+<span class="c1">## [443] &quot;Latin-Thai&quot;                   &quot;Latn-Arab&quot;                   </span>
+<span class="c1">## [445] &quot;Latn-Armn&quot;                    &quot;Latn-Beng&quot;                   </span>
+<span class="c1">## [447] &quot;Latn-Bopo&quot;                    &quot;Latn-Cans&quot;                   </span>
+<span class="c1">## [449] &quot;Latn-Cyrl&quot;                    &quot;Latn-Deva&quot;                   </span>
+<span class="c1">## [451] &quot;Latn-Ethi&quot;                    &quot;Latn-Geor&quot;                   </span>
+<span class="c1">## [453] &quot;Latn-Grek&quot;                    &quot;Latn-Grek/UNGEGN&quot;            </span>
+<span class="c1">## [455] &quot;Latn-Gujr&quot;                    &quot;Latn-Guru&quot;                   </span>
+<span class="c1">## [457] &quot;Latn-Hang&quot;                    &quot;Latn-Hebr&quot;                   </span>
+<span class="c1">## [459] &quot;Latn-Hira&quot;                    &quot;Latn-Jamo&quot;                   </span>
+<span class="c1">## [461] &quot;Latn-Kana&quot;                    &quot;Latn-Knda&quot;                   </span>
+<span class="c1">## [463] &quot;Latn-Mlym&quot;                    &quot;Latn-Orya&quot;                   </span>
+<span class="c1">## [465] &quot;Latn-Syrc&quot;                    &quot;Latn-Taml&quot;                   </span>
+<span class="c1">## [467] &quot;Latn-Telu&quot;                    &quot;Latn-Thaa&quot;                   </span>
+<span class="c1">## [469] &quot;Latn-Thai&quot;                    &quot;lt-Lower&quot;                    </span>
+<span class="c1">## [471] &quot;lt-Title&quot;                     &quot;lt-Upper&quot;                    </span>
+<span class="c1">## [473] &quot;Macedonian-Latin/BGN&quot;         &quot;Malayalam-Arabic&quot;            </span>
+<span class="c1">## [475] &quot;Malayalam-Bengali&quot;            &quot;Malayalam-Devanagari&quot;        </span>
+<span class="c1">## [477] &quot;Malayalam-Gujarati&quot;           &quot;Malayalam-Gurmukhi&quot;          </span>
+<span class="c1">## [479] &quot;Malayalam-Kannada&quot;            &quot;Malayalam-Latin&quot;             </span>
+<span class="c1">## [481] &quot;Malayalam-Oriya&quot;              &quot;Malayalam-Tamil&quot;             </span>
+<span class="c1">## [483] &quot;Malayalam-Telugu&quot;             &quot;Maldivian-Latin/BGN&quot;         </span>
+<span class="c1">## [485] &quot;mk-mk_Latn/BGN&quot;               &quot;Mlym-Arab&quot;                   </span>
+<span class="c1">## [487] &quot;Mlym-Beng&quot;                    &quot;Mlym-Deva&quot;                   </span>
+<span class="c1">## [489] &quot;Mlym-Gujr&quot;                    &quot;Mlym-Guru&quot;                   </span>
+<span class="c1">## [491] &quot;Mlym-Knda&quot;                    &quot;Mlym-Latn&quot;                   </span>
+<span class="c1">## [493] &quot;Mlym-Orya&quot;                    &quot;Mlym-Taml&quot;                   </span>
+<span class="c1">## [495] &quot;Mlym-Telu&quot;                    &quot;Mlym-ur&quot;                     </span>
+<span class="c1">## [497] &quot;mn-mn_Latn/BGN&quot;               &quot;mn-mn_Latn/MNS&quot;              </span>
+<span class="c1">## [499] &quot;Mongolian-Latin/BGN&quot;          &quot;my-am&quot;                       </span>
+<span class="c1">## [501] &quot;my-ar&quot;                        &quot;my-chr&quot;                      </span>
+<span class="c1">## [503] &quot;my-fa&quot;                        &quot;my-my_FONIPA&quot;                </span>
+<span class="c1">## [505] &quot;my-my_Latn&quot;                   &quot;my-Zawgyi&quot;                   </span>
+<span class="c1">## [507] &quot;Myanmar-Latin&quot;                &quot;Name-Any&quot;                    </span>
+<span class="c1">## [509] &quot;nl-Title&quot;                     &quot;NumericPinyin-Latin&quot;         </span>
+<span class="c1">## [511] &quot;NumericPinyin-Pinyin&quot;         &quot;nv-nv_FONIPA&quot;                </span>
+<span class="c1">## [513] &quot;Oriya-Arabic&quot;                 &quot;Oriya-Bengali&quot;               </span>
+<span class="c1">## [515] &quot;Oriya-Devanagari&quot;             &quot;Oriya-Gujarati&quot;              </span>
+<span class="c1">## [517] &quot;Oriya-Gurmukhi&quot;               &quot;Oriya-Kannada&quot;               </span>
+<span class="c1">## [519] &quot;Oriya-Latin&quot;                  &quot;Oriya-Malayalam&quot;             </span>
+<span class="c1">## [521] &quot;Oriya-Tamil&quot;                  &quot;Oriya-Telugu&quot;                </span>
+<span class="c1">## [523] &quot;Orya-Arab&quot;                    &quot;Orya-Beng&quot;                   </span>
+<span class="c1">## [525] &quot;Orya-Deva&quot;                    &quot;Orya-Gujr&quot;                   </span>
+<span class="c1">## [527] &quot;Orya-Guru&quot;                    &quot;Orya-Knda&quot;                   </span>
+<span class="c1">## [529] &quot;Orya-Latn&quot;                    &quot;Orya-Mlym&quot;                   </span>
+<span class="c1">## [531] &quot;Orya-Taml&quot;                    &quot;Orya-Telu&quot;                   </span>
+<span class="c1">## [533] &quot;Orya-ur&quot;                      &quot;Pashto-Latin/BGN&quot;            </span>
+<span class="c1">## [535] &quot;Persian-Latin/BGN&quot;            &quot;Pinyin-NumericPinyin&quot;        </span>
+<span class="c1">## [537] &quot;pl_FONIPA-ja&quot;                 &quot;pl-am&quot;                       </span>
+<span class="c1">## [539] &quot;pl-ar&quot;                        &quot;pl-chr&quot;                      </span>
+<span class="c1">## [541] &quot;pl-fa&quot;                        &quot;pl-ja&quot;                       </span>
+<span class="c1">## [543] &quot;pl-pl_FONIPA&quot;                 &quot;ps-ps_Latn/BGN&quot;              </span>
+<span class="c1">## [545] &quot;Publishing-Any&quot;               &quot;rm_SURSILV-am&quot;               </span>
+<span class="c1">## [547] &quot;rm_SURSILV-ar&quot;                &quot;rm_SURSILV-chr&quot;              </span>
+<span class="c1">## [549] &quot;rm_SURSILV-fa&quot;                &quot;rm_SURSILV-rm_FONIPA_SURSILV&quot;</span>
+<span class="c1">## [551] &quot;ro_FONIPA-ja&quot;                 &quot;ro-am&quot;                       </span>
+<span class="c1">## [553] &quot;ro-ar&quot;                        &quot;ro-chr&quot;                      </span>
+<span class="c1">## [555] &quot;ro-fa&quot;                        &quot;ro-ja&quot;                       </span>
+<span class="c1">## [557] &quot;ro-ro_FONIPA&quot;                 &quot;ru_Latn-ru/BGN&quot;              </span>
+<span class="c1">## [559] &quot;ru-ja&quot;                        &quot;ru-ru_Latn/BGN&quot;              </span>
+<span class="c1">## [561] &quot;ru-zh&quot;                        &quot;Russian-Latin/BGN&quot;           </span>
+<span class="c1">## [563] &quot;sat_Olck-sat_FONIPA&quot;          &quot;sat-am&quot;                      </span>
+<span class="c1">## [565] &quot;sat-ar&quot;                       &quot;sat-chr&quot;                     </span>
+<span class="c1">## [567] &quot;sat-fa&quot;                       &quot;Serbian-Latin/BGN&quot;           </span>
+<span class="c1">## [569] &quot;si-am&quot;                        &quot;si-ar&quot;                       </span>
+<span class="c1">## [571] &quot;si-chr&quot;                       &quot;si-fa&quot;                       </span>
+<span class="c1">## [573] &quot;si-si_FONIPA&quot;                 &quot;si-si_Latn&quot;                  </span>
+<span class="c1">## [575] &quot;Simplified-Traditional&quot;       &quot;sk_FONIPA-ja&quot;                </span>
+<span class="c1">## [577] &quot;sk-am&quot;                        &quot;sk-ar&quot;                       </span>
+<span class="c1">## [579] &quot;sk-chr&quot;                       &quot;sk-fa&quot;                       </span>
+<span class="c1">## [581] &quot;sk-ja&quot;                        &quot;sk-sk_FONIPA&quot;                </span>
+<span class="c1">## [583] &quot;sr-sr_Latn/BGN&quot;               &quot;Syrc-Latn&quot;                   </span>
+<span class="c1">## [585] &quot;Syriac-Latin&quot;                 &quot;ta-ta_FONIPA&quot;                </span>
+<span class="c1">## [587] &quot;Tamil-Arabic&quot;                 &quot;Tamil-Bengali&quot;               </span>
+<span class="c1">## [589] &quot;Tamil-Devanagari&quot;             &quot;Tamil-Gujarati&quot;              </span>
+<span class="c1">## [591] &quot;Tamil-Gurmukhi&quot;               &quot;Tamil-Kannada&quot;               </span>
+<span class="c1">## [593] &quot;Tamil-Latin&quot;                  &quot;Tamil-Malayalam&quot;             </span>
+<span class="c1">## [595] &quot;Tamil-Oriya&quot;                  &quot;Tamil-Telugu&quot;                </span>
+<span class="c1">## [597] &quot;Taml-Arab&quot;                    &quot;Taml-Beng&quot;                   </span>
+<span class="c1">## [599] &quot;Taml-Deva&quot;                    &quot;Taml-Gujr&quot;                   </span>
+<span class="c1">## [601] &quot;Taml-Guru&quot;                    &quot;Taml-Knda&quot;                   </span>
+<span class="c1">## [603] &quot;Taml-Latn&quot;                    &quot;Taml-Mlym&quot;                   </span>
+<span class="c1">## [605] &quot;Taml-Orya&quot;                    &quot;Taml-Telu&quot;                   </span>
+<span class="c1">## [607] &quot;Taml-ur&quot;                      &quot;Telu-Arab&quot;                   </span>
+<span class="c1">## [609] &quot;Telu-Beng&quot;                    &quot;Telu-Deva&quot;                   </span>
+<span class="c1">## [611] &quot;Telu-Gujr&quot;                    &quot;Telu-Guru&quot;                   </span>
+<span class="c1">## [613] &quot;Telu-Knda&quot;                    &quot;Telu-Latn&quot;                   </span>
+<span class="c1">## [615] &quot;Telu-Mlym&quot;                    &quot;Telu-Orya&quot;                   </span>
+<span class="c1">## [617] &quot;Telu-Taml&quot;                    &quot;Telu-ur&quot;                     </span>
+<span class="c1">## [619] &quot;Telugu-Arabic&quot;                &quot;Telugu-Bengali&quot;              </span>
+<span class="c1">## [621] &quot;Telugu-Devanagari&quot;            &quot;Telugu-Gujarati&quot;             </span>
+<span class="c1">## [623] &quot;Telugu-Gurmukhi&quot;              &quot;Telugu-Kannada&quot;              </span>
+<span class="c1">## [625] &quot;Telugu-Latin&quot;                 &quot;Telugu-Malayalam&quot;            </span>
+<span class="c1">## [627] &quot;Telugu-Oriya&quot;                 &quot;Telugu-Tamil&quot;                </span>
+<span class="c1">## [629] &quot;Thaa-Latn&quot;                    &quot;Thaana-Latin&quot;                </span>
+<span class="c1">## [631] &quot;Thai-Latin&quot;                   &quot;Thai-Latn&quot;                   </span>
+<span class="c1">## [633] &quot;tk_Cyrl-tk/BGN&quot;               &quot;tlh-am&quot;                      </span>
+<span class="c1">## [635] &quot;tlh-ar&quot;                       &quot;tlh-chr&quot;                     </span>
+<span class="c1">## [637] &quot;tlh-fa&quot;                       &quot;tlh-tlh_FONIPA&quot;              </span>
+<span class="c1">## [639] &quot;Tone-Digit&quot;                   &quot;tr-Lower&quot;                    </span>
+<span class="c1">## [641] &quot;tr-Title&quot;                     &quot;tr-Upper&quot;                    </span>
+<span class="c1">## [643] &quot;Traditional-Simplified&quot;       &quot;Turkmen-Latin/BGN&quot;           </span>
+<span class="c1">## [645] &quot;ug-ug_FONIPA&quot;                 &quot;uk-uk_Latn/BGN&quot;              </span>
+<span class="c1">## [647] &quot;Ukrainian-Latin/BGN&quot;          &quot;und_FONIPA-ar&quot;               </span>
+<span class="c1">## [649] &quot;und_FONIPA-chr&quot;               &quot;und_FONIPA-fa&quot;               </span>
+<span class="c1">## [651] &quot;und_FONIPA-und_FONXSAMP&quot;      &quot;und_FONXSAMP-und_FONIPA&quot;     </span>
+<span class="c1">## [653] &quot;uz_Cyrl-uz_Latn&quot;              &quot;uz_Cyrl-uz/BGN&quot;              </span>
+<span class="c1">## [655] &quot;uz_Latn-uz_Cyrl&quot;              &quot;Uzbek-Latin/BGN&quot;             </span>
+<span class="c1">## [657] &quot;vec-vec_FONIPA&quot;               &quot;xh-am&quot;                       </span>
+<span class="c1">## [659] &quot;xh-ar&quot;                        &quot;xh-chr&quot;                      </span>
+<span class="c1">## [661] &quot;xh-fa&quot;                        &quot;xh-xh_FONIPA&quot;                </span>
+<span class="c1">## [663] &quot;XSampa-IPA&quot;                   &quot;yo-yo_BJ&quot;                    </span>
+<span class="c1">## [665] &quot;Zawgyi-my&quot;                    &quot;zh_Latn_PINYIN-ru&quot;           </span>
+<span class="c1">## [667] &quot;zu-am&quot;                        &quot;zu-ar&quot;                       </span>
+<span class="c1">## [669] &quot;zu-chr&quot;                       &quot;zu-fa&quot;                       </span>
+<span class="c1">## [671] &quot;zu-zu_FONIPA&quot;</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -335,7 +678,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-13 14:21:57.
+        Last updated on 2021-05-13 14:59:02.
       </span>
 
     </p>

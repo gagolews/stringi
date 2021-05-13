@@ -95,16 +95,19 @@
 #' stri_timezone_list(region='PL')
 #' stri_timezone_list(region='US', offset=-10)
 #'
-#' # Fetch info on all time zones
+#' # Fetch information on all time zones
 #' do.call(rbind.data.frame,
 #'    lapply(stri_timezone_list(), function(tz) stri_timezone_info(tz)))
 #'
 #' @family datetime
 #' @family timezone
 #' @export
-stri_timezone_list <- function(region = NA_character_, offset = NA_integer_)
+stri_timezone_list <- function(region=NA_character_, offset=NA_integer_)
 {
-    .Call(C_stri_timezone_list, region, offset)
+    stri_sort(
+        .Call(C_stri_timezone_list, region, offset),
+        locale="en_US", numeric=TRUE, strength=1
+    )
 }
 
 
@@ -195,7 +198,7 @@ stri_timezone_set <- function(tz)
 #' \item \code{ID} (time zone identifier),
 #' \item \code{Name} (localized human-readable time zone name),
 #' \item \code{Name.Daylight} (localized human-readable time zone
-#'       name when DST is used, if available),
+#' name when DST is used, if available),
 #' \item \code{Name.Windows} (Windows time zone ID, if available),
 #' \item \code{RawOffset} (raw GMT offset, in hours, before taking
 #' daylight savings into account), and

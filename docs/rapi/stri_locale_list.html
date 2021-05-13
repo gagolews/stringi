@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.1
+                1.6.2
               </div>
             
           
@@ -156,6 +156,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#details">Details</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#value">Value</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#see-also">See Also</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="stri_locale_set.html">stri_locale_set: Set or Get Default Locale in <span class="pkg">stringi</span></a></li>
@@ -318,6 +319,169 @@
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>Other locale_management: <a class="reference internal" href="about_locale.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_locale</span></code></span></a>, <a class="reference internal" href="stri_locale_info.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_locale_info()</span></code>,</span></a> <code class="docutils literal notranslate"><span class="pre">stri_locale_set()</span></code></p>
 </div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_locale_list</span><span class="p">()</span>
+<span class="c1">##   [1] &quot;af&quot;          &quot;af_NA&quot;       &quot;af_ZA&quot;       &quot;agq&quot;         &quot;agq_CM&quot;     </span>
+<span class="c1">##   [6] &quot;ak&quot;          &quot;ak_GH&quot;       &quot;am&quot;          &quot;am_ET&quot;       &quot;ar&quot;         </span>
+<span class="c1">##  [11] &quot;ar_001&quot;      &quot;ar_AE&quot;       &quot;ar_BH&quot;       &quot;ar_DJ&quot;       &quot;ar_DZ&quot;      </span>
+<span class="c1">##  [16] &quot;ar_EG&quot;       &quot;ar_EH&quot;       &quot;ar_ER&quot;       &quot;ar_IL&quot;       &quot;ar_IQ&quot;      </span>
+<span class="c1">##  [21] &quot;ar_JO&quot;       &quot;ar_KM&quot;       &quot;ar_KW&quot;       &quot;ar_LB&quot;       &quot;ar_LY&quot;      </span>
+<span class="c1">##  [26] &quot;ar_MA&quot;       &quot;ar_MR&quot;       &quot;ar_OM&quot;       &quot;ar_PS&quot;       &quot;ar_QA&quot;      </span>
+<span class="c1">##  [31] &quot;ar_SA&quot;       &quot;ar_SD&quot;       &quot;ar_SO&quot;       &quot;ar_SS&quot;       &quot;ar_SY&quot;      </span>
+<span class="c1">##  [36] &quot;ar_TD&quot;       &quot;ar_TN&quot;       &quot;ar_YE&quot;       &quot;as&quot;          &quot;as_IN&quot;      </span>
+<span class="c1">##  [41] &quot;asa&quot;         &quot;asa_TZ&quot;      &quot;ast&quot;         &quot;ast_ES&quot;      &quot;az&quot;         </span>
+<span class="c1">##  [46] &quot;az_Cyrl&quot;     &quot;az_Cyrl_AZ&quot;  &quot;az_Latn&quot;     &quot;az_Latn_AZ&quot;  &quot;bas&quot;        </span>
+<span class="c1">##  [51] &quot;bas_CM&quot;      &quot;be&quot;          &quot;be_BY&quot;       &quot;bem&quot;         &quot;bem_ZM&quot;     </span>
+<span class="c1">##  [56] &quot;bez&quot;         &quot;bez_TZ&quot;      &quot;bg&quot;          &quot;bg_BG&quot;       &quot;bm&quot;         </span>
+<span class="c1">##  [61] &quot;bm_ML&quot;       &quot;bn&quot;          &quot;bn_BD&quot;       &quot;bn_IN&quot;       &quot;bo&quot;         </span>
+<span class="c1">##  [66] &quot;bo_CN&quot;       &quot;bo_IN&quot;       &quot;br&quot;          &quot;br_FR&quot;       &quot;brx&quot;        </span>
+<span class="c1">##  [71] &quot;brx_IN&quot;      &quot;bs&quot;          &quot;bs_Cyrl&quot;     &quot;bs_Cyrl_BA&quot;  &quot;bs_Latn&quot;    </span>
+<span class="c1">##  [76] &quot;bs_Latn_BA&quot;  &quot;ca&quot;          &quot;ca_AD&quot;       &quot;ca_ES&quot;       &quot;ca_FR&quot;      </span>
+<span class="c1">##  [81] &quot;ca_IT&quot;       &quot;ccp&quot;         &quot;ccp_BD&quot;      &quot;ccp_IN&quot;      &quot;ce&quot;         </span>
+<span class="c1">##  [86] &quot;ce_RU&quot;       &quot;ceb&quot;         &quot;ceb_PH&quot;      &quot;cgg&quot;         &quot;cgg_UG&quot;     </span>
+<span class="c1">##  [91] &quot;chr&quot;         &quot;chr_US&quot;      &quot;ckb&quot;         &quot;ckb_IQ&quot;      &quot;ckb_IR&quot;     </span>
+<span class="c1">##  [96] &quot;cs&quot;          &quot;cs_CZ&quot;       &quot;cy&quot;          &quot;cy_GB&quot;       &quot;da&quot;         </span>
+<span class="c1">## [101] &quot;da_DK&quot;       &quot;da_GL&quot;       &quot;dav&quot;         &quot;dav_KE&quot;      &quot;de&quot;         </span>
+<span class="c1">## [106] &quot;de_AT&quot;       &quot;de_BE&quot;       &quot;de_CH&quot;       &quot;de_DE&quot;       &quot;de_IT&quot;      </span>
+<span class="c1">## [111] &quot;de_LI&quot;       &quot;de_LU&quot;       &quot;dje&quot;         &quot;dje_NE&quot;      &quot;doi&quot;        </span>
+<span class="c1">## [116] &quot;doi_IN&quot;      &quot;dsb&quot;         &quot;dsb_DE&quot;      &quot;dua&quot;         &quot;dua_CM&quot;     </span>
+<span class="c1">## [121] &quot;dyo&quot;         &quot;dyo_SN&quot;      &quot;dz&quot;          &quot;dz_BT&quot;       &quot;ebu&quot;        </span>
+<span class="c1">## [126] &quot;ebu_KE&quot;      &quot;ee&quot;          &quot;ee_GH&quot;       &quot;ee_TG&quot;       &quot;el&quot;         </span>
+<span class="c1">## [131] &quot;el_CY&quot;       &quot;el_GR&quot;       &quot;en&quot;          &quot;en_001&quot;      &quot;en_150&quot;     </span>
+<span class="c1">## [136] &quot;en_AE&quot;       &quot;en_AG&quot;       &quot;en_AI&quot;       &quot;en_AS&quot;       &quot;en_AT&quot;      </span>
+<span class="c1">## [141] &quot;en_AU&quot;       &quot;en_BB&quot;       &quot;en_BE&quot;       &quot;en_BI&quot;       &quot;en_BM&quot;      </span>
+<span class="c1">## [146] &quot;en_BS&quot;       &quot;en_BW&quot;       &quot;en_BZ&quot;       &quot;en_CA&quot;       &quot;en_CC&quot;      </span>
+<span class="c1">## [151] &quot;en_CH&quot;       &quot;en_CK&quot;       &quot;en_CM&quot;       &quot;en_CX&quot;       &quot;en_CY&quot;      </span>
+<span class="c1">## [156] &quot;en_DE&quot;       &quot;en_DG&quot;       &quot;en_DK&quot;       &quot;en_DM&quot;       &quot;en_ER&quot;      </span>
+<span class="c1">## [161] &quot;en_FI&quot;       &quot;en_FJ&quot;       &quot;en_FK&quot;       &quot;en_FM&quot;       &quot;en_GB&quot;      </span>
+<span class="c1">## [166] &quot;en_GD&quot;       &quot;en_GG&quot;       &quot;en_GH&quot;       &quot;en_GI&quot;       &quot;en_GM&quot;      </span>
+<span class="c1">## [171] &quot;en_GU&quot;       &quot;en_GY&quot;       &quot;en_HK&quot;       &quot;en_IE&quot;       &quot;en_IL&quot;      </span>
+<span class="c1">## [176] &quot;en_IM&quot;       &quot;en_IN&quot;       &quot;en_IO&quot;       &quot;en_JE&quot;       &quot;en_JM&quot;      </span>
+<span class="c1">## [181] &quot;en_KE&quot;       &quot;en_KI&quot;       &quot;en_KN&quot;       &quot;en_KY&quot;       &quot;en_LC&quot;      </span>
+<span class="c1">## [186] &quot;en_LR&quot;       &quot;en_LS&quot;       &quot;en_MG&quot;       &quot;en_MH&quot;       &quot;en_MO&quot;      </span>
+<span class="c1">## [191] &quot;en_MP&quot;       &quot;en_MS&quot;       &quot;en_MT&quot;       &quot;en_MU&quot;       &quot;en_MW&quot;      </span>
+<span class="c1">## [196] &quot;en_MY&quot;       &quot;en_NA&quot;       &quot;en_NF&quot;       &quot;en_NG&quot;       &quot;en_NL&quot;      </span>
+<span class="c1">## [201] &quot;en_NR&quot;       &quot;en_NU&quot;       &quot;en_NZ&quot;       &quot;en_PG&quot;       &quot;en_PH&quot;      </span>
+<span class="c1">## [206] &quot;en_PK&quot;       &quot;en_PN&quot;       &quot;en_PR&quot;       &quot;en_PW&quot;       &quot;en_RW&quot;      </span>
+<span class="c1">## [211] &quot;en_SB&quot;       &quot;en_SC&quot;       &quot;en_SD&quot;       &quot;en_SE&quot;       &quot;en_SG&quot;      </span>
+<span class="c1">## [216] &quot;en_SH&quot;       &quot;en_SI&quot;       &quot;en_SL&quot;       &quot;en_SS&quot;       &quot;en_SX&quot;      </span>
+<span class="c1">## [221] &quot;en_SZ&quot;       &quot;en_TC&quot;       &quot;en_TK&quot;       &quot;en_TO&quot;       &quot;en_TT&quot;      </span>
+<span class="c1">## [226] &quot;en_TV&quot;       &quot;en_TZ&quot;       &quot;en_UG&quot;       &quot;en_UM&quot;       &quot;en_US&quot;      </span>
+<span class="c1">## [231] &quot;en_US_POSIX&quot; &quot;en_VC&quot;       &quot;en_VG&quot;       &quot;en_VI&quot;       &quot;en_VU&quot;      </span>
+<span class="c1">## [236] &quot;en_WS&quot;       &quot;en_ZA&quot;       &quot;en_ZM&quot;       &quot;en_ZW&quot;       &quot;eo&quot;         </span>
+<span class="c1">## [241] &quot;eo_001&quot;      &quot;es&quot;          &quot;es_419&quot;      &quot;es_AR&quot;       &quot;es_BO&quot;      </span>
+<span class="c1">## [246] &quot;es_BR&quot;       &quot;es_BZ&quot;       &quot;es_CL&quot;       &quot;es_CO&quot;       &quot;es_CR&quot;      </span>
+<span class="c1">## [251] &quot;es_CU&quot;       &quot;es_DO&quot;       &quot;es_EA&quot;       &quot;es_EC&quot;       &quot;es_ES&quot;      </span>
+<span class="c1">## [256] &quot;es_GQ&quot;       &quot;es_GT&quot;       &quot;es_HN&quot;       &quot;es_IC&quot;       &quot;es_MX&quot;      </span>
+<span class="c1">## [261] &quot;es_NI&quot;       &quot;es_PA&quot;       &quot;es_PE&quot;       &quot;es_PH&quot;       &quot;es_PR&quot;      </span>
+<span class="c1">## [266] &quot;es_PY&quot;       &quot;es_SV&quot;       &quot;es_US&quot;       &quot;es_UY&quot;       &quot;es_VE&quot;      </span>
+<span class="c1">## [271] &quot;et&quot;          &quot;et_EE&quot;       &quot;eu&quot;          &quot;eu_ES&quot;       &quot;ewo&quot;        </span>
+<span class="c1">## [276] &quot;ewo_CM&quot;      &quot;fa&quot;          &quot;fa_AF&quot;       &quot;fa_IR&quot;       &quot;ff&quot;         </span>
+<span class="c1">## [281] &quot;ff_Adlm&quot;     &quot;ff_Adlm_BF&quot;  &quot;ff_Adlm_CM&quot;  &quot;ff_Adlm_GH&quot;  &quot;ff_Adlm_GM&quot; </span>
+<span class="c1">## [286] &quot;ff_Adlm_GN&quot;  &quot;ff_Adlm_GW&quot;  &quot;ff_Adlm_LR&quot;  &quot;ff_Adlm_MR&quot;  &quot;ff_Adlm_NE&quot; </span>
+<span class="c1">## [291] &quot;ff_Adlm_NG&quot;  &quot;ff_Adlm_SL&quot;  &quot;ff_Adlm_SN&quot;  &quot;ff_Latn&quot;     &quot;ff_Latn_BF&quot; </span>
+<span class="c1">## [296] &quot;ff_Latn_CM&quot;  &quot;ff_Latn_GH&quot;  &quot;ff_Latn_GM&quot;  &quot;ff_Latn_GN&quot;  &quot;ff_Latn_GW&quot; </span>
+<span class="c1">## [301] &quot;ff_Latn_LR&quot;  &quot;ff_Latn_MR&quot;  &quot;ff_Latn_NE&quot;  &quot;ff_Latn_NG&quot;  &quot;ff_Latn_SL&quot; </span>
+<span class="c1">## [306] &quot;ff_Latn_SN&quot;  &quot;fi&quot;          &quot;fi_FI&quot;       &quot;fil&quot;         &quot;fil_PH&quot;     </span>
+<span class="c1">## [311] &quot;fo&quot;          &quot;fo_DK&quot;       &quot;fo_FO&quot;       &quot;fr&quot;          &quot;fr_BE&quot;      </span>
+<span class="c1">## [316] &quot;fr_BF&quot;       &quot;fr_BI&quot;       &quot;fr_BJ&quot;       &quot;fr_BL&quot;       &quot;fr_CA&quot;      </span>
+<span class="c1">## [321] &quot;fr_CD&quot;       &quot;fr_CF&quot;       &quot;fr_CG&quot;       &quot;fr_CH&quot;       &quot;fr_CI&quot;      </span>
+<span class="c1">## [326] &quot;fr_CM&quot;       &quot;fr_DJ&quot;       &quot;fr_DZ&quot;       &quot;fr_FR&quot;       &quot;fr_GA&quot;      </span>
+<span class="c1">## [331] &quot;fr_GF&quot;       &quot;fr_GN&quot;       &quot;fr_GP&quot;       &quot;fr_GQ&quot;       &quot;fr_HT&quot;      </span>
+<span class="c1">## [336] &quot;fr_KM&quot;       &quot;fr_LU&quot;       &quot;fr_MA&quot;       &quot;fr_MC&quot;       &quot;fr_MF&quot;      </span>
+<span class="c1">## [341] &quot;fr_MG&quot;       &quot;fr_ML&quot;       &quot;fr_MQ&quot;       &quot;fr_MR&quot;       &quot;fr_MU&quot;      </span>
+<span class="c1">## [346] &quot;fr_NC&quot;       &quot;fr_NE&quot;       &quot;fr_PF&quot;       &quot;fr_PM&quot;       &quot;fr_RE&quot;      </span>
+<span class="c1">## [351] &quot;fr_RW&quot;       &quot;fr_SC&quot;       &quot;fr_SN&quot;       &quot;fr_SY&quot;       &quot;fr_TD&quot;      </span>
+<span class="c1">## [356] &quot;fr_TG&quot;       &quot;fr_TN&quot;       &quot;fr_VU&quot;       &quot;fr_WF&quot;       &quot;fr_YT&quot;      </span>
+<span class="c1">## [361] &quot;fur&quot;         &quot;fur_IT&quot;      &quot;fy&quot;          &quot;fy_NL&quot;       &quot;ga&quot;         </span>
+<span class="c1">## [366] &quot;ga_GB&quot;       &quot;ga_IE&quot;       &quot;gd&quot;          &quot;gd_GB&quot;       &quot;gl&quot;         </span>
+<span class="c1">## [371] &quot;gl_ES&quot;       &quot;gsw&quot;         &quot;gsw_CH&quot;      &quot;gsw_FR&quot;      &quot;gsw_LI&quot;     </span>
+<span class="c1">## [376] &quot;gu&quot;          &quot;gu_IN&quot;       &quot;guz&quot;         &quot;guz_KE&quot;      &quot;gv&quot;         </span>
+<span class="c1">## [381] &quot;gv_IM&quot;       &quot;ha&quot;          &quot;ha_GH&quot;       &quot;ha_NE&quot;       &quot;ha_NG&quot;      </span>
+<span class="c1">## [386] &quot;haw&quot;         &quot;haw_US&quot;      &quot;he&quot;          &quot;he_IL&quot;       &quot;hi&quot;         </span>
+<span class="c1">## [391] &quot;hi_IN&quot;       &quot;hr&quot;          &quot;hr_BA&quot;       &quot;hr_HR&quot;       &quot;hsb&quot;        </span>
+<span class="c1">## [396] &quot;hsb_DE&quot;      &quot;hu&quot;          &quot;hu_HU&quot;       &quot;hy&quot;          &quot;hy_AM&quot;      </span>
+<span class="c1">## [401] &quot;ia&quot;          &quot;ia_001&quot;      &quot;id&quot;          &quot;id_ID&quot;       &quot;ig&quot;         </span>
+<span class="c1">## [406] &quot;ig_NG&quot;       &quot;ii&quot;          &quot;ii_CN&quot;       &quot;is&quot;          &quot;is_IS&quot;      </span>
+<span class="c1">## [411] &quot;it&quot;          &quot;it_CH&quot;       &quot;it_IT&quot;       &quot;it_SM&quot;       &quot;it_VA&quot;      </span>
+<span class="c1">## [416] &quot;ja&quot;          &quot;ja_JP&quot;       &quot;jgo&quot;         &quot;jgo_CM&quot;      &quot;jmc&quot;        </span>
+<span class="c1">## [421] &quot;jmc_TZ&quot;      &quot;jv&quot;          &quot;jv_ID&quot;       &quot;ka&quot;          &quot;ka_GE&quot;      </span>
+<span class="c1">## [426] &quot;kab&quot;         &quot;kab_DZ&quot;      &quot;kam&quot;         &quot;kam_KE&quot;      &quot;kde&quot;        </span>
+<span class="c1">## [431] &quot;kde_TZ&quot;      &quot;kea&quot;         &quot;kea_CV&quot;      &quot;khq&quot;         &quot;khq_ML&quot;     </span>
+<span class="c1">## [436] &quot;ki&quot;          &quot;ki_KE&quot;       &quot;kk&quot;          &quot;kk_KZ&quot;       &quot;kkj&quot;        </span>
+<span class="c1">## [441] &quot;kkj_CM&quot;      &quot;kl&quot;          &quot;kl_GL&quot;       &quot;kln&quot;         &quot;kln_KE&quot;     </span>
+<span class="c1">## [446] &quot;km&quot;          &quot;km_KH&quot;       &quot;kn&quot;          &quot;kn_IN&quot;       &quot;ko&quot;         </span>
+<span class="c1">## [451] &quot;ko_KP&quot;       &quot;ko_KR&quot;       &quot;kok&quot;         &quot;kok_IN&quot;      &quot;ks&quot;         </span>
+<span class="c1">## [456] &quot;ks_Arab&quot;     &quot;ks_Arab_IN&quot;  &quot;ksb&quot;         &quot;ksb_TZ&quot;      &quot;ksf&quot;        </span>
+<span class="c1">## [461] &quot;ksf_CM&quot;      &quot;ksh&quot;         &quot;ksh_DE&quot;      &quot;ku&quot;          &quot;ku_TR&quot;      </span>
+<span class="c1">## [466] &quot;kw&quot;          &quot;kw_GB&quot;       &quot;ky&quot;          &quot;ky_KG&quot;       &quot;lag&quot;        </span>
+<span class="c1">## [471] &quot;lag_TZ&quot;      &quot;lb&quot;          &quot;lb_LU&quot;       &quot;lg&quot;          &quot;lg_UG&quot;      </span>
+<span class="c1">## [476] &quot;lkt&quot;         &quot;lkt_US&quot;      &quot;ln&quot;          &quot;ln_AO&quot;       &quot;ln_CD&quot;      </span>
+<span class="c1">## [481] &quot;ln_CF&quot;       &quot;ln_CG&quot;       &quot;lo&quot;          &quot;lo_LA&quot;       &quot;lrc&quot;        </span>
+<span class="c1">## [486] &quot;lrc_IQ&quot;      &quot;lrc_IR&quot;      &quot;lt&quot;          &quot;lt_LT&quot;       &quot;lu&quot;         </span>
+<span class="c1">## [491] &quot;lu_CD&quot;       &quot;luo&quot;         &quot;luo_KE&quot;      &quot;luy&quot;         &quot;luy_KE&quot;     </span>
+<span class="c1">## [496] &quot;lv&quot;          &quot;lv_LV&quot;       &quot;mai&quot;         &quot;mai_IN&quot;      &quot;mas&quot;        </span>
+<span class="c1">## [501] &quot;mas_KE&quot;      &quot;mas_TZ&quot;      &quot;mer&quot;         &quot;mer_KE&quot;      &quot;mfe&quot;        </span>
+<span class="c1">## [506] &quot;mfe_MU&quot;      &quot;mg&quot;          &quot;mg_MG&quot;       &quot;mgh&quot;         &quot;mgh_MZ&quot;     </span>
+<span class="c1">## [511] &quot;mgo&quot;         &quot;mgo_CM&quot;      &quot;mi&quot;          &quot;mi_NZ&quot;       &quot;mk&quot;         </span>
+<span class="c1">## [516] &quot;mk_MK&quot;       &quot;ml&quot;          &quot;ml_IN&quot;       &quot;mn&quot;          &quot;mn_MN&quot;      </span>
+<span class="c1">## [521] &quot;mni&quot;         &quot;mni_Beng&quot;    &quot;mni_Beng_IN&quot; &quot;mr&quot;          &quot;mr_IN&quot;      </span>
+<span class="c1">## [526] &quot;ms&quot;          &quot;ms_BN&quot;       &quot;ms_ID&quot;       &quot;ms_MY&quot;       &quot;ms_SG&quot;      </span>
+<span class="c1">## [531] &quot;mt&quot;          &quot;mt_MT&quot;       &quot;mua&quot;         &quot;mua_CM&quot;      &quot;my&quot;         </span>
+<span class="c1">## [536] &quot;my_MM&quot;       &quot;mzn&quot;         &quot;mzn_IR&quot;      &quot;naq&quot;         &quot;naq_NA&quot;     </span>
+<span class="c1">## [541] &quot;nb&quot;          &quot;nb_NO&quot;       &quot;nb_SJ&quot;       &quot;nd&quot;          &quot;nd_ZW&quot;      </span>
+<span class="c1">## [546] &quot;ne&quot;          &quot;ne_IN&quot;       &quot;ne_NP&quot;       &quot;nl&quot;          &quot;nl_AW&quot;      </span>
+<span class="c1">## [551] &quot;nl_BE&quot;       &quot;nl_BQ&quot;       &quot;nl_CW&quot;       &quot;nl_NL&quot;       &quot;nl_SR&quot;      </span>
+<span class="c1">## [556] &quot;nl_SX&quot;       &quot;nmg&quot;         &quot;nmg_CM&quot;      &quot;nn&quot;          &quot;nn_NO&quot;      </span>
+<span class="c1">## [561] &quot;nnh&quot;         &quot;nnh_CM&quot;      &quot;no&quot;          &quot;nus&quot;         &quot;nus_SS&quot;     </span>
+<span class="c1">## [566] &quot;nyn&quot;         &quot;nyn_UG&quot;      &quot;om&quot;          &quot;om_ET&quot;       &quot;om_KE&quot;      </span>
+<span class="c1">## [571] &quot;or&quot;          &quot;or_IN&quot;       &quot;os&quot;          &quot;os_GE&quot;       &quot;os_RU&quot;      </span>
+<span class="c1">## [576] &quot;pa&quot;          &quot;pa_Arab&quot;     &quot;pa_Arab_PK&quot;  &quot;pa_Guru&quot;     &quot;pa_Guru_IN&quot; </span>
+<span class="c1">## [581] &quot;pcm&quot;         &quot;pcm_NG&quot;      &quot;pl&quot;          &quot;pl_PL&quot;       &quot;ps&quot;         </span>
+<span class="c1">## [586] &quot;ps_AF&quot;       &quot;ps_PK&quot;       &quot;pt&quot;          &quot;pt_AO&quot;       &quot;pt_BR&quot;      </span>
+<span class="c1">## [591] &quot;pt_CH&quot;       &quot;pt_CV&quot;       &quot;pt_GQ&quot;       &quot;pt_GW&quot;       &quot;pt_LU&quot;      </span>
+<span class="c1">## [596] &quot;pt_MO&quot;       &quot;pt_MZ&quot;       &quot;pt_PT&quot;       &quot;pt_ST&quot;       &quot;pt_TL&quot;      </span>
+<span class="c1">## [601] &quot;qu&quot;          &quot;qu_BO&quot;       &quot;qu_EC&quot;       &quot;qu_PE&quot;       &quot;rm&quot;         </span>
+<span class="c1">## [606] &quot;rm_CH&quot;       &quot;rn&quot;          &quot;rn_BI&quot;       &quot;ro&quot;          &quot;ro_MD&quot;      </span>
+<span class="c1">## [611] &quot;ro_RO&quot;       &quot;rof&quot;         &quot;rof_TZ&quot;      &quot;ru&quot;          &quot;ru_BY&quot;      </span>
+<span class="c1">## [616] &quot;ru_KG&quot;       &quot;ru_KZ&quot;       &quot;ru_MD&quot;       &quot;ru_RU&quot;       &quot;ru_UA&quot;      </span>
+<span class="c1">## [621] &quot;rw&quot;          &quot;rw_RW&quot;       &quot;rwk&quot;         &quot;rwk_TZ&quot;      &quot;sa&quot;         </span>
+<span class="c1">## [626] &quot;sa_IN&quot;       &quot;sah&quot;         &quot;sah_RU&quot;      &quot;saq&quot;         &quot;saq_KE&quot;     </span>
+<span class="c1">## [631] &quot;sat&quot;         &quot;sat_Olck&quot;    &quot;sat_Olck_IN&quot; &quot;sbp&quot;         &quot;sbp_TZ&quot;     </span>
+<span class="c1">## [636] &quot;sd&quot;          &quot;sd_Arab&quot;     &quot;sd_Arab_PK&quot;  &quot;sd_Deva&quot;     &quot;sd_Deva_IN&quot; </span>
+<span class="c1">## [641] &quot;se&quot;          &quot;se_FI&quot;       &quot;se_NO&quot;       &quot;se_SE&quot;       &quot;seh&quot;        </span>
+<span class="c1">## [646] &quot;seh_MZ&quot;      &quot;ses&quot;         &quot;ses_ML&quot;      &quot;sg&quot;          &quot;sg_CF&quot;      </span>
+<span class="c1">## [651] &quot;shi&quot;         &quot;shi_Latn&quot;    &quot;shi_Latn_MA&quot; &quot;shi_Tfng&quot;    &quot;shi_Tfng_MA&quot;</span>
+<span class="c1">## [656] &quot;si&quot;          &quot;si_LK&quot;       &quot;sk&quot;          &quot;sk_SK&quot;       &quot;sl&quot;         </span>
+<span class="c1">## [661] &quot;sl_SI&quot;       &quot;smn&quot;         &quot;smn_FI&quot;      &quot;sn&quot;          &quot;sn_ZW&quot;      </span>
+<span class="c1">## [666] &quot;so&quot;          &quot;so_DJ&quot;       &quot;so_ET&quot;       &quot;so_KE&quot;       &quot;so_SO&quot;      </span>
+<span class="c1">## [671] &quot;sq&quot;          &quot;sq_AL&quot;       &quot;sq_MK&quot;       &quot;sq_XK&quot;       &quot;sr&quot;         </span>
+<span class="c1">## [676] &quot;sr_Cyrl&quot;     &quot;sr_Cyrl_BA&quot;  &quot;sr_Cyrl_ME&quot;  &quot;sr_Cyrl_RS&quot;  &quot;sr_Cyrl_XK&quot; </span>
+<span class="c1">## [681] &quot;sr_Latn&quot;     &quot;sr_Latn_BA&quot;  &quot;sr_Latn_ME&quot;  &quot;sr_Latn_RS&quot;  &quot;sr_Latn_XK&quot; </span>
+<span class="c1">## [686] &quot;su&quot;          &quot;su_Latn&quot;     &quot;su_Latn_ID&quot;  &quot;sv&quot;          &quot;sv_AX&quot;      </span>
+<span class="c1">## [691] &quot;sv_FI&quot;       &quot;sv_SE&quot;       &quot;sw&quot;          &quot;sw_CD&quot;       &quot;sw_KE&quot;      </span>
+<span class="c1">## [696] &quot;sw_TZ&quot;       &quot;sw_UG&quot;       &quot;ta&quot;          &quot;ta_IN&quot;       &quot;ta_LK&quot;      </span>
+<span class="c1">## [701] &quot;ta_MY&quot;       &quot;ta_SG&quot;       &quot;te&quot;          &quot;te_IN&quot;       &quot;teo&quot;        </span>
+<span class="c1">## [706] &quot;teo_KE&quot;      &quot;teo_UG&quot;      &quot;tg&quot;          &quot;tg_TJ&quot;       &quot;th&quot;         </span>
+<span class="c1">## [711] &quot;th_TH&quot;       &quot;ti&quot;          &quot;ti_ER&quot;       &quot;ti_ET&quot;       &quot;tk&quot;         </span>
+<span class="c1">## [716] &quot;tk_TM&quot;       &quot;to&quot;          &quot;to_TO&quot;       &quot;tr&quot;          &quot;tr_CY&quot;      </span>
+<span class="c1">## [721] &quot;tr_TR&quot;       &quot;tt&quot;          &quot;tt_RU&quot;       &quot;twq&quot;         &quot;twq_NE&quot;     </span>
+<span class="c1">## [726] &quot;tzm&quot;         &quot;tzm_MA&quot;      &quot;ug&quot;          &quot;ug_CN&quot;       &quot;uk&quot;         </span>
+<span class="c1">## [731] &quot;uk_UA&quot;       &quot;ur&quot;          &quot;ur_IN&quot;       &quot;ur_PK&quot;       &quot;uz&quot;         </span>
+<span class="c1">## [736] &quot;uz_Arab&quot;     &quot;uz_Arab_AF&quot;  &quot;uz_Cyrl&quot;     &quot;uz_Cyrl_UZ&quot;  &quot;uz_Latn&quot;    </span>
+<span class="c1">## [741] &quot;uz_Latn_UZ&quot;  &quot;vai&quot;         &quot;vai_Latn&quot;    &quot;vai_Latn_LR&quot; &quot;vai_Vaii&quot;   </span>
+<span class="c1">## [746] &quot;vai_Vaii_LR&quot; &quot;vi&quot;          &quot;vi_VN&quot;       &quot;vun&quot;         &quot;vun_TZ&quot;     </span>
+<span class="c1">## [751] &quot;wae&quot;         &quot;wae_CH&quot;      &quot;wo&quot;          &quot;wo_SN&quot;       &quot;xh&quot;         </span>
+<span class="c1">## [756] &quot;xh_ZA&quot;       &quot;xog&quot;         &quot;xog_UG&quot;      &quot;yav&quot;         &quot;yav_CM&quot;     </span>
+<span class="c1">## [761] &quot;yi&quot;          &quot;yi_001&quot;      &quot;yo&quot;          &quot;yo_BJ&quot;       &quot;yo_NG&quot;      </span>
+<span class="c1">## [766] &quot;yue&quot;         &quot;yue_Hans&quot;    &quot;yue_Hans_CN&quot; &quot;yue_Hant&quot;    &quot;yue_Hant_HK&quot;</span>
+<span class="c1">## [771] &quot;zgh&quot;         &quot;zgh_MA&quot;      &quot;zh&quot;          &quot;zh_Hans&quot;     &quot;zh_Hans_CN&quot; </span>
+<span class="c1">## [776] &quot;zh_Hans_HK&quot;  &quot;zh_Hans_MO&quot;  &quot;zh_Hans_SG&quot;  &quot;zh_Hant&quot;     &quot;zh_Hant_HK&quot; </span>
+<span class="c1">## [781] &quot;zh_Hant_MO&quot;  &quot;zh_Hant_TW&quot;  &quot;zu&quot;          &quot;zu_ZA&quot;</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -336,7 +500,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-13 14:21:57.
+        Last updated on 2021-05-13 14:59:02.
       </span>
 
     </p>
