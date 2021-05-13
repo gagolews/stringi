@@ -38,6 +38,8 @@ src-x64/
 *.backup
 *.bak
 *.tmp
+tmp*
+delme*
 
 # LaTeX/knitr dust:
 *.aux
