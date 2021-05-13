@@ -6,6 +6,8 @@
 * [NEW FEATURE] #428: In `stri_flatten`, `na_empty=NA` now means that missing
   values are to be omitted.
 
+* [BUGFIX] TODO: #430 md5sum?
+
 
 ## 1.6.1 (2021-05-05)
 
