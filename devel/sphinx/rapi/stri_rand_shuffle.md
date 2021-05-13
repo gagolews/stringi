@@ -37,12 +37,12 @@ Other random: [`stri_rand_lipsum()`,](stri_rand_lipsum.md) `stri_rand_strings()`
 
 ```r
 stri_rand_shuffle(c('abcdefghi', '0123456789'))
-## [1] "fhdecibag"  "7518309246"
+## [1] "cheidfbag"  "5096873241"
 # you can do better than this with stri_rand_strings:
 stri_rand_shuffle(rep(stri_paste(letters, collapse=''), 10))
-##  [1] "vrzfutpcqlhgxoiknajemdwysb" "yduvarpsfklgcioqxnjebztwhm"
-##  [3] "sibpavocyldtgrjxuemnhwqzfk" "lqotkrenudcxzmbhaypfjiwvsg"
-##  [5] "pcgsdajfkexrolvbqmyhtznuwi" "dbqjimspfxywrhngeuacltzovk"
-##  [7] "dmlpnvkaytzejsugxhqwobcrif" "ecugvwlytzahdfornipbmxksjq"
-##  [9] "mcaqenjsfoihxtklrpbgdyuzvw" "nbhflezaxtkjycwrvqiodsgpum"
+##  [1] "bjyxtszeufhpogcwdrvmaliqkn" "kafgjolxiqwmtpnhyucdbrzevs"
+##  [3] "vumbrtgqlpfhniwkxeazjdocsy" "irjhvgpqsobzayneumlfdkcxtw"
+##  [5] "yplrcekozfjnvmawxgqhtisbud" "afwijgkuxrqonshelmcvdpbyzt"
+##  [7] "flircxuthpsygadwkjvmnzqebo" "zqynmsjreatfhcloipvubdwgkx"
+##  [9] "kvyjzutiprsbclgfqonhmaedwx" "eqjtmzfuaidpkxbchygsrlownv"
 ```
