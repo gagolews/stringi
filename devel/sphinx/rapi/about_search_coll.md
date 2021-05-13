@@ -16,7 +16,7 @@ Please note that <span class="pkg">ICU</span>\'s `StringSearch`-based functions 
 
 ## References
 
-*ICU String Search Service* -- ICU User Guide, <http://userguide.icu-project.org/collation/icu-string-search-service>
+*ICU String Search Service* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/collation/string-search.html>
 
 L. Werner, *Efficient Text Searching in Java*, 1999, <https://icu-project.org/docs/papers/efficient_text_searching_in_java.html>
 

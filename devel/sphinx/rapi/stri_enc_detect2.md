@@ -33,7 +33,7 @@ If you have no initial guess on the language and encoding, try with [`stri_enc_d
 
 Just like [`stri_enc_detect`](stri_enc_detect.md), this function returns a list of length equal to the length of `str`. Each list element is a data frame with the following three named components:
 
--   `Encoding` -- string; guessed encodings; `NA` on failure (iff `encodings` is empty),
+-   `Encoding` -- string; guessed encodings; `NA` on failure (if and only if `encodings` is empty),
 
 -   `Language` -- always `NA`,
 

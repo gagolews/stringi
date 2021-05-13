@@ -55,13 +55,13 @@ stri_datetime_symbols(width='narrow')
 }
 \references{
 \emph{Calendar} - ICU User Guide,
-\url{http://userguide.icu-project.org/datetime/calendar}
+\url{https://unicode-org.github.io/icu/userguide/datetime/calendar/}
 
 \emph{DateFormatSymbols} class -- ICU API Documentation,
 \url{https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/classicu_1_1DateFormatSymbols.html}
 
 \emph{Formatting Dates and Times} -- ICU User Guide,
-\url{http://userguide.icu-project.org/formatparse/datetime}
+\url{https://unicode-org.github.io/icu/userguide/format_parse/datetime/}
 }
 \seealso{
 Other datetime: 

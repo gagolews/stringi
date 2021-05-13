@@ -68,14 +68,11 @@ do.call(rbind.data.frame,
 \emph{TimeZone} class -- ICU API Documentation,
 \url{https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/classicu_1_1TimeZone.html}
 
-\emph{ICU 4.8 Time Zone Names}.
-\url{http://site.icu-project.org/design/formatting/timezone/icu-4-8-time-zone-names}
-
 \emph{ICU TimeZone classes} -- ICU User Guide,
-\url{http://userguide.icu-project.org/datetime/timezone}
+\url{https://unicode-org.github.io/icu/userguide/datetime/timezone/}
 
 \emph{Date/Time Services} -- ICU User Guide,
-\url{http://userguide.icu-project.org/datetime}
+\url{https://unicode-org.github.io/icu/userguide/datetime/}
 }
 \seealso{
 Other datetime: 

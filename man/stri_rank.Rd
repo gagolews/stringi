@@ -44,8 +44,8 @@ X[order(stri_rank(X$a), X$b), ]
 
 }
 \references{
-\emph{Collation} - ICU User Guide,
-\url{http://userguide.icu-project.org/collation}
+\emph{Collation} -- ICU User Guide,
+\url{https://unicode-org.github.io/icu/userguide/collation/}
 }
 \seealso{
 Other locale_sensitive: 

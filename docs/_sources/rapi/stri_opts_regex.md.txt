@@ -54,7 +54,7 @@ Returns a named list object; missing settings are left with default values.
 
 *`enum URegexpFlag`: Constants for Regular Expression Match Modes* -- ICU4C API Documentation, <https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/uregex_8h.html>
 
-*Regular Expressions* -- ICU User Guide, <http://userguide.icu-project.org/strings/regexp>
+*Regular Expressions* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/strings/regexp.html>
 
 ## See Also
 

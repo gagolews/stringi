@@ -42,7 +42,7 @@ The replacement version of `stri_datetime_add` modifies the state of the `time` 
 
 ## References
 
-*Calendar Classes* - ICU User Guide, <http://userguide.icu-project.org/datetime/calendar>
+*Calendar Classes* - ICU User Guide, <https://unicode-org.github.io/icu/userguide/datetime/calendar/>
 
 ## See Also
 
@@ -57,9 +57,9 @@ Other datetime: [`stri_datetime_create()`,](stri_datetime_create.md) [`stri_date
 x <- stri_datetime_now()
 stri_datetime_add(x, units='months') <- 2
 print(x)
-## [1] "2021-07-11 18:00:21 AEST"
+## [1] "2021-07-13 14:21:53 AEST"
 stri_datetime_add(x, -2, units='months')
-## [1] "2021-05-11 18:00:21 AEST"
+## [1] "2021-05-13 14:21:53 AEST"
 stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units='years')
 ## [1] "2015-04-20 12:00:00 AEST"
 stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units='years', locale='@calendar=hebrew')

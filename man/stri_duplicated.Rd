@@ -82,7 +82,7 @@ duplicated(c('gro\u00df', 'GROSS', 'Gro\u00df', 'Gross'))
 }
 \references{
 \emph{Collation} - ICU User Guide,
-\url{http://userguide.icu-project.org/collation}
+\url{https://unicode-org.github.io/icu/userguide/collation/}
 }
 \seealso{
 Other locale_sensitive: 

@@ -49,7 +49,7 @@ Each function returns a character vector.
 
 ## References
 
-*Case Mappings* -- ICU User Guide, <http://userguide.icu-project.org/transforms/casemappings>
+*Case Mappings* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/transforms/casemappings.html>
 
 ## See Also
 

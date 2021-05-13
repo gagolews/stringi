@@ -39,11 +39,9 @@ Returns a character vector.
 
 *TimeZone* class -- ICU API Documentation, <https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/classicu_1_1TimeZone.html>
 
-*ICU 4.8 Time Zone Names*. <http://site.icu-project.org/design/formatting/timezone/icu-4-8-time-zone-names>
+*ICU TimeZone classes* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/datetime/timezone/>
 
-*ICU TimeZone classes* -- ICU User Guide, <http://userguide.icu-project.org/datetime/timezone>
-
-*Date/Time Services* -- ICU User Guide, <http://userguide.icu-project.org/datetime>
+*Date/Time Services* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/datetime/>
 
 ## See Also
 

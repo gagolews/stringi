@@ -185,7 +185,7 @@ stri_datetime_fields <- function(time, tz = attr(time, "tzone"), locale = NULL)
 #'
 #' @references
 #' \emph{Calendar Classes} - ICU User Guide,
-#' \url{http://userguide.icu-project.org/datetime/calendar}
+#' \url{https://unicode-org.github.io/icu/userguide/datetime/calendar/}
 #'
 #'
 #' @examples

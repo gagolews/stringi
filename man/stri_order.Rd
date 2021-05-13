@@ -56,7 +56,7 @@ stri_order(c(1, 100, 2, 101, 11, 10), numeric=TRUE)
 }
 \references{
 \emph{Collation} - ICU User Guide,
-\url{http://userguide.icu-project.org/collation}
+\url{https://unicode-org.github.io/icu/userguide/collation/}
 }
 \seealso{
 Other locale_sensitive: 

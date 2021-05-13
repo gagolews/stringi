@@ -71,7 +71,7 @@
 #'
 #' @references
 #' \emph{Collation} - ICU User Guide,
-#' \url{http://userguide.icu-project.org/collation}
+#' \url{https://unicode-org.github.io/icu/userguide/collation/}
 #'
 #' @family locale_sensitive
 #' @export
@@ -133,7 +133,7 @@ stri_sort <- function(str, decreasing = FALSE, na_last = NA, ..., opts_collator 
 #'
 #' @references
 #' \emph{Collation} - ICU User Guide,
-#' \url{http://userguide.icu-project.org/collation}
+#' \url{https://unicode-org.github.io/icu/userguide/collation/}
 #'
 #' @family locale_sensitive
 #' @export
@@ -187,7 +187,7 @@ stri_order <- function(str, decreasing = FALSE, na_last = TRUE, ..., opts_collat
 #'
 #' @references
 #' \emph{Collation} - ICU User Guide,
-#' \url{http://userguide.icu-project.org/collation}
+#' \url{https://unicode-org.github.io/icu/userguide/collation/}
 #'
 #' @family locale_sensitive
 #' @export
@@ -243,7 +243,7 @@ stri_unique <- function(str, ..., opts_collator = NULL)
 #'
 #' @references
 #' \emph{Collation} - ICU User Guide,
-#' \url{http://userguide.icu-project.org/collation}
+#' \url{https://unicode-org.github.io/icu/userguide/collation/}
 #'
 #' @examples
 #' # In the following examples, we have 3 duplicated values,
@@ -314,7 +314,7 @@ stri_duplicated_any <- function(str, from_last = FALSE, fromLast = from_last, ..
 #'
 #' @references
 #' \emph{Collation} - ICU User Guide,
-#' \url{http://userguide.icu-project.org/collation}
+#' \url{https://unicode-org.github.io/icu/userguide/collation/}
 #'
 #' @examples
 #' stri_sort_key(c('hladny', 'chladny'), locale='pl_PL')
@@ -358,8 +358,8 @@ stri_sort_key <- function(str, ..., opts_collator = NULL)
 #' string in \code{str}.
 #'
 #' @references
-#' \emph{Collation} - ICU User Guide,
-#' \url{http://userguide.icu-project.org/collation}
+#' \emph{Collation} -- ICU User Guide,
+#' \url{https://unicode-org.github.io/icu/userguide/collation/}
 #'
 #' @examples
 #' stri_rank(c('hladny', 'chladny'), locale='pl_PL')

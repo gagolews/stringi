@@ -57,6 +57,7 @@
 #' }
 #'
 #' @details
+#' Quoting the ICU User Guide,
 #' 'Hundreds of encodings have been developed over the years, each for small
 #' groups of languages and for special purposes. As a result,
 #' the interpretation of text, input, sorting, display, and storage
@@ -151,7 +152,7 @@
 #' Moreover, there are two other cases:
 #' \itemize{
 #' \item ASCII -- for strings consisting only of byte codes
-#'                not greater than 127;-
+#'                not greater than 127;
 #' \item \code{native} (a.k.a. \code{unknown} in \code{\link{Encoding}};
 #' quite a misleading name: no explicit encoding mark) -- for
 #' strings that are assumed to be in your platform's native (default) encoding.
@@ -234,13 +235,15 @@
 #'
 #' @references
 #' \emph{Unicode Basics} -- ICU User Guide,
-#' \url{http://userguide.icu-project.org/unicode}
+#' \url{https://unicode-org.github.io/icu/userguide/icu/unicode.html}
 #'
 #' \emph{Conversion} -- ICU User Guide,
-#' \url{http://userguide.icu-project.org/conversion}
+#' \url{https://unicode-org.github.io/icu/userguide/conversion/}
 #'
 #' \emph{Converters} -- ICU User Guide,
-#' \url{http://userguide.icu-project.org/conversion/converters}  (technical details)
+#' \url{https://unicode-org.github.io/icu/userguide/conversion/converters.html}
+#' (technical details)
 #'
-#' \emph{UTF-8, UTF-16, UTF-32 & BOM} -- ICU FAQ, \url{https://www.unicode.org/faq/utf_bom.html}
+#' \emph{UTF-8, UTF-16, UTF-32 & BOM} -- ICU FAQ,
+#' \url{https://www.unicode.org/faq/utf_bom.html}
 invisible(NULL)

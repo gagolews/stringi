@@ -74,7 +74,7 @@ The *ICU* project is covered by the
 [Unicode license](https://github.com/unicode-org/icu/blob/main/icu4c/LICENSE) —
 a simple, permissive non-copyleft free software license, compatible with
 the GNU GPL. The *ICU* license
-is [intended](http://userguide.icu-project.org/icufaq#TOC-How-is-the-ICU-licensed-)
+is [intended](https://unicode-org.github.io/icu/userguide/icu4c/faq.html)
 to allow *ICU* to be included in free software projects as well as
 in proprietary or commercial products.
 

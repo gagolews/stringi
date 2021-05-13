@@ -31,7 +31,7 @@ rather than a character vector should be returned}
 If \code{to_raw} is \code{FALSE},
 then a character vector with encoded strings (and appropriate
 encoding marks) is returned.
-Otherwise, a list of raw vectors is produced.
+Otherwise, a list of vectors of type raw is produced.
 }
 \description{
 These functions convert strings between encodings.
@@ -87,10 +87,8 @@ Because of the way this function is currently implemented,
 maximal size of a single string to be converted cannot exceed ~0.67 GB.
 }
 \references{
-\emph{Conversion} -- ICU User Guide, \url{http://userguide.icu-project.org/conversion}
-
-\emph{Converters} -- ICU User Guide,
-\url{http://userguide.icu-project.org/conversion/converters}  (technical details)
+\emph{Conversion} -- ICU User Guide,
+\url{https://unicode-org.github.io/icu/userguide/conversion/}
 }
 \seealso{
 Other encoding_conversion: 

@@ -59,7 +59,7 @@ stri_datetime_add(stri_datetime_create(2016, 1, 31), 1, units='months')
 }
 \references{
 \emph{Calendar Classes} - ICU User Guide,
-\url{http://userguide.icu-project.org/datetime/calendar}
+\url{https://unicode-org.github.io/icu/userguide/datetime/calendar/}
 }
 \seealso{
 Other datetime: 

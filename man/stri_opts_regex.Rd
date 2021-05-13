@@ -96,7 +96,7 @@ stri_detect_regex('ala', '(?i)ALA') # equivalent
 \url{https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/uregex_8h.html}
 
 \emph{Regular Expressions} -- ICU User Guide,
-\url{http://userguide.icu-project.org/strings/regexp}
+\url{https://unicode-org.github.io/icu/userguide/strings/regexp.html}
 }
 \seealso{
 Other search_regex: 

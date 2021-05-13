@@ -85,7 +85,7 @@ to the ICU User Guide on Boundary Analysis.
 \url{https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/ubrk_8h.html}
 
 \emph{Boundary Analysis} -- ICU User Guide,
-\url{http://userguide.icu-project.org/boundaryanalysis}
+\url{https://unicode-org.github.io/icu/userguide/boundaryanalysis/}
 }
 \seealso{
 Other text_boundaries: 

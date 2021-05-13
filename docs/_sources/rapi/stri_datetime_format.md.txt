@@ -162,7 +162,7 @@ Here are some examples:
 
 ## References
 
-*Formatting Dates and Times* - ICU User Guide, <http://userguide.icu-project.org/formatparse/datetime>
+*Formatting Dates and Times* - ICU User Guide, <https://unicode-org.github.io/icu/userguide/format_parse/datetime/>
 
 ## See Also
 
@@ -175,11 +175,11 @@ Other datetime: [`stri_datetime_add()`,](stri_datetime_add.md) [`stri_datetime_c
 
 ```r
 stri_datetime_parse(c('2015-02-28', '2015-02-29'), 'yyyy-MM-dd')
-## [1] "2015-02-28 18:00:21 AEDT" NA
+## [1] "2015-02-28 14:21:53 AEDT" NA
 stri_datetime_parse(c('2015-02-28', '2015-02-29'), 'yyyy-MM-dd', lenient=TRUE)
-## [1] "2015-02-28 18:00:21 AEDT" "2015-03-01 18:00:21 AEDT"
+## [1] "2015-02-28 14:21:53 AEDT" "2015-03-01 14:21:53 AEDT"
 stri_datetime_parse('19 lipca 2015', 'date_long', locale='pl_PL')
-## [1] "2015-07-19 18:00:21 AEST"
+## [1] "2015-07-19 14:21:53 AEST"
 stri_datetime_format(stri_datetime_now(), 'datetime_relative_medium')
-## [1] "today, 6:00:21 pm"
+## [1] "today, 2:21:53 pm"
 ```

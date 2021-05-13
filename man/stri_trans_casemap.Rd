@@ -76,7 +76,7 @@ stri_trans_totitle('cOOkiE mOnSTeR likes COOKIES. Here HE comes!', type='sentenc
 }
 \references{
 \emph{Case Mappings} -- ICU User Guide,
-\url{http://userguide.icu-project.org/transforms/casemappings}
+\url{https://unicode-org.github.io/icu/userguide/transforms/casemappings.html}
 }
 \seealso{
 Other locale_sensitive: 

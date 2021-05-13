@@ -97,10 +97,10 @@ stri_cmp('above mentioned', 'above-mentioned', alternate_shifted=TRUE)
 }
 \references{
 \emph{Collation} -- ICU User Guide,
-\url{http://userguide.icu-project.org/collation}
+\url{https://unicode-org.github.io/icu/userguide/collation/}
 
 \emph{ICU Collation Service Architecture} -- ICU User Guide,
-\url{http://userguide.icu-project.org/collation/architecture}
+\url{https://unicode-org.github.io/icu/userguide/collation/architecture.html}
 
 \emph{\code{icu::Collator} Class Reference} -- ICU4C API Documentation,
 \url{https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/classicu_1_1Collator.html}

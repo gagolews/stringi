@@ -259,14 +259,13 @@ stri_enc_isutf8 <- function(str)
 #' The guesses are ordered by decreasing confidence.
 #'
 #' @examples
-#' \dontrun{
-#' f <- rawToChar(readBin('test.txt', 'raw', 100000))
-#' stri_enc_detect(f)
-#' }
+#' ## Not run:
+#' ## f <- rawToChar(readBin('test.txt', 'raw', 100000))
+#' ## stri_enc_detect(f)
 #'
 #' @references
 #' \emph{Character Set Detection} -- ICU User Guide,
-#' \url{http://userguide.icu-project.org/conversion/detection}
+#' \url{https://unicode-org.github.io/icu/userguide/conversion/detection.html}
 #'
 #' @family encoding_detection
 #' @export
@@ -324,7 +323,7 @@ stri_enc_detect <- function(str, filter_angle_brackets = FALSE)
 #' Each list element is a data frame with the following three named components:
 #' \itemize{
 #'    \item \code{Encoding} -- string; guessed encodings; \code{NA} on failure
-#'    (iff \code{encodings} is empty),
+#'    (if and only if \code{encodings} is empty),
 #'    \item \code{Language} -- always \code{NA},
 #'    \item \code{Confidence} -- numeric in [0,1]; the higher the value,
 #'    the more confidence there is in the match; \code{NA} on failure.

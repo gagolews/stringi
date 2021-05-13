@@ -95,8 +95,8 @@
 #' in \code{e1} and \code{e2}.
 #'
 #' @references
-#' \emph{Collation} - ICU User Guide,
-#' \url{http://userguide.icu-project.org/collation}
+#' \emph{Collation} -- ICU User Guide,
+#' \url{https://unicode-org.github.io/icu/userguide/collation/}
 #'
 #' @examples
 #' # in Polish, ch < h:

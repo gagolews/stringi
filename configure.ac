@@ -461,8 +461,9 @@ while true; do
     ##### CHECK FOR ICU4C ##########################################################
 
     ##### 1. Get settings from pkg-config or system
-    # Note that according to http://userguide.icu-project.org/howtouseicu,
-    # icu-config is supported, but no longer recommended for production use.
+    # Note that according to
+    # https://unicode-org.github.io/icu/userguide/icu/howtouseicu.html,
+    # icu-config is deprecated and no longer recommended for production use.
 
 
     detect_icu_with_pkg_config() {

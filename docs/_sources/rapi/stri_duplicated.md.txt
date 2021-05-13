@@ -52,7 +52,7 @@ See also [`stri_unique`](stri_unique.md) for extracting unique elements.
 
 ## References
 
-*Collation* - ICU User Guide, <http://userguide.icu-project.org/collation>
+*Collation* - ICU User Guide, <https://unicode-org.github.io/icu/userguide/collation/>
 
 ## See Also
 

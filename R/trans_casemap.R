@@ -81,7 +81,7 @@
 #'
 #' @references
 #' \emph{Case Mappings} -- ICU User Guide,
-#' \url{http://userguide.icu-project.org/transforms/casemappings}
+#' \url{https://unicode-org.github.io/icu/userguide/transforms/casemappings.html}
 #'
 #' @family locale_sensitive
 #' @family transform

@@ -132,8 +132,8 @@ stri_cmp_equiv('G\u00e4rtner', 'Gaertner', locale='de_DE', strength=1L)
 
 }
 \references{
-\emph{Collation} - ICU User Guide,
-\url{http://userguide.icu-project.org/collation}
+\emph{Collation} -- ICU User Guide,
+\url{https://unicode-org.github.io/icu/userguide/collation/}
 }
 \seealso{
 Other locale_sensitive: 

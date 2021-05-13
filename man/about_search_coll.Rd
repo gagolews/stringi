@@ -30,12 +30,12 @@ and how to tune it up
 in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
 
 Please note that \pkg{ICU}'s \code{StringSearch}-based functions
-are  often much slower that those to perform fixed pattern searches.
+are often much slower that those to perform fixed pattern searches.
 }
 
 \references{
 \emph{ICU String Search Service} -- ICU User Guide,
- \url{http://userguide.icu-project.org/collation/icu-string-search-service}
+\url{https://unicode-org.github.io/icu/userguide/collation/string-search.html}
 
 L. Werner, \emph{Efficient Text Searching in Java}, 1999,
 \url{https://icu-project.org/docs/papers/efficient_text_searching_in_java.html}

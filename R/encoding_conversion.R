@@ -105,13 +105,11 @@
 #' @return If \code{to_raw} is \code{FALSE},
 #' then a character vector with encoded strings (and appropriate
 #' encoding marks) is returned.
-#' Otherwise, a list of raw vectors is produced.
+#' Otherwise, a list of vectors of type raw is produced.
 #'
 #' @references
-#' \emph{Conversion} -- ICU User Guide, \url{http://userguide.icu-project.org/conversion}
-#'
-#' \emph{Converters} -- ICU User Guide,
-#' \url{http://userguide.icu-project.org/conversion/converters}  (technical details)
+#' \emph{Conversion} -- ICU User Guide,
+#' \url{https://unicode-org.github.io/icu/userguide/conversion/}
 #'
 #' @family encoding_conversion
 #' @rdname stri_encode

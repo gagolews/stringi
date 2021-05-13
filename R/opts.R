@@ -93,10 +93,10 @@
 #'
 #' @references
 #' \emph{Collation} -- ICU User Guide,
-#' \url{http://userguide.icu-project.org/collation}
+#' \url{https://unicode-org.github.io/icu/userguide/collation/}
 #'
 #' \emph{ICU Collation Service Architecture} -- ICU User Guide,
-#' \url{http://userguide.icu-project.org/collation/architecture}
+#' \url{https://unicode-org.github.io/icu/userguide/collation/architecture.html}
 #'
 #' \emph{\code{icu::Collator} Class Reference} -- ICU4C API Documentation,
 #' \url{https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/classicu_1_1Collator.html}
@@ -206,7 +206,7 @@ stri_coll <- stri_opts_collator
 #' \url{https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/uregex_8h.html}
 #'
 #' \emph{Regular Expressions} -- ICU User Guide,
-#' \url{http://userguide.icu-project.org/strings/regexp}
+#' \url{https://unicode-org.github.io/icu/userguide/strings/regexp.html}
 #'
 #' @examples
 #' stri_detect_regex('ala', 'ALA') # case-sensitive by default
@@ -317,7 +317,7 @@ stri_opts_regex <- function(case_insensitive, comments,
 #' \url{https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/ubrk_8h.html}
 #'
 #' \emph{Boundary Analysis} -- ICU User Guide,
-#' \url{http://userguide.icu-project.org/boundaryanalysis}
+#' \url{https://unicode-org.github.io/icu/userguide/boundaryanalysis/}
 stri_opts_brkiter <- function(type, locale, skip_word_none, skip_word_number,
     skip_word_letter, skip_word_kana, skip_word_ideo, skip_line_soft,
     skip_line_hard, skip_sentence_term, skip_sentence_sep, ...)
@@ -383,7 +383,7 @@ stri_opts_brkiter <- function(type, locale, skip_word_none, skip_word_number,
 #'
 #' @references
 #' \emph{C/POSIX Migration} -- ICU User Guide,
-#' \url{http://userguide.icu-project.org/posix#case_mappings}
+#' \url{https://unicode-org.github.io/icu/userguide/icu/posix.html}
 #'
 #' @examples
 #' stri_detect_fixed('ala', 'ALA') # case-sensitive by default

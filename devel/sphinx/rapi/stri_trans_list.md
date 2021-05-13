@@ -16,7 +16,7 @@ Returns a character vector.
 
 ## References
 
-*General Transforms* -- ICU User Guide, <http://userguide.icu-project.org/transforms/general>
+*General Transforms* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/transforms/general/>
 
 ## See Also
 

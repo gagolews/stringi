@@ -36,7 +36,7 @@ Other locale-sensitive functions include, e.g., [`stri_trans_tolower`](stri_tran
 
 ## References
 
-*Locale* -- ICU User Guide, <http://userguide.icu-project.org/locale>
+*Locale* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/locale/>
 
 *ISO 639: Language Codes*, <https://www.iso.org/iso-639-language-codes.html>
 

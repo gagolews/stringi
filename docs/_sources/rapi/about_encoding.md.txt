@@ -14,7 +14,7 @@ In particular we should note that:
 
 ## Details
 
-\'Hundreds of encodings have been developed over the years, each for small groups of languages and for special purposes. As a result, the interpretation of text, input, sorting, display, and storage depends on the knowledge of all the different types of character sets and their encodings. Programs have been written to handle either one single encoding at a time and switch between them, or to convert between external and internal encodings.\'
+Quoting the ICU User Guide, \'Hundreds of encodings have been developed over the years, each for small groups of languages and for special purposes. As a result, the interpretation of text, input, sorting, display, and storage depends on the knowledge of all the different types of character sets and their encodings. Programs have been written to handle either one single encoding at a time and switch between them, or to convert between external and internal encodings.\'
 
 \'Unicode provides a single character set that covers the major languages of the world, and a small number of machine-friendly encoding forms and schemes to fit the needs of existing applications and protocols. It is designed for best interoperability with both ASCII and ISO-8859-1 (the most widely used character sets) to make it easier for Unicode to be used in almost all applications and protocols\' (see the ICU User Guide).
 
@@ -50,7 +50,7 @@ Character strings in <span style="font-family: Courier New, Courier; color: #666
 
 Moreover, there are two other cases:
 
--   ASCII -- for strings consisting only of byte codes not greater than 127;-
+-   ASCII -- for strings consisting only of byte codes not greater than 127;
 
 -   `native` (a.k.a. `unknown` in [`Encoding`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/Encoding.html); quite a misleading name: no explicit encoding mark) -- for strings that are assumed to be in your platform\'s native (default) encoding. This can represent UTF-8 if you are an OS X user, or some 8-bit Windows code page, for example. The native encoding used by <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> may be determined by examining the LC\_CTYPE category, see [`Sys.getlocale`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/locales.html).
 
@@ -80,11 +80,11 @@ Check out [`stri_enc_detect`](stri_enc_detect.md) (among others) for a useful fu
 
 ## References
 
-*Unicode Basics* -- ICU User Guide, <http://userguide.icu-project.org/unicode>
+*Unicode Basics* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/icu/unicode.html>
 
-*Conversion* -- ICU User Guide, <http://userguide.icu-project.org/conversion>
+*Conversion* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/conversion/>
 
-*Converters* -- ICU User Guide, <http://userguide.icu-project.org/conversion/converters> (technical details)
+*Converters* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/conversion/converters.html> (technical details)
 
 *UTF-8, UTF-16, UTF-32 & BOM* -- ICU FAQ, <https://www.unicode.org/faq/utf_bom.html>
 
