@@ -16,10 +16,9 @@
   General category Sk (Symbol, modifier) is no longer of width 0,
   UCHAR_EAST_ASIAN_WIDTH of U_EA_AMBIGUOUS is no longer of width 2.
 
-* [BUGFIX] .....TODO: #431: Pre-4.9.0 GCC has `::max_align_t`,
-  but not `std::max_align_t`.  .. confirm: is that fixed?????
-
-* [BUGFIX] .....TODO: #430: md5sum? ... need more data ...
+* [BUILD TIME] #431: Pre-4.9.0 GCC has `::max_align_t`,
+  but not `std::max_align_t`, added a (possible) workaround, see the INSTALL
+  file.
 
 * [BUGFIX] ......TODO: #354: ALTREP vectors and CHARSXPs were not copied,
   and thus could have been gc'd in the meanwhile.
@@ -198,12 +197,12 @@ documentation object `stri_datetime_format`: `...`
   platforms (thanks to Dimitri John Ledkov @xnox).
 
 * [BUGFIX] #296: Out-of-the box build used to fail on CentOS 6, upgraded
-  `./configure` to `--disable-cxx11` more eagerly at an early stage.
+  `configure` to `--disable-cxx11` more eagerly at an early stage.
 
 * [BUGFIX] #341: Fixed possible buffer overflows when calling `strncpy()`
   from within ICU 61.
 
-* [BUGFIX] #325: Made `./configure` more portable so that it works
+* [BUGFIX] #325: Made `configure` more portable so that it works
   under `/bin/dash` now.
 
 * [BUGFIX] #319: Fixed overflow in `stri_rand_shuffle()`.
@@ -215,7 +214,7 @@ documentation object `stri_datetime_format`: `...`
 
 ## 1.2.4 (2018-07-20)
 
-* [BUGFIX] #314: Testing `U_CHARSET_IS_UTF8` in `./configure` when
+* [BUGFIX] #314: Testing `U_CHARSET_IS_UTF8` in `configure` when
   using `pkg-build`.
 
 * [BUILD TIME] #317: Included `icudt61l.zip` in the source bundle to solve
@@ -226,7 +225,7 @@ documentation object `stri_datetime_format`: `...`
 
 ## 1.2.3 (2018-05-16)
 
-* [BUGFIX] #296: Fixed the behaviour of the `./configure` script on CentOS 6.
+* [BUGFIX] #296: Fixed the behaviour of the `configure` script on CentOS 6.
 
 * [BUGFIX] Fixed broken Windows build by updating the `icudt` mirror list.
 
@@ -303,7 +302,7 @@ documentation object `stri_datetime_format`: `...`
 * [BUGFIX] #227: Incorrect behaviour of `stri_sub()` and `stri_sub<-()`
   if the empty string was the result.
 
-* [BUILD TIME] #231: The `./configure` (Linux/Unix only) script now reads the
+* [BUILD TIME] #231: The `configure` (Linux/Unix only) script now reads the
   following environment variables: `STRINGI_CFLAGS`, `STRINGI_CPPFLAGS`,
   `STRINGI_CXXFLAGS`, `STRINGI_LDFLAGS`, `STRINGI_LIBS`,
   `STRINGI_DISABLE_CXX11`, `STRINGI_DISABLE_ICU_BUNDLE`,
@@ -313,7 +312,7 @@ documentation object `stri_datetime_format`: `...`
 * [BUILD TIME] #253: Call to `R_useDynamicSymbols()` added.
 
 * [BUILD TIME] #230: `icudt` is now being downloaded by
-  `./configure` (*NIX only) *before* building.
+  `configure` (*NIX only) *before* building.
 
 * [BUILD TIME] #242: `_COUNT/_LIMIT` enum constants have been deprecated
   as of ICU 58.2, stringi code has been upgraded accordingly.
@@ -376,7 +375,7 @@ documentation object `stri_datetime_format`: `...`
 * [BUGFIX] #170: `icu::setDataDirectory` is no longer called if our ICU
   source bundle is not used (this used to cause build problems on openSUSE).
 
-* [BUILD TIME] #169: `./configure` now tries to switch to the *standard*
+* [BUILD TIME] #169: `configure` now tries to switch to the *standard*
   C++ compiler if a C++11 one is not configured correctly.
 
 * [BUILD TIME] `configure.win` (`Biarch: TRUE`) now mimics `autoconf`'s
@@ -442,7 +441,7 @@ documentation object `stri_datetime_format`: `...`
 * [BUILD TIME] #141: A local copy of `icudt*.zip` may be used on package
   install; see the `INSTALL` file for more information.
 
-* [BUILD TIME] #165: The `./configure` option `--disable-icu-bundle`
+* [BUILD TIME] #165: The `configure` option `--disable-icu-bundle`
   forces the use of system ICU when building the package.
 
 * [BUGFIX] Locale specifiers are now normalized in a more intelligent way:
@@ -770,8 +769,8 @@ documentation object `stri_datetime_format`: `...`
 ## 0.1-22 (2014-02-20)
 
 * System ICU is used on systems which do have one (version >= 50 needed).
-  ICU is auto-detected with `pkg-config` in `./configure`.
-  Pass `'--disable-pkg-config'` to `./configure` to force building
+  ICU is auto-detected with `pkg-config` in `configure`.
+  Pass `'--disable-pkg-config'` to `configure` to force building
   ICU from sources.
 
 * `icudt52b` (custom subset) is now shipped with stringi
@@ -804,7 +803,7 @@ documentation object `stri_datetime_format`: `...`
 
 ## 0.1-10 (2013-11-13)
 
-* Using `pkg-config` via `./configure` to look for ICU4C libs.
+* Using `pkg-config` via `configure` to look for ICU4C libs.
 
 
 ## 0.1-6 (2013-07-05)
