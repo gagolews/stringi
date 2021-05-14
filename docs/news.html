@@ -233,9 +233,9 @@
 code points (including grave accent, Eszett, etc.);
 General category Sk (Symbol, modifier) is no longer of width 0,
 UCHAR_EAST_ASIAN_WIDTH of U_EA_AMBIGUOUS is no longer of width 2.</p></li>
-<li><p>[BUGFIX] …..TODO: #431: Pre-4.9.0 GCC has <code class="docutils literal notranslate"><span class="pre">::max_align_t</span></code>,
-but not <code class="docutils literal notranslate"><span class="pre">std::max_align_t</span></code>.  .. confirm: is that fixed?????</p></li>
-<li><p>[BUGFIX] …..TODO: #430: md5sum? … need more data …</p></li>
+<li><p>[BUILD TIME] #431: Pre-4.9.0 GCC has <code class="docutils literal notranslate"><span class="pre">::max_align_t</span></code>,
+but not <code class="docutils literal notranslate"><span class="pre">std::max_align_t</span></code>, added a (possible) workaround, see the INSTALL
+file.</p></li>
 <li><p>[BUGFIX] ……TODO: #354: ALTREP vectors and CHARSXPs were not copied,
 and thus could have been gc’d in the meanwhile.
 TODO check alloc (Rf_alloc) in #396 and #395 too?)</p></li>
@@ -379,10 +379,10 @@ which makes it much more easily pipable (&#64;yutannihilation, &#64;BastienFR).<
 <li><p>[NEW FEATURE] #334: Added missing <code class="docutils literal notranslate"><span class="pre">icudt61b.dat</span></code> to support big-endian
 platforms (thanks to Dimitri John Ledkov &#64;xnox).</p></li>
 <li><p>[BUGFIX] #296: Out-of-the box build used to fail on CentOS 6, upgraded
-<code class="docutils literal notranslate"><span class="pre">./configure</span></code> to <code class="docutils literal notranslate"><span class="pre">--disable-cxx11</span></code> more eagerly at an early stage.</p></li>
+<code class="docutils literal notranslate"><span class="pre">configure</span></code> to <code class="docutils literal notranslate"><span class="pre">--disable-cxx11</span></code> more eagerly at an early stage.</p></li>
 <li><p>[BUGFIX] #341: Fixed possible buffer overflows when calling <code class="docutils literal notranslate"><span class="pre">strncpy()</span></code>
 from within ICU 61.</p></li>
-<li><p>[BUGFIX] #325: Made <code class="docutils literal notranslate"><span class="pre">./configure</span></code> more portable so that it works
+<li><p>[BUGFIX] #325: Made <code class="docutils literal notranslate"><span class="pre">configure</span></code> more portable so that it works
 under <code class="docutils literal notranslate"><span class="pre">/bin/dash</span></code> now.</p></li>
 <li><p>[BUGFIX] #319: Fixed overflow in <code class="docutils literal notranslate"><span class="pre">stri_rand_shuffle()</span></code>.</p></li>
 <li><p>[BUGFIX] #337: Empty search patters in search functions (e.g.,
@@ -393,7 +393,7 @@ too many warnings on empty search patters.</p></li>
 <div class="section" id="id8">
 <h2>1.2.4 (2018-07-20)<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>[BUGFIX] #314: Testing <code class="docutils literal notranslate"><span class="pre">U_CHARSET_IS_UTF8</span></code> in <code class="docutils literal notranslate"><span class="pre">./configure</span></code> when
+<li><p>[BUGFIX] #314: Testing <code class="docutils literal notranslate"><span class="pre">U_CHARSET_IS_UTF8</span></code> in <code class="docutils literal notranslate"><span class="pre">configure</span></code> when
 using <code class="docutils literal notranslate"><span class="pre">pkg-build</span></code>.</p></li>
 <li><p>[BUILD TIME] #317: Included <code class="docutils literal notranslate"><span class="pre">icudt61l.zip</span></code> in the source bundle to solve
 the frequent <code class="docutils literal notranslate"><span class="pre">icudt</span> <span class="pre">download</span> <span class="pre">failed</span></code> error (also on CRAN’s <code class="docutils literal notranslate"><span class="pre">windows-release</span></code>
@@ -404,7 +404,7 @@ errors were caused by a build chain bug).</p></li>
 <div class="section" id="id9">
 <h2>1.2.3 (2018-05-16)<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>[BUGFIX] #296: Fixed the behaviour of the <code class="docutils literal notranslate"><span class="pre">./configure</span></code> script on CentOS 6.</p></li>
+<li><p>[BUGFIX] #296: Fixed the behaviour of the <code class="docutils literal notranslate"><span class="pre">configure</span></code> script on CentOS 6.</p></li>
 <li><p>[BUGFIX] Fixed broken Windows build by updating the <code class="docutils literal notranslate"><span class="pre">icudt</span></code> mirror list.</p></li>
 </ul>
 </div>
@@ -469,7 +469,7 @@ to <code class="docutils literal notranslate"><span class="pre">pkg-config</span
 marked as deprecated in stringi 0.5-5 are no longer being exported.</p></li>
 <li><p>[BUGFIX] #227: Incorrect behaviour of <code class="docutils literal notranslate"><span class="pre">stri_sub()</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_sub&lt;-()</span></code>
 if the empty string was the result.</p></li>
-<li><p>[BUILD TIME] #231: The <code class="docutils literal notranslate"><span class="pre">./configure</span></code> (Linux/Unix only) script now reads the
+<li><p>[BUILD TIME] #231: The <code class="docutils literal notranslate"><span class="pre">configure</span></code> (Linux/Unix only) script now reads the
 following environment variables: <code class="docutils literal notranslate"><span class="pre">STRINGI_CFLAGS</span></code>, <code class="docutils literal notranslate"><span class="pre">STRINGI_CPPFLAGS</span></code>,
 <code class="docutils literal notranslate"><span class="pre">STRINGI_CXXFLAGS</span></code>, <code class="docutils literal notranslate"><span class="pre">STRINGI_LDFLAGS</span></code>, <code class="docutils literal notranslate"><span class="pre">STRINGI_LIBS</span></code>,
 <code class="docutils literal notranslate"><span class="pre">STRINGI_DISABLE_CXX11</span></code>, <code class="docutils literal notranslate"><span class="pre">STRINGI_DISABLE_ICU_BUNDLE</span></code>,
@@ -477,7 +477,7 @@ following environment variables: <code class="docutils literal notranslate"><spa
 see <code class="docutils literal notranslate"><span class="pre">INSTALL</span></code> for more information.</p></li>
 <li><p>[BUILD TIME] #253: Call to <code class="docutils literal notranslate"><span class="pre">R_useDynamicSymbols()</span></code> added.</p></li>
 <li><p>[BUILD TIME] #230: <code class="docutils literal notranslate"><span class="pre">icudt</span></code> is now being downloaded by
-<code class="docutils literal notranslate"><span class="pre">./configure</span></code> (*NIX only) <em>before</em> building.</p></li>
+<code class="docutils literal notranslate"><span class="pre">configure</span></code> (*NIX only) <em>before</em> building.</p></li>
 <li><p>[BUILD TIME] #242: <code class="docutils literal notranslate"><span class="pre">_COUNT/_LIMIT</span></code> enum constants have been deprecated
 as of ICU 58.2, stringi code has been upgraded accordingly.</p></li>
 </ul>
@@ -531,7 +531,7 @@ applications</em> error by forcing (conditionally) <code class="docutils literal
 the recycling rule is violated and <code class="docutils literal notranslate"><span class="pre">sep==&quot;&quot;</span></code>.</p></li>
 <li><p>[BUGFIX] #170: <code class="docutils literal notranslate"><span class="pre">icu::setDataDirectory</span></code> is no longer called if our ICU
 source bundle is not used (this used to cause build problems on openSUSE).</p></li>
-<li><p>[BUILD TIME] #169: <code class="docutils literal notranslate"><span class="pre">./configure</span></code> now tries to switch to the <em>standard</em>
+<li><p>[BUILD TIME] #169: <code class="docutils literal notranslate"><span class="pre">configure</span></code> now tries to switch to the <em>standard</em>
 C++ compiler if a C++11 one is not configured correctly.</p></li>
 <li><p>[BUILD TIME] <code class="docutils literal notranslate"><span class="pre">configure.win</span></code> (<code class="docutils literal notranslate"><span class="pre">Biarch:</span> <span class="pre">TRUE</span></code>) now mimics <code class="docutils literal notranslate"><span class="pre">autoconf</span></code>’s
 <code class="docutils literal notranslate"><span class="pre">AC_SUBST</span></code> and <code class="docutils literal notranslate"><span class="pre">AC_CONFIG_FILES</span></code> so that the build process is now
@@ -586,7 +586,7 @@ relies on the current <code class="docutils literal notranslate"><span class="pr
 This is very fast, e.g., on <code class="docutils literal notranslate"><span class="pre">glibc</span></code> using the <code class="docutils literal notranslate"><span class="pre">SSE2/3/4</span></code> instruction set.</p></li>
 <li><p>[BUILD TIME] #141: A local copy of <code class="docutils literal notranslate"><span class="pre">icudt*.zip</span></code> may be used on package
 install; see the <code class="docutils literal notranslate"><span class="pre">INSTALL</span></code> file for more information.</p></li>
-<li><p>[BUILD TIME] #165: The <code class="docutils literal notranslate"><span class="pre">./configure</span></code> option <code class="docutils literal notranslate"><span class="pre">--disable-icu-bundle</span></code>
+<li><p>[BUILD TIME] #165: The <code class="docutils literal notranslate"><span class="pre">configure</span></code> option <code class="docutils literal notranslate"><span class="pre">--disable-icu-bundle</span></code>
 forces the use of system ICU when building the package.</p></li>
 <li><p>[BUGFIX] Locale specifiers are now normalized in a more intelligent way:
 e.g., <code class="docutils literal notranslate"><span class="pre">&#64;calendar=gregorian</span></code> expands to <code class="docutils literal notranslate"><span class="pre">DEFAULT_LOCALE&#64;calendar=gregorian</span></code>.</p></li>
@@ -842,8 +842,8 @@ it is now downloaded in <code class="docutils literal notranslate"><span class="
 <h2>0.1-22 (2014-02-20)<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>System ICU is used on systems which do have one (version &gt;= 50 needed).
-ICU is auto-detected with <code class="docutils literal notranslate"><span class="pre">pkg-config</span></code> in <code class="docutils literal notranslate"><span class="pre">./configure</span></code>.
-Pass <code class="docutils literal notranslate"><span class="pre">'--disable-pkg-config'</span></code> to <code class="docutils literal notranslate"><span class="pre">./configure</span></code> to force building
+ICU is auto-detected with <code class="docutils literal notranslate"><span class="pre">pkg-config</span></code> in <code class="docutils literal notranslate"><span class="pre">configure</span></code>.
+Pass <code class="docutils literal notranslate"><span class="pre">'--disable-pkg-config'</span></code> to <code class="docutils literal notranslate"><span class="pre">configure</span></code> to force building
 ICU from sources.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">icudt52b</span></code> (custom subset) is now shipped with stringi
 (for big-endian, ASCII systems).</p></li>
@@ -876,7 +876,7 @@ University of Technology.</p></li>
 <div class="section" id="id32">
 <h2>0.1-10 (2013-11-13)<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>Using <code class="docutils literal notranslate"><span class="pre">pkg-config</span></code> via <code class="docutils literal notranslate"><span class="pre">./configure</span></code> to look for ICU4C libs.</p></li>
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">pkg-config</span></code> via <code class="docutils literal notranslate"><span class="pre">configure</span></code> to look for ICU4C libs.</p></li>
 </ul>
 </div>
 <div class="section" id="id33">
@@ -912,7 +912,7 @@ scheduled for milestone 0.1.</p></li>
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-14 13:31:30.
+        Last updated on 2021-05-14 14:02:35.
       </span>
 
     </p>

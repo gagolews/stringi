@@ -36,27 +36,35 @@ If we install the package from sources and either:
    for ICU-based projects, or
 
 * `R CMD INSTALL` is called with the `--configure-args='--disable-pkg-config'`
-    argument or
+    argument or environment variable `STRINGI_DISABLE_PKG_CONFIG` is
+    set to non-zero or
     `install.packages("stringi", configure.args="--disable-pkg-config")`
     is executed,
 
 then ICU will be built together with stringi.
 A custom subset of ICU4C 69.1 is shipped with the package.
 We also include ICU4C 55.1 that can be used as a fallback version
-(e.g., on older Solaris/SPARC boxes).
+(e.g., on older Solaris boxes).
 
 
 > To get the most out of stringi, you are strongly encouraged to rely on our
-> ICU4C package bundle. This guarantees maximum portability.
+> ICU4C package bundle. This ensures maximum portability across all platforms
+> (Windows and macOS users by default fetch the pre-compiled binaries
+> from CRAN built exactly this way).
 
 
 
-If you choose to use our ICU4C bundle, then -- by default -- the ICU data
-library will be downloaded from one of our mirror servers. However, if you
-have already downloaded a version of `icudt*.zip` suitable for your platform
-(big/little endian), you may wish to install the package by calling:
+## ICU Data Library and No Internet Access
 
-    install.packages("stringi", configure.vars="ICUDT_DIR=<icudt_dir>")
+Note that if you choose to use our ICU4C bundle, then -- by default -- the
+ICU data library will be downloaded from one of our mirror servers.
+However, if you have already downloaded a version of `icudt*.zip` suitable
+for your platform (big/little endian), you may wish to install the
+package by calling:
+
+```r
+install.packages("stringi", configure.vars="ICUDT_DIR=<icudt_dir>")
+```
 
 Moreover, if you have **no internet access** on the machines
 you try to install stringi on, try fetching the latest development version
@@ -65,44 +73,57 @@ You can build a distributable source package that includes all the required
 ICU data files (for off-line use) by omitting some relevant lines in
 the `.Rbuildignore` file. The following command sequence should do the trick:
 
-    wget https://github.com/gagolews/stringi/archive/master.zip -O stringi.zip
-    unzip stringi.zip
-    sed -i '/\/icu..\/data/d' stringi-master/.Rbuildignore
-    R CMD build stringi-master
+```sh
+wget https://github.com/gagolews/stringi/archive/master.zip -O stringi.zip
+unzip stringi.zip
+sed -i '/\/icu..\/data/d' stringi-master/.Rbuildignore
+R CMD build stringi-master
+```
 
-Assuming the most recent development version of the package is numbered 1.6.1,
-a file named `stringi_1.6.1.tar.gz` is created in the current working directory.
+Assuming the most recent development version of the package is numbered x.y.z,
+a file named `stringi_x.y.z.tar.gz` is created in the current working directory.
 The package can now be installed (the source bundle may be propagated via
 `scp` etc.) by executing:
 
-    R CMD INSTALL stringi_1.6.1.tar.gz
+```sh
+R CMD INSTALL stringi_x.y.z.tar.gz
+```
 
-or by calling `install.packages("stringi_1.6.1.tar.gz", repos=NULL)`,
-from within an R session.
+Alternatively, call from within an R session:
 
-
-
-
-
-## C++11 Support
-
-For R >= 3.1.0, we suggest (by default) C++11 support to build the package
-from sources. This is because older releases of ICU4C use the `long long`
-type in a few functions, and this is not part of the C++98 standard. Moreover,
-it has become required by newer versions of ICU4C.
-
-However, if your compiler does not support C++11 or it has not been properly
-configured (check out `<R_inst_dir>/etc/Makeconf`) but you are sure it
-understands the `long long` type (which is very common -- this is checked by the
-`configure` script anyway), you may disable C++11 by passing
-the `--disable-cxx11` argument to the `configure` script.
+```r
+install.packages("stringi_x.y.z.tar.gz", repos=NULL)
+```
 
 
+## C++11 Issues
 
+A decent C++11 compiler is required to build ICU4C 69.1 from sources.
+
+Note that Pre-4.9.0 GCC has a
+[bug](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=56019) where
+`::max_align_t` has been defined, but not `std::max_align_t`.
+If our built-in workaround does not work, you may try calling:
+
+```r
+install.packages("stringi", configure.args="--with-extra-cxxflags='--std=c++11'")
+```
+
+Overall, your build chain may be misconfigured, check out,
+amongst others, `<R_inst_dir>/etc/Makeconf`
+(e.g., are you using `--std=gnu++11` instead of `--std=c++11`?). Refer to
+https://cran.r-project.org/doc/manuals/r-release/R-admin.html for more details.
+
+There is an option of using the fallback version of ICU4C 55.1
+which however requires the support of the `long long` type in a few functions,
+(this is not part of the C++98 standard; works on Solaris, though). Try:
+
+```r
+install.packages("stringi", configure.args="--disable-cxx11")
+```
 
 
 ## Customising the Build Process
-
 
 Additional features and options of the `./configure` script:
 
