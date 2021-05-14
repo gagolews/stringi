@@ -26,6 +26,14 @@ See also [`stri_rand_shuffle`](stri_rand_shuffle.md) for a random permutation of
 
 Returns a character vector.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
+## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
+
 ## Examples
 
 

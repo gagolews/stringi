@@ -48,6 +48,8 @@ the default charset is always UTF-8 (i.e., where the internal
 \code{\link{stri_info}}.
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other encoding_management: 
 \code{\link{about_encoding}},
 \code{\link{stri_enc_info}()},
@@ -55,3 +57,6 @@ Other encoding_management:
 \code{\link{stri_enc_mark}()}
 }
 \concept{encoding_management}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

@@ -80,11 +80,17 @@ Returns a list of length equal to the length of `str`. Each list element is a da
 
 The guesses are ordered by decreasing confidence.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## References
 
 *Character Set Detection* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/conversion/detection.html>
 
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other encoding\_detection: [`about_encoding`](about_encoding.md), [`stri_enc_detect2()`,](stri_enc_detect2.md) [`stri_enc_isascii()`,](stri_enc_isascii.md) [`stri_enc_isutf16be()`,](stri_enc_isutf16.md) `stri_enc_isutf8()`
 

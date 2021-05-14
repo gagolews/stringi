@@ -38,11 +38,17 @@ SOFT HYPHEN (U+00AD) (for compatibility with [`nchar`](https://stat.ethz.ch/R-ma
 
 Returns an integer vector of the same length as `str`.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## References
 
 *East Asian Width* -- Unicode Standard Annex \#11, <https://www.unicode.org/reports/tr11/>
 
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other length: [`stri_isempty()`,](stri_isempty.md) [`stri_length()`,](stri_length.md) `stri_numbytes()`
 

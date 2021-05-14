@@ -106,6 +106,8 @@ stri_cmp('above mentioned', 'above-mentioned', alternate_shifted=TRUE)
 \url{https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/classicu_1_1Collator.html}
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other locale_sensitive: 
 \code{\link{\%s<\%}()},
 \code{\link{about_locale}},
@@ -132,3 +134,6 @@ Other search_coll:
 }
 \concept{locale_sensitive}
 \concept{search_coll}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

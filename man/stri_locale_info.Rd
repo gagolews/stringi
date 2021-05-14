@@ -38,9 +38,14 @@ stri_locale_info('Pl_pL') # the same result
 
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other locale_management: 
 \code{\link{about_locale}},
 \code{\link{stri_locale_list}()},
 \code{\link{stri_locale_set}()}
 }
 \concept{locale_management}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

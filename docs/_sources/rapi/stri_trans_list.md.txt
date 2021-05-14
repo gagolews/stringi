@@ -14,11 +14,17 @@ stri_trans_list()
 
 Returns a character vector.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## References
 
 *General Transforms* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/transforms/general/>
 
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other transform: [`stri_trans_char()`,](stri_trans_char.md) [`stri_trans_general()`,](stri_trans_general.md) [`stri_trans_nfc()`,](stri_trans_nf.md) `stri_trans_tolower()`
 

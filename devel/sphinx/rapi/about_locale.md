@@ -34,6 +34,10 @@ One of many examples of locale-dependent services is the Collator, which perform
 
 Other locale-sensitive functions include, e.g., [`stri_trans_tolower`](stri_trans_casemap.md) (that does character case mapping).
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## References
 
 *Locale* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/locale/>
@@ -43,6 +47,8 @@ Other locale-sensitive functions include, e.g., [`stri_trans_tolower`](stri_tran
 *ISO 3166: Country Codes*, <https://www.iso.org/iso-3166-country-codes.html>
 
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other locale\_management: [`stri_locale_info()`,](stri_locale_info.md) [`stri_locale_list()`,](stri_locale_list.md) `stri_locale_set()`
 

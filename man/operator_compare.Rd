@@ -83,6 +83,8 @@ c('a', 'b', 'c') \%stri>=\% 'b'
 
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other locale_sensitive: 
 \code{\link{about_locale}},
 \code{\link{about_search_boundaries}},
@@ -104,3 +106,6 @@ Other locale_sensitive:
 \code{\link{stri_wrap}()}
 }
 \concept{locale_sensitive}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

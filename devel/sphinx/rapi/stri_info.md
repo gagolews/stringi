@@ -35,3 +35,11 @@ Otherwise, a list with the following components is returned:
 -   `ICU.system` -- logical; `TRUE` indicates that the system <span class="pkg">ICU</span> libs are used, otherwise <span class="pkg">ICU</span> was built together with <span class="pkg">stringi</span>;
 
 -   `ICU.UTF8` -- logical; `TRUE` if the internal `U_CHARSET_IS_UTF8` flag is defined and set.
+
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
+## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>

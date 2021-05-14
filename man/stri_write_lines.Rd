@@ -40,8 +40,13 @@ We suggest using the UTF-8 encoding for all text files:
 thus, it is the default one for the output.
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other files: 
 \code{\link{stri_read_lines}()},
 \code{\link{stri_read_raw}()}
 }
 \concept{files}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

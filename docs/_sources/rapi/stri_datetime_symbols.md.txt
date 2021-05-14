@@ -36,6 +36,10 @@ Returns a list with the following named components:
 
 5.  `Era` - era names.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## References
 
 *Calendar* - ICU User Guide, <https://unicode-org.github.io/icu/userguide/datetime/calendar/>
@@ -45,6 +49,8 @@ Returns a list with the following named components:
 *Formatting Dates and Times* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/format_parse/datetime/>
 
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other datetime: [`stri_datetime_add()`,](stri_datetime_add.md) [`stri_datetime_create()`,](stri_datetime_create.md) [`stri_datetime_fields()`,](stri_datetime_fields.md) [`stri_datetime_format()`,](stri_datetime_format.md) [`stri_datetime_fstr()`,](stri_datetime_fstr.md) [`stri_datetime_now()`,](stri_datetime_now.md) [`stri_timezone_get()`,](stri_timezone_set.md) [`stri_timezone_info()`,](stri_timezone_info.md) `stri_timezone_list()`
 

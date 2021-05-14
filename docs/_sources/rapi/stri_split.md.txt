@@ -83,7 +83,13 @@ If `simplify=FALSE` (the default), then the functions return a list of character
 
 Otherwise, [`stri_list2matrix`](stri_list2matrix.md) with `byrow=TRUE` and `n_min=n` arguments is called on the resulting object. In such a case, a character matrix with an appropriate number of rows (according to the length of `str`, `pattern`, etc.) is returned. Note that [`stri_list2matrix`](stri_list2matrix.md)\'s `fill` argument is set to an empty string and `NA`, for `simplify` equal to `TRUE` and `NA`, respectively.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other search\_split: [`about_search`](about_search.md), [`stri_split_boundaries()`,](stri_split_boundaries.md) `stri_split_lines()`
 

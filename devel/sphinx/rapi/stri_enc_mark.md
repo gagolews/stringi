@@ -30,6 +30,12 @@ Returns a character vector of the same length as `str`. Unlike in the [`Encoding
 
 This gives exactly the same data that is used by all the functions in <span class="pkg">stringi</span> to re-encode their inputs.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other encoding\_management: [`about_encoding`](about_encoding.md), [`stri_enc_info()`,](stri_enc_info.md) [`stri_enc_list()`,](stri_enc_list.md) `stri_enc_set()`

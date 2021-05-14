@@ -30,7 +30,13 @@ Sampling of code points from the set specified by `pattern` is always done with 
 
 Returns a character vector.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other random: [`stri_rand_lipsum()`,](stri_rand_lipsum.md) `stri_rand_shuffle()`
 

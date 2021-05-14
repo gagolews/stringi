@@ -115,9 +115,14 @@ print(x)
 \dontrun{x \%>\% stri_sub_replace(1, 5, replacement='new_substring')}
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other indexing: 
 \code{\link{stri_locate_all_boundaries}()},
 \code{\link{stri_locate_all}()},
 \code{\link{stri_sub_all}()}
 }
 \concept{indexing}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

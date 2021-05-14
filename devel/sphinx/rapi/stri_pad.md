@@ -61,6 +61,14 @@ See [`stri_trim_left`](stri_trim.md) (among others) for reverse operation. Also 
 
 Returns a character vector.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
+## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
+
 ## Examples
 
 

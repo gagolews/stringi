@@ -25,7 +25,13 @@ This function is roughly equivalent to `str2 <- stri_enc_toutf8(str); str2[is.na
 
 Returns a character vector.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other utils: [`stri_list2matrix()`,](stri_list2matrix.md) [`stri_na2empty()`,](stri_na2empty.md) `stri_remove_empty()`
 

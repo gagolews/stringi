@@ -24,7 +24,13 @@ Missing values are handled properly.
 
 Returns a logical vector of the same length as `str`.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other length: [`stri_length()`,](stri_length.md) [`stri_numbytes()`,](stri_numbytes.md) `stri_width()`
 

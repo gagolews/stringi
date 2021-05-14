@@ -46,6 +46,8 @@ stri_flatten(c(NA, '', 'A', '', 'B', NA, 'C'), collapse=',', na_empty=NA)
 
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other join: 
 \code{\link{\%s+\%}()},
 \code{\link{stri_dup}()},
@@ -53,3 +55,6 @@ Other join:
 \code{\link{stri_join}()}
 }
 \concept{join}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

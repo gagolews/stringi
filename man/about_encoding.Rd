@@ -216,6 +216,8 @@ function in this category.
 \url{https://www.unicode.org/faq/utf_bom.html}
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other stringi_general_topics: 
 \code{\link{about_arguments}},
 \code{\link{about_locale}},
@@ -252,3 +254,6 @@ Other encoding_conversion:
 \concept{encoding_detection}
 \concept{encoding_management}
 \concept{stringi_general_topics}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

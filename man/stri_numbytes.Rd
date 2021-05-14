@@ -45,9 +45,14 @@ stri_numbytes('\U7fffffff') # compare stri_length('\U7fffffff')
 
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other length: 
 \code{\link{stri_isempty}()},
 \code{\link{stri_length}()},
 \code{\link{stri_width}()}
 }
 \concept{length}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

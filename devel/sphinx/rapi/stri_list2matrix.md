@@ -40,7 +40,13 @@ This function may be useful, e.g., in connection with [`stri_split`](stri_split.
 
 Returns a character matrix.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other utils: [`stri_na2empty()`,](stri_na2empty.md) [`stri_remove_empty()`,](stri_remove_empty.md) `stri_replace_na()`
 

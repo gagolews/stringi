@@ -35,6 +35,8 @@ stri_datetime_fstr('\%Y-\%m-\%d \%H:\%M:\%S')
 
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other datetime: 
 \code{\link{stri_datetime_add}()},
 \code{\link{stri_datetime_create}()},
@@ -47,3 +49,6 @@ Other datetime:
 \code{\link{stri_timezone_list}()}
 }
 \concept{datetime}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

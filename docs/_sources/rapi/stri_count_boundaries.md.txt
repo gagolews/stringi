@@ -37,7 +37,13 @@ Moreover, a `BreakIterator` of type `sentence` may be used to count the number o
 
 Both functions return an integer vector.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other search\_count: [`about_search`](about_search.md), `stri_count()`
 

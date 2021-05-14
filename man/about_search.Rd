@@ -54,6 +54,8 @@ These may include:
 }
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other text_boundaries: 
 \code{\link{about_search_boundaries}},
 \code{\link{stri_count_boundaries}()},
@@ -135,3 +137,6 @@ Other stringi_general_topics:
 \concept{search_subset}
 \concept{stringi_general_topics}
 \concept{text_boundaries}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

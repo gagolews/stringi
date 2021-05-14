@@ -79,6 +79,8 @@ stri_trans_totitle('cOOkiE mOnSTeR likes COOKIES. Here HE comes!', type='sentenc
 \url{https://unicode-org.github.io/icu/userguide/transforms/casemappings.html}
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other locale_sensitive: 
 \code{\link{\%s<\%}()},
 \code{\link{about_locale}},
@@ -119,3 +121,6 @@ Other text_boundaries:
 \concept{locale_sensitive}
 \concept{text_boundaries}
 \concept{transform}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

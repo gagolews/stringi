@@ -123,6 +123,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#arguments">Arguments</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#details">Details</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#value">Value</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#author-s">Author(s)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#references">References</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#see-also">See Also</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a></li>
@@ -858,24 +859,29 @@
 <p><code class="docutils literal notranslate"><span class="pre">stri_datetime_format</span></code> returns a character vector.</p>
 <p><code class="docutils literal notranslate"><span class="pre">stri_datetime_parse</span></code> returns an object of class <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/DateTimeClasses.html"><code class="docutils literal notranslate"><span class="pre">POSIXct</span></code></a>.</p>
 </div>
+<div class="section" id="author-s">
+<h2>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.gagolewski.com/">Marek Gagolewski</a> and other contributors</p>
+</div>
 <div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
 <p><em>Formatting Dates and Times</em> - ICU User Guide, <a class="reference external" href="https://unicode-org.github.io/icu/userguide/format_parse/datetime/">https://unicode-org.github.io/icu/userguide/format_parse/datetime/</a></p>
 </div>
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
 <p>Other datetime: <a class="reference internal" href="stri_datetime_add.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_add()</span></code>,</span></a> <a class="reference internal" href="stri_datetime_create.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_create()</span></code>,</span></a> <a class="reference internal" href="stri_datetime_fields.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_fields()</span></code>,</span></a> <a class="reference internal" href="stri_datetime_fstr.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_fstr()</span></code>,</span></a> <a class="reference internal" href="stri_datetime_now.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_now()</span></code>,</span></a> <a class="reference internal" href="stri_datetime_symbols.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_symbols()</span></code>,</span></a> <a class="reference internal" href="stri_timezone_set.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_get()</span></code>,</span></a> <a class="reference internal" href="stri_timezone_info.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_info()</span></code>,</span></a> <code class="docutils literal notranslate"><span class="pre">stri_timezone_list()</span></code></p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;2015-02-28&#39;</span><span class="p">,</span> <span class="s">&#39;2015-02-29&#39;</span><span class="p">),</span> <span class="s">&#39;yyyy-MM-dd&#39;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2015-02-28 11:32:49 AEDT&quot; NA</span>
+<span class="c1">## [1] &quot;2015-02-28 13:31:26 AEDT&quot; NA</span>
 <span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;2015-02-28&#39;</span><span class="p">,</span> <span class="s">&#39;2015-02-29&#39;</span><span class="p">),</span> <span class="s">&#39;yyyy-MM-dd&#39;</span><span class="p">,</span> <span class="n">lenient</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2015-02-28 11:32:49 AEDT&quot; &quot;2015-03-01 11:32:49 AEDT&quot;</span>
+<span class="c1">## [1] &quot;2015-02-28 13:31:26 AEDT&quot; &quot;2015-03-01 13:31:26 AEDT&quot;</span>
 <span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="s">&#39;19 lipca 2015&#39;</span><span class="p">,</span> <span class="s">&#39;date_long&#39;</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;pl_PL&#39;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2015-07-19 11:32:49 AEST&quot;</span>
+<span class="c1">## [1] &quot;2015-07-19 13:31:26 AEST&quot;</span>
 <span class="nf">stri_datetime_format</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span> <span class="s">&#39;datetime_relative_medium&#39;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;today, 11:32:49 am&quot;</span>
+<span class="c1">## [1] &quot;today, 1:31:26 pm&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -897,7 +903,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-14 11:32:53.
+        Last updated on 2021-05-14 13:31:30.
       </span>
 
     </p>

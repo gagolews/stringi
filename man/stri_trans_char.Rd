@@ -39,6 +39,8 @@ stri_trans_char('babaab', 'ab', '01')
 stri_trans_char('GCUACGGAGCUUCGGAGCUAG', 'ACGT', 'TGCA')
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other transform: 
 \code{\link{stri_trans_general}()},
 \code{\link{stri_trans_list}()},
@@ -46,3 +48,6 @@ Other transform:
 \code{\link{stri_trans_tolower}()}
 }
 \concept{transform}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

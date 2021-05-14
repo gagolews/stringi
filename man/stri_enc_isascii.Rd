@@ -28,6 +28,8 @@ stri_enc_isascii('\u0105\u0104')
 
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other encoding_detection: 
 \code{\link{about_encoding}},
 \code{\link{stri_enc_detect2}()},
@@ -36,3 +38,6 @@ Other encoding_detection:
 \code{\link{stri_enc_isutf8}()}
 }
 \concept{encoding_detection}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

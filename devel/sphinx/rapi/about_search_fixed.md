@@ -22,7 +22,13 @@ see also [about\_search\_coll](about_search_coll.md).
 
 Note that the conversion of input data to Unicode is done as usual.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other search\_fixed: [`about_search`](about_search.md), `stri_opts_fixed()`
 

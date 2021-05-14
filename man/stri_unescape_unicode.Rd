@@ -41,7 +41,12 @@ stri_unescape_unicode('a\\\\u0105!\\\\u0032\\\\n')
 
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other escape: 
 \code{\link{stri_escape_unicode}()}
 }
 \concept{escape}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

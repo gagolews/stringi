@@ -99,8 +99,13 @@ stri_detect_regex('ala', '(?i)ALA') # equivalent
 \url{https://unicode-org.github.io/icu/userguide/strings/regexp.html}
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other search_regex: 
 \code{\link{about_search_regex}},
 \code{\link{about_search}}
 }
 \concept{search_regex}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

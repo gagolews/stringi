@@ -88,6 +88,8 @@ to the ICU User Guide on Boundary Analysis.
 \url{https://unicode-org.github.io/icu/userguide/boundaryanalysis/}
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other text_boundaries: 
 \code{\link{about_search_boundaries}},
 \code{\link{about_search}},
@@ -100,3 +102,6 @@ Other text_boundaries:
 \code{\link{stri_wrap}()}
 }
 \concept{text_boundaries}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

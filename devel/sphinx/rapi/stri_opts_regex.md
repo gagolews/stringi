@@ -50,6 +50,10 @@ Note that some regex settings may be changed using ICU regex flags inside regexe
 
 Returns a named list object; missing settings are left with default values.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## References
 
 *`enum URegexpFlag`: Constants for Regular Expression Match Modes* -- ICU4C API Documentation, <https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/uregex_8h.html>
@@ -57,6 +61,8 @@ Returns a named list object; missing settings are left with default values.
 *Regular Expressions* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/strings/regexp.html>
 
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other search\_regex: [`about_search_regex`](about_search_regex.md), [`about_search`](about_search.md)
 

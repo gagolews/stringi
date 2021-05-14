@@ -36,7 +36,13 @@ Each search engine is able to perform many search-based operations. These may in
 
 -   `stri_subset_*` - return a subset of a character vector with strings that match a given pattern, see, e.g., [`stri_subset`](stri_subset.md).
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other text\_boundaries: [`about_search_boundaries`](about_search_boundaries.md), [`stri_count_boundaries()`,](stri_count_boundaries.md) [`stri_extract_all_boundaries()`,](stri_extract_boundaries.md) [`stri_locate_all_boundaries()`,](stri_locate_boundaries.md) [`stri_opts_brkiter()`,](stri_opts_brkiter.md) [`stri_split_boundaries()`,](stri_split_boundaries.md) [`stri_split_lines()`,](stri_split_lines.md) [`stri_trans_tolower()`,](stri_trans_casemap.md) `stri_wrap()`
 

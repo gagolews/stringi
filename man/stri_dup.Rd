@@ -39,6 +39,8 @@ stri_dup(c('abc', 'pqrst'), c(4, 2))
 "a" \%s*\% 5
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other join: 
 \code{\link{\%s+\%}()},
 \code{\link{stri_flatten}()},
@@ -46,3 +48,6 @@ Other join:
 \code{\link{stri_join}()}
 }
 \concept{join}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

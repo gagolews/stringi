@@ -42,6 +42,8 @@ An error is raised if the provided encoding is unknown to \pkg{ICU}
 (see \code{\link{stri_enc_list}} for more details).
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other encoding_management: 
 \code{\link{about_encoding}},
 \code{\link{stri_enc_list}()},
@@ -49,3 +51,6 @@ Other encoding_management:
 \code{\link{stri_enc_set}()}
 }
 \concept{encoding_management}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

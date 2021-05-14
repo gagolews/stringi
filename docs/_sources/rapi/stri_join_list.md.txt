@@ -34,7 +34,13 @@ If `collapse` or `sep` has length greater than 1, then only the first string wil
 
 Returns a character vector.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other join: [`%s+%()`,](operator_add.md) [`stri_dup()`,](stri_dup.md) [`stri_flatten()`,](stri_flatten.md) `stri_join()`
 

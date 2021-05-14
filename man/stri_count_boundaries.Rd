@@ -68,6 +68,8 @@ stri_numbytes(test2)
 
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other search_count: 
 \code{\link{about_search}},
 \code{\link{stri_count}()}
@@ -106,3 +108,6 @@ Other text_boundaries:
 \concept{locale_sensitive}
 \concept{search_count}
 \concept{text_boundaries}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

@@ -26,7 +26,13 @@ See also [`stri_reverse`](stri_reverse.md) for reversing the order of code point
 
 Returns a character vector.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other random: [`stri_rand_lipsum()`,](stri_rand_lipsum.md) `stri_rand_strings()`
 

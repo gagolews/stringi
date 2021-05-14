@@ -31,7 +31,13 @@ If `str` is not empty, then a single string is returned. If `collapse` has lengt
 
 Returns a single string, i.e., a character vector of length 1.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other join: [`%s+%()`,](operator_add.md) [`stri_dup()`,](stri_dup.md) [`stri_join_list()`,](stri_join_list.md) `stri_join()`
 

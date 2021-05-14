@@ -26,7 +26,13 @@ Warnings are given in case of `%x`, `%X`, `%u`, `%w`, `%g`, `%G`, `%c`, `%U` and
 
 Returns a character vector.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other datetime: [`stri_datetime_add()`,](stri_datetime_add.md) [`stri_datetime_create()`,](stri_datetime_create.md) [`stri_datetime_fields()`,](stri_datetime_fields.md) [`stri_datetime_format()`,](stri_datetime_format.md) [`stri_datetime_now()`,](stri_datetime_now.md) [`stri_datetime_symbols()`,](stri_datetime_symbols.md) [`stri_timezone_get()`,](stri_timezone_set.md) [`stri_timezone_info()`,](stri_timezone_info.md) `stri_timezone_list()`
 

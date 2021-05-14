@@ -36,6 +36,12 @@ We suggest using the UTF-8 encoding for all text files: thus, it is the default 
 
 This function returns nothing noteworthy.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other files: [`stri_read_lines()`,](stri_read_lines.md) `stri_read_raw()`

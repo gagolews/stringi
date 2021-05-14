@@ -128,9 +128,14 @@ stri_extract_all_regex('ACAGAGACTTTAGATAGAGAAGA', '([ACGT])[ACGT]\\\\1')
 
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other search_extract: 
 \code{\link{about_search}},
 \code{\link{stri_extract_all_boundaries}()},
 \code{\link{stri_extract_all}()}
 }
 \concept{search_extract}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

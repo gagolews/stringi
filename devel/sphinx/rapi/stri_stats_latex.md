@@ -38,7 +38,13 @@ Returns an integer vector with the following named elements:
 
 7.  \... (Other stuff that may appear in future releases of <span class="pkg">stringi</span>).
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other stats: `stri_stats_general()`
 

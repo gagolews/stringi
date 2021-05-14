@@ -26,7 +26,13 @@ This function does not do anything really complicated. In many cases it is simil
 
 Returns a list with the following named character strings: `Language`, `Country`, `Variant`, and `Name`, being their underscore separated combination.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other locale\_management: [`about_locale`](about_locale.md), [`stri_locale_list()`,](stri_locale_list.md) `stri_locale_set()`
 

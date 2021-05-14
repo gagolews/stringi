@@ -20,7 +20,13 @@ See [stringi-locale](about_locale.md) for more information.
 
 Returns a character vector with locale identifiers that are known to <span class="pkg">ICU</span>.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other locale\_management: [`about_locale`](about_locale.md), [`stri_locale_info()`,](stri_locale_info.md) `stri_locale_set()`
 

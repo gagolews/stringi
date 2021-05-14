@@ -56,6 +56,8 @@ stri_datetime_create(2015, 02, 29, lenient=TRUE)
 
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other datetime: 
 \code{\link{stri_datetime_add}()},
 \code{\link{stri_datetime_fields}()},
@@ -68,3 +70,6 @@ Other datetime:
 \code{\link{stri_timezone_list}()}
 }
 \concept{datetime}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

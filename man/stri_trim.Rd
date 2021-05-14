@@ -63,6 +63,8 @@ stri_trim_both(' Total of 23.5 bitcoins. ', '\\\\p{L}')
 
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other search_replace: 
 \code{\link{about_search}},
 \code{\link{stri_replace_all}()}
@@ -73,3 +75,6 @@ Other search_charclass:
 }
 \concept{search_charclass}
 \concept{search_replace}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

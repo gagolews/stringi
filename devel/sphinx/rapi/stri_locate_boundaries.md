@@ -49,7 +49,13 @@ For `stri_locate_all_*`, a list of `length(str)` integer matrices is returned. T
 
 `stri_locate_first_*` and `stri_locate_last_*`, return an integer matrix with two columns, giving the start and end positions of the first or the last matches, respectively, and two `NA`s if there is no match.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other search\_locate: [`about_search`](about_search.md), `stri_locate_all()`
 

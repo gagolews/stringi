@@ -29,8 +29,13 @@ stri_rand_shuffle(rep(stri_paste(letters, collapse=''), 10))
 
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other random: 
 \code{\link{stri_rand_lipsum}()},
 \code{\link{stri_rand_strings}()}
 }
 \concept{random}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

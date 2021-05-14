@@ -35,6 +35,10 @@ These <span class="pkg">stringi</span> functions follow UTR\#18 rules, where a n
 
 `stri_split_lines1(str)` is equivalent to `stri_split_lines(str[1])[[1]]` (with default parameters), therefore it returns a character vector. Moreover, if the input string ends with a newline sequence, the last empty string is omitted from the file\'s contents into text lines.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## References
 
 *Unicode Newline Guidelines* -- Unicode Technical Report \#13, <https://www.unicode.org/standard/reports/tr13/tr13-5.html>
@@ -42,6 +46,8 @@ These <span class="pkg">stringi</span> functions follow UTR\#18 rules, where a n
 *Unicode Regular Expressions* -- Unicode Technical Standard \#18, <https://www.unicode.org/reports/tr18/>
 
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other search\_split: [`about_search`](about_search.md), [`stri_split_boundaries()`,](stri_split_boundaries.md) `stri_split()`
 

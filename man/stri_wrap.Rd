@@ -126,6 +126,8 @@ Breaking paragraphs into lines, \emph{Software: Practice and Experience} 11(11),
 1981, pp. 1119--1184
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other locale_sensitive: 
 \code{\link{\%s<\%}()},
 \code{\link{about_locale}},
@@ -159,3 +161,6 @@ Other text_boundaries:
 }
 \concept{locale_sensitive}
 \concept{text_boundaries}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

@@ -108,7 +108,13 @@ Otherwise, i.e., if `simplify` is not `FALSE`, then [`stri_list2matrix`](stri_li
 
 Note that `stri_extract_last_regex` searches from start to end, but skips overlapping matches, see the example below.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other search\_extract: [`about_search`](about_search.md), [`stri_extract_all_boundaries()`,](stri_extract_boundaries.md) `stri_match_all()`
 

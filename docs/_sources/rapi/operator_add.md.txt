@@ -29,7 +29,13 @@ These operators act like a call to [`stri_join(e1, e2, sep='')`. However, note t
 
 Returns a character vector.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other join: [`stri_dup()`,](stri_dup.md) [`stri_flatten()`,](stri_flatten.md) [`stri_join_list()`,](stri_join_list.md) `stri_join()`
 

@@ -122,6 +122,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#arguments">Arguments</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#details">Details</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#value">Value</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#author-s">Author(s)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#see-also">See Also</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a></li>
 </ul>
@@ -352,22 +353,27 @@
 <li><p>Era (see <a class="reference internal" href="stri_datetime_symbols.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_symbols</span></code></span></a>)</p></li>
 </ol>
 </div>
+<div class="section" id="author-s">
+<h2>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.gagolewski.com/">Marek Gagolewski</a> and other contributors</p>
+</div>
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
 <p>Other datetime: <a class="reference internal" href="stri_datetime_add.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_add()</span></code>,</span></a> <a class="reference internal" href="stri_datetime_create.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_create()</span></code>,</span></a> <a class="reference internal" href="stri_datetime_format.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_format()</span></code>,</span></a> <a class="reference internal" href="stri_datetime_fstr.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_fstr()</span></code>,</span></a> <a class="reference internal" href="stri_datetime_now.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_now()</span></code>,</span></a> <a class="reference internal" href="stri_datetime_symbols.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_symbols()</span></code>,</span></a> <a class="reference internal" href="stri_timezone_set.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_get()</span></code>,</span></a> <a class="reference internal" href="stri_timezone_info.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_info()</span></code>,</span></a> <code class="docutils literal notranslate"><span class="pre">stri_timezone_list()</span></code></p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_fields</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">())</span>
 <span class="c1">##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth</span>
-<span class="c1">## 1 2021     5  14   11     32     49         502         20           3</span>
+<span class="c1">## 1 2021     5  14   13     31     26         200         20           3</span>
 <span class="c1">##   DayOfYear DayOfWeek Hour12 AmPm Era</span>
-<span class="c1">## 1       134         6     11    1   2</span>
+<span class="c1">## 1       134         6      1    2   2</span>
 <span class="nf">stri_datetime_fields</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span>
 <span class="c1">##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth</span>
-<span class="c1">## 1 5781    10   3   11     32     49         505         35           1</span>
+<span class="c1">## 1 5781    10   3   13     31     26         203         35           1</span>
 <span class="c1">##   DayOfYear DayOfWeek Hour12 AmPm Era</span>
-<span class="c1">## 1       238         6     11    1   1</span>
+<span class="c1">## 1       238         6      1    2   1</span>
 <span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span><span class="o">$</span><span class="n">Month</span><span class="p">[</span>
    <span class="nf">stri_datetime_fields</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span><span class="o">$</span><span class="n">Month</span>
 <span class="p">]</span>
@@ -393,7 +399,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-14 11:32:53.
+        Last updated on 2021-05-14 13:31:30.
       </span>
 
     </p>

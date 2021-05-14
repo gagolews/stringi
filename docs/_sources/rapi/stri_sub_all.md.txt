@@ -47,7 +47,13 @@ In the replacement function, the index ranges must be sorted with respect to `fr
 
 `stri_sub_all` returns a list of character vectors. Its replacement versions return a character vector.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other indexing: [`stri_locate_all_boundaries()`,](stri_locate_boundaries.md) [`stri_locate_all()`,](stri_locate.md) `stri_sub()`
 

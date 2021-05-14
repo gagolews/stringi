@@ -26,7 +26,13 @@ If `simplify` is `FALSE`, a list of character vectors is returned. Each list ele
 
 If `simplify` is `TRUE` (the default), then the resulting list is coerced to a character vector and sorted, and returned with removed duplicated entries.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other encoding\_management: [`about_encoding`](about_encoding.md), [`stri_enc_info()`,](stri_enc_info.md) [`stri_enc_mark()`,](stri_enc_mark.md) `stri_enc_set()`
 

@@ -71,7 +71,13 @@ For `stri_match_first*` and `stri_match_last*` a character matrix is returned. E
 
 The first matrix column gives the whole match. The second one corresponds to the first capture group, the third -- the second capture group, and so on.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other search\_extract: [`about_search`](about_search.md), [`stri_extract_all_boundaries()`,](stri_extract_boundaries.md) `stri_extract_all()`
 
