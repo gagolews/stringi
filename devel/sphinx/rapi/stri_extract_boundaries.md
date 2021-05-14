@@ -58,7 +58,13 @@ Otherwise, [`stri_list2matrix`](stri_list2matrix.md) with `byrow=TRUE` argument 
 
 For `stri_extract_first_*` and `stri_extract_last_*`, a character vector is returned. A `NA` element indicates a no-match.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other search\_extract: [`about_search`](about_search.md), [`stri_extract_all()`,](stri_extract.md) `stri_match_all()`
 

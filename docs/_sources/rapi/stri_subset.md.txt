@@ -73,7 +73,13 @@ The `stri_subset` functions return a character vector. As usual, the output enco
 
 The `stri_subset<-` function modifies the `str` object \'in-place\'.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other search\_subset: [`about_search`](about_search.md)
 

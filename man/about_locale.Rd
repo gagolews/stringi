@@ -104,6 +104,8 @@ Other locale-sensitive functions include, e.g.,
 \url{https://www.iso.org/iso-3166-country-codes.html}
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other locale_management: 
 \code{\link{stri_locale_info}()},
 \code{\link{stri_locale_list}()},
@@ -143,3 +145,6 @@ Other stringi_general_topics:
 \concept{locale_management}
 \concept{locale_sensitive}
 \concept{stringi_general_topics}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

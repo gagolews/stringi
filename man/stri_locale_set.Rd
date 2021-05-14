@@ -47,9 +47,14 @@ stri_locale_set(oldloc) # restore the previous default locale
 }
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other locale_management: 
 \code{\link{about_locale}},
 \code{\link{stri_locale_info}()},
 \code{\link{stri_locale_list}()}
 }
 \concept{locale_management}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

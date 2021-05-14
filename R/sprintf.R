@@ -56,7 +56,7 @@
 #' or a single atomic vector
 #'
 #' @return
-#' Returns a character vector.
+#' Returns a character vector
 #'
 #'
 #' @examples

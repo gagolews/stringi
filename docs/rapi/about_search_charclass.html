@@ -110,6 +110,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#unicode-general-categories">Unicode General Categories</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#unicode-binary-properties">Unicode Binary Properties</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#posix-character-classes">POSIX Character Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#author-s">Author(s)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#references">References</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#see-also">See Also</a></li>
 </ul>
@@ -533,6 +534,10 @@
 <p>In particular, in POSIX-like regex engines, <code class="docutils literal notranslate"><span class="pre">[:punct:]</span></code> stands for the character class corresponding to the <code class="docutils literal notranslate"><span class="pre">ispunct()</span></code> classification function (check out <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">3</span> <span class="pre">ispunct</span></code> on UNIX-like systems). According to ISO/IEC 9899:1990 (ISO C90), the <code class="docutils literal notranslate"><span class="pre">ispunct()</span></code> function tests for any printing character except for space or a character for which <code class="docutils literal notranslate"><span class="pre">isalnum()</span></code> is true. However, in a POSIX setting, the details of what characters belong into which class depend on the current locale. So the <code class="docutils literal notranslate"><span class="pre">[:punct:]</span></code> class does not lead to a portable code (again, in POSIX-like regex engines).</p>
 <p>Therefore, a POSIX flavor of <code class="docutils literal notranslate"><span class="pre">[:punct:]</span></code> is more like <code class="docutils literal notranslate"><span class="pre">[\p{P}\p{S}]</span></code> in <span class="pkg">ICU</span>. You have been warned.</p>
 </div>
+<div class="section" id="author-s">
+<h2>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.gagolewski.com/">Marek Gagolewski</a> and other contributors</p>
+</div>
 <div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
 <p><em>The Unicode Character Database</em> – Unicode Standard Annex #44, <a class="reference external" href="https://www.unicode.org/reports/tr44/">https://www.unicode.org/reports/tr44/</a></p>
@@ -544,6 +549,7 @@
 </div>
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
 <p>Other search_charclass: <a class="reference internal" href="about_search.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></span></a>, <code class="docutils literal notranslate"><span class="pre">stri_trim_both()</span></code></p>
 <p>Other stringi_general_topics: <a class="reference internal" href="about_arguments.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_arguments</span></code></span></a>, <a class="reference internal" href="about_encoding.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_encoding</span></code></span></a>, <a class="reference internal" href="about_locale.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_locale</span></code></span></a>, <a class="reference internal" href="about_search_boundaries.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_boundaries</span></code></span></a>, <a class="reference internal" href="about_search_coll.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_coll</span></code></span></a>, <a class="reference internal" href="about_search_fixed.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_fixed</span></code></span></a>, <a class="reference internal" href="about_search_regex.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_regex</span></code></span></a>, <a class="reference internal" href="about_search.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></span></a>, <a class="reference internal" href="about_stringi.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_stringi</span></code></span></a></p>
 </div>
@@ -565,7 +571,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-14 11:32:53.
+        Last updated on 2021-05-14 13:31:30.
       </span>
 
     </p>

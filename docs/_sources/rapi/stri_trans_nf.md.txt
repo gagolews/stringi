@@ -62,6 +62,10 @@ The `stri_trans_nf*` functions return a character vector of the same length as i
 
 `stri_trans_isnf*` return a logical vector.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## References
 
 *Unicode Normalization Forms* -- Unicode Standard Annex \#15, <https://unicode.org/reports/tr15/>
@@ -75,6 +79,8 @@ The `stri_trans_nf*` functions return a character vector of the same length as i
 *Unicode Equivalence* -- Wikipedia, <https://en.wikipedia.org/wiki/Unicode_equivalence>
 
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other transform: [`stri_trans_char()`,](stri_trans_char.md) [`stri_trans_general()`,](stri_trans_general.md) [`stri_trans_list()`,](stri_trans_list.md) `stri_trans_tolower()`
 

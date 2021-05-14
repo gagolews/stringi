@@ -18,6 +18,8 @@ number of seconds since 1970-01-01 00:00:00 UTC.
 UTC leap seconds are ignored.
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other datetime: 
 \code{\link{stri_datetime_add}()},
 \code{\link{stri_datetime_create}()},
@@ -30,3 +32,6 @@ Other datetime:
 \code{\link{stri_timezone_list}()}
 }
 \concept{datetime}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

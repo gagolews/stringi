@@ -132,8 +132,13 @@ stri_endswith_coll('\ufdfa\ufdfa\ufdfaXYZ', pat, strength=1)
 
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other search_detect: 
 \code{\link{about_search}},
 \code{\link{stri_detect}()}
 }
 \concept{search_detect}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

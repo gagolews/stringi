@@ -39,6 +39,8 @@ c('abc', '123', 'xy') \%s+\% letters[1:6]
 
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other join: 
 \code{\link{stri_dup}()},
 \code{\link{stri_flatten}()},
@@ -46,3 +48,6 @@ Other join:
 \code{\link{stri_join}()}
 }
 \concept{join}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

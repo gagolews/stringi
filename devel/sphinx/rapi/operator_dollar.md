@@ -29,7 +29,15 @@ Note that [`sprintf`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/
 
 ## Value
 
-Returns a character vector.
+Returns a character vector
+
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
+## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 ## Examples
 

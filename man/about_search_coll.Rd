@@ -41,6 +41,8 @@ L. Werner, \emph{Efficient Text Searching in Java}, 1999,
 \url{https://icu-project.org/docs/papers/efficient_text_searching_in_java.html}
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other search_coll: 
 \code{\link{about_search}},
 \code{\link{stri_opts_collator}()}
@@ -79,3 +81,6 @@ Other stringi_general_topics:
 \concept{locale_sensitive}
 \concept{search_coll}
 \concept{stringi_general_topics}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

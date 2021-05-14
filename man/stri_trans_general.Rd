@@ -68,6 +68,8 @@ stri_trans_general('\u2620', 'hex/c') # to hex
 \url{https://unicode-org.github.io/icu/userguide/transforms/general/}
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other transform: 
 \code{\link{stri_trans_char}()},
 \code{\link{stri_trans_list}()},
@@ -75,3 +77,6 @@ Other transform:
 \code{\link{stri_trans_tolower}()}
 }
 \concept{transform}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

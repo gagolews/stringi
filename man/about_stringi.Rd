@@ -127,6 +127,8 @@ interesting facilities and topics.
 \url{https://tools.ietf.org/html/rfc3629}
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other stringi_general_topics: 
 \code{\link{about_arguments}},
 \code{\link{about_encoding}},

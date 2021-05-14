@@ -424,6 +424,10 @@ In particular, in POSIX-like regex engines, `[:punct:]` stands for the character
 
 Therefore, a POSIX flavor of `[:punct:]` is more like `[\p{P}\p{S}]` in <span class="pkg">ICU</span>. You have been warned.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## References
 
 *The Unicode Character Database* -- Unicode Standard Annex \#44, <https://www.unicode.org/reports/tr44/>
@@ -439,6 +443,8 @@ Therefore, a POSIX flavor of `[:punct:]` is more like `[\p{P}\p{S}]` in <span cl
 *icu::Unicodeset Class Reference* -- ICU4C API Documentation, <https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/classicu_1_1UnicodeSet.html>
 
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other search\_charclass: [`about_search`](about_search.md), `stri_trim_both()`
 

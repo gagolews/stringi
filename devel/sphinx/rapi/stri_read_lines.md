@@ -31,6 +31,12 @@ Because of the way this function is currently implemented, maximal file size can
 
 Returns a character vector, each text line is a separate string. The output is always marked as UTF-8.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other files: [`stri_read_raw()`,](stri_read_raw.md) `stri_write_lines()`

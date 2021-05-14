@@ -28,7 +28,13 @@ Missing values are handled properly. For \'byte\' encodings we get, as usual, an
 
 Returns an integer vector of the same length as `str`.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other length: [`stri_isempty()`,](stri_isempty.md) [`stri_numbytes()`,](stri_numbytes.md) `stri_width()`
 

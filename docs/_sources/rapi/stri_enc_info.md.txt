@@ -40,6 +40,12 @@ Returns a list with the following components:
 
 -   `CharSize.max` -- maximal number of bytes used to represent a UChar (in UTF-16, this is not the same as UChar32, i.e., does not reflect the maximal code point representation size)
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other encoding\_management: [`about_encoding`](about_encoding.md), [`stri_enc_list()`,](stri_enc_list.md) [`stri_enc_mark()`,](stri_enc_mark.md) `stri_enc_set()`

@@ -9,7 +9,12 @@ all: r
 
 autoconf:
 	autoconf
-	Rscript -e 'roxygen2::roxygenise(roclets=c("rd", "collate", "namespace", "vignette"), load_code=roxygen2::load_installed)'
+	Rscript -e "\
+	    source('devel/roxygen2-patch.R');\
+	    roxygenise(\
+	        roclets=c('rd', 'collate', 'namespace', 'vignette'),\
+	        load_code=roxygen2::load_installed\
+	    )"
 
 r: autoconf
 	R CMD INSTALL . --configure-args='--disable-pkg-config --enable-gcc-debug --enable-gcc-pedantic' --html

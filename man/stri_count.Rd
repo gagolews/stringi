@@ -81,8 +81,13 @@ stri_count_regex(c('stringi', '123'), '^(s|1)')
 
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other search_count: 
 \code{\link{about_search}},
 \code{\link{stri_count_boundaries}()}
 }
 \concept{search_count}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

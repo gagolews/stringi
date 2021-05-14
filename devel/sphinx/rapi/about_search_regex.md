@@ -306,6 +306,10 @@ Note that if a given regex `pattern` is empty, then all the functions in <span c
 
 If you wish to search for a fixed pattern, refer to [about\_search\_coll](about_search_coll.md) or [about\_search\_fixed](about_search_fixed.md). They allow to perform a locale-aware text lookup, or a very fast exact-byte search, respectively.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## References
 
 *Regular expressions* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/strings/regexp.html>
@@ -317,6 +321,8 @@ J.E.F. Friedl, *Mastering Regular Expressions*, O\'Reilly, 2002
 *Unicode Regular Expressions* -- Regex tutorial, <https://www.regular-expressions.info/unicode.html>
 
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other search\_regex: [`about_search`](about_search.md), `stri_opts_regex()`
 

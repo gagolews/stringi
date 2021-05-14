@@ -47,6 +47,8 @@ stri_timezone_set(oldtz) # restore previous default time zone
 \url{https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/classicu_1_1TimeZone.html}
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other datetime: 
 \code{\link{stri_datetime_add}()},
 \code{\link{stri_datetime_create}()},
@@ -64,3 +66,6 @@ Other timezone:
 }
 \concept{datetime}
 \concept{timezone}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

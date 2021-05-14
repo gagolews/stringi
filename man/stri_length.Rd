@@ -43,9 +43,14 @@ stri_count_boundaries(stri_trans_nfkd('\u0105'), type='character') # ...and one 
 
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other length: 
 \code{\link{stri_isempty}()},
 \code{\link{stri_numbytes}()},
 \code{\link{stri_width}()}
 }
 \concept{length}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

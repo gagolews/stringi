@@ -26,8 +26,13 @@ splitting of text into lines (see \code{\link{stri_split_lines1}})
 can be performed.
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other files: 
 \code{\link{stri_read_lines}()},
 \code{\link{stri_write_lines}()}
 }
 \concept{files}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

@@ -28,11 +28,17 @@ Searching for overlapping pattern matches is available in [`stri_extract_all_fix
 
 Returns a named list object.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## References
 
 *C/POSIX Migration* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/icu/posix.html>
 
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other search\_fixed: [`about_search_fixed`](about_search_fixed.md), [`about_search`](about_search.md)
 

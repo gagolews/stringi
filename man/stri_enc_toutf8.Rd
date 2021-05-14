@@ -51,6 +51,8 @@ where you want to fix an invalid UTF-8 byte sequence.
 For \code{NA}, a bogus string will be replaced with a missing value.
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other encoding_conversion: 
 \code{\link{about_encoding}},
 \code{\link{stri_enc_fromutf32}()},
@@ -60,3 +62,6 @@ Other encoding_conversion:
 \code{\link{stri_encode}()}
 }
 \concept{encoding_conversion}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

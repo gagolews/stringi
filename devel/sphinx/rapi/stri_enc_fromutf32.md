@@ -30,6 +30,12 @@ See also [`stri_encode`](stri_encode.md) for decoding arbitrary byte sequences f
 
 Returns a character vector (in UTF-8). `NULL`s in the input list are converted to `NA_character_`.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other encoding\_conversion: [`about_encoding`](about_encoding.md), [`stri_enc_toascii()`,](stri_enc_toascii.md) [`stri_enc_tonative()`,](stri_enc_tonative.md) [`stri_enc_toutf32()`,](stri_enc_toutf32.md) [`stri_enc_toutf8()`,](stri_enc_toutf8.md) `stri_encode()`

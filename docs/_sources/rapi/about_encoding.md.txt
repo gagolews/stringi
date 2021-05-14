@@ -78,6 +78,10 @@ Encoding detection is always an imprecise operation and needs a considerable amo
 
 Check out [`stri_enc_detect`](stri_enc_detect.md) (among others) for a useful function in this category.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## References
 
 *Unicode Basics* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/icu/unicode.html>
@@ -89,6 +93,8 @@ Check out [`stri_enc_detect`](stri_enc_detect.md) (among others) for a useful fu
 *UTF-8, UTF-16, UTF-32 & BOM* -- ICU FAQ, <https://www.unicode.org/faq/utf_bom.html>
 
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other stringi\_general\_topics: [`about_arguments`](about_arguments.md), [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_charclass`](about_search_charclass.md), [`about_search_coll`](about_search_coll.md), [`about_search_fixed`](about_search_fixed.md), [`about_search_regex`](about_search_regex.md), [`about_search`](about_search.md), [`about_stringi`](about_stringi.md)
 

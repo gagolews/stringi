@@ -26,7 +26,13 @@ As usual, any input string is converted to Unicode before executing the escape p
 
 Returns a character vector.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other escape: `stri_unescape_unicode()`
 

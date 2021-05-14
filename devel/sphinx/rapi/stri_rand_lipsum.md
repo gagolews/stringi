@@ -28,7 +28,13 @@ The current implementation is very simple: words are selected randomly from a Zi
 
 Returns a character vector of length `n_paragraphs`.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other random: [`stri_rand_shuffle()`,](stri_rand_shuffle.md) `stri_rand_strings()`
 

@@ -31,7 +31,13 @@ Vectorized over all arguments.
 
 Returns a character vector.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other join: [`%s+%()`,](operator_add.md) [`stri_flatten()`,](stri_flatten.md) [`stri_join_list()`,](stri_join_list.md) `stri_join()`
 

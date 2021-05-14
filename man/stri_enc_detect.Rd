@@ -112,6 +112,8 @@ IBM424 \tab Hebrew \cr
 \url{https://unicode-org.github.io/icu/userguide/conversion/detection.html}
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other encoding_detection: 
 \code{\link{about_encoding}},
 \code{\link{stri_enc_detect2}()},
@@ -120,3 +122,6 @@ Other encoding_detection:
 \code{\link{stri_enc_isutf8}()}
 }
 \concept{encoding_detection}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

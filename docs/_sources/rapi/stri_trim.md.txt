@@ -42,7 +42,13 @@ For trimming white-spaces, please note the difference between Unicode binary pro
 
 All these functions return a character vector.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other search\_replace: [`about_search`](about_search.md), `stri_replace_all()`
 

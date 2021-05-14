@@ -91,6 +91,8 @@ maximal size of a single string to be converted cannot exceed ~0.67 GB.
 \url{https://unicode-org.github.io/icu/userguide/conversion/}
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other encoding_conversion: 
 \code{\link{about_encoding}},
 \code{\link{stri_enc_fromutf32}()},
@@ -100,3 +102,6 @@ Other encoding_conversion:
 \code{\link{stri_enc_toutf8}()}
 }
 \concept{encoding_conversion}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

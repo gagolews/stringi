@@ -115,7 +115,12 @@ print(x)
 
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other search_subset: 
 \code{\link{about_search}}
 }
 \concept{search_subset}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

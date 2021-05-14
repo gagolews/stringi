@@ -87,3 +87,9 @@ cat(stri_pad_both(c('\ud6c8\ubbfc\uc815\uc74c', # takes width into account
    stri_trans_nfkd('\ud6c8\ubbfc\uc815\uc74c'), 'abcd'),
    width=10), sep='\n')
 }
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}
+\seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+}

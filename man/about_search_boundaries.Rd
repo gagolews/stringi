@@ -56,6 +56,8 @@ to the \pkg{ICU} User Guide, see below.
 \url{https://unicode-org.github.io/icu/userguide/boundaryanalysis/}
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other locale_sensitive: 
 \code{\link{\%s<\%}()},
 \code{\link{about_locale}},
@@ -101,3 +103,6 @@ Other stringi_general_topics:
 \concept{locale_sensitive}
 \concept{stringi_general_topics}
 \concept{text_boundaries}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

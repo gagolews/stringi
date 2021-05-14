@@ -75,6 +75,8 @@ do.call(rbind.data.frame,
 \url{https://unicode-org.github.io/icu/userguide/datetime/}
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other datetime: 
 \code{\link{stri_datetime_add}()},
 \code{\link{stri_datetime_create}()},
@@ -92,3 +94,6 @@ Other timezone:
 }
 \concept{datetime}
 \concept{timezone}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

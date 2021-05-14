@@ -28,3 +28,9 @@ stri_reverse('ZXY (\u0105\u0104123$^).')
 stri_reverse(stri_trans_nfd('\u0105')) == stri_trans_nfd('\u0105') # A, ogonek -> agonek, A
 
 }
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}
+\seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+}

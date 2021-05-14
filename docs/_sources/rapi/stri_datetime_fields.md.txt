@@ -54,7 +54,13 @@ Returns a data frame with the following columns:
 
 14. Era (see [`stri_datetime_symbols`](stri_datetime_symbols.md))
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other datetime: [`stri_datetime_add()`,](stri_datetime_add.md) [`stri_datetime_create()`,](stri_datetime_create.md) [`stri_datetime_format()`,](stri_datetime_format.md) [`stri_datetime_fstr()`,](stri_datetime_fstr.md) [`stri_datetime_now()`,](stri_datetime_now.md) [`stri_datetime_symbols()`,](stri_datetime_symbols.md) [`stri_timezone_get()`,](stri_timezone_set.md) [`stri_timezone_info()`,](stri_timezone_info.md) `stri_timezone_list()`
 
@@ -66,14 +72,14 @@ Other datetime: [`stri_datetime_add()`,](stri_datetime_add.md) [`stri_datetime_c
 ```r
 stri_datetime_fields(stri_datetime_now())
 ##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth
-## 1 2021     5  14   11     32     49         502         20           3
+## 1 2021     5  14   13     31     26         200         20           3
 ##   DayOfYear DayOfWeek Hour12 AmPm Era
-## 1       134         6     11    1   2
+## 1       134         6      1    2   2
 stri_datetime_fields(stri_datetime_now(), locale='@calendar=hebrew')
 ##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth
-## 1 5781    10   3   11     32     49         505         35           1
+## 1 5781    10   3   13     31     26         203         35           1
 ##   DayOfYear DayOfWeek Hour12 AmPm Era
-## 1       238         6     11    1   1
+## 1       238         6      1    2   1
 stri_datetime_symbols(locale='@calendar=hebrew')$Month[
    stri_datetime_fields(stri_datetime_now(), locale='@calendar=hebrew')$Month
 ]

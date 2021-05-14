@@ -25,6 +25,12 @@ Once a text file is read into memory, encoding detection (see [`stri_enc_detect`
 
 Returns a vector of type `raw`.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other files: [`stri_read_lines()`,](stri_read_lines.md) `stri_write_lines()`

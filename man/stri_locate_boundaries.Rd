@@ -92,6 +92,8 @@ So am I, Prof. Smith.', type='sentence', locale='en_US@ss=standard') # ICU >= 56
 
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other search_locate: 
 \code{\link{about_search}},
 \code{\link{stri_locate_all}()}
@@ -136,3 +138,6 @@ Other text_boundaries:
 \concept{locale_sensitive}
 \concept{search_locate}
 \concept{text_boundaries}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

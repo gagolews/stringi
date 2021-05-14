@@ -198,6 +198,8 @@ stri_locate_last_regex("agaga", "aga")
 
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other search_locate: 
 \code{\link{about_search}},
 \code{\link{stri_locate_all_boundaries}()}
@@ -209,3 +211,6 @@ Other indexing:
 }
 \concept{indexing}
 \concept{search_locate}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

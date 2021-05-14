@@ -86,7 +86,13 @@ Note that testing for a pattern match at the start or end of a string has not be
 
 Each function returns a logical vector.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other search\_detect: [`about_search`](about_search.md), `stri_detect()`
 

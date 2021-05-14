@@ -40,7 +40,12 @@ stri_stats_latex(s)
 
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other stats: 
 \code{\link{stri_stats_general}()}
 }
 \concept{stats}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

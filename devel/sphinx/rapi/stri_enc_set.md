@@ -34,6 +34,12 @@ If you set a default encoding that is neither a superset of ASCII, nor an 8-bit 
 
 `stri_enc_get` returns a string with current default character encoding.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other encoding\_management: [`about_encoding`](about_encoding.md), [`stri_enc_info()`,](stri_enc_info.md) [`stri_enc_list()`,](stri_enc_list.md) `stri_enc_mark()`

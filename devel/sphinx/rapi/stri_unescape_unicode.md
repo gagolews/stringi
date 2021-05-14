@@ -30,7 +30,13 @@ Note that some versions of R on Windows cannot handle characters defined with \\
 
 Returns a character vector. If an escape sequence is ill-formed, result will be `NA` and a warning will be given.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other escape: `stri_escape_unicode()`
 

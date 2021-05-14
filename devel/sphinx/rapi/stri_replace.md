@@ -112,7 +112,13 @@ If you wish to remove white-spaces from the start or end of a string, see [`stri
 
 All the functions return a character vector.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other search\_replace: [`about_search`](about_search.md), `stri_trim_both()`
 

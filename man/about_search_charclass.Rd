@@ -281,6 +281,8 @@ to a portable code (again, in POSIX-like regex engines).
 \url{https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/classicu_1_1UnicodeSet.html}
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other search_charclass: 
 \code{\link{about_search}},
 \code{\link{stri_trim_both}()}
@@ -298,3 +300,6 @@ Other stringi_general_topics:
 }
 \concept{search_charclass}
 \concept{stringi_general_topics}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

@@ -60,6 +60,8 @@ Each match serves as a text line separator.
 \url{https://www.unicode.org/reports/tr18/}
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other search_split: 
 \code{\link{about_search}},
 \code{\link{stri_split_boundaries}()},
@@ -78,3 +80,6 @@ Other text_boundaries:
 }
 \concept{search_split}
 \concept{text_boundaries}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

@@ -28,7 +28,13 @@ This function is independent of the way <span style="font-family: Courier New, C
 
 Returns a logical vector. Its i-th element indicates whether the i-th string corresponds to a valid UTF-8 byte sequence.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other encoding\_detection: [`about_encoding`](about_encoding.md), [`stri_enc_detect2()`,](stri_enc_detect2.md) [`stri_enc_detect()`,](stri_enc_detect.md) [`stri_enc_isascii()`,](stri_enc_isascii.md) `stri_enc_isutf16be()`
 

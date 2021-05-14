@@ -155,9 +155,14 @@ stri_split_regex('Lorem ipsum dolor sit amet',
 
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other search_split: 
 \code{\link{about_search}},
 \code{\link{stri_split_boundaries}()},
 \code{\link{stri_split_lines}()}
 }
 \concept{search_split}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

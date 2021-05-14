@@ -46,6 +46,8 @@ stri_unique(c('gro\u00df', 'GROSS', 'Gro\u00df', 'Gross'), strength=1)
 \url{https://unicode-org.github.io/icu/userguide/collation/}
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other locale_sensitive: 
 \code{\link{\%s<\%}()},
 \code{\link{about_locale}},
@@ -67,3 +69,6 @@ Other locale_sensitive:
 \code{\link{stri_wrap}()}
 }
 \concept{locale_sensitive}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

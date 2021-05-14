@@ -76,6 +76,8 @@ or use, e.g., the subsetting operation like \code{x[] <- stri_...(x, ...)}.
 }
 
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other stringi_general_topics: 
 \code{\link{about_encoding}},
 \code{\link{about_locale}},
@@ -89,3 +91,6 @@ Other stringi_general_topics:
 }
 \concept{prepare_arg}
 \concept{stringi_general_topics}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

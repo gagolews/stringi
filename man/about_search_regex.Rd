@@ -207,6 +207,8 @@ J.E.F. Friedl, \emph{Mastering Regular Expressions}, O'Reilly, 2002
 \url{https://www.regular-expressions.info/unicode.html}
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other search_regex: 
 \code{\link{about_search}},
 \code{\link{stri_opts_regex}()}
@@ -224,3 +226,6 @@ Other stringi_general_topics:
 }
 \concept{search_regex}
 \concept{stringi_general_topics}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

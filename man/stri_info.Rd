@@ -37,3 +37,9 @@ Gives the current default settings used by the \pkg{ICU} library.
 }
 \concept{encoding}
 \concept{locale}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}
+\seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+}

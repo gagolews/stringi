@@ -30,6 +30,12 @@ You may find details on vectorization behavior in the man pages on each particul
 
 Generally, all our functions drop input objects\' attributes (e.g., [`names`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/names.html), [`dim`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/dim.html), etc.). This is generally because of advanced vectorization and for efficiency reasons. Thus, if arguments\' preserving is needed, please remember to copy important attributes manually or use, e.g., the subsetting operation like `x[] <- stri_...(x, ...)`.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other stringi\_general\_topics: [`about_encoding`](about_encoding.md), [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_charclass`](about_search_charclass.md), [`about_search_coll`](about_search_coll.md), [`about_search_fixed`](about_search_fixed.md), [`about_search_regex`](about_search_regex.md), [`about_search`](about_search.md), [`about_stringi`](about_stringi.md)

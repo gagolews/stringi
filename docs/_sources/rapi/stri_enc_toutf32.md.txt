@@ -28,6 +28,12 @@ Unlike `utf8ToInt`, if ill-formed UTF-8 byte sequences are detected, a correspon
 
 Returns a list of integer vectors. Missing values are converted to `NULL`s.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other encoding\_conversion: [`about_encoding`](about_encoding.md), [`stri_enc_fromutf32()`,](stri_enc_fromutf32.md) [`stri_enc_toascii()`,](stri_enc_toascii.md) [`stri_enc_tonative()`,](stri_enc_tonative.md) [`stri_enc_toutf8()`,](stri_enc_toutf8.md) `stri_encode()`

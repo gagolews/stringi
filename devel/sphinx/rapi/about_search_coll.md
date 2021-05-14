@@ -14,6 +14,10 @@ For more information on <span class="pkg">ICU</span>\'s Collator and the search 
 
 Please note that <span class="pkg">ICU</span>\'s `StringSearch`-based functions are often much slower that those to perform fixed pattern searches.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## References
 
 *ICU String Search Service* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/collation/string-search.html>
@@ -21,6 +25,8 @@ Please note that <span class="pkg">ICU</span>\'s `StringSearch`-based functions 
 L. Werner, *Efficient Text Searching in Java*, 1999, <https://icu-project.org/docs/papers/efficient_text_searching_in_java.html>
 
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other search\_coll: [`about_search`](about_search.md), `stri_opts_collator()`
 

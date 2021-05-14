@@ -94,7 +94,13 @@ For `stri_locate_all_*`, a list of integer matrices is returned. Each list eleme
 
 For `stri_locate_*_regex`, if the match is of zero length, `end` will be one character less than `start`. Note that `stri_locate_last_regex` searches from start to end, but skips overlapping matches, see the example below.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other search\_locate: [`about_search`](about_search.md), `stri_locate_all_boundaries()`
 

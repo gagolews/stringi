@@ -38,8 +38,13 @@ Because of the way this function is currently implemented,
 maximal file size cannot exceed ~0.67 GB.
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other files: 
 \code{\link{stri_read_raw}()},
 \code{\link{stri_write_lines}()}
 }
 \concept{files}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

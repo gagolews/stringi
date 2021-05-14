@@ -18,7 +18,7 @@ e1 \%stri$\% e2
 or a single atomic vector}
 }
 \value{
-Returns a character vector.
+Returns a character vector
 }
 \description{
 Provides access to base R's \code{\link{sprintf}} in form of a binary
@@ -46,4 +46,10 @@ x <- c("abcd", "\u00DF\u00B5\U0001F970", "abcdef")
 cat(sprintf("\%s\%6s\%s", "-", x, "-"), sep="\n")
 cat(sprintf("\%s\%s\%s", "-", stringi::stri_pad(x, 6), "-"), sep="\n")
 
+}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}
+\seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
 }

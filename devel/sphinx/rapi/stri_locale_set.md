@@ -30,7 +30,13 @@ See [stringi-locale](about_locale.md) for more information on the effect of chan
 
 `stri_locale_get` returns a string of the form `Language`, `Language_Country`, or `Language_Country_Variant`, e.g., `'en_US'`.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other locale\_management: [`about_locale`](about_locale.md), [`stri_locale_info()`,](stri_locale_info.md) `stri_locale_list()`
 

@@ -51,7 +51,13 @@ Note that for some Unicode strings, the extracted substrings might not be well-f
 
 `stri_sub` and `stri_sub_replace` return a character vector. `stri_sub<-` changes the `str` object in-place.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other indexing: [`stri_locate_all_boundaries()`,](stri_locate_boundaries.md) [`stri_locate_all()`,](stri_locate.md) `stri_sub_all()`
 

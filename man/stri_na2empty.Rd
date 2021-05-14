@@ -21,9 +21,14 @@ stri_na2empty(c('a', NA, '', 'b'))
 
 }
 \seealso{
+The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
 Other utils: 
 \code{\link{stri_list2matrix}()},
 \code{\link{stri_remove_empty}()},
 \code{\link{stri_replace_na}()}
 }
 \concept{utils}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+}

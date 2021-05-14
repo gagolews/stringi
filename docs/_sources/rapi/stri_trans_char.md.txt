@@ -32,7 +32,13 @@ Time complexity for each string in `str` is O(`stri_length(str)*stri_length(patt
 
 Returns a character vector.
 
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
 ## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Other transform: [`stri_trans_general()`,](stri_trans_general.md) [`stri_trans_list()`,](stri_trans_list.md) [`stri_trans_nfc()`,](stri_trans_nf.md) `stri_trans_tolower()`
 
