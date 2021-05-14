@@ -24,8 +24,6 @@
   and thus could have been gc'd in the meanwhile.
         TODO check alloc (Rf_alloc) in #396 and #395 too?)
 
-* [BUGFIX] .....TODO: #415 icu collator case level.....
-
 
 ## 1.6.1 (2021-05-05)
 
