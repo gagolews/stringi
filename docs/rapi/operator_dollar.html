@@ -351,14 +351,15 @@
 <span class="s">&quot;%s=&#39;%d&#39;&quot;</span> <span class="o">%s$%</span> <span class="nf">list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">),</span> <span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)</span>
 <span class="c1">## [1] &quot;a=&#39;1&#39;&quot; &quot;b=&#39;2&#39;&quot; &quot;c=&#39;3&#39;&quot;</span>
 <span class="c1"># sprintf field width:</span>
-<span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%6s%6s%6s&quot;</span><span class="p">,</span> <span class="s">&quot;-&quot;</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;asc&quot;</span><span class="p">,</span> <span class="s">&quot;ąść&quot;</span><span class="p">,</span> <span class="s">&quot;abcdefg&quot;</span><span class="p">),</span> <span class="s">&quot;-&quot;</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
-<span class="c1">##      -   asc     -</span>
-<span class="c1">##      -ąść     -</span>
-<span class="c1">##      -abcdefg     -</span>
-<span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%6s%s%6s&quot;</span><span class="p">,</span> <span class="s">&quot;-&quot;</span><span class="p">,</span> <span class="n">stringi</span><span class="o">::</span><span class="nf">stri_pad</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;asc&quot;</span><span class="p">,</span> <span class="s">&quot;ąść&quot;</span><span class="p">,</span> <span class="s">&quot;abcdefg&quot;</span><span class="p">),</span> <span class="m">6</span><span class="p">),</span> <span class="s">&quot;-&quot;</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
-<span class="c1">##      -   asc     -</span>
-<span class="c1">##      -   ąść     -</span>
-<span class="c1">##      -abcdefg     -</span>
+<span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;abcd&quot;</span><span class="p">,</span> <span class="s">&quot;\u00DF\u00B5\U0001F970&quot;</span><span class="p">,</span> <span class="s">&quot;abcdef&quot;</span><span class="p">)</span>
+<span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%s%6s%s&quot;</span><span class="p">,</span> <span class="s">&quot;-&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="s">&quot;-&quot;</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
+<span class="c1">## -  abcd-</span>
+<span class="c1">## -ßµ🥰-</span>
+<span class="c1">## -abcdef-</span>
+<span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%s%s%s&quot;</span><span class="p">,</span> <span class="s">&quot;-&quot;</span><span class="p">,</span> <span class="n">stringi</span><span class="o">::</span><span class="nf">stri_pad</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">6</span><span class="p">),</span> <span class="s">&quot;-&quot;</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
+<span class="c1">## -  abcd-</span>
+<span class="c1">## -  ßµ🥰-</span>
+<span class="c1">## -abcdef-</span>
 </pre></div>
 </div>
 </div>
@@ -380,7 +381,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-13 18:45:13.
+        Last updated on 2021-05-14 11:32:53.
       </span>
 
     </p>
