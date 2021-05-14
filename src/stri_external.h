@@ -71,6 +71,11 @@ using namespace icu;
 #include <Rdefines.h>
 #include <R_ext/Rdynload.h>
 
+#ifndef ALTREP
+/* ALTREP is R>=3.5.0 */
+#define ALTREP(x) (0)
+#endif
+
 #include <vector>
 #include <deque>
 

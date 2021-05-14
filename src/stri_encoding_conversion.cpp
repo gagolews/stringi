@@ -258,7 +258,7 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit, SEXP validate)
 
             if (IS_ASCII(curs) || IS_UTF8(curs)) {
                 R_len_t curs_n = LENGTH(curs);
-                const char* curs_s = CHAR(curs);
+                const char* curs_s = CHAR(curs);  // TODO: ALTREP will be problematic?
                 if (curs_n >= 3 &&
                         (uint8_t)(curs_s[0]) == UTF8_BOM_BYTE1 &&
                         (uint8_t)(curs_s[1]) == UTF8_BOM_BYTE2 &&
@@ -274,7 +274,7 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit, SEXP validate)
 
             // otherwise, we have an 8-bit encoding
             R_len_t curn = LENGTH(curs);
-            const char* curs_tab = CHAR(curs);
+            const char* curs_tab = CHAR(curs);  // TODO: ALTREP will be problematic?
             R_len_t k = 0;
             for (R_len_t j=0; j<curn; ++j) {
                 if (U8_IS_SINGLE(curs_tab[j]))
@@ -297,7 +297,7 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit, SEXP validate)
             SEXP curs = STRING_ELT(ret, i);
             if (curs == NA_STRING) continue;
 
-            const char* s = CHAR(curs);
+            const char* s = CHAR(curs);  // TODO: ALTREP will be problematic?
             R_len_t sn = LENGTH(curs);
             R_len_t j = 0;
             UChar32 c = 0;
@@ -393,7 +393,7 @@ SEXP stri_enc_toascii(SEXP str)
         }
 
         R_len_t curn = LENGTH(curs);
-        const char* curs_tab = CHAR(curs);
+        const char* curs_tab = CHAR(curs);  // TODO: ALTREP will be problematic?
 
         if (IS_UTF8(curs)) {
             R_len_t k = 0, j = 0;
@@ -630,7 +630,7 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
         UErrorCode status = U_ZERO_ERROR;
         UnicodeString encs(curs, curn, uconv_from, status); // FROM -> UTF-16 [this is the slow part]
         if (status == U_ILLEGAL_ARGUMENT_ERROR)
-            throw StriException(MSG__MEM_ALLOC_ERROR);
+            throw StriException(MSG__MEM_ALLOC_ERROR);  // see #395
         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
         R_len_t curn_tmp = encs.length();

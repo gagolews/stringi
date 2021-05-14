@@ -46,7 +46,7 @@ StriContainerListUTF8::StriContainerListUTF8()
 
 
 /**
- * Construct the Container from an  R list
+ * Construct the Container from an R list
  * @param rvec R list vector
  * @param nrecycle extend length of each character vector stored [vectorization]
  * @param shallowrecycle will stored character vectors be ever modified?

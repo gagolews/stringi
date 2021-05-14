@@ -116,7 +116,7 @@ SEXP stri_length(SEXP str)
         }
         else if (IS_UTF8(curs) || ucnvNative.isUTF8()) { // utf8 or native-utf8
             UChar32 c = 0;
-            const char* curs_s = CHAR(curs);
+            const char* curs_s = CHAR(curs);  // TODO: ALTREP will be problematic?
             R_len_t j = 0;
             R_len_t i = 0;
             while (c >= 0 && j < curs_n) {
@@ -141,7 +141,7 @@ SEXP stri_length(SEXP str)
             // native encoding which is neither 8-bit, nor UTF-8 (e.g., 'Big5')
             // this is weird, but we'll face it
             UErrorCode status = U_ZERO_ERROR;
-            const char* source = CHAR(curs);
+            const char* source = CHAR(curs);  // TODO: ALTREP will be problematic?
             const char* sourceLimit = source + curs_n;
             R_len_t j;
             for (j = 0; source != sourceLimit; j++) {

@@ -50,6 +50,9 @@ StriContainerListRaw::StriContainerListRaw()
  * @param rstr R object
  *
  * if you want nrecycle > n, call set_nrecycle
+ *
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-14)
+ *    #354 Force the copying of ALTREP data
  */
 StriContainerListRaw::StriContainerListRaw(SEXP rstr)
 {
@@ -64,8 +67,9 @@ StriContainerListRaw::StriContainerListRaw(SEXP rstr)
         this->init_Base(1, 1, true);
         this->data = new String8[this->n];
         if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
+        bool memalloc = ALTREP(rstr);  // #354: force copying of ALTREP data
         this->data[0].initialize((const char*)RAW(rstr), LENGTH(rstr),
-                                 false/*memalloc*/, false/*killbom*/, false/*isASCII*/); // shallow copy
+                                 memalloc, false/*killbom*/, false/*isASCII*/); // shallow copy
     }
     else if (Rf_isVectorList(rstr)) {
         R_len_t nv = LENGTH(rstr);
@@ -74,9 +78,11 @@ StriContainerListRaw::StriContainerListRaw(SEXP rstr)
         if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
         for (R_len_t i=0; i<this->n; ++i) {
             SEXP cur = VECTOR_ELT(rstr, i);
-            if (!isNull(cur))
+            if (!isNull(cur)) {
+                bool memalloc = ALTREP(cur);  // #354: force copying of ALTREP data
                 this->data[i].initialize((const char*)RAW(cur), LENGTH(cur),
-                                         false/*memalloc*/, false/*killbom*/, false/*isASCII*/); // shallow copy
+                                         memalloc, false/*killbom*/, false/*isASCII*/); // shallow copy
+            }
             // else leave as-is, i.e., NA
         }
     }
@@ -87,9 +93,11 @@ StriContainerListRaw::StriContainerListRaw(SEXP rstr)
         if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
         for (R_len_t i=0; i<this->n; ++i) {
             SEXP cur = STRING_ELT(rstr, i);
-            if (cur != NA_STRING)
+            if (cur != NA_STRING) {
+                bool memalloc = ALTREP(rstr);  // #354: force copying of ALTREP data
                 this->data[i].initialize(CHAR(cur), LENGTH(cur),
-                                         false/*memalloc*/, false/*killbom*/, false/*isASCII*/); // shallow copy
+                                         memalloc, false/*killbom*/, false/*isASCII*/); // shallow copy
+            }
             // else leave as-is, i.e., NA
         }
     }

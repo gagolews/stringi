@@ -63,7 +63,7 @@ public:
 #endif
         R_len_t ndata = LENGTH(rvec);
         this->init_Base(ndata, _nrecycle, true);
-        this->data = REAL(rvec);
+        this->data = REAL(rvec);  // TODO: ALTREP will be problematic?
     }
 
     //  StriContainerDouble(StriContainerDouble& container); // default-shallow

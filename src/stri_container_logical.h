@@ -64,7 +64,7 @@ public:
 #endif
         R_len_t ndata = LENGTH(rvec);
         this->init_Base(ndata, _nrecycle, true);
-        this->data = LOGICAL(rvec);
+        this->data = LOGICAL(rvec);  // TODO: ALTREP will be problematic?
     }
 
     //  StriContainerLogical(StriContainerLogical& container); // default-shallow

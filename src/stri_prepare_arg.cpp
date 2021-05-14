@@ -1153,7 +1153,7 @@ const char* stri__copy_string_Ralloc(SEXP x, const char* argname)
 
 
 
-/** Prepare double argument - one value, not NA [no re-encoding done!!!]
+/** Prepare string argument - one value, not NA [no re-encoding done!!!]
  *
  * If there are 0 elements -> error
  * If there are >1 elements -> warning

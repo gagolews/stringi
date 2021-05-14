@@ -1,28 +1,27 @@
 # What Is New in *stringi*
 
 
-## 1.6.2 (2021-XX-XX)
+## 1.6.2 (2021-05-14)
 
 * [BACKWARD INCOMPATIBILITY] In `stri_enc_list()`,
   `simplify` now defaults to `TRUE`.
 
-* [NEW FEATURE] #428: In `stri_flatten`, `na_empty=NA` now omits missing values.
-
 * [NEW FEATURE] #425: The outputs of `stri_enc_list()`, `stri_locale_list()`,
   `stri_timezone_list()`, and `stri_trans_list()` are now sorted.
+
+* [NEW FEATURE] #428: In `stri_flatten`, `na_empty=NA` now omits missing values.
+
+* [BUILD TIME] #431: Pre-4.9.0 GCC has `::max_align_t`,
+  but not `std::max_align_t`, added a (possible) workaround, see the INSTALL
+  file.
 
 * [BUGFIX] #429: `stri_width()` misclassified the width of certain
   code points (including grave accent, Eszett, etc.);
   General category Sk (Symbol, modifier) is no longer of width 0,
   UCHAR_EAST_ASIAN_WIDTH of U_EA_AMBIGUOUS is no longer of width 2.
 
-* [BUILD TIME] #431: Pre-4.9.0 GCC has `::max_align_t`,
-  but not `std::max_align_t`, added a (possible) workaround, see the INSTALL
-  file.
-
-* [BUGFIX] ......TODO: #354: ALTREP vectors and CHARSXPs were not copied,
-  and thus could have been gc'd in the meanwhile.
-        TODO check alloc (Rf_alloc) in #396 and #395 too?)
+* [BUGFIX] #354: `ALTREP` `CHARSXP`s were not copied, and thus could have been
+  garbage collected in the so-called meanwhile (with thanks to @jimhester).
 
 
 ## 1.6.1 (2021-05-05)

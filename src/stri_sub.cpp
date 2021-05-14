@@ -495,7 +495,7 @@ SEXP stri__sub_replacement_all_single(SEXP curs,
         Rf_warning(MSG__WARN_RECYCLING_RULE2);
 
 
-    const char* curs_s = CHAR(curs); // already in UTF-8
+    const char* curs_s = CHAR(curs); // already in UTF-8  // TODO: ALTREP will be problematic?
     R_len_t curs_n = LENGTH(curs);
 
     // first check for NAs....
@@ -585,7 +585,7 @@ SEXP stri__sub_replacement_all_single(SEXP curs,
 
         // then, copy the corresponding replacement string
         SEXP value_cur = STRING_ELT(value, i%value_len);
-        const char* value_s = CHAR(value_cur);
+        const char* value_s = CHAR(value_cur);  // TODO: ALTREP will be problematic?
         R_len_t value_n = LENGTH(value_cur);
         if (value_n > 0) {
             R_len_t buf_size = buf.size();
