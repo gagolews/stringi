@@ -66,14 +66,14 @@ Other datetime: [`stri_datetime_add()`,](stri_datetime_add.md) [`stri_datetime_c
 ```r
 stri_datetime_fields(stri_datetime_now())
 ##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth
-## 1 2021     5  13   18     45     10          23         20           3
+## 1 2021     5  14   11     32     49         502         20           3
 ##   DayOfYear DayOfWeek Hour12 AmPm Era
-## 1       133         5      6    2   2
+## 1       134         6     11    1   2
 stri_datetime_fields(stri_datetime_now(), locale='@calendar=hebrew')
 ##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth
-## 1 5781    10   2   18     45     10          26         35           1
+## 1 5781    10   3   11     32     49         505         35           1
 ##   DayOfYear DayOfWeek Hour12 AmPm Era
-## 1       237         5      6    2   1
+## 1       238         6     11    1   1
 stri_datetime_symbols(locale='@calendar=hebrew')$Month[
    stri_datetime_fields(stri_datetime_now(), locale='@calendar=hebrew')$Month
 ]

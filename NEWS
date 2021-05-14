@@ -17,15 +17,13 @@
   UCHAR_EAST_ASIAN_WIDTH of U_EA_AMBIGUOUS is no longer of width 2.
 
 * [BUGFIX] .....TODO: #431: Pre-4.9.0 GCC has `::max_align_t`,
-  but not `std::max_align_t`.
+  but not `std::max_align_t`.  .. confirm: is that fixed?????
 
 * [BUGFIX] .....TODO: #430: md5sum? ... need more data ...
 
 * [BUGFIX] ......TODO: #354: ALTREP vectors and CHARSXPs were not copied,
   and thus could have been gc'd in the meanwhile.
-        TODO check alloc (RF_alloc) in #396 and #395 too?)
-
-
+        TODO check alloc (Rf_alloc) in #396 and #395 too?)
 
 * [BUGFIX] .....TODO: #415 icu collator case level.....
 

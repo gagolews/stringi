@@ -50,12 +50,13 @@ Returns a character vector.
 "%s='%d'" %s$% list(c("a", "b", "c"), 1:3)
 ## [1] "a='1'" "b='2'" "c='3'"
 # sprintf field width:
-cat(sprintf("%6s%6s%6s", "-", c("asc", "ąść", "abcdefg"), "-"), sep="\n")
-##      -   asc     -
-##      -ąść     -
-##      -abcdefg     -
-cat(sprintf("%6s%s%6s", "-", stringi::stri_pad(c("asc", "ąść", "abcdefg"), 6), "-"), sep="\n")
-##      -   asc     -
-##      -   ąść     -
-##      -abcdefg     -
+x <- c("abcd", "\u00DF\u00B5\U0001F970", "abcdef")
+cat(sprintf("%s%6s%s", "-", x, "-"), sep="\n")
+## -  abcd-
+## -ßµ🥰-
+## -abcdef-
+cat(sprintf("%s%s%s", "-", stringi::stri_pad(x, 6), "-"), sep="\n")
+## -  abcd-
+## -  ßµ🥰-
+## -abcdef-
 ```
