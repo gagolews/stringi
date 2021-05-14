@@ -64,7 +64,7 @@ StriContainerListInt::StriContainerListInt(SEXP rstr)
         this->init_Base(1, 1, true);
         this->data = new IntVec[this->n];
         if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
-        this->data[0].initialize((const int*)INTEGER(rstr), LENGTH(rstr)); // shallow copy
+        this->data[0].initialize((const int*)INTEGER(rstr), LENGTH(rstr)); // shallow copy // TODO: ALTREP will be problematic?
     }
     else // if (Rf_isVectorList(rstr)) -- args already checked
     {
@@ -75,7 +75,7 @@ StriContainerListInt::StriContainerListInt(SEXP rstr)
         for (R_len_t i=0; i<this->n; ++i) {
             SEXP cur = VECTOR_ELT(rstr, i);
             if (!isNull(cur))
-                this->data[i].initialize((const int*)INTEGER(cur), LENGTH(cur)); // shallow copy
+                this->data[i].initialize((const int*)INTEGER(cur), LENGTH(cur)); // shallow copy // TODO: ALTREP will be problematic?
             // else leave as-is, i.e., NULL/NA
         }
     }

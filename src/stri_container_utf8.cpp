@@ -55,6 +55,9 @@ StriContainerUTF8::StriContainerUTF8()
  *
  * @version 1.0.6 (Marek Gagolewski, 2017-05-25)
  *    #270 latin-1 is windows-1252 on Windows
+ *
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-14)
+ *    #354 Force the copying of ALTREP data
  */
 StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallowrecycle)
 {
@@ -102,11 +105,13 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
 
         if (IS_ASCII(curs)) {
             // ASCII - ultra fast
-            this->str[i].initialize(CHAR(curs), LENGTH(curs), false/*!_shallowrecycle*/, false/*killbom*/, true/*isASCII*/);
+            bool memalloc = ALTREP(rstr);  // #354: force copying of ALTREP data
+            this->str[i].initialize(CHAR(curs), LENGTH(curs), memalloc/*!_shallowrecycle*/, false/*killbom*/, true/*isASCII*/);
         }
         else if (IS_UTF8(curs)) {
             // UTF-8 - ultra fast
-            this->str[i].initialize(CHAR(curs), LENGTH(curs), false/*!_shallowrecycle*/, true/*killbom*/, false/*isASCII*/);
+            bool memalloc = ALTREP(rstr);  // #354: force copying of ALTREP data
+            this->str[i].initialize(CHAR(curs), LENGTH(curs), memalloc/*!_shallowrecycle*/, true/*killbom*/, false/*isASCII*/);
             // the same is done for native encoding && ucnvNative_isUTF8
             // @TODO: use macro (here & ucnvNative_isUTF8 below)
         }
@@ -127,8 +132,9 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
                 if (ucnvNative.isUTF8()) {
                     // UTF-8 - ultra fast
                     // @TODO: use macro
+                    bool memalloc = ALTREP(rstr);  // #354: force copying of ALTREP data
                     this->str[i].initialize(CHAR(curs), LENGTH(curs),
-                                            false /*!_shallowrecycle*/, true/*killbom*/, false/*isASCII*/);
+                                            memalloc/*!_shallowrecycle*/, true/*killbom*/, false/*isASCII*/);
                     continue;
                 }
 

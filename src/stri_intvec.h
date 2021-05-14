@@ -73,11 +73,10 @@ public:
 
 
     /** constructor
-     * @param str character buffer
+     * @param data buffer
      * @param n buffer length (not including NUL)
-     * @param memalloc should a deep copy of the buffer be done?
      */
-    IntVec(const int* data, R_len_t n)
+    IntVec(const int* data, R_len_t n)  // TODO: bool memalloc
     {
         initialize(data, n);
     }
