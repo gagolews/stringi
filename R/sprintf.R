@@ -31,12 +31,98 @@
 ## EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
+#' @title
+#' Format Strings
+#'
+#' @description
+#' A Unicode-aware replacements for the built-in \code{\link[base]{sprintf}}
+#' function. Moreover, \code{stri_printf} displays/writes formatted strings.
+#'
+#' @details
+#' Vectorized over \code{format} and all vectors passed via \code{...}.
+#'
+#' \code{stri_string_format} is a synonym for \code{stri_sprintf}.
+#'
+#' Note that \code{stri_printf} treats missing values as \code{"NA"} strings
+#' by default.
+#'
+#' Note that Unicode code points may have various widths when
+#' printed on the console and that, by default, the function takes that
+#' into account. By changing the state of the \code{use_length}
+#' argument, this function act as if each code point was of width 1.
+#'
+#' @param format character vector of format strings
+#' @param ... logical, integer, real, or character vectors (or objects
+#'     coercible to)
+#' @param na_string single string to represent missing values;
+#'     if \code{NA}, missing values in \code{...}
+#'     result in the corresponding outputs be missing too;
+#'     use \code{"NA"} for compatibility with base R
+#' @param inf_string single string to represent the (unsigned) infinity
+#' @param na_string single string to represent the not-a-number
+#' @param use_length single logical value; should the number of code
+#' points be used when applying modifiers such as \code{\%20s}
+#' instead of the total code point width (see \code{\link{stri_width}})?
+#' @param file see \code{\link[base]{cat}}
+#' @param sep see \code{\link[base]{cat}}
+#' @param append see \code{\link[base]{cat}}
+#'
+#' @return
+#' \code{stri_printf} is used for its side effect, which is printing
+#' of text on the standard output or other connection. Hence, it returns
+#' \code{invisible(NULL)}.
+#'
+#' The other function return a character vector.
+#'
+#' @rdname stri_sprintf
+#' @examples
+#' stri_sprintf("%10s=%.3f", "pi", pi)
+#'
+#' @export
+stri_sprintf <- function(
+    format, ...,
+    na_string=NA_character_,
+    inf_string="Inf",
+    nan_string="NaN",
+    use_length=FALSE
+) {
+    # force eval of ... here
+    .Call(C_stri_sprintf, format, list(...),
+        na_string, inf_string, nan_string, use_length)
+}
+
+
+#' @rdname stri_sprintf
+#' @export
+stri_string_format <- stri_sprintf
+
+
+#' @export
+stri_printf <- function(
+    format, ...,
+    file="",
+    sep="\n",
+    append=FALSE,
+    na_string="NA",
+    inf_string="Inf",
+    nan_string="NaN",
+    use_length=FALSE
+) {
+    # force eval of ... here
+    str <- .Call(C_stri_sprintf, format, list(...),
+        na_string, inf_string, nan_string, use_length)
+    cat(str, file=file, sep=sep, append=append)
+}
+
+### TODO: update
+
 
 #' @title
 #' C-Style Formatting with sprintf as a Binary Operator
+#' TODO: call stri_sprintf
 #'
 #' @description
-#' Provides access to base R's \code{\link{sprintf}} in form of a binary
+#' Provides access to base R's \code{\link[base]{sprintf}} in form of a binary
 #' operator in a way similar to Python's \code{\%} overloaded for strings.
 #'
 #'
@@ -47,12 +133,12 @@
 #' \code{e1 \%s$\% atomic_vector} is equivalent to
 #' \code{e1 \%s$\% list(atomic_vector)}.
 #'
-#' Note that \code{\link{sprintf}} takes field width in bytes,
+#' Note that \code{\link[base]{sprintf}} takes field width in bytes,
 #' not Unicode code points. See Examples for a workaround.
 #'
 #'
-#' @param e1 format strings, see \code{\link{sprintf}} for syntax
-#' @param e2 a list of atomic vectors to be passed to \code{\link{sprintf}}
+#' @param e1 format strings, see \code{\link[base]{sprintf}} for syntax
+#' @param e2 a list of atomic vectors to be passed to \code{\link[base]{sprintf}}
 #' or a single atomic vector
 #'
 #' @return

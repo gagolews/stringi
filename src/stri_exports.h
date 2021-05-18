@@ -36,7 +36,6 @@
 #include <R.h>
 #include <Rdefines.h>
 
-
 // compare.cpp:
 SEXP stri_cmp(SEXP e1, SEXP e2, SEXP opts_collator=R_NilValue);
 SEXP stri_cmp_le(SEXP e1, SEXP e2, SEXP opts_collator=R_NilValue);
@@ -149,7 +148,15 @@ SEXP stri_enc_isutf32be(SEXP str);
 
 // pad.cpp
 SEXP stri_pad(SEXP str, SEXP width, SEXP side=Rf_mkString("left"),
-              SEXP pad=Rf_mkString(" "), SEXP use_length=Rf_ScalarLogical(FALSE));
+    SEXP pad=Rf_mkString(" "), SEXP use_length=Rf_ScalarLogical(FALSE));
+
+
+// sprintf.cpp
+SEXP stri_sprintf(SEXP format, SEXP x,
+    SEXP na_string=Rf_ScalarString(NA_STRING),
+    SEXP inf_string=Rf_mkString("Inf"),
+    SEXP nan_string=Rf_mkString("NaN"),
+    SEXP use_length=Rf_ScalarLogical(FALSE));
 
 // wrap.cpp
 SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent=Rf_ScalarInteger(2),

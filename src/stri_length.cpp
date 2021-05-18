@@ -414,6 +414,7 @@ int stri__width_string(const char* str_cur_s, int str_cur_n)
     return cur_width;
 }
 
+
 /**
   * Determine the width of strings
   *

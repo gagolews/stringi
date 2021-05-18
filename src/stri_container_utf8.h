@@ -34,6 +34,7 @@
 #define __stri_container_utf8_h
 
 #include "stri_container_base.h"
+#include "stri_string8.h"
 
 
 /**

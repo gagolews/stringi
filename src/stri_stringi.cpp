@@ -191,6 +191,7 @@ const R_CallMethodDef cCallMethods[] = {
     STRI__MK_CALL("C_stri_split_lines",                  stri_split_lines,                2),
     STRI__MK_CALL("C_stri_split_lines1",                 stri_split_lines1,               1),
     STRI__MK_CALL("C_stri_split_regex",                  stri_split_regex,                7),
+    STRI__MK_CALL("C_stri_sprintf",                      stri_sprintf,                    6),
     STRI__MK_CALL("C_stri_startswith_charclass",         stri_startswith_charclass,       4),
     STRI__MK_CALL("C_stri_startswith_coll",              stri_startswith_coll,            5),
     STRI__MK_CALL("C_stri_startswith_fixed",             stri_startswith_fixed,           5),
