@@ -17,7 +17,10 @@ autoconf:
 	    )"
 
 r: autoconf
-	R CMD INSTALL . --configure-args='--disable-pkg-config --enable-gcc-debug --enable-gcc-pedantic' --html
+	R CMD INSTALL . --html \
+	    --configure-args="--disable-pkg-config \
+	                      --enable-gcc-debug \
+	                      --enable-gcc-pedantic"
 
 r-icu-system:
 	R CMD INSTALL .
@@ -43,7 +46,10 @@ check: stop-on-utf8 build
 	cd .. && R CMD check `ls -t ${PKGNAME}*.tar.gz | head -1` --no-manual
 
 check-cran: stop-on-utf8 build
-	cd .. && STRINGI_DISABLE_PKG_CONFIG=1 R_DEFAULT_INTERNET_TIMEOUT=240 _R_CHECK_CRAN_INCOMING_REMOTE_=FALSE R CMD check `ls -t ${PKGNAME}*.tar.gz | head -1` --as-cran
+	cd .. && STRINGI_DISABLE_PKG_CONFIG=1 \
+	    R_DEFAULT_INTERNET_TIMEOUT=240 \
+	    _R_CHECK_CRAN_INCOMING_REMOTE_=FALSE \
+	    R CMD check `ls -t ${PKGNAME}*.tar.gz | head -1` --as-cran
 
 
 ############## Rd2rst: https://github.com/gagolews/Rd2rst ######################

@@ -10,6 +10,7 @@ kate-swp$
 ^src/boost
 ^src-i386
 ^src-x64
+^src/\.clangd$
 ^src/.*\.o$
 ^src/.*\.a$
 ^src/.*\.so$
