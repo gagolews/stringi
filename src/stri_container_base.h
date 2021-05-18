@@ -33,6 +33,10 @@
 #ifndef __stri_container_base_h
 #define __stri_container_base_h
 
+#include "stri_external.h"
+#include "stri_exception.h"
+
+
 
 /**
  * Base class for all StriContainers

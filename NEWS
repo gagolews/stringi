@@ -1,6 +1,20 @@
 # What Is New in *stringi*
 
 
+
+## 1.6.3-devel (2021-xx-yy)
+
+* TODO ... [NEW FEATURE] #420: `stri_sprintf` (alias: `stri_string_format`)
+  is a Unicode-aware replacement for the base `sprintf`:
+  it adds a customised handling of `NA`s (on demand) and
+  computing field size based on code point width.
+  Moreover, `stri_printf` can be used to display formatted strings
+  conveniently.
+
+* TODO ... [NEW FEATURE] #434: `stri_datetime_format` and `stri_datetime_parse`
+  is now also vectorised with respect to the `format` argument.
+
+
 ## 1.6.2 (2021-05-14)
 
 * [BACKWARD INCOMPATIBILITY] In `stri_enc_list()`,
@@ -12,13 +26,13 @@
 * [NEW FEATURE] #428: In `stri_flatten`, `na_empty=NA` now omits missing values.
 
 * [BUILD TIME] #431: Pre-4.9.0 GCC has `::max_align_t`,
-  but not `std::max_align_t`, added a (possible) workaround, see the INSTALL
+  but not `std::max_align_t`, added a (possible) workaround, see the `INSTALL`
   file.
 
 * [BUGFIX] #429: `stri_width()` misclassified the width of certain
   code points (including grave accent, Eszett, etc.);
-  General category Sk (Symbol, modifier) is no longer of width 0,
-  UCHAR_EAST_ASIAN_WIDTH of U_EA_AMBIGUOUS is no longer of width 2.
+  General category *Sk* (Symbol, modifier) is no longer of width 0,
+  `UCHAR_EAST_ASIAN_WIDTH` of `U_EA_AMBIGUOUS` is no longer of width 2.
 
 * [BUGFIX] #354: `ALTREP` `CHARSXP`s were not copied, and thus could have been
   garbage collected in the so-called meanwhile (with thanks to @jimhester).

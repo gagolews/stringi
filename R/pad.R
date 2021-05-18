@@ -67,7 +67,7 @@
 #' points be used instead of the total code point width
 #'  (see \code{\link{stri_width}})?
 #'
-#' @return Returns a character vector.
+#' @return These functions return a character vector.
 #'
 #' @rdname stri_pad
 #' @examples

@@ -52,7 +52,7 @@ sides on which padding character is added
 (\code{left}, \code{right}, or \code{both})}
 }
 \value{
-Returns a character vector.
+These functions return a character vector.
 }
 \description{
 Add multiple \code{pad} characters at the given \code{side}(s) of each string
