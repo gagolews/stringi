@@ -116,6 +116,7 @@
 #define MSG__ICU_WARNING \
    "%s (%s)"
 
+
 #define MSG__EXPECTED_NONNEGATIVE \
    "argument `%s`: expected a nonnegative numeric value"
 
@@ -201,7 +202,7 @@
    "unknown character class"
 
 #define MSG__ARG_EXPECTED_NOT_NA \
-   "missing value in argument `%s` is not supported"
+   "missing values in argument `%s` is not supported"
 
 #define MSG__ARG_EXPECTED_NOT_EMPTY \
    "argument `%s` should be a non-empty vector"
@@ -229,6 +230,9 @@
 
 #define MSG__ARG_EXPECTED_LIST_INTEGER \
    "argument `%s` should be a list of integer vectors or an integer vector (or an object coercible to)"
+
+#define MSG__ARG_EXPECTED_VECTOR \
+   "argument `%s` should be a vector"
 
 
 #define MSG__ARG_EXPECTED_RAW \
@@ -275,6 +279,9 @@
 
 #define MSG__ARG_EXCLUSIVE \
    "arguments `%s` and `%s` are mutually exclusive in this context"
+
+#define MSG__ARG_NEED_MORE \
+   "too few arguments"
 
 
 #define MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED \

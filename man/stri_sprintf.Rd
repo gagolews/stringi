@@ -26,8 +26,7 @@ stri_string_format(
 \arguments{
 \item{format}{character vector of format strings}
 
-\item{...}{logical, integer, real, or character vectors (or objects
-coercible to)}
+\item{...}{vectors (coercible to integer, real, or character)}
 
 \item{na_string}{single string to represent the not-a-number}
 
@@ -45,7 +44,7 @@ instead of the total code point width (see \code{\link{stri_width}})?}
 }
 \value{
 \code{stri_printf} is used for its side effect, which is printing
-of text on the standard output or other connection. Hence, it returns
+text on the standard output or other connection/file. Hence, it returns
 \code{invisible(NULL)}.
 
 The other function return a character vector.
@@ -59,8 +58,8 @@ Vectorized over \code{format} and all vectors passed via \code{...}.
 
 \code{stri_string_format} is a synonym for \code{stri_sprintf}.
 
-Note that \code{stri_printf} treats missing values as \code{"NA"} strings
-by default.
+Note that \code{stri_printf} treats missing values in \code{...}
+as \code{"NA"} strings by default.
 
 Note that Unicode code points may have various widths when
 printed on the console and that, by default, the function takes that
@@ -68,7 +67,12 @@ into account. By changing the state of the \code{use_length}
 argument, this function act as if each code point was of width 1.
 }
 \examples{
-stri_sprintf("\%10s=\%.3f", "pi", pi)
+cat(stri_sprintf("\%4s=\%.3f", c("e", "e\u00b2", "\u03c0", "\u03c0\u00b2"),
+    c(exp(1), exp(2), pi, pi^2)), sep="\n")
+
+# using a "preformatted" logical vector:
+x <- c(TRUE, FALSE, FALSE, NA, TRUE, FALSE)
+stri_sprintf("\%s) \%s", letters[seq_along(x)], c("\u2718", "\u2713")[x+1])
 
 }
 \author{

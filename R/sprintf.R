@@ -35,25 +35,32 @@
 #' Format Strings
 #'
 #' @description
-#' A Unicode-aware replacements for the built-in \code{\link[base]{sprintf}}
-#' function. Moreover, \code{stri_printf} displays/writes formatted strings.
+#' A Unicode-aware replacement for the built-in \code{\link[base]{sprintf}}
+#' function. Moreover, \code{stri_printf} prints formatted strings.
 #'
 #' @details
 #' Vectorized over \code{format} and all vectors passed via \code{...}.
 #'
 #' \code{stri_string_format} is a synonym for \code{stri_sprintf}.
 #'
-#' Note that \code{stri_printf} treats missing values as \code{"NA"} strings
-#' by default.
+#' Note that \code{stri_printf} treats missing values in \code{...}
+#' as \code{"NA"} strings by default.
 #'
 #' Note that Unicode code points may have various widths when
 #' printed on the console and that, by default, the function takes that
 #' into account. By changing the state of the \code{use_length}
 #' argument, this function act as if each code point was of width 1.
 #'
+#' For \code{\%d} and \code{\%f} formats, factors are treated as integer
+#' vectors (underlying codes) and so are date and time objects, etc.
+#'
+#' This function is not locale sensitive. For instance, numbers are
+#' always formatted in the "POSIX" style, e.g., \code{-123456.789}.
+#' Such a feature might be added at a later date, though.
+#'
+#'
 #' @param format character vector of format strings
-#' @param ... logical, integer, real, or character vectors (or objects
-#'     coercible to)
+#' @param ... vectors (coercible to integer, real, or character)
 #' @param na_string single string to represent missing values;
 #'     if \code{NA}, missing values in \code{...}
 #'     result in the corresponding outputs be missing too;
@@ -69,15 +76,22 @@
 #'
 #' @return
 #' \code{stri_printf} is used for its side effect, which is printing
-#' of text on the standard output or other connection. Hence, it returns
+#' text on the standard output or other connection/file. Hence, it returns
 #' \code{invisible(NULL)}.
 #'
-#' The other function return a character vector.
+#' The other functions return a character vector.
+#'
+#'
+#' @examples
+#' printf("%4s=%.3f", c("e", "e\u00b2", "\u03c0", "\u03c0\u00b2"),
+#'     c(exp(1), exp(2), pi, pi^2))
+#'
+#' # using a "preformatted" logical vector:
+#' x <- c(TRUE, FALSE, FALSE, NA, TRUE, FALSE)
+#' stri_sprintf("%s) %s", letters[seq_along(x)], c("\u2718", "\u2713")[x+1])
+#'
 #'
 #' @rdname stri_sprintf
-#' @examples
-#' stri_sprintf("%10s=%.3f", "pi", pi)
-#'
 #' @export
 stri_sprintf <- function(
     format, ...,
