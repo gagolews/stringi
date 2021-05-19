@@ -6,17 +6,15 @@
 \alias{stringi-arguments}
 \title{Passing Arguments to Functions in \pkg{stringi}}
 \description{
-Below we explain how \pkg{stringi} deals (in most of the cases)
-with its functions' arguments.
+Below we explain how \pkg{stringi} deals with its functions' arguments.
 }
 \section{Coercion of Arguments}{
 
 
 When a character vector argument is expected, factors and other vectors
-coercible to characters vectors
-are silently converted with \code{\link{as.character}},
-otherwise an error is generated.
-Coercion from a list of non-atomic vectors each of length 1
+coercible to characters vectors are silently converted with
+\code{\link{as.character}}, otherwise an error is generated.
+Coercion from a list which does not consist of length-1 atomic vectors
 issues a warning.
 
 When a logical, numeric, or integer vector argument is expected,
@@ -34,12 +32,10 @@ Due to this property you may,
 for instance, search for one pattern in each given string,
 search for each pattern in one given string,
 and search for the i-th pattern within the i-th string.
-This behavior sometimes leads to peculiar results - we assume you know what
-you are doing.
 
 We of course took great care of performance issues:
 e.g., in regular expression searching, regex matchers are reused
-from iteration to iteration, as long it is possible.
+from iteration to iteration, as long as it is possible.
 
 Functions with some non-vectorized arguments are rare:
 e.g., regular expression matcher's settings are established
@@ -62,17 +58,20 @@ on each particular function of your interest.
 \pkg{stringi} handles missing values consistently.
 For any vectorized operation, if at least one vector element is missing,
 then the corresponding resulting value is also set to \code{NA}.
+
+If some function violates this rule (for a very important reason),
+this is clearly indicated in its documentation (with discussion).
 }
 
-\section{Preserving Input Objects' Attributes}{
+\section{Preserving Object Attributes}{
 
 
 Generally, all our functions drop input objects' attributes
 (e.g., \code{\link{names}}, \code{\link{dim}}, etc.).
-This is generally because of advanced vectorization and for efficiency reasons.
-Thus, if arguments' preserving is needed,
-please remember to copy important attributes manually
-or use, e.g., the subsetting operation like \code{x[] <- stri_...(x, ...)}.
+This is due to deep vectorization as well as for efficiency reasons.
+If the preservation of attributes is needed,
+important attributes can be manually copied. Alternatively, the notation
+\code{x[] <- stri_...(x, ...)} can sometimes be used too.
 }
 
 \seealso{

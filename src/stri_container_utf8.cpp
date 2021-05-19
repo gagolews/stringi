@@ -336,7 +336,7 @@ SEXP StriContainerUTF8::toR(R_len_t i) const
         return NA_STRING;
     }
     else if (curs->isReadOnly()) {
-        // if ReadOnly, then surely in ASCII or UTF-8 and without BOMS (see SEXP-constructor)
+        // if ReadOnly, then surely in ASCII or UTF-8 and without BOMs (see SEXP-constructor)
         return STRING_ELT(sexp, i%n);
     }
     else {

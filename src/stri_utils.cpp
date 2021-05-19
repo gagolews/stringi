@@ -67,6 +67,9 @@ SEXP stri_list2matrix(SEXP x, SEXP byrow, SEXP fill, SEXP n_min)
         if (k > m) m = k;
     }
 
+    // TODO: the following does not re-encode strings to UTF-8,
+    // it merely emplaces them in a matrix as-is
+
     SEXP ret;
     if (!byrow2) {
         STRI__PROTECT(ret = Rf_allocMatrix(STRSXP, m, n));

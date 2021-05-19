@@ -33,6 +33,7 @@
 #include "stri_stringi.h"
 #include <unicode/uloc.h>
 
+
 /**
  * Prepare list argument
  *
@@ -302,13 +303,16 @@ SEXP stri_prepare_arg_string(SEXP x, const char* argname)
  *
  * @version 1.2.1 (Marek Gagolewski, 2018-04-21)
  *    #285: warn if coercing from a non-trivial list
+ *
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-19)
+ *    factors_as_strings
  */
-SEXP stri_prepare_arg_double(SEXP x, const char* argname)
+SEXP stri_prepare_arg_double(SEXP x, const char* argname, bool factors_as_strings)
 {
     if ((SEXP*)argname == (SEXP*)R_NilValue)
         argname = "<noname>";
 
-    if (Rf_isFactor(x))
+    if (factors_as_strings && Rf_isFactor(x))
     {
         SEXP call;
         PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
@@ -421,13 +425,16 @@ SEXP stri_prepare_arg_POSIXct(SEXP x, const char* argname)
  *
  * @version 1.2.1 (Marek Gagolewski, 2018-04-21)
  *    #285: warn if coercing from a non-trivial list
+ *
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-19)
+ *    factors_as_strings
  */
-SEXP stri_prepare_arg_integer(SEXP x, const char* argname)
+SEXP stri_prepare_arg_integer(SEXP x, const char* argname, bool factors_as_strings)
 {
     if ((SEXP*)argname == (SEXP*)R_NilValue)
         argname = "<noname>";
 
-    if (Rf_isFactor(x)) // factors must be checked first (as they are currently represented as integer vectors)
+    if (factors_as_strings && Rf_isFactor(x)) // factors must be checked first (as they are currently represented as integer vectors)
     {
         SEXP call;
         PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
@@ -493,6 +500,9 @@ SEXP stri_prepare_arg_integer(SEXP x, const char* argname)
  *
  * @version 1.2.1 (Marek Gagolewski, 2018-04-21)
  *    #285: warn if coercing from a non-trivial list
+ *
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-19)
+ *    call as.logical on factors (not as.character+coerce to LGLSXP)
  */
 SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
 {
@@ -502,10 +512,13 @@ SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
     if (Rf_isFactor(x))
     {
         SEXP call;
-        PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
+//         PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
+//         PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
+//         PROTECT(x = Rf_coerceVector(x, LGLSXP));
+//         UNPROTECT(3);
+        PROTECT(call = Rf_lang2(Rf_install("as.logical"), x));
         PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
-        PROTECT(x = Rf_coerceVector(x, LGLSXP));
-        UNPROTECT(3);
+        UNPROTECT(2);
         return x;
     }
     else if (Rf_isVectorList(x) || isObject(x))
@@ -562,13 +575,16 @@ SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
  *
  * @version 1.2.1 (Marek Gagolewski, 2018-04-21)
  *    #285: warn if coercing from a non-trivial list
+ *
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-19)
+ *    factors_as_strings
  */
-SEXP stri_prepare_arg_raw(SEXP x, const char* argname)
+SEXP stri_prepare_arg_raw(SEXP x, const char* argname, bool factors_as_strings)
 {
     if ((SEXP*)argname == (SEXP*)R_NilValue)
         argname = "<noname>";
 
-    if (Rf_isFactor(x))
+    if (factors_as_strings && Rf_isFactor(x))
     {
         SEXP call;
         PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
@@ -716,14 +732,17 @@ SEXP stri_prepare_arg_string_1(SEXP x, const char* argname)
  *
  * @version 1.2.1 (Marek Gagolewski, 2018-04-21)
  *    #285: warn if coercing from a non-trivial list
+ *
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-19)
+ *    factors_as_strings
  */
-SEXP stri_prepare_arg_double_1(SEXP x, const char* argname)
+SEXP stri_prepare_arg_double_1(SEXP x, const char* argname, bool factors_as_strings)
 {
     if ((SEXP*)argname == (SEXP*)R_NilValue)
         argname = "<noname>";
 
     int nprotect = 0;
-    if (Rf_isFactor(x))
+    if (factors_as_strings && Rf_isFactor(x))
     {
         SEXP call;
         PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
@@ -803,14 +822,17 @@ SEXP stri_prepare_arg_double_1(SEXP x, const char* argname)
  *
  * @version 1.2.1 (Marek Gagolewski, 2018-04-21)
  *    #285: warn if coercing from a non-trivial list
+ *
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-19)
+ *    factors_as_strings
  */
-SEXP stri_prepare_arg_integer_1(SEXP x, const char* argname)
+SEXP stri_prepare_arg_integer_1(SEXP x, const char* argname, bool factors_as_strings)
 {
     if ((SEXP*)argname == (SEXP*)R_NilValue)
         argname = "<noname>";
 
     int nprotect = 0;
-    if (Rf_isFactor(x)) // factors must be checked first (as they are currently represented as integer vectors)
+    if (factors_as_strings && Rf_isFactor(x)) // factors must be checked first (as they are currently represented as integer vectors)
     {
         SEXP call;
         PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
@@ -890,6 +912,9 @@ SEXP stri_prepare_arg_integer_1(SEXP x, const char* argname)
  *
  * @version 1.2.1 (Marek Gagolewski, 2018-04-21)
  *    #285: warn if coercing from a non-trivial list
+ *
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-19)
+ *    call as.logical on factors (not as.character+coerce to LGLSXP)
  */
 SEXP stri_prepare_arg_logical_1(SEXP x, const char* argname)
 {
@@ -901,10 +926,13 @@ SEXP stri_prepare_arg_logical_1(SEXP x, const char* argname)
     if (Rf_isFactor(x))
     {
         SEXP call;
-        PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
+//         PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
+//         PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
+//         PROTECT(x = Rf_coerceVector(x, LGLSXP));
+//         nprotect = 3;
+        PROTECT(call = Rf_lang2(Rf_install("as.logical"), x));
         PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
-        PROTECT(x = Rf_coerceVector(x, LGLSXP));
-        nprotect = 3;
+        nprotect = 2;
     }
     else if (Rf_isVectorList(x) || isObject(x))
     {

@@ -21,8 +21,12 @@ jobs:
         sudo apt-get -y upgrade
         sudo apt-get -y install libcurl4-openssl-dev r-base-dev devscripts
         sudo Rscript -e "install.packages(c('tinytest', 'roxygen2', 'pkgbuild', 'Rcpp'))"
-    - name: Test and check stringi
+    - name: Install stringi
       run: |
         sudo make r-icu-bundle
+    - name: Test stringi
+      run: |
         sudo make tinytest
+    - name: Check stringi
+      run: |
         sudo make check
