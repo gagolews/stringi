@@ -64,6 +64,8 @@ sprintf("%08s", "abc")
 sprintf("%-8s", "abc")
 sprintf("%+8s", "abc")
 
+sprintf("%1$s %s %2$s %s", 1, 2)
+
 sprintf("% d", 123)
 sprintf("% +d", 123)
 sprintf("%+ d", 123)

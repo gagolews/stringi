@@ -47,11 +47,11 @@ instead of the total code point width (see \code{\link{stri_width}})?}
 text on the standard output or other connection/file. Hence, it returns
 \code{invisible(NULL)}.
 
-The other function return a character vector.
+The other functions return a character vector.
 }
 \description{
-A Unicode-aware replacements for the built-in \code{\link[base]{sprintf}}
-function. Moreover, \code{stri_printf} displays/writes formatted strings.
+A Unicode-aware replacement for the built-in \code{\link[base]{sprintf}}
+function. Moreover, \code{stri_printf} prints formatted strings.
 }
 \details{
 Vectorized over \code{format} and all vectors passed via \code{...}.
@@ -65,14 +65,22 @@ Note that Unicode code points may have various widths when
 printed on the console and that, by default, the function takes that
 into account. By changing the state of the \code{use_length}
 argument, this function act as if each code point was of width 1.
+
+For \code{\%d} and \code{\%f} formats, factors are treated as integer
+vectors (underlying codes) and so are date and time objects, etc.
+
+This function is not locale sensitive. For instance, numbers are
+always formatted in the "POSIX" style, e.g., \code{-123456.789}.
+Such a feature might be added at a later date, though.
 }
 \examples{
-cat(stri_sprintf("\%4s=\%.3f", c("e", "e\u00b2", "\u03c0", "\u03c0\u00b2"),
-    c(exp(1), exp(2), pi, pi^2)), sep="\n")
+printf("\%4s=\%.3f", c("e", "e\u00b2", "\u03c0", "\u03c0\u00b2"),
+    c(exp(1), exp(2), pi, pi^2))
 
 # using a "preformatted" logical vector:
 x <- c(TRUE, FALSE, FALSE, NA, TRUE, FALSE)
 stri_sprintf("\%s) \%s", letters[seq_along(x)], c("\u2718", "\u2713")[x+1])
+
 
 }
 \author{

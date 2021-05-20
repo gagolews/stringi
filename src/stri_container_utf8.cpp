@@ -83,7 +83,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
     without any conversion table data. The common library contains
     code to handle several important encodings algorithmically: US-ASCII,
     ISO-8859-1, UTF-7/8/16/32, SCSU, BOCU-1, CESU-8, and IMAP-mailbox-name */
-    // for conversion from non-utf8/ascii native charsets:
+    // for conversion from non-UTF-8/ASCII native charsets:
 #if defined(_WIN32) || defined(_WIN64)
     // #270: latin-1 is windows-1252 on Windows
     StriUcnv ucnvLatin1("WINDOWS-1252");

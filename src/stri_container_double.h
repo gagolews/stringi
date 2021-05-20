@@ -85,6 +85,7 @@ public:
 
 
     /** get the vectorized ith element
+     *
      * @param i index
      * @return double
      */
@@ -94,6 +95,20 @@ public:
             throw StriException("StriContainerDouble::get(): INDEX OUT OF BOUNDS");
         if (ISNA(data[i%n]))
             throw StriException("StriContainerDouble::get(): isNA");
+#endif
+        return (data[i%n]);
+    }
+
+
+    /** get the vectorized ith element, no NA check here
+     *
+     * @param i index
+     * @return double
+     */
+    inline double getNAble(R_len_t i) const {
+#ifndef NDEBUG
+        if (i < 0 || i >= nrecycle)
+            throw StriException("StriContainerDouble::get(): INDEX OUT OF BOUNDS");
 #endif
         return (data[i%n]);
     }
