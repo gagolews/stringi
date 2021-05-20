@@ -45,8 +45,8 @@ expect_identical(stri_extract_first_regex(character(0), character(0)), character
 expect_identical(stri_extract_first_regex(NA, "test"), NA_character_)
 expect_identical(stri_extract_first_regex("test", NA), NA_character_)
 suppressWarnings(expect_identical(stri_extract_first_regex("test", ""), NA_character_))
-expect_identical(stri_extract_first_regex("\U00f0ffffb\u0105deb!d", "b.d"), "b\u0105d")
-expect_identical(stri_extract_first_regex("\U00f0ffffb\u0105deb!d", "B.D", stri_opts_regex(case_insensitive = TRUE)),
+expect_identical(stri_extract_first_regex("\U0001F600b\u0105deb!d", "b.d"), "b\u0105d")
+expect_identical(stri_extract_first_regex("\U0001F600b\u0105deb!d", "B.D", stri_opts_regex(case_insensitive = TRUE)),
     "b\u0105d")
 
 expect_identical(stri_extract_first_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*"), c("",
@@ -66,8 +66,8 @@ expect_identical(stri_extract_last_regex(character(0), character(0)), character(
 expect_identical(stri_extract_last_regex(NA, "test"), NA_character_)
 expect_identical(stri_extract_last_regex("test", NA), NA_character_)
 suppressWarnings(expect_identical(stri_extract_last_regex("test", ""), NA_character_))
-expect_identical(stri_extract_last_regex("b!d\U00f0ffffb\u0105de", "b.d"), "b\u0105d")
-expect_identical(stri_extract_last_regex("b!d\U00f0ffffb\u0105de", "B.D", stri_opts_regex(case_insensitive = TRUE)),
+expect_identical(stri_extract_last_regex("b!d\U0001F600b\u0105de", "b.d"), "b\u0105d")
+expect_identical(stri_extract_last_regex("b!d\U0001F600b\u0105de", "B.D", stri_opts_regex(case_insensitive = TRUE)),
     "b\u0105d")
 
 expect_identical(stri_extract_last_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*"), c("", ""))  # match of zero length
