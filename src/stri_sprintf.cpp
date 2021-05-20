@@ -42,7 +42,7 @@
 
 #define STRI_SPRINTF_TYPE_INTEGER 1
 #define STRI_SPRINTF_TYPE_REAL 2
-#define STRI_SPRINTF_TYPE_CHARACTER 3
+#define STRI_SPRINTF_TYPE_STRING 3
 
 /*
 dioxX
@@ -82,6 +82,130 @@ There can be two asterisks, right?
 default precision???
 default field width???
 */
+
+
+/** Enables fetching of the i-th/next integer/real/string datum from `...`.
+ *
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-20)
+ */
+class SprintfDataProvider
+{
+private:
+    SEXP x;  // protected outside
+    R_len_t narg;
+    R_len_t vectorize_length;
+    std::vector< StriContainerInteger* > x_integer;
+    std::vector< StriContainerDouble* > x_double;
+    std::vector< StriContainerUTF8* > x_string;
+    R_len_t nprotect;
+    R_len_t cur_elem;  // 0..vectorize_length-1
+    R_len_t cur_item;  // 0..narg-1
+
+public:
+    SprintfDataProvider(SEXP x, R_len_t vectorize_length) :
+        x(x),
+        narg(LENGTH(x)),
+        vectorize_length(vectorize_length),
+        x_integer(narg, nullptr),
+        x_double(narg, nullptr),
+        x_string(narg, nullptr),
+        nprotect(0)
+    {
+        STRI_ASSERT(Rf_isVectorList(x));
+        cur_elem = -1;
+    }
+
+    ~SprintfDataProvider()
+    {
+        for (R_len_t j=0; j<narg; ++j) {
+            if (x_integer[j] != nullptr) {
+                delete x_integer[j];
+            }
+            if (x_double[j] != nullptr) {
+                delete x_double[j];
+            }
+            if (x_string[j] != nullptr) {
+                delete x_string[j];
+            }
+        }
+        if (nprotect > 0) UNPROTECT(nprotect);
+    }
+
+    void reset(R_len_t elem) {
+        cur_elem = elem;
+        cur_item = 0;
+    }
+
+
+    /** Gets the next (i negative) or the i-th integer datum
+     *  Can be NA, so check with ... == NA_INTEGER.
+     */
+    int getIntegerOrNA(int i=-1)
+    {
+        if (i < 0) i = (cur_item++);
+        // else do not advance cur_item
+        if (i >= narg) throw StriException(MSG__ARG_NEED_MORE);
+
+        if (x_integer[i] == nullptr) {
+            SEXP y;
+            // the following may call Rf_error:
+            PROTECT(y = stri_prepare_arg_integer(VECTOR_ELT(x, i), "...",
+                false/*factors_as_strings*/, false/*allow_error*/));
+            nprotect++;
+            if (isNull(y)) throw StriException(MSG__ARG_EXPECTED_INTEGER, "...");
+            x_integer[i] = new StriContainerInteger(y, vectorize_length);
+        }
+
+        return x_integer[i]->getNAble(cur_elem);
+    }
+
+
+
+    /** Gets the next (i negative) or the i-th real datum;
+     *  Can be NA, so check with ISNA(...).
+     */
+    double getDoubleOrNA(int i=-1)
+    {
+        if (i < 0) i = (cur_item++);
+        // else do not advance cur_item
+        if (i >= narg) throw StriException(MSG__ARG_NEED_MORE);
+
+        if (x_double[i] == nullptr) {
+            SEXP y;
+            // the following may call Rf_error:
+            PROTECT(y = stri_prepare_arg_double(VECTOR_ELT(x, i), "...",
+                false/*factors_as_strings*/, false/*allow_error*/));
+            nprotect++;
+            if (isNull(y)) throw StriException(MSG__ARG_EXPECTED_NUMERIC, "...");
+            x_double[i] = new StriContainerDouble(y, vectorize_length);
+        }
+
+        return x_double[i]->getNAble(cur_elem);
+    }
+
+
+    /** Gets the next (i negative) or the i-th real datum
+     *  Can be NA, so check with ....isNA().
+     */
+    const String8& getStringOrNA(int i=-1)
+    {
+        if (i < 0) i = (cur_item++);
+        // else do not advance cur_item
+        if (i >= narg) throw StriException(MSG__ARG_NEED_MORE);
+
+        if (x_string[i] == nullptr) {
+            SEXP y;
+            // the following may call Rf_error:
+            PROTECT(y = stri_prepare_arg_string(VECTOR_ELT(x, i), "...",
+                false/*allow_error*/));
+            nprotect++;
+            if (isNull(y)) throw StriException(MSG__ARG_EXPECTED_STRING, "...");
+            x_string[i] = new StriContainerUTF8(y, vectorize_length);
+        }
+
+        return x_string[i]->getNAble(cur_elem);
+    }
+};
 
 
 
@@ -156,9 +280,7 @@ SEXP stri_sprintf(SEXP format, SEXP x, SEXP na_string,
     StriContainerUTF8 inf_string_cont(inf_string, 1);
     StriContainerUTF8 nan_string_cont(nan_string, 1);
 
-    std::vector< StriContainerInteger* > x_integer(narg, nullptr);
-    std::vector< StriContainerDouble* > x_double(narg, nullptr);
-    std::vector< StriContainerUTF8* > x_character(narg, nullptr);
+    SprintfDataProvider data(x, vectorize_length);
 
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
@@ -173,20 +295,17 @@ SEXP stri_sprintf(SEXP format, SEXP x, SEXP na_string,
             continue;
         }
 
-//     MSG__ARG_NEED_MORE
-//     int stri__width_string(const char* str_cur_s, int str_cur_n)
+        // The "parsing" of the format string is done from scratch
+        // each time and the output strings are generated on the fly.
+        // Let's keep the code simple; the possibility of having
+        // *-fields of different max widths/numbers of different precisions
+        // makes the process quite complicated anyway.
+        data.reset(i);
 
-// stri_prepare_arg_double(x, "...", false/*factors_as_strings*/)
+//         if (use_length_val) width = str.countCodePoints();
+//         else width = stri__width_string(str.c_str(), str.length())
+//
 
-    }
-
-    for (R_len_t j=0; j<narg; ++j) {
-        if (x_integer[j] != nullptr)
-            delete x_integer[j];
-        if (x_double[j] != nullptr)
-            delete x_double[j];
-        if (x_character[j] != nullptr)
-            delete x_character[j];
     }
 
     STRI__UNPROTECT_ALL

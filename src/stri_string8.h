@@ -33,10 +33,17 @@
 #ifndef __stri_string8_h
 #define __stri_string8_h
 
+#include "stri_external.h"
+#include "stri_exception.h"
+#include "stri_messages.h"
+#include "stri_macros.h"
+
 
 /**
- * A class to represent an UTF-8 string
+ * A class to represent a (TODO: read-only?) UTF-8 string.
  *
+ * It can mark string as missing (NA), count the number of Unicode code points,
+ * remove BOMs
  *
  * @version 0.1-?? (Marek Gagolewski)
  *
@@ -70,8 +77,8 @@ private:
 
     char* m_str;      ///< character data in UTF-8, NULL denotes NA
     R_len_t m_n;      ///< string length (in bytes), not including NUL
-    bool m_memalloc;  ///< should the memory be freed at the end
-    bool m_isASCII;   ///< ASCII or UTF-8?
+    bool m_memalloc;  ///< should the memory be freed at the end?
+    bool m_isASCII;   ///< ASCII or UTF-8?  TODO: is it used anywhere?
 
 
 public:
@@ -222,12 +229,12 @@ public:
         return !this->m_str;
     }
 
-    /** does this String8 is in ASCII? */
+    /** is this String8 in ASCII? */
     inline bool isASCII() const {
         return this->m_isASCII;
     }
 
-    /** does this String8 is in UTF-8? */
+    /** is this String8 in UTF-8? */
     inline bool isUTF8() const {
         return !this->m_isASCII;
     }
@@ -260,7 +267,7 @@ public:
     }
 
 
-    /** number of utf-8 code points */
+    /** The number of Unicode code points */
     inline R_len_t countCodePoints() const
     {
 #ifndef NDEBUG

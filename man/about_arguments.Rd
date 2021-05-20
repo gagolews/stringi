@@ -7,6 +7,10 @@
 \title{Passing Arguments to Functions in \pkg{stringi}}
 \description{
 Below we explain how \pkg{stringi} deals with its functions' arguments.
+
+If some function violates one of the following rules
+(for a very important reason),
+this is clearly indicated in its documentation (with discussion).
 }
 \section{Coercion of Arguments}{
 
@@ -58,9 +62,6 @@ on each particular function of your interest.
 \pkg{stringi} handles missing values consistently.
 For any vectorized operation, if at least one vector element is missing,
 then the corresponding resulting value is also set to \code{NA}.
-
-If some function violates this rule (for a very important reason),
-this is clearly indicated in its documentation (with discussion).
 }
 
 \section{Preserving Object Attributes}{

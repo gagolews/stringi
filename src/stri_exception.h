@@ -33,6 +33,10 @@
 #ifndef __stri_exception_h
 #define __stri_exception_h
 
+#include "stri_external.h"
+#include "stri_messages.h"
+
+
 #include <cstdarg>
 using namespace std;
 

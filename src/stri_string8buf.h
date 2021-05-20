@@ -33,11 +33,16 @@
 #ifndef __stri_string8buf_h
 #define __stri_string8buf_h
 
+#include "stri_external.h"
+#include "stri_exception.h"
+#include "stri_messages.h"
 
 /**
- * A class to represent a temporary string buffer
+ * [DEPRECATED] A class to represent a temporary string buffer
  *
- * Quite similar to std::string and/or  Vector<char>
+ * Quite similar to std::string and/or std::vector<char>;
+ * actually, we could/should now
+ * TODO: rewrite most code to use the C++11 std::string.
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-24)
  *          Separated from String8
@@ -50,7 +55,7 @@ class String8buf  {
 private:
 
     char* m_str;
-    size_t m_size;   ///< buffer size in bytes
+    size_t m_size;   ///< physical buffer size in bytes
 
 
 public:
@@ -138,11 +143,13 @@ public:
         if (!this->m_str)
             throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE, sizeof(char)*this->m_size);
         if (!old_str || !copy) {
-            this->m_str[0] = 0;
+            this->m_str[0] = '\0';
         }
     }
 
     /** Replace substrings with a given replacement string
+     *
+     * TODO: How does this relate to String8::replaceAllAtPos? Is it redundant?
      *
      * @return number of bytes written
      *
@@ -162,7 +169,7 @@ public:
             buf_used += match.first-jlast;
 #ifndef NDEBUG
             if (buf_used > m_size)
-                throw StriException("!NDEBUG: String8::replaceAllAtPos: buf_used > buf_size");
+                throw StriException("!NDEBUG: String8buf::replaceAllAtPos: buf_used > buf_size");
 #endif
 
             jlast = match.second;
@@ -170,7 +177,7 @@ public:
             buf_used += replacement_cur_n;
 #ifndef NDEBUG
             if (buf_used > m_size)
-                throw StriException("!NDEBUG: String8::replaceAllAtPos: buf_used > buf_size");
+                throw StriException("!NDEBUG: String8buf::replaceAllAtPos: buf_used > buf_size");
 #endif
         }
 
@@ -178,7 +185,7 @@ public:
         buf_used += (str_cur_n-jlast);
 #ifndef NDEBUG
         if (buf_used > m_size)
-            throw StriException("!NDEBUG: String8::replaceAllAtPos: buf_used > buf_size");
+            throw StriException("!NDEBUG: String8buf::replaceAllAtPos: buf_used > buf_size");
 #endif
 
         return buf_used;
