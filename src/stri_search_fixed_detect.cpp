@@ -165,7 +165,7 @@ SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP negate,
 //      uregex_reset(matcher, 0, &err);
 //      int found = (int)uregex_find(matcher, -1, &err);
 //      if (U_FAILURE(err))
-//         throw StriException(MSG__REGEXP_FAILED);
+//         throw StriException(MSG__REGEX_FAILED);
 //      LOGICAL(ret)[i] = found;
 //   }
 //

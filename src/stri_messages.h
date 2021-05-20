@@ -33,7 +33,11 @@
 #ifndef __stri_messages_h
 #define __stri_messages_h
 
-/// inccorect uchar class id, see stri_char_getpropertyid and stri_char_getcategoryid
+
+// see stri_exception.cpp for more messages
+
+
+/// incorrect uchar class id, see stri_char_getpropertyid and stri_char_getcategoryid
 #define MSG__INCORRECT_UCHAR_CLASS_ID \
    "incorrect character class identifier"
 
@@ -41,7 +45,7 @@
    "incorrect option for `%s`"
 
 #define MSG__INCORRECT_COLLATOR_OPTION \
-   "incorrect opts_collator setting: `%s`; ignoring"
+   "incorrect opts_collator setting: '%s'; ignoring"
 
 #define MSG__INCORRECT_COLLATOR_OPTION_SPEC \
    "incorrect collator option specifier, see ?stri_opts_collator"
@@ -50,10 +54,10 @@
    "incorrect break iterator option specifier, see ?stri_opts_brkiter"
 
 #define MSG__INCORRECT_FIXED_OPTION \
-   "incorrect opts_fixed setting: `%s`; ignoring"
+   "incorrect opts_fixed setting: '%s'; ignoring"
 
 #define MSG__INCORRECT_REGEX_OPTION \
-   "incorrect opts_regex setting: `%s`; ignoring"
+   "incorrect opts_regex setting: '%s'; ignoring"
 
 #define MSG__INVALID_CODE_POINT \
    "invalid Unicode code point \\U%08.8x"
@@ -159,17 +163,17 @@
 #define MSG__BYTESENC \
    "bytes encoding is not supported by this function"
 
-#define MSG__REGEXP_FAILED \
+#define MSG__REGEX_FAILED \
    "regex search failed"
 
-#define MSG__REGEXP_CONFIG_FAILED \
+#define MSG__REGEX_CONFIG_FAILED \
    "regex engine configuration failed"
+
+#define MSG__REGEX_FAILED_DETAILS \
+   "regex search failed: %s"
 
 #define MSG__FIXED_CONFIG_FAILED \
    "fixed search engine configuration failed"
-
-#define MSG__REGEXP_FAILED_DETAILS \
-   "regex search failed: %s"
 
 #define MSG__STRSEARCH_FAILED \
    "string search failed"
@@ -196,7 +200,7 @@
    "each string in `%s` should consist of code points of total width %d"
 
 #define MSG__CHARCLASS_INCORRECT_WHICH \
-   "unknown character class `%s`; assuming NA"
+   "unknown character class '%s'; assuming NA"
 
 #define MSG__CHARCLASS_INCORRECT \
    "unknown character class"
@@ -283,6 +287,8 @@
 #define MSG__ARG_NEED_MORE \
    "too few arguments"
 
+#define MSG__INVALID_FORMAT_STRING \
+   "format string '%s' is not valid"
 
 #define MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED \
    "empty search patterns are not supported"

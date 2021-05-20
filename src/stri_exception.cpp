@@ -283,9 +283,9 @@ const char* ICUError::getICUerrorName(UErrorCode status)
     case U_REGEX_INTERNAL_ERROR:
         return "An internal error (bug) was detected in ICU.";
 //      case U_REGEX_ERROR_START:
-//         return "Start of codes indicating Regexp failures.";
+//         return "Start of codes indicating regex failures.";
     case U_REGEX_RULE_SYNTAX:
-        return "Syntax error in regexp pattern.";
+        return "Syntax error in regex pattern.";
     case U_REGEX_INVALID_STATE:
         return "RegexMatcher in invalid state for requested operation.";
     case U_REGEX_BAD_ESCAPE_SEQUENCE:
@@ -293,9 +293,9 @@ const char* ICUError::getICUerrorName(UErrorCode status)
     case U_REGEX_PROPERTY_SYNTAX:
         return "Incorrect Unicode property.";
     case U_REGEX_UNIMPLEMENTED:
-        return "Use of regexp feature that is not yet implemented.";
+        return "Use of regex feature that is not yet implemented.";
     case U_REGEX_MISMATCHED_PAREN:
-        return "Incorrectly nested parentheses in regexp pattern.";
+        return "Incorrectly nested parentheses in regex pattern.";
     case U_REGEX_NUMBER_TOO_BIG:
         return "Decimal number is too large.";
     case U_REGEX_BAD_INTERVAL:
@@ -309,7 +309,7 @@ const char* ICUError::getICUerrorName(UErrorCode status)
     case U_REGEX_LOOK_BEHIND_LIMIT:
         return "Look-Behind pattern matches must have a bounded maximum length.";
     case U_REGEX_SET_CONTAINS_STRING:
-        return "Regexps cannot have UnicodeSets containing strings.";
+        return "Regexes cannot have UnicodeSets containing strings.";
 //         case U_REGEX_OCTAL_TOO_BIG: //Deprecated ICU 54. This error cannot occur.
 //            return "Octal character constants must be <= 0377.";
     case U_REGEX_MISSING_CLOSE_BRACKET:
@@ -323,7 +323,7 @@ const char* ICUError::getICUerrorName(UErrorCode status)
     case U_REGEX_STOPPED_BY_CALLER:
         return "Matching operation aborted by user callback fn.";
     // case U_REGEX_ERROR_LIMIT:
-    //    return "This must always be the last value to indicate the limit for regexp errors.";
+    //    return "This must always be the last value to indicate the limit for regex errors.";
 //      case U_PLUGIN_ERROR_START:
 //         return "Start of codes indicating plugin failures.";
     case U_PLUGIN_TOO_HIGH:
