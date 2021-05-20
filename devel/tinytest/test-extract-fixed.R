@@ -32,8 +32,8 @@ expect_identical(stri_extract_first_fixed(character(0), character(0)), character
 expect_identical(stri_extract_first_fixed(NA, "test"), NA_character_)
 expect_identical(stri_extract_first_fixed("test", NA), NA_character_)
 suppressWarnings(expect_identical(stri_extract_first_fixed("test", ""), NA_character_))
-expect_identical(stri_extract_first_fixed("\U00f0ffffb\u0105deb!d", "b\u0105d"), "b\u0105d")
-expect_identical(stri_extract_first_fixed("\U00f0ffffb\u0105deb!d", "B\u0105D", case_insensitive = TRUE),
+expect_identical(stri_extract_first_fixed("\U0001F600b\u0105deb!d", "b\u0105d"), "b\u0105d")
+expect_identical(stri_extract_first_fixed("\U0001F600b\u0105deb!d", "B\u0105D", case_insensitive = TRUE),
     "b\u0105d")
 
 expect_identical(stri_extract_last_fixed(character(0), "test"), character(0))
@@ -42,8 +42,8 @@ expect_identical(stri_extract_last_fixed(character(0), character(0)), character(
 expect_identical(stri_extract_last_fixed(NA, "test"), NA_character_)
 expect_identical(stri_extract_last_fixed("test", NA), NA_character_)
 suppressWarnings(expect_identical(stri_extract_last_fixed("test", ""), NA_character_))
-expect_identical(stri_extract_last_fixed("b!d\U00f0ffffb\u0105de", "b\u0105d"), "b\u0105d")
-expect_identical(stri_extract_last_fixed("b!d\U00f0ffffb\u0105de", "B\u0105D", case_insensitive = TRUE),
+expect_identical(stri_extract_last_fixed("b!d\U0001F600b\u0105de", "b\u0105d"), "b\u0105d")
+expect_identical(stri_extract_last_fixed("b!d\U0001F600b\u0105de", "B\u0105D", case_insensitive = TRUE),
     "b\u0105d")
 
 expect_identical(stri_extract_last_fixed("agAGA", "aga", case_insensitive=TRUE), "AGA")
