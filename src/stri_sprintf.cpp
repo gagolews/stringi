@@ -40,17 +40,160 @@
 #include <vector>
 
 
-#define STRI_SPRINTF_TYPE_INTEGER 1
-#define STRI_SPRINTF_TYPE_REAL 2
-#define STRI_SPRINTF_TYPE_STRING 3
+
+#define STRI_SPRINTF_SPEC_INTEGER "dioxX"
+#define STRI_SPRINTF_SPEC_DOUBLE "feEgGaA"
+#define STRI_SPRINTF_SPEC_STRING "s"
+
+#define STRI_SPRINTF_SPEC_TYPE (STRI_SPRINTF_SPEC_INTEGER \
+                                STRI_SPRINTF_SPEC_DOUBLE  \
+                                STRI_SPRINTF_SPEC_STRING)
+
+#define STRI_SPRINTF_FLAGS "-+ 0#"
+
+
+typedef enum {
+    STRI_SPRINTF_TYPE_UNDEFINED=0,
+    STRI_SPRINTF_TYPE_INTEGER,
+    STRI_SPRINTF_TYPE_DOUBLE,
+    STRI_SPRINTF_TYPE_STRING,
+} StriSprintfType;
+
+
+struct StriSprintfFormatSpec
+{
+    StriSprintfType type;
+    bool pad_from_right;   // '-'
+    bool pad_zero;         // '0'
+    bool sign_space;       // ' '
+    bool sign_plus;        // '+'
+    bool alternate_output; // '#'
+    int min_width;
+    int precision;         // can be negative
+
+    StriSprintfFormatSpec(char type_spec)
+    {
+        if (strchr(STRI_SPRINTF_SPEC_INTEGER, type_spec) != nullptr)
+            type = STRI_SPRINTF_TYPE_INTEGER;
+        else if (strchr(STRI_SPRINTF_SPEC_DOUBLE, type_spec) != nullptr)
+            type = STRI_SPRINTF_TYPE_DOUBLE;
+        else
+            type = STRI_SPRINTF_TYPE_STRING;
+
+        pad_from_right = false;
+        pad_zero = false;
+        sign_space = false;
+        sign_plus = false;
+        alternate_output = false;
+        min_width = NA_INTEGER;
+        precision = NA_INTEGER;
+        // eEfFgG - default precision = 6
+        // aA - default precision = depends on the input
+        // dioxX - default precision = 1
+        // s - default precision - unspecified
+
+        // gG uses eE if precision <= exponent < -4
+    }
+
+
+    void normalise()
+    {
+        if (min_width != NA_INTEGER && min_width < 0) {
+            min_width = -min_width;
+            pad_from_right = true;
+        }
+
+        if (min_width == 0)
+            min_width = NA_INTEGER;
+
+        if (precision != NA_INTEGER && precision < 0)
+            precision = NA_INTEGER;
+
+        if (pad_from_right)
+            pad_zero = false;
+
+        if (sign_plus)
+            sign_space = false;
+    }
+};
+
+
+/**
+ * stops right after delim, modifies j0 in place
+ */
+int stri__atoi_to_delim(const char* f, R_len_t& j0, char delim, int max_val=99999)
+{
+    int val = (int)f[j0++]-(int)'\0';
+    while (true) {
+        if (f[j0] == delim) { j0++; break; }
+
+        if (f[j0] < '0' || f[j0] > '9')
+            throw StriException(MSG__INVALID_FORMAT_STRING, f);
+
+        val = val*10 + ((int)f[j0++]-(int)'\0');
+        if (val > max_val)
+            throw StriException(MSG__INVALID_FORMAT_STRING, f);
+    }
+    return val;
+}
+
+
+/**
+ * stops at non-digit, modifies j0 in place
+ */
+int stri__atoi_to_other(const char* f, R_len_t& j0, int max_val=99999)
+{
+    int val = (int)f[j0++]-(int)'\0';
+    while (true) {
+        if (f[j0] < '0' || f[j0] > '9')
+            break;
+
+        val = val*10 + ((int)f[j0++]-(int)'\0');
+        if (val > max_val)
+            throw StriException(MSG__INVALID_FORMAT_STRING, f);
+    }
+    return val;
+}
+
+
+/**
+ * preflight - get possible format spec
+ * throws an error on any chars in [^0-9*$. +0#-]
+ *
+ * @returns index of the first char in STRI_SPRINTF_SPEC_TYPE
+ */
+int stri__find_type_spec(const char* f, R_len_t j1, R_len_t n)
+{
+    while (true) {
+        if (j1 >= n)
+            throw StriException(MSG__INVALID_FORMAT_STRING, f); // dangling %...
+        else if (strchr(STRI_SPRINTF_SPEC_TYPE, f[j1]) != nullptr)
+            break;
+        else if (strchr(STRI_SPRINTF_FLAGS, f[j1]) != nullptr)
+            ;
+        else if (f[j1] == '*' || f[j1] == '$' || f[j1] == '.')
+            ;
+        else if (f[j1] >= '0' && f[j1] <= '9')
+            ;
+        else
+            throw StriException(MSG__INVALID_FORMAT_STRING, f);
+
+        j1++;
+    }
+}
+
+
 
 /*
-dioxX
-feEgGaA
+
+
 s
 %
 
-%<FLAGS><MINIMUM FIELD WIDTH><PRECISION><CONVERSION SPECIFIER>
+start: 123$ / none
+flags
+width: none / 123 / * / *123$
+precision: none / .123 / . / .* / .123$
 
 %i$... instead of %... - which argument is taken (indexed starting from 1)
 *j$ instead of *
@@ -61,7 +204,7 @@ s
 <.n> precision
     precision "." == ".0"
 A negative precision is taken as if the precision were  omitted.   This
-       gives  the minimum number of digits to appear for d, i, o, u, x, and X conver‐
+       gives  the minimum number of digits to appear for d, i, o, u, x, and X conver-
        sions, the number of digits to appear after the radix character for a,  A,  e,
        E,  f, and F conversions, the maximum number of significant digits for g and G
        conversions, or the maximum number of characters to be printed from  a  string
@@ -69,15 +212,6 @@ A negative precision is taken as if the precision were  omitted.   This
 
 
 There can be two asterisks, right?
-
-
-'-' pad_right
-'0' pad_zero   # always off (ignored) if pad_right
-
-' ' sign_space
-'+' sign_plus  # overrides sign_space if set
-'#' alternate_output
-
 
 default precision???
 default field width???
@@ -88,7 +222,7 @@ default field width???
  *
  * @version 1.6.2 (Marek Gagolewski, 2021-05-20)
  */
-class SprintfDataProvider
+class StriSprintfDataProvider
 {
 private:
     SEXP x;  // protected outside
@@ -102,7 +236,7 @@ private:
     R_len_t cur_item;  // 0..narg-1
 
 public:
-    SprintfDataProvider(SEXP x, R_len_t vectorize_length) :
+    StriSprintfDataProvider(SEXP x, R_len_t vectorize_length) :
         x(x),
         narg(LENGTH(x)),
         vectorize_length(vectorize_length),
@@ -115,7 +249,7 @@ public:
         cur_elem = -1;
     }
 
-    ~SprintfDataProvider()
+    ~StriSprintfDataProvider()
     {
         for (R_len_t j=0; j<narg; ++j) {
             if (x_integer[j] != nullptr) {
@@ -209,6 +343,111 @@ public:
 
 
 
+SEXP stri__sprintf_1(
+    const String8& _f,
+    StriSprintfDataProvider& data,
+    const String8& na_string,
+    const String8& inf_string,
+    const String8& nan_string,
+    bool use_length
+) {
+    STRI_ASSERT(!_f.isNA());
+    R_len_t n = _f.length();
+    const char* f = _f.c_str();
+
+    std::string buf;
+    buf.reserve(n+1); // whatever; maybe there are no format specifiers at all
+
+    R_len_t i=0;
+    while (i < n) {
+        if (f[i] != '%') { buf.push_back(f[i++]); continue; }
+
+        i++;
+        if (i >= n) throw StriException(MSG__INVALID_FORMAT_STRING, f); // dangling %
+        if (f[i] == '%') { buf.push_back('%'); i++; continue; }
+
+        // pre-flight stage:
+        R_len_t j0 = i;  // start
+        R_len_t j1 = stri__find_type_spec(f, i, n);  // stop
+        i = j1+1; // in the next iteration, start right after the format spec
+        // now f[j0..j1] may be a format specifier (without the preceding %)
+
+        StriSprintfFormatSpec spec(f[j1]);
+        // %<DATUM INDEX$><FLAGS><FIELD WIDTH><.PRECISION><CONVERSION SPECIFIER>
+        //       1            2        3           4            5 == f[j1]
+
+        // 1. optional [1-9][0-9]*\$  - which datum is to be formatted?
+        int which_datum = -1;
+        if (f[j0] >= '1' && f[j0] <= '9') {
+            // we expect arg pos spec now
+            which_datum = stri__atoi_to_delim(
+                f, /*by reference*/j0, /*delimiter*/'$'
+            );
+        }
+
+        // 2. optional flags [ +0#-]
+        while (true) {
+            if      (f[j0] == ' ') spec.sign_space       = true;
+            else if (f[j0] == '+') spec.sign_plus        = true;
+            else if (f[j0] == '0') spec.pad_zero         = true;
+            else if (f[j0] == '-') spec.pad_from_right   = true;
+            else if (f[j0] == '#') spec.alternate_output = true;
+            else break;
+            j0++;
+        }
+
+        // 3. optional field width: none / 123 / * / *123$
+        if (f[j0] >= '1' && f[j0] <= '9') {
+            spec.min_width = stri__atoi_to_other(f, /*by reference*/j0);
+        }
+        else if (f[j0] == '*') {  // take from ... args
+            j0++;
+            int which_width = -1;
+            if (f[j0] >= '1' && f[j0] <= '9') {
+                which_width = stri__atoi_to_delim(
+                    f, /*by reference*/j0, /*delimiter*/'$'
+                );
+            }
+            spec.min_width = data.getIntegerOrNA(which_width);
+        }
+
+        // 4. optional field precision: none / .123 / . / .* / .123$
+        if (f[j0] == '.') {
+            j0++;
+            if (f[j0] >= '1' && f[j0] <= '9') {
+                spec.precision = stri__atoi_to_other(f, /*by reference*/j0);
+            }
+            else if (f[j0] == '*') {  // take from ... args
+                j0++;
+                int which_precision = -1;
+                if (f[j0] >= '1' && f[j0] <= '9') {
+                    which_precision = stri__atoi_to_delim(
+                        f, /*by reference*/j0, /*delimiter*/'$'
+                    );
+                }
+                spec.precision = data.getIntegerOrNA(which_precision);
+            }
+            else {
+                ; // unspecified
+            }
+        }
+
+        // now we should be at the conversion specifier
+        if (j0 != j1)
+            throw StriException(MSG__INVALID_FORMAT_STRING, f);
+
+        spec.normalise();
+
+        // which_datum
+//         if (use_length_val) width = str.countCodePoints();
+//         else width = stri__width_string(str.c_str(), str.length())
+    }
+//              NA_STRING
+//         MSG__INVALID_FORMAT_STRING
+    return NA_STRING;
+}
+
+
 /**
  * Format a string
  *
@@ -280,7 +519,7 @@ SEXP stri_sprintf(SEXP format, SEXP x, SEXP na_string,
     StriContainerUTF8 inf_string_cont(inf_string, 1);
     StriContainerUTF8 nan_string_cont(nan_string, 1);
 
-    SprintfDataProvider data(x, vectorize_length);
+    StriSprintfDataProvider data(x, vectorize_length);
 
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
@@ -295,6 +534,8 @@ SEXP stri_sprintf(SEXP format, SEXP x, SEXP na_string,
             continue;
         }
 
+        continue;  // !!!!!!!!!!!!!!T.B.D.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
         // The "parsing" of the format string is done from scratch
         // each time and the output strings are generated on the fly.
         // Let's keep the code simple; the possibility of having
@@ -302,10 +543,18 @@ SEXP stri_sprintf(SEXP format, SEXP x, SEXP na_string,
         // makes the process quite complicated anyway.
         data.reset(i);
 
-//         if (use_length_val) width = str.countCodePoints();
-//         else width = stri__width_string(str.c_str(), str.length())
-//
 
+        SEXP out;
+        PROTECT(out = stri__sprintf_1(
+            format_cont.get(i),
+            data,
+            na_string_cont.getNAble(0),
+            inf_string_cont.getNAble(0),
+            nan_string_cont.getNAble(0),
+            use_length_val
+        ));
+        SET_STRING_ELT(ret, i, out);
+        UNPROTECT(1);
     }
 
     STRI__UNPROTECT_ALL

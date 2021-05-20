@@ -196,11 +196,11 @@ StriRegexMatcherOptions StriContainerRegexPattern::getRegexOptions(SEXP opts_reg
 
         SEXP names = PROTECT(Rf_getAttrib(opts_regex, R_NamesSymbol));
         if (names == R_NilValue || LENGTH(names) != narg)
-            Rf_error(MSG__REGEXP_CONFIG_FAILED); // error() call allowed here
+            Rf_error(MSG__REGEX_CONFIG_FAILED); // error() call allowed here
 
         for (R_len_t i=0; i<narg; ++i) {
             if (STRING_ELT(names, i) == NA_STRING)
-                Rf_error(MSG__REGEXP_CONFIG_FAILED); // error() call allowed here
+                Rf_error(MSG__REGEX_CONFIG_FAILED); // error() call allowed here
 
             SEXP tmp_arg;
             PROTECT(tmp_arg = STRING_ELT(names, i));
