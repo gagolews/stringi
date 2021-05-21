@@ -88,11 +88,11 @@ SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n, SEXP omit_empty,
                      SEXP tokens_only, SEXP simplify, SEXP opts_collator)
 {
     bool tokens_only1 = stri__prepare_arg_logical_1_notNA(tokens_only, "tokens_only");
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
-    PROTECT(n = stri_prepare_arg_integer(n, "n"));
-    PROTECT(omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty"));
-    PROTECT(simplify = stri_prepare_arg_logical_1(simplify, "simplify"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
+    PROTECT(n = stri__prepare_arg_integer(n, "n"));
+    PROTECT(omit_empty = stri__prepare_arg_logical(omit_empty, "omit_empty"));
+    PROTECT(simplify = stri__prepare_arg_logical_1(simplify, "simplify"));
 
     UCollator* collator = NULL;
     collator = stri__ucol_open(opts_collator);

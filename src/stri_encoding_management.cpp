@@ -265,7 +265,7 @@ SEXP stri_enc_info(SEXP enc)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_enc_mark(SEXP str) {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));    // prepare string argument
+    PROTECT(str = stri__prepare_arg_string(str, "str"));    // prepare string argument
 
     STRI__ERROR_HANDLER_BEGIN(1)
     R_len_t str_len = LENGTH(str);

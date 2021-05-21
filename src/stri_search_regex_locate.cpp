@@ -72,8 +72,8 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
     bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
     StriRegexMatcherOptions pattern_opts =
         StriContainerRegexPattern::getRegexOptions(opts_regex);
-    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern")); // prepare string argument
+    PROTECT(str = stri__prepare_arg_string(str, "str")); // prepare string argument
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern")); // prepare string argument
     R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
     STRI__ERROR_HANDLER_BEGIN(2)
@@ -164,8 +164,8 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
  */
 SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool first)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern")); // prepare string argument
+    PROTECT(str = stri__prepare_arg_string(str, "str")); // prepare string argument
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern")); // prepare string argument
     R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
     StriRegexMatcherOptions pattern_opts =

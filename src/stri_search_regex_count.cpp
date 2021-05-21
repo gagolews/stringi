@@ -65,8 +65,8 @@
  */
 SEXP stri_count_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
     R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
     StriRegexMatcherOptions pattern_opts =

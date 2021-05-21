@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count.html">stri_count: Count the Number of Pattern Matches</a></li>
@@ -188,6 +188,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_split_boundaries.html">stri_split_boundaries: Split a String at Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split_lines.html">stri_split_lines: Split a String Into Text Lines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split.html">stri_split: Split a String By Pattern Matches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_sprintf.html">stri_sprintf: Format Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_startsendswith.html">stri_startsendswith: Determine if the Start or End of a String Matches a Pattern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_stats_general.html">stri_stats_general: General Statistics for a Character Vector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_stats_latex.html">stri_stats_latex: Statistics for a Character Vector Containing LaTeX Commands</a></li>
@@ -325,8 +326,8 @@
 </div>
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
-<p>With this function you may obtain some basic information on any provided locale identifier, even if it is unsupported by <span class="pkg">ICU</span> or if you pass a malformed locale identifier (the one that is not, e.g., of the form Language_Country). See <a class="reference internal" href="about_locale.html"><span class="doc std std-doc">stringi-locale</span></a> for discussion.</p>
-<p>This function does not do anything really complicated. In many cases it is similar to a call to <code class="docutils literal notranslate"><span class="pre">as.list(stri_split_fixed(locale,</span> <span class="pre">'_',</span> <span class="pre">3L)[[1]])</span></code>, with <code class="docutils literal notranslate"><span class="pre">locale</span></code> case mapped. It may be used, however, to get insight on how ICU understands a given locale identifier.</p>
+<p>With this function you may obtain some basic information on any provided locale identifier, even if it is unsupported by <span class="pkg">ICU</span> or if you pass a malformed locale identifier (the one that is not, e.g., of the form Language_Country). See <a class="reference external" href="https://stringi.gagolewski.com/rapi/stringi-locale.html">stringi-locale</a> for discussion.</p>
+<p>This function does not do anything really complicated. In many cases it is similar to a call to <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/list.html"><code class="docutils literal notranslate"><span class="pre">as.list(stri_split_fixed</span></code></a>(locale, ‘_’, 3L)[[1]]), with <code class="docutils literal notranslate"><span class="pre">locale</span></code> case mapped. It may be used, however, to get insight on how ICU understands a given locale identifier.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
@@ -339,7 +340,7 @@
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
-<p>Other locale_management: <a class="reference internal" href="about_locale.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_locale</span></code></span></a>, <a class="reference internal" href="stri_locale_list.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_locale_list()</span></code>,</span></a> <code class="docutils literal notranslate"><span class="pre">stri_locale_set()</span></code></p>
+<p>Other locale_management: <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_locale.html"><code class="docutils literal notranslate"><span class="pre">about_locale</span></code></a>, <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_locale_list.html"><code class="docutils literal notranslate"><span class="pre">stri_locale_list</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_locale_set.html"><code class="docutils literal notranslate"><span class="pre">stri_locale_set</span></code></a>()</p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
@@ -388,7 +389,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-14 17:08:05.
+        Last updated on 2021-05-21 14:42:13.
       </span>
 
     </p>

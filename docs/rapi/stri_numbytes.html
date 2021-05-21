@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count.html">stri_count: Count the Number of Pattern Matches</a></li>
@@ -188,6 +188,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_split_boundaries.html">stri_split_boundaries: Split a String at Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split_lines.html">stri_split_lines: Split a String Into Text Lines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split.html">stri_split: Split a String By Pattern Matches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_sprintf.html">stri_sprintf: Format Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_startsendswith.html">stri_startsendswith: Determine if the Start or End of a String Matches a Pattern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_stats_general.html">stri_stats_general: General Statistics for a Character Vector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_stats_latex.html">stri_stats_latex: Statistics for a Character Vector Containing LaTeX Commands</a></li>
@@ -325,8 +326,8 @@
 </div>
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
-<p>Often, this is not the function you would normally use in your string processing activities. See <a class="reference internal" href="stri_length.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_length</span></code></span></a> instead.</p>
-<p>For 8-bit encoded strings, this is the same as <a class="reference internal" href="stri_length.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_length</span></code></span></a>. For UTF-8 strings, the returned values may be greater than the number of code points, as UTF-8 is not a fixed-byte encoding: one code point may be encoded by 1-4 bytes (according to the current Unicode standard).</p>
+<p>Often, this is not the function you would normally use in your string processing activities. See <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_length.html"><code class="docutils literal notranslate"><span class="pre">stri_length</span></code></a> instead.</p>
+<p>For 8-bit encoded strings, this is the same as <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_length.html"><code class="docutils literal notranslate"><span class="pre">stri_length</span></code></a>. For UTF-8 strings, the returned values may be greater than the number of code points, as UTF-8 is not a fixed-byte encoding: one code point may be encoded by 1-4 bytes (according to the current Unicode standard).</p>
 <p>Missing values are handled properly.</p>
 <p>The strings do not need to be re-encoded to perform this operation.</p>
 <p>The returned values do not include the trailing NUL bytes, which are used internally to mark the end of string data (in C).</p>
@@ -342,7 +343,7 @@
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
-<p>Other length: <a class="reference internal" href="stri_isempty.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_isempty()</span></code>,</span></a> <a class="reference internal" href="stri_length.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_length()</span></code>,</span></a> <code class="docutils literal notranslate"><span class="pre">stri_width()</span></code></p>
+<p>Other length: <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_isempty.html"><code class="docutils literal notranslate"><span class="pre">stri_isempty</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_length.html"><code class="docutils literal notranslate"><span class="pre">stri_length</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_width.html"><code class="docutils literal notranslate"><span class="pre">stri_width</span></code></a>()</p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
@@ -351,10 +352,10 @@
 <span class="nf">stri_numbytes</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;abc&#39;</span><span class="p">,</span> <span class="s">&#39;123&#39;</span><span class="p">,</span> <span class="s">&#39;\u0105\u0104&#39;</span><span class="p">))</span>
 <span class="c1">## [1] 3 3 4</span>
 <span class="c1">## Not run: </span>
-<span class="c1"># this used to fail on Windows, as there was no native support for 4-bytes</span>
-<span class="c1"># Unicode characters; see, however, stri_escape_unicode():</span>
-<span class="nf">stri_numbytes</span><span class="p">(</span><span class="s">&#39;\U7fffffff&#39;</span><span class="p">)</span> <span class="c1"># compare stri_length(&#39;\U7fffffff&#39;)</span>
-<span class="c1">## [1] 6</span>
+<span class="c1"># this used to fail on Windows, where there were no native support</span>
+<span class="c1"># for 4-bytes Unicode characters; see, however, stri_unescape_unicode():</span>
+<span class="nf">stri_numbytes</span><span class="p">(</span><span class="s">&#39;\U001F600&#39;</span><span class="p">)</span> <span class="c1"># compare stri_length(&#39;\U001F600&#39;)</span>
+<span class="c1">## [1] 4</span>
 <span class="c1">## End(Not run)</span>
 </pre></div>
 </div>
@@ -377,7 +378,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-14 17:08:05.
+        Last updated on 2021-05-21 14:42:13.
       </span>
 
     </p>

@@ -34,7 +34,7 @@ Returns a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other escape: `stri_unescape_unicode()`
+Other escape: [`stri_unescape_unicode`](https://stringi.gagolewski.com/rapi/stri_unescape_unicode.html)()
 
 ## Examples
 

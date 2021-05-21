@@ -58,6 +58,9 @@
 #' always formatted in the "POSIX" style, e.g., \code{-123456.789}.
 #' Such a feature might be added at a later date, though.
 #'
+#' All arguments passed via \code{...} are evaluated. If some of them
+#' are unused, a warning is generated. Too few arguments result in an error.
+#'
 #'
 #' @param format character vector of format strings
 #' @param ... vectors (coercible to integer, real, or character)
@@ -83,12 +86,17 @@
 #'
 #'
 #' @examples
-#' printf("%4s=%.3f", c("e", "e\u00b2", "\u03c0", "\u03c0\u00b2"),
-#'     c(exp(1), exp(2), pi, pi^2))
+#' #...
+#' #stri_printf("%4s=%.3f", c("e", "e\u00b2", "\u03c0", "\u03c0\u00b2"),
+#' #    c(exp(1), exp(2), pi, pi^2))
+#'
+#' # vectorization wrt all arguments:
+#' #p <- runif(10)
+#' #stri_sprintf(ifelse(p > 0.5, "P(Y=1)=%1$.2f", "P(Y=0)=%2$.2f"), p, 1-p)
 #'
 #' # using a "preformatted" logical vector:
-#' x <- c(TRUE, FALSE, FALSE, NA, TRUE, FALSE)
-#' stri_sprintf("%s) %s", letters[seq_along(x)], c("\u2718", "\u2713")[x+1])
+#' #x <- c(TRUE, FALSE, FALSE, NA, TRUE, FALSE)
+#' #stri_sprintf("%s) %s", letters[seq_along(x)], c("\u2718", "\u2713")[x+1])
 #'
 #'
 #' @rdname stri_sprintf
@@ -132,8 +140,7 @@ stri_printf <- function(
 
 
 #' @title
-#' C-Style Formatting with sprintf as a Binary Operator
-#' TODO: call stri_sprintf
+#' C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf
 #'
 #' @description
 #' Provides access to base R's \code{\link[base]{sprintf}} in form of a binary

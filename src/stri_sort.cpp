@@ -120,8 +120,8 @@ SEXP stri_order_rank_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
                         SEXP opts_collator, int _type)
 {
     bool decr = stri__prepare_arg_logical_1_notNA(decreasing, "decreasing");
-    PROTECT(na_last   = stri_prepare_arg_logical_1(na_last, "na_last"));
-    PROTECT(str       = stri_prepare_arg_string(str, "str")); // prepare string argument
+    PROTECT(na_last   = stri__prepare_arg_logical_1(na_last, "na_last"));
+    PROTECT(str       = stri__prepare_arg_string(str, "str")); // prepare string argument
     int na_last_int   = INTEGER(na_last)[0];
 
     // type is an internal arg -- check manually
@@ -336,7 +336,7 @@ SEXP stri_rank(SEXP str, SEXP opts_collator)
  */
 SEXP stri_unique(SEXP str, SEXP opts_collator)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
+    PROTECT(str = stri__prepare_arg_string(str, "str")); // prepare string argument
 
     // call stri__ucol_open after prepare_arg:
     // if prepare_arg had failed, we would have a mem leak
@@ -409,7 +409,7 @@ SEXP stri_unique(SEXP str, SEXP opts_collator)
  */
 SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP opts_collator)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
+    PROTECT(str = stri__prepare_arg_string(str, "str")); // prepare string argument
     bool fromLastBool = stri__prepare_arg_logical_1_notNA(fromLast, "fromLast");
 
     // call stri__ucol_open after prepare_arg:
@@ -492,7 +492,7 @@ SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP opts_collator)
  */
 SEXP stri_duplicated_any(SEXP str, SEXP fromLast, SEXP opts_collator)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
+    PROTECT(str = stri__prepare_arg_string(str, "str")); // prepare string argument
     bool fromLastBool = stri__prepare_arg_logical_1_notNA(fromLast, "fromLast");
 
     // call stri__ucol_open after prepare_arg:
@@ -582,7 +582,7 @@ SEXP stri_duplicated_any(SEXP str, SEXP fromLast, SEXP opts_collator)
  *          output `bytes`-encoded strings
  */
 SEXP stri_sort_key(SEXP str, SEXP opts_collator) {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
 
     // call stri__ucol_open after prepare_arg:
     // if prepare_arg had failed, we would have a mem leak

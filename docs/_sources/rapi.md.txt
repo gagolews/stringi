@@ -84,6 +84,7 @@ rapi/stri_sort
 rapi/stri_split_boundaries
 rapi/stri_split_lines
 rapi/stri_split
+rapi/stri_sprintf
 rapi/stri_startsendswith
 rapi/stri_stats_general
 rapi/stri_stats_latex

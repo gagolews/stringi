@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count.html">stri_count: Count the Number of Pattern Matches</a></li>
@@ -188,6 +188,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split.html">stri_split: Split a String By Pattern Matches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_sprintf.html">stri_sprintf: Format Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_startsendswith.html">stri_startsendswith: Determine if the Start or End of a String Matches a Pattern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_stats_general.html">stri_stats_general: General Statistics for a Character Vector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_stats_latex.html">stri_stats_latex: Statistics for a Character Vector Containing LaTeX Commands</a></li>
@@ -352,8 +353,8 @@
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
-<p>Other search_split: <a class="reference internal" href="about_search.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></span></a>, <a class="reference internal" href="stri_split_boundaries.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_split_boundaries()</span></code>,</span></a> <code class="docutils literal notranslate"><span class="pre">stri_split()</span></code></p>
-<p>Other text_boundaries: <a class="reference internal" href="about_search_boundaries.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_boundaries</span></code></span></a>, <a class="reference internal" href="about_search.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></span></a>, <a class="reference internal" href="stri_count_boundaries.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_count_boundaries()</span></code>,</span></a> <a class="reference internal" href="stri_extract_boundaries.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_extract_all_boundaries()</span></code>,</span></a> <a class="reference internal" href="stri_locate_boundaries.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_locate_all_boundaries()</span></code>,</span></a> <a class="reference internal" href="stri_opts_brkiter.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_opts_brkiter()</span></code>,</span></a> <a class="reference internal" href="stri_split_boundaries.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_split_boundaries()</span></code>,</span></a> <a class="reference internal" href="stri_trans_casemap.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_tolower()</span></code>,</span></a> <code class="docutils literal notranslate"><span class="pre">stri_wrap()</span></code></p>
+<p>Other search_split: <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_search.html"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></a>, <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_split_boundaries.html"><code class="docutils literal notranslate"><span class="pre">stri_split_boundaries</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_split.html"><code class="docutils literal notranslate"><span class="pre">stri_split</span></code></a>()</p>
+<p>Other text_boundaries: <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_search_boundaries.html"><code class="docutils literal notranslate"><span class="pre">about_search_boundaries</span></code></a>, <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_search.html"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></a>, <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_count_boundaries.html"><code class="docutils literal notranslate"><span class="pre">stri_count_boundaries</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_extract_all_boundaries.html"><code class="docutils literal notranslate"><span class="pre">stri_extract_all_boundaries</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_locate_all_boundaries.html"><code class="docutils literal notranslate"><span class="pre">stri_locate_all_boundaries</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_opts_brkiter.html"><code class="docutils literal notranslate"><span class="pre">stri_opts_brkiter</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_split_boundaries.html"><code class="docutils literal notranslate"><span class="pre">stri_split_boundaries</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_trans_tolower.html"><code class="docutils literal notranslate"><span class="pre">stri_trans_tolower</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_wrap.html"><code class="docutils literal notranslate"><span class="pre">stri_wrap</span></code></a>()</p>
 </div>
 </div>
 
@@ -373,7 +374,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-14 17:08:05.
+        Last updated on 2021-05-21 14:42:13.
       </span>
 
     </p>

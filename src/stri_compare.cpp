@@ -112,8 +112,8 @@ SEXP stri_cmp_codepoints(SEXP e1, SEXP e2, int _negate)
     if (_negate < 0 || _negate > 1)
         Rf_error(MSG__INCORRECT_INTERNAL_ARG);
 
-    PROTECT(e1 = stri_prepare_arg_string(e1, "e1")); // prepare string argument
-    PROTECT(e2 = stri_prepare_arg_string(e2, "e2")); // prepare string argument
+    PROTECT(e1 = stri__prepare_arg_string(e1, "e1")); // prepare string argument
+    PROTECT(e2 = stri__prepare_arg_string(e2, "e2")); // prepare string argument
 
     STRI__ERROR_HANDLER_BEGIN(2)
 
@@ -218,8 +218,8 @@ SEXP stri__cmp_logical(SEXP e1, SEXP e2, SEXP opts_collator, int _type, int _neg
     if (_type > 1 || _type < -1 || _negate < 0 || _negate > 1)
         Rf_error(MSG__INCORRECT_INTERNAL_ARG);
 
-    PROTECT(e1 = stri_prepare_arg_string(e1, "e1")); // prepare string argument
-    PROTECT(e2 = stri_prepare_arg_string(e2, "e2")); // prepare string argument
+    PROTECT(e1 = stri__prepare_arg_string(e1, "e1")); // prepare string argument
+    PROTECT(e2 = stri__prepare_arg_string(e2, "e2")); // prepare string argument
 
     // call stri__ucol_open after prepare_arg:
     // if prepare_arg had failed, we would have a mem leak
@@ -414,8 +414,8 @@ SEXP stri_cmp_ge(SEXP e1, SEXP e2, SEXP opts_collator) {
  */
 SEXP stri_cmp(SEXP e1, SEXP e2, SEXP opts_collator)
 {
-    PROTECT(e1 = stri_prepare_arg_string(e1, "e1"));
-    PROTECT(e2 = stri_prepare_arg_string(e2, "e2"));
+    PROTECT(e1 = stri__prepare_arg_string(e1, "e1"));
+    PROTECT(e2 = stri__prepare_arg_string(e2, "e2"));
 
     // call stri__ucol_open after prepare_arg:
     // if prepare_arg had failed, we would have a mem leak

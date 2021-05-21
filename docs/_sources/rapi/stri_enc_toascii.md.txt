@@ -18,7 +18,7 @@ stri_enc_toascii(str)
 
 ## Details
 
-All code points greater than 127 are replaced with the ASCII SUBSTITUTE CHARACTER (0x1A). <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> encoding declarations are always used to determine which encoding is assumed for each input, see [`stri_enc_mark`](stri_enc_mark.md). If ill-formed byte sequences are found in UTF-8 byte streams, a warning is generated.
+All code points greater than 127 are replaced with the ASCII SUBSTITUTE CHARACTER (0x1A). <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> encoding declarations are always used to determine which encoding is assumed for each input, see [`stri_enc_mark`](https://stringi.gagolewski.com/rapi/stri_enc_mark.html). If ill-formed byte sequences are found in UTF-8 byte streams, a warning is generated.
 
 A `bytes`-marked string is assumed to be in an 8-bit encoding extending the ASCII map (a common assumption in <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> itself).
 
@@ -36,4 +36,4 @@ Returns a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other encoding\_conversion: [`about_encoding`](about_encoding.md), [`stri_enc_fromutf32()`,](stri_enc_fromutf32.md) [`stri_enc_tonative()`,](stri_enc_tonative.md) [`stri_enc_toutf32()`,](stri_enc_toutf32.md) [`stri_enc_toutf8()`,](stri_enc_toutf8.md) `stri_encode()`
+Other encoding\_conversion: [`about_encoding`](https://stringi.gagolewski.com/rapi/about_encoding.html), [`stri_enc_fromutf32`](https://stringi.gagolewski.com/rapi/stri_enc_fromutf32.html)(), [`stri_enc_tonative`](https://stringi.gagolewski.com/rapi/stri_enc_tonative.html)(), [`stri_enc_toutf32`](https://stringi.gagolewski.com/rapi/stri_enc_toutf32.html)(), [`stri_enc_toutf8`](https://stringi.gagolewski.com/rapi/stri_enc_toutf8.html)(), [`stri_encode`](https://stringi.gagolewski.com/rapi/stri_encode.html)()

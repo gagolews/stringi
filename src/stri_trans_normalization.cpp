@@ -132,7 +132,7 @@ SEXP stri_trans_nf(SEXP str, int type)
     const Normalizer2* normalizer =
         stri__normalizer_get(type); // auto `type` check here, call before ERROR_HANDLER
 
-    PROTECT(str = stri_prepare_arg_string(str, "str"));    // prepare string argument
+    PROTECT(str = stri__prepare_arg_string(str, "str"));    // prepare string argument
     R_len_t str_length = LENGTH(str);
 
     STRI__ERROR_HANDLER_BEGIN(1)
@@ -179,7 +179,7 @@ SEXP stri_trans_isnf(SEXP str, int type)
     const Normalizer2* normalizer =
         stri__normalizer_get(type); // auto `type` check here, call before ERROR_HANDLER
 
-    PROTECT(str = stri_prepare_arg_string(str, "str"));    // prepare string argument
+    PROTECT(str = stri__prepare_arg_string(str, "str"));    // prepare string argument
     R_len_t str_length = LENGTH(str);
 
     STRI__ERROR_HANDLER_BEGIN(1)

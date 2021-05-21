@@ -57,7 +57,7 @@
  */
 SEXP stri_reverse(SEXP str)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));    // prepare string argument
+    PROTECT(str = stri__prepare_arg_string(str, "str"));    // prepare string argument
 
     STRI__ERROR_HANDLER_BEGIN(1)
     R_len_t str_len = LENGTH(str);

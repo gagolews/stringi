@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count.html">stri_count: Count the Number of Pattern Matches</a></li>
@@ -178,6 +178,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_split_boundaries.html">stri_split_boundaries: Split a String at Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split_lines.html">stri_split_lines: Split a String Into Text Lines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split.html">stri_split: Split a String By Pattern Matches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_sprintf.html">stri_sprintf: Format Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_startsendswith.html">stri_startsendswith: Determine if the Start or End of a String Matches a Pattern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_stats_general.html">stri_stats_general: General Statistics for a Character Vector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_stats_latex.html">stri_stats_latex: Statistics for a Character Vector Containing LaTeX Commands</a></li>
@@ -327,7 +328,7 @@
 <td><p>a character vector of strings to be trimmed</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pattern</span></code></p></td>
-<td><p>a single pattern, specifying character classes that should be preserved (see <a class="reference internal" href="about_search_charclass.html"><span class="doc std std-doc">stringi-search-charclass</span></a>). Defaults to ‘<code class="docutils literal notranslate"><span class="pre">\P{Wspace}</span></code>.</p></td>
+<td><p>a single pattern, specifying character classes that should be preserved (see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stringi-search-charclass.html">stringi-search-charclass</a>). Defaults to ‘<code class="docutils literal notranslate"><span class="pre">\P{Wspace}</span></code>.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">side</span></code></p></td>
 <td><p>character [<code class="docutils literal notranslate"><span class="pre">stri_trim</span></code> only]; defaults to <code class="docutils literal notranslate"><span class="pre">'both'</span></code></p></td>
@@ -340,9 +341,9 @@
 <p>Vectorized over <code class="docutils literal notranslate"><span class="pre">str</span></code> and <code class="docutils literal notranslate"><span class="pre">pattern</span></code>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">stri_trim</span></code> is a convenience wrapper over <code class="docutils literal notranslate"><span class="pre">stri_trim_left</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_trim_right</span></code>.</p>
 <p>Contrary to many other string processing libraries, our trimming functions are universal. A character class, given by <code class="docutils literal notranslate"><span class="pre">pattern</span></code>, may be adjusted to suit your needs (yet, most often you stick to the default value).</p>
-<p>For replacing pattern matches with arbitrary replacement string, see <a class="reference internal" href="stri_replace.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_replace</span></code></span></a>.</p>
+<p>For replacing pattern matches with arbitrary replacement string, see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_replace.html"><code class="docutils literal notranslate"><span class="pre">stri_replace</span></code></a>.</p>
 <p>Trimming can also be used where you would normally rely on regular expressions. For instance, you may get <code class="docutils literal notranslate"><span class="pre">'23.5'</span></code> out of <code class="docutils literal notranslate"><span class="pre">'total</span> <span class="pre">of</span> <span class="pre">23.5</span> <span class="pre">bitcoins'</span></code>.</p>
-<p>For trimming white-spaces, please note the difference between Unicode binary property ‘<code class="docutils literal notranslate"><span class="pre">\p{Wspace}</span></code>’ (more universal) and general character category ‘<code class="docutils literal notranslate"><span class="pre">\p{Z}</span></code>’, see <a class="reference internal" href="about_search_charclass.html"><span class="doc std std-doc">stringi-search-charclass</span></a>.</p>
+<p>For trimming white-spaces, please note the difference between Unicode binary property ‘<code class="docutils literal notranslate"><span class="pre">\p{Wspace}</span></code>’ (more universal) and general character category ‘<code class="docutils literal notranslate"><span class="pre">\p{Z}</span></code>’, see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stringi-search-charclass.html">stringi-search-charclass</a>.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
@@ -355,8 +356,8 @@
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
-<p>Other search_replace: <a class="reference internal" href="about_search.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></span></a>, <code class="docutils literal notranslate"><span class="pre">stri_replace_all()</span></code></p>
-<p>Other search_charclass: <a class="reference internal" href="about_search_charclass.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_charclass</span></code></span></a>, <a class="reference internal" href="about_search.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></span></a></p>
+<p>Other search_replace: <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_search.html"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></a>, <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_replace_all.html"><code class="docutils literal notranslate"><span class="pre">stri_replace_all</span></code></a>()</p>
+<p>Other search_charclass: <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_search_charclass.html"><code class="docutils literal notranslate"><span class="pre">about_search_charclass</span></code></a>, <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_search.html"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></a></p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
@@ -389,7 +390,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-14 17:08:05.
+        Last updated on 2021-05-21 14:42:13.
       </span>
 
     </p>

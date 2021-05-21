@@ -56,9 +56,9 @@
 SEXP stri_startswith_coll(SEXP str, SEXP pattern, SEXP from, SEXP negate, SEXP opts_collator)
 {
     bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
-    PROTECT(from = stri_prepare_arg_integer(from, "from"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
+    PROTECT(from = stri__prepare_arg_integer(from, "from"));
 
     UCollator* collator = NULL;
     collator = stri__ucol_open(opts_collator);
@@ -150,9 +150,9 @@ SEXP stri_startswith_coll(SEXP str, SEXP pattern, SEXP from, SEXP negate, SEXP o
 SEXP stri_endswith_coll(SEXP str, SEXP pattern, SEXP to, SEXP negate, SEXP opts_collator)
 {
     bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
-    PROTECT(to = stri_prepare_arg_integer(to, "to"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
+    PROTECT(to = stri__prepare_arg_integer(to, "to"));
 
     UCollator* collator = NULL;
     collator = stri__ucol_open(opts_collator);

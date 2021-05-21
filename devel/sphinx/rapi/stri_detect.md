@@ -41,14 +41,14 @@ stri_detect_regex(
 
 ## Arguments
 
-|                                          |                                                                                                                                                                                                                                            |
-|------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`                                    | character vector; strings to search in                                                                                                                                                                                                     |
-| `...`                                    | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_regex`, `opts_fixed`, and so on                                                                                       |
-| `pattern, regex, fixed, coll, charclass` | character vector; search patterns; for more details refer to [stringi-search](about_search.md)                                                                                                                                             |
-| `negate`                                 | single logical value; whether a no-match to a pattern is rather of interest                                                                                                                                                                |
-| `max_count`                              | single integer; allows to stop searching once a given number of occurrences is detected; `-1` (the default) inspects all elements                                                                                                          |
-| `opts_collator, opts_fixed, opts_regex`  | a named list used to tune up the search engine\'s settings; see [`stri_opts_collator`](stri_opts_collator.md), [`stri_opts_fixed`](stri_opts_fixed.md), and [`stri_opts_regex`](stri_opts_regex.md), respectively; `NULL` for the defaults |
+|                                          |                                                                                                                                                                                                                                                                                                                                                              |
+|------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `str`                                    | character vector; strings to search in                                                                                                                                                                                                                                                                                                                       |
+| `...`                                    | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_regex`, `opts_fixed`, and so on                                                                                                                                                                                                         |
+| `pattern, regex, fixed, coll, charclass` | character vector; search patterns; for more details refer to [stringi-search](https://stringi.gagolewski.com/rapi/stringi-search.html)                                                                                                                                                                                                                       |
+| `negate`                                 | single logical value; whether a no-match to a pattern is rather of interest                                                                                                                                                                                                                                                                                  |
+| `max_count`                              | single integer; allows to stop searching once a given number of occurrences is detected; `-1` (the default) inspects all elements                                                                                                                                                                                                                            |
+| `opts_collator, opts_fixed, opts_regex`  | a named list used to tune up the search engine\'s settings; see [`stri_opts_collator`](https://stringi.gagolewski.com/rapi/stri_opts_collator.html), [`stri_opts_fixed`](https://stringi.gagolewski.com/rapi/stri_opts_fixed.html), and [`stri_opts_regex`](https://stringi.gagolewski.com/rapi/stri_opts_regex.html), respectively; `NULL` for the defaults |
 
 ## Details
 
@@ -58,7 +58,7 @@ If `pattern` is empty, then the result is `NA` and a warning is generated.
 
 `stri_detect` is a convenience function. It calls either `stri_detect_regex`, `stri_detect_fixed`, `stri_detect_coll`, or `stri_detect_charclass`, depending on the argument used.
 
-See also [`stri_startswith`](stri_startsendswith.md) and [`stri_endswith`](stri_startsendswith.md) for testing whether a string starts or ends with a match to a given pattern. Moreover, see [`stri_subset`](stri_subset.md) for a character vector subsetting.
+See also [`stri_startswith`](https://stringi.gagolewski.com/rapi/stri_startswith.html) and [`stri_endswith`](https://stringi.gagolewski.com/rapi/stri_endswith.html) for testing whether a string starts or ends with a match to a given pattern. Moreover, see [`stri_subset`](https://stringi.gagolewski.com/rapi/stri_subset.html) for a character vector subsetting.
 
 If `max_count` is negative, then all stings are examined. Otherwise, searching terminates once `max_count` matches (or, if `negate` is `TRUE`, no-matches) are detected. The uninspected cases are marked as missing in the return vector. Be aware that, unless `pattern` is a singleton, the elements in `str` might be inspected in a non-consecutive order.
 
@@ -74,7 +74,7 @@ Each function returns a logical vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_detect: [`about_search`](about_search.md), `stri_startswith()`
+Other search\_detect: [`about_search`](https://stringi.gagolewski.com/rapi/about_search.html), [`stri_startswith`](https://stringi.gagolewski.com/rapi/stri_startswith.html)()
 
 ## Examples
 

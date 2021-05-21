@@ -77,9 +77,9 @@ using namespace std;
  */
 SEXP stri__replace_all_charclass_yes_vectorize_all(SEXP str, SEXP pattern, SEXP replacement, SEXP merge)
 {
-    PROTECT(str            = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern        = stri_prepare_arg_string(pattern, "pattern"));
-    PROTECT(replacement    = stri_prepare_arg_string(replacement, "replacement"));
+    PROTECT(str            = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern        = stri__prepare_arg_string(pattern, "pattern"));
+    PROTECT(replacement    = stri__prepare_arg_string(replacement, "replacement"));
     bool merge_cur = stri__prepare_arg_logical_1_notNA(merge, "merge");
     R_len_t vectorize_length = stri__recycling_rule(true, 3,
                                LENGTH(str), LENGTH(pattern), LENGTH(replacement));
@@ -164,7 +164,7 @@ SEXP stri__replace_all_charclass_yes_vectorize_all(SEXP str, SEXP pattern, SEXP 
  */
 SEXP stri__replace_all_charclass_no_vectorize_all(SEXP str, SEXP pattern, SEXP replacement, SEXP merge)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
 
     // if str_n is 0, then return an empty vector
     R_len_t str_n = LENGTH(str);
@@ -173,8 +173,8 @@ SEXP stri__replace_all_charclass_no_vectorize_all(SEXP str, SEXP pattern, SEXP r
         return stri__vector_empty_strings(0);
     }
 
-    PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
-    PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
+    PROTECT(pattern      = stri__prepare_arg_string(pattern, "pattern"));
+    PROTECT(replacement  = stri__prepare_arg_string(replacement, "replacement"));
     R_len_t pattern_n = LENGTH(pattern);
     R_len_t replacement_n = LENGTH(replacement);
     if (pattern_n < replacement_n || pattern_n <= 0 || replacement_n <= 0) {
@@ -294,9 +294,9 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement, SEXP m
  */
 SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement, bool first)
 {
-    PROTECT(str          = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
-    PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
+    PROTECT(str          = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern      = stri__prepare_arg_string(pattern, "pattern"));
+    PROTECT(replacement  = stri__prepare_arg_string(replacement, "replacement"));
     R_len_t vectorize_length = stri__recycling_rule(true, 3,
                                LENGTH(str), LENGTH(pattern), LENGTH(replacement));
 

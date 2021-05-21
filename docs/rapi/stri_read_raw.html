@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count.html">stri_count: Count the Number of Pattern Matches</a></li>
@@ -187,6 +187,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_split_boundaries.html">stri_split_boundaries: Split a String at Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split_lines.html">stri_split_lines: Split a String Into Text Lines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split.html">stri_split: Split a String By Pattern Matches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_sprintf.html">stri_sprintf: Format Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_startsendswith.html">stri_startsendswith: Determine if the Start or End of a String Matches a Pattern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_stats_general.html">stri_stats_general: General Statistics for a Character Vector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_stats_latex.html">stri_stats_latex: Statistics for a Character Vector Containing LaTeX Commands</a></li>
@@ -327,7 +328,7 @@
 </div>
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
-<p>Once a text file is read into memory, encoding detection (see <a class="reference internal" href="stri_enc_detect.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_detect</span></code></span></a>), conversion (see <a class="reference internal" href="stri_encode.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_encode</span></code></span></a>), and/or splitting of text into lines (see <a class="reference internal" href="stri_split_lines.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_split_lines1</span></code></span></a>) can be performed.</p>
+<p>Once a text file is read into memory, encoding detection (see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_enc_detect.html"><code class="docutils literal notranslate"><span class="pre">stri_enc_detect</span></code></a>), conversion (see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_encode.html"><code class="docutils literal notranslate"><span class="pre">stri_encode</span></code></a>), and/or splitting of text into lines (see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_split_lines1.html"><code class="docutils literal notranslate"><span class="pre">stri_split_lines1</span></code></a>) can be performed.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
@@ -340,7 +341,7 @@
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
-<p>Other files: <a class="reference internal" href="stri_read_lines.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_read_lines()</span></code>,</span></a> <code class="docutils literal notranslate"><span class="pre">stri_write_lines()</span></code></p>
+<p>Other files: <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_read_lines.html"><code class="docutils literal notranslate"><span class="pre">stri_read_lines</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_write_lines.html"><code class="docutils literal notranslate"><span class="pre">stri_write_lines</span></code></a>()</p>
 </div>
 </div>
 
@@ -360,7 +361,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-14 17:08:05.
+        Last updated on 2021-05-21 14:42:13.
       </span>
 
     </p>

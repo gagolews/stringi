@@ -71,9 +71,9 @@ using namespace std;
 SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP opts_regex, bool first)
 {
     // @TODO: capture_groups arg (integer vector/set - which capture groups to extract)
-    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern")); // prepare string argument
-    PROTECT(cg_missing = stri_prepare_arg_string_1(cg_missing, "cg_missing"));
+    PROTECT(str = stri__prepare_arg_string(str, "str")); // prepare string argument
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern")); // prepare string argument
+    PROTECT(cg_missing = stri__prepare_arg_string_1(cg_missing, "cg_missing"));
     R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
     StriRegexMatcherOptions pattern_opts =
@@ -250,9 +250,9 @@ SEXP stri_match_last_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP opts_re
 SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP cg_missing, SEXP opts_regex)
 {
     bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
-    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern")); // prepare string argument
-    PROTECT(cg_missing = stri_prepare_arg_string_1(cg_missing, "cg_missing"));
+    PROTECT(str = stri__prepare_arg_string(str, "str")); // prepare string argument
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern")); // prepare string argument
+    PROTECT(cg_missing = stri__prepare_arg_string_1(cg_missing, "cg_missing"));
     R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
     StriRegexMatcherOptions pattern_opts =

@@ -66,9 +66,9 @@ using namespace std;
  */
 SEXP stri__replace_allfirstlast_coll(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_collator, int type)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-    PROTECT(replacement = stri_prepare_arg_string(replacement, "replacement"));
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(replacement = stri__prepare_arg_string(replacement, "replacement"));
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
 
     UCollator* collator = NULL;
     collator = stri__ucol_open(opts_collator);
@@ -182,7 +182,7 @@ SEXP stri__replace_allfirstlast_coll(SEXP str, SEXP pattern, SEXP replacement, S
  */
 SEXP stri__replace_all_coll_no_vectorize_all(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_collator)
 {   // version beta
-    PROTECT(str          = stri_prepare_arg_string(str, "str"));
+    PROTECT(str          = stri__prepare_arg_string(str, "str"));
 
     // if str_n is 0, then return an empty vector
     R_len_t str_n = LENGTH(str);
@@ -191,8 +191,8 @@ SEXP stri__replace_all_coll_no_vectorize_all(SEXP str, SEXP pattern, SEXP replac
         return stri__vector_empty_strings(0);
     }
 
-    PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
-    PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
+    PROTECT(pattern      = stri__prepare_arg_string(pattern, "pattern"));
+    PROTECT(replacement  = stri__prepare_arg_string(replacement, "replacement"));
     R_len_t pattern_n = LENGTH(pattern);
     R_len_t replacement_n = LENGTH(replacement);
     if (pattern_n < replacement_n || pattern_n <= 0 || replacement_n <= 0) {

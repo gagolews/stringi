@@ -69,9 +69,9 @@
  */
 SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex, int type)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-    PROTECT(replacement = stri_prepare_arg_string(replacement, "replacement"));
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(replacement = stri__prepare_arg_string(replacement, "replacement"));
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
     StriRegexMatcherOptions pattern_opts =
         StriContainerRegexPattern::getRegexOptions(opts_regex);
 
@@ -169,7 +169,7 @@ SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, 
  */
 SEXP stri__replace_all_regex_no_vectorize_all(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex)
 {   // version beta
-    PROTECT(str          = stri_prepare_arg_string(str, "str"));
+    PROTECT(str          = stri__prepare_arg_string(str, "str"));
 
     // if str_n is 0, then return an empty vector
     R_len_t str_n = LENGTH(str);
@@ -178,8 +178,8 @@ SEXP stri__replace_all_regex_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
         return stri__vector_empty_strings(0);
     }
 
-    PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
-    PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
+    PROTECT(pattern      = stri__prepare_arg_string(pattern, "pattern"));
+    PROTECT(replacement  = stri__prepare_arg_string(replacement, "replacement"));
     StriRegexMatcherOptions pattern_opts =
         StriContainerRegexPattern::getRegexOptions(opts_regex);
 
@@ -247,8 +247,8 @@ SEXP stri__replace_all_regex_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
 
 // version alpha == to slow == too many toutf16 conversions
 //{
-//   PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
-//   PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
+//   PROTECT(pattern      = stri__prepare_arg_string(pattern, "pattern"));
+//   PROTECT(replacement  = stri__prepare_arg_string(replacement, "replacement"));
 //
 //   R_len_t pattern_n = LENGTH(pattern);
 //   R_len_t replacement_n = LENGTH(replacement);

@@ -466,7 +466,7 @@ SEXP stri_enc_isenc(SEXP str, int _type)
     }
 
 
-    PROTECT(str = stri_prepare_arg_list_raw(str, "str"));
+    PROTECT(str = stri__prepare_arg_list_raw(str, "str"));
 
     STRI__ERROR_HANDLER_BEGIN(1)
     StriContainerListRaw str_cont(str);
@@ -588,8 +588,8 @@ SEXP stri_enc_isutf32le(SEXP str) {
  */
 SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets)
 {
-    PROTECT(str = stri_prepare_arg_list_raw(str, "str"));
-    PROTECT(filter_angle_brackets = stri_prepare_arg_logical(filter_angle_brackets, "filter_angle_brackets"));
+    PROTECT(str = stri__prepare_arg_list_raw(str, "str"));
+    PROTECT(filter_angle_brackets = stri__prepare_arg_logical(filter_angle_brackets, "filter_angle_brackets"));
 
     UCharsetDetector* ucsdet = NULL;
 
@@ -1010,7 +1010,7 @@ SEXP stri_enc_detect2(SEXP str, SEXP loc)
     const char* qloc = /* this is R_alloc'ed */
         stri__prepare_arg_locale(loc, "locale", true, true); // allowdefault, allowna
     // raw vector, character vector, or list of raw vectors:
-    PROTECT(str = stri_prepare_arg_list_raw(str, "str"));
+    PROTECT(str = stri__prepare_arg_list_raw(str, "str"));
 
     STRI__ERROR_HANDLER_BEGIN(1)
 

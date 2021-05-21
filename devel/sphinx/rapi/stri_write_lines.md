@@ -44,4 +44,4 @@ This function returns nothing noteworthy.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other files: [`stri_read_lines()`,](stri_read_lines.md) `stri_read_raw()`
+Other files: [`stri_read_lines`](https://stringi.gagolewski.com/rapi/stri_read_lines.html)(), [`stri_read_raw`](https://stringi.gagolewski.com/rapi/stri_read_raw.html)()

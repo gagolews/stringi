@@ -58,7 +58,7 @@ using namespace std;
  */
 SEXP stri_split_lines1(SEXP str)
 {
-    PROTECT(str = stri_prepare_arg_string_1(str, "str"));
+    PROTECT(str = stri__prepare_arg_string_1(str, "str"));
     R_len_t vectorize_length = LENGTH(str);
 
     STRI__ERROR_HANDLER_BEGIN(1)
@@ -150,9 +150,9 @@ SEXP stri_split_lines1(SEXP str)
  */
 SEXP stri_split_lines(SEXP str, SEXP omit_empty)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-//   n_max = stri_prepare_arg_integer(n_max, "n_max");
-    PROTECT(omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+//   n_max = stri__prepare_arg_integer(n_max, "n_max");
+    PROTECT(omit_empty = stri__prepare_arg_logical(omit_empty, "omit_empty"));
     R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), /*LENGTH(n_max), */LENGTH(omit_empty));
 
     STRI__ERROR_HANDLER_BEGIN(2)

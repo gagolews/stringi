@@ -20,7 +20,7 @@ stri_reverse(str)
 
 Note that this operation may result in non-Unicode-normalized strings and may give peculiar outputs for bidirectional strings.
 
-See also [`stri_rand_shuffle`](stri_rand_shuffle.md) for a random permutation of code points.
+See also [`stri_rand_shuffle`](https://stringi.gagolewski.com/rapi/stri_rand_shuffle.html) for a random permutation of code points.
 
 ## Value
 

@@ -63,6 +63,7 @@ typedef enum {
 struct StriSprintfFormatSpec
 {
     StriSprintfType type;
+    char type_spec;
     bool pad_from_right;   // '-'
     bool pad_zero;         // '0'
     bool sign_space;       // ' '
@@ -71,8 +72,10 @@ struct StriSprintfFormatSpec
     int min_width;
     int precision;         // can be negative
 
-    StriSprintfFormatSpec(char type_spec)
+    StriSprintfFormatSpec(char _type_spec)
     {
+        type_spec = _type_spec;
+
         if (strchr(STRI_SPRINTF_SPEC_INTEGER, type_spec) != nullptr)
             type = STRI_SPRINTF_TYPE_INTEGER;
         else if (strchr(STRI_SPRINTF_SPEC_DOUBLE, type_spec) != nullptr)
@@ -93,6 +96,24 @@ struct StriSprintfFormatSpec
         // s - default precision - unspecified
 
         // gG uses eE if precision <= exponent < -4
+    }
+
+    std::string toString()
+    {
+        normalise();
+        std::string f("%");
+        if (alternate_output) f.push_back('#');
+        if (sign_space) f.push_back(' ');
+        if (sign_plus) f.push_back('+');
+        if (pad_from_right) f.push_back('-');
+        if (pad_zero) f.push_back('0');
+        if (min_width != NA_INTEGER) f.append(std::to_string(min_width));
+        if (precision != NA_INTEGER) {
+            f.push_back('.');
+            f.append(std::to_string(precision));
+        }
+        f.push_back(type_spec);
+        return f;
     }
 
 
@@ -119,21 +140,33 @@ struct StriSprintfFormatSpec
 
 
 /**
- * stops right after delim, modifies j0 in place
+ * if delim found, stops right after delim, modifies j0 in place
+ * if delim not found, returns NA_INTEGER or throws an error
  */
-int stri__atoi_to_delim(const char* f, R_len_t& j0, char delim, int max_val=99999)
-{
-    int val = (int)f[j0++]-(int)'\0';
+int stri__atoi_to_delim(
+    const char* f,
+    R_len_t& j0,
+    char delim,
+    bool throw_error=true,
+    int max_val=99999
+) {
+    R_len_t j1 = j0;
+    int val = (int)f[j1++]-(int)'0';
     while (true) {
-        if (f[j0] == delim) { j0++; break; }
+        if (f[j1] == delim) { j1++; break; }
 
-        if (f[j0] < '0' || f[j0] > '9')
-            throw StriException(MSG__INVALID_FORMAT_STRING, f);
+        if (f[j1] < '0' || f[j1] > '9') {
+            if (throw_error)
+                throw StriException(MSG__INVALID_FORMAT_STRING, f);
+            else
+                return NA_INTEGER;
+        }
 
-        val = val*10 + ((int)f[j0++]-(int)'\0');
+        val = val*10 + ((int)f[j1++]-(int)'0');
         if (val > max_val)
             throw StriException(MSG__INVALID_FORMAT_STRING, f);
     }
+    j0 = j1;  // passed by reference
     return val;
 }
 
@@ -143,12 +176,12 @@ int stri__atoi_to_delim(const char* f, R_len_t& j0, char delim, int max_val=9999
  */
 int stri__atoi_to_other(const char* f, R_len_t& j0, int max_val=99999)
 {
-    int val = (int)f[j0++]-(int)'\0';
+    int val = (int)f[j0++]-(int)'0';
     while (true) {
         if (f[j0] < '0' || f[j0] > '9')
             break;
 
-        val = val*10 + ((int)f[j0++]-(int)'\0');
+        val = val*10 + ((int)f[j0++]-(int)'0');
         if (val > max_val)
             throw StriException(MSG__INVALID_FORMAT_STRING, f);
     }
@@ -180,6 +213,7 @@ int stri__find_type_spec(const char* f, R_len_t j1, R_len_t n)
 
         j1++;
     }
+    return j1;
 }
 
 
@@ -251,18 +285,29 @@ public:
 
     ~StriSprintfDataProvider()
     {
+        R_len_t num_unused = 0;
         for (R_len_t j=0; j<narg; ++j) {
+            bool this_unused = true;
             if (x_integer[j] != nullptr) {
                 delete x_integer[j];
+                this_unused = false;
             }
             if (x_double[j] != nullptr) {
                 delete x_double[j];
+                this_unused = false;
             }
             if (x_string[j] != nullptr) {
                 delete x_string[j];
+                this_unused = false;
             }
+            if (this_unused) num_unused++;
         }
         if (nprotect > 0) UNPROTECT(nprotect);
+
+        if (num_unused == 1)
+            Rf_warning(MSG__ARG_UNUSED_1);
+        else if (num_unused > 1)
+            Rf_warning(MSG__ARG_UNUSED_N, num_unused);
     }
 
     void reset(R_len_t elem) {
@@ -276,14 +321,14 @@ public:
      */
     int getIntegerOrNA(int i=-1)
     {
-        if (i < 0) i = (cur_item++);
+        if (i == NA_INTEGER || i < 0) i = (cur_item++);
         // else do not advance cur_item
         if (i >= narg) throw StriException(MSG__ARG_NEED_MORE);
 
         if (x_integer[i] == nullptr) {
             SEXP y;
             // the following may call Rf_error:
-            PROTECT(y = stri_prepare_arg_integer(VECTOR_ELT(x, i), "...",
+            PROTECT(y = stri__prepare_arg_integer(VECTOR_ELT(x, i), "...",
                 false/*factors_as_strings*/, false/*allow_error*/));
             nprotect++;
             if (isNull(y)) throw StriException(MSG__ARG_EXPECTED_INTEGER, "...");
@@ -300,14 +345,14 @@ public:
      */
     double getDoubleOrNA(int i=-1)
     {
-        if (i < 0) i = (cur_item++);
+        if (i == NA_INTEGER || i < 0) i = (cur_item++);
         // else do not advance cur_item
         if (i >= narg) throw StriException(MSG__ARG_NEED_MORE);
 
         if (x_double[i] == nullptr) {
             SEXP y;
             // the following may call Rf_error:
-            PROTECT(y = stri_prepare_arg_double(VECTOR_ELT(x, i), "...",
+            PROTECT(y = stri__prepare_arg_double(VECTOR_ELT(x, i), "...",
                 false/*factors_as_strings*/, false/*allow_error*/));
             nprotect++;
             if (isNull(y)) throw StriException(MSG__ARG_EXPECTED_NUMERIC, "...");
@@ -323,14 +368,14 @@ public:
      */
     const String8& getStringOrNA(int i=-1)
     {
-        if (i < 0) i = (cur_item++);
+        if (i == NA_INTEGER || i < 0) i = (cur_item++);
         // else do not advance cur_item
         if (i >= narg) throw StriException(MSG__ARG_NEED_MORE);
 
         if (x_string[i] == nullptr) {
             SEXP y;
             // the following may call Rf_error:
-            PROTECT(y = stri_prepare_arg_string(VECTOR_ELT(x, i), "...",
+            PROTECT(y = stri__prepare_arg_string(VECTOR_ELT(x, i), "...",
                 false/*allow_error*/));
             nprotect++;
             if (isNull(y)) throw StriException(MSG__ARG_EXPECTED_STRING, "...");
@@ -377,12 +422,13 @@ SEXP stri__sprintf_1(
         //       1            2        3           4            5 == f[j1]
 
         // 1. optional [1-9][0-9]*\$  - which datum is to be formatted?
-        int which_datum = -1;
+        int which_datum = NA_INTEGER;
         if (f[j0] >= '1' && f[j0] <= '9') {
-            // we expect arg pos spec now
+            // arg pos spec if digits followed by '$'
             which_datum = stri__atoi_to_delim(
-                f, /*by reference*/j0, /*delimiter*/'$'
-            );
+                f, /*by reference*/j0, /*delimiter*/'$', false/*throw_error*/
+            )-1/*0-based indexing*/;
+            // result can be NA_INTEGER
         }
 
         // 2. optional flags [ +0#-]
@@ -402,11 +448,11 @@ SEXP stri__sprintf_1(
         }
         else if (f[j0] == '*') {  // take from ... args
             j0++;
-            int which_width = -1;
+            int which_width = NA_INTEGER;
             if (f[j0] >= '1' && f[j0] <= '9') {
                 which_width = stri__atoi_to_delim(
                     f, /*by reference*/j0, /*delimiter*/'$'
-                );
+                )-1/*0-based indexing*/;
             }
             spec.min_width = data.getIntegerOrNA(which_width);
         }
@@ -419,11 +465,11 @@ SEXP stri__sprintf_1(
             }
             else if (f[j0] == '*') {  // take from ... args
                 j0++;
-                int which_precision = -1;
+                int which_precision = NA_INTEGER;
                 if (f[j0] >= '1' && f[j0] <= '9') {
                     which_precision = stri__atoi_to_delim(
                         f, /*by reference*/j0, /*delimiter*/'$'
-                    );
+                    )-1/*0-based indexing*/;
                 }
                 spec.precision = data.getIntegerOrNA(which_precision);
             }
@@ -438,13 +484,16 @@ SEXP stri__sprintf_1(
 
         spec.normalise();
 
+        //Rprintf("*** spec=%s\n", spec.toString().c_str());
+        buf += spec.toString();
+
         // which_datum
 //         if (use_length_val) width = str.countCodePoints();
 //         else width = stri__width_string(str.c_str(), str.length())
     }
 //              NA_STRING
 //         MSG__INVALID_FORMAT_STRING
-    return NA_STRING;
+    return Rf_mkCharLenCE(buf.data(), buf.size(), CE_UTF8);
 }
 
 
@@ -467,11 +516,11 @@ SEXP stri_sprintf(SEXP format, SEXP x, SEXP na_string,
     SEXP inf_string, SEXP nan_string, SEXP use_length)
 {
     bool use_length_val = stri__prepare_arg_logical_1_notNA(use_length, "use_length");
-    PROTECT(x = stri_prepare_arg_list(x, "x"));
-    PROTECT(format = stri_prepare_arg_string(format, "format"));
-    PROTECT(na_string = stri_prepare_arg_string_1(na_string, "na_string"));
-    PROTECT(inf_string = stri_prepare_arg_string_1(inf_string, "inf_string"));
-    PROTECT(nan_string = stri_prepare_arg_string_1(nan_string, "nan_string"));
+    PROTECT(x = stri__prepare_arg_list(x, "x"));
+    PROTECT(format = stri__prepare_arg_string(format, "format"));
+    PROTECT(na_string = stri__prepare_arg_string_1(na_string, "na_string"));
+    PROTECT(inf_string = stri__prepare_arg_string_1(inf_string, "inf_string"));
+    PROTECT(nan_string = stri__prepare_arg_string_1(nan_string, "nan_string"));
 
     R_len_t format_length = LENGTH(format);
     R_len_t vectorize_length = format_length;
@@ -534,8 +583,6 @@ SEXP stri_sprintf(SEXP format, SEXP x, SEXP na_string,
             continue;
         }
 
-        continue;  // !!!!!!!!!!!!!!T.B.D.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
         // The "parsing" of the format string is done from scratch
         // each time and the output strings are generated on the fly.
         // Let's keep the code simple; the possibility of having
@@ -545,7 +592,7 @@ SEXP stri_sprintf(SEXP format, SEXP x, SEXP na_string,
 
 
         SEXP out;
-        PROTECT(out = stri__sprintf_1(
+        STRI__PROTECT(out = stri__sprintf_1(
             format_cont.get(i),
             data,
             na_string_cont.getNAble(0),
@@ -554,7 +601,7 @@ SEXP stri_sprintf(SEXP format, SEXP x, SEXP na_string,
             use_length_val
         ));
         SET_STRING_ELT(ret, i, out);
-        UNPROTECT(1);
+        STRI__UNPROTECT(1);
     }
 
     STRI__UNPROTECT_ALL

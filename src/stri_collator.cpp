@@ -121,7 +121,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
             opt_ALTERNATE_HANDLING = (val_bool?UCOL_SHIFTED:UCOL_NON_IGNORABLE);
         } else if  (!strcmp(curname, "uppercase_first")) {
             SEXP val;
-            PROTECT(val = stri_prepare_arg_logical_1(tmp_arg, "uppercase_first"));
+            PROTECT(val = stri__prepare_arg_logical_1(tmp_arg, "uppercase_first"));
             opt_CASE_FIRST = (LOGICAL(val)[0]==NA_LOGICAL?UCOL_OFF:
                               (LOGICAL(val)[0]?UCOL_UPPER_FIRST:UCOL_LOWER_FIRST));
             UNPROTECT(1);

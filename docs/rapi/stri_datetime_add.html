@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count.html">stri_count: Count the Number of Pattern Matches</a></li>
@@ -189,6 +189,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_split_boundaries.html">stri_split_boundaries: Split a String at Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split_lines.html">stri_split_lines: Split a String Into Text Lines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split.html">stri_split: Split a String By Pattern Matches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_sprintf.html">stri_sprintf: Format Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_startsendswith.html">stri_startsendswith: Determine if the Start or End of a String Matches a Pattern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_stats_general.html">stri_stats_general: General Statistics for a Character Vector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_stats_latex.html">stri_stats_latex: Statistics for a Character Vector Containing LaTeX Commands</a></li>
@@ -365,16 +366,16 @@
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
-<p>Other datetime: <a class="reference internal" href="stri_datetime_create.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_create()</span></code>,</span></a> <a class="reference internal" href="stri_datetime_fields.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_fields()</span></code>,</span></a> <a class="reference internal" href="stri_datetime_format.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_format()</span></code>,</span></a> <a class="reference internal" href="stri_datetime_fstr.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_fstr()</span></code>,</span></a> <a class="reference internal" href="stri_datetime_now.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_now()</span></code>,</span></a> <a class="reference internal" href="stri_datetime_symbols.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_symbols()</span></code>,</span></a> <a class="reference internal" href="stri_timezone_set.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_get()</span></code>,</span></a> <a class="reference internal" href="stri_timezone_info.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_info()</span></code>,</span></a> <code class="docutils literal notranslate"><span class="pre">stri_timezone_list()</span></code></p>
+<p>Other datetime: <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_create.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_create</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_fields.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_fields</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_format.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_format</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_fstr.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_fstr</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_now.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_now</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_symbols.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_symbols</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_timezone_get.html"><code class="docutils literal notranslate"><span class="pre">stri_timezone_get</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_timezone_info.html"><code class="docutils literal notranslate"><span class="pre">stri_timezone_info</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_timezone_list.html"><code class="docutils literal notranslate"><span class="pre">stri_timezone_list</span></code></a>()</p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">stri_datetime_now</span><span class="p">()</span>
 <span class="nf">stri_datetime_add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s">&#39;months&#39;</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="m">2</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2021-07-14 17:08:01 AEST&quot;</span>
+<span class="c1">## [1] &quot;2021-07-21 14:42:08 AEST&quot;</span>
 <span class="nf">stri_datetime_add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">-2</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s">&#39;months&#39;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2021-05-14 17:08:01 AEST&quot;</span>
+<span class="c1">## [1] &quot;2021-05-21 14:42:08 AEST&quot;</span>
 <span class="nf">stri_datetime_add</span><span class="p">(</span><span class="nf">stri_datetime_create</span><span class="p">(</span><span class="m">2014</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">20</span><span class="p">),</span> <span class="m">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s">&#39;years&#39;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;2015-04-20 12:00:00 AEST&quot;</span>
 <span class="nf">stri_datetime_add</span><span class="p">(</span><span class="nf">stri_datetime_create</span><span class="p">(</span><span class="m">2014</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">20</span><span class="p">),</span> <span class="m">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s">&#39;years&#39;</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span>
@@ -402,7 +403,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-14 17:08:05.
+        Last updated on 2021-05-21 14:42:13.
       </span>
 
     </p>

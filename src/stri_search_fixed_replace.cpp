@@ -75,9 +75,9 @@ using namespace std;
 SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_fixed, int type)
 {
     uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
-    PROTECT(str          = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
-    PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
+    PROTECT(str          = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern      = stri__prepare_arg_string(pattern, "pattern"));
+    PROTECT(replacement  = stri__prepare_arg_string(replacement, "replacement"));
     R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));
 
     STRI__ERROR_HANDLER_BEGIN(3)
@@ -158,9 +158,9 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
 // Version 2, 2014-11-02, using String8::replaceAllAtPos, slower
 //SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, int type)
 //{
-//   str          = stri_prepare_arg_string(str, "str");
-//   pattern      = stri_prepare_arg_string(pattern, "pattern");
-//   replacement  = stri_prepare_arg_string(replacement, "replacement");
+//   str          = stri__prepare_arg_string(str, "str");
+//   pattern      = stri__prepare_arg_string(pattern, "pattern");
+//   replacement  = stri__prepare_arg_string(replacement, "replacement");
 //   R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));
 //
 //   STRI__ERROR_HANDLER_BEGIN
@@ -249,7 +249,7 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
  */
 SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_fixed)
 {   // version gamma:
-    PROTECT(str          = stri_prepare_arg_string(str, "str"));
+    PROTECT(str          = stri__prepare_arg_string(str, "str"));
 
     // if str_n is 0, then return an empty vector
     R_len_t str_n = LENGTH(str);
@@ -258,8 +258,8 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
         return stri__vector_empty_strings(0);
     }
 
-    PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
-    PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
+    PROTECT(pattern      = stri__prepare_arg_string(pattern, "pattern"));
+    PROTECT(replacement  = stri__prepare_arg_string(replacement, "replacement"));
 
     R_len_t pattern_n = LENGTH(pattern);
     R_len_t replacement_n = LENGTH(replacement);
@@ -338,8 +338,8 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
 
 // stri__replace_all_fixed_no_vectorize_all
 //{  // version beta: for-loop like, 2014-11-01
-//   PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
-//   PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
+//   PROTECT(pattern      = stri__prepare_arg_string(pattern, "pattern"));
+//   PROTECT(replacement  = stri__prepare_arg_string(replacement, "replacement"));
 //
 //   R_len_t pattern_n = LENGTH(pattern);
 //   R_len_t replacement_n = LENGTH(replacement);
@@ -370,9 +370,9 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
 // Not worth fighting for..... :/, 2014-11-01
 //SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP replacement)
 //{
-//   str          = stri_prepare_arg_string(str, "str");
-//   pattern      = stri_prepare_arg_string(pattern, "pattern");
-//   replacement  = stri_prepare_arg_string(replacement, "replacement");
+//   str          = stri__prepare_arg_string(str, "str");
+//   pattern      = stri__prepare_arg_string(pattern, "pattern");
+//   replacement  = stri__prepare_arg_string(replacement, "replacement");
 //
 //   R_len_t str_n = LENGTH(str);
 //   R_len_t pattern_n = LENGTH(pattern);

@@ -60,8 +60,8 @@ SEXP stri_subset_charclass(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate)
 {
     bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
     bool omit_na1 = stri__prepare_arg_logical_1_notNA(omit_na, "omit_na");
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
     R_len_t vectorize_length =
         stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
@@ -133,9 +133,9 @@ SEXP stri_subset_charclass(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate)
 SEXP stri_subset_charclass_replacement(SEXP str, SEXP pattern, SEXP negate, SEXP value)
 {
     bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern = stri_prepare_arg_string_1(pattern, "pattern"));
-    PROTECT(value = stri_prepare_arg_string(value, "value"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri__prepare_arg_string_1(pattern, "pattern"));
+    PROTECT(value = stri__prepare_arg_string(value, "value"));
 
     int vectorize_length = LENGTH(str);
     int value_length = LENGTH(value);

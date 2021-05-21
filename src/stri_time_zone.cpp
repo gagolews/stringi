@@ -47,8 +47,8 @@
 SEXP stri_timezone_list(SEXP region, SEXP offset)
 {
     StringEnumeration* tz_enum = NULL;
-    PROTECT(region = stri_prepare_arg_string_1(region, "region"));
-    PROTECT(offset = stri_prepare_arg_double_1(offset, "offset"));
+    PROTECT(region = stri__prepare_arg_string_1(region, "region"));
+    PROTECT(offset = stri__prepare_arg_double_1(offset, "offset"));
 
     STRI__ERROR_HANDLER_BEGIN(2)
     StriContainerUTF8 region_cont(region, 1);

@@ -54,7 +54,7 @@ Note that many W3C Specifications recommend using NFC for all content, because t
 
 As usual in <span class="pkg">stringi</span>, if the input character vector is in the native encoding, it will be automatically converted to UTF-8.
 
-For more general text transforms refer to [`stri_trans_general`](stri_trans_general.md).
+For more general text transforms refer to [`stri_trans_general`](https://stringi.gagolewski.com/rapi/stri_trans_general.html).
 
 ## Value
 
@@ -82,7 +82,7 @@ The `stri_trans_nf*` functions return a character vector of the same length as i
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other transform: [`stri_trans_char()`,](stri_trans_char.md) [`stri_trans_general()`,](stri_trans_general.md) [`stri_trans_list()`,](stri_trans_list.md) `stri_trans_tolower()`
+Other transform: [`stri_trans_char`](https://stringi.gagolewski.com/rapi/stri_trans_char.html)(), [`stri_trans_general`](https://stringi.gagolewski.com/rapi/stri_trans_general.html)(), [`stri_trans_list`](https://stringi.gagolewski.com/rapi/stri_trans_list.html)(), [`stri_trans_tolower`](https://stringi.gagolewski.com/rapi/stri_trans_tolower.html)()
 
 ## Examples
 

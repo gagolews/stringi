@@ -58,7 +58,7 @@ SEXP stri__prepare_arg_list_ignore_null(SEXP x, bool ignore_null)
 
 #ifndef NDEBUG
     if (!Rf_isVectorList(x))
-        Rf_error("stri_prepare_arg_list_ignore_null:: !NDEBUG: not a list"); // error() allowed here
+        Rf_error("stri__prepare_arg_list_ignore_null:: !NDEBUG: not a list"); // error() allowed here
 #endif
 
     R_len_t narg = LENGTH(x);
@@ -77,7 +77,7 @@ SEXP stri__prepare_arg_list_ignore_null(SEXP x, bool ignore_null)
     for (R_len_t i=0; i<narg; ++i) {
 #ifndef NDEBUG
         if (!Rf_isVector(VECTOR_ELT(x, i)))
-            Rf_error("stri_prepare_arg_list_ignore_null:: !NDEBUG: not a vector element"); // error() allowed here
+            Rf_error("stri__prepare_arg_list_ignore_null:: !NDEBUG: not a vector element"); // error() allowed here
 #endif
         if (LENGTH(VECTOR_ELT(x, i)) > 0)
             ++nret;
@@ -134,8 +134,8 @@ SEXP stri__prepare_arg_list_ignore_null(SEXP x, bool ignore_null)
 */
 SEXP stri_dup(SEXP str, SEXP times)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
-    PROTECT(times = stri_prepare_arg_integer(times, "times")); // prepare string argument
+    PROTECT(str = stri__prepare_arg_string(str, "str")); // prepare string argument
+    PROTECT(times = stri__prepare_arg_integer(times, "times")); // prepare string argument
     R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(times));
     if (vectorize_length <= 0) {
         UNPROTECT(2);
@@ -242,8 +242,8 @@ SEXP stri_dup(SEXP str, SEXP times)
 */
 SEXP stri_join2(SEXP e1, SEXP e2) // a.k.a. stri_join2_nocollapse
 {
-    PROTECT(e1 = stri_prepare_arg_string(e1, "e1")); // prepare string argument
-    PROTECT(e2 = stri_prepare_arg_string(e2, "e2")); // prepare string argument
+    PROTECT(e1 = stri__prepare_arg_string(e1, "e1")); // prepare string argument
+    PROTECT(e2 = stri__prepare_arg_string(e2, "e2")); // prepare string argument
 
     R_len_t e1_length = LENGTH(e1);
     R_len_t e2_length = LENGTH(e2);
@@ -341,9 +341,9 @@ SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
         return stri_join2(e1, e2); // a.k.a. stri_join2_nocollapse
     }
 
-    PROTECT(e1 = stri_prepare_arg_string(e1, "e1")); // prepare string argument
-    PROTECT(e2 = stri_prepare_arg_string(e2, "e2")); // prepare string argument
-    PROTECT(collapse = stri_prepare_arg_string_1(collapse, "collapse"));
+    PROTECT(e1 = stri__prepare_arg_string(e1, "e1")); // prepare string argument
+    PROTECT(e2 = stri__prepare_arg_string(e2, "e2")); // prepare string argument
+    PROTECT(collapse = stri__prepare_arg_string_1(collapse, "collapse"));
     if (STRING_ELT(collapse, 0) == NA_STRING) {
         UNPROTECT(3);
         return stri__vector_NA_strings(1);
@@ -443,7 +443,7 @@ SEXP stri_join_nocollapse(SEXP strlist, SEXP sep, SEXP ignore_null)
 {
     bool ignore_null1 = stri__prepare_arg_logical_1_notNA(ignore_null, "ignore_null");
     PROTECT(strlist = stri__prepare_arg_list_ignore_null(
-                          stri_prepare_arg_list_string(strlist, "..."), ignore_null1
+                          stri__prepare_arg_list_string(strlist, "..."), ignore_null1
                       ));
     R_len_t strlist_length = LENGTH(strlist);
     if (strlist_length <= 0) {
@@ -463,7 +463,7 @@ SEXP stri_join_nocollapse(SEXP strlist, SEXP sep, SEXP ignore_null)
             vectorize_length = strlist_cur_length;
     }
 
-    PROTECT(sep = stri_prepare_arg_string_1(sep, "sep"));
+    PROTECT(sep = stri__prepare_arg_string_1(sep, "sep"));
     if (STRING_ELT(sep, 0) == NA_STRING) {
         UNPROTECT(2);
         return stri__vector_NA_strings(vectorize_length);
@@ -585,7 +585,7 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse, SEXP ignore_null)
 
     bool ignore_null1 = stri__prepare_arg_logical_1_notNA(ignore_null, "ignore_null");
     PROTECT(strlist = stri__prepare_arg_list_ignore_null(
-                          stri_prepare_arg_list_string(strlist, "..."), ignore_null1
+                          stri__prepare_arg_list_string(strlist, "..."), ignore_null1
                       ));
     R_len_t strlist_length = LENGTH(strlist);
     if (strlist_length <= 0) {
@@ -601,8 +601,8 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse, SEXP ignore_null)
         return ret;
     }
 
-    PROTECT(sep = stri_prepare_arg_string_1(sep, "sep"));
-    PROTECT(collapse = stri_prepare_arg_string_1(collapse, "collapse"));
+    PROTECT(sep = stri__prepare_arg_string_1(sep, "sep"));
+    PROTECT(collapse = stri__prepare_arg_string_1(collapse, "collapse"));
     if (STRING_ELT(sep, 0) == NA_STRING || STRING_ELT(collapse, 0) == NA_STRING) {
         UNPROTECT(3);
         return stri__vector_NA_strings(1);
@@ -729,7 +729,7 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse, SEXP ignore_null)
  */
 SEXP stri_flatten_noressep(SEXP str, int na_empty)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
     R_len_t str_length = LENGTH(str);
     if (str_length <= 0) {
         UNPROTECT(1);
@@ -812,7 +812,7 @@ SEXP stri_flatten_noressep(SEXP str, int na_empty)
  */
 SEXP stri_flatten(SEXP str, SEXP collapse, SEXP na_empty, SEXP omit_empty) // a.k.a. C_stri_flatten_withressep
 {
-    PROTECT(collapse = stri_prepare_arg_string_1(collapse, "collapse"));
+    PROTECT(collapse = stri__prepare_arg_string_1(collapse, "collapse"));
     int na_empty_1 = stri__prepare_arg_logical_1_NA(na_empty, "na_empty");
     bool omit_empty_1 = stri__prepare_arg_logical_1_notNA(omit_empty, "omit_empty");
 
@@ -828,7 +828,7 @@ SEXP stri_flatten(SEXP str, SEXP collapse, SEXP na_empty, SEXP omit_empty) // a.
         return stri_flatten_noressep(str, na_empty_1);
     }
 
-    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
+    PROTECT(str = stri__prepare_arg_string(str, "str")); // prepare string argument
     R_len_t str_length = LENGTH(str);
     if (str_length <= 0) {
         UNPROTECT(2);
@@ -914,7 +914,7 @@ SEXP stri_flatten(SEXP str, SEXP collapse, SEXP na_empty, SEXP omit_empty) // a.
 SEXP stri_join_list(SEXP x, SEXP sep, SEXP collapse)
 {
     PROTECT(x = stri__prepare_arg_list_ignore_null(
-                    stri_prepare_arg_list_string(x, "x"), true
+                    stri__prepare_arg_list_string(x, "x"), true
                 ));
 
     R_len_t strlist_length = LENGTH(x);
@@ -923,11 +923,11 @@ SEXP stri_join_list(SEXP x, SEXP sep, SEXP collapse)
         return stri__vector_empty_strings(0);
     }
 
-    PROTECT(sep = stri_prepare_arg_string_1(sep, "sep"));
+    PROTECT(sep = stri__prepare_arg_string_1(sep, "sep"));
     if (isNull(collapse))
         PROTECT(collapse);
     else
-        PROTECT(collapse = stri_prepare_arg_string_1(collapse, "collapse"));
+        PROTECT(collapse = stri__prepare_arg_string_1(collapse, "collapse"));
 
     STRI__ERROR_HANDLER_BEGIN(3)
 

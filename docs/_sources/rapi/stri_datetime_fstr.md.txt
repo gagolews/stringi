@@ -2,7 +2,7 @@
 
 ## Description
 
-A function to convert [`strptime`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/strptime.html)/[`strftime`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/strptime.html)-style format strings to <span class="pkg">ICU</span> format strings that may be used in [`stri_datetime_parse`](stri_datetime_format.md) and [`stri_datetime_format`](stri_datetime_format.md) functions.
+A function to convert [`strptime`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/strptime.html)/[`strftime`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/strptime.html)-style format strings to <span class="pkg">ICU</span> format strings that may be used in [`stri_datetime_parse`](https://stringi.gagolewski.com/rapi/stri_datetime_parse.html) and [`stri_datetime_format`](https://stringi.gagolewski.com/rapi/stri_datetime_format.html) functions.
 
 ## Usage
 
@@ -34,7 +34,7 @@ Returns a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other datetime: [`stri_datetime_add()`,](stri_datetime_add.md) [`stri_datetime_create()`,](stri_datetime_create.md) [`stri_datetime_fields()`,](stri_datetime_fields.md) [`stri_datetime_format()`,](stri_datetime_format.md) [`stri_datetime_now()`,](stri_datetime_now.md) [`stri_datetime_symbols()`,](stri_datetime_symbols.md) [`stri_timezone_get()`,](stri_timezone_set.md) [`stri_timezone_info()`,](stri_timezone_info.md) `stri_timezone_list()`
+Other datetime: [`stri_datetime_add`](https://stringi.gagolewski.com/rapi/stri_datetime_add.html)(), [`stri_datetime_create`](https://stringi.gagolewski.com/rapi/stri_datetime_create.html)(), [`stri_datetime_fields`](https://stringi.gagolewski.com/rapi/stri_datetime_fields.html)(), [`stri_datetime_format`](https://stringi.gagolewski.com/rapi/stri_datetime_format.html)(), [`stri_datetime_now`](https://stringi.gagolewski.com/rapi/stri_datetime_now.html)(), [`stri_datetime_symbols`](https://stringi.gagolewski.com/rapi/stri_datetime_symbols.html)(), [`stri_timezone_get`](https://stringi.gagolewski.com/rapi/stri_timezone_get.html)(), [`stri_timezone_info`](https://stringi.gagolewski.com/rapi/stri_timezone_info.html)(), [`stri_timezone_list`](https://stringi.gagolewski.com/rapi/stri_timezone_list.html)()
 
 ## Examples
 

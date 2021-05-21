@@ -55,7 +55,7 @@
  *    use tz
  */
 SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale) {
-    PROTECT(time = stri_prepare_arg_POSIXct(time, "time"));
+    PROTECT(time = stri__prepare_arg_POSIXct(time, "time"));
     const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
     const char* format_val = stri__prepare_arg_string_1_notNA(format, "format");
 
@@ -217,11 +217,11 @@ SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale) {
  * @version 0.5-1 (Marek Gagolewski, 2015-03-01) set tzone attrib on retval
  */
 SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP lenient, SEXP tz, SEXP locale) {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
     const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
     const char* format_val = stri__prepare_arg_string_1_notNA(format, "format");
     bool lenient_val = stri__prepare_arg_logical_1_notNA(lenient, "lenient");
-    if (!isNull(tz)) PROTECT(tz = stri_prepare_arg_string_1(tz, "tz"));
+    if (!isNull(tz)) PROTECT(tz = stri__prepare_arg_string_1(tz, "tz"));
     else             PROTECT(tz); /* needed to set tzone attrib */
 
     // "format" may be one of:

@@ -60,7 +60,7 @@ R_len_t stri__sub_prepare_from_to_length(SEXP& from, SEXP& to, SEXP& length,
     }
 
     sub_protected++;
-    PROTECT(from = stri_prepare_arg_integer(from, "from"));
+    PROTECT(from = stri__prepare_arg_integer(from, "from"));
     /* may remove R_DimSymbol */
 
     if (from_ismatrix) {
@@ -73,7 +73,7 @@ R_len_t stri__sub_prepare_from_to_length(SEXP& from, SEXP& to, SEXP& length,
     }
     else if (isNull(length)) {
         sub_protected++;
-        PROTECT(to    = stri_prepare_arg_integer(to, "to"));
+        PROTECT(to    = stri__prepare_arg_integer(to, "to"));
         from_len      = LENGTH(from);
         from_tab      = INTEGER(from);
         to_len        = LENGTH(to);
@@ -82,7 +82,7 @@ R_len_t stri__sub_prepare_from_to_length(SEXP& from, SEXP& to, SEXP& length,
     }
     else {
         sub_protected++;
-        PROTECT(length= stri_prepare_arg_integer(length, "length"));
+        PROTECT(length= stri__prepare_arg_integer(length, "length"));
         from_len      = LENGTH(from);
         from_tab      = INTEGER(from);
         length_len    = LENGTH(length);
@@ -162,7 +162,7 @@ inline void stri__sub_get_indices(StriContainerUTF8_indexable& str_cont, R_len_t
  */
 SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
 
     R_len_t str_len       = LENGTH(str);
     R_len_t from_len      = 0;
@@ -276,8 +276,8 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
  */
 SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_na, SEXP value)
 {
-    PROTECT(str   = stri_prepare_arg_string(str, "str"));
-    PROTECT(value = stri_prepare_arg_string(value, "value"));
+    PROTECT(str   = stri__prepare_arg_string(str, "str"));
+    PROTECT(value = stri__prepare_arg_string(value, "value"));
     bool omit_na_1 = stri__prepare_arg_logical_1_notNA(omit_na, "omit_na");
 
     R_len_t value_len     = LENGTH(value);
@@ -385,10 +385,10 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_n
  */
 SEXP stri_sub_all(SEXP str, SEXP from, SEXP to, SEXP length)
 {
-    PROTECT(str    = stri_prepare_arg_string(str, "str"));
-    PROTECT(from   = stri_prepare_arg_list(from, "from"));
-    PROTECT(to     = stri_prepare_arg_list(to, "to"));
-    PROTECT(length = stri_prepare_arg_list(length, "length"));
+    PROTECT(str    = stri__prepare_arg_string(str, "str"));
+    PROTECT(from   = stri__prepare_arg_list(from, "from"));
+    PROTECT(to     = stri__prepare_arg_list(to, "to"));
+    PROTECT(length = stri__prepare_arg_list(length, "length"));
 
     R_len_t str_len       = LENGTH(str);
     R_len_t from_len      = LENGTH(from);
@@ -642,12 +642,12 @@ SEXP stri__sub_replacement_all_single(SEXP curs,
  */
 SEXP stri_sub_replacement_all(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_na, SEXP value)
 {
-    //PROTECT(str    = stri_prepare_arg_string(str, "str"));
+    //PROTECT(str    = stri__prepare_arg_string(str, "str"));
     PROTECT(str = stri_enc_toutf8(str, Rf_ScalarLogical(FALSE), Rf_ScalarLogical(FALSE)));
-    PROTECT(from   = stri_prepare_arg_list(from, "from"));
-    PROTECT(to     = stri_prepare_arg_list(to, "to"));
-    PROTECT(length = stri_prepare_arg_list(length, "length"));
-    PROTECT(value  = stri_prepare_arg_list(value, "value"));
+    PROTECT(from   = stri__prepare_arg_list(from, "from"));
+    PROTECT(to     = stri__prepare_arg_list(to, "to"));
+    PROTECT(length = stri__prepare_arg_list(length, "length"));
+    PROTECT(value  = stri__prepare_arg_list(value, "value"));
     bool omit_na_1 = stri__prepare_arg_logical_1_notNA(omit_na, "omit_na");
 
     R_len_t str_len       = LENGTH(str);

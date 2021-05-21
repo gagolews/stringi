@@ -34,6 +34,16 @@
 #define __stri_messages_h
 
 
+// CONVENTION: start with a lowercase letter, end with a dot
+
+// arg names and symbols should be `backticked`
+// string-like objects should be 'quoted'
+
+// ASCII only
+
+// ensure proper capitalisation: ASCII, Unicode, UTF-8, ...
+
+
 // see stri_exception.cpp for more messages
 
 
@@ -155,7 +165,7 @@
    "incorrect character encoding identifier"
 
 #define MSG__ENC_INCORRECT_ID_WHAT \
-   "incorrect character encoding identifier: %s"
+   "incorrect character encoding identifier: '%s'"
 
 #define MSG__ENC_NOT8BIT \
    "encoding %s is not an 8-bit encoding"
@@ -286,6 +296,15 @@
 
 #define MSG__ARG_NEED_MORE \
    "too few arguments"
+
+#define MSG__ARG_UNUSED \
+   "some of the arguments have not been used"
+
+#define MSG__ARG_UNUSED_1 \
+   "one of the arguments has not been used"
+
+#define MSG__ARG_UNUSED_N \
+   "%d arguments have not been used"
 
 #define MSG__INVALID_FORMAT_STRING \
    "format string '%s' is not valid"

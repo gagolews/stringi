@@ -51,6 +51,19 @@ check-cran: stop-on-utf8 build
 	    _R_CHECK_CRAN_INCOMING_REMOTE_=FALSE \
 	    R CMD check `ls -t ${PKGNAME}*.tar.gz | head -1` --as-cran
 
+check-revdep: r
+	# remotes::install_github("r-lib/revdepcheck")
+	# TODO rm -rf revdep/
+	Rscript -e 'revdepcheck::revdep_check(num_workers=4, bioc=FALSE)'
+	Rscript -e 'revdepcheck::revdep_report()'
+	# TODO export revdep/*.md
+
+check-kalibera: build
+	# https://github.com/kalibera/rchk
+	cd .. && docker run -v `pwd`:/rchk/packages kalibera/rchk:latest \
+	    /rchk/packages/`ls -t ${PKGNAME}*.tar.gz | head -1` | \
+	    grep -v 'unsupported form of unprotect'
+
 
 ############## Rd2rst: https://github.com/gagolews/Rd2rst ######################
 
@@ -65,7 +78,7 @@ weave-examples:
 	cd devel/sphinx/rapi && Rscript -e "Rd2rst::weave_examples('${PKGNAME}', '.')"
 	devel/sphinx/fix-code-blocks.sh devel/sphinx/rapi
 
-sphinx: r rd2myst news weave-examples
+sphinx: stop-on-utf8 r rd2myst news weave-examples
 	rm -rf devel/sphinx/_build/
 	cd devel/sphinx && make html
 	rm -rf docs/
@@ -83,6 +96,7 @@ clean:
 	rm -f src/Makevars src/uconfig_local.h \
 	    src/install.libs.R config.log config.status src/symbols.rds
 	rm -rf devel/sphinx/_build/
+	rm -rf revdep/
 
 purge: clean
 	find src -name '*.o' -exec rm {} \;

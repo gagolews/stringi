@@ -45,9 +45,9 @@
 // */
 //SEXP stri_split_pos(SEXP s, SEXP from, SEXP to)
 //{
-//   s = STRING_ELT(stri_prepare_arg_string(s, "str"),0);
-//   from = stri_prepare_arg_integer(from, "from");
-//   to = stri_prepare_arg_integer(to, "to");
+//   s = STRING_ELT(stri__prepare_arg_string(s, "str"),0);
+//   from = stri__prepare_arg_integer(from, "from");
+//   to = stri__prepare_arg_integer(to, "to");
 //   if(s == NA_STRING)
 //      return NA_STRING;
 //   int ns = LENGTH(s);

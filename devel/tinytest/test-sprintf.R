@@ -8,6 +8,9 @@ expect_identical(stri_sprintf(rep("%s", 10), 1:10, character(0)), character(0))
 expect_warning(stri_sprintf(rep("%s", 10), 1:5, 1:3))
 
 '
+sprintf("%2$s", 1, 2)  # warning - unsused arg
+sprintf("%3$s", 1, 2, 3)  # warning - unsused arg
+
 
 sprintf("%s", as.name("symbols are not supported"))
 sprintf("%s", list(11:13))  # ok, as.character called

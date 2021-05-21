@@ -25,14 +25,14 @@ stri_datetime_parse(
 
 ## Arguments
 
-|           |                                                                                                                                                                 |
-|-----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `time`    | an object of class [`POSIXct`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/DateTimeClasses.html) or an object coercible to                        |
-| `format`  | single string, see Details; see also [`stri_datetime_fstr`](stri_datetime_fstr.md)                                                                              |
-| `tz`      | `NULL` or `''` for the default time zone or a single string with a timezone identifier, see [`stri_timezone_list`](stri_timezone_list.md)                       |
-| `locale`  | `NULL` or `''` for default locale, or a single string with locale identifier; a non-Gregorian calendar may be specified by setting the `@calendar=name` keyword |
-| `str`     | character vector                                                                                                                                                |
-| `lenient` | single logical value; should date/time parsing be lenient?                                                                                                      |
+|           |                                                                                                                                                                                 |
+|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `time`    | an object of class [`POSIXct`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/DateTimeClasses.html) or an object coercible to                                        |
+| `format`  | single string, see Details; see also [`stri_datetime_fstr`](https://stringi.gagolewski.com/rapi/stri_datetime_fstr.html)                                                        |
+| `tz`      | `NULL` or `''` for the default time zone or a single string with a timezone identifier, see [`stri_timezone_list`](https://stringi.gagolewski.com/rapi/stri_timezone_list.html) |
+| `locale`  | `NULL` or `''` for default locale, or a single string with locale identifier; a non-Gregorian calendar may be specified by setting the `@calendar=name` keyword                 |
+| `str`     | character vector                                                                                                                                                                |
+| `lenient` | single logical value; should date/time parsing be lenient?                                                                                                                      |
 
 ## Details
 
@@ -172,7 +172,7 @@ Here are some examples:
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other datetime: [`stri_datetime_add()`,](stri_datetime_add.md) [`stri_datetime_create()`,](stri_datetime_create.md) [`stri_datetime_fields()`,](stri_datetime_fields.md) [`stri_datetime_fstr()`,](stri_datetime_fstr.md) [`stri_datetime_now()`,](stri_datetime_now.md) [`stri_datetime_symbols()`,](stri_datetime_symbols.md) [`stri_timezone_get()`,](stri_timezone_set.md) [`stri_timezone_info()`,](stri_timezone_info.md) `stri_timezone_list()`
+Other datetime: [`stri_datetime_add`](https://stringi.gagolewski.com/rapi/stri_datetime_add.html)(), [`stri_datetime_create`](https://stringi.gagolewski.com/rapi/stri_datetime_create.html)(), [`stri_datetime_fields`](https://stringi.gagolewski.com/rapi/stri_datetime_fields.html)(), [`stri_datetime_fstr`](https://stringi.gagolewski.com/rapi/stri_datetime_fstr.html)(), [`stri_datetime_now`](https://stringi.gagolewski.com/rapi/stri_datetime_now.html)(), [`stri_datetime_symbols`](https://stringi.gagolewski.com/rapi/stri_datetime_symbols.html)(), [`stri_timezone_get`](https://stringi.gagolewski.com/rapi/stri_timezone_get.html)(), [`stri_timezone_info`](https://stringi.gagolewski.com/rapi/stri_timezone_info.html)(), [`stri_timezone_list`](https://stringi.gagolewski.com/rapi/stri_timezone_list.html)()
 
 ## Examples
 
@@ -181,11 +181,11 @@ Other datetime: [`stri_datetime_add()`,](stri_datetime_add.md) [`stri_datetime_c
 
 ```r
 stri_datetime_parse(c('2015-02-28', '2015-02-29'), 'yyyy-MM-dd')
-## [1] "2015-02-28 17:08:01 AEDT" NA
+## [1] "2015-02-28 14:42:08 AEDT" NA
 stri_datetime_parse(c('2015-02-28', '2015-02-29'), 'yyyy-MM-dd', lenient=TRUE)
-## [1] "2015-02-28 17:08:01 AEDT" "2015-03-01 17:08:01 AEDT"
+## [1] "2015-02-28 14:42:08 AEDT" "2015-03-01 14:42:08 AEDT"
 stri_datetime_parse('19 lipca 2015', 'date_long', locale='pl_PL')
-## [1] "2015-07-19 17:08:01 AEST"
+## [1] "2015-07-19 14:42:08 AEST"
 stri_datetime_format(stri_datetime_now(), 'datetime_relative_medium')
-## [1] "today, 5:08:01 pm"
+## [1] "today, 2:42:08 pm"
 ```

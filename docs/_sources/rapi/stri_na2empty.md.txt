@@ -2,7 +2,7 @@
 
 ## Description
 
-This function replaces all missing values with empty strings. See [`stri_replace_na`](stri_replace_na.md) for a generalization.
+This function replaces all missing values with empty strings. See [`stri_replace_na`](https://stringi.gagolewski.com/rapi/stri_replace_na.html) for a generalization.
 
 ## Usage
 
@@ -28,7 +28,7 @@ Returns a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other utils: [`stri_list2matrix()`,](stri_list2matrix.md) [`stri_remove_empty()`,](stri_remove_empty.md) `stri_replace_na()`
+Other utils: [`stri_list2matrix`](https://stringi.gagolewski.com/rapi/stri_list2matrix.html)(), [`stri_remove_empty`](https://stringi.gagolewski.com/rapi/stri_remove_empty.html)(), [`stri_replace_na`](https://stringi.gagolewski.com/rapi/stri_replace_na.html)()
 
 ## Examples
 

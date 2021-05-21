@@ -26,11 +26,11 @@ Otherwise, a list with the following components is returned:
 
 -   `ICU.version` -- <span class="pkg">ICU</span> library version used;
 
--   `Locale` -- contains information on default locale, as returned by [`stri_locale_info`](stri_locale_info.md);
+-   `Locale` -- contains information on default locale, as returned by [`stri_locale_info`](https://stringi.gagolewski.com/rapi/stri_locale_info.html);
 
 -   `Charset.internal` -- fixed at `c('UTF-8', 'UTF-16')`;
 
--   `Charset.native` -- information on the default encoding, as returned by [`stri_enc_info`](stri_enc_info.md);
+-   `Charset.native` -- information on the default encoding, as returned by [`stri_enc_info`](https://stringi.gagolewski.com/rapi/stri_enc_info.html);
 
 -   `ICU.system` -- logical; `TRUE` indicates that the system <span class="pkg">ICU</span> libs are used, otherwise <span class="pkg">ICU</span> was built together with <span class="pkg">stringi</span>;
 

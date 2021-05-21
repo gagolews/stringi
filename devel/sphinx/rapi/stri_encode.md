@@ -14,20 +14,20 @@ stri_conv(str, from = NULL, to = NULL, to_raw = FALSE)
 
 ## Arguments
 
-|          |                                                                                                                                                                                                  |
-|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`    | a character vector, a raw vector, or a list of `raw` vectors to be converted                                                                                                                     |
-| `from`   | input encoding: `NULL` or `''` for the default encoding or internal encoding marks\' usage (see Details); otherwise, a single string with encoding name, see [`stri_enc_list`](stri_enc_list.md) |
-| `to`     | target encoding: `NULL` or `''` for default encoding (see [`stri_enc_get`](stri_enc_set.md)), or a single string with encoding name                                                              |
-| `to_raw` | a single logical value; indicates whether a list of raw vectors rather than a character vector should be returned                                                                                |
+|          |                                                                                                                                                                                                                                        |
+|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `str`    | a character vector, a raw vector, or a list of `raw` vectors to be converted                                                                                                                                                           |
+| `from`   | input encoding: `NULL` or `''` for the default encoding or internal encoding marks\' usage (see Details); otherwise, a single string with encoding name, see [`stri_enc_list`](https://stringi.gagolewski.com/rapi/stri_enc_list.html) |
+| `to`     | target encoding: `NULL` or `''` for default encoding (see [`stri_enc_get`](https://stringi.gagolewski.com/rapi/stri_enc_get.html)), or a single string with encoding name                                                              |
+| `to_raw` | a single logical value; indicates whether a list of raw vectors rather than a character vector should be returned                                                                                                                      |
 
 ## Details
 
 `stri_conv` is an alias for `stri_encode`.
 
-Refer to [`stri_enc_list`](stri_enc_list.md) for the list of supported encodings and [stringi-encoding](about_encoding.md) for a general discussion.
+Refer to [`stri_enc_list`](https://stringi.gagolewski.com/rapi/stri_enc_list.html) for the list of supported encodings and [stringi-encoding](https://stringi.gagolewski.com/rapi/stringi-encoding.html) for a general discussion.
 
-If `from` is either missing, `''`, or `NULL`, and if `str` is a character vector then the marked encodings are used (see [`stri_enc_mark`](stri_enc_mark.md)) -- in such a case `bytes`-declared strings are disallowed. Otherwise, i.e., if `str` is a `raw`-type vector or a list of raw vectors, we assume that the input encoding is the current default encoding as given by [`stri_enc_get`](stri_enc_set.md).
+If `from` is either missing, `''`, or `NULL`, and if `str` is a character vector then the marked encodings are used (see [`stri_enc_mark`](https://stringi.gagolewski.com/rapi/stri_enc_mark.html)) -- in such a case `bytes`-declared strings are disallowed. Otherwise, i.e., if `str` is a `raw`-type vector or a list of raw vectors, we assume that the input encoding is the current default encoding as given by [`stri_enc_get`](https://stringi.gagolewski.com/rapi/stri_enc_get.html).
 
 However, if `from` is given explicitly, the internal encoding declarations are always ignored.
 
@@ -57,4 +57,4 @@ If `to_raw` is `FALSE`, then a character vector with encoded strings (and approp
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other encoding\_conversion: [`about_encoding`](about_encoding.md), [`stri_enc_fromutf32()`,](stri_enc_fromutf32.md) [`stri_enc_toascii()`,](stri_enc_toascii.md) [`stri_enc_tonative()`,](stri_enc_tonative.md) [`stri_enc_toutf32()`,](stri_enc_toutf32.md) `stri_enc_toutf8()`
+Other encoding\_conversion: [`about_encoding`](https://stringi.gagolewski.com/rapi/about_encoding.html), [`stri_enc_fromutf32`](https://stringi.gagolewski.com/rapi/stri_enc_fromutf32.html)(), [`stri_enc_toascii`](https://stringi.gagolewski.com/rapi/stri_enc_toascii.html)(), [`stri_enc_tonative`](https://stringi.gagolewski.com/rapi/stri_enc_tonative.html)(), [`stri_enc_toutf32`](https://stringi.gagolewski.com/rapi/stri_enc_toutf32.html)(), [`stri_enc_toutf8`](https://stringi.gagolewski.com/rapi/stri_enc_toutf8.html)()

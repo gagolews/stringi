@@ -62,8 +62,8 @@ SEXP stri__extract_firstlast_coll(SEXP str, SEXP pattern, SEXP opts_collator, bo
     UCollator* collator = NULL;
     collator = stri__ucol_open(opts_collator);
 
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
 
     STRI__ERROR_HANDLER_BEGIN(2)
     R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
@@ -187,9 +187,9 @@ SEXP stri_extract_last_coll(SEXP str, SEXP pattern, SEXP opts_collator)
 SEXP stri_extract_all_coll(SEXP str, SEXP pattern, SEXP simplify, SEXP omit_no_match, SEXP opts_collator)
 {
     bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
-    PROTECT(simplify = stri_prepare_arg_logical_1(simplify, "simplify"));
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(simplify = stri__prepare_arg_logical_1(simplify, "simplify"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
 
     // call stri__ucol_open after prepare_arg:
     // if prepare_arg had failed, we would have a mem leak

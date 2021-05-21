@@ -41,7 +41,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="stri_stats_general: General Statistics for a Character Vector" href="stri_stats_general.html" />
-    <link rel="prev" title="stri_split: Split a String By Pattern Matches" href="stri_split.html" /> 
+    <link rel="prev" title="stri_sprintf: Format Strings" href="stri_sprintf.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count.html">stri_count: Count the Number of Pattern Matches</a></li>
@@ -178,6 +178,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_split_boundaries.html">stri_split_boundaries: Split a String at Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split_lines.html">stri_split_lines: Split a String Into Text Lines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split.html">stri_split: Split a String By Pattern Matches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_sprintf.html">stri_sprintf: Format Strings</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">stri_startsendswith: Determine if the Start or End of a String Matches a Pattern</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#description">Description</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
@@ -287,7 +288,7 @@
         <a href="stri_stats_general.html" class="btn btn-neutral float-right" title="stri_stats_general: General Statistics for a Character Vector" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
       
       
-        <a href="stri_split.html" class="btn btn-neutral float-left" title="stri_split: Split a String By Pattern Matches" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="stri_sprintf.html" class="btn btn-neutral float-left" title="stri_sprintf: Format Strings" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
       
   </div>
   
@@ -366,7 +367,7 @@
 <td><p>supplementary arguments passed to the underlying functions, including additional settings for <code class="docutils literal notranslate"><span class="pre">opts_collator</span></code>, <code class="docutils literal notranslate"><span class="pre">opts_fixed</span></code>, and so on.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pattern,</span> <span class="pre">fixed,</span> <span class="pre">coll,</span> <span class="pre">charclass</span></code></p></td>
-<td><p>character vector defining search patterns; for more details refer to <a class="reference internal" href="about_search.html"><span class="doc std std-doc">stringi-search</span></a></p></td>
+<td><p>character vector defining search patterns; for more details refer to <a class="reference external" href="https://stringi.gagolewski.com/rapi/stringi-search.html">stringi-search</a></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">from</span></code></p></td>
 <td><p>integer vector</p></td>
@@ -378,7 +379,7 @@
 <td><p>integer vector</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">opts_collator,</span> <span class="pre">opts_fixed</span></code></p></td>
-<td><p>a named list used to tune up the search engine’s settings; see <a class="reference internal" href="stri_opts_collator.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_opts_collator</span></code></span></a> and <a class="reference internal" href="stri_opts_fixed.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_opts_fixed</span></code></span></a>, respectively; <code class="docutils literal notranslate"><span class="pre">NULL</span></code> for the defaults</p></td>
+<td><p>a named list used to tune up the search engine’s settings; see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_opts_collator.html"><code class="docutils literal notranslate"><span class="pre">stri_opts_collator</span></code></a> and <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_opts_fixed.html"><code class="docutils literal notranslate"><span class="pre">stri_opts_fixed</span></code></a>, respectively; <code class="docutils literal notranslate"><span class="pre">NULL</span></code> for the defaults</p></td>
 </tr>
 </tbody>
 </table>
@@ -390,9 +391,9 @@
 <p>Argument <code class="docutils literal notranslate"><span class="pre">start</span></code> controls the start position in <code class="docutils literal notranslate"><span class="pre">str</span></code> where there is a match to a <code class="docutils literal notranslate"><span class="pre">pattern</span></code>. <code class="docutils literal notranslate"><span class="pre">to</span></code> gives the end position.</p>
 <p>Indexes given by <code class="docutils literal notranslate"><span class="pre">from</span></code> or <code class="docutils literal notranslate"><span class="pre">to</span></code> are of course 1-based, i.e., an index 1 denotes the first character in a string. This gives a typical R look-and-feel.</p>
 <p>For negative indexes in <code class="docutils literal notranslate"><span class="pre">from</span></code> or <code class="docutils literal notranslate"><span class="pre">to</span></code>, counting starts at the end of the string. For instance, index -1 denotes the last code point in the string.</p>
-<p>If you wish to test for a pattern match at an arbitrary position in <code class="docutils literal notranslate"><span class="pre">str</span></code>, use <a class="reference internal" href="stri_detect.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_detect</span></code></span></a>.</p>
+<p>If you wish to test for a pattern match at an arbitrary position in <code class="docutils literal notranslate"><span class="pre">str</span></code>, use <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_detect.html"><code class="docutils literal notranslate"><span class="pre">stri_detect</span></code></a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">stri_startswith</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_endswith</span></code> are convenience functions. They call either <code class="docutils literal notranslate"><span class="pre">stri_*_fixed</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_*_coll</span></code>, or <code class="docutils literal notranslate"><span class="pre">stri_*_charclass</span></code>, depending on the argument used. Relying on these underlying functions directly will make your code run slightly faster.</p>
-<p>Note that testing for a pattern match at the start or end of a string has not been implemented separately for regex patterns. For that you may use the ‘<code class="docutils literal notranslate"><span class="pre">^</span></code>’ and ‘<code class="docutils literal notranslate"><span class="pre">$</span></code>’ meta-characters, see <a class="reference internal" href="about_search_regex.html"><span class="doc std std-doc">stringi-search-regex</span></a>.</p>
+<p>Note that testing for a pattern match at the start or end of a string has not been implemented separately for regex patterns. For that you may use the ‘<code class="docutils literal notranslate"><span class="pre">^</span></code>’ and ‘<code class="docutils literal notranslate"><span class="pre">$</span></code>’ meta-characters, see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stringi-search-regex.html">stringi-search-regex</a>.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
@@ -405,7 +406,7 @@
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
-<p>Other search_detect: <a class="reference internal" href="about_search.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></span></a>, <code class="docutils literal notranslate"><span class="pre">stri_detect()</span></code></p>
+<p>Other search_detect: <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_search.html"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></a>, <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_detect.html"><code class="docutils literal notranslate"><span class="pre">stri_detect</span></code></a>()</p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
@@ -437,7 +438,7 @@
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="stri_stats_general.html" class="btn btn-neutral float-right" title="stri_stats_general: General Statistics for a Character Vector" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="stri_split.html" class="btn btn-neutral float-left" title="stri_split: Split a String By Pattern Matches" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="stri_sprintf.html" class="btn btn-neutral float-left" title="stri_sprintf: Format Strings" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
@@ -446,7 +447,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-14 17:08:05.
+        Last updated on 2021-05-21 14:42:13.
       </span>
 
     </p>

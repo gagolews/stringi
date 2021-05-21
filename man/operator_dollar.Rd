@@ -5,8 +5,7 @@
 \alias{operator_dollar}
 \alias{oper_dollar}
 \alias{\%stri$\%}
-\title{C-Style Formatting with sprintf as a Binary Operator
-TODO: call stri_sprintf}
+\title{C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf}
 \usage{
 e1 \%s$\% e2
 

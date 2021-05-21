@@ -27,25 +27,25 @@ stri_locate_first_words(str, locale = NULL)
 
 ## Arguments
 
-|                 |                                                                                                                                                                                  |
-|-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`           | character vector or an object coercible to                                                                                                                                       |
-| `omit_no_match` | single logical value; if `FALSE`, then two missing values will indicate that there are no text boundaries                                                                        |
-| `...`           | additional settings for `opts_brkiter`                                                                                                                                           |
-| `opts_brkiter`  | a named list with <span class="pkg">ICU</span> BreakIterator\'s settings, see [`stri_opts_brkiter`](stri_opts_brkiter.md); `NULL` for default break iterator, i.e., `line_break` |
-| `locale`        | `NULL` or `''` for text boundary analysis following the conventions of the default locale, or a single string with locale identifier, see [stringi-locale](about_locale.md)      |
+|                 |                                                                                                                                                                                                                        |
+|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `str`           | character vector or an object coercible to                                                                                                                                                                             |
+| `omit_no_match` | single logical value; if `FALSE`, then two missing values will indicate that there are no text boundaries                                                                                                              |
+| `...`           | additional settings for `opts_brkiter`                                                                                                                                                                                 |
+| `opts_brkiter`  | a named list with <span class="pkg">ICU</span> BreakIterator\'s settings, see [`stri_opts_brkiter`](https://stringi.gagolewski.com/rapi/stri_opts_brkiter.html); `NULL` for default break iterator, i.e., `line_break` |
+| `locale`        | `NULL` or `''` for text boundary analysis following the conventions of the default locale, or a single string with locale identifier, see [stringi-locale](https://stringi.gagolewski.com/rapi/stringi-locale.html)    |
 
 ## Details
 
 Vectorized over `str`.
 
-For more information on text boundary analysis performed by <span class="pkg">ICU</span>\'s `BreakIterator`, see [stringi-search-boundaries](about_search_boundaries.md).
+For more information on text boundary analysis performed by <span class="pkg">ICU</span>\'s `BreakIterator`, see [stringi-search-boundaries](https://stringi.gagolewski.com/rapi/stringi-search-boundaries.html).
 
-In case of `stri_locate_*_words`, just like in [`stri_extract_all_words`](stri_extract_boundaries.md) and [`stri_count_words`](stri_count_boundaries.md), <span class="pkg">ICU</span>\'s word `BreakIterator` iterator is used to locate the word boundaries, and all non-word characters (`UBRK_WORD_NONE` rule status) are ignored. This is function is equivalent to a call to `stri_locate_*_boundaries(str, type='word', skip_word_none=TRUE, locale=locale)`
+In case of `stri_locate_*_words`, just like in [`stri_extract_all_words`](https://stringi.gagolewski.com/rapi/stri_extract_all_words.html) and [`stri_count_words`](https://stringi.gagolewski.com/rapi/stri_count_words.html), <span class="pkg">ICU</span>\'s word `BreakIterator` iterator is used to locate the word boundaries, and all non-word characters (`UBRK_WORD_NONE` rule status) are ignored. This is function is equivalent to a call to `stri_locate_*_boundaries(str, type='word', skip_word_none=TRUE, locale=locale)`
 
 ## Value
 
-For `stri_locate_all_*`, a list of `length(str)` integer matrices is returned. The first column gives the start positions of substrings between located boundaries, and the second column gives the end positions. The indexes are code point-based, thus they may be passed, e.g., to [`stri_sub`](stri_sub.md) or [`stri_sub_all`](stri_sub_all.md). Note that you get two `NA`s in one row if there is no match (and `omit_no_match` is `FALSE`) or there are missing data in the input vector.
+For `stri_locate_all_*`, a list of `length(str)` integer matrices is returned. The first column gives the start positions of substrings between located boundaries, and the second column gives the end positions. The indexes are code point-based, thus they may be passed, e.g., to [`stri_sub`](https://stringi.gagolewski.com/rapi/stri_sub.html) or [`stri_sub_all`](https://stringi.gagolewski.com/rapi/stri_sub_all.html). Note that you get two `NA`s in one row if there is no match (and `omit_no_match` is `FALSE`) or there are missing data in the input vector.
 
 `stri_locate_first_*` and `stri_locate_last_*`, return an integer matrix with two columns, giving the start and end positions of the first or the last matches, respectively, and two `NA`s if there is no match.
 
@@ -57,13 +57,13 @@ For `stri_locate_all_*`, a list of `length(str)` integer matrices is returned. T
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_locate: [`about_search`](about_search.md), `stri_locate_all()`
+Other search\_locate: [`about_search`](https://stringi.gagolewski.com/rapi/about_search.html), [`stri_locate_all`](https://stringi.gagolewski.com/rapi/stri_locate_all.html)()
 
-Other indexing: [`stri_locate_all()`,](stri_locate.md) [`stri_sub_all()`,](stri_sub_all.md) `stri_sub()`
+Other indexing: [`stri_locate_all`](https://stringi.gagolewski.com/rapi/stri_locate_all.html)(), [`stri_sub_all`](https://stringi.gagolewski.com/rapi/stri_sub_all.html)(), [`stri_sub`](https://stringi.gagolewski.com/rapi/stri_sub.html)()
 
-Other locale\_sensitive: [`%s<%()`,](operator_compare.md) [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_coll`](about_search_coll.md), [`stri_compare()`,](stri_compare.md) [`stri_count_boundaries()`,](stri_count_boundaries.md) [`stri_duplicated()`,](stri_duplicated.md) [`stri_enc_detect2()`,](stri_enc_detect2.md) [`stri_extract_all_boundaries()`,](stri_extract_boundaries.md) [`stri_opts_collator()`,](stri_opts_collator.md) [`stri_order()`,](stri_order.md) [`stri_rank()`,](stri_rank.md) [`stri_sort_key()`,](stri_sort_key.md) [`stri_sort()`,](stri_sort.md) [`stri_split_boundaries()`,](stri_split_boundaries.md) [`stri_trans_tolower()`,](stri_trans_casemap.md) [`stri_unique()`,](stri_unique.md) `stri_wrap()`
+Other locale\_sensitive: [`%s<%`](https://stringi.gagolewski.com/rapi/%25s%3C%25.html)(), [`about_locale`](https://stringi.gagolewski.com/rapi/about_locale.html), [`about_search_boundaries`](https://stringi.gagolewski.com/rapi/about_search_boundaries.html), [`about_search_coll`](https://stringi.gagolewski.com/rapi/about_search_coll.html), [`stri_compare`](https://stringi.gagolewski.com/rapi/stri_compare.html)(), [`stri_count_boundaries`](https://stringi.gagolewski.com/rapi/stri_count_boundaries.html)(), [`stri_duplicated`](https://stringi.gagolewski.com/rapi/stri_duplicated.html)(), [`stri_enc_detect2`](https://stringi.gagolewski.com/rapi/stri_enc_detect2.html)(), [`stri_extract_all_boundaries`](https://stringi.gagolewski.com/rapi/stri_extract_all_boundaries.html)(), [`stri_opts_collator`](https://stringi.gagolewski.com/rapi/stri_opts_collator.html)(), [`stri_order`](https://stringi.gagolewski.com/rapi/stri_order.html)(), [`stri_rank`](https://stringi.gagolewski.com/rapi/stri_rank.html)(), [`stri_sort_key`](https://stringi.gagolewski.com/rapi/stri_sort_key.html)(), [`stri_sort`](https://stringi.gagolewski.com/rapi/stri_sort.html)(), [`stri_split_boundaries`](https://stringi.gagolewski.com/rapi/stri_split_boundaries.html)(), [`stri_trans_tolower`](https://stringi.gagolewski.com/rapi/stri_trans_tolower.html)(), [`stri_unique`](https://stringi.gagolewski.com/rapi/stri_unique.html)(), [`stri_wrap`](https://stringi.gagolewski.com/rapi/stri_wrap.html)()
 
-Other text\_boundaries: [`about_search_boundaries`](about_search_boundaries.md), [`about_search`](about_search.md), [`stri_count_boundaries()`,](stri_count_boundaries.md) [`stri_extract_all_boundaries()`,](stri_extract_boundaries.md) [`stri_opts_brkiter()`,](stri_opts_brkiter.md) [`stri_split_boundaries()`,](stri_split_boundaries.md) [`stri_split_lines()`,](stri_split_lines.md) [`stri_trans_tolower()`,](stri_trans_casemap.md) `stri_wrap()`
+Other text\_boundaries: [`about_search_boundaries`](https://stringi.gagolewski.com/rapi/about_search_boundaries.html), [`about_search`](https://stringi.gagolewski.com/rapi/about_search.html), [`stri_count_boundaries`](https://stringi.gagolewski.com/rapi/stri_count_boundaries.html)(), [`stri_extract_all_boundaries`](https://stringi.gagolewski.com/rapi/stri_extract_all_boundaries.html)(), [`stri_opts_brkiter`](https://stringi.gagolewski.com/rapi/stri_opts_brkiter.html)(), [`stri_split_boundaries`](https://stringi.gagolewski.com/rapi/stri_split_boundaries.html)(), [`stri_split_lines`](https://stringi.gagolewski.com/rapi/stri_split_lines.html)(), [`stri_trans_tolower`](https://stringi.gagolewski.com/rapi/stri_trans_tolower.html)(), [`stri_wrap`](https://stringi.gagolewski.com/rapi/stri_wrap.html)()
 
 ## Examples
 

@@ -72,8 +72,8 @@ SEXP stri_detect_coll(SEXP str, SEXP pattern, SEXP negate,
 {
     bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
     int max_count_1 = stri__prepare_arg_integer_1_notNA(max_count, "max_count");
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
 
     // call stri__ucol_open after prepare_arg:
     // if prepare_arg had failed, we would have a mem leak
