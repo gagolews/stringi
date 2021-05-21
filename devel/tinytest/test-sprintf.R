@@ -7,6 +7,16 @@ expect_identical(stri_sprintf("%s", 1:10, character(0)), character(0))
 expect_identical(stri_sprintf(rep("%s", 10), 1:10, character(0)), character(0))
 expect_warning(stri_sprintf(rep("%s", 10), 1:5, 1:3))
 
+sprintf("%10.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_))
+sprintf("%010.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_))
+sprintf("%+10.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_))
+sprintf("%- 10.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_))
+
+sprintf("% f", c(-Inf, -0, 0, Inf, NaN, NA_real_))  # space NaN/NA
+sprintf("%+f", c(-Inf, -0, 0, Inf, NaN, NA_real_))  # no plus NaN/NA (bug glibc has it)
+sprintf("% d", c(-1, 0, 1, NA_integer_)) # no space NA
+
+
 '
 sprintf("%2$s", 1, 2)  # warning - unsused arg
 sprintf("%3$s", 1, 2, 3)  # warning - unsused arg
