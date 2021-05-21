@@ -47,9 +47,9 @@
 // */
 //SEXP stri_in_fixed(SEXP str, SEXP table, SEXP nomatch)
 //{
-//   str = stri_prepare_arg_string(str, "str");
-//   table = stri_prepare_arg_string(table, "table");
-//   nomatch = stri_prepare_arg_integer_1(nomatch, "nomatch");
+//   str = stri__prepare_arg_string(str, "str");
+//   table = stri__prepare_arg_string(table, "table");
+//   nomatch = stri__prepare_arg_integer_1(nomatch, "nomatch");
 //   R_len_t str_length = LENGTH(str);
 //   R_len_t table_length = LENGTH(table);
 //
@@ -133,9 +133,9 @@
 // */
 //SEXP stri_in_fixed(SEXP str, SEXP table, SEXP nomatch)
 //{
-//   str = stri_prepare_arg_string(str, "str");
-//   table = stri_prepare_arg_string(table, "table");
-//   nomatch = stri_prepare_arg_integer_1(nomatch, "nomatch");
+//   str = stri__prepare_arg_string(str, "str");
+//   table = stri__prepare_arg_string(table, "table");
+//   nomatch = stri__prepare_arg_integer_1(nomatch, "nomatch");
 //   R_len_t str_length = LENGTH(str);
 //   R_len_t table_length = LENGTH(table);
 //
@@ -198,9 +198,9 @@
 // */
 //SEXP stri_in_fixed(SEXP str, SEXP table, SEXP nomatch)
 //{
-//   str = stri_prepare_arg_string(str, "str");
-//   table = stri_prepare_arg_string(table, "table");
-//   nomatch = stri_prepare_arg_integer_1(nomatch, "nomatch");
+//   str = stri__prepare_arg_string(str, "str");
+//   table = stri__prepare_arg_string(table, "table");
+//   nomatch = stri__prepare_arg_integer_1(nomatch, "nomatch");
 //   R_len_t str_length = LENGTH(str);
 //   R_len_t table_length = LENGTH(table);
 //

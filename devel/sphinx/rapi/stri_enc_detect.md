@@ -21,7 +21,7 @@ stri_enc_detect(str, filter_angle_brackets = FALSE)
 
 Vectorized over `str` and `filter_angle_brackets`.
 
-For a character vector input, merging all text lines via `stri_flatten(str, collapse='\n')` might be needed if `str` has been obtained via a call to `readLines` and in fact represents an image of a single text file.
+For a character vector input, merging all text lines via [`stri_flatten`](https://stringi.gagolewski.com/rapi/stri_flatten.html)(str, collapse=\'\\n\') might be needed if `str` has been obtained via a call to `readLines` and in fact represents an image of a single text file.
 
 This is, at best, an imprecise operation using statistics and heuristics. Because of this, detection works best if you supply at least a few hundred bytes of character data that is mostly in a single language. However, because the detection only looks at a limited amount of the input data, some of the returned character sets may fail to handle all of the input data. Note that in some cases, the language can be determined along with the encoding.
 
@@ -29,7 +29,7 @@ Several different techniques are used for character set detection. For multi-byt
 
 The detection process can be configured to optionally ignore HTML or XML style markup (using <span class="pkg">ICU</span>\'s internal facilities), which can interfere with the detection process by changing the statistics.
 
-This function should most often be used for byte-marked input strings, especially after loading them from text files and before the main conversion with [`stri_encode`](stri_encode.md). The input encoding is of course not taken into account here, even if marked.
+This function should most often be used for byte-marked input strings, especially after loading them from text files and before the main conversion with [`stri_encode`](https://stringi.gagolewski.com/rapi/stri_encode.html). The input encoding is of course not taken into account here, even if marked.
 
 The following table shows all the encodings that can be detected:
 
@@ -92,7 +92,7 @@ The guesses are ordered by decreasing confidence.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other encoding\_detection: [`about_encoding`](about_encoding.md), [`stri_enc_detect2()`,](stri_enc_detect2.md) [`stri_enc_isascii()`,](stri_enc_isascii.md) [`stri_enc_isutf16be()`,](stri_enc_isutf16.md) `stri_enc_isutf8()`
+Other encoding\_detection: [`about_encoding`](https://stringi.gagolewski.com/rapi/about_encoding.html), [`stri_enc_detect2`](https://stringi.gagolewski.com/rapi/stri_enc_detect2.html)(), [`stri_enc_isascii`](https://stringi.gagolewski.com/rapi/stri_enc_isascii.html)(), [`stri_enc_isutf16be`](https://stringi.gagolewski.com/rapi/stri_enc_isutf16be.html)(), [`stri_enc_isutf8`](https://stringi.gagolewski.com/rapi/stri_enc_isutf8.html)()
 
 ## Examples
 

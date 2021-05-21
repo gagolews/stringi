@@ -14,15 +14,15 @@ stri_locale_get()
 
 ## Arguments
 
-|          |                                                                                                                                                          |
-|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `locale` | single string of the form `Language`, `Language_Country`, or `Language_Country_Variant`, e.g., `'en_US'`, see [`stri_locale_list`](stri_locale_list.md). |
+|          |                                                                                                                                                                                                |
+|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `locale` | single string of the form `Language`, `Language_Country`, or `Language_Country_Variant`, e.g., `'en_US'`, see [`stri_locale_list`](https://stringi.gagolewski.com/rapi/stri_locale_list.html). |
 
 ## Details
 
-See [stringi-locale](about_locale.md) for more information on the effect of changing the default locale.
+See [stringi-locale](https://stringi.gagolewski.com/rapi/stringi-locale.html) for more information on the effect of changing the default locale.
 
-`stri_locale_get` is the same as `stri_locale_info(NULL)$Name`.
+`stri_locale_get` is the same as [`stri_locale_info`](https://stringi.gagolewski.com/rapi/stri_locale_info.html)(NULL)\$Name.
 
 ## Value
 
@@ -38,7 +38,7 @@ See [stringi-locale](about_locale.md) for more information on the effect of chan
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other locale\_management: [`about_locale`](about_locale.md), [`stri_locale_info()`,](stri_locale_info.md) `stri_locale_list()`
+Other locale\_management: [`about_locale`](https://stringi.gagolewski.com/rapi/about_locale.html), [`stri_locale_info`](https://stringi.gagolewski.com/rapi/stri_locale_info.html)(), [`stri_locale_list`](https://stringi.gagolewski.com/rapi/stri_locale_list.html)()
 
 ## Examples
 
@@ -48,12 +48,12 @@ Other locale\_management: [`about_locale`](about_locale.md), [`stri_locale_info(
 ```r
 ## Not run: 
 oldloc <- stri_locale_set('pt_BR')
-## You are now working with stringi_1.6.2 (pt_BR.UTF-8; ICU4C 69.1 [bundle]; Unicode 13.0)
+## You are now working with stringi_1.6.3 (pt_BR.UTF-8; ICU4C 69.1 [bundle]; Unicode 13.0)
 # ... some locale-dependent operations
 # ... note that you may always modify a locale per-call
 # ... changing the default locale is convenient if you perform
 # ... many operations
 stri_locale_set(oldloc) # restore the previous default locale
-## You are now working with stringi_1.6.2 (en_AU.UTF-8; ICU4C 69.1 [bundle]; Unicode 13.0)
+## You are now working with stringi_1.6.3 (en_AU.UTF-8; ICU4C 69.1 [bundle]; Unicode 13.0)
 ## End(Not run)
 ```

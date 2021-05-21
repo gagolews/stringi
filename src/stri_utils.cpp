@@ -54,8 +54,8 @@ SEXP stri_list2matrix(SEXP x, SEXP byrow, SEXP fill, SEXP n_min)
     bool byrow2 = stri__prepare_arg_logical_1_notNA(byrow, "byrow");
     R_len_t n_min2 = stri__prepare_arg_integer_1_notNA(n_min, "n_min");
     if (n_min2 < 0) Rf_error(MSG__EXPECTED_NONNEGATIVE, "n_min");
-    PROTECT(x = stri_prepare_arg_list_string(x, "x"));
-    PROTECT(fill = stri_prepare_arg_string_1(fill, "fill")); // enc2utf8 called in R
+    PROTECT(x = stri__prepare_arg_list_string(x, "x"));
+    PROTECT(fill = stri__prepare_arg_string_1(fill, "fill")); // enc2utf8 called in R
 
     STRI__ERROR_HANDLER_BEGIN(2)
     R_len_t n = LENGTH(x);
@@ -123,8 +123,8 @@ SEXP stri_list2matrix(SEXP x, SEXP byrow, SEXP fill, SEXP n_min)
 *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
 */
 SEXP stri_replace_na(SEXP str, SEXP replacement) {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-    PROTECT(replacement = stri_prepare_arg_string_1(replacement, "replacement"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(replacement = stri__prepare_arg_string_1(replacement, "replacement"));
     R_len_t str_len = LENGTH(str);
 
     // @TODO: stri_replace_na(str, character(0)) returns a char vect with no NAs

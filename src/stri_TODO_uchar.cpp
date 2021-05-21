@@ -40,7 +40,7 @@
 // */
 //SEXP stri_chartype(SEXP s)
 //{
-//   s = stri_prepare_arg_string(s, "str");
+//   s = stri__prepare_arg_string(s, "str");
 //   R_len_t ns = LENGTH(s);
 //   if (ns <= 0) return R_NilValue;
 //

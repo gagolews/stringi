@@ -63,8 +63,8 @@
 */
 SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
     R_len_t vectorize_length =
         stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 

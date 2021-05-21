@@ -86,9 +86,9 @@ SEXP stri_datetime_now()
  * @version 0.5-1 (Marek Gagolewski, 2015-03-06) tz arg added
  */
 SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP tz, SEXP locale) {
-    PROTECT(time = stri_prepare_arg_POSIXct(time, "time"));
-    PROTECT(value = stri_prepare_arg_integer(value, "value"));
-    if (!isNull(tz)) PROTECT(tz = stri_prepare_arg_string_1(tz, "tz"));
+    PROTECT(time = stri__prepare_arg_POSIXct(time, "time"));
+    PROTECT(value = stri__prepare_arg_integer(value, "value"));
+    if (!isNull(tz)) PROTECT(tz = stri__prepare_arg_string_1(tz, "tz"));
     else             PROTECT(tz); /* needed to set tzone attrib */
 
     R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(time), LENGTH(value));
@@ -202,9 +202,9 @@ SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP tz, SEXP locale) 
  * @version 0.5-1 (Marek Gagolewski, 2015-03-03) tz arg added
  */
 SEXP stri_datetime_fields(SEXP time, SEXP tz, SEXP locale) {
-    PROTECT(time = stri_prepare_arg_POSIXct(time, "time"));
+    PROTECT(time = stri__prepare_arg_POSIXct(time, "time"));
     const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
-    if (!isNull(tz)) PROTECT(tz = stri_prepare_arg_string_1(tz, "tz"));
+    if (!isNull(tz)) PROTECT(tz = stri__prepare_arg_string_1(tz, "tz"));
     else             PROTECT(tz); /* needed to set tzone attrib */
 
     TimeZone* tz_val = stri__prepare_arg_timezone(tz, "tz", true/*allowdefault*/);
@@ -353,15 +353,15 @@ SEXP stri_datetime_fields(SEXP time, SEXP tz, SEXP locale) {
 SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour,
                           SEXP minute, SEXP second, SEXP lenient, SEXP tz, SEXP locale)
 {
-    PROTECT(year = stri_prepare_arg_integer(year, "year"));
-    PROTECT(month = stri_prepare_arg_integer(month, "month"));
-    PROTECT(day = stri_prepare_arg_integer(day, "day"));
-    PROTECT(hour = stri_prepare_arg_integer(hour, "hour"));
-    PROTECT(minute = stri_prepare_arg_integer(minute, "minute"));
-    PROTECT(second = stri_prepare_arg_double(second, "second"));
+    PROTECT(year = stri__prepare_arg_integer(year, "year"));
+    PROTECT(month = stri__prepare_arg_integer(month, "month"));
+    PROTECT(day = stri__prepare_arg_integer(day, "day"));
+    PROTECT(hour = stri__prepare_arg_integer(hour, "hour"));
+    PROTECT(minute = stri__prepare_arg_integer(minute, "minute"));
+    PROTECT(second = stri__prepare_arg_double(second, "second"));
     const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
     bool lenient_val = stri__prepare_arg_logical_1_notNA(lenient, "lenient");
-    if (!isNull(tz)) PROTECT(tz = stri_prepare_arg_string_1(tz, "tz"));
+    if (!isNull(tz)) PROTECT(tz = stri__prepare_arg_string_1(tz, "tz"));
     else             PROTECT(tz); /* needed to set tzone attrib */
 
     R_len_t vectorize_length = stri__recycling_rule(true, 6,
@@ -447,7 +447,7 @@ SEXP stri_c_posixst(SEXP x) {
     R_len_t n = LENGTH(x);
     R_len_t m = 0;
     for (R_len_t i=0; i<n; ++i) {
-        SET_VECTOR_ELT(x, i, stri_prepare_arg_POSIXct(VECTOR_ELT(x, i), "..."));
+        SET_VECTOR_ELT(x, i, stri__prepare_arg_POSIXct(VECTOR_ELT(x, i), "..."));
         m += LENGTH(VECTOR_ELT(x, i));
     }
     SEXP ret;

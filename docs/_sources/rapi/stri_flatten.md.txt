@@ -23,7 +23,7 @@ stri_flatten(str, collapse = "", na_empty = FALSE, omit_empty = FALSE)
 
 The `stri_flatten(str, collapse='XXX')` call is equivalent to `paste(str, collapse='XXX', sep='')`.
 
-If you wish to use some more fancy (e.g., differing) separators between flattened strings, call `stri_join(str, separators, collapse='')`.
+If you wish to use some more fancy (e.g., differing) separators between flattened strings, call [`stri_join`](https://stringi.gagolewski.com/rapi/stri_join.html)(str, separators, collapse=\'\').
 
 If `str` is not empty, then a single string is returned. If `collapse` has length \> 1, then only the first string will be used.
 
@@ -39,7 +39,7 @@ Returns a single string, i.e., a character vector of length 1.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other join: [`%s+%()`,](operator_add.md) [`stri_dup()`,](stri_dup.md) [`stri_join_list()`,](stri_join_list.md) `stri_join()`
+Other join: [`%s+%`](https://stringi.gagolewski.com/rapi/%25s+%25.html)(), [`stri_dup`](https://stringi.gagolewski.com/rapi/stri_dup.html)(), [`stri_join_list`](https://stringi.gagolewski.com/rapi/stri_join_list.html)(), [`stri_join`](https://stringi.gagolewski.com/rapi/stri_join.html)()
 
 ## Examples
 

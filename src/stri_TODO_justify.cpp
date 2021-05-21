@@ -40,8 +40,8 @@
 //*/
 //SEXP stri_justify(SEXP s, SEXP width)
 //{
-//   s = stri_prepare_arg_string(s, "str"); // prepare string argument
-//   width = stri_prepare_arg_integer(width, "width");
+//   s = stri__prepare_arg_string(s, "str"); // prepare string argument
+//   width = stri__prepare_arg_integer(width, "width");
 //
 //   int ns = LENGTH(s);
 //   int nwidth = LENGTH(width);

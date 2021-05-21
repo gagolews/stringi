@@ -64,8 +64,8 @@ using namespace std;
  */
 SEXP stri__extract_firstlast_charclass(SEXP str, SEXP pattern, bool first)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
     R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
     STRI__ERROR_HANDLER_BEGIN(2)
@@ -197,9 +197,9 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP simplif
 {
     bool merge_cur = stri__prepare_arg_logical_1_notNA(merge, "merge");
     bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
-    PROTECT(simplify = stri_prepare_arg_logical_1(simplify, "simplify"));
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(simplify = stri__prepare_arg_logical_1(simplify, "simplify"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
     R_len_t vectorize_length = stri__recycling_rule(true, 2,
                                LENGTH(str), LENGTH(pattern));
 

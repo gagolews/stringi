@@ -16,6 +16,7 @@ kate-swp$
 ^src/.*\.so$
 ^src/.*\.dll$
 ^src/symbols\.rds$
+^revdep
 ^README.md$
 ^\.git
 ^docs

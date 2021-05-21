@@ -59,7 +59,7 @@
  */
 SEXP stri_enc_fromutf32(SEXP vec)
 {
-    PROTECT(vec = stri_prepare_arg_list_integer(vec, "vec"));
+    PROTECT(vec = stri__prepare_arg_list_integer(vec, "vec"));
 
     STRI__ERROR_HANDLER_BEGIN(1)
     StriContainerListInt vec_cont(vec);
@@ -134,7 +134,7 @@ SEXP stri_enc_fromutf32(SEXP vec)
  */
 SEXP stri_enc_toutf32(SEXP str)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
     R_len_t n = LENGTH(str);
 
     STRI__ERROR_HANDLER_BEGIN(1)
@@ -220,10 +220,10 @@ SEXP stri_enc_toutf32(SEXP str)
  */
 SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit, SEXP validate)
 {
-    PROTECT(validate = stri_prepare_arg_logical_1(validate, "validate"));
+    PROTECT(validate = stri__prepare_arg_logical_1(validate, "validate"));
     bool is_unknown_8bit_logical =
         stri__prepare_arg_logical_1_notNA(is_unknown_8bit, "is_unknown_8bit");
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
     R_len_t n = LENGTH(str);
 
     STRI__ERROR_HANDLER_BEGIN(2)
@@ -364,7 +364,7 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit, SEXP validate)
  */
 SEXP stri_enc_toascii(SEXP str)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
     R_len_t n = LENGTH(str);
 
     STRI__ERROR_HANDLER_BEGIN(1)
@@ -455,7 +455,7 @@ SEXP stri_enc_toascii(SEXP str)
  */
 SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
     const char* selected_to   = stri__prepare_arg_enc(to, "to", true); /* this is R_alloc'ed */
     bool to_raw_logical = stri__prepare_arg_logical_1_notNA(to_raw, "to_raw");
 
@@ -580,7 +580,7 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
     bool to_raw_logical = stri__prepare_arg_logical_1_notNA(to_raw, "to_raw");
 
     // raw vector, character vector, or list of raw vectors:
-    PROTECT(str = stri_prepare_arg_list_raw(str, "str"));
+    PROTECT(str = stri__prepare_arg_list_raw(str, "str"));
 
 
     STRI__ERROR_HANDLER_BEGIN(1)

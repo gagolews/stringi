@@ -32,7 +32,7 @@ Returns a logical vector of the same length as `str`.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other length: [`stri_length()`,](stri_length.md) [`stri_numbytes()`,](stri_numbytes.md) `stri_width()`
+Other length: [`stri_length`](https://stringi.gagolewski.com/rapi/stri_length.html)(), [`stri_numbytes`](https://stringi.gagolewski.com/rapi/stri_numbytes.html)(), [`stri_width`](https://stringi.gagolewski.com/rapi/stri_width.html)()
 
 ## Examples
 

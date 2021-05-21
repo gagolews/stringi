@@ -86,11 +86,11 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n,
                           SEXP omit_empty, SEXP tokens_only, SEXP simplify)
 {
     bool tokens_only1 = stri__prepare_arg_logical_1_notNA(tokens_only, "tokens_only");
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
-    PROTECT(n = stri_prepare_arg_integer(n, "n"));
-    PROTECT(omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty"));
-    PROTECT(simplify = stri_prepare_arg_logical_1(simplify, "simplify"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
+    PROTECT(n = stri__prepare_arg_integer(n, "n"));
+    PROTECT(omit_empty = stri__prepare_arg_logical(omit_empty, "omit_empty"));
+    PROTECT(simplify = stri__prepare_arg_logical_1(simplify, "simplify"));
     R_len_t vectorize_length = stri__recycling_rule(true, 4,
                                LENGTH(str), LENGTH(pattern), LENGTH(n), LENGTH(omit_empty));
 

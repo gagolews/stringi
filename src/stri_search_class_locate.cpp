@@ -65,8 +65,8 @@ using namespace std;
  */
 SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
     R_len_t vectorize_length =
         stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
@@ -185,8 +185,8 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP omit_no_
 {
     bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
     bool merge_cur = stri__prepare_arg_logical_1_notNA(merge, "merge");
-    PROTECT(str     = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(str     = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
     R_len_t vectorize_length = stri__recycling_rule(true, 2,
                                LENGTH(str), LENGTH(pattern));
 

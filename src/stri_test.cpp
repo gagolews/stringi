@@ -60,7 +60,7 @@ SEXP stri_test_returnasis(SEXP x)
 SEXP stri_test_Rmark(SEXP s)
 {
 #ifndef NDEBUG
-    PROTECT(s = stri_prepare_arg_string(s, "str"));
+    PROTECT(s = stri__prepare_arg_string(s, "str"));
     int ns = LENGTH(s);
     for (int i=0; i < ns; ++i) {
         fprintf(stdout, "!NDEBUG: Element #%d:\n", i);
@@ -97,7 +97,7 @@ SEXP stri_test_Rmark(SEXP s)
  */
 SEXP stri_test_UnicodeContainer16(SEXP str)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
     STRI__ERROR_HANDLER_BEGIN(1)
     StriContainerUTF16 ss(str, LENGTH(str));
     STRI__UNPROTECT_ALL
@@ -115,7 +115,7 @@ SEXP stri_test_UnicodeContainer16(SEXP str)
  */
 SEXP stri_test_UnicodeContainer16b(SEXP str)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
     STRI__ERROR_HANDLER_BEGIN(1)
     StriContainerUTF16 ss(str, LENGTH(str));
     STRI__UNPROTECT_ALL
@@ -132,7 +132,7 @@ SEXP stri_test_UnicodeContainer16b(SEXP str)
  */
 SEXP stri_test_UnicodeContainer8(SEXP str)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
     STRI__ERROR_HANDLER_BEGIN(1)
     StriContainerUTF8 ss(str, LENGTH(str));
     STRI__UNPROTECT_ALL

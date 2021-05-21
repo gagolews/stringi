@@ -67,9 +67,9 @@ void stri__split_codepoints(vector<UChar32>& out, const char* s, int n) {
  *     BUGFIX: overlapping maps (#343)
  */
 SEXP stri_trans_char(SEXP str, SEXP pattern, SEXP replacement) {
-    PROTECT(str          = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern      = stri_prepare_arg_string_1(pattern, "pattern"));
-    PROTECT(replacement  = stri_prepare_arg_string_1(replacement, "replacement"));
+    PROTECT(str          = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern      = stri__prepare_arg_string_1(pattern, "pattern"));
+    PROTECT(replacement  = stri__prepare_arg_string_1(replacement, "replacement"));
     R_len_t vectorize_length = LENGTH(str);
 
     STRI__ERROR_HANDLER_BEGIN(3)

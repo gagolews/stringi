@@ -44,63 +44,63 @@ using namespace std;
 #define StriException_BUFSIZE 4096
 
 
-#define STRI__ERROR_HANDLER_BEGIN(nprotect)                 \
-   int __stri_protected_sexp_num = nprotect;                \
-   char* __stri_error_msg = (char*)NULL;                    \
+#define STRI__ERROR_HANDLER_BEGIN(nprotect)                   \
+   int __stri_protected_sexp_num = nprotect;                  \
+   char* __stri_error_msg = (char*)NULL;                      \
    try {
 
-#define STRI__ERROR_HANDLER_END(cleanup)                    \
-   }                                                        \
-   catch (StriException e) {                                \
-      cleanup;                                              \
-      STRI__UNPROTECT_ALL                                   \
-      /*don't do this, memleaks!: e.throwRerror();*/        \
-      __stri_error_msg = R_alloc(StriException_BUFSIZE, 1); \
-      strcpy(__stri_error_msg, e.getMessage());             \
-      /*return R_NilValue;*/                                \
-   }                                                        \
-   /* call Rf_error here, when e is deleted, no memleaks */ \
-   Rf_error(__stri_error_msg);                              \
-   /* to avoid compiler warning: */                         \
+#define STRI__ERROR_HANDLER_END(cleanup)                      \
+   }                                                          \
+   catch (StriException e) {                                  \
+      cleanup;                                                \
+      STRI__UNPROTECT_ALL                                     \
+      /*e.throwRerror()----don't do this, memleaks!: */       \
+      __stri_error_msg = R_alloc(StriException_BUFSIZE, 1);   \
+      strncpy(__stri_error_msg, e.getMessage(), StriException_BUFSIZE);               \
+      /*return R_NilValue;*/                                  \
+   }                                                          \
+   /* call Rf_error here, when e is deleted, no memleaks */   \
+   Rf_error("%s", __stri_error_msg); /* msg may feature %s */ \
+   /* to avoid compiler warning: */                           \
    return R_NilValue;
 
 
-#define STRI__PROTECT(s) {                                  \
-   PROTECT(s);                                              \
+#define STRI__PROTECT(s) {                                    \
+   PROTECT(s);                                                \
    ++__stri_protected_sexp_num; }
 
 #ifndef NDEBUG
-#define STRI__UNPROTECT(n) {                                \
-   UNPROTECT(n);                                            \
-   if (n > __stri_protected_sexp_num)                       \
-      Rf_warning("STRI__UNPROTECT: stack imbalance!");      \
+#define STRI__UNPROTECT(n) {                                  \
+   UNPROTECT(n);                                              \
+   if (n > __stri_protected_sexp_num)                         \
+      Rf_warning("STRI__UNPROTECT: stack imbalance!");        \
    __stri_protected_sexp_num -= n; }
 #else
-#define STRI__UNPROTECT(n) {                                \
-   UNPROTECT(n);                                            \
+#define STRI__UNPROTECT(n) {                                  \
+   UNPROTECT(n);                                              \
    __stri_protected_sexp_num -= n; }
 #endif
 
-#define STRI__UNPROTECT_ALL {                               \
-   UNPROTECT(__stri_protected_sexp_num);                    \
+#define STRI__UNPROTECT_ALL {                                 \
+   UNPROTECT(__stri_protected_sexp_num);                      \
    __stri_protected_sexp_num = 0; }
 
 
-#define STRI__CHECKICUSTATUS_THROW(status, onerror) {       \
-   if (U_FAILURE(status)) {                                 \
-      onerror;                                              \
-      throw StriException(status);                          \
-   }                                                        \
+#define STRI__CHECKICUSTATUS_THROW(status, onerror) {         \
+   if (U_FAILURE(status)) {                                   \
+      onerror;                                                \
+      throw StriException(status);                            \
+   }                                                          \
 }
 
 
-#define STRI__CHECKICUSTATUS_RFERROR(status, onerror) {     \
-   if (U_FAILURE(status)) {                                 \
-      onerror;                                              \
-      Rf_error(MSG__ICU_ERROR,                              \
-         ICUError::getICUerrorName(status),            \
-         u_errorName(status));                              \
-   }                                                        \
+#define STRI__CHECKICUSTATUS_RFERROR(status, onerror) {       \
+   if (U_FAILURE(status)) {                                   \
+      onerror;                                                \
+      Rf_error(MSG__ICU_ERROR,                                \
+         ICUError::getICUerrorName(status),                   \
+         u_errorName(status));                                \
+   }                                                          \
 }
 
 
@@ -138,6 +138,8 @@ public:
  *
  * @version 1.4.7 (Marek Gagolewski, 2020-08-21)
  *          Improve !NDEBUG diagnostics
+ *
+ * @version 1.6.3 (Marek Gagolewski, 2021-05-21) snprintf
  */
 class __StriException {
 
@@ -148,29 +150,31 @@ private:
 public:
 
     __StriException(const char* file, int line, const char* format, ...) {
-        sprintf(msg, "[!NDEBUG] Error in %s:%d: ", file, line);
+        snprintf(msg, StriException_BUFSIZE, "[!NDEBUG] Error in %s:%d: ", file, line);
         va_list args;
         va_start(args, format);
-        vsprintf(msg+strlen(msg), format, args);
+        R_len_t msg_size = strlen(msg);
+        vsnprintf(msg+msg_size, StriException_BUFSIZE-msg_size, format, args);
         va_end(args);
     }
 
     __StriException(const char* file, int line, UErrorCode status, const char* context = NULL) {
-        sprintf(msg, "[!NDEBUG: Error in %s:%d] ", file, line);
+        snprintf(msg, StriException_BUFSIZE, "[!NDEBUG: Error in %s:%d] ", file, line);
+        R_len_t msg_size = strlen(msg);
         if (context) {
-            sprintf(msg+strlen(msg),
+            snprintf(msg+msg_size, StriException_BUFSIZE-msg_size,
                 MSG__ICU_ERROR_WITH_CONTEXT, ICUError::getICUerrorName(status),
                     u_errorName(status), context);
         }
         else {
-            sprintf(msg+strlen(msg),
+            snprintf(msg+msg_size, StriException_BUFSIZE-msg_size,
                 MSG__ICU_ERROR, ICUError::getICUerrorName(status), u_errorName(status));
         }
     }
 
 
     void throwRerror() {
-        Rf_error(msg);
+        Rf_error("%s", msg);  // avoids treating %'s as special chars
     }
 
     const char* getMessage() const {
@@ -195,6 +199,8 @@ typedef __StriException StriException;
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-18)
  *          do not use R_alloc for msg
+ *
+ * @version 1.6.3 (Marek Gagolewski, 2021-05-21) snprintf
  */
 class StriException {
 
@@ -207,24 +213,24 @@ public:
     StriException(const char* format, ...) {
         va_list args;
         va_start(args, format);
-        vsprintf(msg, format, args);
+        vsnprintf(msg, StriException_BUFSIZE, format, args);
         va_end(args);
     }
 
     StriException(UErrorCode status, const char* context = NULL) {
         if (context) {
-            sprintf(msg, MSG__ICU_ERROR_WITH_CONTEXT,
+            snprintf(msg, StriException_BUFSIZE, MSG__ICU_ERROR_WITH_CONTEXT,
                 ICUError::getICUerrorName(status), u_errorName(status), context);
         }
         else {
-            sprintf(msg, MSG__ICU_ERROR,
+            snprintf(msg, StriException_BUFSIZE, MSG__ICU_ERROR,
                 ICUError::getICUerrorName(status), u_errorName(status));
         }
     }
 
 
     void throwRerror() {
-        Rf_error(msg);
+        Rf_error("%s", msg);  // avoids treating %'s as special chars
     }
 
     const char* getMessage() const {

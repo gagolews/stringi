@@ -47,7 +47,7 @@ Returns a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other join: [`%s+%()`,](operator_add.md) [`stri_dup()`,](stri_dup.md) [`stri_flatten()`,](stri_flatten.md) `stri_join_list()`
+Other join: [`%s+%`](https://stringi.gagolewski.com/rapi/%25s+%25.html)(), [`stri_dup`](https://stringi.gagolewski.com/rapi/stri_dup.html)(), [`stri_flatten`](https://stringi.gagolewski.com/rapi/stri_flatten.html)(), [`stri_join_list`](https://stringi.gagolewski.com/rapi/stri_join_list.html)()
 
 ## Examples
 

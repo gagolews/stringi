@@ -127,7 +127,7 @@ invisible(NULL)
 # @family prepare_arg
 stri_prepare_arg_string <- function(x)
 {
-    .Call(C_stri_prepare_arg_string, x, NULL)
+    .Call(C_stri_prepare_arg_string, x, deparse(substitute(x)))
 }
 
 
@@ -138,6 +138,7 @@ stri_prepare_arg_string <- function(x)
 # This is an internal function. However, the interested user may play with it
 # in order to get more insight on how \pkg{stringi} deals with its
 # functions' arguments. See `Value' section for details.
+# TODO: factors_as_strings
 #
 # @param x argument to be checked
 #
@@ -153,7 +154,7 @@ stri_prepare_arg_string <- function(x)
 # @family prepare_arg
 stri_prepare_arg_double <- function(x)
 {
-    .Call(C_stri_prepare_arg_double, x, NULL)
+    .Call(C_stri_prepare_arg_double, x, deparse(substitute(x)))
 }
 
 
@@ -164,6 +165,7 @@ stri_prepare_arg_double <- function(x)
 # This is an internal function. However, the interested user may play with it
 # in order to get more insight on how \pkg{stringi} deals with its
 # functions' arguments. See `Value' section for details.
+# TODO: factors_as_strings
 #
 # @param x argument to be checked
 #
@@ -179,7 +181,7 @@ stri_prepare_arg_double <- function(x)
 # @family prepare_arg
 stri_prepare_arg_integer <- function(x)
 {
-    .Call(C_stri_prepare_arg_integer, x, NULL)
+    .Call(C_stri_prepare_arg_integer, x, deparse(substitute(x)))
 }
 
 
@@ -190,6 +192,7 @@ stri_prepare_arg_integer <- function(x)
 # This is an internal function. However, the interested user may play with it
 # in order to get more insight on how \pkg{stringi} deals with its
 # functions' arguments. See `Value' section for details.
+# TODO: factors_as_strings
 #
 # @param x argument to be checked
 #
@@ -205,7 +208,7 @@ stri_prepare_arg_integer <- function(x)
 # @family prepare_arg
 stri_prepare_arg_logical <- function(x)
 {
-    .Call(C_stri_prepare_arg_logical, x, NULL)
+    .Call(C_stri_prepare_arg_logical, x, deparse(substitute(x)))
 }
 
 
@@ -216,6 +219,7 @@ stri_prepare_arg_logical <- function(x)
 # This is an internal function. However, the interested user may play with it
 # in order to get more insight on how \pkg{stringi} deals with its
 # functions' arguments. See `Value' section for details.
+# TODO: factors_as_strings
 #
 # @param x argument to be checked
 #
@@ -231,7 +235,7 @@ stri_prepare_arg_logical <- function(x)
 # @family prepare_arg
 stri_prepare_arg_raw <- function(x)
 {
-    .Call(C_stri_prepare_arg_raw, x, NULL)
+    .Call(C_stri_prepare_arg_raw, x, deparse(substitute(x)))
 }
 
 
@@ -253,7 +257,7 @@ stri_prepare_arg_raw <- function(x)
 # @family prepare_arg
 stri_prepare_arg_string_1 <- function(x)
 {
-    .Call(C_stri_prepare_arg_string_1, x, NULL)
+    .Call(C_stri_prepare_arg_string_1, x, deparse(substitute(x)))
 }
 
 
@@ -264,6 +268,7 @@ stri_prepare_arg_string_1 <- function(x)
 # This is an internal function. However, the interested user may play with it
 # in order to get more insight on how \pkg{stringi} deals with its
 # functions' arguments. See `Value' section for details.
+# TODO: factors_as_strings
 #
 # @param x argument to be checked
 # @return
@@ -275,7 +280,7 @@ stri_prepare_arg_string_1 <- function(x)
 # @family prepare_arg
 stri_prepare_arg_double_1 <- function(x)
 {
-    .Call(C_stri_prepare_arg_double_1, x, NULL)
+    .Call(C_stri_prepare_arg_double_1, x, deparse(substitute(x)))
 }
 
 
@@ -287,17 +292,19 @@ stri_prepare_arg_double_1 <- function(x)
 # in order to get more insight on how \pkg{stringi} deals with its
 # functions' arguments. See `Value' section for details.
 #
+# TODO: factors_as_strings
+#
 # @param x argument to be checked
 # @return
 # In the first place, \code{\link{stri_prepare_arg_integer}} is called.
-# On ab empty vector, an error is generated.
+# On an empty vector, an error is generated.
 # If there are more than 1 elements, a warning is generated.
 # A vector with one element (the first in \code{x}) is returned.
 #
 # @family prepare_arg
 stri_prepare_arg_integer_1 <- function(x)
 {
-    .Call(C_stri_prepare_arg_integer_1, x, NULL)
+    .Call(C_stri_prepare_arg_integer_1, x, deparse(substitute(x)))
 }
 
 
@@ -319,5 +326,5 @@ stri_prepare_arg_integer_1 <- function(x)
 # @family prepare_arg
 stri_prepare_arg_logical_1 <- function(x)
 {
-    .Call(C_stri_prepare_arg_logical_1, x, NULL)
+    .Call(C_stri_prepare_arg_logical_1, x, deparse(substitute(x)))
 }

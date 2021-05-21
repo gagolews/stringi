@@ -73,11 +73,11 @@ SEXP stri_pad(SEXP str, SEXP width, SEXP side, SEXP pad, SEXP use_length)
         Rf_error(MSG__INCORRECT_INTERNAL_ARG);
 
     bool use_length_val = stri__prepare_arg_logical_1_notNA(use_length, "use_length");
-    PROTECT(str         = stri_prepare_arg_string(str, "str"));
-    PROTECT(width       = stri_prepare_arg_integer(width, "width"));
-    PROTECT(pad         = stri_prepare_arg_string(pad, "pad"));
+    PROTECT(str         = stri__prepare_arg_string(str, "str"));
+    PROTECT(width       = stri__prepare_arg_integer(width, "width"));
+    PROTECT(pad         = stri__prepare_arg_string(pad, "pad"));
 
-//   side       = stri_prepare_arg_string(side, "side");
+//   side       = stri__prepare_arg_string(side, "side");
 //   const char* side_opts[] = {"left", "right", "both", NULL};
 
     R_len_t str_length     = LENGTH(str);
@@ -189,9 +189,9 @@ SEXP stri_pad(SEXP str, SEXP width, SEXP side, SEXP pad, SEXP use_length)
 
 // // Second version by BT: uses StriContainerUTF16 & ICU's padLeading
 //{
-//   str    = stri_prepare_arg_string(str, "str"); // prepare string argument
-//   length = stri_prepare_arg_integer(length, "length");
-//   pad    = stri_prepare_arg_string(pad, "pad");
+//   str    = stri__prepare_arg_string(str, "str"); // prepare string argument
+//   length = stri__prepare_arg_integer(length, "length");
+//   pad    = stri__prepare_arg_string(pad, "pad");
 //
 //   R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(length), LENGTH(pad));
 //

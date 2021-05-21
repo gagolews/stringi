@@ -60,8 +60,8 @@ using namespace std;
 SEXP stri__extract_firstlast_fixed(SEXP str, SEXP pattern, SEXP opts_fixed, bool first)
 {
     uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
-    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern")); // prepare string argument
+    PROTECT(str = stri__prepare_arg_string(str, "str")); // prepare string argument
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern")); // prepare string argument
 
     STRI__ERROR_HANDLER_BEGIN(2)
     int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
@@ -166,9 +166,9 @@ SEXP stri_extract_all_fixed(SEXP str, SEXP pattern, SEXP simplify, SEXP omit_no_
 {
     uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed, /*allow_overlap*/true);
     bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
-    PROTECT(simplify = stri_prepare_arg_logical_1(simplify, "simplify"));
-    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern")); // prepare string argument
+    PROTECT(simplify = stri__prepare_arg_logical_1(simplify, "simplify"));
+    PROTECT(str = stri__prepare_arg_string(str, "str")); // prepare string argument
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern")); // prepare string argument
 
     STRI__ERROR_HANDLER_BEGIN(3)
     R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));

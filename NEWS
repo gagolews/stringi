@@ -14,6 +14,9 @@
 * TODO ... [NEW FEATURE] #434: `stri_datetime_format` and `stri_datetime_parse`
   is now also vectorised with respect to the `format` argument.
 
+* [INTERNAL] `stri_prepare_arg*` have been refactored, buffer overruns
+  in the exception handling subsystem are now avoided.
+
 
 ## 1.6.2 (2021-05-14)
 

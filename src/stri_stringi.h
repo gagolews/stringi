@@ -66,12 +66,18 @@ int     stri__width_char(UChar32 c);
 int     stri__width_string(const char* str_cur_s, int str_cur_n);
 
 // prepare_arg.cpp:
+SEXP stri__prepare_arg_string_1(SEXP x,     const char* argname);
+SEXP stri__prepare_arg_double_1(SEXP x,     const char* argname, bool factors_as_strings=true);
+SEXP stri__prepare_arg_integer_1(SEXP x,    const char* argname, bool factors_as_strings=true);
+SEXP stri__prepare_arg_logical_1(SEXP x,    const char* argname);
+
 const char* stri__copy_string_Ralloc(SEXP, const char* argname);
 const char* stri__prepare_arg_string_1_notNA(SEXP x,  const char* argname);
 double      stri__prepare_arg_double_1_notNA(SEXP x,  const char* argname);
 int         stri__prepare_arg_integer_1_notNA(SEXP x, const char* argname);
 bool        stri__prepare_arg_logical_1_notNA(SEXP x, const char* argname);
 
+const char* stri__prepare_arg_string_1_NA(SEXP x,  const char* argname);
 double      stri__prepare_arg_double_1_NA(SEXP x, const char* argname);
 int stri__prepare_arg_logical_1_NA(SEXP x, const char* argname);
 int stri__prepare_arg_integer_1_NA(SEXP x, const char* argname);
@@ -82,21 +88,18 @@ const char* stri__prepare_arg_enc(SEXP loc,           const char* argname,
                                   bool allowdefault);
 TimeZone* stri__prepare_arg_timezone(SEXP tz, const char* argname, bool allowdefault);
 
-// prepare_arg.cpp /* internal, but in namespace: for testing */
-SEXP        stri_prepare_arg_list(SEXP x,             const char* argname);
-SEXP        stri_prepare_arg_list_string(SEXP x,      const char* argname);
-SEXP        stri_prepare_arg_list_integer(SEXP x,     const char* argname);
-SEXP        stri_prepare_arg_list_raw(SEXP x,         const char* argname);
-SEXP        stri_prepare_arg_string(SEXP x,           const char* argname, bool allow_error=true);
-SEXP        stri_prepare_arg_logical(SEXP x,          const char* argname, bool allow_error=true);
-SEXP        stri_prepare_arg_double(SEXP x,           const char* argname, bool factors_as_strings=true, bool allow_error=true);
-SEXP        stri_prepare_arg_integer(SEXP x,          const char* argname, bool factors_as_strings=true, bool allow_error=true);
-SEXP        stri_prepare_arg_raw(SEXP x,              const char* argname, bool factors_as_strings=true, bool allow_error=true);
-SEXP        stri_prepare_arg_POSIXct(SEXP x,          const char* argname);
-SEXP        stri_prepare_arg_string_1(SEXP x,         const char* argname);
-SEXP        stri_prepare_arg_double_1(SEXP x,         const char* argname, bool factors_as_strings=true);
-SEXP        stri_prepare_arg_integer_1(SEXP x,        const char* argname, bool factors_as_strings=true);
-SEXP        stri_prepare_arg_logical_1(SEXP x,        const char* argname);
+SEXP stri__prepare_arg_list(SEXP x,         const char* argname);
+SEXP stri__prepare_arg_list_string(SEXP x,  const char* argname);
+SEXP stri__prepare_arg_list_integer(SEXP x, const char* argname);
+SEXP stri__prepare_arg_list_raw(SEXP x,     const char* argname);
+
+SEXP stri__prepare_arg_string(SEXP x,       const char* argname, bool allow_error=true);
+SEXP stri__prepare_arg_logical(SEXP x,      const char* argname, bool allow_error=true);
+SEXP stri__prepare_arg_double(SEXP x,       const char* argname, bool factors_as_strings=true, bool allow_error=true);
+SEXP stri__prepare_arg_integer(SEXP x,      const char* argname, bool factors_as_strings=true, bool allow_error=true);
+SEXP stri__prepare_arg_raw(SEXP x,          const char* argname, bool factors_as_strings=true, bool allow_error=true);
+
+SEXP stri__prepare_arg_POSIXct(SEXP x,      const char* argname);
 
 // test.cpp /* internal, but in namespace: for testing */
 SEXP stri_test_Rmark(SEXP str);

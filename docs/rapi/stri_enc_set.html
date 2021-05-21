@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count.html">stri_count: Count the Number of Pattern Matches</a></li>
@@ -187,6 +187,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_split_boundaries.html">stri_split_boundaries: Split a String at Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split_lines.html">stri_split_lines: Split a String Into Text Lines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split.html">stri_split: Split a String By Pattern Matches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_sprintf.html">stri_sprintf: Format Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_startsendswith.html">stri_startsendswith: Determine if the Start or End of a String Matches a Pattern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_stats_general.html">stri_stats_general: General Statistics for a Character Vector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_stats_latex.html">stri_stats_latex: Statistics for a Character Vector Containing LaTeX Commands</a></li>
@@ -299,7 +300,7 @@
 <h1>stri_enc_set: Set or Get Default Character Encoding in <span class="pkg">stringi</span><a class="headerlink" href="#stri-enc-set-set-or-get-default-character-encoding-in-span-class-pkg-stringi-span" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">stri_enc_set</span></code> sets the encoding used to re-encode strings internally (i.e., by <span style="font-family: Courier New, Courier; color: #666666;"><strong>R</strong></span>) declared to be in native encoding, see <a class="reference internal" href="about_encoding.html"><span class="doc std std-doc">stringi-encoding</span></a> and <a class="reference internal" href="stri_enc_mark.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_mark</span></code></span></a>. <code class="docutils literal notranslate"><span class="pre">stri_enc_get</span></code> returns the currently used default encoding.</p>
+<p><code class="docutils literal notranslate"><span class="pre">stri_enc_set</span></code> sets the encoding used to re-encode strings internally (i.e., by <span style="font-family: Courier New, Courier; color: #666666;"><strong>R</strong></span>) declared to be in native encoding, see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stringi-encoding.html">stringi-encoding</a> and <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_enc_mark.html"><code class="docutils literal notranslate"><span class="pre">stri_enc_mark</span></code></a>. <code class="docutils literal notranslate"><span class="pre">stri_enc_get</span></code> returns the currently used default encoding.</p>
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
@@ -319,17 +320,17 @@
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">enc</span></code></p></td>
-<td><p>single string; character encoding name, see <a class="reference internal" href="stri_enc_list.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_list</span></code></span></a> for the list of supported encodings.</p></td>
+<td><p>single string; character encoding name, see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_enc_list.html"><code class="docutils literal notranslate"><span class="pre">stri_enc_list</span></code></a> for the list of supported encodings.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">stri_enc_get</span></code> is the same as <code class="docutils literal notranslate"><span class="pre">stri_enc_info(NULL)$Name.friendly</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">stri_enc_get</span></code> is the same as <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_enc_info.html"><code class="docutils literal notranslate"><span class="pre">stri_enc_info</span></code></a>(NULL)$Name.friendly.</p>
 <p>Note that changing the default encoding may have undesired consequences. Unless you are an expert user and you know what you are doing, <code class="docutils literal notranslate"><span class="pre">stri_enc_set</span></code> should only be used if <span class="pkg">ICU</span> fails to detect your system’s encoding correctly (while testing <span class="pkg">stringi</span> we only encountered such a situation on a very old Solaris machine). Note that <span class="pkg">ICU</span> tries to match the encoding part of the <code class="docutils literal notranslate"><span class="pre">LC_CTYPE</span></code> category as given by <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/locales.html"><code class="docutils literal notranslate"><span class="pre">Sys.getlocale</span></code></a>.</p>
-<p>If you set a default encoding that is neither a superset of ASCII, nor an 8-bit encoding, a warning will be generated, see <a class="reference internal" href="about_encoding.html"><span class="doc std std-doc">stringi-encoding</span></a> for discussion.</p>
-<p><code class="docutils literal notranslate"><span class="pre">stri_enc_set</span></code> has no effect if the system ICU assumes that the default charset is always UTF-8 (i.e., where the internal <code class="docutils literal notranslate"><span class="pre">U_CHARSET_IS_UTF8</span></code> is defined and set to 1), see <a class="reference internal" href="stri_info.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_info</span></code></span></a>.</p>
+<p>If you set a default encoding that is neither a superset of ASCII, nor an 8-bit encoding, a warning will be generated, see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stringi-encoding.html">stringi-encoding</a> for discussion.</p>
+<p><code class="docutils literal notranslate"><span class="pre">stri_enc_set</span></code> has no effect if the system ICU assumes that the default charset is always UTF-8 (i.e., where the internal <code class="docutils literal notranslate"><span class="pre">U_CHARSET_IS_UTF8</span></code> is defined and set to 1), see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_info.html"><code class="docutils literal notranslate"><span class="pre">stri_info</span></code></a>.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
@@ -343,7 +344,7 @@
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
-<p>Other encoding_management: <a class="reference internal" href="about_encoding.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_encoding</span></code></span></a>, <a class="reference internal" href="stri_enc_info.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_info()</span></code>,</span></a> <a class="reference internal" href="stri_enc_list.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_list()</span></code>,</span></a> <code class="docutils literal notranslate"><span class="pre">stri_enc_mark()</span></code></p>
+<p>Other encoding_management: <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_encoding.html"><code class="docutils literal notranslate"><span class="pre">about_encoding</span></code></a>, <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_enc_info.html"><code class="docutils literal notranslate"><span class="pre">stri_enc_info</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_enc_list.html"><code class="docutils literal notranslate"><span class="pre">stri_enc_list</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_enc_mark.html"><code class="docutils literal notranslate"><span class="pre">stri_enc_mark</span></code></a>()</p>
 </div>
 </div>
 
@@ -363,7 +364,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-14 17:08:05.
+        Last updated on 2021-05-21 14:42:13.
       </span>
 
     </p>

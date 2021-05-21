@@ -34,7 +34,7 @@ If `byrow` is `FALSE`, then a matrix with `length(x)` columns is returned. The n
 
 If `byrow` is `TRUE`, then the resulting matrix is a transposition of the above-described one.
 
-This function may be useful, e.g., in connection with [`stri_split`](stri_split.md) and [`stri_extract_all`](stri_extract.md).
+This function may be useful, e.g., in connection with [`stri_split`](https://stringi.gagolewski.com/rapi/stri_split.html) and [`stri_extract_all`](https://stringi.gagolewski.com/rapi/stri_extract_all.html).
 
 ## Value
 
@@ -48,7 +48,7 @@ Returns a character matrix.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other utils: [`stri_na2empty()`,](stri_na2empty.md) [`stri_remove_empty()`,](stri_remove_empty.md) `stri_replace_na()`
+Other utils: [`stri_na2empty`](https://stringi.gagolewski.com/rapi/stri_na2empty.html)(), [`stri_remove_empty`](https://stringi.gagolewski.com/rapi/stri_remove_empty.html)(), [`stri_replace_na`](https://stringi.gagolewski.com/rapi/stri_replace_na.html)()
 
 ## Examples
 

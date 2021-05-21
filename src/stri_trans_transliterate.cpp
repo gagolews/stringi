@@ -102,8 +102,8 @@ SEXP stri_trans_list()
  */
 SEXP stri_trans_general(SEXP str, SEXP id)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-    PROTECT(id  = stri_prepare_arg_string_1(id, "id"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(id  = stri__prepare_arg_string_1(id, "id"));
     R_len_t str_length = LENGTH(str);
 
     Transliterator* trans = NULL;

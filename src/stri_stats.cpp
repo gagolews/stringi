@@ -55,7 +55,7 @@
  */
 SEXP stri_stats_general(SEXP str)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
     R_len_t str_length = LENGTH(str);
 
     STRI__ERROR_HANDLER_BEGIN(1)
@@ -140,7 +140,7 @@ SEXP stri_stats_general(SEXP str)
  */
 SEXP stri_stats_latex(SEXP str)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
     R_len_t str_length = LENGTH(str);
 
     STRI__ERROR_HANDLER_BEGIN(1)

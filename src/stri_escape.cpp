@@ -35,6 +35,8 @@
 #include "stri_container_utf16.h"
 
 
+#define StriEscape_BUFSIZE 12
+
 /**
  *  Escape Unicode code points
  *
@@ -54,7 +56,7 @@
 */
 SEXP stri_escape_unicode(SEXP str)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
+    PROTECT(str = stri__prepare_arg_string(str, "str")); // prepare string argument
 
     STRI__ERROR_HANDLER_BEGIN(1)
     R_len_t str_length = LENGTH(str);
@@ -99,12 +101,13 @@ SEXP stri_escape_unicode(SEXP str)
 
         // do escape
         j = 0;
-        char buf[11];
+        char buf[StriEscape_BUFSIZE];
         while (j < str_cur_n) {
             U8_NEXT(str_cur_s, j, str_cur_n, c);
             /* if (c < 0)
                throw StriException(MSG__INVALID_UTF8); // this has already been checked :)
-            else */ if (c <= ASCII_MAXCHARCODE) {
+            else */
+            if (c <= ASCII_MAXCHARCODE) {
                 switch ((char)c) {
                 case 0x07:
                     out.append("\\a");
@@ -141,17 +144,17 @@ SEXP stri_escape_unicode(SEXP str)
                     if ((char)c >= 32 && (char)c <= 126) // printable characters
                         out.append(1, (char)c);
                     else {
-                        sprintf(buf, "\\u%4.4x", (uint16_t)c);
+                        snprintf(buf, StriEscape_BUFSIZE, "\\u%4.4x", (uint16_t)c);
                         out.append(buf, 6);
                     }
                 }
             }
             else if (c <= 0xffff) {
-                sprintf(buf, "\\u%4.4x", (uint16_t)c);
+                snprintf(buf, StriEscape_BUFSIZE, "\\u%4.4x", (uint16_t)c);
                 out.append(buf, 6);
             }
             else {
-                sprintf(buf, "\\U%8.8x", (uint32_t)c);
+                snprintf(buf, StriEscape_BUFSIZE, "\\U%8.8x", (uint32_t)c);
                 out.append(buf, 10);
             }
         }
@@ -180,7 +183,7 @@ SEXP stri_escape_unicode(SEXP str)
 */
 SEXP stri_unescape_unicode(SEXP str)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
+    PROTECT(str = stri__prepare_arg_string(str, "str")); // prepare string argument
 
     STRI__ERROR_HANDLER_BEGIN(1)
     R_len_t str_length = LENGTH(str);

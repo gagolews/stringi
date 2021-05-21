@@ -66,8 +66,8 @@ SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate, SEXP op
 {
     bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
     bool omit_na1 = stri__prepare_arg_logical_1_notNA(omit_na, "omit_na");
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
 
     // call stri__ucol_open after prepare_arg:
     // if prepare_arg had failed, we would have a mem leak
@@ -141,9 +141,9 @@ SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate, SEXP op
 SEXP stri_subset_coll_replacement(SEXP str, SEXP pattern, SEXP negate, SEXP opts_collator, SEXP value)
 {
     bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern = stri_prepare_arg_string_1(pattern, "pattern"));
-    PROTECT(value = stri_prepare_arg_string(value, "value"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri__prepare_arg_string_1(pattern, "pattern"));
+    PROTECT(value = stri__prepare_arg_string(value, "value"));
 
     int vectorize_length = LENGTH(str);
     int value_length = LENGTH(value);

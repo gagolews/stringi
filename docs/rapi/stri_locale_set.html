@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count.html">stri_count: Count the Number of Pattern Matches</a></li>
@@ -188,6 +188,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_split_boundaries.html">stri_split_boundaries: Split a String at Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split_lines.html">stri_split_lines: Split a String Into Text Lines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split.html">stri_split: Split a String By Pattern Matches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_sprintf.html">stri_sprintf: Format Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_startsendswith.html">stri_startsendswith: Determine if the Start or End of a String Matches a Pattern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_stats_general.html">stri_stats_general: General Statistics for a Character Vector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_stats_latex.html">stri_stats_latex: Statistics for a Character Vector Containing LaTeX Commands</a></li>
@@ -320,15 +321,15 @@
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">locale</span></code></p></td>
-<td><p>single string of the form <code class="docutils literal notranslate"><span class="pre">Language</span></code>, <code class="docutils literal notranslate"><span class="pre">Language_Country</span></code>, or <code class="docutils literal notranslate"><span class="pre">Language_Country_Variant</span></code>, e.g., <code class="docutils literal notranslate"><span class="pre">'en_US'</span></code>, see <a class="reference internal" href="stri_locale_list.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_locale_list</span></code></span></a>.</p></td>
+<td><p>single string of the form <code class="docutils literal notranslate"><span class="pre">Language</span></code>, <code class="docutils literal notranslate"><span class="pre">Language_Country</span></code>, or <code class="docutils literal notranslate"><span class="pre">Language_Country_Variant</span></code>, e.g., <code class="docutils literal notranslate"><span class="pre">'en_US'</span></code>, see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_locale_list.html"><code class="docutils literal notranslate"><span class="pre">stri_locale_list</span></code></a>.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
-<p>See <a class="reference internal" href="about_locale.html"><span class="doc std std-doc">stringi-locale</span></a> for more information on the effect of changing the default locale.</p>
-<p><code class="docutils literal notranslate"><span class="pre">stri_locale_get</span></code> is the same as <code class="docutils literal notranslate"><span class="pre">stri_locale_info(NULL)$Name</span></code>.</p>
+<p>See <a class="reference external" href="https://stringi.gagolewski.com/rapi/stringi-locale.html">stringi-locale</a> for more information on the effect of changing the default locale.</p>
+<p><code class="docutils literal notranslate"><span class="pre">stri_locale_get</span></code> is the same as <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_locale_info.html"><code class="docutils literal notranslate"><span class="pre">stri_locale_info</span></code></a>(NULL)$Name.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
@@ -342,19 +343,19 @@
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
-<p>Other locale_management: <a class="reference internal" href="about_locale.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_locale</span></code></span></a>, <a class="reference internal" href="stri_locale_info.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_locale_info()</span></code>,</span></a> <code class="docutils literal notranslate"><span class="pre">stri_locale_list()</span></code></p>
+<p>Other locale_management: <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_locale.html"><code class="docutils literal notranslate"><span class="pre">about_locale</span></code></a>, <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_locale_info.html"><code class="docutils literal notranslate"><span class="pre">stri_locale_info</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_locale_list.html"><code class="docutils literal notranslate"><span class="pre">stri_locale_list</span></code></a>()</p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">## Not run: </span>
 <span class="n">oldloc</span> <span class="o">&lt;-</span> <span class="nf">stri_locale_set</span><span class="p">(</span><span class="s">&#39;pt_BR&#39;</span><span class="p">)</span>
-<span class="c1">## You are now working with stringi_1.6.2 (pt_BR.UTF-8; ICU4C 69.1 [bundle]; Unicode 13.0)</span>
+<span class="c1">## You are now working with stringi_1.6.3 (pt_BR.UTF-8; ICU4C 69.1 [bundle]; Unicode 13.0)</span>
 <span class="c1"># ... some locale-dependent operations</span>
 <span class="c1"># ... note that you may always modify a locale per-call</span>
 <span class="c1"># ... changing the default locale is convenient if you perform</span>
 <span class="c1"># ... many operations</span>
 <span class="nf">stri_locale_set</span><span class="p">(</span><span class="n">oldloc</span><span class="p">)</span> <span class="c1"># restore the previous default locale</span>
-<span class="c1">## You are now working with stringi_1.6.2 (en_AU.UTF-8; ICU4C 69.1 [bundle]; Unicode 13.0)</span>
+<span class="c1">## You are now working with stringi_1.6.3 (en_AU.UTF-8; ICU4C 69.1 [bundle]; Unicode 13.0)</span>
 <span class="c1">## End(Not run)</span>
 </pre></div>
 </div>
@@ -377,7 +378,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-14 17:08:05.
+        Last updated on 2021-05-21 14:42:13.
       </span>
 
     </p>

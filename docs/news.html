@@ -107,6 +107,7 @@
 <li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">What Is New in <em>stringi</em></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#devel-2021-xx-yy">1.6.3-devel (2021-xx-yy)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id1">1.6.2 (2021-05-14)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id2">1.6.1 (2021-05-05)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id3">1.5.3 (2020-09-04)</a></li>
@@ -221,6 +222,19 @@
             
   <div class="section" id="what-is-new-in-stringi">
 <h1>What Is New in <em>stringi</em><a class="headerlink" href="#what-is-new-in-stringi" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="devel-2021-xx-yy">
+<h2>1.6.3-devel (2021-xx-yy)<a class="headerlink" href="#devel-2021-xx-yy" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>TODO … [NEW FEATURE] #420: <code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code> (alias: <code class="docutils literal notranslate"><span class="pre">stri_string_format</span></code>)
+is a Unicode-aware replacement for the base <code class="docutils literal notranslate"><span class="pre">sprintf</span></code>:
+it adds a customised handling of <code class="docutils literal notranslate"><span class="pre">NA</span></code>s (on demand) and
+computing field size based on code point width.
+Moreover, <code class="docutils literal notranslate"><span class="pre">stri_printf</span></code> can be used to display formatted strings
+conveniently.</p></li>
+<li><p>TODO … [NEW FEATURE] #434: <code class="docutils literal notranslate"><span class="pre">stri_datetime_format</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_datetime_parse</span></code>
+is now also vectorised with respect to the <code class="docutils literal notranslate"><span class="pre">format</span></code> argument.</p></li>
+</ul>
+</div>
 <div class="section" id="id1">
 <h2>1.6.2 (2021-05-14)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
@@ -230,12 +244,12 @@
 <code class="docutils literal notranslate"><span class="pre">stri_timezone_list()</span></code>, and <code class="docutils literal notranslate"><span class="pre">stri_trans_list()</span></code> are now sorted.</p></li>
 <li><p>[NEW FEATURE] #428: In <code class="docutils literal notranslate"><span class="pre">stri_flatten</span></code>, <code class="docutils literal notranslate"><span class="pre">na_empty=NA</span></code> now omits missing values.</p></li>
 <li><p>[BUILD TIME] #431: Pre-4.9.0 GCC has <code class="docutils literal notranslate"><span class="pre">::max_align_t</span></code>,
-but not <code class="docutils literal notranslate"><span class="pre">std::max_align_t</span></code>, added a (possible) workaround, see the INSTALL
+but not <code class="docutils literal notranslate"><span class="pre">std::max_align_t</span></code>, added a (possible) workaround, see the <code class="docutils literal notranslate"><span class="pre">INSTALL</span></code>
 file.</p></li>
 <li><p>[BUGFIX] #429: <code class="docutils literal notranslate"><span class="pre">stri_width()</span></code> misclassified the width of certain
 code points (including grave accent, Eszett, etc.);
-General category Sk (Symbol, modifier) is no longer of width 0,
-UCHAR_EAST_ASIAN_WIDTH of U_EA_AMBIGUOUS is no longer of width 2.</p></li>
+General category <em>Sk</em> (Symbol, modifier) is no longer of width 0,
+<code class="docutils literal notranslate"><span class="pre">UCHAR_EAST_ASIAN_WIDTH</span></code> of <code class="docutils literal notranslate"><span class="pre">U_EA_AMBIGUOUS</span></code> is no longer of width 2.</p></li>
 <li><p>[BUGFIX] #354: <code class="docutils literal notranslate"><span class="pre">ALTREP</span></code> <code class="docutils literal notranslate"><span class="pre">CHARSXP</span></code>s were not copied, and thus could have been
 garbage collected in the so-called meanwhile (with thanks to &#64;jimhester).</p></li>
 </ul>
@@ -910,7 +924,7 @@ scheduled for milestone 0.1.</p></li>
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-14 17:08:05.
+        Last updated on 2021-05-21 14:42:13.
       </span>
 
     </p>

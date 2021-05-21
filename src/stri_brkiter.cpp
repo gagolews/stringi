@@ -75,7 +75,7 @@ void StriBrkIterOptions::setType(SEXP opts_brkiter, const char* _default) {
                 PROTECT(curval2 = stri_enc_toutf8(VECTOR_ELT(opts_brkiter, i),
                                                   Rf_ScalarLogical(FALSE),
                                                   Rf_ScalarLogical(FALSE)));
-                PROTECT(curval = stri_prepare_arg_string_1(curval2, "type"));
+                PROTECT(curval = stri__prepare_arg_string_1(curval2, "type"));
                 if (STRING_ELT(curval, i) == NA_STRING) {
                     UNPROTECT(1);
                     Rf_error(MSG__INCORRECT_MATCH_OPTION, "type");

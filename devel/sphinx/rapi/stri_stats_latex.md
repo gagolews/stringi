@@ -46,7 +46,7 @@ Returns an integer vector with the following named elements:
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other stats: `stri_stats_general()`
+Other stats: [`stri_stats_general`](https://stringi.gagolewski.com/rapi/stri_stats_general.html)()
 
 ## Examples
 

@@ -20,7 +20,7 @@ stri_rand_shuffle(str)
 
 This operation may result in non-Unicode-normalized strings and may give peculiar outputs in case of bidirectional strings.
 
-See also [`stri_reverse`](stri_reverse.md) for reversing the order of code points.
+See also [`stri_reverse`](https://stringi.gagolewski.com/rapi/stri_reverse.html) for reversing the order of code points.
 
 ## Value
 
@@ -34,7 +34,7 @@ Returns a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other random: [`stri_rand_lipsum()`,](stri_rand_lipsum.md) `stri_rand_strings()`
+Other random: [`stri_rand_lipsum`](https://stringi.gagolewski.com/rapi/stri_rand_lipsum.html)(), [`stri_rand_strings`](https://stringi.gagolewski.com/rapi/stri_rand_strings.html)()
 
 ## Examples
 

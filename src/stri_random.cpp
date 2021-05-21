@@ -53,7 +53,7 @@
  */
 SEXP stri_rand_shuffle(SEXP str)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
     R_len_t n = LENGTH(str);
 
     GetRNGstate();
@@ -150,8 +150,8 @@ SEXP stri_rand_shuffle(SEXP str)
 SEXP stri_rand_strings(SEXP n, SEXP length, SEXP pattern)
 {
     int n_val = stri__prepare_arg_integer_1_notNA(n, "n");
-    PROTECT(length    = stri_prepare_arg_integer(length, "length"));
-    PROTECT(pattern   = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(length    = stri__prepare_arg_integer(length, "length"));
+    PROTECT(pattern   = stri__prepare_arg_string(pattern, "pattern"));
 
     if (n_val < 0) n_val = 0; /* that's not NA for sure now */
 

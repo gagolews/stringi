@@ -56,7 +56,7 @@
  */
 SEXP stri_trans_totitle(SEXP str, SEXP opts_brkiter) {
     StriBrkIterOptions opts_brkiter2(opts_brkiter, "word");
-    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
+    PROTECT(str = stri__prepare_arg_string(str, "str")); // prepare string argument
 
 // version 0.2-1 - Does not work with ICU 4.8 (but we require ICU >= 50)
     UCaseMap* ucasemap = NULL;
@@ -186,7 +186,7 @@ SEXP stri_trans_casemap(SEXP str, int _type, SEXP locale)
     if (_type < 1 || _type > 3)
         Rf_error(MSG__INCORRECT_INTERNAL_ARG);
     const char* qloc = stri__prepare_arg_locale(locale, "locale", true); /* this is R_alloc'ed */
-    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
+    PROTECT(str = stri__prepare_arg_string(str, "str")); // prepare string argument
 
 // version 0.2-1 - Does not work with ICU 4.8 (but we require ICU >= 50)
     UCaseMap* ucasemap = NULL;

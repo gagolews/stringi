@@ -79,8 +79,8 @@ SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP negate,
     bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
     int max_count_1 = stri__prepare_arg_integer_1_notNA(max_count, "max_count");
     uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
 
     STRI__ERROR_HANDLER_BEGIN(2)
     int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));

@@ -12,11 +12,11 @@ stri_datetime_fields(time, tz = attr(time, "tzone"), locale = NULL)
 
 ## Arguments
 
-|          |                                                                                                                                                                           |
-|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `time`   | an object of class [`POSIXct`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/DateTimeClasses.html) or an object coercible to                                  |
-| `tz`     | `NULL` or `''` for the default time zone or a single string with time zone identifier, see [`stri_timezone_list`](stri_timezone_list.md)                                  |
-| `locale` | `NULL` or `''` for the current default locale, or a single string with a locale identifier; a non-Gregorian calendar may be specified by setting `@calendar=name` keyword |
+|          |                                                                                                                                                                                |
+|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `time`   | an object of class [`POSIXct`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/DateTimeClasses.html) or an object coercible to                                       |
+| `tz`     | `NULL` or `''` for the default time zone or a single string with time zone identifier, see [`stri_timezone_list`](https://stringi.gagolewski.com/rapi/stri_timezone_list.html) |
+| `locale` | `NULL` or `''` for the current default locale, or a single string with a locale identifier; a non-Gregorian calendar may be specified by setting `@calendar=name` keyword      |
 
 ## Details
 
@@ -28,7 +28,7 @@ Returns a data frame with the following columns:
 
 1.  Year (0 is 1BC, -1 is 2BC, etc.)
 
-2.  Month (1-based, i.e., 1 stands for the first month, e.g., January; note that the number of months depends on the selected calendar, see [`stri_datetime_symbols`](stri_datetime_symbols.md))
+2.  Month (1-based, i.e., 1 stands for the first month, e.g., January; note that the number of months depends on the selected calendar, see [`stri_datetime_symbols`](https://stringi.gagolewski.com/rapi/stri_datetime_symbols.html))
 
 3.  Day
 
@@ -46,13 +46,13 @@ Returns a data frame with the following columns:
 
 10. DayOfYear
 
-11. DayOfWeek (1-based, 1 denotes Sunday; see [`stri_datetime_symbols`](stri_datetime_symbols.md))
+11. DayOfWeek (1-based, 1 denotes Sunday; see [`stri_datetime_symbols`](https://stringi.gagolewski.com/rapi/stri_datetime_symbols.html))
 
 12. Hour12 (12-h clock)
 
-13. AmPm (see [`stri_datetime_symbols`](stri_datetime_symbols.md))
+13. AmPm (see [`stri_datetime_symbols`](https://stringi.gagolewski.com/rapi/stri_datetime_symbols.html))
 
-14. Era (see [`stri_datetime_symbols`](stri_datetime_symbols.md))
+14. Era (see [`stri_datetime_symbols`](https://stringi.gagolewski.com/rapi/stri_datetime_symbols.html))
 
 ## Author(s)
 
@@ -62,7 +62,7 @@ Returns a data frame with the following columns:
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other datetime: [`stri_datetime_add()`,](stri_datetime_add.md) [`stri_datetime_create()`,](stri_datetime_create.md) [`stri_datetime_format()`,](stri_datetime_format.md) [`stri_datetime_fstr()`,](stri_datetime_fstr.md) [`stri_datetime_now()`,](stri_datetime_now.md) [`stri_datetime_symbols()`,](stri_datetime_symbols.md) [`stri_timezone_get()`,](stri_timezone_set.md) [`stri_timezone_info()`,](stri_timezone_info.md) `stri_timezone_list()`
+Other datetime: [`stri_datetime_add`](https://stringi.gagolewski.com/rapi/stri_datetime_add.html)(), [`stri_datetime_create`](https://stringi.gagolewski.com/rapi/stri_datetime_create.html)(), [`stri_datetime_format`](https://stringi.gagolewski.com/rapi/stri_datetime_format.html)(), [`stri_datetime_fstr`](https://stringi.gagolewski.com/rapi/stri_datetime_fstr.html)(), [`stri_datetime_now`](https://stringi.gagolewski.com/rapi/stri_datetime_now.html)(), [`stri_datetime_symbols`](https://stringi.gagolewski.com/rapi/stri_datetime_symbols.html)(), [`stri_timezone_get`](https://stringi.gagolewski.com/rapi/stri_timezone_get.html)(), [`stri_timezone_info`](https://stringi.gagolewski.com/rapi/stri_timezone_info.html)(), [`stri_timezone_list`](https://stringi.gagolewski.com/rapi/stri_timezone_list.html)()
 
 ## Examples
 
@@ -72,14 +72,14 @@ Other datetime: [`stri_datetime_add()`,](stri_datetime_add.md) [`stri_datetime_c
 ```r
 stri_datetime_fields(stri_datetime_now())
 ##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth
-## 1 2021     5  14   17      8      1         717         20           3
+## 1 2021     5  21   14     42      8         667         21           4
 ##   DayOfYear DayOfWeek Hour12 AmPm Era
-## 1       134         6      5    2   2
+## 1       141         6      2    2   2
 stri_datetime_fields(stri_datetime_now(), locale='@calendar=hebrew')
 ##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth
-## 1 5781    10   3   17      8      1         721         35           1
+## 1 5781    10  10   14     42      8         671         36           2
 ##   DayOfYear DayOfWeek Hour12 AmPm Era
-## 1       238         6      5    2   1
+## 1       245         6      2    2   1
 stri_datetime_symbols(locale='@calendar=hebrew')$Month[
    stri_datetime_fields(stri_datetime_now(), locale='@calendar=hebrew')$Month
 ]

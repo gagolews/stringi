@@ -20,11 +20,11 @@ stri_width(str)
 
 The Unicode standard does not formalize the notion of a character width. Roughly based on <https://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c>, <https://github.com/nodejs/node/blob/master/src/node_i18n.cc>, and UAX \#11 we proceed as follows. The following code points are of width 0:
 
--   code points with general category (see [stringi-search-charclass](about_search_charclass.md)) `Me`, `Mn`, and `Cf`),
+-   code points with general category (see [stringi-search-charclass](https://stringi.gagolewski.com/rapi/stringi-search-charclass.html)) `Me`, `Mn`, and `Cf`),
 
 -   `C0` and `C1` control codes (general category `Cc`) - for compatibility with the [`nchar`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/nchar.html) function,
 
--   Hangul Jamo medial vowels and final consonants (code points with enumerable property `UCHAR_HANGUL_SYLLABLE_TYPE` equal to `U_HST_VOWEL_JAMO` or `U_HST_TRAILING_JAMO`; note that applying the NFC normalization with [`stri_trans_nfc`](stri_trans_nf.md) is encouraged),
+-   Hangul Jamo medial vowels and final consonants (code points with enumerable property `UCHAR_HANGUL_SYLLABLE_TYPE` equal to `U_HST_VOWEL_JAMO` or `U_HST_TRAILING_JAMO`; note that applying the NFC normalization with [`stri_trans_nfc`](https://stringi.gagolewski.com/rapi/stri_trans_nfc.html) is encouraged),
 
 -   ZERO WIDTH SPACE (U+200B),
 
@@ -50,7 +50,7 @@ Returns an integer vector of the same length as `str`.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other length: [`stri_isempty()`,](stri_isempty.md) [`stri_length()`,](stri_length.md) `stri_numbytes()`
+Other length: [`stri_isempty`](https://stringi.gagolewski.com/rapi/stri_isempty.html)(), [`stri_length`](https://stringi.gagolewski.com/rapi/stri_length.html)(), [`stri_numbytes`](https://stringi.gagolewski.com/rapi/stri_numbytes.html)()
 
 ## Examples
 

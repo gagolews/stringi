@@ -159,7 +159,6 @@ const R_CallMethodDef cCallMethods[] = {
     STRI__MK_CALL("C_stri_sort_key",                     stri_sort_key,                   2),
     STRI__MK_CALL("C_stri_pad",                          stri_pad,                        5),
     STRI__MK_CALL("C_stri_prepare_arg_string",           stri_prepare_arg_string,         2),
-    STRI__MK_CALL("C_stri_prepare_arg_POSIXct",          stri_prepare_arg_POSIXct,        2),
     STRI__MK_CALL("C_stri_prepare_arg_double",           stri_prepare_arg_double,         2),
     STRI__MK_CALL("C_stri_prepare_arg_integer",          stri_prepare_arg_integer,        2),
     STRI__MK_CALL("C_stri_prepare_arg_logical",          stri_prepare_arg_logical,        2),

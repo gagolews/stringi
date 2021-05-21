@@ -20,7 +20,7 @@ stri_length(str)
 
 Note that the number of code points is not the same as the \'width\' of the string when printed on the console.
 
-If a given string is in UTF-8 and has not been properly normalized (e.g., by [`stri_trans_nfc`](stri_trans_nf.md)), the returned counts may sometimes be misleading. See [`stri_count_boundaries`](stri_count_boundaries.md) for a method to count *Unicode characters*. Moreover, if an incorrect UTF-8 byte sequence is detected, then a warning is generated and the corresponding output element is set to `NA`, see also [`stri_enc_toutf8`](stri_enc_toutf8.md) for a method to deal with such cases.
+If a given string is in UTF-8 and has not been properly normalized (e.g., by [`stri_trans_nfc`](https://stringi.gagolewski.com/rapi/stri_trans_nfc.html)), the returned counts may sometimes be misleading. See [`stri_count_boundaries`](https://stringi.gagolewski.com/rapi/stri_count_boundaries.html) for a method to count *Unicode characters*. Moreover, if an incorrect UTF-8 byte sequence is detected, then a warning is generated and the corresponding output element is set to `NA`, see also [`stri_enc_toutf8`](https://stringi.gagolewski.com/rapi/stri_enc_toutf8.html) for a method to deal with such cases.
 
 Missing values are handled properly. For \'byte\' encodings we get, as usual, an error.
 
@@ -36,7 +36,7 @@ Returns an integer vector of the same length as `str`.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other length: [`stri_isempty()`,](stri_isempty.md) [`stri_numbytes()`,](stri_numbytes.md) `stri_width()`
+Other length: [`stri_isempty`](https://stringi.gagolewski.com/rapi/stri_isempty.html)(), [`stri_numbytes`](https://stringi.gagolewski.com/rapi/stri_numbytes.html)(), [`stri_width`](https://stringi.gagolewski.com/rapi/stri_width.html)()
 
 ## Examples
 

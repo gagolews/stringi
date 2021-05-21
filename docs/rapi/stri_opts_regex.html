@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count.html">stri_count: Count the Number of Pattern Matches</a></li>
@@ -189,6 +189,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_split_boundaries.html">stri_split_boundaries: Split a String at Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split_lines.html">stri_split_lines: Split a String Into Text Lines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split.html">stri_split: Split a String By Pattern Matches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_sprintf.html">stri_sprintf: Format Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_startsendswith.html">stri_startsendswith: Determine if the Start or End of a String Matches a Pattern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_stats_general.html">stri_stats_general: General Statistics for a Character Vector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_stats_latex.html">stri_stats_latex: Statistics for a Character Vector Containing LaTeX Commands</a></li>
@@ -301,7 +302,7 @@
 <h1>stri_opts_regex: Generate a List with Regex Matcher Settings<a class="headerlink" href="#stri-opts-regex-generate-a-list-with-regex-matcher-settings" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>A convenience function to tune the <span class="pkg">ICU</span> regular expressions matcher’s behavior, e.g., in <a class="reference internal" href="stri_count.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_count_regex</span></code></span></a> and other <a class="reference internal" href="about_search_regex.html"><span class="doc std std-doc">stringi-search-regex</span></a> functions.</p>
+<p>A convenience function to tune the <span class="pkg">ICU</span> regular expressions matcher’s behavior, e.g., in <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_count_regex.html"><code class="docutils literal notranslate"><span class="pre">stri_count_regex</span></code></a> and other <a class="reference external" href="https://stringi.gagolewski.com/rapi/stringi-search-regex.html">stringi-search-regex</a> functions.</p>
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
@@ -345,7 +346,7 @@
 <td><p>alias of <code class="docutils literal notranslate"><span class="pre">dotall</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">literal</span></code></p></td>
-<td><p>logical; if set, treat the entire pattern as a literal string: metacharacters or escape sequences in the input sequence will be given no special meaning; note that in most cases you would rather use the <a class="reference internal" href="about_search_fixed.html"><span class="doc std std-doc">stringi-search-fixed</span></a> facilities in this case</p></td>
+<td><p>logical; if set, treat the entire pattern as a literal string: metacharacters or escape sequences in the input sequence will be given no special meaning; note that in most cases you would rather use the <a class="reference external" href="https://stringi.gagolewski.com/rapi/stringi-search-fixed.html">stringi-search-fixed</a> facilities in this case</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">multiline</span></code></p></td>
 <td><p>logical; controls the behavior of ‘<code class="docutils literal notranslate"><span class="pre">$</span></code>’ and ‘<code class="docutils literal notranslate"><span class="pre">^</span></code>’. If set, recognize line terminators within a string, otherwise, match only at start and end of input string [regex flag <code class="docutils literal notranslate"><span class="pre">(?m)</span></code>]</p></td>
@@ -376,7 +377,7 @@
 </div>
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
-<p>Note that some regex settings may be changed using ICU regex flags inside regexes. For example, <code class="docutils literal notranslate"><span class="pre">'(?i)pattern'</span></code> performs a case-insensitive match of a given pattern, see the <span class="pkg">ICU</span> User Guide entry on Regular Expressions in the References section or <a class="reference internal" href="about_search_regex.html"><span class="doc std std-doc">stringi-search-regex</span></a>.</p>
+<p>Note that some regex settings may be changed using ICU regex flags inside regexes. For example, <code class="docutils literal notranslate"><span class="pre">'(?i)pattern'</span></code> performs a case-insensitive match of a given pattern, see the <span class="pkg">ICU</span> User Guide entry on Regular Expressions in the References section or <a class="reference external" href="https://stringi.gagolewski.com/rapi/stringi-search-regex.html">stringi-search-regex</a>.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
@@ -394,7 +395,7 @@
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
-<p>Other search_regex: <a class="reference internal" href="about_search_regex.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_regex</span></code></span></a>, <a class="reference internal" href="about_search.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></span></a></p>
+<p>Other search_regex: <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_search_regex.html"><code class="docutils literal notranslate"><span class="pre">about_search_regex</span></code></a>, <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_search.html"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></a></p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
@@ -427,7 +428,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-14 17:08:05.
+        Last updated on 2021-05-21 14:42:13.
       </span>
 
     </p>

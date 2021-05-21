@@ -47,6 +47,8 @@
  *
  * @version 1.4.7 (Marek Gagolewski, 2020-08-21) Rename class, make
  * independent from StriException
+ *
+ * TODO: these should all start with a lowercase letter and not end with a dot
  */
 const char* ICUError::getICUerrorName(UErrorCode status)
 {

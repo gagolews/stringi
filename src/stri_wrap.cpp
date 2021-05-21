@@ -262,9 +262,9 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
 
     const char* qloc = stri__prepare_arg_locale(locale, "locale", true); /* this is R_alloc'ed */
     Locale loc = Locale::createFromName(qloc);
-    PROTECT(str     = stri_prepare_arg_string(str, "str"));
-    PROTECT(prefix  = stri_prepare_arg_string_1(prefix, "prefix"));
-    PROTECT(initial = stri_prepare_arg_string_1(initial, "initial"));
+    PROTECT(str     = stri__prepare_arg_string(str, "str"));
+    PROTECT(prefix  = stri__prepare_arg_string_1(prefix, "prefix"));
+    PROTECT(initial = stri__prepare_arg_string_1(initial, "initial"));
 
     BreakIterator* briter = NULL;
     UText* str_text = NULL;

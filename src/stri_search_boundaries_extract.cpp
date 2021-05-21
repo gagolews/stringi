@@ -48,7 +48,7 @@
  */
 SEXP stri__extract_firstlast_boundaries(SEXP str, SEXP opts_brkiter, bool first)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
     StriBrkIterOptions opts_brkiter2(opts_brkiter, "line_break");
 
     STRI__ERROR_HANDLER_BEGIN(1)
@@ -129,8 +129,8 @@ SEXP stri_extract_last_boundaries(SEXP str, SEXP opts_brkiter)
 SEXP stri_extract_all_boundaries(SEXP str, SEXP simplify, SEXP omit_no_match, SEXP opts_brkiter)
 {
     bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
-    PROTECT(simplify = stri_prepare_arg_logical_1(simplify, "simplify"));
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(simplify = stri__prepare_arg_logical_1(simplify, "simplify"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
     StriBrkIterOptions opts_brkiter2(opts_brkiter, "line_break");
 
     STRI__ERROR_HANDLER_BEGIN(2)

@@ -22,7 +22,7 @@ config.status
 stringi.Rcheck
 *.kate-swp
 .vscode
-
+revdep/
 
 # Compiled files:
 *.o

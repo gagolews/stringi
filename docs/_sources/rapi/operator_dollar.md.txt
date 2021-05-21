@@ -1,4 +1,4 @@
-# operator\_dollar: C-Style Formatting with sprintf as a Binary Operator
+# operator\_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri\_sprintf
 
 ## Description
 

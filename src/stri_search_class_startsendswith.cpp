@@ -55,9 +55,9 @@
 SEXP stri_startswith_charclass(SEXP str, SEXP pattern, SEXP from, SEXP negate)
 {
     bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
-    PROTECT(from = stri_prepare_arg_integer(from, "from"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
+    PROTECT(from = stri__prepare_arg_integer(from, "from"));
 
     STRI__ERROR_HANDLER_BEGIN(3)
     int vectorize_length = stri__recycling_rule(true, 3,
@@ -131,9 +131,9 @@ SEXP stri_startswith_charclass(SEXP str, SEXP pattern, SEXP from, SEXP negate)
 SEXP stri_endswith_charclass(SEXP str, SEXP pattern, SEXP to, SEXP negate)
 {
     bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
-    PROTECT(to = stri_prepare_arg_integer(to, "to"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
+    PROTECT(to = stri__prepare_arg_integer(to, "to"));
 
     STRI__ERROR_HANDLER_BEGIN(3)
     int vectorize_length = stri__recycling_rule(true, 3,

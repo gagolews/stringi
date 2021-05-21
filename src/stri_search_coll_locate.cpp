@@ -64,8 +64,8 @@ using namespace std;
  */
 SEXP stri__locate_firstlast_coll(SEXP str, SEXP pattern, SEXP opts_collator, bool first)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
 
     UCollator* collator = NULL;
     collator = stri__ucol_open(opts_collator);
@@ -207,8 +207,8 @@ SEXP stri_locate_last_coll(SEXP str, SEXP pattern, SEXP opts_collator)
 SEXP stri_locate_all_coll(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts_collator)
 {
     bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
-    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
 
     UCollator* collator = NULL;
     collator = stri__ucol_open(opts_collator);

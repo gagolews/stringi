@@ -18,11 +18,11 @@ stri_enc_toutf32(str)
 
 ## Details
 
-See [`stri_enc_fromutf32`](stri_enc_fromutf32.md) for a dual operation.
+See [`stri_enc_fromutf32`](https://stringi.gagolewski.com/rapi/stri_enc_fromutf32.html) for a dual operation.
 
-This function is roughly equivalent to a vectorized call to [`utf8ToInt(enc2utf8(str))`. If you want a list of raw vectors on output, use](https://stat.ethz.ch/R-manual/R-patched/library/base/html/utf8Conversion.html) [`stri_encode`](stri_encode.md).
+This function is roughly equivalent to a vectorized call to [`utf8ToInt(enc2utf8(str))`. If you want a list of raw vectors on output, use](https://stat.ethz.ch/R-manual/R-patched/library/base/html/utf8Conversion.html) [`stri_encode`](https://stringi.gagolewski.com/rapi/stri_encode.html).
 
-Unlike `utf8ToInt`, if ill-formed UTF-8 byte sequences are detected, a corresponding element is set to NULL and a warning is generated. To deal with such issues, use, e.g., [`stri_enc_toutf8`](stri_enc_toutf8.md).
+Unlike `utf8ToInt`, if ill-formed UTF-8 byte sequences are detected, a corresponding element is set to NULL and a warning is generated. To deal with such issues, use, e.g., [`stri_enc_toutf8`](https://stringi.gagolewski.com/rapi/stri_enc_toutf8.html).
 
 ## Value
 
@@ -36,4 +36,4 @@ Returns a list of integer vectors. Missing values are converted to `NULL`s.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other encoding\_conversion: [`about_encoding`](about_encoding.md), [`stri_enc_fromutf32()`,](stri_enc_fromutf32.md) [`stri_enc_toascii()`,](stri_enc_toascii.md) [`stri_enc_tonative()`,](stri_enc_tonative.md) [`stri_enc_toutf8()`,](stri_enc_toutf8.md) `stri_encode()`
+Other encoding\_conversion: [`about_encoding`](https://stringi.gagolewski.com/rapi/about_encoding.html), [`stri_enc_fromutf32`](https://stringi.gagolewski.com/rapi/stri_enc_fromutf32.html)(), [`stri_enc_toascii`](https://stringi.gagolewski.com/rapi/stri_enc_toascii.html)(), [`stri_enc_tonative`](https://stringi.gagolewski.com/rapi/stri_enc_tonative.html)(), [`stri_enc_toutf8`](https://stringi.gagolewski.com/rapi/stri_enc_toutf8.html)(), [`stri_encode`](https://stringi.gagolewski.com/rapi/stri_encode.html)()

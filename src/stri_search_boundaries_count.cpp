@@ -52,7 +52,7 @@
  */
 SEXP stri_count_boundaries(SEXP str, SEXP opts_brkiter)
 {
-    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
     StriBrkIterOptions opts_brkiter2(opts_brkiter, "line_break");
 
     STRI__ERROR_HANDLER_BEGIN(1)
