@@ -312,10 +312,10 @@
    "too few arguments"
 
 #define MSG__ARG_UNUSED \
-   "some of the arguments have not been used"
+   "some arguments have not been used"
 
 #define MSG__ARG_UNUSED_1 \
-   "one of the arguments has not been used"
+   "one argument has not been used"
 
 #define MSG__ARG_UNUSED_N \
    "%d arguments have not been used"
