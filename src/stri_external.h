@@ -76,7 +76,5 @@ using namespace icu;
 #define ALTREP(x) (0)
 #endif
 
-#include <vector>
-#include <deque>
 
 #endif

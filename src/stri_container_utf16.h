@@ -34,6 +34,8 @@
 #define __stri_container_utf16_h
 
 #include "stri_container_base.h"
+#include <vector>
+
 
 /**
  * A class to handle conversion between R character vectors
@@ -157,5 +159,9 @@ public:
     // @QUESTION: separate StriContainerUTF16_indexable?
     void UChar16_to_UChar32_index(R_len_t i, int* i1, int* i2, const int ni, int adj1, int adj2);
 };
+
+
+SEXP stri__subset_by_logical(const StriContainerUTF16& str_cont,
+                             const std::vector<int>& which, int result_counter);
 
 #endif

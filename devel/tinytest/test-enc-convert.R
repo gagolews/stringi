@@ -57,10 +57,13 @@ expect_identical(stri_enc_toutf32(LETTERS), as.list(65:90))
 expect_identical(stri_enc_toutf32(c("A", NA, "A")), list(65L, NULL, 65L))
 expect_identical(stri_enc_toutf32("a\u0105\u3423b")[[1]], utf8ToInt("a\u0105\u3423b"))
 
+
+# MSG__INVALID_UTF8:
 x <- "\x99\x85"
 Encoding(x) <- "UTF-8"
-expect_warning(stri_enc_toutf32(x))
-suppressWarnings(expect_identical(stri_enc_toutf32(x), list(NULL)))
+expect_error(stri_enc_toutf32(x))
+# expect_warning(stri_enc_toutf32(x))
+# suppressWarnings(expect_identical(stri_enc_toutf32(x), list(NULL)))
 
 
 

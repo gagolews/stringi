@@ -33,6 +33,7 @@
 #ifndef __stri_container_listraw_h
 #define __stri_container_listraw_h
 
+#include "stri_string8.h"
 #include "stri_container_base.h"
 
 

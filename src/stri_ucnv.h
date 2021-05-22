@@ -33,10 +33,11 @@
 #ifndef __stri_ucnv_h
 #define __stri_ucnv_h
 
-
+#include "stri_stringi.h"
 #include <unicode/ucnv.h>
 #include <string>
 #include <vector>
+
 
 /**
  * A class to manage an encoding converter

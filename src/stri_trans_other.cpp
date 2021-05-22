@@ -47,7 +47,7 @@ void stri__split_codepoints(vector<UChar32>& out, const char* s, int n) {
         out.push_back(c);
 
         if (c < 0)
-            Rf_warning(MSG__INVALID_UTF8);
+            throw StriException(MSG__INVALID_UTF8);
     }
 }
 
@@ -124,7 +124,7 @@ SEXP stri_trans_char(SEXP str, SEXP pattern, SEXP replacement) {
         R_len_t j = 0; // current pos
         while (j < n) {
             U8_NEXT(s, j, n, c);
-            if (c < 0) Rf_warning(MSG__INVALID_UTF8);
+            if (c < 0) throw StriException(MSG__INVALID_UTF8);
 
             // considering only the first m elements in d_pat and d_rep, from last
             for (R_len_t k=m-1; k>=0; --k) {

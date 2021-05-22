@@ -351,17 +351,30 @@ SEXP stri_datetime_format(SEXP time, SEXP format=Rf_mkString("uuuu-MM-dd HH:mm:s
                           SEXP tz=R_NilValue, SEXP locale=R_NilValue);
 SEXP stri_datetime_parse(SEXP str, SEXP format=Rf_mkString("uuuu-MM-dd HH:mm:ss"),
                          SEXP lenient=Rf_ScalarLogical(FALSE), SEXP tz=R_NilValue, SEXP locale=R_NilValue);
+// SEXP stri_c_posixst(SEXP x);   // internal
 
 // prepare_arg.cpp:
 SEXP stri_prepare_arg_string_1(SEXP x, SEXP argname);
-SEXP stri_prepare_arg_double_1(SEXP x, SEXP argname); // TODO: factors_as_strings
+SEXP stri_prepare_arg_double_1(SEXP x, SEXP argname);  // TODO: factors_as_strings
 SEXP stri_prepare_arg_integer_1(SEXP x, SEXP argname); // TODO: factors_as_strings
 SEXP stri_prepare_arg_logical_1(SEXP x, SEXP argname);
 SEXP stri_prepare_arg_string(SEXP x, SEXP argname);
-SEXP stri_prepare_arg_double(SEXP x, SEXP argname); // TODO: factors_as_strings
+SEXP stri_prepare_arg_double(SEXP x, SEXP argname);  // TODO: factors_as_strings
 SEXP stri_prepare_arg_integer(SEXP x, SEXP argname); // TODO: factors_as_strings
 SEXP stri_prepare_arg_logical(SEXP x, SEXP argname);
-SEXP stri_prepare_arg_raw(SEXP x, SEXP argname);  // TODO: factors_as_strings
+SEXP stri_prepare_arg_raw(SEXP x, SEXP argname);     // TODO: factors_as_strings
 // TODO: other prepare args
+
+
+// encoding_conversion.cpp:
+// SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw);  // internal
+
+
+// test.cpp /* internal, but in namespace: for testing */
+SEXP stri_test_Rmark(SEXP str);
+SEXP stri_test_UnicodeContainer16(SEXP str);
+SEXP stri_test_UnicodeContainer16b(SEXP str);
+SEXP stri_test_UnicodeContainer8(SEXP str);
+SEXP stri_test_returnasis(SEXP x);
 
 #endif

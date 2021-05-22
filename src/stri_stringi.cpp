@@ -302,7 +302,7 @@ extern "C" void R_init_stringi(DllInfo* dll)
        u_init() will attempt to load some part of ICU's data, and is useful
        as a test for configuration or installation problems that leave
        the ICU data inaccessible. A successful invocation of u_init() does not,
-       however, guarantee that all ICU data is accessible.
+       however, guarantee that all ICU data are accessible.
     */
     UErrorCode status = U_ZERO_ERROR;
     u_init(&status);
@@ -322,7 +322,7 @@ extern "C" void R_init_stringi(DllInfo* dll)
     }
 
     if (!SUPPORT_UTF8) {
-        /* Rconfig.h states that all R platforms supports that */
+        /* Rconfig.h states that all R platforms support that */
         Rf_error("R does not support UTF-8 encoding.");
     }
 
@@ -330,12 +330,7 @@ extern "C" void R_init_stringi(DllInfo* dll)
 #ifndef NDEBUG
 //    fprintf(stdout, "!NDEBUG: ************************************************\n");
 //    fprintf(stdout, "!NDEBUG: Dynamic library `stringi` loaded\n");
-//    fprintf(stdout, "!NDEBUG: Check out http://stringi.rexamine.com\n");
-//    fprintf(stdout, "!NDEBUG: \n");
-//    fprintf(stdout, "!NDEBUG: Please send bug reports to stringi@rexamine.com \n");
-//    fprintf(stdout, "!NDEBUG: or at https://github.com/Rexamine/stringi/issues\n");
-//    fprintf(stdout, "!NDEBUG: \n");
-//    fprintf(stdout, "!NDEBUG: Have fun testing! :-)\n");
+//    fprintf(stdout, "!NDEBUG: Check out http://stringi.gagolewski.com\n");
 //    fprintf(stdout, "!NDEBUG: ************************************************\n");
 #endif
 }

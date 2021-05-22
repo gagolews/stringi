@@ -34,6 +34,8 @@
 #define __stri_bytesearch_matcher_h
 
 
+#include "stri_stringi.h"
+
 #ifndef USEARCH_DONE
 #define USEARCH_DONE -1
 #endif
