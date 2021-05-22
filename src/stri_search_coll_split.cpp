@@ -131,7 +131,7 @@ SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n, SEXP omit_empty,
 
 
         if (n_cur >= INT_MAX-1)
-            throw StriException(MSG__EXPECTED_SMALLER, "n");
+            throw StriException(MSG__INCORRECT_NAMED_ARG "; " MSG__EXPECTED_SMALLER, "n");
         else if (n_cur < 0)
             n_cur = INT_MAX;
         else if (n_cur == 0) {

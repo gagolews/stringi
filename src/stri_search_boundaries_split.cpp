@@ -98,7 +98,7 @@ SEXP stri_split_boundaries(SEXP str, SEXP n, SEXP tokens_only, SEXP simplify, SE
         }
 
         if (n_cur >= INT_MAX-1)
-            throw StriException(MSG__EXPECTED_SMALLER, "n");
+            throw StriException(MSG__INCORRECT_NAMED_ARG "; " MSG__EXPECTED_SMALLER, "n");
         else if (n_cur < 0)
             n_cur = INT_MAX;
         else if (n_cur == 0) {

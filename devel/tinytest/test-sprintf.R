@@ -7,20 +7,35 @@ expect_identical(stri_sprintf("%s", 1:10, character(0)), character(0))
 expect_identical(stri_sprintf(rep("%s", 10), 1:10, character(0)), character(0))
 expect_warning(stri_sprintf(rep("%s", 10), 1:5, 1:3))
 
-sprintf("%10.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_))
-sprintf("%010.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_))
-sprintf("%+10.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_))
-sprintf("%- 10.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_))
+expect_error(suppressWarnings(stri_sprintf("%000000000000000000$s", "a")))
+expect_error(suppressWarnings(stri_sprintf("%0$s", "a")))
+expect_error(suppressWarnings(stri_sprintf("%-3$s", "a")))
 
-sprintf("% f", c(-Inf, -0, 0, Inf, NaN, NA_real_))  # space NaN/NA
-sprintf("%+f", c(-Inf, -0, 0, Inf, NaN, NA_real_))  # no plus NaN/NA (bug glibc has it)
-sprintf("% d", c(-1, 0, 1, NA_integer_)) # no space NA
+expect_identical(stri_sprintf("%%"), "%")
+expect_error(suppressWarnings(stri_sprintf("abc%")))
+
+stri_sprintf("%0000000000000000001$#- *0000002$.*003$f", 1.23456, -10, -3)
+
+# sprintf("%10.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_))
+# sprintf("%010.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_))
+# sprintf("%+10.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_))
+# sprintf("%- 10.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_))
+#
+# sprintf("% f", c(-Inf, -0, 0, Inf, NaN, NA_real_))  # space NaN/NA
+# sprintf("%+f", c(-Inf, -0, 0, Inf, NaN, NA_real_))  # no plus NaN/NA (bug glibc has it)
+# sprintf("% d", c(-1, 0, 1, NA_integer_)) # no space NA
+
+
 
 
 '
 sprintf("%2$s", 1, 2)  # warning - unsused arg
 sprintf("%3$s", 1, 2, 3)  # warning - unsused arg
 
+sprintf("%1$#- *0000002$.*000003$f", 1.23456, 10, 3)  # error: at most one asterisk * is supported in each conversion specification
+sprintf("%1$#- *0000002$f", 1.23456, 10) # invalid format
+sprintf("%0001$s", "s")  # invalid format
+sprintf("%1$#- *2$f", 1.23456, 10)
 
 sprintf("%s", as.name("symbols are not supported"))
 sprintf("%s", list(11:13))  # ok, as.character called
@@ -139,3 +154,34 @@ sprintf(c("%2s", "%5s", "%9s", "%10s", "%15s"), "abcdefghi")
 
 stri_sprintf("%4s=%.3f", c("e", "e\u00b2", "\u03c0", "\u03c0\u00b2"), c(exp(1), exp(2), pi, pi^2))
 '
+
+
+
+
+expect_equivalent("value='%d'" %s$% 3, "value='3'")
+expect_equivalent("value='%d'" %s$% 1:3, c("value='1'", "value='2'", "value='3'"))
+expect_equivalent("%s='%d'" %s$% list("value", 3), "value='3'")
+expect_equivalent("%s='%d'" %s$% list("value", 1:3), c("value='1'", "value='2'", "value='3'"))
+expect_equivalent("%s='%d'" %s$% list(c("a", "b", "c"), 1), c("a='1'", "b='1'", "c='1'"))
+expect_equivalent("%s='%d'" %s$% list(c("\u0105", "\u015B", "\u0107"), 1), c("\u0105='1'", "\u015B='1'", "\u0107='1'"))
+expect_equivalent("%s='%d'" %s$% list(factor(c("\u0105", "\u015B", "\u0107")), 1), c("\u0105='1'", "\u015B='1'", "\u0107='1'"))
+expect_equivalent("%s='%d'" %s$% list(c("a", "b", "c"), 1:3), c("a='1'", "b='2'", "c='3'"))
+
+expect_equivalent("%s='%d'" %s$% list(c("a", NA, "c"), 1:3), c("a='1'", NA, "c='3'"))
+
+expect_equivalent("%s='%d'" %s$% list(c("a", "b", "c"), NA), c(NA_character_, NA_character_, NA_character_))
+
+expect_equivalent("%s='%d'" %s$% list(character(0), NA_character_), character(0))
+expect_equivalent("%s" %s$% character(0), character(0))
+
+expect_equivalent(character(0) %s$% character(0), character(0))
+expect_equivalent(character(0) %s$% c(c("a", "b", "c"), 1), character(0))
+expect_equivalent(character(0) %s$% c(NA_character_, NA_character_), character(0))
+expect_equivalent(c(NA_character_, "%s", NA_character_) %s$% "a", c(NA_character_, "a", NA_character_))
+expect_equivalent(c(NA_character_, "%s", NA_character_) %s$% c("a", NA_character_, "a"), c(NA_character_, NA_character_, NA_character_))
+expect_equivalent(suppressWarnings(c(NA_character_) %s$% list("a", NA_character_, "a")), c(NA_character_))
+expect_equivalent(suppressWarnings(c(NA_character_) %s$% list(c("a", NA_character_, "a"))), c(NA_character_, NA_character_, NA_character_))
+expect_equivalent(c(NA_character_, "%s", NA_character_) %s$% c("a", "a", "a"), c(NA_character_, "a", NA_character_))
+expect_equivalent(c(NA_character_, "%s") %s$% c("a", NA_character_, "a", NA_character_), c(NA_character_, NA_character_, NA_character_, NA_character_))
+expect_equivalent(c(NA_character_, "%s") %s$% c(NA_character_, "a", NA_character_, "a"), c(NA_character_, "a", NA_character_, "a"))
+

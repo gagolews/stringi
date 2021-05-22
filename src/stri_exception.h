@@ -131,8 +131,6 @@ public:
 #endif
 
 
-#define StriException(...) __StriException(__FILE__, __LINE__, __VA_ARGS__)
-
 /**
  * A class representing exceptions for !NDEBUG
  *
@@ -141,7 +139,8 @@ public:
  *
  * @version 1.6.3 (Marek Gagolewski, 2021-05-21) snprintf
  */
-class __StriException {
+class __StriException
+{
 
 private:
 
@@ -149,7 +148,8 @@ private:
 
 public:
 
-    __StriException(const char* file, int line, const char* format, ...) {
+    __StriException(const char* file, int line, const char* format, ...)
+    {
         snprintf(msg, StriException_BUFSIZE, "[!NDEBUG] Error in %s:%d: ", file, line);
         va_list args;
         va_start(args, format);
@@ -158,7 +158,8 @@ public:
         va_end(args);
     }
 
-    __StriException(const char* file, int line, UErrorCode status, const char* context = NULL) {
+    __StriException(const char* file, int line, UErrorCode status, const char* context = NULL)
+    {
         snprintf(msg, StriException_BUFSIZE, "[!NDEBUG: Error in %s:%d] ", file, line);
         R_len_t msg_size = strlen(msg);
         if (context) {
@@ -173,16 +174,21 @@ public:
     }
 
 
-    void throwRerror() {
+    void throwRerror()
+    {
         Rf_error("%s", msg);  // avoids treating %'s as special chars
     }
 
-    const char* getMessage() const {
+    const char* getMessage() const
+    {
         return msg;
     }
 };
 
+#define StriException(...) __StriException(__FILE__, __LINE__, __VA_ARGS__)
+
 typedef __StriException StriException;
+
 
 
 /* *************** !NDEBUG *************************************************** */
@@ -202,7 +208,8 @@ typedef __StriException StriException;
  *
  * @version 1.6.3 (Marek Gagolewski, 2021-05-21) snprintf
  */
-class StriException {
+class StriException
+{
 
 private:
 
@@ -210,14 +217,16 @@ private:
 
 public:
 
-    StriException(const char* format, ...) {
+    StriException(const char* format, ...)
+    {
         va_list args;
         va_start(args, format);
         vsnprintf(msg, StriException_BUFSIZE, format, args);
         va_end(args);
     }
 
-    StriException(UErrorCode status, const char* context = NULL) {
+    StriException(UErrorCode status, const char* context = NULL)
+    {
         if (context) {
             snprintf(msg, StriException_BUFSIZE, MSG__ICU_ERROR_WITH_CONTEXT,
                 ICUError::getICUerrorName(status), u_errorName(status), context);
@@ -229,18 +238,18 @@ public:
     }
 
 
-    void throwRerror() {
+    void throwRerror()
+    {
         Rf_error("%s", msg);  // avoids treating %'s as special chars
     }
 
-    const char* getMessage() const {
+    const char* getMessage() const
+    {
         return msg;
     }
 };
 
 /* *************** NDEBUG *************************************************** */
 #endif
-
-
 
 #endif

@@ -41,30 +41,3 @@ expect_equivalent(stri_remove_empty(c("1", "", "2", NA, NA, "", "3")), c("1",
     "2", NA, NA, "3"))
 expect_equivalent(stri_omit_empty(c("1", "", "2", NA, NA, "", "3")), c("1", "2",
     NA, NA, "3"))
-
-expect_equivalent("value='%d'" %s$% 3, "value='3'")
-expect_equivalent("value='%d'" %s$% 1:3, c("value='1'", "value='2'", "value='3'"))
-expect_equivalent("%s='%d'" %s$% list("value", 3), "value='3'")
-expect_equivalent("%s='%d'" %s$% list("value", 1:3), c("value='1'", "value='2'", "value='3'"))
-expect_equivalent("%s='%d'" %s$% list(c("a", "b", "c"), 1), c("a='1'", "b='1'", "c='1'"))
-expect_equivalent("%s='%d'" %s$% list(c("\u0105", "\u015B", "\u0107"), 1), c("\u0105='1'", "\u015B='1'", "\u0107='1'"))
-expect_equivalent("%s='%d'" %s$% list(factor(c("\u0105", "\u015B", "\u0107")), 1), c("\u0105='1'", "\u015B='1'", "\u0107='1'"))
-expect_equivalent("%s='%d'" %s$% list(c("a", "b", "c"), 1:3), c("a='1'", "b='2'", "c='3'"))
-
-expect_equivalent("%s='%d'" %s$% list(c("a", NA, "c"), 1:3), c("a='1'", NA, "c='3'"))
-
-expect_equivalent("%s='%d'" %s$% list(c("a", "b", "c"), NA), c(NA_character_, NA_character_, NA_character_))
-
-expect_equivalent("%s='%d'" %s$% list(character(0), NA_character_), character(0))
-expect_equivalent("%s" %s$% character(0), character(0))
-
-expect_equivalent(character(0) %s$% character(0), character(0))
-expect_equivalent(character(0) %s$% c(c("a", "b", "c"), 1), character(0))
-expect_equivalent(character(0) %s$% c(NA_character_, NA_character_), character(0))
-expect_equivalent(c(NA_character_, "%s", NA_character_) %s$% "a", c(NA_character_, "a", NA_character_))
-expect_equivalent(c(NA_character_, "%s", NA_character_) %s$% c("a", NA_character_, "a"), c(NA_character_, NA_character_, NA_character_))
-expect_equivalent(c(NA_character_) %s$% list("a", NA_character_, "a"), c(NA_character_))
-expect_equivalent(c(NA_character_) %s$% list(c("a", NA_character_, "a")), c(NA_character_, NA_character_, NA_character_))
-expect_equivalent(c(NA_character_, "%s", NA_character_) %s$% c("a", "a", "a"), c(NA_character_, "a", NA_character_))
-expect_equivalent(c(NA_character_, "%s") %s$% c("a", NA_character_, "a", NA_character_), c(NA_character_, NA_character_, NA_character_, NA_character_))
-expect_equivalent(c(NA_character_, "%s") %s$% c(NA_character_, "a", NA_character_, "a"), c(NA_character_, "a", NA_character_, "a"))

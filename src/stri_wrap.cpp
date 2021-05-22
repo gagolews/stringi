@@ -254,10 +254,10 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
     if (width_val <= 0) width_val = 0;
 
     int indent_val = stri__prepare_arg_integer_1_notNA(indent, "indent");
-    if (indent_val < 0) Rf_error(MSG__EXPECTED_POSITIVE, "indent");
+    if (indent_val < 0) Rf_error(MSG__INCORRECT_NAMED_ARG "; " MSG__EXPECTED_POSITIVE, "indent");
 
     int exdent_val = stri__prepare_arg_integer_1_notNA(exdent, "exdent");
-    if (exdent_val < 0) Rf_error(MSG__EXPECTED_POSITIVE, "exdent");
+    if (exdent_val < 0) Rf_error(MSG__INCORRECT_NAMED_ARG "; " MSG__EXPECTED_POSITIVE, "exdent");
 
 
     const char* qloc = stri__prepare_arg_locale(locale, "locale", true); /* this is R_alloc'ed */

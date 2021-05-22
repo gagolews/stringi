@@ -21,5 +21,7 @@ int main()
         const char* v = vals2[i];
         printf("[%05s]\t[% s]\t[%+s][%- 5s]\t[%5.3s]\n", v, v, v, v, v);
     }
+
+    printf("%000001$#- *0000002$.*000003$f", 1.23456, 10, 3);
     return 0;
 }
