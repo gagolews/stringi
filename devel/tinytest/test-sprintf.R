@@ -14,7 +14,8 @@ expect_error(suppressWarnings(stri_sprintf("%-3$s", "a")))
 expect_identical(stri_sprintf("%%"), "%")
 expect_error(suppressWarnings(stri_sprintf("abc%")))
 
-stri_sprintf("%0000000000000000001$#- *0000002$.*003$f", 1.23456, -10, -3)
+stringi::stri_sprintf("%0000000000000000001$#0+ *0000002$.*003$e", 1.23456, -12, 3)
+stringi::stri_sprintf("%0000000000000000001$#0+ *0000002$.*003$e", 1.23456, 12, 3)
 
 # sprintf("%10.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_))
 # sprintf("%010.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_))
@@ -35,10 +36,18 @@ stringi::stri_sprintf("%.*s", -1:8, x)
 stringi::stri_sprintf("%.*s", -1:8, x, use_length=TRUE)
 
 x <- "\u200b\u200b\u200b\u200b\U0001F3F4\U000E0067\U000E0062\U000E0073\U000E0063\U000E0074\U000E007Fabcd"
-stringi::stri_sprintf("%.*s", -1:8, x)
-stringi::stri_sprintf("%.*s", -1:8, x, use_length=TRUE)
+stringi::stri_sprintf("%4.*s", -1:8, x)
+stringi::stri_sprintf("%4.*s", -1:8, x, use_length=TRUE)
 
 
+x <- "\u200b\u200b\u200b\u200b\U0001F3F4\U000E0067\U000E0062\U000E0073\U000E0063\U000E0074\U000E007Fabcd"
+stringi::stri_sprintf("[%-16.*s]", -1:8, x)
+stringi::stri_sprintf("[%16.*s]", -1:8, x)
+
+stringi::stri_sprintf("[%*.*s]", 1:8, 1:8, x)
+stringi::stri_sprintf("[%-*.*s]", 1:8, 1:8, x)
+stringi::stri_sprintf("[%*s]", 1:8, x)
+stringi::stri_sprintf("[%-*s]", 1:8, x)
 
 '
 sprintf("%2$s", 1, 2)  # warning - unsused arg

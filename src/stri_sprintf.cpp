@@ -76,6 +76,17 @@ typedef enum {
 } StriSprintfType;
 
 
+/** data types for sprintf
+ *
+ * @version 1.6.3 (Marek Gagolewski, 2021-05-20)
+ */
+typedef enum {
+    STRI_SPRINTF_FORMAT_STATUS_OK=0,
+    STRI_SPRINTF_FORMAT_STATUS_IS_NA,
+    STRI_SPRINTF_FORMAT_STATUS_NEEDS_PADDING
+} StriSprintfFormatStatus;
+
+
 /**
  * if delim found, stops right after delim, modifies jc in place
  * if delim not found, returns NA_INTEGER or throws an error
@@ -421,8 +432,9 @@ public:
             // followed by '$' and the call below will return NA_INTEGER
             which_datum = stri__atoi_to_delim(
                 f, /*by reference*/jc, j0, j1, /*delimiter*/'$', false/*throw_error*/
-            )-1/*0-based indexing*/;
+            );
             // result can be NA_INTEGER; incorrect indexes will be caught by get*
+            if (which_datum != NA_INTEGER) which_datum--; /*0-based indexing*/
         }
 
         // 2. optional flags [ +0#-]
@@ -446,7 +458,8 @@ public:
             if (f[jc] >= '0' && f[jc] <= '9') {
                 which_width = stri__atoi_to_delim(
                     f, /*by reference*/jc, j0, j1, /*delimiter*/'$'
-                )-1/*0-based indexing*/;
+                );
+                if (which_width != NA_INTEGER) which_width--; /*0-based indexing*/
             }
             min_width = data.getIntegerOrNA(which_width);
         }
@@ -470,7 +483,8 @@ public:
                 if (f[jc] >= '0' && f[jc] <= '9') {
                     which_precision = stri__atoi_to_delim(
                         f, /*by reference*/jc, j0, j1, /*delimiter*/'$'
-                    )-1/*0-based indexing*/;
+                    );
+                    if (which_precision != NA_INTEGER) which_precision--; /*0-based indexing*/
                 }
                 precision = data.getIntegerOrNA(which_precision);
             }
@@ -546,45 +560,60 @@ public:
     }
 
 
-    std::string formatDatum()
+    StriSprintfFormatStatus formatDatum(std::string& preformatted_datum)
     {
-        std::string preformatted_datum;
-        bool needs_padding;
+        StriSprintfFormatStatus status;
         if (type == STRI_SPRINTF_TYPE_INTEGER) {
             int datum = data.getIntegerOrNA(which_datum);
-            needs_padding = preformatDatum_doxX(preformatted_datum/*by reference*/, datum);
+            status = preformatDatum_doxX(preformatted_datum/*by reference*/, datum);
         }
         else if (type == STRI_SPRINTF_TYPE_DOUBLE) {
             double datum = data.getDoubleOrNA(which_datum);
-            needs_padding = preformatDatum_feEgGaA(preformatted_datum/*by reference*/, datum);
+            status = preformatDatum_feEgGaA(preformatted_datum/*by reference*/, datum);
         }
         else { // string
             const String8& datum = data.getStringOrNA(which_datum);
-            needs_padding = preformatDatum_s(preformatted_datum, datum);
+            status = preformatDatum_s(preformatted_datum, datum);
         }
 
-        if (!needs_padding)
-            return preformatted_datum;
+        if (status != STRI_SPRINTF_FORMAT_STATUS_NEEDS_PADDING)
+            return status;
 
-        // now we need to pad with spaces from left or right up to min_width
-        // based on width or length (use_length)
+        if (min_width == NA_INTEGER)
+            return STRI_SPRINTF_FORMAT_STATUS_OK;
 
-        // btw: pad_from_right always add spaces
-        // btw: pad_zero   "-00000" "+00000" " 00000" "0x0000" "0X0000"
-        //     but not NA/Inf/... and only numerics,
-        //     and this needs_padding no more (already dealt with)
+        STRI_ASSERT(min_width > 0);
 
+        R_len_t datum_size;
+        if (use_length)  // number of code points
+            datum_size = stri__length_string(preformatted_datum.c_str(),
+                                             preformatted_datum.length());
+        else
+            datum_size = stri__width_string(preformatted_datum.c_str(),
+                                            preformatted_datum.length());
 
-//         if (use_length) width = str.countCodePoints();
-//         else width = stri__width_string(str.c_str(), str.length())
+        if (datum_size < min_width) {
+            // now we need to pad with spaces from left or right up to min_width
+            // based on width or length (use_length)
 
-        return preformatted_datum; // TODO
+            // btw: pad_from_right always add spaces
+            // btw: pad_zero   "-00000" "+00000" " 00000" "0x0000" "0X0000"
+            //     but not NA/Inf/... and only numerics,
+            //     and this needs_padding no more (already dealt with)
+
+            if (pad_from_right)
+                preformatted_datum.append(min_width-datum_size, ' ');
+            else
+                preformatted_datum.assign(std::string(min_width-datum_size, ' ') + preformatted_datum);
+        }
+
+        return STRI_SPRINTF_FORMAT_STATUS_OK;
     }
 
 
 private:
 
-    bool preformatDatum_doxX(std::string& preformatted_datum, int datum)
+    StriSprintfFormatStatus preformatDatum_doxX(std::string& preformatted_datum, int datum)
     {
         STRI_ASSERT(type_spec != 'i');  // normalised i->d
         if (datum != NA_INTEGER) {
@@ -603,11 +632,15 @@ private:
             snprintf(buf.data(), bufsize, format_string.c_str(), datum);
             preformatted_datum.append(buf.data());
 
-            return false;  /* all in ASCII, padding done by std::snprintf */
+            return STRI_SPRINTF_FORMAT_STATUS_OK;  /* all in ASCII, padding done by std::snprintf */
         }
         else {
             STRI_ASSERT(type_spec == 'd' || !sign_plus);
             STRI_ASSERT(type_spec == 'd' || !sign_space);
+
+            if (na_string.isNA())
+                return STRI_SPRINTF_FORMAT_STATUS_IS_NA;
+
             if (sign_plus) {
                 // glibc produces "+nan", but we will output " nan" instead
                 preformatted_datum.push_back(' ');
@@ -617,12 +650,12 @@ private:
             // else no sign
 
             preformatted_datum.append(na_string.c_str());
-            return true;  /* might need padding (na_string can be fancy Unicode) */
+            return STRI_SPRINTF_FORMAT_STATUS_NEEDS_PADDING;  /* might need padding (na_string can be fancy Unicode) */
         }
     }
 
 
-    bool preformatDatum_feEgGaA(std::string& preformatted_datum, double datum)
+    StriSprintfFormatStatus preformatDatum_feEgGaA(std::string& preformatted_datum, double datum)
     {
         if (R_FINITE(datum)) {
             STRI_ASSERT(min_width == NA_INTEGER || min_width >= 0);
@@ -640,7 +673,7 @@ private:
             snprintf(buf.data(), bufsize, format_string.c_str(), datum);
             preformatted_datum.append(buf.data());
 
-            return false;  /* all in ASCII, padding done by std::snprintf */
+            return STRI_SPRINTF_FORMAT_STATUS_OK;  /* all in ASCII, padding done by std::snprintf */
         }
         else {
             if (ISNA(datum) || ISNAN(datum)) {
@@ -663,19 +696,28 @@ private:
             }
 
             // alternate_output has no effect (use inf_string etc. instead)
-            if (ISNA(datum))
+            if (ISNA(datum)) {
+                if (na_string.isNA())
+                    return STRI_SPRINTF_FORMAT_STATUS_IS_NA;
                 preformatted_datum.append(na_string.c_str());
-            else if (ISNAN(datum))
+            }
+            else if (ISNAN(datum)) {
+                if (nan_string.isNA())
+                    return STRI_SPRINTF_FORMAT_STATUS_IS_NA;
                 preformatted_datum.append(nan_string.c_str());
-            else
+            }
+            else {
+                if (inf_string.isNA())
+                    return STRI_SPRINTF_FORMAT_STATUS_IS_NA;
                 preformatted_datum.append(inf_string.c_str());
+            }
 
-            return true;  /* might need padding (na_string can be fancy Unicode) */
+            return STRI_SPRINTF_FORMAT_STATUS_NEEDS_PADDING;  /* might need padding (na_string can be fancy Unicode) */
         }
     }
 
 
-    bool preformatDatum_s(std::string& preformatted_datum, const String8& datum)
+    StriSprintfFormatStatus preformatDatum_s(std::string& preformatted_datum, const String8& datum)
     {
         STRI_ASSERT(!pad_zero);
         STRI_ASSERT(!sign_plus);
@@ -684,7 +726,7 @@ private:
         STRI_ASSERT(precision == NA_INTEGER || precision >= 0);
 
         if (!datum.isNA()) {
-            R_len_t datum_size = datum.length();
+            R_len_t datum_size = datum.length();  // this is byte count
             if (precision != NA_INTEGER) {
                 if (use_length) {
                     // ha! output no more than <precision> code points
@@ -698,10 +740,13 @@ private:
             preformatted_datum.append(datum.c_str(), datum_size);
         }
         else { // isNA
+            if (na_string.isNA())
+                return STRI_SPRINTF_FORMAT_STATUS_IS_NA;
+
             preformatted_datum.append(na_string.c_str());
         }
 
-        return true;  /* might need padding */
+        return STRI_SPRINTF_FORMAT_STATUS_NEEDS_PADDING;  /* might need padding */
     }
 };
 
@@ -753,7 +798,9 @@ SEXP stri__sprintf_1(
         // debug: Rprintf("*** spec=%s\n", spec.toString().c_str());
         // debug: buf.append(spec.toString());
 
-        std::string formatted_datum = spec.formatDatum();
+        std::string formatted_datum;
+        if (spec.formatDatum(formatted_datum) == STRI_SPRINTF_FORMAT_STATUS_IS_NA)
+            return NA_STRING;
 
         buf.append(formatted_datum);
     }

@@ -50,8 +50,9 @@ text on the standard output or other connection/file. Hence, it returns
 The other functions return a character vector.
 }
 \description{
-A Unicode-aware replacement for the built-in \code{\link[base]{sprintf}}
-function. Moreover, \code{stri_printf} prints formatted strings.
+A Unicode-aware replacement for and enhancement of
+the built-in \code{\link[base]{sprintf}} function.
+Moreover, \code{stri_printf} prints formatted strings.
 }
 \details{
 Vectorized over \code{format} and all vectors passed via \code{...}.
