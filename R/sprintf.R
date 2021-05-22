@@ -35,8 +35,9 @@
 #' Format Strings
 #'
 #' @description
-#' A Unicode-aware replacement for the built-in \code{\link[base]{sprintf}}
-#' function. Moreover, \code{stri_printf} prints formatted strings.
+#' A Unicode-aware replacement for and enhancement of
+#' the built-in \code{\link[base]{sprintf}} function.
+#' Moreover, \code{stri_printf} prints formatted strings.
 #'
 #' @details
 #' Vectorized over \code{format} and all vectors passed via \code{...}.
@@ -191,27 +192,34 @@ stri_printf <- function(
     if (!is.list(e2))
         e2 <- list(e2)
 
-    # this is stringi, assure UTF-8 output and proper NA handling!
-    e1 <- stri_enc_toutf8(as.character(e1))
-    if (length(e1) == 0) return(character(0))
+    .Call(C_stri_sprintf, e1, e2,
+        na_string=NA_character_,
+        inf_string="Inf",
+        nan_string="NaN",
+        use_length=FALSE)
 
-    for (i in seq_along(e2)) {
-        stopifnot(is.atomic(e2[[i]]))  # factor is atomic
-        if (length(e2[[i]]) == 0) return(character(0))
-        if (is.character(e2[[i]]) || is.factor(e2[[i]])) {
-            e2[[i]] <- stri_enc_toutf8(e2[[i]])
-        }
-    }
-
-    ret <- stri_enc_toutf8(do.call(sprintf, as.list(c(list(e1), e2))))
-    # for the time being, let stri_paste determine NAs
-    # (it might be too greedy if there are unused strings)
-    which_na <- do.call(stri_paste, e2)
-    ret[is.na(which_na)] <- NA_character_
-
-    ret[is.na(e1)] <- NA_character_
-
-    ret
+#  old version: based on base::sprintf
+#     # this is stringi, assure UTF-8 output and proper NA handling!
+#     e1 <- stri_enc_toutf8(as.character(e1))
+#     if (length(e1) == 0) return(character(0))
+#
+#     for (i in seq_along(e2)) {
+#         stopifnot(is.atomic(e2[[i]]))  # factor is atomic
+#         if (length(e2[[i]]) == 0) return(character(0))
+#         if (is.character(e2[[i]]) || is.factor(e2[[i]])) {
+#             e2[[i]] <- stri_enc_toutf8(e2[[i]])
+#         }
+#     }
+#
+#     ret <- stri_enc_toutf8(do.call(sprintf, as.list(c(list(e1), e2))))
+#     # for the time being, let stri_paste determine NAs
+#     # (it might be too greedy if there are unused strings)
+#     which_na <- do.call(stri_paste, e2)
+#     ret[is.na(which_na)] <- NA_character_
+#
+#     ret[is.na(e1)] <- NA_character_
+#
+#     ret
 }
 
 
