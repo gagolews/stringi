@@ -34,7 +34,9 @@
 #define __stri_messages_h
 
 
-// CONVENTION: start with a lowercase letter, end with a dot
+// CONVENTION: start with a lowercase letter, do not end with a dot
+// separate messages with "; " like "hello" "; " "it is me you're looking for"
+// or MSG__INCORRECT_NAMED_ARG "; " MSG__EXPECTED_SMALLER
 
 // arg names and symbols should be `backticked`
 // string-like objects should be 'quoted'
@@ -45,6 +47,26 @@
 
 
 // see stri_exception.cpp for more messages
+
+
+
+#define MSG__INCORRECT_INTERNAL_ARG \
+   "incorrect argument"
+
+#define MSG__INCORRECT_NAMED_ARG \
+   "incorrect argument `%s`"
+
+#define MSG__INTERNAL_ERROR \
+   "internal error"
+
+#define MSG__ICU_ERROR \
+   "%s (%s)"
+
+#define MSG__ICU_ERROR_WITH_CONTEXT \
+   "%s (%s, context=`%s`)"
+
+#define MSG__ICU_WARNING \
+   "%s (%s)"
 
 
 /// incorrect uchar class id, see stri_char_getpropertyid and stri_char_getcategoryid
@@ -115,33 +137,26 @@
 #define MSG__WARN_RECYCLING_RULE2 \
    "vector length not consistent with other arguments"
 
-#define MSG__INCORRECT_INTERNAL_ARG \
-   "incorrect argument"
-
-#define MSG__INTERNAL_ERROR \
-   "internal error"
-
-#define MSG__ICU_ERROR \
-   "%s (%s)"
-
-#define MSG__ICU_ERROR_WITH_CONTEXT \
-   "%s (%s, context=`%s`)"
-
-#define MSG__ICU_WARNING \
-   "%s (%s)"
 
 
 #define MSG__EXPECTED_NONNEGATIVE \
-   "argument `%s`: expected a nonnegative numeric value"
+   "expected a nonnegative numeric value"
 
 #define MSG__EXPECTED_POSITIVE \
-   "argument `%s`: expected a positive numeric value"
+   "expected a positive numeric value"
 
 #define MSG__EXPECTED_SMALLER \
-   "argument `%s`: value too large"
+   "value too large"
+
+#define MSG__EXPECTED_LARGER \
+   "value too small"
 
 #define MSG__EXPECTED_ASCII \
-   "incorrect argument: the string contains non-ASCII characters"
+   "expected a string that consists of ASCII characters only"
+
+#define MSG__EXPECTED_CHAR_IN_SET \
+   "expected a character in [%s]"
+
 
 #define MSG__TIMEZONE_INCORRECT_ID \
    "incorrect time zone identifier"
@@ -248,7 +263,6 @@
 #define MSG__ARG_EXPECTED_VECTOR \
    "argument `%s` should be a vector"
 
-
 #define MSG__ARG_EXPECTED_RAW \
    "argument `%s` should be a raw vector (or an object coercible to)"
 
@@ -306,8 +320,11 @@
 #define MSG__ARG_UNUSED_N \
    "%d arguments have not been used"
 
-#define MSG__INVALID_FORMAT_STRING \
-   "format string '%s' is not valid"
+#define MSG__INVALID_FORMAT_SPECIFIER \
+   "conversion specifier '%%%s' is not valid"
+
+#define MSG__INVALID_FORMAT_SPECIFIER_SUB \
+   "conversion specifier '%%%.*s' is not valid"
 
 #define MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED \
    "empty search patterns are not supported"

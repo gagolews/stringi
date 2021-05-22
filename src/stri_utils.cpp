@@ -53,7 +53,7 @@ SEXP stri_list2matrix(SEXP x, SEXP byrow, SEXP fill, SEXP n_min)
 {
     bool byrow2 = stri__prepare_arg_logical_1_notNA(byrow, "byrow");
     R_len_t n_min2 = stri__prepare_arg_integer_1_notNA(n_min, "n_min");
-    if (n_min2 < 0) Rf_error(MSG__EXPECTED_NONNEGATIVE, "n_min");
+    if (n_min2 < 0) Rf_error(MSG__INCORRECT_NAMED_ARG "; " MSG__EXPECTED_NONNEGATIVE, "n_min");
     PROTECT(x = stri__prepare_arg_list_string(x, "x"));
     PROTECT(fill = stri__prepare_arg_string_1(fill, "fill")); // enc2utf8 called in R
 

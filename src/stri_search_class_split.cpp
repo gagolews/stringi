@@ -117,7 +117,7 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n,
         int  omit_empty_cur   = !omit_empty_cont.isNA(i) && omit_empty_cont.get(i);
 
         if (n_cur >= INT_MAX-1)
-            throw StriException(MSG__EXPECTED_SMALLER, "n");
+            throw StriException(MSG__INCORRECT_NAMED_ARG "; " MSG__EXPECTED_SMALLER, "n");
         else if (n_cur < 0)
             n_cur = INT_MAX;
         else if (n_cur == 0) {

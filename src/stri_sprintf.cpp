@@ -45,13 +45,28 @@
 #define STRI_SPRINTF_SPEC_DOUBLE "feEgGaA"
 #define STRI_SPRINTF_SPEC_STRING "s"
 
-#define STRI_SPRINTF_SPEC_TYPE (STRI_SPRINTF_SPEC_INTEGER \
-                                STRI_SPRINTF_SPEC_DOUBLE  \
-                                STRI_SPRINTF_SPEC_STRING)
+#define STRI_SPRINTF_SPEC_TYPE ( \
+    STRI_SPRINTF_SPEC_INTEGER    \
+    STRI_SPRINTF_SPEC_DOUBLE     \
+    STRI_SPRINTF_SPEC_STRING     \
+)
 
 #define STRI_SPRINTF_FLAGS "-+ 0#"
 
+#define STRI_SPRINTF_ACCEPTED_CHARS ( \
+    STRI_SPRINTF_SPEC_INTEGER         \
+    STRI_SPRINTF_SPEC_DOUBLE          \
+    STRI_SPRINTF_SPEC_STRING          \
+    STRI_SPRINTF_FLAGS                \
+    ".*$"                             \
+    "0123456789"                      \
+)
 
+
+/** data types for sprintf
+ *
+ * @version 1.6.3 (Marek Gagolewski, 2021-05-20)
+ */
 typedef enum {
     STRI_SPRINTF_TYPE_UNDEFINED=0,
     STRI_SPRINTF_TYPE_INTEGER,
@@ -60,168 +75,99 @@ typedef enum {
 } StriSprintfType;
 
 
-struct StriSprintfFormatSpec
-{
-    StriSprintfType type;
-    char type_spec;
-    bool pad_from_right;   // '-'
-    bool pad_zero;         // '0'
-    bool sign_space;       // ' '
-    bool sign_plus;        // '+'
-    bool alternate_output; // '#'
-    int min_width;
-    int precision;         // can be negative
-
-    StriSprintfFormatSpec(char _type_spec)
-    {
-        type_spec = _type_spec;
-
-        if (strchr(STRI_SPRINTF_SPEC_INTEGER, type_spec) != nullptr)
-            type = STRI_SPRINTF_TYPE_INTEGER;
-        else if (strchr(STRI_SPRINTF_SPEC_DOUBLE, type_spec) != nullptr)
-            type = STRI_SPRINTF_TYPE_DOUBLE;
-        else
-            type = STRI_SPRINTF_TYPE_STRING;
-
-        pad_from_right = false;
-        pad_zero = false;
-        sign_space = false;
-        sign_plus = false;
-        alternate_output = false;
-        min_width = NA_INTEGER;
-        precision = NA_INTEGER;
-        // eEfFgG - default precision = 6
-        // aA - default precision = depends on the input
-        // dioxX - default precision = 1
-        // s - default precision - unspecified
-
-        // gG uses eE if precision <= exponent < -4
-    }
-
-
-    std::string toString(bool use_sign=true, bool use_pad=true)
-    {
-        normalise();
-        std::string f("%");
-        if (alternate_output) f.push_back('#');
-        if (use_sign && sign_space) f.push_back(' ');
-        if (use_sign && sign_plus) f.push_back('+');
-        if (use_pad && pad_from_right) f.push_back('-');
-        if (use_pad && pad_zero) f.push_back('0');
-        if (use_pad && min_width != NA_INTEGER) f.append(std::to_string(min_width));
-        if (precision != NA_INTEGER) {
-            f.push_back('.');
-            f.append(std::to_string(precision));
-        }
-        f.push_back(type_spec);
-        return f;
-    }
-
-
-    void normalise()
-    {
-        if (type_spec == 'i')
-            type_spec = 'd';  // synonym
-
-        // TODO: warnings when switching off the flags?
-
-        if (min_width != NA_INTEGER && min_width < 0) {
-            min_width = -min_width;
-            pad_from_right = true;
-        }
-
-        if (min_width == 0)
-            min_width = NA_INTEGER;
-
-        if (precision != NA_INTEGER && precision < 0)
-            precision = NA_INTEGER;
-
-        if (pad_from_right)
-            pad_zero = false;
-
-        if (sign_plus)
-            sign_space = false;
-
-        if (type == STRI_SPRINTF_TYPE_STRING) {
-            pad_zero = false;    // [-Wformat=] even warns about this
-            sign_plus = false;   // [-Wformat=] even warns about this
-            sign_space = false;  // [-Wformat=] even warns about this
-            alternate_output = false;
-            precision = NA_INTEGER; // TODO: maximum width/length? see below for discussion
-        }
-        else if (type == STRI_SPRINTF_TYPE_INTEGER) {
-            // precision -- minimal number of digits that must appear
-
-            if (type_spec != 'd') {  // and not i, because i->d
-                sign_plus = false;   // [-Wformat=] even warns about this
-                sign_space = false;  // [-Wformat=] even warns about this
-            }
-        }
-    }
-};
-
-
 /**
- * if delim found, stops right after delim, modifies j0 in place
+ * if delim found, stops right after delim, modifies jc in place
  * if delim not found, returns NA_INTEGER or throws an error
+ * ignores leading 0s
+ * non-negative values only
  */
 int stri__atoi_to_delim(
     const char* f,
-    R_len_t& j0,
+    R_len_t& jc,
+    R_len_t j0,
+    R_len_t j1,
     char delim,
     bool throw_error=true,
     int max_val=99999
 ) {
-    R_len_t j1 = j0;
-    int val = (int)f[j1++]-(int)'0';
-    while (true) {
-        if (f[j1] == delim) { j1++; break; }
+    R_len_t j = jc;
+    STRI_ASSERT(j0 <= j && j <= j1)
 
-        if (f[j1] < '0' || f[j1] > '9') {
+    if (f[j] < '0' || f[j] > '9')
+        throw StriException(
+            MSG__INVALID_FORMAT_SPECIFIER_SUB "; " MSG__EXPECTED_NONNEGATIVE,
+            j1-j0+1, f+j0);
+
+    int val = (int)f[j++]-(int)'0';
+
+    while (true) {
+        if (f[j] == delim) { j++; break; }
+
+        if (j >= j1 || f[j] < '0' || f[j] > '9') {
             if (throw_error)
-                throw StriException(MSG__INVALID_FORMAT_STRING, f);
+                throw StriException(
+                    MSG__INVALID_FORMAT_SPECIFIER_SUB, // TODO: error details
+                    j1-j0+1, f+j0);
             else
                 return NA_INTEGER;
         }
 
-        val = val*10 + ((int)f[j1++]-(int)'0');
+        val = val*10 + ((int)f[j++]-(int)'0');  // this ignores leading 0s
         if (val > max_val)
-            throw StriException(MSG__INVALID_FORMAT_STRING, f);
+            throw StriException(
+                MSG__INVALID_FORMAT_SPECIFIER_SUB "; " MSG__EXPECTED_SMALLER,
+                j1-j0+1, f+j0);
     }
-    j0 = j1;  // passed by reference
+
+    // found.
+    jc = j;  // passed by reference
     return val;
 }
 
 
 /**
- * stops at non-digit, modifies j0 in place
+ * stops at a non-digit, modifies jc in place
+ * ignores leading 0s
+ * non-negative values only
  */
-int stri__atoi_to_other(const char* f, R_len_t& j0, int max_val=99999)
+int stri__atoi_to_other(const char* f, R_len_t& jc, R_len_t j0, R_len_t j1, int max_val=99999)
 {
-    int val = (int)f[j0++]-(int)'0';
-    while (true) {
-        if (f[j0] < '0' || f[j0] > '9')
+    STRI_ASSERT(j0 <= jc && jc < j1)
+
+    if (f[jc] < '0' || f[jc] > '9')
+        throw StriException(
+            MSG__INVALID_FORMAT_SPECIFIER_SUB "; " MSG__EXPECTED_NONNEGATIVE,
+            j1-j0+1, f+j0);
+
+    int val = (int)f[jc++]-(int)'0';
+
+    while (jc < j1) {
+        if (f[jc] < '0' || f[jc] > '9')
             break;
 
-        val = val*10 + ((int)f[j0++]-(int)'0');
+        val = val*10 + ((int)f[jc++]-(int)'0');  // this ignores leading 0s
         if (val > max_val)
-            throw StriException(MSG__INVALID_FORMAT_STRING, f);
+            throw StriException(
+                MSG__INVALID_FORMAT_SPECIFIER_SUB "; " MSG__EXPECTED_SMALLER,
+                j1-j0+1, f+j0);
     }
     return val;
 }
 
 
 /**
- * preflight - get possible format spec
- * throws an error on any chars in [^0-9*$. +0#-]
+ * preflight - get something which possibly is a format spec
+ * throws an error on any chars outside of [0-9*$. +0#-]
  *
  * @returns index of the first char in STRI_SPRINTF_SPEC_TYPE
  */
-int stri__find_type_spec(const char* f, R_len_t j1, R_len_t n)
+int stri__find_type_spec(const char* f, R_len_t j0, R_len_t n)
 {
+    R_len_t j1 = j0;
+    STRI_ASSERT(f[j0-1] == '%');
     while (true) {
         if (j1 >= n)
-            throw StriException(MSG__INVALID_FORMAT_STRING, f); // dangling %...
+            throw StriException(MSG__INVALID_FORMAT_SPECIFIER, f+j0); // dangling %...
         else if (strchr(STRI_SPRINTF_SPEC_TYPE, f[j1]) != nullptr)
             break;
         else if (strchr(STRI_SPRINTF_FLAGS, f[j1]) != nullptr)
@@ -231,7 +177,9 @@ int stri__find_type_spec(const char* f, R_len_t j1, R_len_t n)
         else if (f[j1] >= '0' && f[j1] <= '9')
             ;
         else
-            throw StriException(MSG__INVALID_FORMAT_STRING, f);
+            throw StriException(
+                MSG__INVALID_FORMAT_SPECIFIER "; " MSG__EXPECTED_CHAR_IN_SET,
+                (f+j0), STRI_SPRINTF_ACCEPTED_CHARS);
 
         j1++;
     }
@@ -239,42 +187,7 @@ int stri__find_type_spec(const char* f, R_len_t j1, R_len_t n)
 }
 
 
-
-/*
-
-
-s
-%
-
-start: 123$ / none
-flags
-width: none / 123 / * / *123$
-precision: none / .123 / . / .* / .123$
-
-%i$... instead of %... - which argument is taken (indexed starting from 1)
-*j$ instead of *
-
-
-<m> field_width
-    A negative field width is taken as a '-' flag followed by a positive field width.
-<.n> precision
-    precision "." == ".0"
-A negative precision is taken as if the precision were  omitted.   This
-       gives  the minimum number of digits to appear for d, i, o, u, x, and X conver-
-       sions, the number of digits to appear after the radix character for a,  A,  e,
-       E,  f, and F conversions, the maximum number of significant digits for g and G
-       conversions, or the maximum number of characters to be printed from  a  string
-       for s and S conversions.
-
-
-There can be two asterisks, right?
-
-default precision???
-default field width???
-*/
-
-
-/** Enables fetching of the i-th/next integer/real/string datum from `...`.
+/** Enables the fetching of the i-th/next integer/real/string datum from `...`.
  *
  * @version 1.6.2 (Marek Gagolewski, 2021-05-20)
  */
@@ -340,11 +253,15 @@ public:
 
     /** Gets the next (i negative) or the i-th integer datum
      *  Can be NA, so check with ... == NA_INTEGER.
+     *
+     *  i == NA_INTEGER means "get next unconsumed"
      */
-    int getIntegerOrNA(int i=-1)
+    int getIntegerOrNA(int i=NA_INTEGER)
     {
-        if (i == NA_INTEGER || i < 0) i = (cur_item++);
+        if (i == NA_INTEGER) i = (cur_item++);
         // else do not advance cur_item
+
+        if (i < 0) throw StriException(MSG__EXPECTED_LARGER);
         if (i >= narg) throw StriException(MSG__ARG_NEED_MORE);
 
         if (x_integer[i] == nullptr) {
@@ -364,11 +281,15 @@ public:
 
     /** Gets the next (i negative) or the i-th real datum;
      *  Can be NA, so check with ISNA(...).
+     *
+     *  i == NA_INTEGER means "get next unconsumed"
      */
-    double getDoubleOrNA(int i=-1)
+    double getDoubleOrNA(int i=NA_INTEGER)
     {
-        if (i == NA_INTEGER || i < 0) i = (cur_item++);
+        if (i == NA_INTEGER) i = (cur_item++);
         // else do not advance cur_item
+
+        if (i < 0) throw StriException(MSG__EXPECTED_LARGER);
         if (i >= narg) throw StriException(MSG__ARG_NEED_MORE);
 
         if (x_double[i] == nullptr) {
@@ -387,11 +308,15 @@ public:
 
     /** Gets the next (i negative) or the i-th real datum
      *  Can be NA, so check with ....isNA().
+     *
+     *  i == NA_INTEGER means "get next unconsumed"
      */
-    const String8& getStringOrNA(int i=-1)
+    const String8& getStringOrNA(int i=NA_INTEGER)
     {
-        if (i == NA_INTEGER || i < 0) i = (cur_item++);
+        if (i == NA_INTEGER) i = (cur_item++);
         // else do not advance cur_item
+
+        if (i < 0) throw StriException(MSG__EXPECTED_LARGER);
         if (i >= narg) throw StriException(MSG__ARG_NEED_MORE);
 
         if (x_string[i] == nullptr) {
@@ -410,6 +335,202 @@ public:
 
 
 
+
+/** Parses and stores info on a single sprintf format (conversion) specifier
+ *
+ * @version 1.6.3 (Marek Gagolewski, 2021-05-22)
+ */
+struct StriSprintfFormatSpec
+{
+    StriSprintfType type;
+    char type_spec;
+
+    int which_datum;       // can be NA_INTEGER (== consume next datum)
+
+    // see normalise() for info on which options are mutually exclusive etc.
+    bool pad_from_right;   // '-'
+    bool pad_zero;         // '0'
+    bool sign_space;       // ' '
+    bool sign_plus;        // '+'
+    bool alternate_output; // '#'
+    int min_width;         // can be NA_INTEGER
+    int precision;         // can be NA_INTEGER or negative (but then like '-')
+
+
+    StriSprintfFormatSpec(
+        const char* f,
+        R_len_t j0,
+        R_len_t j1,
+        StriSprintfDataProvider& data
+    ) {
+        // f[j0..j1] may be a format specifier (without the preceding %)
+        // %<DATUM INDEX$><FLAGS><FIELD WIDTH><.PRECISION><CONVERSION SPECIFIER>
+        //       1            2        3           4            5 == f[j1]
+
+        STRI_ASSERT(f[j0-1] == '%')
+        type_spec = f[j1];
+
+        if (strchr(STRI_SPRINTF_SPEC_INTEGER, type_spec) != nullptr)
+            type = STRI_SPRINTF_TYPE_INTEGER;
+        else if (strchr(STRI_SPRINTF_SPEC_DOUBLE, type_spec) != nullptr)
+            type = STRI_SPRINTF_TYPE_DOUBLE;
+        else
+            type = STRI_SPRINTF_TYPE_STRING;
+
+        pad_from_right = false;
+        pad_zero = false;
+        sign_space = false;
+        sign_plus = false;
+        alternate_output = false;
+        min_width = NA_INTEGER;
+        precision = NA_INTEGER;
+        // eEfFgG - default precision = 6
+        // aA - default precision = depends on the input
+        // dioxX - default precision = 1
+        // s - default precision - unspecified
+
+        // gG uses eE if precision <= exponent < -4
+
+        R_len_t jc = j0;
+
+        // 1. optional [0-9]*\$  - which datum is to be formatted?
+        which_datum = NA_INTEGER;
+        if (f[jc] >= '0' && f[jc] <= '9') { // trailing 0s will be ignored
+            // arg pos spec if digits followed by '$'
+            // we can also have '0' flag at this pos, but this will not be
+            // followed by '$' and the call below will return NA_INTEGER
+            which_datum = stri__atoi_to_delim(
+                f, /*by reference*/jc, j0, j1, /*delimiter*/'$', false/*throw_error*/
+            )-1/*0-based indexing*/;
+            // result can be NA_INTEGER; incorrect indexes will be caught by get*
+        }
+
+        // 2. optional flags [ +0#-]
+        while (true) {
+            if      (f[jc] == ' ') sign_space       = true;
+            else if (f[jc] == '+') sign_plus        = true;
+            else if (f[jc] == '0') pad_zero         = true;
+            else if (f[jc] == '-') pad_from_right   = true;
+            else if (f[jc] == '#') alternate_output = true;
+            else break;
+            jc++;
+        }
+
+        // 3. optional field width: none / 123 / * / *0123$
+        if (f[jc] >= '1' && f[jc] <= '9') {  // note that 0 is treated above
+            min_width = stri__atoi_to_other(f, /*by reference*/jc, j0, j1);
+        }
+        else if (f[jc] == '*') {  // take from ... args
+            jc++;
+            int which_width = NA_INTEGER;
+            if (f[jc] >= '0' && f[jc] <= '9') {
+                which_width = stri__atoi_to_delim(
+                    f, /*by reference*/jc, j0, j1, /*delimiter*/'$'
+                )-1/*0-based indexing*/;
+            }
+            min_width = data.getIntegerOrNA(which_width);
+        }
+        // else if . -- treated below
+        // else if type spec like dfgxo -- treated below
+        // else probably an error, will be caught below
+
+        // 4. optional field precision: none / .0123 / . / .* / .0123$
+        if (f[jc] == '.') {
+            jc++;
+            if (jc == j1) {
+                // precision "." is ".0"
+                precision = 0;
+            }
+            if (f[jc] >= '0' && f[jc] <= '9') {  // trailing 0s will be ignored
+                precision = stri__atoi_to_other(f, /*by reference*/jc, j0, j1);
+            }
+            else if (f[jc] == '*') {  // take from ... args
+                jc++;
+                int which_precision = NA_INTEGER;
+                if (f[jc] >= '0' && f[jc] <= '9') {
+                    which_precision = stri__atoi_to_delim(
+                        f, /*by reference*/jc, j0, j1, /*delimiter*/'$'
+                    )-1/*0-based indexing*/;
+                }
+                precision = data.getIntegerOrNA(which_precision);
+            }
+            // else error, exception thrown below
+        }
+
+        // now we should be at the conversion specifier
+        if (jc != j1)
+            throw StriException(MSG__INVALID_FORMAT_SPECIFIER_SUB, j1-j0+1, f+j0);
+
+        normalise();
+    }
+
+
+    std::string toString(bool use_sign=true, bool use_pad=true)
+    {
+        normalise();
+        std::string f("%");
+        if (alternate_output) f.push_back('#');
+        if (use_sign && sign_space) f.push_back(' ');
+        if (use_sign && sign_plus) f.push_back('+');
+        if (use_pad && pad_from_right) f.push_back('-');
+        if (use_pad && pad_zero) f.push_back('0');
+        if (use_pad && min_width != NA_INTEGER) f.append(std::to_string(min_width));
+        if (precision != NA_INTEGER) {
+            f.push_back('.');
+            f.append(std::to_string(precision));
+        }
+        f.push_back(type_spec);
+        return f;
+    }
+
+
+    void normalise()
+    {
+        if (type_spec == 'i')
+            type_spec = 'd';  // synonym
+
+        // TODO: warnings when switching off the flags?
+
+        if (min_width != NA_INTEGER && min_width < 0) {
+            min_width = -min_width;
+            pad_from_right = true;
+        }
+
+        if (min_width == 0)
+            min_width = NA_INTEGER;
+
+        if (precision != NA_INTEGER && precision < 0)
+            precision = NA_INTEGER;
+
+        if (pad_from_right)
+            pad_zero = false;
+
+        if (sign_plus)
+            sign_space = false;
+
+        if (type == STRI_SPRINTF_TYPE_STRING) {
+            pad_zero = false;    // [-Wformat=] even warns about this
+            sign_plus = false;   // [-Wformat=] even warns about this
+            sign_space = false;  // [-Wformat=] even warns about this
+            alternate_output = false;
+            precision = NA_INTEGER; // TODO: maximum width/length? see below for discussion
+        }
+        else if (type == STRI_SPRINTF_TYPE_INTEGER) {
+            // precision -- minimal number of digits that must appear
+
+            if (type_spec != 'd') {  // and not i, because i->d
+                sign_plus = false;   // [-Wformat=] even warns about this
+                sign_space = false;  // [-Wformat=] even warns about this
+            }
+        }
+    }
+};
+
+
+/** Formats a single string
+ *
+ * @version 1.6.3 (Marek Gagolewski, 2021-05-22)
+ */
 SEXP stri__sprintf_1(
     const String8& _f,
     StriSprintfDataProvider& data,
@@ -427,91 +548,35 @@ SEXP stri__sprintf_1(
 
     R_len_t i=0;
     while (i < n) {
+        // consume everything up to the next '%'
         if (f[i] != '%') { buf.push_back(f[i++]); continue; }
 
+        // '%' found.
         i++;
-        if (i >= n) throw StriException(MSG__INVALID_FORMAT_STRING, f); // dangling %
+        if (i >= n)  // dangling %
+            throw StriException(MSG__INVALID_FORMAT_SPECIFIER, "");
+
+        // if "%%", then output '%' and continue looking for the next '%'
         if (f[i] == '%') { buf.push_back('%'); i++; continue; }
 
-        // pre-flight stage:
+        // We have %., where . is not a %% -- a possible format specifier
+        // pre-flight stage -- look for the indef of a type spec (dfFgGs etc.)
         R_len_t j0 = i;  // start
         R_len_t j1 = stri__find_type_spec(f, i, n);  // stop
         i = j1+1; // in the next iteration, start right after the format spec
         // now f[j0..j1] may be a format specifier (without the preceding %)
 
-        StriSprintfFormatSpec spec(f[j1]);
-        // %<DATUM INDEX$><FLAGS><FIELD WIDTH><.PRECISION><CONVERSION SPECIFIER>
-        //       1            2        3           4            5 == f[j1]
+        StriSprintfFormatSpec spec(f, j0, j1, data);
 
-        // 1. optional [1-9][0-9]*\$  - which datum is to be formatted?
-        int which_datum = NA_INTEGER;
-        if (f[j0] >= '1' && f[j0] <= '9') {
-            // arg pos spec if digits followed by '$'
-            which_datum = stri__atoi_to_delim(
-                f, /*by reference*/j0, /*delimiter*/'$', false/*throw_error*/
-            )-1/*0-based indexing*/;
-            // result can be NA_INTEGER
-        }
 
-        // 2. optional flags [ +0#-]
-        while (true) {
-            if      (f[j0] == ' ') spec.sign_space       = true;
-            else if (f[j0] == '+') spec.sign_plus        = true;
-            else if (f[j0] == '0') spec.pad_zero         = true;
-            else if (f[j0] == '-') spec.pad_from_right   = true;
-            else if (f[j0] == '#') spec.alternate_output = true;
-            else break;
-            j0++;
-        }
 
-        // 3. optional field width: none / 123 / * / *123$
-        if (f[j0] >= '1' && f[j0] <= '9') {
-            spec.min_width = stri__atoi_to_other(f, /*by reference*/j0);
-        }
-        else if (f[j0] == '*') {  // take from ... args
-            j0++;
-            int which_width = NA_INTEGER;
-            if (f[j0] >= '1' && f[j0] <= '9') {
-                which_width = stri__atoi_to_delim(
-                    f, /*by reference*/j0, /*delimiter*/'$'
-                )-1/*0-based indexing*/;
-            }
-            spec.min_width = data.getIntegerOrNA(which_width);
-        }
-
-        // 4. optional field precision: none / .123 / . / .* / .123$
-        if (f[j0] == '.') {
-            j0++;
-            if (f[j0] >= '1' && f[j0] <= '9') {
-                spec.precision = stri__atoi_to_other(f, /*by reference*/j0);
-            }
-            else if (f[j0] == '*') {  // take from ... args
-                j0++;
-                int which_precision = NA_INTEGER;
-                if (f[j0] >= '1' && f[j0] <= '9') {
-                    which_precision = stri__atoi_to_delim(
-                        f, /*by reference*/j0, /*delimiter*/'$'
-                    )-1/*0-based indexing*/;
-                }
-                spec.precision = data.getIntegerOrNA(which_precision);
-            }
-            else {
-                ; // unspecified
-            }
-        }
-
-        // now we should be at the conversion specifier
-        if (j0 != j1)
-            throw StriException(MSG__INVALID_FORMAT_STRING, f);
-
-        spec.normalise();
 
         //Rprintf("*** spec=%s\n", spec.toString().c_str());
         //buf += spec.toString();
 
         std::string preformatted_datum;
         if (spec.type_spec == 'd') {
-            int datum = data.getIntegerOrNA(which_datum);
+            int datum = data.getIntegerOrNA(spec.which_datum);
             if (datum != NA_INTEGER) {
                 if (datum >= 0) {
                     if (spec.sign_plus)       preformatted_datum.push_back('+');
@@ -520,7 +585,7 @@ SEXP stri__sprintf_1(
                 else preformatted_datum.push_back('-');
 
                 spec.toString(/*use_sign*/false, /*use_pad*/false);
-                std::abs(datum);
+                (int)std::abs(datum);
                 // TODO......................................................
             }
             else {
@@ -539,7 +604,7 @@ SEXP stri__sprintf_1(
             STRI_ASSERT(!spec.sign_plus);
             STRI_ASSERT(!spec.sign_space);
 
-            int datum = data.getIntegerOrNA(which_datum);
+            int datum = data.getIntegerOrNA(spec.which_datum);
             if (datum != NA_INTEGER) {
                 spec.toString(/*use_sign*/false, /*use_pad*/false);
                 (unsigned int)(datum);
@@ -550,7 +615,7 @@ SEXP stri__sprintf_1(
             }
 
         } else if (spec.type == STRI_SPRINTF_TYPE_DOUBLE) {
-            double datum = data.getDoubleOrNA(which_datum);
+            double datum = data.getDoubleOrNA(spec.which_datum);
             if (R_FINITE(datum)) {
                 if (datum >= 0.0) {
                     if (spec.sign_plus)       preformatted_datum.push_back('+');
@@ -559,7 +624,7 @@ SEXP stri__sprintf_1(
                 else preformatted_datum.push_back('-');
 
                 spec.toString(/*use_sign*/false, /*use_pad*/false);
-                std::abs(datum);
+                (double)std::abs(datum);
                 // TODO......................................................
             }
             else {
@@ -595,7 +660,7 @@ SEXP stri__sprintf_1(
             STRI_ASSERT(!spec.sign_space);
             STRI_ASSERT(!spec.alternate_output);
             STRI_ASSERT(spec.precision == NA_INTEGER); // TODO: maximum width/length?
-            const String8& datum = data.getStringOrNA(which_datum);
+            const String8& datum = data.getStringOrNA(spec.which_datum);
             if (!datum.isNA()) {
                 // TODO: if (spec.precision != NA_INTEGER)
                 // TODO: use_length - truncation can be tricky
@@ -613,8 +678,7 @@ SEXP stri__sprintf_1(
 //         if (use_length) width = str.countCodePoints();
 //         else width = stri__width_string(str.c_str(), str.length())
     }
-//              NA_STRING
-//         MSG__INVALID_FORMAT_STRING
+
     return Rf_mkCharLenCE(buf.data(), buf.size(), CE_UTF8);
 }
 
@@ -675,7 +739,7 @@ SEXP stri_sprintf(SEXP format, SEXP x, SEXP na_string,
     }
 
     // ASSERT: vectorize_length > 0
-    // ASSERT: all elements in x are meet Rf_isVector(VECTOR_ELT(x, j))
+    // ASSERT: all elements in x meet Rf_isVector(VECTOR_ELT(x, j))
 
     if (vectorize_length % format_length != 0)
         Rf_warning(MSG__WARN_RECYCLING_RULE);
@@ -711,7 +775,6 @@ SEXP stri_sprintf(SEXP format, SEXP x, SEXP na_string,
         // *-fields of different max widths/numbers of different precisions
         // makes the process quite complicated anyway.
         data.reset(i);
-
 
         SEXP out;
         STRI__PROTECT(out = stri__sprintf_1(
