@@ -100,5 +100,10 @@ stri_sub_replace(x, stri_locate_last_regex(x, '[0-9]+'),
 stri_sub(x, stri_locate_first_regex(x, '[0-9]+'), omit_na=TRUE) <- '***'
 print(x)
 ## [1] "*** 3456 789" "abc"          ""             NA             "***"
+# to fetch first code points of at most a given width, use stri_sprintf:
+x <- "\u200b\u200b\u200b\u200b\U0001F3F4\U000E0067\U000E0062\U000E0073\U000E0063\U000E0074\U000E007Fabcd"
+stri_sprintf("%.*s", 0:8, x)
+## [1] "​​​​"       "​​​​"       "​​​​🏴󠁧󠁢󠁳󠁣󠁴󠁿"     "​​​​🏴󠁧󠁢󠁳󠁣󠁴󠁿a"    "​​​​🏴󠁧󠁢󠁳󠁣󠁴󠁿ab"   "​​​​🏴󠁧󠁢󠁳󠁣󠁴󠁿abc"  "​​​​🏴󠁧󠁢󠁳󠁣󠁴󠁿abcd" "​​​​🏴󠁧󠁢󠁳󠁣󠁴󠁿abcd"
+## [9] "​​​​🏴󠁧󠁢󠁳󠁣󠁴󠁿abcd"
 ## Not run: x %>% stri_sub_replace(1, 5, replacement='new_substring')
 ```

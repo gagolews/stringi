@@ -2,7 +2,7 @@
 
 ## Description
 
-A Unicode-aware replacement for the built-in [`sprintf`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/sprintf.html) function. Moreover, `stri_printf` prints formatted strings.
+A Unicode-aware replacement for and enhancement of the built-in [`sprintf`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/sprintf.html) function. Moreover, `stri_printf` prints formatted strings.
 
 ## Usage
 
@@ -76,14 +76,28 @@ The official online manual of <span class="pkg">stringi</span> at <https://strin
 
 ```r
 #...
-#stri_printf("%4s=%.3f", c("e", "e\u00b2", "\u03c0", "\u03c0\u00b2"),
-#    c(exp(1), exp(2), pi, pi^2))
-
+stri_printf("%4s=%.3f", c("e", "e\u00b2", "\u03c0", "\u03c0\u00b2"),
+    c(exp(1), exp(2), pi, pi^2))
+##    e=2.718
+##   e²=7.389
+##    π=3.142
+##   π²=9.870
 # vectorization wrt all arguments:
-#p <- runif(10)
-#stri_sprintf(ifelse(p > 0.5, "P(Y=1)=%1$.2f", "P(Y=0)=%2$.2f"), p, 1-p)
-
+p <- runif(10)
+stri_sprintf(ifelse(p > 0.5, "P(Y=1)=%1$.2f", "P(Y=0)=%2$.2f"), p, 1-p)
+##  [1] "P(Y=0)=0.71" "P(Y=1)=0.79" "P(Y=0)=0.59" "P(Y=1)=0.88" "P(Y=1)=0.94"
+##  [6] "P(Y=0)=0.95" "P(Y=1)=0.53" "P(Y=1)=0.89" "P(Y=1)=0.55" "P(Y=0)=0.54"
 # using a "preformatted" logical vector:
-#x <- c(TRUE, FALSE, FALSE, NA, TRUE, FALSE)
-#stri_sprintf("%s) %s", letters[seq_along(x)], c("\u2718", "\u2713")[x+1])
+x <- c(TRUE, FALSE, FALSE, NA, TRUE, FALSE)
+stri_sprintf("%s) %s", letters[seq_along(x)], c("\u2718", "\u2713")[x+1])
+## [1] "a) ✓" "b) ✘" "c) ✘" NA     "e) ✓" "f) ✘"
+# custom NA/Inf/NaN strings:
+stri_printf("%+10.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_),
+    na_string="<NA>", nan_string="\U0001F4A9", inf_string="\u221E")
+##         -∞
+##     -0.000
+##     +0.000
+##         +∞
+##         💩
+##       <NA>
 ```

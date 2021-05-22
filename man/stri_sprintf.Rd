@@ -79,17 +79,20 @@ are unused, a warning is generated. Too few arguments result in an error.
 }
 \examples{
 #...
-#stri_printf("\%4s=\%.3f", c("e", "e\u00b2", "\u03c0", "\u03c0\u00b2"),
-#    c(exp(1), exp(2), pi, pi^2))
+stri_printf("\%4s=\%.3f", c("e", "e\u00b2", "\u03c0", "\u03c0\u00b2"),
+    c(exp(1), exp(2), pi, pi^2))
 
 # vectorization wrt all arguments:
-#p <- runif(10)
-#stri_sprintf(ifelse(p > 0.5, "P(Y=1)=\%1$.2f", "P(Y=0)=\%2$.2f"), p, 1-p)
+p <- runif(10)
+stri_sprintf(ifelse(p > 0.5, "P(Y=1)=\%1$.2f", "P(Y=0)=\%2$.2f"), p, 1-p)
 
 # using a "preformatted" logical vector:
-#x <- c(TRUE, FALSE, FALSE, NA, TRUE, FALSE)
-#stri_sprintf("\%s) \%s", letters[seq_along(x)], c("\u2718", "\u2713")[x+1])
+x <- c(TRUE, FALSE, FALSE, NA, TRUE, FALSE)
+stri_sprintf("\%s) \%s", letters[seq_along(x)], c("\u2718", "\u2713")[x+1])
 
+# custom NA/Inf/NaN strings:
+stri_printf("\%+10.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_),
+    na_string="<NA>", nan_string="\U0001F4A9", inf_string="\u221E")
 
 }
 \author{
