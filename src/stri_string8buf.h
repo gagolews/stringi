@@ -33,9 +33,9 @@
 #ifndef __stri_string8buf_h
 #define __stri_string8buf_h
 
-#include "stri_external.h"
-#include "stri_exception.h"
-#include "stri_messages.h"
+#include "stri_stringi.h"
+#include <deque>
+
 
 /**
  * [DEPRECATED] A class to represent a temporary string buffer

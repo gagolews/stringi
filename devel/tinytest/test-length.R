@@ -10,13 +10,15 @@ expect_equivalent(stri_numbytes(c(NA, '', ' ', 'abc', '\u0104B\u0106')), c(NA, 0
 
 expect_equivalent(stri_length(character(0)), integer(0))
 expect_equivalent(stri_length(c(NA, '', ' ', 'abc', '\u0104B\u0106')), c(NA, 0, 1, 3, 3))
-expect_equivalent(stri_length(10:99), rep(2,90))
+expect_equivalent(stri_length(10:99), rep(2, 90))
 
 
+# MSG__INVALID_UTF8:
 x <- "\x99\x85"
 Encoding(x) <- "UTF-8"
-expect_warning(stri_length(x))
-suppressWarnings(expect_identical(stri_length(x), NA_integer_))
+expect_error(stri_length(x))
+# expect_warning(stri_length(x))
+# suppressWarnings(expect_identical(stri_length(x), NA_integer_))
 
 # Not on Windows (currently...)
 # expect_warning(stri_length('\U7fffffff'))

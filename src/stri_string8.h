@@ -33,10 +33,8 @@
 #ifndef __stri_string8_h
 #define __stri_string8_h
 
-#include "stri_external.h"
-#include "stri_exception.h"
-#include "stri_messages.h"
-#include "stri_macros.h"
+#include "stri_stringi.h"
+#include <deque>
 
 
 /**
@@ -239,7 +237,7 @@ public:
         return !this->m_isASCII;
     }
 
-    /** misleading name: did we allocate mem in String8
+    /** Misleading name: did we allocate mem in String8
      *  or is this string a shallow copy of some "external" resource?
      */
     inline bool isReadOnly() const {
@@ -276,19 +274,8 @@ public:
 #endif
         if (m_isASCII)
             return m_n;
-
-        UChar32 c = 0;
-        R_len_t j = 0;
-        R_len_t i = 0;
-        while (j < m_n) {
-            U8_NEXT(m_str, j, m_n, c); // faster that U8_FWD_1 & gives bad UChar32s
-            i++;
-
-            if (c < 0)
-                Rf_warning(MSG__INVALID_UTF8);
-        }
-
-        return i;
+        else
+            return stri__length_string(m_str, m_n);
     }
 
 

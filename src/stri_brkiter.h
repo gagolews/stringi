@@ -33,13 +33,13 @@
 #ifndef __stri_brkiter_h
 #define __stri_brkiter_h
 
+#include "stri_stringi.h"
 #include <deque>
 #include <utility>
 #include <vector>
 #include <unicode/brkiter.h>
 #include <unicode/uloc.h>
 #include <unicode/locid.h>
-
 
 /**
  * A class to manage a break iterator's options

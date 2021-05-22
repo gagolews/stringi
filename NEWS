@@ -17,6 +17,10 @@
 * [INTERNAL] `stri_prepare_arg*`s have been refactored, buffer overruns
   in the exception handling subsystem are now avoided.
 
+* [BUGFIX] Few functions (`stri_length`, `stri_enc_toutf32`, etc.)
+  did not throw an exception on an invalid UTF-8
+  byte sequence (and merely issues a warning instead)
+
 
 ## 1.6.2 (2021-05-14)
 

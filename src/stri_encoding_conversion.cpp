@@ -173,9 +173,9 @@ SEXP stri_enc_toutf32(SEXP str)
         }
 
         if (c < 0) {
-            Rf_warning(MSG__INVALID_UTF8);
-            SET_VECTOR_ELT(ret, i, R_NilValue);
-            continue;
+            throw StriException(MSG__INVALID_UTF8);
+//             SET_VECTOR_ELT(ret, i, R_NilValue);
+//             continue;
         }
         else {
             SEXP conv;

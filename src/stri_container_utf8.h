@@ -33,9 +33,9 @@
 #ifndef __stri_container_utf8_h
 #define __stri_container_utf8_h
 
-#include "stri_container_base.h"
 #include "stri_string8.h"
-
+#include "stri_container_base.h"
+#include <vector>
 
 /**
  * A class to handle conversion between R character vectors
@@ -216,5 +216,10 @@ public:
     }
 
 };
+
+
+SEXP stri__subset_by_logical(const StriContainerUTF8& str_cont,
+                             const std::vector<int>& which, int result_counter);
+
 
 #endif

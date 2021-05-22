@@ -33,6 +33,8 @@
 #ifndef __stri_intvec_h
 #define __stri_intvec_h
 
+#include "stri_stringi.h"
+
 
 /**
  * A class to represent an integer vector or NULL/NA

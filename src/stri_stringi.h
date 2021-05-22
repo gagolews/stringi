@@ -37,10 +37,8 @@
 #include "stri_messages.h"
 #include "stri_macros.h"
 #include "stri_exception.h"
-#include "stri_string8.h"
-#include "stri_container_utf8.h"
-#include "stri_container_utf16.h"
 #include "stri_exports.h"
+
 
 
 // common.cpp
@@ -63,7 +61,8 @@ UCollator* stri__ucol_open(SEXP opts_collator);
 // length.cpp
 R_len_t stri__numbytes_max(SEXP str);
 int     stri__width_char(UChar32 c);
-int     stri__width_string(const char* str_cur_s, int str_cur_n);
+int     stri__width_string(const char* s, int n, int max_width=NA_INTEGER);
+int     stri__length_string(const char* s, int n, int max_length=NA_INTEGER);
 
 // prepare_arg.cpp:
 SEXP stri__prepare_arg_string_1(SEXP x,     const char* argname);
@@ -101,29 +100,15 @@ SEXP stri__prepare_arg_raw(SEXP x,          const char* argname, bool factors_as
 
 SEXP stri__prepare_arg_POSIXct(SEXP x,      const char* argname);
 
-// test.cpp /* internal, but in namespace: for testing */
-SEXP stri_test_Rmark(SEXP str);
-SEXP stri_test_UnicodeContainer16(SEXP str);
-SEXP stri_test_UnicodeContainer16b(SEXP str);
-SEXP stri_test_UnicodeContainer8(SEXP str);
-SEXP stri_test_returnasis(SEXP x);
+
 
 // search
 void stri__locate_set_dimnames_list(SEXP list);
 void stri__locate_set_dimnames_matrix(SEXP matrix);
-SEXP stri__subset_by_logical(const StriContainerUTF8& str_cont,
-                             const std::vector<int>& which, int result_counter);
-SEXP stri__subset_by_logical(const StriContainerUTF16& str_cont,
-                             const std::vector<int>& which, int result_counter);
+
 
 // date/time
 void stri__set_class_POSIXct(SEXP x);
-
-// encoding_conversion.cpp:
-SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw);
-
-// date/time:
-SEXP stri_c_posixst(SEXP x);
 
 // ------------------------------------------------------------------------
 

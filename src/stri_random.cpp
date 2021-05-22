@@ -91,9 +91,10 @@ SEXP stri_rand_shuffle(SEXP str)
         }
 
         if (c < 0) {
-            Rf_warning(MSG__INVALID_UTF8);
-            SET_STRING_ELT(ret, i, NA_STRING);
-            continue;
+            throw StriException(MSG__INVALID_UTF8);
+//             Rf_warning(...);
+//             SET_STRING_ELT(ret, i, NA_STRING);
+//             continue;
         }
 
         // do shuffle buf1 at pos 0..k-1: (Fisher-Yates shuffle)

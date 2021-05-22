@@ -35,20 +35,21 @@
 
 
 /**
- * Get the largest number of bytes in its strings
+ * Get the largest number of bytes amongst the strings in a character vector
  * (useful for allocating temporary buffers)
  *
- * if all strings are NA or an empty character vector is given, -1 is returned
+ * If all strings are NA or an empty character vector is given, -1 is returned.
  * Prior to memory allocation, you should check for < 0!
  *
  * Note that ICU permits only strings of length < 2^31.
- * @param s R character vector
+ * @param s character vector
  * @return maximal number of bytes
  *
  * @version 0.1-?? (Marek Gagolewski)
  */
 R_len_t stri__numbytes_max(SEXP str)
 {
+    // STRI_ASSERT - str is a character vector
     R_len_t ns = LENGTH(str);
     if (ns <= 0) return -1;
     R_len_t maxlen = -1;
@@ -61,15 +62,16 @@ R_len_t stri__numbytes_max(SEXP str)
         }
     }
     return maxlen;
-    // @TODO: overload this function for StriContainers.....
+    // TODO: overload this function for StriContainers.....
 }
 
 
 /**
- * Count the number of characters in a string
+ * Count the number of characters/code points in a string
  *
  * Note that ICU permits only strings of length < 2^31.
- * @param s R character vector
+ *
+ * @param s character vector
  * @return integer vector
  *
  * @version 0.1-?? (Marcin Bujarski)
@@ -82,10 +84,13 @@ R_len_t stri__numbytes_max(SEXP str)
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-27)
  *          using StriUcnv;
- *          warn on invalid utf-8 sequences
+ *          warn on invalid UTF-8 sequences
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.6.3 (Marek Gagolewski, 2021-05-22)
+ *    use stri__length_string for UTF-8
  */
 SEXP stri_length(SEXP str)
 {
@@ -107,29 +112,16 @@ SEXP stri_length(SEXP str)
             continue;
         }
 
-        R_len_t curs_n = LENGTH(curs);  // O(1) - stored by R
+        R_len_t curs_n = LENGTH(curs);  // O(1) - stored in SEXPREC
         if (IS_ASCII(curs) || IS_LATIN1(curs)) {
             retint[k] = curs_n;
         }
         else if (IS_BYTES(curs)) {
             throw StriException(MSG__BYTESENC);
         }
-        else if (IS_UTF8(curs) || ucnvNative.isUTF8()) { // utf8 or native-utf8
-            UChar32 c = 0;
+        else if (IS_UTF8(curs) || ucnvNative.isUTF8()) { // UTF-8 or native is UTF-8
             const char* curs_s = CHAR(curs);  // TODO: ALTREP will be problematic?
-            R_len_t j = 0;
-            R_len_t i = 0;
-            while (c >= 0 && j < curs_n) {
-                U8_NEXT(curs_s, j, curs_n, c); // faster that U8_FWD_1 & gives bad UChar32s
-                i++;
-            }
-
-            if (c < 0) { // invalid utf-8 sequence
-                Rf_warning(MSG__INVALID_UTF8);
-                retint[k] = NA_INTEGER;
-            }
-            else
-                retint[k] = i;
+            retint[k] = stri__length_string(curs_s, curs_n);
         }
         else if (ucnvNative.is8bit()) { // native-8bit
             retint[k] = curs_n;
@@ -138,8 +130,8 @@ SEXP stri_length(SEXP str)
 
             UConverter* uconv = ucnvNative.getConverter();
 
-            // native encoding which is neither 8-bit, nor UTF-8 (e.g., 'Big5')
-            // this is weird, but we'll face it
+            // native encoding which is neither 8-bit nor UTF-8 (e.g., 'Big5')
+            // this is weird, but we're prepared
             UErrorCode status = U_ZERO_ERROR;
             const char* source = CHAR(curs);  // TODO: ALTREP will be problematic?
             const char* sourceLimit = source + curs_n;
@@ -347,19 +339,62 @@ int stri__width_char(UChar32 c)
 }
 
 
-/** Get width of a single UTF-8 string
+
+/** Get the length (number of Unicode code points) of a single UTF-8 string
+ *  or get the position where a substring of <= max_length ends
  *
  * @param str_cur_s string
  * @param str_cur_n number of bytes in str_cur_s
- * @return width
+ * @param max_length
+ * @return length of the whole string (if max_length==NA_INTEGER) or index
+ *
+ * @version 1.6.3 (Marek Gagolewski, 2021-05-22)
+ *    extracted from stri_length
+ */
+int stri__length_string(const char* str_cur_s, int str_cur_n, int max_length)
+{
+    // is string is in ASCII, then length == str_cur_n, but with
+    // merely str_cur_s ptr we are unable to tell that here
+
+    UChar32 c = 0;
+    R_len_t j = 0;
+    R_len_t cur_length = 0;
+    while (j < str_cur_n) {
+        R_len_t prevj = j;
+        U8_NEXT(str_cur_s, j, str_cur_n, c); // faster that U8_FWD_1 & gives bad UChar32s
+        if (c < 0)
+            throw StriException(MSG__INVALID_UTF8);
+        cur_length++;
+        if (max_length != NA_INTEGER && cur_length > max_length)
+            return prevj;
+    }
+
+    if (max_length == NA_INTEGER)
+        return cur_length;
+    else
+        return str_cur_n;  // the whole string has length <= max_length
+}
+
+
+/** Get the width of a single UTF-8 string or get the position where
+ *  a substring of <= max_width ends
+ *
+ * @param str_cur_s string
+ * @param str_cur_n number of bytes in str_cur_s
+ * @param max_width
+ * @return width of the whole string (if max_width==NA_INTEGER)
+ * or index
  *
  * @version 1.6.1 (Marek Gagolewski)
  *    most in https://unicode.org/Public/emoji/13.1/emoji-test.txt of width=2
  *
  * @version 1.6.2 (Marek Gagolewski, 2021-05-13)
  *    bugfixes
+ *
+ * @version 1.6.3 (Marek Gagolewski, 2021-05-22)
+ *    max_width
  */
-int stri__width_string(const char* str_cur_s, int str_cur_n)
+int stri__width_string(const char* str_cur_s, int str_cur_n, int max_width)
 {
     int cur_width = 0;
 
@@ -367,51 +402,57 @@ int stri__width_string(const char* str_cur_s, int str_cur_n)
     UChar32 c = 0;  // current
     R_len_t j = 0;
     while (j < str_cur_n) {
+        R_len_t prevj = j;
         p = c;
         U8_NEXT(str_cur_s, j, str_cur_n, c);
         if (c < 0)
             throw StriException(MSG__INVALID_UTF8);
-        else {
 #if U_ICU_VERSION_MAJOR_NUM>=57
-            // UCHAR_EMOJI_* is ICU >= 57
-            if (
-                j > 0 && p == 0x200D /* ZERO WIDTH JOINER */ && (
-                    u_hasBinaryProperty(c, UCHAR_EMOJI_MODIFIER) ||
-                    u_hasBinaryProperty(c, UCHAR_EMOJI_PRESENTATION) ||
-                    c == 0x2640 /* FEMALE */ ||
-                    c == 0x2642 /* MALE */ ||
-                    c == 0x26A7 /* TRANSGENDER */ ||
-                    c == 0x2695 /* HEALTH */ ||
-                    c == 0x2696 /* JUDGE */ ||
-                    c == 0x1F5E8 /* SPEECH */ ||
-                    c == 0x1F32B /* CLOUDS */ ||
-                    c == 0x2708 /* PLANE */ ||
-                    c == 0x2764 /* HEART */ ||
-                    c == 0x2744 /* SNOWFLAKE */ ||
-                    c == 0x2620 /* SKULL AND CROSSBONES */
-                )
-            ) {
-                // emoji sequence - ignore (display might not support it)
-                cur_width += 0;
-            }
-            else if (
-                j > 0 && (p >= 0x1F1E6 && p <= 0x1F1FF)
-                && (c >= 0x1F1E6 && c <= 0x1F1FF)
-            ) {
-                // E2.0 flag (p counted as of width=2 already)
-                cur_width += 0;
-                c = 0;  // allow the next flag to be recognised
-            }
-            else {
-                cur_width += stri__width_char(c);
-            }
-#else // U_ICU_VERSION_MAJOR_NUM < 57 - no emoji support
-            cur_width += stri__width_char(c);
-#endif
+        // UCHAR_EMOJI_* is ICU >= 57
+        if (
+            j > 0 && p == 0x200D /* ZERO WIDTH JOINER */ && (
+                u_hasBinaryProperty(c, UCHAR_EMOJI_MODIFIER) ||
+                u_hasBinaryProperty(c, UCHAR_EMOJI_PRESENTATION) ||
+                c == 0x2640 /* FEMALE */ ||
+                c == 0x2642 /* MALE */ ||
+                c == 0x26A7 /* TRANSGENDER */ ||
+                c == 0x2695 /* HEALTH */ ||
+                c == 0x2696 /* JUDGE */ ||
+                c == 0x1F5E8 /* SPEECH */ ||
+                c == 0x1F32B /* CLOUDS */ ||
+                c == 0x2708 /* PLANE */ ||
+                c == 0x2764 /* HEART */ ||
+                c == 0x2744 /* SNOWFLAKE */ ||
+                c == 0x2620 /* SKULL AND CROSSBONES */
+            )
+        ) {
+            // emoji sequence - ignore (display might not support it)
+            cur_width += 0;
         }
+        else if (
+            j > 0 && (p >= 0x1F1E6 && p <= 0x1F1FF)
+            && (c >= 0x1F1E6 && c <= 0x1F1FF)
+        ) {
+            // E2.0 flag (p counted as of width=2 already)
+            cur_width += 0;
+            c = 0;  // allow the next flag to be recognised
+        }
+        else {
+            cur_width += stri__width_char(c);
+        }
+#else // U_ICU_VERSION_MAJOR_NUM < 57 - no emoji support
+        cur_width += stri__width_char(c);
+#endif
+
+        // test if max_width exceeded (here; there may be zero-width chars)
+        if (max_width != NA_INTEGER && cur_width > max_width)
+            return prevj;
     }
 
-    return cur_width;
+    if (max_width == NA_INTEGER)
+        return cur_width;
+    else
+        return str_cur_n;  // the whole string has width <= max_width
 }
 
 
