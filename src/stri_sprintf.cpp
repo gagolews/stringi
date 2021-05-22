@@ -533,7 +533,7 @@ public:
             sign_plus = false;   // [-Wformat=] even warns about this
             sign_space = false;  // [-Wformat=] even warns about this
             alternate_output = false;
-            precision = NA_INTEGER; // TODO: maximum width/length? see below for discussion
+            // precision = maximum width/length, yes, we support it.
         }
         else if (type == STRI_SPRINTF_TYPE_INTEGER) {
             // precision -- minimal number of digits that must appear
@@ -681,16 +681,25 @@ private:
         STRI_ASSERT(!sign_plus);
         STRI_ASSERT(!sign_space);
         STRI_ASSERT(!alternate_output);
-        STRI_ASSERT(precision == NA_INTEGER); // TODO: maximum width/length?
+        STRI_ASSERT(precision == NA_INTEGER || precision >= 0);
 
         if (!datum.isNA()) {
-            // TODO: if (precision != NA_INTEGER)
-            // TODO: use_length - truncation can be tricky
-            // TODO: with characters of width 0 though
-            preformatted_datum.append(datum.c_str());
+            R_len_t datum_size = datum.length();
+            if (precision != NA_INTEGER) {
+                if (use_length) {
+                    // ha! output no more than <precision> code points
+                    datum_size = stri__length_string(datum.c_str(), datum_size, precision);
+                }
+                else {
+                    // ho! output code points of total width no more than precision characters
+                    datum_size = stri__width_string(datum.c_str(), datum_size, precision);
+                }
+            }
+            preformatted_datum.append(datum.c_str(), datum_size);
         }
-        else
+        else { // isNA
             preformatted_datum.append(na_string.c_str());
+        }
 
         return true;  /* might need padding */
     }

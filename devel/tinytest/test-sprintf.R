@@ -26,6 +26,18 @@ stri_sprintf("%0000000000000000001$#- *0000002$.*003$f", 1.23456, -10, -3)
 # sprintf("% d", c(-1, 0, 1, NA_integer_)) # no space NA
 
 
+x <- "abcdef"
+stringi::stri_sprintf("%.*s", -1:8, x)
+stringi::stri_sprintf("%.*s", -1:8, x, use_length=TRUE)
+
+x <- "ąćęłńó"
+stringi::stri_sprintf("%.*s", -1:8, x)
+stringi::stri_sprintf("%.*s", -1:8, x, use_length=TRUE)
+
+x <- "\u200b\u200b\u200b\u200b\U0001F3F4\U000E0067\U000E0062\U000E0073\U000E0063\U000E0074\U000E007Fabcd"
+stringi::stri_sprintf("%.*s", -1:8, x)
+stringi::stri_sprintf("%.*s", -1:8, x, use_length=TRUE)
+
 
 
 '
