@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.2
+                1.6.3
               </div>
             
           
@@ -226,13 +226,22 @@
 <h2>1.6.3-devel (2021-xx-yy)<a class="headerlink" href="#devel-2021-xx-yy" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>TODO … [NEW FEATURE] #420: <code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code> (alias: <code class="docutils literal notranslate"><span class="pre">stri_string_format</span></code>)
-is a Unicode-aware replacement for the base <code class="docutils literal notranslate"><span class="pre">sprintf</span></code>:
-it adds a customised handling of <code class="docutils literal notranslate"><span class="pre">NA</span></code>s (on demand) and
-computing field size based on code point width.
+is a Unicode-aware replacement for and enhancement of the base <code class="docutils literal notranslate"><span class="pre">sprintf</span></code>:
+it adds a customised handling of <code class="docutils literal notranslate"><span class="pre">NA</span></code>s (on demand),
+computing field size based on code point width,
+outputting substrings of at most given width,
+variable width and precision (both at the same time), etc.
 Moreover, <code class="docutils literal notranslate"><span class="pre">stri_printf</span></code> can be used to display formatted strings
 conveniently.</p></li>
+<li><p>[BACKWARD INCOMPATIBILITY] <code class="docutils literal notranslate"><span class="pre">%s$%</span></code> and <code class="docutils literal notranslate"><span class="pre">%stri$%</span></code> now use <code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code>
+instead of <code class="docutils literal notranslate"><span class="pre">base::sprintf</span></code>.</p></li>
 <li><p>TODO … [NEW FEATURE] #434: <code class="docutils literal notranslate"><span class="pre">stri_datetime_format</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_datetime_parse</span></code>
 is now also vectorised with respect to the <code class="docutils literal notranslate"><span class="pre">format</span></code> argument.</p></li>
+<li><p>[INTERNAL] <code class="docutils literal notranslate"><span class="pre">stri_prepare_arg*</span></code>s have been refactored, buffer overruns
+in the exception handling subsystem are now avoided.</p></li>
+<li><p>[BUGFIX] Few functions (<code class="docutils literal notranslate"><span class="pre">stri_length</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_enc_toutf32</span></code>, etc.)
+did not throw an exception on an invalid UTF-8
+byte sequence (and merely issues a warning instead)</p></li>
 </ul>
 </div>
 <div class="section" id="id1">
@@ -924,7 +933,7 @@ scheduled for milestone 0.1.</p></li>
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-21 14:42:13.
+        Last updated on 2021-05-22 21:42:07.
       </span>
 
     </p>

@@ -5,14 +5,26 @@
 ## 1.6.3-devel (2021-xx-yy)
 
 * TODO ... [NEW FEATURE] #420: `stri_sprintf` (alias: `stri_string_format`)
-  is a Unicode-aware replacement for the base `sprintf`:
-  it adds a customised handling of `NA`s (on demand) and
-  computing field size based on code point width.
+  is a Unicode-aware replacement for and enhancement of the base `sprintf`:
+  it adds a customised handling of `NA`s (on demand),
+  computing field size based on code point width,
+  outputting substrings of at most given width,
+  variable width and precision (both at the same time), etc.
   Moreover, `stri_printf` can be used to display formatted strings
   conveniently.
 
+* [BACKWARD INCOMPATIBILITY] `%s$%` and `%stri$%` now use `stri_sprintf`
+  instead of `base::sprintf`.
+
 * TODO ... [NEW FEATURE] #434: `stri_datetime_format` and `stri_datetime_parse`
   is now also vectorised with respect to the `format` argument.
+
+* [INTERNAL] `stri_prepare_arg*`s have been refactored, buffer overruns
+  in the exception handling subsystem are now avoided.
+
+* [BUGFIX] Few functions (`stri_length`, `stri_enc_toutf32`, etc.)
+  did not throw an exception on an invalid UTF-8
+  byte sequence (and merely issues a warning instead)
 
 
 ## 1.6.2 (2021-05-14)

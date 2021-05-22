@@ -49,6 +49,9 @@ stringi::stri_sprintf("[%-*.*s]", 1:8, 1:8, x)
 stringi::stri_sprintf("[%*s]", 1:8, x)
 stringi::stri_sprintf("[%-*s]", 1:8, x)
 
+stringi::stri_sprintf("%+10.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_), na_string="<NA>", nan_string="\U0001F4A9", inf_string="\u221E")
+
+
 '
 sprintf("%2$s", 1, 2)  # warning - unsused arg
 sprintf("%3$s", 1, 2, 3)  # warning - unsused arg

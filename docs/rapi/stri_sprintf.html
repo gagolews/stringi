@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.2
+                1.6.3
               </div>
             
           
@@ -301,7 +301,7 @@
 <h1>stri_sprintf: Format Strings<a class="headerlink" href="#stri-sprintf-format-strings" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>A Unicode-aware replacement for the built-in <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/sprintf.html"><code class="docutils literal notranslate"><span class="pre">sprintf</span></code></a> function. Moreover, <code class="docutils literal notranslate"><span class="pre">stri_printf</span></code> prints formatted strings.</p>
+<p>A Unicode-aware replacement for and enhancement of the built-in <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/sprintf.html"><code class="docutils literal notranslate"><span class="pre">sprintf</span></code></a> function. Moreover, <code class="docutils literal notranslate"><span class="pre">stri_printf</span></code> prints formatted strings.</p>
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
@@ -387,16 +387,30 @@
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">#...</span>
-<span class="c1">#stri_printf(&quot;%4s=%.3f&quot;, c(&quot;e&quot;, &quot;e\u00b2&quot;, &quot;\u03c0&quot;, &quot;\u03c0\u00b2&quot;),</span>
-<span class="c1">#    c(exp(1), exp(2), pi, pi^2))</span>
-
+<span class="nf">stri_printf</span><span class="p">(</span><span class="s">&quot;%4s=%.3f&quot;</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;e&quot;</span><span class="p">,</span> <span class="s">&quot;e\u00b2&quot;</span><span class="p">,</span> <span class="s">&quot;\u03c0&quot;</span><span class="p">,</span> <span class="s">&quot;\u03c0\u00b2&quot;</span><span class="p">),</span>
+    <span class="nf">c</span><span class="p">(</span><span class="nf">exp</span><span class="p">(</span><span class="m">1</span><span class="p">),</span> <span class="nf">exp</span><span class="p">(</span><span class="m">2</span><span class="p">),</span> <span class="kc">pi</span><span class="p">,</span> <span class="kc">pi</span><span class="o">^</span><span class="m">2</span><span class="p">))</span>
+<span class="c1">##    e=2.718</span>
+<span class="c1">##   e²=7.389</span>
+<span class="c1">##    π=3.142</span>
+<span class="c1">##   π²=9.870</span>
 <span class="c1"># vectorization wrt all arguments:</span>
-<span class="c1">#p &lt;- runif(10)</span>
-<span class="c1">#stri_sprintf(ifelse(p &gt; 0.5, &quot;P(Y=1)=%1$.2f&quot;, &quot;P(Y=0)=%2$.2f&quot;), p, 1-p)</span>
-
+<span class="n">p</span> <span class="o">&lt;-</span> <span class="nf">runif</span><span class="p">(</span><span class="m">10</span><span class="p">)</span>
+<span class="nf">stri_sprintf</span><span class="p">(</span><span class="nf">ifelse</span><span class="p">(</span><span class="n">p</span> <span class="o">&gt;</span> <span class="m">0.5</span><span class="p">,</span> <span class="s">&quot;P(Y=1)=%1$.2f&quot;</span><span class="p">,</span> <span class="s">&quot;P(Y=0)=%2$.2f&quot;</span><span class="p">),</span> <span class="n">p</span><span class="p">,</span> <span class="m">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span>
+<span class="c1">##  [1] &quot;P(Y=0)=0.71&quot; &quot;P(Y=1)=0.79&quot; &quot;P(Y=0)=0.59&quot; &quot;P(Y=1)=0.88&quot; &quot;P(Y=1)=0.94&quot;</span>
+<span class="c1">##  [6] &quot;P(Y=0)=0.95&quot; &quot;P(Y=1)=0.53&quot; &quot;P(Y=1)=0.89&quot; &quot;P(Y=1)=0.55&quot; &quot;P(Y=0)=0.54&quot;</span>
 <span class="c1"># using a &quot;preformatted&quot; logical vector:</span>
-<span class="c1">#x &lt;- c(TRUE, FALSE, FALSE, NA, TRUE, FALSE)</span>
-<span class="c1">#stri_sprintf(&quot;%s) %s&quot;, letters[seq_along(x)], c(&quot;\u2718&quot;, &quot;\u2713&quot;)[x+1])</span>
+<span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">)</span>
+<span class="nf">stri_sprintf</span><span class="p">(</span><span class="s">&quot;%s) %s&quot;</span><span class="p">,</span> <span class="kc">letters</span><span class="p">[</span><span class="nf">seq_along</span><span class="p">(</span><span class="n">x</span><span class="p">)],</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;\u2718&quot;</span><span class="p">,</span> <span class="s">&quot;\u2713&quot;</span><span class="p">)[</span><span class="n">x</span><span class="m">+1</span><span class="p">])</span>
+<span class="c1">## [1] &quot;a) ✓&quot; &quot;b) ✘&quot; &quot;c) ✘&quot; NA     &quot;e) ✓&quot; &quot;f) ✘&quot;</span>
+<span class="c1"># custom NA/Inf/NaN strings:</span>
+<span class="nf">stri_printf</span><span class="p">(</span><span class="s">&quot;%+10.3f&quot;</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="o">-</span><span class="kc">Inf</span><span class="p">,</span> <span class="m">-0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="kc">Inf</span><span class="p">,</span> <span class="kc">NaN</span><span class="p">,</span> <span class="kc">NA_real_</span><span class="p">),</span>
+    <span class="n">na_string</span><span class="o">=</span><span class="s">&quot;&lt;NA&gt;&quot;</span><span class="p">,</span> <span class="n">nan_string</span><span class="o">=</span><span class="s">&quot;\U0001F4A9&quot;</span><span class="p">,</span> <span class="n">inf_string</span><span class="o">=</span><span class="s">&quot;\u221E&quot;</span><span class="p">)</span>
+<span class="c1">##         -∞</span>
+<span class="c1">##     -0.000</span>
+<span class="c1">##     +0.000</span>
+<span class="c1">##         +∞</span>
+<span class="c1">##         💩</span>
+<span class="c1">##       &lt;NA&gt;</span>
 </pre></div>
 </div>
 </div>
@@ -418,7 +432,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-21 14:42:13.
+        Last updated on 2021-05-22 21:42:07.
       </span>
 
     </p>

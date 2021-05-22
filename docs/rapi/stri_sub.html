@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.2
+                1.6.3
               </div>
             
           
@@ -409,6 +409,11 @@
 <span class="nf">stri_sub</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nf">stri_locate_first_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&#39;[0-9]+&#39;</span><span class="p">),</span> <span class="n">omit_na</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="s">&#39;***&#39;</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;*** 3456 789&quot; &quot;abc&quot;          &quot;&quot;             NA             &quot;***&quot;</span>
+<span class="c1"># to fetch first code points of at most a given width, use stri_sprintf:</span>
+<span class="n">x</span> <span class="o">&lt;-</span> <span class="s">&quot;\u200b\u200b\u200b\u200b\U0001F3F4\U000E0067\U000E0062\U000E0073\U000E0063\U000E0074\U000E007Fabcd&quot;</span>
+<span class="nf">stri_sprintf</span><span class="p">(</span><span class="s">&quot;%.*s&quot;</span><span class="p">,</span> <span class="m">0</span><span class="o">:</span><span class="m">8</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="c1">## [1] &quot;​​​​&quot;       &quot;​​​​&quot;       &quot;​​​​🏴󠁧󠁢󠁳󠁣󠁴󠁿&quot;     &quot;​​​​🏴󠁧󠁢󠁳󠁣󠁴󠁿a&quot;    &quot;​​​​🏴󠁧󠁢󠁳󠁣󠁴󠁿ab&quot;   &quot;​​​​🏴󠁧󠁢󠁳󠁣󠁴󠁿abc&quot;  &quot;​​​​🏴󠁧󠁢󠁳󠁣󠁴󠁿abcd&quot; &quot;​​​​🏴󠁧󠁢󠁳󠁣󠁴󠁿abcd&quot;</span>
+<span class="c1">## [9] &quot;​​​​🏴󠁧󠁢󠁳󠁣󠁴󠁿abcd&quot;</span>
 <span class="c1">## Not run: x %&gt;% stri_sub_replace(1, 5, replacement=&#39;new_substring&#39;)</span>
 </pre></div>
 </div>
@@ -431,7 +436,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-21 14:42:13.
+        Last updated on 2021-05-22 21:42:07.
       </span>
 
     </p>
