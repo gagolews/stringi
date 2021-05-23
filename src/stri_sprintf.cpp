@@ -217,6 +217,10 @@ private:
     R_len_t cur_item;  // 0..narg-1
 
 public:
+    bool warn_if_arg_unused;
+
+
+public:
     StriSprintfDataProvider(SEXP x, R_len_t vectorize_length) :
         x(x),
         narg(LENGTH(x)),
@@ -228,6 +232,7 @@ public:
     {
         STRI_ASSERT(Rf_isVectorList(x));
         cur_elem = -1;
+        warn_if_arg_unused = false;
     }
 
     ~StriSprintfDataProvider()
@@ -251,10 +256,12 @@ public:
         }
         if (nprotect > 0) UNPROTECT(nprotect);
 
-        if (num_unused == 1)
-            Rf_warning(MSG__ARG_UNUSED_1);
-        else if (num_unused > 1)
-            Rf_warning(MSG__ARG_UNUSED_N, num_unused);
+        if (warn_if_arg_unused) {
+            if (num_unused == 1)
+                Rf_warning(MSG__ARG_UNUSED_1);
+            else if (num_unused > 1)
+                Rf_warning(MSG__ARG_UNUSED_N, num_unused);
+        }
     }
 
 
@@ -376,6 +383,7 @@ private:
     int min_width;         // can be NA_INTEGER
     int precision;         // can be NA_INTEGER or negative (but then like '-')
     // TODO: flag "'" -- localised formatting with ICU
+
 
 public:
     StriSprintfFormatSpec(
@@ -914,6 +922,9 @@ SEXP stri_sprintf(SEXP format, SEXP x, SEXP na_string,
         SET_STRING_ELT(ret, i, out);
         STRI__UNPROTECT(1);
     }
+
+    // there was no error, we may want to warn about unused args
+    data.warn_if_arg_unused = true;
 
     STRI__UNPROTECT_ALL
     return ret;
