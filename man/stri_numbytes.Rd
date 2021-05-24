@@ -48,8 +48,11 @@ stri_numbytes('\U001F600') # compare stri_length('\U001F600')
 The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
 
 Other length: 
+\code{\link{\%s$\%}()},
 \code{\link{stri_isempty}()},
 \code{\link{stri_length}()},
+\code{\link{stri_pad_both}()},
+\code{\link{stri_sprintf}()},
 \code{\link{stri_width}()}
 }
 \concept{length}

@@ -1,8 +1,8 @@
-# operator\_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri\_sprintf
+# operator\_dollar: C-Style Formatting with [`stri_sprintf`](https://stringi.gagolewski.com/rapi/stri_sprintf.html) as a Binary Operator
 
 ## Description
 
-Provides access to base R\'s [`sprintf`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/sprintf.html) in form of a binary operator in a way similar to Python\'s `%` overloaded for strings.
+Provides access to [`stri_sprintf`](https://stringi.gagolewski.com/rapi/stri_sprintf.html) in form of a binary operator in a way similar to Python\'s `%` overloaded for strings.
 
 ## Usage
 
@@ -14,18 +14,16 @@ e1 %stri$% e2
 
 ## Arguments
 
-|      |                                                                                                                                                        |
-|------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `e1` | format strings, see [`sprintf`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/sprintf.html) for syntax                                     |
-| `e2` | a list of atomic vectors to be passed to [`sprintf`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/sprintf.html) or a single atomic vector |
+|      |                                                                                                                                            |
+|------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| `e1` | format strings, see [`stri_sprintf`](https://stringi.gagolewski.com/rapi/stri_sprintf.html) for syntax                                     |
+| `e2` | a list of atomic vectors to be passed to [`stri_sprintf`](https://stringi.gagolewski.com/rapi/stri_sprintf.html) or a single atomic vector |
 
 ## Details
 
 Vectorized over `e1` and `e2`.
 
 `e1 %s$% atomic_vector` is equivalent to `e1 %s$% list(atomic_vector)`.
-
-Note that [`sprintf`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/sprintf.html) takes field width in bytes, not Unicode code points. See Examples for a workaround.
 
 ## Value
 
@@ -38,6 +36,8 @@ Returns a character vector
 ## See Also
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
+
+Other length: [`stri_isempty`](https://stringi.gagolewski.com/rapi/stri_isempty.html)(), [`stri_length`](https://stringi.gagolewski.com/rapi/stri_length.html)(), [`stri_numbytes`](https://stringi.gagolewski.com/rapi/stri_numbytes.html)(), [`stri_pad_both`](https://stringi.gagolewski.com/rapi/stri_pad_both.html)(), [`stri_sprintf`](https://stringi.gagolewski.com/rapi/stri_sprintf.html)(), [`stri_width`](https://stringi.gagolewski.com/rapi/stri_width.html)()
 
 ## Examples
 
@@ -57,14 +57,9 @@ The official online manual of <span class="pkg">stringi</span> at <https://strin
 ## [1] "a='1'" "b='1'" "c='1'"
 "%s='%d'" %s$% list(c("a", "b", "c"), 1:3)
 ## [1] "a='1'" "b='2'" "c='3'"
-# sprintf field width:
 x <- c("abcd", "\u00DF\u00B5\U0001F970", "abcdef")
-cat(sprintf("%s%6s%s", "-", x, "-"), sep="\n")
-## -  abcd-
-## -ßµ🥰-
-## -abcdef-
-cat(sprintf("%s%s%s", "-", stringi::stri_pad(x, 6), "-"), sep="\n")
-## -  abcd-
-## -  ßµ🥰-
-## -abcdef-
+cat("[%6s]" %s$% x, sep="\n")  # width used, not the number of bytes
+## [  abcd]
+## [  ßµ🥰]
+## [abcdef]
 ```

@@ -178,9 +178,10 @@ int stri__find_type_spec(const char* f, R_len_t j0, R_len_t n)
     R_len_t j1 = j0;
     STRI_ASSERT(f[j0-1] == '%');
     while (true) {
-        if (j1 >= n)
+        if (j1 >= n) {
+            // TODO: note that this will display UTF-8 also on non-UTF-8 outputs
             throw StriException(MSG__INVALID_FORMAT_SPECIFIER, f+j0); // dangling %...
-        else if (strchr(STRI_SPRINTF_SPEC_TYPE, f[j1]) != nullptr)
+        } else if (strchr(STRI_SPRINTF_SPEC_TYPE, f[j1]) != nullptr)
             break;
         else if (strchr(STRI_SPRINTF_FLAGS, f[j1]) != nullptr)
             ;
@@ -188,10 +189,12 @@ int stri__find_type_spec(const char* f, R_len_t j0, R_len_t n)
             ;
         else if (f[j1] >= '0' && f[j1] <= '9')
             ;
-        else
+        else {
+            // TODO: note that this will display UTF-8 also on non-UTF-8 outputs
             throw StriException(
                 MSG__INVALID_FORMAT_SPECIFIER "; " MSG__EXPECTED_CHAR_IN_SET,
                 (f+j0), STRI_SPRINTF_ACCEPTED_CHARS);
+        }
 
         j1++;
     }

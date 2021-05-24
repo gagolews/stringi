@@ -3,7 +3,7 @@
 
 ## 1.6.2.9xxx (to-be >=1.6.3) (2021-xx-yy)
 
-* TODO ... [NEW FEATURE] #420: `stri_sprintf` (alias: `stri_string_format`)
+* [NEW FEATURE] #420: `stri_sprintf` (alias: `stri_string_format`)
   is a Unicode-aware replacement for and enhancement of the base `sprintf`:
   it adds a customised handling of `NA`s (on demand),
   computing field size based on code point width,
@@ -12,11 +12,11 @@
   Moreover, `stri_printf` can be used to display formatted strings
   conveniently.
 
-* [BACKWARD INCOMPATIBILITY] `%s$%` and `%stri$%` now use `stri_sprintf`
-  instead of `base::sprintf`.
-
 * TODO ... [NEW FEATURE] #434: `stri_datetime_format` and `stri_datetime_parse`
   is now also vectorised with respect to the `format` argument.
+
+* [BACKWARD INCOMPATIBILITY] `%s$%` and `%stri$%` now use `stri_sprintf`
+  instead of `base::sprintf`.
 
 * [INTERNAL] `stri_prepare_arg*`s have been refactored, buffer overruns
   in the exception handling subsystem are now avoided.

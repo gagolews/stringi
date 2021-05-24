@@ -96,6 +96,11 @@ expect_identical(stri_sprintf("%+ d", 123), sprintf("%+ d", 123) )
 expect_identical(stri_sprintf("%.0f", c(0, 0.5, 1, 1.5, 2)), sprintf("%.0f", c(0, 0.5, 1, 1.5, 2)))
 expect_identical(stri_sprintf("%d", c(0, 0.5, 1, 1.5, 2)), sprintf("%d", as.integer(c(0, 0.5, 1, 1.5, 2))))
 
+x <- as.integer(c(-1000000, 0, -532, 6, -2, 54326430))
+expect_identical(stri_sprintf("%d", x), sprintf("%d", x))
+expect_identical(stri_sprintf("%0i", x), sprintf("%0i", x))
+expect_identical(stri_sprintf("%6i", x), sprintf("%6i", x))
+expect_identical(stri_sprintf("%+6.3i", x), sprintf("%+6.3i", x))
 
 
 expect_warning(stri_sprintf("%s %1$s %s", "a", "b", "c", "d"))
@@ -165,66 +170,75 @@ expect_equivalent(c(NA_character_, "%s", NA_character_) %s$% c("a", "a", "a"), c
 expect_equivalent(c(NA_character_, "%s") %s$% c("a", NA_character_, "a", NA_character_), c(NA_character_, NA_character_, NA_character_, NA_character_))
 expect_equivalent(c(NA_character_, "%s") %s$% c(NA_character_, "a", NA_character_, "a"), c(NA_character_, "a", NA_character_, "a"))
 
+expect_identical(stri_sprintf(NA), NA_character_)
+expect_identical(stri_sprintf(NA_character_), NA_character_)
+
+expect_identical(stri_sprintf(c("%d", "%s"), factor(11:12)), c("1", "12"))
+expect_identical(stri_sprintf(c("%s", "%d"), factor(11:12)), c("11", "2"))
+expect_identical(stri_sprintf("%1$s_%1$d", factor(11:12)), c("11_1", "12_2"))
+expect_identical(stri_sprintf("%1$d_%1$s", factor(11:12)), c("1_11", "2_12"))
+expect_identical(stri_sprintf("%s", factor(11:12)), c("11", "12"))
+expect_identical(stri_sprintf("%d", factor(11:12)), c("1", "2"))
 
 
-'
-TODO: add quirks to stringx
-
-# NAs not propagated correctly  [this is a string formatting function, so there should be an option to treat NA as "NA" etc. though)
-sprintf(NA, "this should yield NA")  # error, but should be NA_character_
-sprintf(NA_character_, "this should yield NA")  # "NA", but should be NA_character_
-
-# not fully vectorised:
-sprintf(c("%d", "%s"), factor(11:12))  # error, converts to int only and then fails
-sprintf(c("%s", "%d"), factor(11:12))  # error, converts to character only and then fails
-sprintf("%1$s_%1$d", factor(11:12))  # does not work either
-
-sprintf("%d%d", 1:3, 1:2)  # error, but should be a warning about partial recycling
-
-sprintf("%s%d", character(0), 1:10)  # ok, empty vector
-
-sprintf(c(x="%s", y="%s"), c(a=1, b=2))  # attributes not preserved
-
-# "prefix 0 for characters zero-pads on some platforms and is ignored on others."
-
-sprintf("%#010x", 123)
-sprintf("%f", 123)# "123.000000"
-sprintf("%#f", 123)# "123.000000"
-sprintf("%#g", 123)# "123.000"
-sprintf("%g", 123) # "123"
-sprintf("%#015g", 123) # "00000000123.000"
-
-sprintf("%5.3d", 1)  # "  001"
-sprintf("%5.8d", 1)  # "00000001"
-sprintf("%5.8d", 123)# "00000123"
-sprintf("%5.8d", 12345678) # "12345678"
-sprintf("%5.8d", 123456789)# "123456789"
-
-sprintf("% 05d", c(-123, 123, 0))  # "-0123" " 0123" " 0000"
-sprintf("%+05d", c(-123, 123, 0))  # "-0123" "+0123" "+0000"
-sprintf("%+5d", c(-123, 123, 0))   # " -123" " +123" "   +0"
-sprintf("% 5d", c(-123, 123, 0))   # " -123" "  123" "    0"
-sprintf("%- 5d", c(-123, 123, 0))  # "-123 " " 123 " " 0   "
-sprintf("%-+5d", c(-123, 123, 0))  # "-123 " "+123 " "+0   "
-sprintf("%-0+5d", c(-123, 123, 0)) # "-123 " "+123 " "+0   "
-sprintf("%-0 5d", c(-123, 123, 0)) # "-123 " " 123 " " 0   "
+expect_identical(stri_sprintf("%#010x", 123), sprintf("%#010x", 123))
+expect_identical(stri_sprintf("%f", 123), sprintf("%f", 123))
+expect_identical(stri_sprintf("%#f", 123), sprintf("%#f", 123))
+expect_identical(stri_sprintf("%#g", 123), sprintf("%#g", 123))
+expect_identical(stri_sprintf("%g", 123), sprintf("%g", 123))
+expect_identical(stri_sprintf("%#015g", 123), sprintf("%#015g", 123))
+expect_identical(stri_sprintf("%5.3d", 1), sprintf("%5.3d", 1))
+expect_identical(stri_sprintf("%5.8d", 1), sprintf("%5.8d", 1))
+expect_identical(stri_sprintf("%5.8d", 123), sprintf("%5.8d", 123))
+expect_identical(stri_sprintf("%5.8d", 12345678), sprintf("%5.8d", 12345678))
+expect_identical(stri_sprintf("%5.8d", 123456789), sprintf("%5.8d", 123456789))
+expect_identical(stri_sprintf("% 05d", c(-123, 123, 0)), sprintf("% 05d", c(-123, 123, 0)))
+expect_identical(stri_sprintf("%+05d", c(-123, 123, 0)), sprintf("%+05d", c(-123, 123, 0)))
+expect_identical(stri_sprintf("%+5d", c(-123, 123, 0)), sprintf("%+5d", c(-123, 123, 0)))
+expect_identical(stri_sprintf("% 5d", c(-123, 123, 0)), sprintf("% 5d", c(-123, 123, 0)))
+expect_identical(stri_sprintf("%- 5d", c(-123, 123, 0)), sprintf("%- 5d", c(-123, 123, 0)))
+expect_identical(stri_sprintf("%-+5d", c(-123, 123, 0)), sprintf("%-+5d", c(-123, 123, 0)))
+expect_identical(stri_sprintf("%-0+5d", c(-123, 123, 0)), sprintf("%-0+5d", c(-123, 123, 0)))
+expect_identical(stri_sprintf("%-0 5d", c(-123, 123, 0)), sprintf("%-0 5d", c(-123, 123, 0)))
+expect_identical(stri_sprintf("%08s", "abc"), sprintf("%08s", "abc"))
+expect_identical(stri_sprintf("%-8s", "abc"), sprintf("%-8s", "abc"))
+expect_identical(stri_sprintf("%+8s", "abc"), sprintf("%+8s", "abc"))
+expect_identical(stri_sprintf("%1$s %s %2$s %s", 1, 2), sprintf("%1$s %s %2$s %s", 1, 2))
+expect_identical(suppressWarnings(stri_sprintf("%4$*3$s", 1, "a", 6, "b")), suppressWarnings(sprintf("%4$*3$s", 1, "a", 6, "b")))
+expect_identical(suppressWarnings(stri_sprintf("%4$*3$.2f", 1, "a", 6, pi)), suppressWarnings(sprintf("%4$*3$.2f", 1, "a", 6, pi)))
+expect_identical(suppressWarnings(stri_sprintf("%4$10.*3$f", 1, "a", 6, pi)), suppressWarnings(sprintf("%4$10.*3$f", 1, "a", 6, pi)))
+expect_identical(suppressWarnings(stri_sprintf("%4$-*3$.2f", 1, "a", 6, pi)), suppressWarnings(sprintf("%4$-*3$.2f", 1, "a", 6, pi)))
+expect_identical(stri_sprintf("e with %1$2d digits = %2$.*1$g", 10, exp(1)), sprintf("e with %1$2d digits = %2$.*1$g", 10, exp(1)))
+expect_identical(stri_sprintf("%*1$d", 1:5), sprintf("%*1$d", 1:5))
+expect_identical(stri_sprintf("%1$*1$d", 1:5), sprintf("%1$*1$d", 1:5))
+expect_identical(stri_sprintf("%1$*d", 1:5), sprintf("%1$*d", 1:5))
 
 
-sprintf("%08s", "abc")
-sprintf("%-8s", "abc")
-sprintf("%+8s", "abc")
+# the following are from help("sprintf"):
 
-sprintf("%1$s %s %2$s %s", 1, 2)
-
-
-
-sprintf("%4$*3$s", 1, "a", 6, "b")
-sprintf("%4$*3$.2f", 1, "a", 6, pi)
-sprintf("%4$10.*3$f", 1, "a", 6, pi)
-sprintf("%4$-*3$.2f", 1, "a", 6, pi)
-sprintf("e with %1$2d digits = %2$.*1$g", 10, exp(1))
-
-sprintf("%*1$d", 1:5)
-sprintf("%1$*1$d", 1:5)
-sprintf("%1$*d", 1:5)
-'
+expect_identical(stri_sprintf("%.0f%% said yes (out of a sample of size %.0f)", 66.666, 3), sprintf("%.0f%% said yes (out of a sample of size %.0f)", 66.666, 3))
+expect_identical(stri_sprintf("%f", pi), sprintf("%f", pi))
+expect_identical(stri_sprintf("%.3f", pi), sprintf("%.3f", pi))
+expect_identical(stri_sprintf("%1.0f", pi), sprintf("%1.0f", pi))
+expect_identical(stri_sprintf("%5.1f", pi), sprintf("%5.1f", pi))
+expect_identical(stri_sprintf("%05.1f", pi), sprintf("%05.1f", pi))
+expect_identical(stri_sprintf("%+f", pi), sprintf("%+f", pi))
+expect_identical(stri_sprintf("% f", pi), sprintf("% f", pi))
+expect_identical(stri_sprintf("%-10f", pi) , sprintf("%-10f", pi))
+expect_identical(stri_sprintf("%e", pi), sprintf("%e", pi))
+expect_identical(stri_sprintf("%E", pi), sprintf("%E", pi))
+expect_identical(stri_sprintf("%g", pi), sprintf("%g", pi))
+expect_identical(stri_sprintf("%g",   1e6 * pi) , sprintf("%g",   1e6 * pi))
+expect_identical(stri_sprintf("%.9g", 1e6 * pi) , sprintf("%.9g", 1e6 * pi))
+expect_identical(stri_sprintf("%G", 1e-6 * pi), sprintf("%G", 1e-6 * pi))
+expect_identical(stri_sprintf("%1.f", 101), sprintf("%1.f", 101))
+expect_identical(stri_sprintf("%1$d %1$x %1$X", 0:15), sprintf("%1$d %1$x %1$X", 0:15))
+expect_identical(stri_sprintf("min 10-char string '%10s'", c("a", "ABC", "and an even longer one")), sprintf("min 10-char string '%10s'", c("a", "ABC", "and an even longer one")))
+expect_identical(stri_sprintf("%09s", month.name), sprintf("%09s", month.name))
+expect_identical(stri_sprintf(paste0("e with %2d digits = %.", 1:18, "g"), 1:18, exp(1)), sprintf(paste0("e with %2d digits = %.", 1:18, "g"), 1:18, exp(1)))
+expect_identical(stri_sprintf("second %2$1.0f, first %1$5.2f, third %3$1.0f", pi, 2, 3), sprintf("second %2$1.0f, first %1$5.2f, third %3$1.0f", pi, 2, 3))
+expect_identical(stri_sprintf("precision %.*f, width '%*.3f'", 3, pi, 8, pi), sprintf("precision %.*f, width '%*.3f'", 3, pi, 8, pi))
+expect_identical(stri_sprintf("e with %1$2d digits = %2$.*1$g", 1:18, exp(1)), sprintf("e with %1$2d digits = %2$.*1$g", 1:18, exp(1)))
+expect_identical(stri_sprintf("%s %d", "test", 1:3), sprintf("%s %d", "test", 1:3))
+expect_identical(stri_sprintf("%a", seq(0, 1.0, 0.1)), sprintf("%a", seq(0, 1.0, 0.1)))
+expect_identical(stri_sprintf("%a", c(0,.1,.2,.3,.4,.5,.6,.7,.8,.9,1)), sprintf("%a", c(0,.1,.2,.3,.4,.5,.6,.7,.8,.9,1)))
