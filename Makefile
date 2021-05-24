@@ -81,6 +81,14 @@ weave-examples:
 sphinx: stop-on-utf8 r rd2myst news weave-examples
 	rm -rf devel/sphinx/_build/
 	cd devel/sphinx && make html
+	echo "*** Browse the generated documentation at"\
+	    "file://`pwd`/devel/sphinx/_build/html/index.html"
+
+docs: sphinx
+	# this is recommended only when publishing an official release
+	# -> updates the package homepage
+	rm -rf devel/sphinx/_build/
+	cd devel/sphinx && make html
 	rm -rf docs/
 	mkdir docs/
 	cp -rf devel/sphinx/_build/html/* docs/
@@ -96,12 +104,12 @@ clean:
 	rm -f src/Makevars src/uconfig_local.h \
 	    src/install.libs.R config.log config.status src/symbols.rds
 	rm -rf devel/sphinx/_build/
+	rm -rf devel/sphinx/rapi/
 	rm -rf revdep/
 
 purge: clean
 	find src -name '*.o' -exec rm {} \;
 	find src -name '*.so' -exec rm {} \;
 	rm -fr autom4te.cache
-	rm -f man/*.Rd
-	rm -rf devel/sphinx/rapi/
-	rm -rf docs/
+	#rm -f man/*.Rd
+	#rm -rf docs/
