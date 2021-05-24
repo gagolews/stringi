@@ -61,7 +61,7 @@
 #' @param width integer vector giving minimal output string lengths
 #' @param side [\code{stri_pad} only] single character string;
 #'    sides on which padding character is added
-#'    (\code{left}, \code{right}, or \code{both})
+#'    (\code{left} (default), \code{right}, or \code{both})
 #' @param pad character vector giving padding code points
 #' @param use_length single logical value; should the number of code
 #' points be used instead of the total code point width
@@ -69,7 +69,6 @@
 #'
 #' @return These functions return a character vector.
 #'
-#' @rdname stri_pad
 #' @examples
 #' stri_pad_left('stringi', 10, pad='#')
 #' stri_pad_both('stringi', 8:12, pad='*')
@@ -79,6 +78,9 @@
 #' cat(stri_pad_both(c('\ud6c8\ubbfc\uc815\uc74c', # takes width into account
 #'    stri_trans_nfkd('\ud6c8\ubbfc\uc815\uc74c'), 'abcd'),
 #'    width=10), sep='\n')
+#'
+#' @family length
+#' @rdname stri_pad
 #' @export
 stri_pad_both <- function(str, width = floor(0.9 * getOption("width")), pad = " ",
     use_length = FALSE)

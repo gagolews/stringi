@@ -62,9 +62,12 @@ stri_width(stri_trans_nfkd('\ubc1f')) # includes Hangul Jamo medial vowels and f
 The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
 
 Other length: 
+\code{\link{\%s$\%}()},
 \code{\link{stri_isempty}()},
 \code{\link{stri_length}()},
-\code{\link{stri_numbytes}()}
+\code{\link{stri_numbytes}()},
+\code{\link{stri_pad_both}()},
+\code{\link{stri_sprintf}()}
 }
 \concept{length}
 \author{

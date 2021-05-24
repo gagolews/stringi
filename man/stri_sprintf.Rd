@@ -3,6 +3,7 @@
 \name{stri_sprintf}
 \alias{stri_sprintf}
 \alias{stri_string_format}
+\alias{stri_printf}
 \title{Format Strings}
 \usage{
 stri_sprintf(
@@ -22,19 +23,36 @@ stri_string_format(
   nan_string = "NaN",
   use_length = FALSE
 )
+
+stri_printf(
+  format,
+  ...,
+  file = "",
+  sep = "\\n",
+  append = FALSE,
+  na_string = "NA",
+  inf_string = "Inf",
+  nan_string = "NaN",
+  use_length = FALSE
+)
 }
 \arguments{
-\item{format}{character vector of format strings}
+\item{format}{character vector of format strings \code{\link[base]{sprintf}}}
 
 \item{...}{vectors (coercible to integer, real, or character)}
 
-\item{na_string}{single string to represent the not-a-number}
+\item{na_string}{single string to represent missing values;
+if \code{NA}, missing values in \code{...}
+result in the corresponding outputs be missing too;
+use \code{"NA"} for compatibility with base R}
 
-\item{inf_string}{single string to represent the (unsigned) infinity}
+\item{inf_string}{single string to represent the (unsigned) infinity (\code{NA} allowed)}
+
+\item{nan_string}{single string to represent the not-a-number (\code{NA} allowed)}
 
 \item{use_length}{single logical value; should the number of code
 points be used when applying modifiers such as \code{\%20s}
-instead of the total code point width (see \code{\link{stri_width}})?}
+instead of the total code point width?}
 
 \item{file}{see \code{\link[base]{cat}}}
 
@@ -50,37 +68,53 @@ text on the standard output or other connection/file. Hence, it returns
 The other functions return a character vector.
 }
 \description{
-A Unicode-aware replacement for and enhancement of
+\code{stri_sprintf} (synonym: \code{stri_string_format})
+is a Unicode-aware replacement for and enhancement of
 the built-in \code{\link[base]{sprintf}} function.
 Moreover, \code{stri_printf} prints formatted strings.
 }
 \details{
 Vectorized over \code{format} and all vectors passed via \code{...}.
 
-\code{stri_string_format} is a synonym for \code{stri_sprintf}.
-
-Note that \code{stri_printf} treats missing values in \code{...}
-as \code{"NA"} strings by default.
-
-Note that Unicode code points may have various widths when
-printed on the console and that, by default, the function takes that
-into account. By changing the state of the \code{use_length}
-argument, this function act as if each code point was of width 1.
-
-For \code{\%d} and \code{\%f} formats, factors are treated as integer
-vectors (underlying codes) and so are date and time objects, etc.
+Unicode code points may have various widths when
+printed on the console (compare \code{\link{stri_width}}).
+These functions, by default (see the \code{use_length} argument), take this
+into account.
 
 This function is not locale sensitive. For instance, numbers are
-always formatted in the "POSIX" style, e.g., \code{-123456.789}.
+always formatted in the "POSIX" style, e.g., \code{-123456.789}
+(no thousands separator, dot as a fractional separator).
 Such a feature might be added at a later date, though.
 
 All arguments passed via \code{...} are evaluated. If some of them
 are unused, a warning is generated. Too few arguments result in an error.
+
+Note that \code{stri_printf} treats missing values in \code{...}
+as strings \code{"NA"} by default.
+
+All format specifiers supported \code{\link[base]{sprintf}} are
+also available here. For the formatting of integers and floating-point
+values, currently the system \code{std::snprintf()} is called, but
+this may change in the future. Format specifiers are normalized
+and necessary sanity checks are performed.
+
+Supported conversion specifiers: \code{dioxX} (integers)
+\code{feEgGaA} (floats) and \code{s} (character strings).
+Supported flags: \code{-} (left-align),
+\code{+} (force output sign or blank when \code{NaN} or \code{NA}; numeric only),
+\code{<space>} (output minus or space for a sign; numeric only)
+\code{0} (pad with 0s; numeric only),
+\code{#} (alternative output of some numerics).
 }
 \examples{
-#...
 stri_printf("\%4s=\%.3f", c("e", "e\u00b2", "\u03c0", "\u03c0\u00b2"),
     c(exp(1), exp(2), pi, pi^2))
+
+x <- c("xxabcd", "xx\u0105\u0106\u0107\u0108",
+    "\u200b\u200b\u200b\u200b\U0001F3F4\U000E0067\U000E0062\U000E0073\U000E0063\U000E0074\U000E007Fabcd")
+stri_printf("[\%10s]", x)  # minimum width = 10
+stri_printf("[\%-10.3s]", x)  # output of max width = 3, but pad to width of 10
+stri_printf("[\%10s]", x, use_length=TRUE)  # minimum number Unicode of code points = 10
 
 # vectorization wrt all arguments:
 p <- runif(10)
@@ -94,10 +128,35 @@ stri_sprintf("\%s) \%s", letters[seq_along(x)], c("\u2718", "\u2713")[x+1])
 stri_printf("\%+10.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_),
     na_string="<NA>", nan_string="\U0001F4A9", inf_string="\u221E")
 
+stri_sprintf("UNIX time \%1$f is \%1$s.", Sys.time())
+
+# the following do not work in sprintf()
+stri_sprintf("\%1$#- *2$.*3$f", 1.23456, 10, 3)  # two asterisks
+stri_sprintf(c("\%s", "\%f"), pi)  # re-coercion needed
+stri_sprintf("\%1$s is \%1$f UNIX time.", Sys.time())  # re-coercion needed
+stri_sprintf(c("\%d", "\%s"), factor(11:12))  # re-coercion needed
+stri_sprintf(c("\%s", "\%d"), factor(11:12))  # re-coercion needed
+
 }
-\author{
-\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+\references{
+\code{printf} in \code{glibc},
+\url{https://man.archlinux.org/man/printf.3}
+
+\code{printf} format strings -- Wikipedia,
+\url{https://en.wikipedia.org/wiki/Printf_format_string}
 }
 \seealso{
 The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
+Other length: 
+\code{\link{\%s$\%}()},
+\code{\link{stri_isempty}()},
+\code{\link{stri_length}()},
+\code{\link{stri_numbytes}()},
+\code{\link{stri_pad_both}()},
+\code{\link{stri_width}()}
+}
+\concept{length}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
 }

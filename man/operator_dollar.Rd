@@ -5,23 +5,23 @@
 \alias{operator_dollar}
 \alias{oper_dollar}
 \alias{\%stri$\%}
-\title{C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf}
+\title{C-Style Formatting with \code{\link{stri_sprintf}} as a Binary Operator}
 \usage{
 e1 \%s$\% e2
 
 e1 \%stri$\% e2
 }
 \arguments{
-\item{e1}{format strings, see \code{\link[base]{sprintf}} for syntax}
+\item{e1}{format strings, see \code{\link{stri_sprintf}} for syntax}
 
-\item{e2}{a list of atomic vectors to be passed to \code{\link[base]{sprintf}}
+\item{e2}{a list of atomic vectors to be passed to \code{\link{stri_sprintf}}
 or a single atomic vector}
 }
 \value{
 Returns a character vector
 }
 \description{
-Provides access to base R's \code{\link[base]{sprintf}} in form of a binary
+Provides access to \code{\link{stri_sprintf}} in form of a binary
 operator in a way similar to Python's \code{\%} overloaded for strings.
 }
 \details{
@@ -29,9 +29,6 @@ Vectorized over \code{e1} and \code{e2}.
 
 \code{e1 \%s$\% atomic_vector} is equivalent to
 \code{e1 \%s$\% list(atomic_vector)}.
-
-Note that \code{\link[base]{sprintf}} takes field width in bytes,
-not Unicode code points. See Examples for a workaround.
 }
 \examples{
 "value='\%d'" \%s$\% 3
@@ -41,15 +38,22 @@ not Unicode code points. See Examples for a workaround.
 "\%s='\%d'" \%s$\% list(c("a", "b", "c"), 1)
 "\%s='\%d'" \%s$\% list(c("a", "b", "c"), 1:3)
 
-# sprintf field width:
 x <- c("abcd", "\u00DF\u00B5\U0001F970", "abcdef")
-cat(sprintf("\%s\%6s\%s", "-", x, "-"), sep="\n")
-cat(sprintf("\%s\%s\%s", "-", stringi::stri_pad(x, 6), "-"), sep="\n")
+cat("[\%6s]" \%s$\% x, sep="\n")  # width used, not the number of bytes
 
-}
-\author{
-\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
 }
 \seealso{
 The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
+Other length: 
+\code{\link{stri_isempty}()},
+\code{\link{stri_length}()},
+\code{\link{stri_numbytes}()},
+\code{\link{stri_pad_both}()},
+\code{\link{stri_sprintf}()},
+\code{\link{stri_width}()}
+}
+\concept{length}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
 }

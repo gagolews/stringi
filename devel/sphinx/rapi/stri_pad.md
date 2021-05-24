@@ -45,7 +45,7 @@ stri_pad(
 | `width`      | integer vector giving minimal output string lengths                                                                                                                             |
 | `pad`        | character vector giving padding code points                                                                                                                                     |
 | `use_length` | single logical value; should the number of code points be used instead of the total code point width (see [`stri_width`](https://stringi.gagolewski.com/rapi/stri_width.html))? |
-| `side`       | \[`stri_pad` only\] single character string; sides on which padding character is added (`left`, `right`, or `both`)                                                             |
+| `side`       | \[`stri_pad` only\] single character string; sides on which padding character is added (`left` (default), `right`, or `both`)                                                   |
 
 ## Details
 
@@ -68,6 +68,8 @@ These functions return a character vector.
 ## See Also
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
+
+Other length: [`%s$%`](https://stringi.gagolewski.com/rapi/%25s$%25.html)(), [`stri_isempty`](https://stringi.gagolewski.com/rapi/stri_isempty.html)(), [`stri_length`](https://stringi.gagolewski.com/rapi/stri_length.html)(), [`stri_numbytes`](https://stringi.gagolewski.com/rapi/stri_numbytes.html)(), [`stri_sprintf`](https://stringi.gagolewski.com/rapi/stri_sprintf.html)(), [`stri_width`](https://stringi.gagolewski.com/rapi/stri_width.html)()
 
 ## Examples
 

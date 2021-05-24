@@ -49,7 +49,7 @@ points be used instead of the total code point width
 
 \item{side}{[\code{stri_pad} only] single character string;
 sides on which padding character is added
-(\code{left}, \code{right}, or \code{both})}
+(\code{left} (default), \code{right}, or \code{both})}
 }
 \value{
 These functions return a character vector.
@@ -86,10 +86,20 @@ cat(stri_pad_both(c('the', 'string', 'processing', 'package'),
 cat(stri_pad_both(c('\ud6c8\ubbfc\uc815\uc74c', # takes width into account
    stri_trans_nfkd('\ud6c8\ubbfc\uc815\uc74c'), 'abcd'),
    width=10), sep='\n')
-}
-\author{
-\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
+
 }
 \seealso{
 The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
+Other length: 
+\code{\link{\%s$\%}()},
+\code{\link{stri_isempty}()},
+\code{\link{stri_length}()},
+\code{\link{stri_numbytes}()},
+\code{\link{stri_sprintf}()},
+\code{\link{stri_width}()}
+}
+\concept{length}
+\author{
+\href{https://www.gagolewski.com/}{Marek Gagolewski} and other contributors
 }
