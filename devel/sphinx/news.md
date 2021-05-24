@@ -12,8 +12,8 @@
   Moreover, `stri_printf` can be used to display formatted strings
   conveniently.
 
-* TODO ... [NEW FEATURE] #434: `stri_datetime_format` and `stri_datetime_parse`
-  is now also vectorised with respect to the `format` argument.
+* [NEW FEATURE] #434: `stri_datetime_format` and `stri_datetime_parse`
+  are now vectorised also with respect to the `format` argument.
 
 * [BACKWARD INCOMPATIBILITY] `%s$%` and `%stri$%` now use `stri_sprintf`
   instead of `base::sprintf`.
@@ -23,7 +23,9 @@
 
 * [BUGFIX] Few functions (`stri_length`, `stri_enc_toutf32`, etc.)
   did not throw an exception on an invalid UTF-8
-  byte sequence (and merely issues a warning instead)
+  byte sequence (and merely issues a warning instead).
+
+* [BUGFIX] `stri_datetime_fstr` did not honour `NA_character_`.
 
 
 ## 1.6.2 (2021-05-14)

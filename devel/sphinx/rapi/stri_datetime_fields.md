@@ -72,14 +72,14 @@ Other datetime: [`stri_datetime_add`](https://stringi.gagolewski.com/rapi/stri_d
 ```r
 stri_datetime_fields(stri_datetime_now())
 ##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth
-## 1 2021     5  24   12     48     34         215         22           5
+## 1 2021     5  24   14     54      2         921         22           5
 ##   DayOfYear DayOfWeek Hour12 AmPm Era
-## 1       144         2      0    2   2
+## 1       144         2      2    2   2
 stri_datetime_fields(stri_datetime_now(), locale='@calendar=hebrew')
 ##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth
-## 1 5781    10  13   12     48     34         219         37           3
+## 1 5781    10  13   14     54      2         924         37           3
 ##   DayOfYear DayOfWeek Hour12 AmPm Era
-## 1       248         2      0    2   1
+## 1       248         2      2    2   1
 stri_datetime_symbols(locale='@calendar=hebrew')$Month[
    stri_datetime_fields(stri_datetime_now(), locale='@calendar=hebrew')$Month
 ]

@@ -49,6 +49,8 @@ expect_equivalent(format(t), "2015-02-25 23:53:01")
 
 expect_equivalent(unclass(stri_datetime_parse(NA)), NA_real_)
 expect_equivalent(unclass(stri_datetime_parse(character(0))), double(0))
+expect_equivalent(unclass(stri_datetime_parse(Sys.time(), character(0))), double(0))
+expect_equivalent(unclass(stri_datetime_parse(Sys.time(), NA)), NA_real_)
 
 expect_equivalent(unclass(stri_datetime_format(as.POSIXct(NA))), NA_character_)
 expect_equivalent(unclass(stri_datetime_format(structure(double(0), class = c("POSIXct",
@@ -58,6 +60,11 @@ t <- stri_datetime_parse("2015-02-25 23:53:01", tz = "Europe/Tallinn")
 expect_equivalent(attr(t, "tzone"), "Europe/Tallinn")
 expect_equivalent(format(t, tz = "Europe/Warsaw"), "2015-02-25 22:53:01")
 expect_equivalent(format(structure(t, tzone = "Europe/Tallinn")), "2015-02-25 23:53:01")
+
+t <- Sys.time()
+f <- c("%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M", "%Y-%m-%d")
+expect_equivalent(stri_datetime_format(t, stri_datetime_fstr(f)), strftime(t, f))
+expect_equivalent(stri_datetime_format(t+3245*seq_along(f), stri_datetime_fstr(f)), strftime(t+3245*seq_along(f), f))
 
 # daylight savings time=FALSE
 x1 <- as.POSIXct(strptime("2015-03-01 12:00:00", "%Y-%m-%d %H:%M:%S", tz = "Europe/Warsaw"))
@@ -73,6 +80,12 @@ expect_equivalent(format(x1, usetz = TRUE), format(x2, usetz = TRUE))
 x1 <- as.POSIXct(strptime(c("2015-04-01 12:00:00", "2015-03-31 23:59:59"), "%Y-%m-%d %H:%M:%S",
     tz = "Europe/Warsaw"))
 x2 <- stri_datetime_parse(c("2015-04-01 12:00:00", "2015-03-31 23:59:59"), tz = "Europe/Warsaw")
+expect_equivalent(format(x1), format(x2))
+expect_equivalent(format(x1, usetz = TRUE), format(x2, usetz = TRUE))
+
+x1 <- as.POSIXct(strptime(c("2015-04-01 12:00:00", "2015-03-31 23:59"), c("%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M"),
+    tz = "Europe/Warsaw"))
+x2 <- stri_datetime_parse(c("2015-04-01 12:00:00", "2015-03-31 23:59"), stri_datetime_fstr(c("%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M")), tz = "Europe/Warsaw")
 expect_equivalent(format(x1), format(x2))
 expect_equivalent(format(x1, usetz = TRUE), format(x2, usetz = TRUE))
 

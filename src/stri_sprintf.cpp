@@ -66,7 +66,7 @@
 
 /** data types for sprintf
  *
- * @version 1.6.3 (Marek Gagolewski, 2021-05-20)
+ * @version 1.6.3 (Marek Gagolewski, 2021-05-24)
  */
 typedef enum {
     STRI_SPRINTF_TYPE_UNDEFINED=0,
@@ -78,7 +78,7 @@ typedef enum {
 
 /** data types for sprintf
  *
- * @version 1.6.3 (Marek Gagolewski, 2021-05-20)
+ * @version 1.6.3 (Marek Gagolewski, 2021-05-24)
  */
 typedef enum {
     STRI_SPRINTF_FORMAT_STATUS_OK=0,
@@ -92,6 +92,8 @@ typedef enum {
  * if delim not found, returns NA_INTEGER or throws an error
  * ignores leading 0s
  * non-negative values only
+ *
+ * @version 1.6.3 (Marek Gagolewski, 2021-05-24)
  */
 int stri__atoi_to_delim(
     const char* f,
@@ -141,6 +143,8 @@ int stri__atoi_to_delim(
  * stops at a non-digit, modifies jc in place
  * ignores leading 0s
  * non-negative values only
+ *
+ * @version 1.6.3 (Marek Gagolewski, 2021-05-24)
  */
 int stri__atoi_to_other(const char* f, R_len_t& jc, R_len_t j0, R_len_t j1, int max_val=99999)
 {
@@ -172,6 +176,8 @@ int stri__atoi_to_other(const char* f, R_len_t& jc, R_len_t j0, R_len_t j1, int 
  * throws an error on any chars outside of [0-9*$. +0#-]
  *
  * @returns index of the first char in STRI_SPRINTF_SPEC_TYPE
+ *
+ * @version 1.6.3 (Marek Gagolewski, 2021-05-24)
  */
 int stri__find_type_spec(const char* f, R_len_t j0, R_len_t n)
 {
@@ -204,7 +210,7 @@ int stri__find_type_spec(const char* f, R_len_t j0, R_len_t n)
 
 /** Enables the fetching of the i-th/next integer/real/string datum from `...`.
  *
- * @version 1.6.2 (Marek Gagolewski, 2021-05-20)
+ * @version 1.6.3 (Marek Gagolewski, 2021-05-24)
  */
 class StriSprintfDataProvider
 {
@@ -361,7 +367,7 @@ public:
 
 /** Parses and stores info on a single sprintf format (conversion) specifier
  *
- * @version 1.6.3 (Marek Gagolewski, 2021-05-22)
+ * @version 1.6.3 (Marek Gagolewski, 2021-05-24)
  */
 class StriSprintfFormatSpec
 {
@@ -764,7 +770,7 @@ private:
 
 /** Formats a single string
  *
- * @version 1.6.3 (Marek Gagolewski, 2021-05-22)
+ * @version 1.6.3 (Marek Gagolewski, 2021-05-24)
  */
 SEXP stri__sprintf_1(
     const String8& _f,
@@ -833,7 +839,7 @@ SEXP stri__sprintf_1(
  * @param use_length single logical value
  * @return character vector
  *
- * @version 1.6.3 (Marek Gagolewski, 2021-05-18)
+ * @version 1.6.3 (Marek Gagolewski, 2021-05-24)
 */
 SEXP stri_sprintf(SEXP format, SEXP x, SEXP na_string,
     SEXP inf_string, SEXP nan_string, SEXP use_length)

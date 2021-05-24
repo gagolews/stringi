@@ -28,7 +28,7 @@ stri_datetime_parse(
 |           |                                                                                                                                                                                 |
 |-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `time`    | an object of class [`POSIXct`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/DateTimeClasses.html) or an object coercible to                                        |
-| `format`  | single string, see Details; see also [`stri_datetime_fstr`](https://stringi.gagolewski.com/rapi/stri_datetime_fstr.html)                                                        |
+| `format`  | character vector, see Details; see also [`stri_datetime_fstr`](https://stringi.gagolewski.com/rapi/stri_datetime_fstr.html)                                                     |
 | `tz`      | `NULL` or `''` for the default time zone or a single string with a timezone identifier, see [`stri_timezone_list`](https://stringi.gagolewski.com/rapi/stri_timezone_list.html) |
 | `locale`  | `NULL` or `''` for default locale, or a single string with locale identifier; a non-Gregorian calendar may be specified by setting the `@calendar=name` keyword                 |
 | `str`     | character vector                                                                                                                                                                |
@@ -36,15 +36,15 @@ stri_datetime_parse(
 
 ## Details
 
-Vectorized over `time` or `str`.
+Vectorized over `format` and `time` or `str`.
 
-By default, `stri_datetime_format` (for the sake of compatibility with the [`strftime`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/strptime.html) function, but unlike `format.POSIXst`) formats a date/time object using the current default time zone.
+By default, `stri_datetime_format` (for the sake of compatibility with the [`strftime`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/strftime.html) function, but unlike `format.POSIXst`) formats a date/time object using the current default time zone.
 
-`format` may be one of `DT_STYLE` or `DT_relative_STYLE`, where `DT` is equal to `date`, `time`, or `datetime`, and `STYLE` is equal to `full`, `long`, `medium`, or `short`. This gives a locale-dependent date and/or time format. Note that currently <span class="pkg">ICU</span> does not support `relative` `time` formats, so this flag is currently ignored in such a context.
+`format` may be one of `DT_STYLE` or `DT_relative_STYLE`, where `DT` is equal to `date`, `time`, or `datetime`, and `STYLE` is equal to `full`, `long`, `medium`, or `short`. This gives a locale-dependent date and/or time format. Note that currently <span class="pkg">ICU</span> does not support `relative` `time` formats, thus this flag is currently ignored in such a context.
 
-Otherwise, `format` is a pattern: a string, where specific sequences of characters are replaced with date and time data from a calendar when formatting or used to generate data for a calendar when parsing. For example, `y` stands for the year. Characters may be used multiple times: `yy` might produce `99`, whereas `yyyy` yields `1999`. For most of the numerical fields, the number of characters specifies the field width. For example, if `h` is the hour, `h` might produce `5`, but `hh` yields `05`. For some characters, the count specifies whether an abbreviated or full form should be used, but may have other choices, as given below.
+Otherwise, `format` is a pattern: a string where specific sequences of characters are replaced with date/time data from a calendar when formatting or used to generate data for a calendar when parsing. For example, `y` stands for \'year\'. Characters may be used multiple times: `yy` might produce `99`, whereas `yyyy` yields `1999`. For most numerical fields, the number of characters specifies the field width. For example, if `h` is the hour, `h` might produce `5`, but `hh` yields `05`. For some characters, the count specifies whether an abbreviated or full form should be used.
 
-Two single quotes represent a literal single quote, either inside or outside single quotes. Text within single quotes is not interpreted in any way (except for two adjacent single quotes). Otherwise all ASCII letter from `a` to `z` and `A` to `Z` are reserved as syntax characters, and require quoting if they are to represent literal characters. In addition, certain ASCII punctuation characters may become variable in the future (e.g., `:` being interpreted as the time separator and `/` as a date separator, and replaced by respective locale-sensitive characters in display).
+Two single quotes represent a literal single quote, either inside or outside single quotes. Text within single quotes is not interpreted in any way (except for two adjacent single quotes). Otherwise, all ASCII letters from `a` to `z` and `A` to `Z` are reserved as syntax characters, and require quoting if they are to represent literal characters. In addition, certain ASCII punctuation characters may become available in the future (e.g., `:` being interpreted as the time separator and `/` as a date separator, and replaced by respective locale-sensitive characters in display).
 
 |            |                                                        |                |                                  |
 |:-----------|:-------------------------------------------------------|:---------------|:---------------------------------|
@@ -138,13 +138,13 @@ Two single quotes represent a literal single quote, either inside or outside sin
 | \'         | escape for text                                        | \'             | (nothing)                        |
 | \' \'      | two single quotes produce one                          | \' \'          | \'                               |
 
-Note that any characters in the pattern that are not in the ranges of `[a-z]` and `[A-Z]` will be treated as quoted text. For instance, characters like `:`, `.`, (a space), `#` and `@` will appear in the resulting time text even if they are not enclosed within single quotes. The single quote is used to "escape" letters. Two single quotes in a row, inside or outside a quoted sequence, represent a "real" single quote.
+Note that any characters in the pattern that are not in the ranges of `[a-z]` and `[A-Z]` will be treated as quoted text. For instance, characters like `:`, `.`, (a space), `#` and `@` will appear in the resulting time text even if they are not enclosed within single quotes. The single quote is used to "escape" the letters. Two single quotes in a row, inside or outside a quoted sequence, represent a "real" single quote.
 
-Here are some examples:
+A few examples:
 
 |                                |                                                   |
 |:-------------------------------|:--------------------------------------------------|
-| **Exemplary Pattern**          | **Result**                                        |
+| **Example Pattern**            | **Result**                                        |
 | yyyy.MM.dd \'at\' HH:mm:ss zzz | 2015.12.31 at 23:59:59 GMT+1                      |
 | EEE, MMM d, \'\'yy             | czw., gru 31, \'15                                |
 | h:mm a                         | 11:59 PM                                          |
@@ -166,7 +166,7 @@ Here are some examples:
 
 ## References
 
-*Formatting Dates and Times* - ICU User Guide, <https://unicode-org.github.io/icu/userguide/format_parse/datetime/>
+*Formatting Dates and Times* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/format_parse/datetime/>
 
 ## See Also
 
@@ -181,11 +181,11 @@ Other datetime: [`stri_datetime_add`](https://stringi.gagolewski.com/rapi/stri_d
 
 ```r
 stri_datetime_parse(c('2015-02-28', '2015-02-29'), 'yyyy-MM-dd')
-## [1] "2015-02-28 12:48:34 AEDT" NA
+## [1] "2015-02-28 14:54:02 AEDT" NA
 stri_datetime_parse(c('2015-02-28', '2015-02-29'), 'yyyy-MM-dd', lenient=TRUE)
-## [1] "2015-02-28 12:48:34 AEDT" "2015-03-01 12:48:34 AEDT"
+## [1] "2015-02-28 14:54:02 AEDT" "2015-03-01 14:54:02 AEDT"
 stri_datetime_parse('19 lipca 2015', 'date_long', locale='pl_PL')
-## [1] "2015-07-19 12:48:34 AEST"
+## [1] "2015-07-19 14:54:02 AEST"
 stri_datetime_format(stri_datetime_now(), 'datetime_relative_medium')
-## [1] "today, 12:48:34 pm"
+## [1] "today, 2:54:02 pm"
 ```
