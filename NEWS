@@ -1,8 +1,7 @@
 # What Is New in *stringi*
 
 
-
-## 1.6.3-devel (2021-xx-yy)
+## 1.6.2.9xxx (to-be >=1.6.3) (2021-xx-yy)
 
 * TODO ... [NEW FEATURE] #420: `stri_sprintf` (alias: `stri_string_format`)
   is a Unicode-aware replacement for and enhancement of the base `sprintf`:

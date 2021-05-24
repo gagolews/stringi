@@ -1,12 +1,18 @@
 # Configuration file for the Sphinx documentation builder.
 
 
-import sys
-import os
+#import sys
+#import os
+#import sphinx
+#import matplotlib.sphinxext
+#import IPython.sphinxext
 import sphinx_rtd_theme
-import sphinx
-import matplotlib.sphinxext
-import IPython.sphinxext
+import re
+
+def get_package_version():
+    with open("../../DESCRIPTION") as f:
+        return re.search(r'Version:[ ]*([0-9.-]+)', f.read()).group(1)
+
 
 # -- Project information -----------------------------------------------------
 
@@ -16,9 +22,11 @@ author = 'Marek Gagolewski'
 html_title = project
 html_short_title = project
 
-# The full version, including alpha/beta/rc tags
-version = '1.6.3'  # TODO: automate
+version = get_package_version()
 release = version
+
+print("This is %s %s by %s.\n" % (project, version, author))
+
 
 github_project_url = "https://github.com/gagolews/stringi/"
 html_baseurl = "https://stringi.gagolewski.com/"
