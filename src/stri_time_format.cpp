@@ -32,6 +32,7 @@
 
 #include "stri_stringi.h"
 #include "stri_container_utf16.h"
+#include "stri_container_utf8.h"
 #include "stri_container_double.h"
 #include "stri_container_integer.h"
 #include <unicode/calendar.h>
@@ -40,24 +41,15 @@
 
 
 /**
- * Format date-time objects
+ * Get date format
  *
- * @param time
- * @param format
- * @param tz
- * @param locale
- *
- * @return character vector
- *
- * @version 0.5-1 (Marek Gagolewski, 2015-01-05)
- *
- * @version 0.5-1 (Marek Gagolewski, 2015-02-22)
- *    use tz
+ * @version 1.6.3 (Marek Gagolewski, 2021-05-24)
+ *    refactor from stri_datetime_parse
  */
-SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale) {
-    PROTECT(time = stri__prepare_arg_POSIXct(time, "time"));
-    const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
-    const char* format_val = stri__prepare_arg_string_1_notNA(format, "format");
+DateFormat* stri__get_date_format(
+    const char* format_val, const char* locale_val, UErrorCode status
+) {
+    DateFormat* fmt = NULL;
 
     // "format" may be one of:
     const char* format_opts[] = {
@@ -71,15 +63,6 @@ SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale) {
     };
     int format_cur = stri__match_arg(format_val, format_opts);
 
-    TimeZone* tz_val = stri__prepare_arg_timezone(tz, "tz", true/*allowdefault*/);
-    Calendar* cal = NULL;
-    DateFormat* fmt = NULL;
-    STRI__ERROR_HANDLER_BEGIN(1)
-    R_len_t vectorize_length = LENGTH(time);
-    StriContainerDouble time_cont(time, vectorize_length);
-    UnicodeString format_str(format_val);
-
-    UErrorCode status = U_ZERO_ERROR;
     if (format_cur >= 0) {
         DateFormat::EStyle style = DateFormat::kNone;
         switch (format_cur % 8) {
@@ -115,20 +98,24 @@ SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale) {
         /* ICU 54.1: Relative time styles are not currently supported.  */
         switch (format_cur / 8) {
         case 0:
-            fmt = DateFormat::createDateInstance(style,
-                                                 Locale::createFromName(locale_val));
+            fmt = DateFormat::createDateInstance(
+                style, Locale::createFromName(locale_val)
+            );
             break;
 
         case 1:
             fmt = DateFormat::createTimeInstance(
-                      (DateFormat::EStyle)(style & ~DateFormat::kRelative),
-                      Locale::createFromName(locale_val));
+                (DateFormat::EStyle)(style & ~DateFormat::kRelative),
+                Locale::createFromName(locale_val)
+            );
             break;
 
         case 2:
-            fmt = DateFormat::createDateTimeInstance(style,
-                    (DateFormat::EStyle)(style & ~DateFormat::kRelative),
-                    Locale::createFromName(locale_val));
+            fmt = DateFormat::createDateTimeInstance(
+                style,
+                (DateFormat::EStyle)(style & ~DateFormat::kRelative),
+                Locale::createFromName(locale_val)
+            );
             break;
 
         default:
@@ -137,11 +124,51 @@ SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale) {
 
         }
     }
-    else
-        fmt = new SimpleDateFormat(format_str, Locale::createFromName(locale_val), status);
-    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+    else {
+        UnicodeString format_str(format_val);
+        fmt = new SimpleDateFormat(
+            format_str, Locale::createFromName(locale_val), status
+        );
+    }
 
-    status = U_ZERO_ERROR;
+    return fmt;
+}
+
+
+/**
+ * Format date-time objects
+ *
+ * @param time
+ * @param format
+ * @param tz
+ * @param locale
+ *
+ * @return character vector
+ *
+ * @version 0.5-1 (Marek Gagolewski, 2015-01-05)
+ * @version 0.5-1 (Marek Gagolewski, 2015-02-22) use tz
+ * @version 1.6.3 (Marek Gagolewski, 2021-05-24) #434: vectorise wrt format
+ */
+SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale) {
+    const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
+    PROTECT(time = stri__prepare_arg_POSIXct(time, "time"));
+    PROTECT(format = stri__prepare_arg_string(format, "format"));
+
+    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(time), LENGTH(format));
+    if (vectorize_length <= 0) {
+        UNPROTECT(2);
+        return Rf_allocVector(STRSXP, 0);
+    }
+
+    TimeZone* tz_val = stri__prepare_arg_timezone(tz, "tz", true/*allowdefault*/);
+    Calendar* cal = NULL;
+    DateFormat* fmt = NULL;
+
+    STRI__ERROR_HANDLER_BEGIN(2)
+    StriContainerDouble time_cont(time, vectorize_length);
+    StriContainerUTF8 format_cont(format, vectorize_length);
+
+    UErrorCode status = U_ZERO_ERROR;
     cal = Calendar::createInstance(locale_val, status);
     STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
@@ -150,10 +177,30 @@ SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale) {
 
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
-    for (R_len_t i=0; i<vectorize_length; ++i) {
-        if (time_cont.isNA(i)) {
+
+    const String8* format_last = NULL; // this will allow for formatter reuse
+    for (R_len_t i = format_cont.vectorize_init();
+            i != format_cont.vectorize_end();
+            i = format_cont.vectorize_next(i))
+    {
+        if (time_cont.isNA(i) || format_cont.isNA(i)) {
             SET_STRING_ELT(ret, i, NA_STRING);
             continue;
+        }
+
+        const String8* format_cur = &(format_cont.get(i));
+        if (format_cur != format_last) {
+            // well, no reuse possible - resetting
+            format_last = format_cur;
+
+            if (fmt) {
+                delete fmt;
+                fmt = NULL;
+            }
+
+            status = U_ZERO_ERROR;
+            fmt = stri__get_date_format(format_cur->c_str(), locale_val, status);
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
         }
 
         status = U_ZERO_ERROR;
@@ -215,96 +262,30 @@ SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale) {
  * @version 0.5-1 (Marek Gagolewski, 2015-01-11) lenient arg added
  * @version 0.5-1 (Marek Gagolewski, 2015-02-22) use tz
  * @version 0.5-1 (Marek Gagolewski, 2015-03-01) set tzone attrib on retval
+ * @version 1.6.3 (Marek Gagolewski, 2021-05-24) #434: vectorise wrt format
  */
 SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP lenient, SEXP tz, SEXP locale) {
-    PROTECT(str = stri__prepare_arg_string(str, "str"));
     const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
-    const char* format_val = stri__prepare_arg_string_1_notNA(format, "format");
+    PROTECT(str = stri__prepare_arg_string(str, "str"));
+    PROTECT(format = stri__prepare_arg_string(format, "format"));
     bool lenient_val = stri__prepare_arg_logical_1_notNA(lenient, "lenient");
     if (!isNull(tz)) PROTECT(tz = stri__prepare_arg_string_1(tz, "tz"));
     else             PROTECT(tz); /* needed to set tzone attrib */
 
-    // "format" may be one of:
-    const char* format_opts[] = {
-        "date_full", "date_long", "date_medium", "date_short",
-        "date_relative_full", "date_relative_long", "date_relative_medium", "date_relative_short",
-        "time_full", "time_long", "time_medium", "time_short",
-        "time_relative_full", "time_relative_long", "time_relative_medium", "time_relative_short",
-        "datetime_full", "datetime_long", "datetime_medium", "datetime_short",
-        "datetime_relative_full", "datetime_relative_long", "datetime_relative_medium", "datetime_relative_short",
-        NULL
-    };
-    int format_cur = stri__match_arg(format_val, format_opts);
+    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(format));
+    if (vectorize_length <= 0) {
+        UNPROTECT(3);
+        return Rf_allocVector(REALSXP, 0);
+    }
 
     TimeZone* tz_val = stri__prepare_arg_timezone(tz, "tz", true/*allowdefault*/);
     Calendar* cal = NULL;
     DateFormat* fmt = NULL;
-    STRI__ERROR_HANDLER_BEGIN(2)
-    R_len_t vectorize_length = LENGTH(str);
+    STRI__ERROR_HANDLER_BEGIN(3)
     StriContainerUTF16 str_cont(str, vectorize_length);
-    UnicodeString format_str(format_val);
+    StriContainerUTF8 format_cont(format, vectorize_length);
 
     UErrorCode status = U_ZERO_ERROR;
-    if (format_cur >= 0) {
-        DateFormat::EStyle style = DateFormat::kNone;
-        switch (format_cur % 8) {
-        case 0:
-            style = DateFormat::kFull;
-            break;
-        case 1:
-            style = DateFormat::kLong;
-            break;
-        case 2:
-            style = DateFormat::kMedium;
-            break;
-        case 3:
-            style = DateFormat::kShort;
-            break;
-        case 4:
-            style = DateFormat::kFullRelative;
-            break;
-        case 5:
-            style = DateFormat::kLongRelative;
-            break;
-        case 6:
-            style = DateFormat::kMediumRelative;
-            break;
-        case 7:
-            style = DateFormat::kShortRelative;
-            break;
-        default:
-            style = DateFormat::kNone;
-            break;
-        }
-
-        /* ICU 54.1: Relative time styles are not currently supported.  */
-        switch (format_cur / 8) {
-        case 0:
-            fmt = DateFormat::createDateInstance(style, Locale::createFromName(locale_val));
-            break;
-
-        case 1:
-            fmt = DateFormat::createTimeInstance((DateFormat::EStyle)(style & ~DateFormat::kRelative),
-                                                 Locale::createFromName(locale_val));
-            break;
-
-        case 2:
-            fmt = DateFormat::createDateTimeInstance(style,
-                    (DateFormat::EStyle)(style & ~DateFormat::kRelative),
-                    Locale::createFromName(locale_val));
-            break;
-
-        default:
-            fmt = NULL;
-            break;
-
-        }
-    }
-    else
-        fmt = new SimpleDateFormat(format_str, Locale::createFromName(locale_val), status);
-    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-
-    status = U_ZERO_ERROR;
     cal = Calendar::createInstance(locale_val, status);
     STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
@@ -315,10 +296,30 @@ SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP lenient, SEXP tz, SEXP loca
 
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocVector(REALSXP, vectorize_length));
-    for (R_len_t i=0; i<vectorize_length; ++i) {
-        if (str_cont.isNA(i)) {
+
+    const String8* format_last = NULL; // this will allow for formatter reuse
+    for (R_len_t i = format_cont.vectorize_init();
+            i != format_cont.vectorize_end();
+            i = format_cont.vectorize_next(i))
+    {
+        if (str_cont.isNA(i) || format_cont.isNA(i)) {
             REAL(ret)[i] = NA_REAL;
             continue;
+        }
+
+        const String8* format_cur = &(format_cont.get(i));
+        if (format_cur != format_last) {
+            // well, no reuse possible - resetting
+            format_last = format_cur;
+
+            if (fmt) {
+                delete fmt;
+                fmt = NULL;
+            }
+
+            status = U_ZERO_ERROR;
+            fmt = stri__get_date_format(format_cur->c_str(), locale_val, status);
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
         }
 
         status = U_ZERO_ERROR;
