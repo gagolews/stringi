@@ -220,9 +220,9 @@
 #' @rdname stri_datetime_format
 #' @family datetime
 #' @export
-stri_datetime_format <- function(time, format = "uuuu-MM-dd HH:mm:ss", tz = NULL,
-    locale = NULL)
-{
+stri_datetime_format <- function(
+    time, format = "uuuu-MM-dd HH:mm:ss", tz = NULL, locale = NULL
+) {
     .Call(C_stri_datetime_format, time, format, tz, locale)
 }
 
@@ -230,35 +230,38 @@ stri_datetime_format <- function(time, format = "uuuu-MM-dd HH:mm:ss", tz = NULL
 #' @export
 #' @rdname stri_datetime_format
 #' @aliases stri_datetime_format
-stri_datetime_parse <- function(str, format = "uuuu-MM-dd HH:mm:ss", lenient = FALSE,
-    tz = NULL, locale = NULL)
-{
+stri_datetime_parse <- function(
+    str, format = "uuuu-MM-dd HH:mm:ss",
+    lenient = FALSE, tz = NULL, locale = NULL
+) {
     .Call(C_stri_datetime_parse, str, format, lenient, tz, locale)
 }
 
 
 #' @title
-#' Convert strptime-Style Format Strings
+#' Convert \code{strptime}-Style Format Strings
 #'
 #' @description
-#' A function to convert \code{\link{strptime}}/\code{\link{strftime}}-style
+#' This function converts \code{\link[base]{strptime}} or
+#' \code{\link[base]{strftime}}-style
 #' format strings to \pkg{ICU} format strings that may be used
 #' in \code{\link{stri_datetime_parse}} and \code{\link{stri_datetime_format}}
 #' functions.
 #'
 #' @details
 #' For more details on conversion specifiers please refer to
-#' the manual page of \code{\link{strptime}}. Most of the formatters
+#' the manual page of \code{\link[base]{strptime}}. Most of the formatters
 #' of the form \code{\%x}, where \code{x} is a letter, are supported.
 #' Moreover, each \code{\%\%} is replaced with \code{\%}.
 #'
-#' Warnings are given in case of \code{\%x}, \code{\%X}, \code{\%u}, \code{\%w},
-#' \code{\%g}, \code{\%G}, \code{\%c}, \code{\%U} and \code{\%W}
+#' Warnings are given in the case of \code{\%x}, \code{\%X}, \code{\%u},
+#' \code{\%w}, \code{\%g}, \code{\%G}, \code{\%c}, \code{\%U}, and \code{\%W}
 #' as in such circumstances either \pkg{ICU} does not
-#' support the  functionality requested using the format-strings API
+#' support the functionality requested using the string format API
 #' or there are some inconsistencies between base R and \pkg{ICU}.
 #'
-#' @param x character vector consisting of date/time format strings
+#' @param x character vector of date/time format strings
+#'
 #' @return Returns a character vector.
 #'
 #' @examples
@@ -268,6 +271,9 @@ stri_datetime_parse <- function(str, format = "uuuu-MM-dd HH:mm:ss", lenient = F
 #' @export
 stri_datetime_fstr <- function(x)
 {
+    x <- stri_enc_toutf8(x)
+    if (length(x) <= 0) return(x)
+
     # %U, %W -> %V + warn
     # %x, %X -> warn
     # %u, %w -> warn
@@ -299,12 +305,12 @@ stri_datetime_fstr <- function(x)
     x <- stri_replace_all_fixed(x, "%%", "%!")  # well, that's not very elegant...
     x <- stri_replace_all_regex(x, "(?:(?<=[%][A-Za-z])|^(?![%][A-Za-z]))(.+?)(?:(?<![%][A-Za-z])$|(?=[%][A-Za-z]))",
         "'$1'")
-    if (any(stri_detect_regex(x, stri_flatten(warn, collapse = "|"))))
+    if (any(stri_detect_regex(x, stri_flatten(warn, collapse = "|")), na.rm=TRUE))
         warning(sprintf("Formatters %s might not be 100%% compatible with ICU", stri_flatten(warn,
             collapse = ", ")))
     x <- stri_replace_all_fixed(x, search, needle, vectorize_all = FALSE)
-    if (any(stri_detect_regex(x, "%[A-Za-z]"))) {
-        warning("Unsupported date/time format specifier. Ignoring")
+    if (any(stri_detect_regex(x, "%[A-Za-z]"), na.rm=TRUE)) {
+        warning("Unsupported date/time format specifier; ignoring")
         x <- stri_replace_all_regex(x, "%[A-Za-z]", "%?")  # unsupported formatter
     }
     x <- stri_replace_all_fixed(x, "%!", "%")  # well, that's not very elegant...

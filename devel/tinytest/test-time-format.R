@@ -2,6 +2,7 @@ library("tinytest")
 library("stringi")
 
 
+
 expect_true(stri_datetime_fstr(" test123") == "' test123'")
 expect_true(stri_datetime_fstr("%%") == "'%'")
 expect_true(stri_datetime_fstr("%%y%%m%%") == "'%y%m%'")
@@ -23,7 +24,10 @@ expect_true(stri_datetime_fstr("%M") == "mm")
 expect_true(stri_datetime_fstr("%S") == "ss")
 expect_true(stri_datetime_fstr("%H") == "HH")
 expect_true(stri_datetime_fstr("%d") == "dd")
-expect_equivalent(stri_datetime_fstr(character(0)), character(0))
+expect_equivalent(stri_datetime_fstr(NA), NA_character_)
+expect_identical(stri_datetime_fstr(c("%Y-%m-%d", "", NA, "stringi", "'stri'ngi'", "%H-%M-%S")),
+    c("yyyy'-'MM'-'dd", "", NA, "'stringi'", "'\\'stri\\'ngi\\''", "HH'-'mm'-'ss"))
+expect_equivalent(stri_datetime_fstr(numeric(0)), character(0))
 #    expect_equivalent(stri_datetime_fstr(NA), NA_character_)
 
 
