@@ -23,7 +23,9 @@
 
 * [BUGFIX] Few functions (`stri_length`, `stri_enc_toutf32`, etc.)
   did not throw an exception on an invalid UTF-8
-  byte sequence (and merely issues a warning instead)
+  byte sequence (and merely issues a warning instead).
+
+* [BUGFIX] `stri_datetime_fstr` did not honour `NA_character_`.
 
 
 ## 1.6.2 (2021-05-14)

@@ -2,32 +2,33 @@
 % Please edit documentation in R/time_format.R
 \name{stri_datetime_fstr}
 \alias{stri_datetime_fstr}
-\title{Convert strptime-Style Format Strings}
+\title{Convert \code{strptime}-Style Format Strings}
 \usage{
 stri_datetime_fstr(x)
 }
 \arguments{
-\item{x}{character vector consisting of date/time format strings}
+\item{x}{character vector of date/time format strings}
 }
 \value{
 Returns a character vector.
 }
 \description{
-A function to convert \code{\link{strptime}}/\code{\link{strftime}}-style
+This function converts \code{\link[base]{strptime}} or
+\code{\link[base]{strftime}}-style
 format strings to \pkg{ICU} format strings that may be used
 in \code{\link{stri_datetime_parse}} and \code{\link{stri_datetime_format}}
 functions.
 }
 \details{
 For more details on conversion specifiers please refer to
-the manual page of \code{\link{strptime}}. Most of the formatters
+the manual page of \code{\link[base]{strptime}}. Most of the formatters
 of the form \code{\%x}, where \code{x} is a letter, are supported.
 Moreover, each \code{\%\%} is replaced with \code{\%}.
 
-Warnings are given in case of \code{\%x}, \code{\%X}, \code{\%u}, \code{\%w},
-\code{\%g}, \code{\%G}, \code{\%c}, \code{\%U} and \code{\%W}
+Warnings are given in the case of \code{\%x}, \code{\%X}, \code{\%u},
+\code{\%w}, \code{\%g}, \code{\%G}, \code{\%c}, \code{\%U}, and \code{\%W}
 as in such circumstances either \pkg{ICU} does not
-support the  functionality requested using the format-strings API
+support the functionality requested using the string format API
 or there are some inconsistencies between base R and \pkg{ICU}.
 }
 \examples{
