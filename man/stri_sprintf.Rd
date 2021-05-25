@@ -37,7 +37,7 @@ stri_printf(
 )
 }
 \arguments{
-\item{format}{character vector of format strings \code{\link[base]{sprintf}}}
+\item{format}{character vector of format strings}
 
 \item{...}{vectors (coercible to integer, real, or character)}
 
@@ -81,7 +81,7 @@ printed on the console (compare \code{\link{stri_width}}).
 These functions, by default (see the \code{use_length} argument), take this
 into account.
 
-This function is not locale sensitive. For instance, numbers are
+These functions are not locale sensitive. For instance, numbers are
 always formatted in the "POSIX" style, e.g., \code{-123456.789}
 (no thousands separator, dot as a fractional separator).
 Such a feature might be added at a later date, though.

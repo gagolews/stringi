@@ -28,6 +28,12 @@ r-icu-system:
 r-icu-bundle:
 	R CMD INSTALL . --configure-args='--disable-pkg-config'
 
+reload: r
+	# https://github.com/gagolews/home_bin
+	if [ `whoami` = "gagolews" ]; then \
+		jupyter-qtconsole-sender --silent "reload('${PKGNAME}')"; \
+	fi
+
 tinytest:
 	Rscript -e 'source("devel/tinytest.R")'
 
