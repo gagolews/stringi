@@ -263,6 +263,10 @@ stri_datetime_parse <- function(
 #'
 #' @param x character vector of date/time format strings
 #'
+#' @param ignore_special if \code{FALSE}, special identifiers like
+#'     \code{"datetime_full"} or \code{date_relative_short}
+#'     (see \code{\link{stri_datetime_format}}) are left as-is
+#'
 #' @return Returns a character vector.
 #'
 #' @examples
@@ -270,7 +274,7 @@ stri_datetime_parse <- function(
 #'
 #' @family datetime
 #' @export
-stri_datetime_fstr <- function(x)
+stri_datetime_fstr <- function(x, ignore_special=TRUE)
 {
     x <- stri_enc_toutf8(x)
     if (length(x) <= 0) return(x)
@@ -315,6 +319,20 @@ stri_datetime_fstr <- function(x)
         x <- stri_replace_all_regex(x, "%[A-Za-z]", "%?")  # unsupported formatter
     }
     x <- stri_replace_all_fixed(x, "%!", "%")  # well, that's not very elegant...
+
+    if (isFALSE(ignore_special)) {
+        formats <- outer(
+            c("date", "time", "datetime", "date_relative", "datetime_relative"),
+            c("full", "long", "medium", "short"),
+            stri_paste,
+            sep="_"
+        )
+
+        which_p <- match(x, stringi::stri_sprintf("'%s'", formats))
+        # works for NAs and no items on the above list too
+        x[which(!is.na(which_p))] <- formats[which_p[!is.na(which_p)]]
+    }
+
     x
 }
 

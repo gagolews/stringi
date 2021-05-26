@@ -18,11 +18,13 @@ e1 \%stri$\% e2
 or a single atomic vector}
 }
 \value{
-Returns a character vector
+Returns a character vector.
 }
 \description{
 Provides access to \code{\link{stri_sprintf}} in form of a binary
 operator in a way similar to Python's \code{\%} overloaded for strings.
+
+Missing values and empty vectors are propagated as usual.
 }
 \details{
 Vectorized over \code{e1} and \code{e2}.

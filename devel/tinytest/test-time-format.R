@@ -14,6 +14,12 @@ expect_true(suppressWarnings(stri_datetime_fstr("%Q")) == "%?")  # unsupported f
 expect_true(stri_datetime_fstr("!%y!") == "'!'yy'!'")
 expect_true(stri_datetime_fstr("%%%y%%") == "'%'yy'%'")
 
+expect_identical(stri_datetime_fstr(c("datetime_short", "datetime_lol", "%Y", NA)), c("'datetime_short'", "'datetime_lol'", "yyyy", NA))
+expect_identical(stri_datetime_fstr(c("datetime_short", "datetime_lol", "%Y", NA), ignore_special=FALSE), c("datetime_short", "'datetime_lol'", "yyyy", NA))
+expect_identical(stri_datetime_fstr(character(0), ignore_special=FALSE), character(0))
+expect_identical(stri_datetime_fstr(rep(NA_character_, 1), ignore_special=FALSE), rep(NA_character_, 1))
+expect_identical(stri_datetime_fstr(rep(NA_character_, 71), ignore_special=FALSE), rep(NA_character_, 71))
+
 expect_equivalent(stri_datetime_fstr(c("%Z", "%z")), c("z", "Z"))
 expect_true(stri_datetime_fstr("%Y") == "yyyy")
 expect_true(stri_datetime_fstr("%y") == "yy")

@@ -182,7 +182,7 @@ stri_printf <- function(
 #' Provides access to \code{\link{stri_sprintf}} in form of a binary
 #' operator in a way similar to Python's \code{\%} overloaded for strings.
 #'
-#'
+#' Missing values and empty vectors are propagated as usual.
 #'
 #' @details
 #' Vectorized over \code{e1} and \code{e2}.
@@ -196,7 +196,7 @@ stri_printf <- function(
 #' or a single atomic vector
 #'
 #' @return
-#' Returns a character vector
+#' Returns a character vector.
 #'
 #'
 #' @examples
