@@ -42,7 +42,7 @@
 #' Vectorized over \code{format} and \code{time} or \code{str}.
 #'
 #' By default, \code{stri_datetime_format} (for the sake of compatibility
-#' with the \code{\link[base]{strftime}} function, but unlike \code{format.POSIXst})
+#' with the \code{\link[base]{strftime}} function)
 #' formats a date/time object using the current default time zone.
 #'
 #' \code{format} may be one of \code{DT_STYLE} or \code{DT_relative_STYLE},
@@ -191,16 +191,18 @@
 #' uuuu-MM-dd'T'HH:mm:ssZ \tab 2015-12-31T23:59:59+0100 (the ISO 8601 guideline) \cr
 #' }
 #'
-#' @param time an object of class \code{\link{POSIXct}} or an object coercible to
+#' @param time an object of class \code{\link{POSIXct}}
+#'     (\code{as.POSIXct} will be called on character vectors
+#'     and objects of class \code{POSIXlt}, \code{Date}, and \code{factor})
 #' @param format character vector, see Details; see also \code{\link{stri_datetime_fstr}}
 #' @param str character vector
 #' @param tz \code{NULL} or \code{''} for the default time zone
-#' or a single string with a timezone identifier,
-#' see \code{\link{stri_timezone_list}}
+#'     or a single string with a timezone identifier,
+#'     see \code{\link{stri_timezone_get}} and \code{\link{stri_timezone_list}}
 #' @param lenient single logical value; should date/time parsing be lenient?
-#' @param locale \code{NULL} or \code{''} for default locale,
-#' or a single string with locale identifier; a non-Gregorian calendar
-#' may be specified by setting the \code{@@calendar=name} keyword
+#' @param locale \code{NULL} or \code{''} for the default locale,
+#'     or a single string with locale identifier; a non-Gregorian calendar
+#'     may be specified by setting the \code{@@calendar=name} keyword
 #'
 #' @return
 #' \code{stri_datetime_format} returns a character vector.
@@ -329,7 +331,7 @@ stri_datetime_fstr <- function(x, ignore_special=TRUE)
         )
 
         which_p <- match(x, stringi::stri_sprintf("'%s'", formats))
-        # works for NAs and no items on the above list too
+        # works for NAs and no items from the above list too
         x[which(!is.na(which_p))] <- formats[which_p[!is.na(which_p)]]
     }
 
@@ -338,12 +340,6 @@ stri_datetime_fstr <- function(x, ignore_special=TRUE)
 
 
 # ?DateTimeClasses
-
-# seq.POSIXst
-
-# rep.POSIXst
-
-# diff.POSIXt
 
 # cut
 
@@ -355,12 +351,3 @@ stri_datetime_fstr <- function(x, ignore_special=TRUE)
 # z + time
 # time - z
 # time1 lop time2
-
-# #' @rdname stri_datetime_format
-# #' @export
-# #' @param usetz single logical value; should the time zone be appended
-# #' to the output?
-# format.POSIXst <- function(x, format='uuuu-MM-dd HH:mm:ss', tz=attr(x, 'tzone'), usetz=FALSE, ...) {
-#    if (identical(usetz, TRUE)) format <- stri_paste(format, ' z') # this is not too intelligent
-#    stri_datetime_format(x, format=format, tz=tz) # ignore ... arg purposedly
-# }

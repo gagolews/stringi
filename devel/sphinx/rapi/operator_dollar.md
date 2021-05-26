@@ -4,6 +4,8 @@
 
 Provides access to [`stri_sprintf`](https://stringi.gagolewski.com/rapi/stri_sprintf.html) in form of a binary operator in a way similar to Python\'s `%` overloaded for strings.
 
+Missing values and empty vectors are propagated as usual.
+
 ## Usage
 
 ```r
@@ -27,7 +29,7 @@ Vectorized over `e1` and `e2`.
 
 ## Value
 
-Returns a character vector
+Returns a character vector.
 
 ## Author(s)
 

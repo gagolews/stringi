@@ -6,7 +6,7 @@ library("stringi")
 expect_true(is(stri_datetime_now(), "POSIXct"))
 expect_true(is(stri_datetime_now(), "POSIXt"))
 
-expect_true(abs(unclass(stri_datetime_now()) - unclass(Sys.time())) < 1)
+expect_true(abs(unclass(stri_datetime_now()) - unclass(Sys.time())) < 1)  # lol
 
 
 
@@ -71,6 +71,11 @@ expect_equivalent(stri_datetime_add(stri_datetime_create(2016, 1, 31), 1, units 
 expect_equivalent(stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units = "years",
     locale = "@calendar=hebrew"), stri_datetime_create(2015, 4, 9))
 
+expect_equivalent(stri_datetime_add(as.character(stri_datetime_create(2016, 1, 31)), 1, units = "months",
+    locale = "en_US"), stri_datetime_create(2016, 2, 29))
+
+expect_equivalent(stri_datetime_add(factor(as.character(stri_datetime_create(2016, 1, 31))), 1, units = "months",
+    locale = "en_US"), stri_datetime_create(2016, 2, 29))
 
 
 expect_true(nrow(stri_datetime_fields(structure(double(0), class = c("POSIXTst",

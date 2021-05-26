@@ -42,7 +42,7 @@ stri_printf(
 
 |              |                                                                                                                                                                          |
 |--------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `format`     | character vector of format strings [`sprintf`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/sprintf.html)                                                   |
+| `format`     | character vector of format strings                                                                                                                                       |
 | `...`        | vectors (coercible to integer, real, or character)                                                                                                                       |
 | `na_string`  | single string to represent missing values; if `NA`, missing values in `...` result in the corresponding outputs be missing too; use `"NA"` for compatibility with base R |
 | `inf_string` | single string to represent the (unsigned) infinity (`NA` allowed)                                                                                                        |
@@ -58,7 +58,7 @@ Vectorized over `format` and all vectors passed via `...`.
 
 Unicode code points may have various widths when printed on the console (compare [`stri_width`](https://stringi.gagolewski.com/rapi/stri_width.html)). These functions, by default (see the `use_length` argument), take this into account.
 
-This function is not locale sensitive. For instance, numbers are always formatted in the \"POSIX\" style, e.g., `-123456.789` (no thousands separator, dot as a fractional separator). Such a feature might be added at a later date, though.
+These functions are not locale sensitive. For instance, numbers are always formatted in the \"POSIX\" style, e.g., `-123456.789` (no thousands separator, dot as a fractional separator). Such a feature might be added at a later date, though.
 
 All arguments passed via `...` are evaluated. If some of them are unused, a warning is generated. Too few arguments result in an error.
 
@@ -135,14 +135,14 @@ stri_printf("%+10.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_),
 ##         💩
 ##       <NA>
 stri_sprintf("UNIX time %1$f is %1$s.", Sys.time())
-## [1] "UNIX time 1621832043.714684 is 2021-05-24 14:54:03."
+## [1] "UNIX time 1622009497.918161 is 2021-05-26 16:11:37."
 # the following do not work in sprintf()
 stri_sprintf("%1$#- *2$.*3$f", 1.23456, 10, 3)  # two asterisks
 ## [1] " 1.235    "
 stri_sprintf(c("%s", "%f"), pi)  # re-coercion needed
 ## [1] "3.14159265358979" "3.141593"
 stri_sprintf("%1$s is %1$f UNIX time.", Sys.time())  # re-coercion needed
-## [1] "2021-05-24 14:54:03 is 1621832043.718319 UNIX time."
+## [1] "2021-05-26 16:11:37 is 1622009497.921733 UNIX time."
 stri_sprintf(c("%d", "%s"), factor(11:12))  # re-coercion needed
 ## [1] "1"  "12"
 stri_sprintf(c("%s", "%d"), factor(11:12))  # re-coercion needed

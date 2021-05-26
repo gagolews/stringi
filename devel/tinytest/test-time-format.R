@@ -48,6 +48,12 @@ expect_equivalent(stri_datetime_fstr(numeric(0)), character(0))
 #       sep='\t'
 #    )
 
+expect_identical(stri_datetime_format("2021-03-23", "yyyy"), "2021")
+expect_identical(stri_datetime_format(factor("2021-03-23"), "yyyy"), "2021")
+expect_identical(stri_datetime_format(as.Date("2021-03-23"), "yyyy"), "2021")
+expect_identical(stri_datetime_format(as.POSIXlt("2021-03-23"), "yyyy"), "2021")
+expect_error(stri_datetime_format(2021, "yyyy"))
+
 
 t <- stri_datetime_parse("2015-02-25 23:53:01")
 expect_equivalent(attr(t, "tzone"), NULL)

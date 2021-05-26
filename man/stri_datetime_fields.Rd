@@ -7,7 +7,9 @@
 stri_datetime_fields(time, tz = attr(time, "tzone"), locale = NULL)
 }
 \arguments{
-\item{time}{an object of class \code{\link{POSIXct}} or an object coercible to}
+\item{time}{an object of class \code{\link{POSIXct}}
+(\code{as.POSIXct} will be called on character vectors
+and objects of class \code{POSIXlt}, \code{Date}, and \code{factor})}
 
 \item{tz}{\code{NULL} or \code{''} for the default time zone or
 a single string with time zone identifier, see \code{\link{stri_timezone_list}}}

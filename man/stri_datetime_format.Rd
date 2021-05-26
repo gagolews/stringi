@@ -21,15 +21,17 @@ stri_datetime_parse(
 )
 }
 \arguments{
-\item{time}{an object of class \code{\link{POSIXct}} or an object coercible to}
+\item{time}{an object of class \code{\link{POSIXct}}
+(\code{as.POSIXct} will be called on character vectors
+and objects of class \code{POSIXlt}, \code{Date}, and \code{factor})}
 
 \item{format}{character vector, see Details; see also \code{\link{stri_datetime_fstr}}}
 
 \item{tz}{\code{NULL} or \code{''} for the default time zone
 or a single string with a timezone identifier,
-see \code{\link{stri_timezone_list}}}
+see \code{\link{stri_timezone_get}} and \code{\link{stri_timezone_list}}}
 
-\item{locale}{\code{NULL} or \code{''} for default locale,
+\item{locale}{\code{NULL} or \code{''} for the default locale,
 or a single string with locale identifier; a non-Gregorian calendar
 may be specified by setting the \code{@calendar=name} keyword}
 
@@ -50,7 +52,7 @@ to a character vector, or vice versa.
 Vectorized over \code{format} and \code{time} or \code{str}.
 
 By default, \code{stri_datetime_format} (for the sake of compatibility
-with the \code{\link[base]{strftime}} function, but unlike \code{format.POSIXst})
+with the \code{\link[base]{strftime}} function)
 formats a date/time object using the current default time zone.
 
 \code{format} may be one of \code{DT_STYLE} or \code{DT_relative_STYLE},
