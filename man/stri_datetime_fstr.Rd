@@ -4,10 +4,14 @@
 \alias{stri_datetime_fstr}
 \title{Convert \code{strptime}-Style Format Strings}
 \usage{
-stri_datetime_fstr(x)
+stri_datetime_fstr(x, ignore_special = TRUE)
 }
 \arguments{
 \item{x}{character vector of date/time format strings}
+
+\item{ignore_special}{if \code{FALSE}, special identifiers like
+\code{"datetime_full"} or \code{date_relative_short}
+(see \code{\link{stri_datetime_format}}) are left as-is}
 }
 \value{
 Returns a character vector.
