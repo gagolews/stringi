@@ -12,11 +12,11 @@ stri_datetime_fields(time, tz = attr(time, "tzone"), locale = NULL)
 
 ## Arguments
 
-|          |                                                                                                                                                                                |
-|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `time`   | an object of class [`POSIXct`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/DateTimeClasses.html) or an object coercible to                                       |
-| `tz`     | `NULL` or `''` for the default time zone or a single string with time zone identifier, see [`stri_timezone_list`](https://stringi.gagolewski.com/rapi/stri_timezone_list.html) |
-| `locale` | `NULL` or `''` for the current default locale, or a single string with a locale identifier; a non-Gregorian calendar may be specified by setting `@calendar=name` keyword      |
+|          |                                                                                                                                                                                                                        |
+|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `time`   | an object of class [`POSIXct`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/DateTimeClasses.html) (`as.POSIXct` will be called on character vectors and objects of class `POSIXlt`, `Date`, and `factor`) |
+| `tz`     | `NULL` or `''` for the default time zone or a single string with time zone identifier, see [`stri_timezone_list`](https://stringi.gagolewski.com/rapi/stri_timezone_list.html)                                         |
+| `locale` | `NULL` or `''` for the current default locale, or a single string with a locale identifier; a non-Gregorian calendar may be specified by setting `@calendar=name` keyword                                              |
 
 ## Details
 
@@ -72,14 +72,14 @@ Other datetime: [`stri_datetime_add`](https://stringi.gagolewski.com/rapi/stri_d
 ```r
 stri_datetime_fields(stri_datetime_now())
 ##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth
-## 1 2021     5  24   14     54      2         921         22           5
+## 1 2021     5  26   16     11     37         163         22           5
 ##   DayOfYear DayOfWeek Hour12 AmPm Era
-## 1       144         2      2    2   2
+## 1       146         4      4    2   2
 stri_datetime_fields(stri_datetime_now(), locale='@calendar=hebrew')
 ##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth
-## 1 5781    10  13   14     54      2         924         37           3
+## 1 5781    10  15   16     11     37         166         37           3
 ##   DayOfYear DayOfWeek Hour12 AmPm Era
-## 1       248         2      2    2   1
+## 1       250         4      4    2   1
 stri_datetime_symbols(locale='@calendar=hebrew')$Month[
    stri_datetime_fields(stri_datetime_now(), locale='@calendar=hebrew')$Month
 ]

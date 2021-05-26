@@ -7,14 +7,15 @@ This function converts [`strptime`](https://stat.ethz.ch/R-manual/R-patched/libr
 ## Usage
 
 ```r
-stri_datetime_fstr(x)
+stri_datetime_fstr(x, ignore_special = TRUE)
 ```
 
 ## Arguments
 
-|     |                                              |
-|-----|----------------------------------------------|
-| `x` | character vector of date/time format strings |
+|                  |                                                                                                                                                                                              |
+|------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `x`              | character vector of date/time format strings                                                                                                                                                 |
+| `ignore_special` | if `FALSE`, special identifiers like `"datetime_full"` or `date_relative_short` (see [`stri_datetime_format`](https://stringi.gagolewski.com/rapi/stri_datetime_format.html)) are left as-is |
 
 ## Details
 

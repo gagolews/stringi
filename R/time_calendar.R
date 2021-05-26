@@ -106,7 +106,9 @@ stri_datetime_now <- function()
 #' Vectorized over \code{time}.
 #'
 #'
-#' @param time an object of class \code{\link{POSIXct}} or an object coercible to
+#' @param time an object of class \code{\link{POSIXct}}
+#'     (\code{as.POSIXct} will be called on character vectors
+#'     and objects of class \code{POSIXlt}, \code{Date}, and \code{factor})
 #' @param tz \code{NULL} or \code{''} for the default time zone or
 #' a single string with time zone identifier, see \code{\link{stri_timezone_list}}
 #' @param locale \code{NULL} or \code{''} for the current default locale,
@@ -166,7 +168,9 @@ stri_datetime_fields <- function(time, tz = attr(time, "tzone"), locale = NULL)
 #'
 #' Note that, e.g., January, 31 + 1 month = February, 28 or 29.
 #'
-#' @param time an object of class \code{\link{POSIXct}} or an object coercible to
+#' @param time an object of class \code{\link{POSIXct}}
+#'     (\code{as.POSIXct} will be called on character vectors
+#'     and objects of class \code{POSIXlt}, \code{Date}, and \code{factor})
 #' @param value integer vector; signed number of units to add to \code{time}
 #' @param units single string; one of \code{'years'}, \code{'months'},
 #' \code{'weeks'}, \code{'days'}, \code{'hours'}, \code{'minutes'},

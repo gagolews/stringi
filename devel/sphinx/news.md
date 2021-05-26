@@ -5,15 +5,19 @@
 
 * [NEW FEATURE] #420: `stri_sprintf` (alias: `stri_string_format`)
   is a Unicode-aware replacement for and enhancement of the base `sprintf`:
-  it adds a customised handling of `NA`s (on demand),
-  computing field size based on code point width,
-  outputting substrings of at most given width,
-  variable width and precision (both at the same time), etc.
-  Moreover, `stri_printf` can be used to display formatted strings
-  conveniently.
+  it adds a customised handling of `NA`s (on demand), computing field size
+  based on code point width, outputting substrings of at most given width,
+  variable width and precision (both at the same time), etc. Moreover,
+  `stri_printf` can be used to display formatted strings conveniently.
 
 * [NEW FEATURE] #434: `stri_datetime_format` and `stri_datetime_parse`
   are now vectorised also with respect to the `format` argument.
+
+* [NEW FEATURE] `stri_datetime_fstr` has a new argument, `ignore_special`,
+  which default to `TRUE` for backward compatibility.
+
+* [NEW FEATURE] `stri_datetime_format`, `stri_datetime_add`, and
+  `stri_datetime_fields` now call `as.POSIXct` more eagerly.
 
 * [BACKWARD INCOMPATIBILITY] `%s$%` and `%stri$%` now use `stri_sprintf`
   instead of `base::sprintf`.

@@ -20,13 +20,13 @@ stri_datetime_add(time, units = "seconds", tz = NULL, locale = NULL) <- value
 
 ## Arguments
 
-|          |                                                                                                                                                                 |
-|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `time`   | an object of class [`POSIXct`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/DateTimeClasses.html) or an object coercible to                        |
-| `value`  | integer vector; signed number of units to add to `time`                                                                                                         |
-| `units`  | single string; one of `'years'`, `'months'`, `'weeks'`, `'days'`, `'hours'`, `'minutes'`, `'seconds'`, or `'milliseconds'`                                      |
-| `tz`     | `NULL` or `''` for the default time zone or a single string with a timezone identifier,                                                                         |
-| `locale` | `NULL` or `''` for default locale, or a single string with locale identifier; a non-Gregorian calendar may be specified by setting the `@calendar=name` keyword |
+|          |                                                                                                                                                                                                                        |
+|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `time`   | an object of class [`POSIXct`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/DateTimeClasses.html) (`as.POSIXct` will be called on character vectors and objects of class `POSIXlt`, `Date`, and `factor`) |
+| `value`  | integer vector; signed number of units to add to `time`                                                                                                                                                                |
+| `units`  | single string; one of `'years'`, `'months'`, `'weeks'`, `'days'`, `'hours'`, `'minutes'`, `'seconds'`, or `'milliseconds'`                                                                                             |
+| `tz`     | `NULL` or `''` for the default time zone or a single string with a timezone identifier,                                                                                                                                |
+| `locale` | `NULL` or `''` for default locale, or a single string with locale identifier; a non-Gregorian calendar may be specified by setting the `@calendar=name` keyword                                                        |
 
 ## Details
 
@@ -63,9 +63,9 @@ Other datetime: [`stri_datetime_create`](https://stringi.gagolewski.com/rapi/str
 x <- stri_datetime_now()
 stri_datetime_add(x, units='months') <- 2
 print(x)
-## [1] "2021-07-24 14:54:02 AEST"
+## [1] "2021-07-26 16:11:37 AEST"
 stri_datetime_add(x, -2, units='months')
-## [1] "2021-05-24 14:54:02 AEST"
+## [1] "2021-05-26 16:11:37 AEST"
 stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units='years')
 ## [1] "2015-04-20 12:00:00 AEST"
 stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units='years', locale='@calendar=hebrew')
