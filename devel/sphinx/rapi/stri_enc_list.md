@@ -18,7 +18,7 @@ stri_enc_list(simplify = TRUE)
 
 ## Details
 
-Apart from given encoding identifiers and their aliases, some other specifiers might additionally be available. This is due to the fact that <span class="pkg">ICU</span> tries to normalize converter names. For instance, `'UTF8'` is also valid, see [stringi-encoding](../../stringi/help/stringi-encoding.html) for more information.
+Apart from given encoding identifiers and their aliases, some other specifiers might additionally be available. This is due to the fact that <span class="pkg">ICU</span> tries to normalize converter names. For instance, `'UTF8'` is also valid, see [stringi-encoding](about_encoding.md) for more information.
 
 ## Value
 
@@ -34,7 +34,7 @@ If `simplify` is `TRUE` (the default), then the resulting list is coerced to a c
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other encoding\_management: [`about_encoding`](https://stringi.gagolewski.com/rapi/about_encoding.html), [`stri_enc_info`](https://stringi.gagolewski.com/rapi/stri_enc_info.html)(), [`stri_enc_mark`](https://stringi.gagolewski.com/rapi/stri_enc_mark.html)(), [`stri_enc_set`](https://stringi.gagolewski.com/rapi/stri_enc_set.html)()
+Other encoding\_management: [`about_encoding`](about_encoding.md), [`stri_enc_info()`](stri_enc_info.md), [`stri_enc_mark()`](stri_enc_mark.md), [`stri_enc_set()`](stri_enc_set.md)
 
 ## Examples
 

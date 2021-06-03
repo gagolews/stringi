@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.2.9001
+                1.6.2.9004
               </div>
             
           
@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code></span> as a Binary Operator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count.html">stri_count: Count the Number of Pattern Matches</a></li>
@@ -118,7 +118,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_create.html">stri_datetime_create: Create a Date-Time Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_fields.html">stri_datetime_fields: Get Values for Date and Time Fields</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_format.html">stri_datetime_format: Date and Time Formatting and Parsing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert strptime-Style Format Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert <code class="docutils literal notranslate"><span class="pre">strptime</span></code>-Style Format Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_now.html">stri_datetime_now: Get Current Date and Time</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_symbols.html">stri_datetime_symbols: List Localizable Date-Time Formatting Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_detect.html">stri_detect: Detect a Pattern Match</a></li>
@@ -325,13 +325,13 @@
 </div>
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
-<p>According to <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/Encoding.html"><code class="docutils literal notranslate"><span class="pre">Encoding</span></code></a>, <span style="font-family: Courier New, Courier; color: #666666;"><strong>R</strong></span> has a simple encoding marking mechanism: strings can be declared to be in <code class="docutils literal notranslate"><span class="pre">latin1</span></code>, <code class="docutils literal notranslate"><span class="pre">UTF-8</span></code> or <code class="docutils literal notranslate"><span class="pre">bytes</span></code>.</p>
-<p>Moreover, we may check (via the R/C API) whether a string is in ASCII (<span style="font-family: Courier New, Courier; color: #666666;"><strong>R</strong></span> assumes that this holds if and only if all bytes in a string are not greater than 127, so there is an implicit assumption that your platform uses an encoding that extends ASCII) or in the system’s default (a.k.a. <code class="docutils literal notranslate"><span class="pre">unknown</span></code> in <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/Encoding.html"><code class="docutils literal notranslate"><span class="pre">Encoding</span></code></a>) encoding.</p>
-<p>Intuitively, the default encoding should be equivalent to the one you use on <code class="docutils literal notranslate"><span class="pre">stdin</span></code> (e.g., your ‘keyboard’). In <span class="pkg">stringi</span> we assume that such an encoding is equivalent to the one returned by <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_enc_get.html"><code class="docutils literal notranslate"><span class="pre">stri_enc_get</span></code></a>. It is automatically detected by <span class="pkg">ICU</span> to match – by default – the encoding part of the <code class="docutils literal notranslate"><span class="pre">LC_CTYPE</span></code> category as given by <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/locales.html"><code class="docutils literal notranslate"><span class="pre">Sys.getlocale</span></code></a>.</p>
+<p>According to <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Encoding.html"><code class="docutils literal notranslate"><span class="pre">Encoding</span></code></a>, <span style="font-family: Courier New, Courier; color: #666666;"><strong>R</strong></span> has a simple encoding marking mechanism: strings can be declared to be in <code class="docutils literal notranslate"><span class="pre">latin1</span></code>, <code class="docutils literal notranslate"><span class="pre">UTF-8</span></code> or <code class="docutils literal notranslate"><span class="pre">bytes</span></code>.</p>
+<p>Moreover, we may check (via the R/C API) whether a string is in ASCII (<span style="font-family: Courier New, Courier; color: #666666;"><strong>R</strong></span> assumes that this holds if and only if all bytes in a string are not greater than 127, so there is an implicit assumption that your platform uses an encoding that extends ASCII) or in the system’s default (a.k.a. <code class="docutils literal notranslate"><span class="pre">unknown</span></code> in <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Encoding.html"><code class="docutils literal notranslate"><span class="pre">Encoding</span></code></a>) encoding.</p>
+<p>Intuitively, the default encoding should be equivalent to the one you use on <code class="docutils literal notranslate"><span class="pre">stdin</span></code> (e.g., your ‘keyboard’). In <span class="pkg">stringi</span> we assume that such an encoding is equivalent to the one returned by <a class="reference internal" href="stri_enc_set.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_get</span></code></span></a>. It is automatically detected by <span class="pkg">ICU</span> to match – by default – the encoding part of the <code class="docutils literal notranslate"><span class="pre">LC_CTYPE</span></code> category as given by <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/locales.html"><code class="docutils literal notranslate"><span class="pre">Sys.getlocale</span></code></a>.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
-<p>Returns a character vector of the same length as <code class="docutils literal notranslate"><span class="pre">str</span></code>. Unlike in the <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/Encoding.html"><code class="docutils literal notranslate"><span class="pre">Encoding</span></code></a> function, here the possible encodings are: <code class="docutils literal notranslate"><span class="pre">ASCII</span></code>, <code class="docutils literal notranslate"><span class="pre">latin1</span></code>, <code class="docutils literal notranslate"><span class="pre">bytes</span></code>, <code class="docutils literal notranslate"><span class="pre">native</span></code>, and <code class="docutils literal notranslate"><span class="pre">UTF-8</span></code>. Additionally, missing values are handled properly.</p>
+<p>Returns a character vector of the same length as <code class="docutils literal notranslate"><span class="pre">str</span></code>. Unlike in the <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Encoding.html"><code class="docutils literal notranslate"><span class="pre">Encoding</span></code></a> function, here the possible encodings are: <code class="docutils literal notranslate"><span class="pre">ASCII</span></code>, <code class="docutils literal notranslate"><span class="pre">latin1</span></code>, <code class="docutils literal notranslate"><span class="pre">bytes</span></code>, <code class="docutils literal notranslate"><span class="pre">native</span></code>, and <code class="docutils literal notranslate"><span class="pre">UTF-8</span></code>. Additionally, missing values are handled properly.</p>
 <p>This gives exactly the same data that is used by all the functions in <span class="pkg">stringi</span> to re-encode their inputs.</p>
 </div>
 <div class="section" id="author-s">
@@ -341,7 +341,7 @@
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
-<p>Other encoding_management: <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_encoding.html"><code class="docutils literal notranslate"><span class="pre">about_encoding</span></code></a>, <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_enc_info.html"><code class="docutils literal notranslate"><span class="pre">stri_enc_info</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_enc_list.html"><code class="docutils literal notranslate"><span class="pre">stri_enc_list</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_enc_set.html"><code class="docutils literal notranslate"><span class="pre">stri_enc_set</span></code></a>()</p>
+<p>Other encoding_management: <a class="reference internal" href="about_encoding.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_encoding</span></code></span></a>, <a class="reference internal" href="stri_enc_info.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_info()</span></code></span></a>, <a class="reference internal" href="stri_enc_list.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_list()</span></code></span></a>, <a class="reference internal" href="stri_enc_set.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_set()</span></code></span></a></p>
 </div>
 </div>
 
@@ -361,7 +361,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-24 11:20:07.
+        Last updated on 2021-06-03T14:48:11+1000.
       </span>
 
     </p>

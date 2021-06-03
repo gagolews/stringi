@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.2.9001
+                1.6.2.9004
               </div>
             
           
@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code></span> as a Binary Operator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count.html">stri_count: Count the Number of Pattern Matches</a></li>
@@ -118,7 +118,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_create.html">stri_datetime_create: Create a Date-Time Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_fields.html">stri_datetime_fields: Get Values for Date and Time Fields</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_format.html">stri_datetime_format: Date and Time Formatting and Parsing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert strptime-Style Format Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert <code class="docutils literal notranslate"><span class="pre">strptime</span></code>-Style Format Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_now.html">stri_datetime_now: Get Current Date and Time</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_symbols.html">stri_datetime_symbols: List Localizable Date-Time Formatting Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_detect.html">stri_detect: Detect a Pattern Match</a></li>
@@ -312,7 +312,7 @@
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_trans_general</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">id</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_trans_general</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="n">rules</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="n">forward</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -329,7 +329,13 @@
 <td><p>character vector</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">id</span></code></p></td>
-<td><p>a single string with transform identifier, see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_trans_list.html"><code class="docutils literal notranslate"><span class="pre">stri_trans_list</span></code></a></p></td>
+<td><p>a single string with transform identifier, see <a class="reference internal" href="stri_trans_list.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_list</span></code></span></a>, or custom transliteration rules</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rules</span></code></p></td>
+<td><p>if <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, treat <code class="docutils literal notranslate"><span class="pre">id</span></code> as a string with semicolon-separated transliteration rules (see the <span class="pkg">ICU</span> manual);</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">forward</span></code></p></td>
+<td><p>transliteration direction (<code class="docutils literal notranslate"><span class="pre">TRUE</span></code> for forward, <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> for reverse)</p></td>
 </tr>
 </tbody>
 </table>
@@ -337,8 +343,9 @@
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
 <p><span class="pkg">ICU</span> Transforms were mainly designed to transliterate characters from one script to another (for example, from Greek to Latin, or Japanese Katakana to Latin). However, these services are also capable of handling a much broader range of tasks. In particular, the Transforms include pre-built transformations for case conversions, for normalization conversions, for the removal of given characters, and also for a variety of language and script transliterations. Transforms can be chained together to perform a series of operations and each step of the process can use a UnicodeSet to restrict the characters that are affected.</p>
-<p>To get the list of available transforms, call <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_trans_list.html"><code class="docutils literal notranslate"><span class="pre">stri_trans_list</span></code></a>.</p>
-<p>Note that transliterators are often combined in sequence to achieve a desired transformation. This is analogous to the composition of mathematical functions. For example, given a script that converts lowercase ASCII characters from Latin script to Katakana script, it is convenient to first (1) separate input base characters and accents, and then (2) convert uppercase to lowercase. To achieve this, a compound transform can be specified as follows: <code class="docutils literal notranslate"><span class="pre">NFKD;</span> <span class="pre">Lower;</span> <span class="pre">Latin-Katakana;</span></code></p>
+<p>To get the list of available transforms, call <a class="reference internal" href="stri_trans_list.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_list</span></code></span></a>.</p>
+<p>Note that transliterators are often combined in sequence to achieve a desired transformation. This is analogous to the composition of mathematical functions. For example, given a script that converts lowercase ASCII characters from Latin script to Katakana script, it is convenient to first (1) separate input base characters and accents, and then (2) convert uppercase to lowercase. To achieve this, a compound transform can be specified as follows: <code class="docutils literal notranslate"><span class="pre">NFKD;</span> <span class="pre">Lower;</span> <span class="pre">Latin-Katakana;</span></code> (with the default <code class="docutils literal notranslate"><span class="pre">rules=FALSE</span></code>).</p>
+<p>Custom rule-based transliteration is also supported, see the <span class="pkg">ICU</span> manual and below for some examples.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
@@ -355,7 +362,7 @@
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
-<p>Other transform: <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_trans_char.html"><code class="docutils literal notranslate"><span class="pre">stri_trans_char</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_trans_list.html"><code class="docutils literal notranslate"><span class="pre">stri_trans_list</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_trans_nfc.html"><code class="docutils literal notranslate"><span class="pre">stri_trans_nfc</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_trans_tolower.html"><code class="docutils literal notranslate"><span class="pre">stri_trans_tolower</span></code></a>()</p>
+<p>Other transform: <a class="reference internal" href="stri_trans_char.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_char()</span></code></span></a>, <a class="reference internal" href="stri_trans_list.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_list()</span></code></span></a>, <a class="reference internal" href="stri_trans_nf.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_nfc()</span></code></span></a>, <a class="reference internal" href="stri_trans_casemap.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_tolower()</span></code></span></a></p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
@@ -369,14 +376,29 @@
 <span class="c1">## [1] &quot;STRINGI&quot;</span>
 <span class="nf">stri_trans_general</span><span class="p">(</span><span class="s">&#39;\u0104&#39;</span><span class="p">,</span> <span class="s">&#39;nfd; lower&#39;</span><span class="p">)</span> <span class="c1"># compound id; see stri_trans_nfd</span>
 <span class="c1">## [1] &quot;ą&quot;</span>
-<span class="nf">stri_trans_general</span><span class="p">(</span><span class="s">&#39;tato nie wraca ranki wieczory&#39;</span><span class="p">,</span> <span class="s">&#39;pl-pl_FONIPA&#39;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;tatɔ ɲɛ vrat͡sa ranki vʲɛt͡ʂɔrɨ&quot;</span>
+<span class="nf">stri_trans_general</span><span class="p">(</span><span class="s">&#39;Marek G\u0105golewski&#39;</span><span class="p">,</span> <span class="s">&#39;pl-pl_FONIPA&#39;</span><span class="p">)</span>
+<span class="c1">## [1] &quot;marɛk ɡɔŋɡɔlɛfski&quot;</span>
 <span class="nf">stri_trans_general</span><span class="p">(</span><span class="s">&#39;\u2620&#39;</span><span class="p">,</span> <span class="s">&#39;any-name&#39;</span><span class="p">)</span> <span class="c1"># character name</span>
 <span class="c1">## [1] &quot;\\N{SKULL AND CROSSBONES}&quot;</span>
 <span class="nf">stri_trans_general</span><span class="p">(</span><span class="s">&#39;\\N{latin small letter a}&#39;</span><span class="p">,</span> <span class="s">&#39;name-any&#39;</span><span class="p">)</span> <span class="c1"># decode name</span>
 <span class="c1">## [1] &quot;a&quot;</span>
 <span class="nf">stri_trans_general</span><span class="p">(</span><span class="s">&#39;\u2620&#39;</span><span class="p">,</span> <span class="s">&#39;hex/c&#39;</span><span class="p">)</span> <span class="c1"># to hex</span>
 <span class="c1">## [1] &quot;\\u2620&quot;</span>
+<span class="n">x</span> <span class="o">&lt;-</span> <span class="s">&quot;\uC11C\uC6B8\uD2B9\uBCC4\uC2DC\u0020\uC885\uB85C\uAD6C\u0020\uC0AC\uC9C1\uB3D9&quot;</span>
+<span class="n">stringi</span><span class="o">::</span><span class="nf">stri_trans_general</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;Hangul-Latin&quot;</span><span class="p">)</span>
+<span class="c1">## [1] &quot;seoulteugbyeolsi jonglogu sajigdong&quot;</span>
+<span class="c1"># Deviate from the ICU rules of Romanisation of Korean,</span>
+<span class="c1"># see https://en.wikipedia.org/wiki/%E3%84%B1</span>
+<span class="n">id</span> <span class="o">&lt;-</span> <span class="s">&quot;</span>
+<span class="s">    :: NFD;</span>
+<span class="s">    \u11A8 &gt; k;</span>
+<span class="s">    \u11AE &gt; t;</span>
+<span class="s">    \u11B8 &gt; p;</span>
+<span class="s">    \u1105 &gt; r;</span>
+<span class="s">    :: Hangul-Latin;</span>
+<span class="s">&quot;</span>
+<span class="n">stringi</span><span class="o">::</span><span class="nf">stri_trans_general</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="n">rules</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="c1">## [1] &quot;seoulteukbyeolsi jongrogu sajikdong&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -398,7 +420,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-24 11:20:07.
+        Last updated on 2021-06-03T14:48:11+1000.
       </span>
 
     </p>

@@ -38,7 +38,7 @@ Returns a character vector. If an escape sequence is ill-formed, result will be 
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other escape: [`stri_escape_unicode`](https://stringi.gagolewski.com/rapi/stri_escape_unicode.html)()
+Other escape: [`stri_escape_unicode()`](stri_escape_unicode.md)
 
 ## Examples
 

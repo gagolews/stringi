@@ -18,7 +18,7 @@ stri_enc_isascii(str)
 
 ## Details
 
-This function is independent of the way <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> marks encodings in character strings (see [Encoding](https://stat.ethz.ch/R-manual/R-patched/library/base/html/Encoding.html) and [stringi-encoding](../../stringi/help/stringi-encoding.html)).
+This function is independent of the way <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> marks encodings in character strings (see [Encoding](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Encoding.html) and [stringi-encoding](about_encoding.md)).
 
 ## Value
 
@@ -32,7 +32,7 @@ Returns a logical vector. The i-th element indicates whether the i-th string cor
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other encoding\_detection: [`about_encoding`](https://stringi.gagolewski.com/rapi/about_encoding.html), [`stri_enc_detect2`](https://stringi.gagolewski.com/rapi/stri_enc_detect2.html)(), [`stri_enc_detect`](https://stringi.gagolewski.com/rapi/stri_enc_detect.html)(), [`stri_enc_isutf16be`](https://stringi.gagolewski.com/rapi/stri_enc_isutf16be.html)(), [`stri_enc_isutf8`](https://stringi.gagolewski.com/rapi/stri_enc_isutf8.html)()
+Other encoding\_detection: [`about_encoding`](about_encoding.md), [`stri_enc_detect2()`](stri_enc_detect2.md), [`stri_enc_detect()`](stri_enc_detect.md), [`stri_enc_isutf16be()`](stri_enc_isutf16.md), [`stri_enc_isutf8()`](stri_enc_isutf8.md)
 
 ## Examples
 

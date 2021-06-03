@@ -22,17 +22,17 @@ stri_datetime_create(
 
 ## Arguments
 
-|           |                                                                                                                                                                                |
-|-----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `year`    | integer vector; 0 is 1BC, -1 is 2BC, etc.                                                                                                                                      |
-| `month`   | integer vector; months are 1-based                                                                                                                                             |
-| `day`     | integer vector                                                                                                                                                                 |
-| `hour`    | integer vector                                                                                                                                                                 |
-| `minute`  | integer vector                                                                                                                                                                 |
-| `second`  | numeric vector; fractional seconds are allowed                                                                                                                                 |
-| `lenient` | single logical value; should the operation be lenient?                                                                                                                         |
-| `tz`      | `NULL` or `''` for the default time zone or a single string with time zone identifier, see [`stri_timezone_list`](https://stringi.gagolewski.com/rapi/stri_timezone_list.html) |
-| `locale`  | `NULL` or `''` for default locale, or a single string with locale identifier; a non-Gregorian calendar may be specified by setting `@calendar=name` keyword                    |
+|           |                                                                                                                                                             |
+|-----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `year`    | integer vector; 0 is 1BC, -1 is 2BC, etc.                                                                                                                   |
+| `month`   | integer vector; months are 1-based                                                                                                                          |
+| `day`     | integer vector                                                                                                                                              |
+| `hour`    | integer vector                                                                                                                                              |
+| `minute`  | integer vector                                                                                                                                              |
+| `second`  | numeric vector; fractional seconds are allowed                                                                                                              |
+| `lenient` | single logical value; should the operation be lenient?                                                                                                      |
+| `tz`      | `NULL` or `''` for the default time zone or a single string with time zone identifier, see [`stri_timezone_list`](stri_timezone_list.md)                    |
+| `locale`  | `NULL` or `''` for default locale, or a single string with locale identifier; a non-Gregorian calendar may be specified by setting `@calendar=name` keyword |
 
 ## Details
 
@@ -40,7 +40,7 @@ Vectorized over `year`, `month`, `day`, `hour`, `hour`, `minute`, and `second`.
 
 ## Value
 
-Returns an object of class [`POSIXct`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/DateTimeClasses.html).
+Returns an object of class [`POSIXct`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/DateTimeClasses.html).
 
 ## Author(s)
 
@@ -50,7 +50,7 @@ Returns an object of class [`POSIXct`](https://stat.ethz.ch/R-manual/R-patched/l
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other datetime: [`stri_datetime_add`](https://stringi.gagolewski.com/rapi/stri_datetime_add.html)(), [`stri_datetime_fields`](https://stringi.gagolewski.com/rapi/stri_datetime_fields.html)(), [`stri_datetime_format`](https://stringi.gagolewski.com/rapi/stri_datetime_format.html)(), [`stri_datetime_fstr`](https://stringi.gagolewski.com/rapi/stri_datetime_fstr.html)(), [`stri_datetime_now`](https://stringi.gagolewski.com/rapi/stri_datetime_now.html)(), [`stri_datetime_symbols`](https://stringi.gagolewski.com/rapi/stri_datetime_symbols.html)(), [`stri_timezone_get`](https://stringi.gagolewski.com/rapi/stri_timezone_get.html)(), [`stri_timezone_info`](https://stringi.gagolewski.com/rapi/stri_timezone_info.html)(), [`stri_timezone_list`](https://stringi.gagolewski.com/rapi/stri_timezone_list.html)()
+Other datetime: [`stri_datetime_add()`](stri_datetime_add.md), [`stri_datetime_fields()`](stri_datetime_fields.md), [`stri_datetime_format()`](stri_datetime_format.md), [`stri_datetime_fstr()`](stri_datetime_fstr.md), [`stri_datetime_now()`](stri_datetime_now.md), [`stri_datetime_symbols()`](stri_datetime_symbols.md), [`stri_timezone_get()`](stri_timezone_set.md), [`stri_timezone_info()`](stri_timezone_info.md), [`stri_timezone_list()`](stri_timezone_list.md)
 
 ## Examples
 

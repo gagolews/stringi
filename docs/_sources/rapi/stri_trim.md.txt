@@ -18,11 +18,11 @@ stri_trim(str, side = c("both", "left", "right"), pattern = "\\P{Wspace}")
 
 ## Arguments
 
-|           |                                                                                                                                                                                                          |
-|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`     | a character vector of strings to be trimmed                                                                                                                                                              |
-| `pattern` | a single pattern, specifying character classes that should be preserved (see [stringi-search-charclass](https://stringi.gagolewski.com/rapi/stringi-search-charclass.html)). Defaults to \'`\P{Wspace}`. |
-| `side`    | character \[`stri_trim` only\]; defaults to `'both'`                                                                                                                                                     |
+|           |                                                                                                                                                                  |
+|-----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `str`     | a character vector of strings to be trimmed                                                                                                                      |
+| `pattern` | a single pattern, specifying character classes that should be preserved (see [stringi-search-charclass](about_search_charclass.md)). Defaults to \'`\P{Wspace}`. |
+| `side`    | character \[`stri_trim` only\]; defaults to `'both'`                                                                                                             |
 
 ## Details
 
@@ -32,11 +32,11 @@ Vectorized over `str` and `pattern`.
 
 Contrary to many other string processing libraries, our trimming functions are universal. A character class, given by `pattern`, may be adjusted to suit your needs (yet, most often you stick to the default value).
 
-For replacing pattern matches with arbitrary replacement string, see [`stri_replace`](https://stringi.gagolewski.com/rapi/stri_replace.html).
+For replacing pattern matches with arbitrary replacement string, see [`stri_replace`](stri_replace.md).
 
 Trimming can also be used where you would normally rely on regular expressions. For instance, you may get `'23.5'` out of `'total of 23.5 bitcoins'`.
 
-For trimming white-spaces, please note the difference between Unicode binary property \'`\p{Wspace}`\' (more universal) and general character category \'`\p{Z}`\', see [stringi-search-charclass](https://stringi.gagolewski.com/rapi/stringi-search-charclass.html).
+For trimming white-spaces, please note the difference between Unicode binary property \'`\p{Wspace}`\' (more universal) and general character category \'`\p{Z}`\', see [stringi-search-charclass](about_search_charclass.md).
 
 ## Value
 
@@ -50,9 +50,9 @@ All these functions return a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_replace: [`about_search`](https://stringi.gagolewski.com/rapi/about_search.html), [`stri_replace_all`](https://stringi.gagolewski.com/rapi/stri_replace_all.html)()
+Other search\_replace: [`about_search`](about_search.md), [`stri_replace_all()`](stri_replace.md)
 
-Other search\_charclass: [`about_search_charclass`](https://stringi.gagolewski.com/rapi/about_search_charclass.html), [`about_search`](https://stringi.gagolewski.com/rapi/about_search.html)
+Other search\_charclass: [`about_search_charclass`](about_search_charclass.md), [`about_search`](about_search.md)
 
 ## Examples
 

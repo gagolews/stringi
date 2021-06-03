@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf &mdash; stringi</title>
+  <title>operator_dollar: C-Style Formatting with stri_sprintf as a Binary Operator &mdash; stringi</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.2.9001
+                1.6.2.9004
               </div>
             
           
@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">operator_dollar: C-Style Formatting with <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code></span> as a Binary Operator</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#description">Description</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#arguments">Arguments</a></li>
@@ -128,7 +128,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_create.html">stri_datetime_create: Create a Date-Time Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_fields.html">stri_datetime_fields: Get Values for Date and Time Fields</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_format.html">stri_datetime_format: Date and Time Formatting and Parsing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert strptime-Style Format Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert <code class="docutils literal notranslate"><span class="pre">strptime</span></code>-Style Format Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_now.html">stri_datetime_now: Get Current Date and Time</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_symbols.html">stri_datetime_symbols: List Localizable Date-Time Formatting Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_detect.html">stri_detect: Detect a Pattern Match</a></li>
@@ -271,7 +271,7 @@
         
           <li><a href="../rapi.html">R Package <em>stringi</em> Reference</a> &raquo;</li>
         
-      <li>operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf</li>
+      <li>operator_dollar: C-Style Formatting with <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code></span> as a Binary Operator</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -297,11 +297,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="operator-dollar-c-style-formatting-with-sprintf-as-a-binary-operator-todo-call-stri-sprintf">
-<h1>operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf<a class="headerlink" href="#operator-dollar-c-style-formatting-with-sprintf-as-a-binary-operator-todo-call-stri-sprintf" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="operator-dollar-c-style-formatting-with-stri-sprintf-as-a-binary-operator">
+<h1>operator_dollar: C-Style Formatting with <a class="reference internal" href="stri_sprintf.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code></span></a> as a Binary Operator<a class="headerlink" href="#operator-dollar-c-style-formatting-with-stri-sprintf-as-a-binary-operator" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>Provides access to base R’s <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/sprintf.html"><code class="docutils literal notranslate"><span class="pre">sprintf</span></code></a> in form of a binary operator in a way similar to Python’s <code class="docutils literal notranslate"><span class="pre">%</span></code> overloaded for strings.</p>
+<p>Provides access to <a class="reference internal" href="stri_sprintf.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code></span></a> in form of a binary operator in a way similar to Python’s <code class="docutils literal notranslate"><span class="pre">%</span></code> overloaded for strings.</p>
+<p>Missing values and empty vectors are propagated as usual.</p>
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
@@ -321,10 +322,10 @@
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">e1</span></code></p></td>
-<td><p>format strings, see <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/sprintf.html"><code class="docutils literal notranslate"><span class="pre">sprintf</span></code></a> for syntax</p></td>
+<td><p>format strings, see <a class="reference internal" href="stri_sprintf.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code></span></a> for syntax</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">e2</span></code></p></td>
-<td><p>a list of atomic vectors to be passed to <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/sprintf.html"><code class="docutils literal notranslate"><span class="pre">sprintf</span></code></a> or a single atomic vector</p></td>
+<td><p>a list of atomic vectors to be passed to <a class="reference internal" href="stri_sprintf.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code></span></a> or a single atomic vector</p></td>
 </tr>
 </tbody>
 </table>
@@ -333,11 +334,10 @@
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
 <p>Vectorized over <code class="docutils literal notranslate"><span class="pre">e1</span></code> and <code class="docutils literal notranslate"><span class="pre">e2</span></code>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">e1</span> <span class="pre">%s$%</span> <span class="pre">atomic_vector</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">e1</span> <span class="pre">%s$%</span> <span class="pre">list(atomic_vector)</span></code>.</p>
-<p>Note that <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/sprintf.html"><code class="docutils literal notranslate"><span class="pre">sprintf</span></code></a> takes field width in bytes, not Unicode code points. See Examples for a workaround.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
-<p>Returns a character vector</p>
+<p>Returns a character vector.</p>
 </div>
 <div class="section" id="author-s">
 <h2>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this headline">¶</a></h2>
@@ -346,6 +346,7 @@
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
+<p>Other length: <a class="reference internal" href="stri_isempty.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_isempty()</span></code></span></a>, <a class="reference internal" href="stri_length.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_length()</span></code></span></a>, <a class="reference internal" href="stri_numbytes.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_numbytes()</span></code></span></a>, <a class="reference internal" href="stri_pad.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_pad_both()</span></code></span></a>, <a class="reference internal" href="stri_sprintf.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_sprintf()</span></code></span></a>, <a class="reference internal" href="stri_width.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_width()</span></code></span></a></p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
@@ -361,16 +362,11 @@
 <span class="c1">## [1] &quot;a=&#39;1&#39;&quot; &quot;b=&#39;1&#39;&quot; &quot;c=&#39;1&#39;&quot;</span>
 <span class="s">&quot;%s=&#39;%d&#39;&quot;</span> <span class="o">%s$%</span> <span class="nf">list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">),</span> <span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)</span>
 <span class="c1">## [1] &quot;a=&#39;1&#39;&quot; &quot;b=&#39;2&#39;&quot; &quot;c=&#39;3&#39;&quot;</span>
-<span class="c1"># sprintf field width:</span>
 <span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;abcd&quot;</span><span class="p">,</span> <span class="s">&quot;\u00DF\u00B5\U0001F970&quot;</span><span class="p">,</span> <span class="s">&quot;abcdef&quot;</span><span class="p">)</span>
-<span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%s%6s%s&quot;</span><span class="p">,</span> <span class="s">&quot;-&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="s">&quot;-&quot;</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
-<span class="c1">## -  abcd-</span>
-<span class="c1">## -ßµ🥰-</span>
-<span class="c1">## -abcdef-</span>
-<span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%s%s%s&quot;</span><span class="p">,</span> <span class="s">&quot;-&quot;</span><span class="p">,</span> <span class="n">stringi</span><span class="o">::</span><span class="nf">stri_pad</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">6</span><span class="p">),</span> <span class="s">&quot;-&quot;</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
-<span class="c1">## -  abcd-</span>
-<span class="c1">## -  ßµ🥰-</span>
-<span class="c1">## -abcdef-</span>
+<span class="nf">cat</span><span class="p">(</span><span class="s">&quot;[%6s]&quot;</span> <span class="o">%s$%</span> <span class="n">x</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>  <span class="c1"># width used, not the number of bytes</span>
+<span class="c1">## [  abcd]</span>
+<span class="c1">## [  ßµ🥰]</span>
+<span class="c1">## [abcdef]</span>
 </pre></div>
 </div>
 </div>
@@ -392,7 +388,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-24 11:20:07.
+        Last updated on 2021-06-03T14:48:11+1000.
       </span>
 
     </p>

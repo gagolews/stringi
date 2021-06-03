@@ -18,7 +18,7 @@ stri_escape_unicode(str)
 
 ## Details
 
-For non-printable and certain special (well-known, see also R man page [Quotes](https://stat.ethz.ch/R-manual/R-patched/library/base/html/Quotes.html)) ASCII characters the following (also recognized in R) convention is used. We get `\a`, `\b`, `\t`, `\n`, `\v`, `\f`, `\r`, `\"`, `\'`, `\\` or either \\uXXXX (4 hex digits) or \\UXXXXXXXX (8 hex digits) otherwise.
+For non-printable and certain special (well-known, see also R man page [Quotes](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Quotes.html)) ASCII characters the following (also recognized in R) convention is used. We get `\a`, `\b`, `\t`, `\n`, `\v`, `\f`, `\r`, `\"`, `\'`, `\\` or either \\uXXXX (4 hex digits) or \\UXXXXXXXX (8 hex digits) otherwise.
 
 As usual, any input string is converted to Unicode before executing the escape process.
 
@@ -34,7 +34,7 @@ Returns a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other escape: [`stri_unescape_unicode`](https://stringi.gagolewski.com/rapi/stri_unescape_unicode.html)()
+Other escape: [`stri_unescape_unicode()`](stri_unescape_unicode.md)
 
 ## Examples
 

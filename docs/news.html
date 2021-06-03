@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.2.9001
+                1.6.2.9004
               </div>
             
           
@@ -225,23 +225,28 @@
 <div class="section" id="xxx-to-be-1-6-3-2021-xx-yy">
 <h2>1.6.2.9xxx (to-be &gt;=1.6.3) (2021-xx-yy)<a class="headerlink" href="#xxx-to-be-1-6-3-2021-xx-yy" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>TODO … [NEW FEATURE] #420: <code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code> (alias: <code class="docutils literal notranslate"><span class="pre">stri_string_format</span></code>)
+<li><p>[NEW FEATURE] #420: <code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code> (alias: <code class="docutils literal notranslate"><span class="pre">stri_string_format</span></code>)
 is a Unicode-aware replacement for and enhancement of the base <code class="docutils literal notranslate"><span class="pre">sprintf</span></code>:
-it adds a customised handling of <code class="docutils literal notranslate"><span class="pre">NA</span></code>s (on demand),
-computing field size based on code point width,
-outputting substrings of at most given width,
-variable width and precision (both at the same time), etc.
-Moreover, <code class="docutils literal notranslate"><span class="pre">stri_printf</span></code> can be used to display formatted strings
-conveniently.</p></li>
+it adds a customised handling of <code class="docutils literal notranslate"><span class="pre">NA</span></code>s (on demand), computing field size
+based on code point width, outputting substrings of at most given width,
+variable width and precision (both at the same time), etc. Moreover,
+<code class="docutils literal notranslate"><span class="pre">stri_printf</span></code> can be used to display formatted strings conveniently.</p></li>
+<li><p>[NEW FEATURE] #438: <code class="docutils literal notranslate"><span class="pre">stri_trans_general</span></code> now supports rule-based
+as well as reverse-direction transliteration.</p></li>
+<li><p>[NEW FEATURE] #434: <code class="docutils literal notranslate"><span class="pre">stri_datetime_format</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_datetime_parse</span></code>
+are now vectorised also with respect to the <code class="docutils literal notranslate"><span class="pre">format</span></code> argument.</p></li>
+<li><p>[NEW FEATURE] <code class="docutils literal notranslate"><span class="pre">stri_datetime_fstr</span></code> has a new argument, <code class="docutils literal notranslate"><span class="pre">ignore_special</span></code>,
+which default to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> for backward compatibility.</p></li>
+<li><p>[NEW FEATURE] <code class="docutils literal notranslate"><span class="pre">stri_datetime_format</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_datetime_add</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">stri_datetime_fields</span></code> now call <code class="docutils literal notranslate"><span class="pre">as.POSIXct</span></code> more eagerly.</p></li>
 <li><p>[BACKWARD INCOMPATIBILITY] <code class="docutils literal notranslate"><span class="pre">%s$%</span></code> and <code class="docutils literal notranslate"><span class="pre">%stri$%</span></code> now use <code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code>
 instead of <code class="docutils literal notranslate"><span class="pre">base::sprintf</span></code>.</p></li>
-<li><p>TODO … [NEW FEATURE] #434: <code class="docutils literal notranslate"><span class="pre">stri_datetime_format</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_datetime_parse</span></code>
-is now also vectorised with respect to the <code class="docutils literal notranslate"><span class="pre">format</span></code> argument.</p></li>
 <li><p>[INTERNAL] <code class="docutils literal notranslate"><span class="pre">stri_prepare_arg*</span></code>s have been refactored, buffer overruns
 in the exception handling subsystem are now avoided.</p></li>
 <li><p>[BUGFIX] Few functions (<code class="docutils literal notranslate"><span class="pre">stri_length</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_enc_toutf32</span></code>, etc.)
 did not throw an exception on an invalid UTF-8
-byte sequence (and merely issues a warning instead)</p></li>
+byte sequence (and merely issues a warning instead).</p></li>
+<li><p>[BUGFIX] <code class="docutils literal notranslate"><span class="pre">stri_datetime_fstr</span></code> did not honour <code class="docutils literal notranslate"><span class="pre">NA_character_</span></code>.</p></li>
 </ul>
 </div>
 <div class="section" id="id1">
@@ -933,7 +938,7 @@ scheduled for milestone 0.1.</p></li>
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-24 11:20:07.
+        Last updated on 2021-06-03T14:48:11+1000.
       </span>
 
     </p>

@@ -14,51 +14,51 @@
 
 Manual pages on general topics:
 
--   [about\_encoding](https://stringi.gagolewski.com/rapi/about_encoding.html) -- character encoding issues, including information on encoding management in <span class="pkg">stringi</span>, as well as on encoding detection and conversion.
+-   [about\_encoding](about_encoding.md) -- character encoding issues, including information on encoding management in <span class="pkg">stringi</span>, as well as on encoding detection and conversion.
 
--   [about\_locale](https://stringi.gagolewski.com/rapi/about_locale.html) -- locale issues, including locale management and specification in <span class="pkg">stringi</span>, and the list of locale-sensitive operations. In particular, see [`stri_opts_collator`](https://stringi.gagolewski.com/rapi/stri_opts_collator.html) for a description of the string collation algorithm, which is used for string comparing, ordering, ranking, sorting, case-folding, and searching.
+-   [about\_locale](about_locale.md) -- locale issues, including locale management and specification in <span class="pkg">stringi</span>, and the list of locale-sensitive operations. In particular, see [`stri_opts_collator`](stri_opts_collator.md) for a description of the string collation algorithm, which is used for string comparing, ordering, ranking, sorting, case-folding, and searching.
 
--   [about\_arguments](https://stringi.gagolewski.com/rapi/about_arguments.html) -- information on how <span class="pkg">stringi</span> handles the arguments passed to its function.
+-   [about\_arguments](about_arguments.md) -- information on how <span class="pkg">stringi</span> handles the arguments passed to its function.
 
 ## Facilities available
 
 Refer to the following:
 
--   [about\_search](https://stringi.gagolewski.com/rapi/about_search.html) for string searching facilities; these include pattern searching, matching, string splitting, and so on. The following independent search engines are provided:
+-   [about\_search](about_search.md) for string searching facilities; these include pattern searching, matching, string splitting, and so on. The following independent search engines are provided:
 
-    -   [about\_search\_regex](https://stringi.gagolewski.com/rapi/about_search_regex.html) -- with ICU (Java-like) regular expressions,
+    -   [about\_search\_regex](about_search_regex.md) -- with ICU (Java-like) regular expressions,
 
-    -   [about\_search\_fixed](https://stringi.gagolewski.com/rapi/about_search_fixed.html) -- fast, locale-independent, byte-wise pattern matching,
+    -   [about\_search\_fixed](about_search_fixed.md) -- fast, locale-independent, byte-wise pattern matching,
 
-    -   [about\_search\_coll](https://stringi.gagolewski.com/rapi/about_search_coll.html) -- locale-aware pattern matching for natural language processing tasks,
+    -   [about\_search\_coll](about_search_coll.md) -- locale-aware pattern matching for natural language processing tasks,
 
-    -   [about\_search\_charclass](https://stringi.gagolewski.com/rapi/about_search_charclass.html) -- seeking elements of particular character classes, like "all whites-paces" or "all digits",
+    -   [about\_search\_charclass](about_search_charclass.md) -- seeking elements of particular character classes, like "all whites-paces" or "all digits",
 
-    -   [about\_search\_boundaries](https://stringi.gagolewski.com/rapi/about_search_boundaries.html) -- text boundary analysis.
+    -   [about\_search\_boundaries](about_search_boundaries.md) -- text boundary analysis.
 
--   [`stri_datetime_format`](https://stringi.gagolewski.com/rapi/stri_datetime_format.html) for date/time formatting and parsing. Also refer to the links therein for other date/time/time zone- related operations.
+-   [`stri_datetime_format`](stri_datetime_format.md) for date/time formatting and parsing. Also refer to the links therein for other date/time/time zone- related operations.
 
--   [`stri_stats_general`](https://stringi.gagolewski.com/rapi/stri_stats_general.html) and [`stri_stats_latex`](https://stringi.gagolewski.com/rapi/stri_stats_latex.html) for gathering some fancy statistics on a character vector\'s contents.
+-   [`stri_stats_general`](stri_stats_general.md) and [`stri_stats_latex`](stri_stats_latex.md) for gathering some fancy statistics on a character vector\'s contents.
 
--   [`stri_join`](https://stringi.gagolewski.com/rapi/stri_join.html), [`stri_dup`](https://stringi.gagolewski.com/rapi/stri_dup.html), `%s+%`, and [`stri_flatten`](https://stringi.gagolewski.com/rapi/stri_flatten.html) for concatenation-based operations.
+-   [`stri_join`](stri_join.md), [`stri_dup`](stri_dup.md), [`%s+%`](operator_add.md), and [`stri_flatten`](stri_flatten.md) for concatenation-based operations.
 
--   [`stri_sub`](https://stringi.gagolewski.com/rapi/stri_sub.html) for extracting and replacing substrings, and [`stri_reverse`](https://stringi.gagolewski.com/rapi/stri_reverse.html) for a joyful function to reverse all code points in a string.
+-   [`stri_sub`](stri_sub.md) for extracting and replacing substrings, and [`stri_reverse`](stri_reverse.md) for a joyful function to reverse all code points in a string.
 
--   [`stri_length`](https://stringi.gagolewski.com/rapi/stri_length.html) (among others) for determining the number of code points in a string. See also [`stri_count_boundaries`](https://stringi.gagolewski.com/rapi/stri_count_boundaries.html) for counting the number of Unicode characters and [`stri_width`](https://stringi.gagolewski.com/rapi/stri_width.html) for approximating the width of a string.
+-   [`stri_length`](stri_length.md) (among others) for determining the number of code points in a string. See also [`stri_count_boundaries`](stri_count_boundaries.md) for counting the number of Unicode characters and [`stri_width`](stri_width.md) for approximating the width of a string.
 
--   [`stri_trim`](https://stringi.gagolewski.com/rapi/stri_trim.html) (among others) for trimming characters from the beginning or/and end of a string, see also [about\_search\_charclass](https://stringi.gagolewski.com/rapi/about_search_charclass.html), and [`stri_pad`](https://stringi.gagolewski.com/rapi/stri_pad.html) for padding strings so that they are of the same width. Additionally, [`stri_wrap`](https://stringi.gagolewski.com/rapi/stri_wrap.html) wraps text into lines.
+-   [`stri_trim`](stri_trim.md) (among others) for trimming characters from the beginning or/and end of a string, see also [about\_search\_charclass](about_search_charclass.md), and [`stri_pad`](stri_pad.md) for padding strings so that they are of the same width. Additionally, [`stri_wrap`](stri_wrap.md) wraps text into lines.
 
--   [`stri_trans_tolower`](https://stringi.gagolewski.com/rapi/stri_trans_tolower.html) (among others) for case mapping, i.e., conversion to lower, UPPER, or Title Case, [`stri_trans_nfc`](https://stringi.gagolewski.com/rapi/stri_trans_nfc.html) (among others) for Unicode normalization, [`stri_trans_char`](https://stringi.gagolewski.com/rapi/stri_trans_char.html) for translating individual code points, and [`stri_trans_general`](https://stringi.gagolewski.com/rapi/stri_trans_general.html) for other universal yet powerful text transforms, including transliteration.
+-   [`stri_trans_tolower`](stri_trans_casemap.md) (among others) for case mapping, i.e., conversion to lower, UPPER, or Title Case, [`stri_trans_nfc`](stri_trans_nf.md) (among others) for Unicode normalization, [`stri_trans_char`](stri_trans_char.md) for translating individual code points, and [`stri_trans_general`](stri_trans_general.md) for other universal yet powerful text transforms, including transliteration.
 
--   [`stri_cmp`](https://stringi.gagolewski.com/rapi/stri_cmp.html), `%s<%`, [`stri_order`](https://stringi.gagolewski.com/rapi/stri_order.html), [`stri_sort`](https://stringi.gagolewski.com/rapi/stri_sort.html), [`stri_rank`](https://stringi.gagolewski.com/rapi/stri_rank.html), [`stri_unique`](https://stringi.gagolewski.com/rapi/stri_unique.html), and [`stri_duplicated`](https://stringi.gagolewski.com/rapi/stri_duplicated.html) for collation-based, locale-aware operations, see also [about\_locale](https://stringi.gagolewski.com/rapi/about_locale.html).
+-   [`stri_cmp`](stri_compare.md), [`%s<%`](operator_compare.md), [`stri_order`](stri_order.md), [`stri_sort`](stri_sort.md), [`stri_rank`](stri_rank.md), [`stri_unique`](stri_unique.md), and [`stri_duplicated`](stri_duplicated.md) for collation-based, locale-aware operations, see also [about\_locale](about_locale.md).
 
--   [`stri_split_lines`](https://stringi.gagolewski.com/rapi/stri_split_lines.html) (among others) to split a string into text lines.
+-   [`stri_split_lines`](stri_split_lines.md) (among others) to split a string into text lines.
 
--   [`stri_escape_unicode`](https://stringi.gagolewski.com/rapi/stri_escape_unicode.html) (among others) for escaping some code points.
+-   [`stri_escape_unicode`](stri_escape_unicode.md) (among others) for escaping some code points.
 
--   [`stri_rand_strings`](https://stringi.gagolewski.com/rapi/stri_rand_strings.html), [`stri_rand_shuffle`](https://stringi.gagolewski.com/rapi/stri_rand_shuffle.html), and [`stri_rand_lipsum`](https://stringi.gagolewski.com/rapi/stri_rand_lipsum.html) for generating (pseudo)random strings.
+-   [`stri_rand_strings`](stri_rand_strings.md), [`stri_rand_shuffle`](stri_rand_shuffle.md), and [`stri_rand_lipsum`](stri_rand_lipsum.md) for generating (pseudo)random strings.
 
--   [`stri_read_raw`](https://stringi.gagolewski.com/rapi/stri_read_raw.html), [`stri_read_lines`](https://stringi.gagolewski.com/rapi/stri_read_lines.html), and [`stri_write_lines`](https://stringi.gagolewski.com/rapi/stri_write_lines.html) for reading and writing text files.
+-   [`stri_read_raw`](stri_read_raw.md), [`stri_read_lines`](stri_read_lines.md), and [`stri_write_lines`](stri_write_lines.md) for reading and writing text files.
 
 Note that each man page provides many further links to other interesting facilities and topics.
 
@@ -82,4 +82,4 @@ Marek Gagolewski, with contributions from Bartek Tartanus and many others. ICU4C
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other stringi\_general\_topics: [`about_arguments`](https://stringi.gagolewski.com/rapi/about_arguments.html), [`about_encoding`](https://stringi.gagolewski.com/rapi/about_encoding.html), [`about_locale`](https://stringi.gagolewski.com/rapi/about_locale.html), [`about_search_boundaries`](https://stringi.gagolewski.com/rapi/about_search_boundaries.html), [`about_search_charclass`](https://stringi.gagolewski.com/rapi/about_search_charclass.html), [`about_search_coll`](https://stringi.gagolewski.com/rapi/about_search_coll.html), [`about_search_fixed`](https://stringi.gagolewski.com/rapi/about_search_fixed.html), [`about_search_regex`](https://stringi.gagolewski.com/rapi/about_search_regex.html), [`about_search`](https://stringi.gagolewski.com/rapi/about_search.html)
+Other stringi\_general\_topics: [`about_arguments`](about_arguments.md), [`about_encoding`](about_encoding.md), [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_charclass`](about_search_charclass.md), [`about_search_coll`](about_search_coll.md), [`about_search_fixed`](about_search_fixed.md), [`about_search_regex`](about_search_regex.md), [`about_search`](about_search.md)

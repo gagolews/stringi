@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.2.9001
+                1.6.2.9004
               </div>
             
           
@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code></span> as a Binary Operator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count.html">stri_count: Count the Number of Pattern Matches</a></li>
@@ -118,7 +118,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_create.html">stri_datetime_create: Create a Date-Time Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_fields.html">stri_datetime_fields: Get Values for Date and Time Fields</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_format.html">stri_datetime_format: Date and Time Formatting and Parsing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert strptime-Style Format Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert <code class="docutils literal notranslate"><span class="pre">strptime</span></code>-Style Format Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_now.html">stri_datetime_now: Get Current Date and Time</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_symbols.html">stri_datetime_symbols: List Localizable Date-Time Formatting Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_detect.html">stri_detect: Detect a Pattern Match</a></li>
@@ -185,6 +185,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#details">Details</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#value">Value</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#author-s">Author(s)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#references">References</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#see-also">See Also</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a></li>
 </ul>
@@ -301,7 +302,7 @@
 <h1>stri_sprintf: Format Strings<a class="headerlink" href="#stri-sprintf-format-strings" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>A Unicode-aware replacement for and enhancement of the built-in <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/sprintf.html"><code class="docutils literal notranslate"><span class="pre">sprintf</span></code></a> function. Moreover, <code class="docutils literal notranslate"><span class="pre">stri_printf</span></code> prints formatted strings.</p>
+<p><code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code> (synonym: <code class="docutils literal notranslate"><span class="pre">stri_string_format</span></code>) is a Unicode-aware replacement for and enhancement of the built-in <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/help/sprintf.html"><code class="docutils literal notranslate"><span class="pre">sprintf</span></code></a> function. Moreover, <code class="docutils literal notranslate"><span class="pre">stri_printf</span></code> prints formatted strings.</p>
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
@@ -318,6 +319,18 @@
   <span class="n">format</span><span class="p">,</span>
   <span class="kc">...</span><span class="p">,</span>
   <span class="n">na_string</span> <span class="o">=</span> <span class="kc">NA_character_</span><span class="p">,</span>
+  <span class="n">inf_string</span> <span class="o">=</span> <span class="s">&quot;Inf&quot;</span><span class="p">,</span>
+  <span class="n">nan_string</span> <span class="o">=</span> <span class="s">&quot;NaN&quot;</span><span class="p">,</span>
+  <span class="n">use_length</span> <span class="o">=</span> <span class="kc">FALSE</span>
+<span class="p">)</span>
+
+<span class="nf">stri_printf</span><span class="p">(</span>
+  <span class="n">format</span><span class="p">,</span>
+  <span class="kc">...</span><span class="p">,</span>
+  <span class="n">file</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
+  <span class="n">sep</span> <span class="o">=</span> <span class="s">&quot;\n&quot;</span><span class="p">,</span>
+  <span class="n">append</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span>
+  <span class="n">na_string</span> <span class="o">=</span> <span class="s">&quot;NA&quot;</span><span class="p">,</span>
   <span class="n">inf_string</span> <span class="o">=</span> <span class="s">&quot;Inf&quot;</span><span class="p">,</span>
   <span class="n">nan_string</span> <span class="o">=</span> <span class="s">&quot;NaN&quot;</span><span class="p">,</span>
   <span class="n">use_length</span> <span class="o">=</span> <span class="kc">FALSE</span>
@@ -341,22 +354,25 @@
 <td><p>vectors (coercible to integer, real, or character)</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">na_string</span></code></p></td>
-<td><p>single string to represent the not-a-number</p></td>
+<td><p>single string to represent missing values; if <code class="docutils literal notranslate"><span class="pre">NA</span></code>, missing values in <code class="docutils literal notranslate"><span class="pre">...</span></code> result in the corresponding outputs be missing too; use <code class="docutils literal notranslate"><span class="pre">&quot;NA&quot;</span></code> for compatibility with base R</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">inf_string</span></code></p></td>
-<td><p>single string to represent the (unsigned) infinity</p></td>
+<td><p>single string to represent the (unsigned) infinity (<code class="docutils literal notranslate"><span class="pre">NA</span></code> allowed)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">use_length</span></code></p></td>
-<td><p>single logical value; should the number of code points be used when applying modifiers such as <code class="docutils literal notranslate"><span class="pre">%20s</span></code> instead of the total code point width (see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_width.html"><code class="docutils literal notranslate"><span class="pre">stri_width</span></code></a>)?</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">nan_string</span></code></p></td>
+<td><p>single string to represent the not-a-number (<code class="docutils literal notranslate"><span class="pre">NA</span></code> allowed)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">file</span></code></p></td>
-<td><p>see <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/cat.html"><code class="docutils literal notranslate"><span class="pre">cat</span></code></a></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">use_length</span></code></p></td>
+<td><p>single logical value; should the number of code points be used when applying modifiers such as <code class="docutils literal notranslate"><span class="pre">%20s</span></code> instead of the total code point width?</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sep</span></code></p></td>
-<td><p>see <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/cat.html"><code class="docutils literal notranslate"><span class="pre">cat</span></code></a></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">file</span></code></p></td>
+<td><p>see <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/help/cat.html"><code class="docutils literal notranslate"><span class="pre">cat</span></code></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">append</span></code></p></td>
-<td><p>see <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/cat.html"><code class="docutils literal notranslate"><span class="pre">cat</span></code></a></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sep</span></code></p></td>
+<td><p>see <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/help/cat.html"><code class="docutils literal notranslate"><span class="pre">cat</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">append</span></code></p></td>
+<td><p>see <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/help/cat.html"><code class="docutils literal notranslate"><span class="pre">cat</span></code></a></p></td>
 </tr>
 </tbody>
 </table>
@@ -364,12 +380,12 @@
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
 <p>Vectorized over <code class="docutils literal notranslate"><span class="pre">format</span></code> and all vectors passed via <code class="docutils literal notranslate"><span class="pre">...</span></code>.</p>
-<p><code class="docutils literal notranslate"><span class="pre">stri_string_format</span></code> is a synonym for <code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code>.</p>
-<p>Note that <code class="docutils literal notranslate"><span class="pre">stri_printf</span></code> treats missing values in <code class="docutils literal notranslate"><span class="pre">...</span></code> as <code class="docutils literal notranslate"><span class="pre">&quot;NA&quot;</span></code> strings by default.</p>
-<p>Note that Unicode code points may have various widths when printed on the console and that, by default, the function takes that into account. By changing the state of the <code class="docutils literal notranslate"><span class="pre">use_length</span></code> argument, this function act as if each code point was of width 1.</p>
-<p>For <code class="docutils literal notranslate"><span class="pre">%d</span></code> and <code class="docutils literal notranslate"><span class="pre">%f</span></code> formats, factors are treated as integer vectors (underlying codes) and so are date and time objects, etc.</p>
-<p>This function is not locale sensitive. For instance, numbers are always formatted in the “POSIX” style, e.g., <code class="docutils literal notranslate"><span class="pre">-123456.789</span></code>. Such a feature might be added at a later date, though.</p>
+<p>Unicode code points may have various widths when printed on the console (compare <a class="reference internal" href="stri_width.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_width</span></code></span></a>). These functions, by default (see the <code class="docutils literal notranslate"><span class="pre">use_length</span></code> argument), take this into account.</p>
+<p>These functions are not locale sensitive. For instance, numbers are always formatted in the “POSIX” style, e.g., <code class="docutils literal notranslate"><span class="pre">-123456.789</span></code> (no thousands separator, dot as a fractional separator). Such a feature might be added at a later date, though.</p>
 <p>All arguments passed via <code class="docutils literal notranslate"><span class="pre">...</span></code> are evaluated. If some of them are unused, a warning is generated. Too few arguments result in an error.</p>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">stri_printf</span></code> treats missing values in <code class="docutils literal notranslate"><span class="pre">...</span></code> as strings <code class="docutils literal notranslate"><span class="pre">&quot;NA&quot;</span></code> by default.</p>
+<p>All format specifiers supported <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/help/sprintf.html"><code class="docutils literal notranslate"><span class="pre">sprintf</span></code></a> are also available here. For the formatting of integers and floating-point values, currently the system <code class="docutils literal notranslate"><span class="pre">std::snprintf()</span></code> is called, but this may change in the future. Format specifiers are normalized and necessary sanity checks are performed.</p>
+<p>Supported conversion specifiers: <code class="docutils literal notranslate"><span class="pre">dioxX</span></code> (integers) <code class="docutils literal notranslate"><span class="pre">feEgGaA</span></code> (floats) and <code class="docutils literal notranslate"><span class="pre">s</span></code> (character strings). Supported flags: <code class="docutils literal notranslate"><span class="pre">-</span></code> (left-align), <code class="docutils literal notranslate"><span class="pre">+</span></code> (force output sign or blank when <code class="docutils literal notranslate"><span class="pre">NaN</span></code> or <code class="docutils literal notranslate"><span class="pre">NA</span></code>; numeric only), <code class="docutils literal notranslate"><span class="pre">&lt;space&gt;</span></code> (output minus or space for a sign; numeric only) <code class="docutils literal notranslate"><span class="pre">0</span></code> (pad with 0s; numeric only), <code class="docutils literal notranslate"><span class="pre">#</span></code> (alternative output of some numerics).</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
@@ -380,19 +396,38 @@
 <h2>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://www.gagolewski.com/">Marek Gagolewski</a> and other contributors</p>
 </div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">printf</span></code> in <code class="docutils literal notranslate"><span class="pre">glibc</span></code>, <a class="reference external" href="https://man.archlinux.org/man/printf.3">https://man.archlinux.org/man/printf.3</a></p>
+<p><code class="docutils literal notranslate"><span class="pre">printf</span></code> format strings – Wikipedia, <a class="reference external" href="https://en.wikipedia.org/wiki/Printf_format_string">https://en.wikipedia.org/wiki/Printf_format_string</a></p>
+</div>
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
+<p>Other length: <a class="reference internal" href="operator_dollar.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">%s$%()</span></code></span></a>, <a class="reference internal" href="stri_isempty.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_isempty()</span></code></span></a>, <a class="reference internal" href="stri_length.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_length()</span></code></span></a>, <a class="reference internal" href="stri_numbytes.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_numbytes()</span></code></span></a>, <a class="reference internal" href="stri_pad.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_pad_both()</span></code></span></a>, <a class="reference internal" href="stri_width.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_width()</span></code></span></a></p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">#...</span>
-<span class="nf">stri_printf</span><span class="p">(</span><span class="s">&quot;%4s=%.3f&quot;</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;e&quot;</span><span class="p">,</span> <span class="s">&quot;e\u00b2&quot;</span><span class="p">,</span> <span class="s">&quot;\u03c0&quot;</span><span class="p">,</span> <span class="s">&quot;\u03c0\u00b2&quot;</span><span class="p">),</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_printf</span><span class="p">(</span><span class="s">&quot;%4s=%.3f&quot;</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;e&quot;</span><span class="p">,</span> <span class="s">&quot;e\u00b2&quot;</span><span class="p">,</span> <span class="s">&quot;\u03c0&quot;</span><span class="p">,</span> <span class="s">&quot;\u03c0\u00b2&quot;</span><span class="p">),</span>
     <span class="nf">c</span><span class="p">(</span><span class="nf">exp</span><span class="p">(</span><span class="m">1</span><span class="p">),</span> <span class="nf">exp</span><span class="p">(</span><span class="m">2</span><span class="p">),</span> <span class="kc">pi</span><span class="p">,</span> <span class="kc">pi</span><span class="o">^</span><span class="m">2</span><span class="p">))</span>
 <span class="c1">##    e=2.718</span>
 <span class="c1">##   e²=7.389</span>
 <span class="c1">##    π=3.142</span>
 <span class="c1">##   π²=9.870</span>
+<span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;xxabcd&quot;</span><span class="p">,</span> <span class="s">&quot;xx\u0105\u0106\u0107\u0108&quot;</span><span class="p">,</span>
+    <span class="s">&quot;\u200b\u200b\u200b\u200b\U0001F3F4\U000E0067\U000E0062\U000E0073\U000E0063\U000E0074\U000E007Fabcd&quot;</span><span class="p">)</span>
+<span class="nf">stri_printf</span><span class="p">(</span><span class="s">&quot;[%10s]&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>  <span class="c1"># minimum width = 10</span>
+<span class="c1">## [    xxabcd]</span>
+<span class="c1">## [    xxąĆćĈ]</span>
+<span class="c1">## [    ​​​​🏴󠁧󠁢󠁳󠁣󠁴󠁿abcd]</span>
+<span class="nf">stri_printf</span><span class="p">(</span><span class="s">&quot;[%-10.3s]&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>  <span class="c1"># output of max width = 3, but pad to width of 10</span>
+<span class="c1">## [xxa       ]</span>
+<span class="c1">## [xxą       ]</span>
+<span class="c1">## [​​​​🏴󠁧󠁢󠁳󠁣󠁴󠁿a       ]</span>
+<span class="nf">stri_printf</span><span class="p">(</span><span class="s">&quot;[%10s]&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">use_length</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>  <span class="c1"># minimum number Unicode of code points = 10</span>
+<span class="c1">## [    xxabcd]</span>
+<span class="c1">## [    xxąĆćĈ]</span>
+<span class="c1">## [​​​​🏴󠁧󠁢󠁳󠁣󠁴󠁿abcd]</span>
 <span class="c1"># vectorization wrt all arguments:</span>
 <span class="n">p</span> <span class="o">&lt;-</span> <span class="nf">runif</span><span class="p">(</span><span class="m">10</span><span class="p">)</span>
 <span class="nf">stri_sprintf</span><span class="p">(</span><span class="nf">ifelse</span><span class="p">(</span><span class="n">p</span> <span class="o">&gt;</span> <span class="m">0.5</span><span class="p">,</span> <span class="s">&quot;P(Y=1)=%1$.2f&quot;</span><span class="p">,</span> <span class="s">&quot;P(Y=0)=%2$.2f&quot;</span><span class="p">),</span> <span class="n">p</span><span class="p">,</span> <span class="m">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span>
@@ -411,6 +446,19 @@
 <span class="c1">##         +∞</span>
 <span class="c1">##         💩</span>
 <span class="c1">##       &lt;NA&gt;</span>
+<span class="nf">stri_sprintf</span><span class="p">(</span><span class="s">&quot;UNIX time %1$f is %1$s.&quot;</span><span class="p">,</span> <span class="nf">Sys.time</span><span class="p">())</span>
+<span class="c1">## [1] &quot;UNIX time 1622695679.486651 is 2021-06-03 14:47:59.&quot;</span>
+<span class="c1"># the following do not work in sprintf()</span>
+<span class="nf">stri_sprintf</span><span class="p">(</span><span class="s">&quot;%1$#- *2$.*3$f&quot;</span><span class="p">,</span> <span class="m">1.23456</span><span class="p">,</span> <span class="m">10</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>  <span class="c1"># two asterisks</span>
+<span class="c1">## [1] &quot; 1.235    &quot;</span>
+<span class="nf">stri_sprintf</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span> <span class="s">&quot;%f&quot;</span><span class="p">),</span> <span class="kc">pi</span><span class="p">)</span>  <span class="c1"># re-coercion needed</span>
+<span class="c1">## [1] &quot;3.14159265358979&quot; &quot;3.141593&quot;</span>
+<span class="nf">stri_sprintf</span><span class="p">(</span><span class="s">&quot;%1$s is %1$f UNIX time.&quot;</span><span class="p">,</span> <span class="nf">Sys.time</span><span class="p">())</span>  <span class="c1"># re-coercion needed</span>
+<span class="c1">## [1] &quot;2021-06-03 14:47:59 is 1622695679.490289 UNIX time.&quot;</span>
+<span class="nf">stri_sprintf</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="s">&quot;%s&quot;</span><span class="p">),</span> <span class="nf">factor</span><span class="p">(</span><span class="m">11</span><span class="o">:</span><span class="m">12</span><span class="p">))</span>  <span class="c1"># re-coercion needed</span>
+<span class="c1">## [1] &quot;1&quot;  &quot;12&quot;</span>
+<span class="nf">stri_sprintf</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span> <span class="s">&quot;%d&quot;</span><span class="p">),</span> <span class="nf">factor</span><span class="p">(</span><span class="m">11</span><span class="o">:</span><span class="m">12</span><span class="p">))</span>  <span class="c1"># re-coercion needed</span>
+<span class="c1">## [1] &quot;11&quot; &quot;2&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -432,7 +480,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-24 11:20:07.
+        Last updated on 2021-06-03T14:48:11+1000.
       </span>
 
     </p>

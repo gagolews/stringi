@@ -2,7 +2,7 @@
 
 ## Description
 
-Returns a list of available text transform identifiers. Each of them may be used in [`stri_trans_general`](https://stringi.gagolewski.com/rapi/stri_trans_general.html) tasks.
+Returns a list of available text transform identifiers. Each of them may be used in [`stri_trans_general`](stri_trans_general.md) tasks.
 
 ## Usage
 
@@ -26,7 +26,7 @@ Returns a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other transform: [`stri_trans_char`](https://stringi.gagolewski.com/rapi/stri_trans_char.html)(), [`stri_trans_general`](https://stringi.gagolewski.com/rapi/stri_trans_general.html)(), [`stri_trans_nfc`](https://stringi.gagolewski.com/rapi/stri_trans_nfc.html)(), [`stri_trans_tolower`](https://stringi.gagolewski.com/rapi/stri_trans_tolower.html)()
+Other transform: [`stri_trans_char()`](stri_trans_char.md), [`stri_trans_general()`](stri_trans_general.md), [`stri_trans_nfc()`](stri_trans_nf.md), [`stri_trans_tolower()`](stri_trans_casemap.md)
 
 ## Examples
 

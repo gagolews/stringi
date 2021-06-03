@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.2.9001
+                1.6.2.9004
               </div>
             
           
@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code></span> as a Binary Operator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count.html">stri_count: Count the Number of Pattern Matches</a></li>
@@ -118,7 +118,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_create.html">stri_datetime_create: Create a Date-Time Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_fields.html">stri_datetime_fields: Get Values for Date and Time Fields</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_format.html">stri_datetime_format: Date and Time Formatting and Parsing</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">stri_datetime_fstr: Convert strptime-Style Format Strings</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">stri_datetime_fstr: Convert <code class="docutils literal notranslate"><span class="pre">strptime</span></code>-Style Format Strings</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#description">Description</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#arguments">Arguments</a></li>
@@ -271,7 +271,7 @@
         
           <li><a href="../rapi.html">R Package <em>stringi</em> Reference</a> &raquo;</li>
         
-      <li>stri_datetime_fstr: Convert strptime-Style Format Strings</li>
+      <li>stri_datetime_fstr: Convert <code class="docutils literal notranslate"><span class="pre">strptime</span></code>-Style Format Strings</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -298,14 +298,14 @@
            <div itemprop="articleBody">
             
   <div class="section" id="stri-datetime-fstr-convert-strptime-style-format-strings">
-<h1>stri_datetime_fstr: Convert strptime-Style Format Strings<a class="headerlink" href="#stri-datetime-fstr-convert-strptime-style-format-strings" title="Permalink to this headline">¶</a></h1>
+<h1>stri_datetime_fstr: Convert <code class="docutils literal notranslate"><span class="pre">strptime</span></code>-Style Format Strings<a class="headerlink" href="#stri-datetime-fstr-convert-strptime-style-format-strings" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>A function to convert <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/strptime.html"><code class="docutils literal notranslate"><span class="pre">strptime</span></code></a>/<a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/strptime.html"><code class="docutils literal notranslate"><span class="pre">strftime</span></code></a>-style format strings to <span class="pkg">ICU</span> format strings that may be used in <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_parse.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_parse</span></code></a> and <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_format.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_format</span></code></a> functions.</p>
+<p>This function converts <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/help/strptime.html"><code class="docutils literal notranslate"><span class="pre">strptime</span></code></a> or <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/help/strftime.html"><code class="docutils literal notranslate"><span class="pre">strftime</span></code></a>-style format strings to <span class="pkg">ICU</span> format strings that may be used in <a class="reference internal" href="stri_datetime_format.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_parse</span></code></span></a> and <a class="reference internal" href="stri_datetime_format.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_format</span></code></span></a> functions.</p>
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_fstr</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_fstr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ignore_special</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -319,15 +319,18 @@
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">x</span></code></p></td>
-<td><p>character vector consisting of date/time format strings</p></td>
+<td><p>character vector of date/time format strings</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ignore_special</span></code></p></td>
+<td><p>if <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>, special identifiers like <code class="docutils literal notranslate"><span class="pre">&quot;datetime_full&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">date_relative_short</span></code> (see <a class="reference internal" href="stri_datetime_format.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_format</span></code></span></a>) are left as-is</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
-<p>For more details on conversion specifiers please refer to the manual page of <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/strptime.html"><code class="docutils literal notranslate"><span class="pre">strptime</span></code></a>. Most of the formatters of the form <code class="docutils literal notranslate"><span class="pre">%x</span></code>, where <code class="docutils literal notranslate"><span class="pre">x</span></code> is a letter, are supported. Moreover, each <code class="docutils literal notranslate"><span class="pre">%%</span></code> is replaced with <code class="docutils literal notranslate"><span class="pre">%</span></code>.</p>
-<p>Warnings are given in case of <code class="docutils literal notranslate"><span class="pre">%x</span></code>, <code class="docutils literal notranslate"><span class="pre">%X</span></code>, <code class="docutils literal notranslate"><span class="pre">%u</span></code>, <code class="docutils literal notranslate"><span class="pre">%w</span></code>, <code class="docutils literal notranslate"><span class="pre">%g</span></code>, <code class="docutils literal notranslate"><span class="pre">%G</span></code>, <code class="docutils literal notranslate"><span class="pre">%c</span></code>, <code class="docutils literal notranslate"><span class="pre">%U</span></code> and <code class="docutils literal notranslate"><span class="pre">%W</span></code> as in such circumstances either <span class="pkg">ICU</span> does not support the functionality requested using the format-strings API or there are some inconsistencies between base R and <span class="pkg">ICU</span>.</p>
+<p>For more details on conversion specifiers please refer to the manual page of <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/help/strptime.html"><code class="docutils literal notranslate"><span class="pre">strptime</span></code></a>. Most of the formatters of the form <code class="docutils literal notranslate"><span class="pre">%x</span></code>, where <code class="docutils literal notranslate"><span class="pre">x</span></code> is a letter, are supported. Moreover, each <code class="docutils literal notranslate"><span class="pre">%%</span></code> is replaced with <code class="docutils literal notranslate"><span class="pre">%</span></code>.</p>
+<p>Warnings are given in the case of <code class="docutils literal notranslate"><span class="pre">%x</span></code>, <code class="docutils literal notranslate"><span class="pre">%X</span></code>, <code class="docutils literal notranslate"><span class="pre">%u</span></code>, <code class="docutils literal notranslate"><span class="pre">%w</span></code>, <code class="docutils literal notranslate"><span class="pre">%g</span></code>, <code class="docutils literal notranslate"><span class="pre">%G</span></code>, <code class="docutils literal notranslate"><span class="pre">%c</span></code>, <code class="docutils literal notranslate"><span class="pre">%U</span></code>, and <code class="docutils literal notranslate"><span class="pre">%W</span></code> as in such circumstances either <span class="pkg">ICU</span> does not support the functionality requested using the string format API or there are some inconsistencies between base R and <span class="pkg">ICU</span>.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
@@ -340,7 +343,7 @@
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
-<p>Other datetime: <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_add.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_add</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_create.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_create</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_fields.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_fields</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_format.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_format</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_now.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_now</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_symbols.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_symbols</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_timezone_get.html"><code class="docutils literal notranslate"><span class="pre">stri_timezone_get</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_timezone_info.html"><code class="docutils literal notranslate"><span class="pre">stri_timezone_info</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_timezone_list.html"><code class="docutils literal notranslate"><span class="pre">stri_timezone_list</span></code></a>()</p>
+<p>Other datetime: <a class="reference internal" href="stri_datetime_add.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_add()</span></code></span></a>, <a class="reference internal" href="stri_datetime_create.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_create()</span></code></span></a>, <a class="reference internal" href="stri_datetime_fields.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_fields()</span></code></span></a>, <a class="reference internal" href="stri_datetime_format.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_format()</span></code></span></a>, <a class="reference internal" href="stri_datetime_now.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_now()</span></code></span></a>, <a class="reference internal" href="stri_datetime_symbols.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_symbols()</span></code></span></a>, <a class="reference internal" href="stri_timezone_set.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_get()</span></code></span></a>, <a class="reference internal" href="stri_timezone_info.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_info()</span></code></span></a>, <a class="reference internal" href="stri_timezone_list.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_list()</span></code></span></a></p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
@@ -367,7 +370,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-24 11:20:07.
+        Last updated on 2021-06-03T14:48:11+1000.
       </span>
 
     </p>

@@ -82,17 +82,17 @@ stri_replace_last_regex(str, pattern, replacement, ..., opts_regex = NULL)
 
 ## Arguments
 
-|                                          |                                                                                                                                                                                                                                                                                                                                                              |
-|------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`                                    | character vector; strings to search in                                                                                                                                                                                                                                                                                                                       |
-| `replacement`                            | character vector with replacements for matched patterns                                                                                                                                                                                                                                                                                                      |
-| `...`                                    | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_regex`, `opts_fixed`, and so on                                                                                                                                                                                                         |
-| `mode`                                   | single string; one of: `'first'` (the default), `'all'`, `'last'`                                                                                                                                                                                                                                                                                            |
-| `pattern, regex, fixed, coll, charclass` | character vector; search patterns; for more details refer to [stringi-search](https://stringi.gagolewski.com/rapi/stringi-search.html)                                                                                                                                                                                                                       |
-| `merge`                                  | single logical value; should consecutive matches be merged into one string; `stri_replace_all_charclass` only                                                                                                                                                                                                                                                |
-| `vectorize_all`                          | single logical value; should each occurrence of a pattern in every string be replaced by a corresponding replacement string?; `stri_replace_all_*` only                                                                                                                                                                                                      |
-| `vectorise_all`                          | alias of `vectorize_all`                                                                                                                                                                                                                                                                                                                                     |
-| `opts_collator, opts_fixed, opts_regex`  | a named list used to tune up the search engine\'s settings; see [`stri_opts_collator`](https://stringi.gagolewski.com/rapi/stri_opts_collator.html), [`stri_opts_fixed`](https://stringi.gagolewski.com/rapi/stri_opts_fixed.html), and [`stri_opts_regex`](https://stringi.gagolewski.com/rapi/stri_opts_regex.html), respectively; `NULL` for the defaults |
+|                                          |                                                                                                                                                                                                                                            |
+|------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `str`                                    | character vector; strings to search in                                                                                                                                                                                                     |
+| `replacement`                            | character vector with replacements for matched patterns                                                                                                                                                                                    |
+| `...`                                    | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_regex`, `opts_fixed`, and so on                                                                                       |
+| `mode`                                   | single string; one of: `'first'` (the default), `'all'`, `'last'`                                                                                                                                                                          |
+| `pattern, regex, fixed, coll, charclass` | character vector; search patterns; for more details refer to [stringi-search](about_search.md)                                                                                                                                             |
+| `merge`                                  | single logical value; should consecutive matches be merged into one string; `stri_replace_all_charclass` only                                                                                                                              |
+| `vectorize_all`                          | single logical value; should each occurrence of a pattern in every string be replaced by a corresponding replacement string?; `stri_replace_all_*` only                                                                                    |
+| `vectorise_all`                          | alias of `vectorize_all`                                                                                                                                                                                                                   |
+| `opts_collator, opts_fixed, opts_regex`  | a named list used to tune up the search engine\'s settings; see [`stri_opts_collator`](stri_opts_collator.md), [`stri_opts_fixed`](stri_opts_fixed.md), and [`stri_opts_regex`](stri_opts_regex.md), respectively; `NULL` for the defaults |
 
 ## Details
 
@@ -106,7 +106,7 @@ Note that `stri_replace_last_regex` searches from start to end, but skips overla
 
 `stri_replace`, `stri_replace_all`, `stri_replace_first`, and `stri_replace_last` are convenience functions; they just call `stri_replace_*_*` variants, depending on the arguments used.
 
-If you wish to remove white-spaces from the start or end of a string, see [`stri_trim`](https://stringi.gagolewski.com/rapi/stri_trim.html).
+If you wish to remove white-spaces from the start or end of a string, see [`stri_trim`](stri_trim.md).
 
 ## Value
 
@@ -120,7 +120,7 @@ All the functions return a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_replace: [`about_search`](https://stringi.gagolewski.com/rapi/about_search.html), [`stri_trim_both`](https://stringi.gagolewski.com/rapi/stri_trim_both.html)()
+Other search\_replace: [`about_search`](about_search.md), [`stri_trim_both()`](stri_trim.md)
 
 ## Examples
 

@@ -25,20 +25,20 @@ stri_datetime_parse(
 
 ## Arguments
 
-|           |                                                                                                                                                                                                                                                                       |
-|-----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `time`    | an object of class [`POSIXct`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/DateTimeClasses.html) (`as.POSIXct` will be called on character vectors and objects of class `POSIXlt`, `Date`, and `factor`)                                                |
-| `format`  | character vector, see Details; see also [`stri_datetime_fstr`](https://stringi.gagolewski.com/rapi/stri_datetime_fstr.html)                                                                                                                                           |
-| `tz`      | `NULL` or `''` for the default time zone or a single string with a timezone identifier, see [`stri_timezone_get`](https://stringi.gagolewski.com/rapi/stri_timezone_get.html) and [`stri_timezone_list`](https://stringi.gagolewski.com/rapi/stri_timezone_list.html) |
-| `locale`  | `NULL` or `''` for the default locale, or a single string with locale identifier; a non-Gregorian calendar may be specified by setting the `@calendar=name` keyword                                                                                                   |
-| `str`     | character vector                                                                                                                                                                                                                                                      |
-| `lenient` | single logical value; should date/time parsing be lenient?                                                                                                                                                                                                            |
+|           |                                                                                                                                                                                                                      |
+|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `time`    | an object of class [`POSIXct`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/DateTimeClasses.html) (`as.POSIXct` will be called on character vectors and objects of class `POSIXlt`, `Date`, and `factor`) |
+| `format`  | character vector, see Details; see also [`stri_datetime_fstr`](stri_datetime_fstr.md)                                                                                                                                |
+| `tz`      | `NULL` or `''` for the default time zone or a single string with a timezone identifier, see [`stri_timezone_get`](stri_timezone_set.md) and [`stri_timezone_list`](stri_timezone_list.md)                            |
+| `locale`  | `NULL` or `''` for the default locale, or a single string with locale identifier; a non-Gregorian calendar may be specified by setting the `@calendar=name` keyword                                                  |
+| `str`     | character vector                                                                                                                                                                                                     |
+| `lenient` | single logical value; should date/time parsing be lenient?                                                                                                                                                           |
 
 ## Details
 
 Vectorized over `format` and `time` or `str`.
 
-By default, `stri_datetime_format` (for the sake of compatibility with the [`strftime`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/strftime.html) function) formats a date/time object using the current default time zone.
+By default, `stri_datetime_format` (for the sake of compatibility with the [`strftime`](https://stat.ethz.ch/R-manual/R-devel/library/base/help/strftime.html) function) formats a date/time object using the current default time zone.
 
 `format` may be one of `DT_STYLE` or `DT_relative_STYLE`, where `DT` is equal to `date`, `time`, or `datetime`, and `STYLE` is equal to `full`, `long`, `medium`, or `short`. This gives a locale-dependent date and/or time format. Note that currently <span class="pkg">ICU</span> does not support `relative` `time` formats, thus this flag is currently ignored in such a context.
 
@@ -158,7 +158,7 @@ A few examples:
 
 `stri_datetime_format` returns a character vector.
 
-`stri_datetime_parse` returns an object of class [`POSIXct`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/DateTimeClasses.html).
+`stri_datetime_parse` returns an object of class [`POSIXct`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/DateTimeClasses.html).
 
 ## Author(s)
 
@@ -172,7 +172,7 @@ A few examples:
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other datetime: [`stri_datetime_add`](https://stringi.gagolewski.com/rapi/stri_datetime_add.html)(), [`stri_datetime_create`](https://stringi.gagolewski.com/rapi/stri_datetime_create.html)(), [`stri_datetime_fields`](https://stringi.gagolewski.com/rapi/stri_datetime_fields.html)(), [`stri_datetime_fstr`](https://stringi.gagolewski.com/rapi/stri_datetime_fstr.html)(), [`stri_datetime_now`](https://stringi.gagolewski.com/rapi/stri_datetime_now.html)(), [`stri_datetime_symbols`](https://stringi.gagolewski.com/rapi/stri_datetime_symbols.html)(), [`stri_timezone_get`](https://stringi.gagolewski.com/rapi/stri_timezone_get.html)(), [`stri_timezone_info`](https://stringi.gagolewski.com/rapi/stri_timezone_info.html)(), [`stri_timezone_list`](https://stringi.gagolewski.com/rapi/stri_timezone_list.html)()
+Other datetime: [`stri_datetime_add()`](stri_datetime_add.md), [`stri_datetime_create()`](stri_datetime_create.md), [`stri_datetime_fields()`](stri_datetime_fields.md), [`stri_datetime_fstr()`](stri_datetime_fstr.md), [`stri_datetime_now()`](stri_datetime_now.md), [`stri_datetime_symbols()`](stri_datetime_symbols.md), [`stri_timezone_get()`](stri_timezone_set.md), [`stri_timezone_info()`](stri_timezone_info.md), [`stri_timezone_list()`](stri_timezone_list.md)
 
 ## Examples
 
@@ -181,11 +181,11 @@ Other datetime: [`stri_datetime_add`](https://stringi.gagolewski.com/rapi/stri_d
 
 ```r
 stri_datetime_parse(c('2015-02-28', '2015-02-29'), 'yyyy-MM-dd')
-## [1] "2015-02-28 11:27:02 AEDT" NA
+## [1] "2015-02-28 14:47:58 AEDT" NA
 stri_datetime_parse(c('2015-02-28', '2015-02-29'), 'yyyy-MM-dd', lenient=TRUE)
-## [1] "2015-02-28 11:27:02 AEDT" "2015-03-01 11:27:02 AEDT"
+## [1] "2015-02-28 14:47:58 AEDT" "2015-03-01 14:47:58 AEDT"
 stri_datetime_parse('19 lipca 2015', 'date_long', locale='pl_PL')
-## [1] "2015-07-19 11:27:02 AEST"
+## [1] "2015-07-19 14:47:58 AEST"
 stri_datetime_format(stri_datetime_now(), 'datetime_relative_medium')
-## [1] "today, 11:27:02 am"
+## [1] "today, 2:47:58 pm"
 ```

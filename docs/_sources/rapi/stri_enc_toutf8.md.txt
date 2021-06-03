@@ -20,11 +20,11 @@ stri_enc_toutf8(str, is_unknown_8bit = FALSE, validate = FALSE)
 
 ## Details
 
-If `is_unknown_8bit` is set to `FALSE` (the default), then R encoding marks are used, see [`stri_enc_mark`](https://stringi.gagolewski.com/rapi/stri_enc_mark.html). Bytes-marked strings will cause the function to fail.
+If `is_unknown_8bit` is set to `FALSE` (the default), then R encoding marks are used, see [`stri_enc_mark`](stri_enc_mark.md). Bytes-marked strings will cause the function to fail.
 
 If a string is in UTF-8 and has a byte order mark (BOM), then the BOM will be silently removed from the output string.
 
-If the default encoding is UTF-8, see [`stri_enc_get`](https://stringi.gagolewski.com/rapi/stri_enc_get.html), then strings marked with `native` are -- for efficiency reasons -- returned as-is, i.e., with unchanged markings. A similar behavior is observed when calling [`enc2utf8`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/Encoding.html).
+If the default encoding is UTF-8, see [`stri_enc_get`](stri_enc_set.md), then strings marked with `native` are -- for efficiency reasons -- returned as-is, i.e., with unchanged markings. A similar behavior is observed when calling [`enc2utf8`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Encoding.html).
 
 For `is_unknown_8bit=TRUE`, if a string is declared to be neither in ASCII nor in UTF-8, then all byte codes \> 127 are replaced with the Unicode REPLACEMENT CHARACTER (\\Ufffd). Note that the REPLACEMENT CHARACTER may be interpreted as Unicode missing value for single characters. Here a `bytes`-marked string is assumed to use an 8-bit encoding that extends the ASCII map.
 
@@ -42,4 +42,4 @@ Returns a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other encoding\_conversion: [`about_encoding`](https://stringi.gagolewski.com/rapi/about_encoding.html), [`stri_enc_fromutf32`](https://stringi.gagolewski.com/rapi/stri_enc_fromutf32.html)(), [`stri_enc_toascii`](https://stringi.gagolewski.com/rapi/stri_enc_toascii.html)(), [`stri_enc_tonative`](https://stringi.gagolewski.com/rapi/stri_enc_tonative.html)(), [`stri_enc_toutf32`](https://stringi.gagolewski.com/rapi/stri_enc_toutf32.html)(), [`stri_encode`](https://stringi.gagolewski.com/rapi/stri_encode.html)()
+Other encoding\_conversion: [`about_encoding`](about_encoding.md), [`stri_enc_fromutf32()`](stri_enc_fromutf32.md), [`stri_enc_toascii()`](stri_enc_toascii.md), [`stri_enc_tonative()`](stri_enc_tonative.md), [`stri_enc_toutf32()`](stri_enc_toutf32.md), [`stri_encode()`](stri_encode.md)

@@ -23,7 +23,7 @@ e1 %stri+% e2
 
 Vectorized over `e1` and `e2`.
 
-These operators act like a call to [`stri_join`](https://stringi.gagolewski.com/rapi/stri_join.html)(e1, e2, sep=\'\'). However, note that joining 3 vectors, e.g., `e1 %s+% e2 %s+% e3` is slower than [`stri_join`](https://stringi.gagolewski.com/rapi/stri_join.html)(e1, e2, e3, sep=\'\'), because it creates a new (temporary) result vector each time the operator is applied.
+These operators act like a call to [`stri_join(e1, e2, sep='')`](stri_join.md). However, note that joining 3 vectors, e.g., `e1 %s+% e2 %s+% e3` is slower than [`stri_join(e1, e2, e3, sep='')`](stri_join.md), because it creates a new (temporary) result vector each time the operator is applied.
 
 ## Value
 
@@ -37,7 +37,7 @@ Returns a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other join: [`stri_dup`](https://stringi.gagolewski.com/rapi/stri_dup.html)(), [`stri_flatten`](https://stringi.gagolewski.com/rapi/stri_flatten.html)(), [`stri_join_list`](https://stringi.gagolewski.com/rapi/stri_join_list.html)(), [`stri_join`](https://stringi.gagolewski.com/rapi/stri_join.html)()
+Other join: [`stri_dup()`](stri_dup.md), [`stri_flatten()`](stri_flatten.md), [`stri_join_list()`](stri_join_list.md), [`stri_join()`](stri_join.md)
 
 ## Examples
 

@@ -43,7 +43,7 @@ Returns a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other utils: [`stri_list2matrix`](https://stringi.gagolewski.com/rapi/stri_list2matrix.html)(), [`stri_na2empty`](https://stringi.gagolewski.com/rapi/stri_na2empty.html)(), [`stri_replace_na`](https://stringi.gagolewski.com/rapi/stri_replace_na.html)()
+Other utils: [`stri_list2matrix()`](stri_list2matrix.md), [`stri_na2empty()`](stri_na2empty.md), [`stri_replace_na()`](stri_replace_na.md)
 
 ## Examples
 

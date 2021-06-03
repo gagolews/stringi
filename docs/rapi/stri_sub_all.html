@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.2.9001
+                1.6.2.9004
               </div>
             
           
@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code></span> as a Binary Operator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count.html">stri_count: Count the Number of Pattern Matches</a></li>
@@ -118,7 +118,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_create.html">stri_datetime_create: Create a Date-Time Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_fields.html">stri_datetime_fields: Get Values for Date and Time Fields</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_format.html">stri_datetime_format: Date and Time Formatting and Parsing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert strptime-Style Format Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert <code class="docutils literal notranslate"><span class="pre">strptime</span></code>-Style Format Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_now.html">stri_datetime_now: Get Current Date and Time</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_symbols.html">stri_datetime_symbols: List Localizable Date-Time Formatting Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_detect.html">stri_detect: Detect a Pattern Match</a></li>
@@ -302,7 +302,7 @@
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">stri_sub_all</span></code> extracts multiple substrings from each string. Its replacement version substitutes (in-place) multiple substrings with the corresponding replacement strings. <code class="docutils literal notranslate"><span class="pre">stri_sub_replace_all</span></code> (alias <code class="docutils literal notranslate"><span class="pre">stri_sub_all_replace</span></code>) is <span class="pkg">magrittr</span>’s pipe-operator-friendly variant, returning a copy of the input vector.</p>
-<p>For extracting/replacing single substrings from/within each string, see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_sub.html"><code class="docutils literal notranslate"><span class="pre">stri_sub</span></code></a>.</p>
+<p>For extracting/replacing single substrings from/within each string, see <a class="reference internal" href="stri_sub.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_sub</span></code></span></a>.</p>
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
@@ -354,10 +354,10 @@
 </div>
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
-<p>Vectorized over <code class="docutils literal notranslate"><span class="pre">str</span></code>, [<code class="docutils literal notranslate"><span class="pre">value</span></code>], <code class="docutils literal notranslate"><span class="pre">from</span></code> and (<code class="docutils literal notranslate"><span class="pre">to</span></code> or <code class="docutils literal notranslate"><span class="pre">length</span></code>). Just like in <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_sub.html"><code class="docutils literal notranslate"><span class="pre">stri_sub</span></code></a>, parameters <code class="docutils literal notranslate"><span class="pre">to</span></code> and <code class="docutils literal notranslate"><span class="pre">length</span></code> are mutually exclusive.</p>
+<p>Vectorized over <code class="docutils literal notranslate"><span class="pre">str</span></code>, [<code class="docutils literal notranslate"><span class="pre">value</span></code>], <code class="docutils literal notranslate"><span class="pre">from</span></code> and (<code class="docutils literal notranslate"><span class="pre">to</span></code> or <code class="docutils literal notranslate"><span class="pre">length</span></code>). Just like in <a class="reference internal" href="stri_sub.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_sub</span></code></span></a>, parameters <code class="docutils literal notranslate"><span class="pre">to</span></code> and <code class="docutils literal notranslate"><span class="pre">length</span></code> are mutually exclusive.</p>
 <p>In one of the simplest scenarios, <code class="docutils literal notranslate"><span class="pre">stri_sub_all(str,</span> <span class="pre">from,</span> <span class="pre">to)</span></code>, the i-th element of the resulting list is generated by calling, e.g., <code class="docutils literal notranslate"><span class="pre">stri_sub(str[i],</span> <span class="pre">from[[i]],</span> <span class="pre">to[[i]])</span></code>. As usual, if one of the inputs is of length smaller than the others, recycling rule is applied.</p>
 <p>If any of <code class="docutils literal notranslate"><span class="pre">from</span></code>, <code class="docutils literal notranslate"><span class="pre">to</span></code>, <code class="docutils literal notranslate"><span class="pre">length</span></code>, or <code class="docutils literal notranslate"><span class="pre">value</span></code> is not a list, it is wrapped into a list.</p>
-<p><code class="docutils literal notranslate"><span class="pre">from</span></code> can be a list of two-column matrices. In such a case, the two columns play a role of <code class="docutils literal notranslate"><span class="pre">from</span></code> and <code class="docutils literal notranslate"><span class="pre">to</span></code>, respectively. Such types of index matrices are generated by <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_locate_all.html"><code class="docutils literal notranslate"><span class="pre">stri_locate_all</span></code></a>. If extraction or replacement based on <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_locate_first.html"><code class="docutils literal notranslate"><span class="pre">stri_locate_first</span></code></a> or <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_locate_last.html"><code class="docutils literal notranslate"><span class="pre">stri_locate_last</span></code></a> is needed, see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_sub.html"><code class="docutils literal notranslate"><span class="pre">stri_sub</span></code></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">from</span></code> can be a list of two-column matrices. In such a case, the two columns play a role of <code class="docutils literal notranslate"><span class="pre">from</span></code> and <code class="docutils literal notranslate"><span class="pre">to</span></code>, respectively. Such types of index matrices are generated by <a class="reference internal" href="stri_locate.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_locate_all</span></code></span></a>. If extraction or replacement based on <a class="reference internal" href="stri_locate.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_locate_first</span></code></span></a> or <a class="reference internal" href="stri_locate.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_locate_last</span></code></span></a> is needed, see <a class="reference internal" href="stri_sub.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_sub</span></code></span></a>.</p>
 <p>In the replacement function, the index ranges must be sorted with respect to <code class="docutils literal notranslate"><span class="pre">from</span></code> are must be mutually disjoint.</p>
 </div>
 <div class="section" id="value">
@@ -371,7 +371,7 @@
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
-<p>Other indexing: <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_locate_all_boundaries.html"><code class="docutils literal notranslate"><span class="pre">stri_locate_all_boundaries</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_locate_all.html"><code class="docutils literal notranslate"><span class="pre">stri_locate_all</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_sub.html"><code class="docutils literal notranslate"><span class="pre">stri_sub</span></code></a>()</p>
+<p>Other indexing: <a class="reference internal" href="stri_locate_boundaries.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_locate_all_boundaries()</span></code></span></a>, <a class="reference internal" href="stri_locate.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_locate_all()</span></code></span></a>, <a class="reference internal" href="stri_sub.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_sub()</span></code></span></a></p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
@@ -432,7 +432,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-24 11:20:07.
+        Last updated on 2021-06-03T14:48:11+1000.
       </span>
 
     </p>

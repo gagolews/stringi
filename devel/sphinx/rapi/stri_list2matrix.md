@@ -28,13 +28,13 @@ stri_list2matrix(
 
 ## Details
 
-This function is similar to the built-in [`simplify2array`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/lapply.html) function. However, it always returns a character matrix, even if each element in `x` is of length 1 or if elements in `x` are not of the same lengths. Moreover, the elements in `x` are always coerced to character vectors.
+This function is similar to the built-in [`simplify2array`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/lapply.html) function. However, it always returns a character matrix, even if each element in `x` is of length 1 or if elements in `x` are not of the same lengths. Moreover, the elements in `x` are always coerced to character vectors.
 
 If `byrow` is `FALSE`, then a matrix with `length(x)` columns is returned. The number of rows is the length of the longest vector in `x`, but no less than `n_min`. Basically, we have `result[i,j] == x[[j]][i]` if `i <= length(x[[j]])` and `result[i,j] == fill` otherwise, see Examples.
 
 If `byrow` is `TRUE`, then the resulting matrix is a transposition of the above-described one.
 
-This function may be useful, e.g., in connection with [`stri_split`](https://stringi.gagolewski.com/rapi/stri_split.html) and [`stri_extract_all`](https://stringi.gagolewski.com/rapi/stri_extract_all.html).
+This function may be useful, e.g., in connection with [`stri_split`](stri_split.md) and [`stri_extract_all`](stri_extract.md).
 
 ## Value
 
@@ -48,7 +48,7 @@ Returns a character matrix.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other utils: [`stri_na2empty`](https://stringi.gagolewski.com/rapi/stri_na2empty.html)(), [`stri_remove_empty`](https://stringi.gagolewski.com/rapi/stri_remove_empty.html)(), [`stri_replace_na`](https://stringi.gagolewski.com/rapi/stri_replace_na.html)()
+Other utils: [`stri_na2empty()`](stri_na2empty.md), [`stri_remove_empty()`](stri_remove_empty.md), [`stri_replace_na()`](stri_replace_na.md)
 
 ## Examples
 

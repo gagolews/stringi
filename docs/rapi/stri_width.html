@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.2.9001
+                1.6.2.9004
               </div>
             
           
@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code></span> as a Binary Operator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count.html">stri_count: Count the Number of Pattern Matches</a></li>
@@ -118,7 +118,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_create.html">stri_datetime_create: Create a Date-Time Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_fields.html">stri_datetime_fields: Get Values for Date and Time Fields</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_format.html">stri_datetime_format: Date and Time Formatting and Parsing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert strptime-Style Format Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert <code class="docutils literal notranslate"><span class="pre">strptime</span></code>-Style Format Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_now.html">stri_datetime_now: Get Current Date and Time</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_symbols.html">stri_datetime_symbols: List Localizable Date-Time Formatting Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_detect.html">stri_detect: Detect a Pattern Match</a></li>
@@ -329,14 +329,14 @@
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
 <p>The Unicode standard does not formalize the notion of a character width. Roughly based on <a class="reference external" href="https://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c">https://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c</a>, <a class="reference external" href="https://github.com/nodejs/node/blob/master/src/node_i18n.cc">https://github.com/nodejs/node/blob/master/src/node_i18n.cc</a>, and UAX #11 we proceed as follows. The following code points are of width 0:</p>
 <ul class="simple">
-<li><p>code points with general category (see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stringi-search-charclass.html">stringi-search-charclass</a>) <code class="docutils literal notranslate"><span class="pre">Me</span></code>, <code class="docutils literal notranslate"><span class="pre">Mn</span></code>, and <code class="docutils literal notranslate"><span class="pre">Cf</span></code>),</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">C0</span></code> and <code class="docutils literal notranslate"><span class="pre">C1</span></code> control codes (general category <code class="docutils literal notranslate"><span class="pre">Cc</span></code>) - for compatibility with the <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/nchar.html"><code class="docutils literal notranslate"><span class="pre">nchar</span></code></a> function,</p></li>
-<li><p>Hangul Jamo medial vowels and final consonants (code points with enumerable property <code class="docutils literal notranslate"><span class="pre">UCHAR_HANGUL_SYLLABLE_TYPE</span></code> equal to <code class="docutils literal notranslate"><span class="pre">U_HST_VOWEL_JAMO</span></code> or <code class="docutils literal notranslate"><span class="pre">U_HST_TRAILING_JAMO</span></code>; note that applying the NFC normalization with <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_trans_nfc.html"><code class="docutils literal notranslate"><span class="pre">stri_trans_nfc</span></code></a> is encouraged),</p></li>
+<li><p>code points with general category (see <a class="reference internal" href="about_search_charclass.html"><span class="doc std std-doc">stringi-search-charclass</span></a>) <code class="docutils literal notranslate"><span class="pre">Me</span></code>, <code class="docutils literal notranslate"><span class="pre">Mn</span></code>, and <code class="docutils literal notranslate"><span class="pre">Cf</span></code>),</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">C0</span></code> and <code class="docutils literal notranslate"><span class="pre">C1</span></code> control codes (general category <code class="docutils literal notranslate"><span class="pre">Cc</span></code>) - for compatibility with the <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/nchar.html"><code class="docutils literal notranslate"><span class="pre">nchar</span></code></a> function,</p></li>
+<li><p>Hangul Jamo medial vowels and final consonants (code points with enumerable property <code class="docutils literal notranslate"><span class="pre">UCHAR_HANGUL_SYLLABLE_TYPE</span></code> equal to <code class="docutils literal notranslate"><span class="pre">U_HST_VOWEL_JAMO</span></code> or <code class="docutils literal notranslate"><span class="pre">U_HST_TRAILING_JAMO</span></code>; note that applying the NFC normalization with <a class="reference internal" href="stri_trans_nf.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_nfc</span></code></span></a> is encouraged),</p></li>
 <li><p>ZERO WIDTH SPACE (U+200B),</p></li>
 </ul>
 <p>Characters with the <code class="docutils literal notranslate"><span class="pre">UCHAR_EAST_ASIAN_WIDTH</span></code> enumerable property equal to <code class="docutils literal notranslate"><span class="pre">U_EA_FULLWIDTH</span></code> or <code class="docutils literal notranslate"><span class="pre">U_EA_WIDE</span></code> are of width 2.</p>
 <p>Most emojis and characters with general category So (other symbols) are of width 2.</p>
-<p>SOFT HYPHEN (U+00AD) (for compatibility with <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/nchar.html"><code class="docutils literal notranslate"><span class="pre">nchar</span></code></a>) as well as any other characters have width 1.</p>
+<p>SOFT HYPHEN (U+00AD) (for compatibility with <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/nchar.html"><code class="docutils literal notranslate"><span class="pre">nchar</span></code></a>) as well as any other characters have width 1.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
@@ -353,7 +353,7 @@
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
-<p>Other length: <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_isempty.html"><code class="docutils literal notranslate"><span class="pre">stri_isempty</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_length.html"><code class="docutils literal notranslate"><span class="pre">stri_length</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_numbytes.html"><code class="docutils literal notranslate"><span class="pre">stri_numbytes</span></code></a>()</p>
+<p>Other length: <a class="reference internal" href="operator_dollar.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">%s$%()</span></code></span></a>, <a class="reference internal" href="stri_isempty.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_isempty()</span></code></span></a>, <a class="reference internal" href="stri_length.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_length()</span></code></span></a>, <a class="reference internal" href="stri_numbytes.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_numbytes()</span></code></span></a>, <a class="reference internal" href="stri_pad.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_pad_both()</span></code></span></a>, <a class="reference internal" href="stri_sprintf.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_sprintf()</span></code></span></a></p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
@@ -392,7 +392,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-24 11:20:07.
+        Last updated on 2021-06-03T14:48:11+1000.
       </span>
 
     </p>

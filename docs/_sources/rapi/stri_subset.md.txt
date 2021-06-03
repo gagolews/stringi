@@ -2,7 +2,7 @@
 
 ## Description
 
-These functions return or modify a sub-vector where there is a match a given pattern. In other words, they are roughly equivalent (but faster and easier to use) to a call to `str[stri_detect`(str, \...)\] or `str[stri_detect`(str, \...)\] \<- value.
+These functions return or modify a sub-vector where there is a match a given pattern. In other words, they are roughly equivalent (but faster and easier to use) to a call to `str[stri_detect(str, ...)]` or `str[stri_detect(str, ...)] <- value`.
 
 ## Usage
 
@@ -51,15 +51,15 @@ stri_subset_regex(str, pattern, negate=FALSE, ..., opts_regex=NULL) <- value
 
 ## Arguments
 
-|                                          |                                                                                                                                                                                                                                                                                                                                                              |
-|------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`                                    | character vector; strings to search in                                                                                                                                                                                                                                                                                                                       |
-| `...`                                    | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_regex`, `opts_fixed`, and so on                                                                                                                                                                                                         |
-| `value`                                  | character vector to be substituted with; replacement function only                                                                                                                                                                                                                                                                                           |
-| `pattern, regex, fixed, coll, charclass` | character vector; search patterns; for more details refer to [stringi-search](https://stringi.gagolewski.com/rapi/stringi-search.html); the replacement functions accept only one pattern at a time                                                                                                                                                          |
-| `omit_na`                                | single logical value; should missing values be excluded from the result?                                                                                                                                                                                                                                                                                     |
-| `negate`                                 | single logical value; whether a no-match is rather of interest                                                                                                                                                                                                                                                                                               |
-| `opts_collator, opts_fixed, opts_regex`  | a named list used to tune up the search engine\'s settings; see [`stri_opts_collator`](https://stringi.gagolewski.com/rapi/stri_opts_collator.html), [`stri_opts_fixed`](https://stringi.gagolewski.com/rapi/stri_opts_fixed.html), and [`stri_opts_regex`](https://stringi.gagolewski.com/rapi/stri_opts_regex.html), respectively; `NULL` for the defaults |
+|                                          |                                                                                                                                                                                                                                            |
+|------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `str`                                    | character vector; strings to search in                                                                                                                                                                                                     |
+| `...`                                    | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_regex`, `opts_fixed`, and so on                                                                                       |
+| `value`                                  | character vector to be substituted with; replacement function only                                                                                                                                                                         |
+| `pattern, regex, fixed, coll, charclass` | character vector; search patterns; for more details refer to [stringi-search](about_search.md); the replacement functions accept only one pattern at a time                                                                                |
+| `omit_na`                                | single logical value; should missing values be excluded from the result?                                                                                                                                                                   |
+| `negate`                                 | single logical value; whether a no-match is rather of interest                                                                                                                                                                             |
+| `opts_collator, opts_fixed, opts_regex`  | a named list used to tune up the search engine\'s settings; see [`stri_opts_collator`](stri_opts_collator.md), [`stri_opts_fixed`](stri_opts_fixed.md), and [`stri_opts_regex`](stri_opts_regex.md), respectively; `NULL` for the defaults |
 
 ## Details
 
@@ -81,7 +81,7 @@ The `stri_subset<-` function modifies the `str` object \'in-place\'.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_subset: [`about_search`](https://stringi.gagolewski.com/rapi/about_search.html)
+Other search\_subset: [`about_search`](about_search.md)
 
 ## Examples
 

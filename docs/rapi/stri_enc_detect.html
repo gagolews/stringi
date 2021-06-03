@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.2.9001
+                1.6.2.9004
               </div>
             
           
@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code></span> as a Binary Operator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count.html">stri_count: Count the Number of Pattern Matches</a></li>
@@ -118,7 +118,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_create.html">stri_datetime_create: Create a Date-Time Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_fields.html">stri_datetime_fields: Get Values for Date and Time Fields</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_format.html">stri_datetime_format: Date and Time Formatting and Parsing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert strptime-Style Format Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert <code class="docutils literal notranslate"><span class="pre">strptime</span></code>-Style Format Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_now.html">stri_datetime_now: Get Current Date and Time</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_symbols.html">stri_datetime_symbols: List Localizable Date-Time Formatting Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_detect.html">stri_detect: Detect a Pattern Match</a></li>
@@ -331,11 +331,11 @@
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
 <p>Vectorized over <code class="docutils literal notranslate"><span class="pre">str</span></code> and <code class="docutils literal notranslate"><span class="pre">filter_angle_brackets</span></code>.</p>
-<p>For a character vector input, merging all text lines via <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_flatten.html"><code class="docutils literal notranslate"><span class="pre">stri_flatten</span></code></a>(str, collapse=’\n’) might be needed if <code class="docutils literal notranslate"><span class="pre">str</span></code> has been obtained via a call to <code class="docutils literal notranslate"><span class="pre">readLines</span></code> and in fact represents an image of a single text file.</p>
+<p>For a character vector input, merging all text lines via <a class="reference internal" href="stri_flatten.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_flatten(str,</span> <span class="pre">collapse='\n')</span></code></span></a> might be needed if <code class="docutils literal notranslate"><span class="pre">str</span></code> has been obtained via a call to <code class="docutils literal notranslate"><span class="pre">readLines</span></code> and in fact represents an image of a single text file.</p>
 <p>This is, at best, an imprecise operation using statistics and heuristics. Because of this, detection works best if you supply at least a few hundred bytes of character data that is mostly in a single language. However, because the detection only looks at a limited amount of the input data, some of the returned character sets may fail to handle all of the input data. Note that in some cases, the language can be determined along with the encoding.</p>
 <p>Several different techniques are used for character set detection. For multi-byte encodings, the sequence of bytes is checked for legible patterns. The detected characters are also checked against a list of frequently used characters in that encoding. For single byte encodings, the data is checked against a list of the most commonly occurring three letter groups for each language that can be written using that encoding.</p>
 <p>The detection process can be configured to optionally ignore HTML or XML style markup (using <span class="pkg">ICU</span>’s internal facilities), which can interfere with the detection process by changing the statistics.</p>
-<p>This function should most often be used for byte-marked input strings, especially after loading them from text files and before the main conversion with <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_encode.html"><code class="docutils literal notranslate"><span class="pre">stri_encode</span></code></a>. The input encoding is of course not taken into account here, even if marked.</p>
+<p>This function should most often be used for byte-marked input strings, especially after loading them from text files and before the main conversion with <a class="reference internal" href="stri_encode.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_encode</span></code></span></a>. The input encoding is of course not taken into account here, even if marked.</p>
 <p>The following table shows all the encodings that can be detected:</p>
 <table class="colwidths-auto docutils align-default">
 <thead>
@@ -464,7 +464,7 @@
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
-<p>Other encoding_detection: <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_encoding.html"><code class="docutils literal notranslate"><span class="pre">about_encoding</span></code></a>, <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_enc_detect2.html"><code class="docutils literal notranslate"><span class="pre">stri_enc_detect2</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_enc_isascii.html"><code class="docutils literal notranslate"><span class="pre">stri_enc_isascii</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_enc_isutf16be.html"><code class="docutils literal notranslate"><span class="pre">stri_enc_isutf16be</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_enc_isutf8.html"><code class="docutils literal notranslate"><span class="pre">stri_enc_isutf8</span></code></a>()</p>
+<p>Other encoding_detection: <a class="reference internal" href="about_encoding.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_encoding</span></code></span></a>, <a class="reference internal" href="stri_enc_detect2.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_detect2()</span></code></span></a>, <a class="reference internal" href="stri_enc_isascii.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_isascii()</span></code></span></a>, <a class="reference internal" href="stri_enc_isutf16.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_isutf16be()</span></code></span></a>, <a class="reference internal" href="stri_enc_isutf8.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_isutf8()</span></code></span></a></p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
@@ -492,7 +492,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-24 11:20:07.
+        Last updated on 2021-06-03T14:48:11+1000.
       </span>
 
     </p>

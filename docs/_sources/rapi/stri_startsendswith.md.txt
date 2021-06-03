@@ -54,15 +54,15 @@ stri_endswith_coll(
 
 ## Arguments
 
-|                                   |                                                                                                                                                                                                                                                                              |
-|-----------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`                             | character vector                                                                                                                                                                                                                                                             |
-| `...`                             | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_fixed`, and so on.                                                                                                                                      |
-| `pattern, fixed, coll, charclass` | character vector defining search patterns; for more details refer to [stringi-search](https://stringi.gagolewski.com/rapi/stringi-search.html)                                                                                                                               |
-| `from`                            | integer vector                                                                                                                                                                                                                                                               |
-| `negate`                          | single logical value; whether a no-match to a pattern is rather of interest                                                                                                                                                                                                  |
-| `to`                              | integer vector                                                                                                                                                                                                                                                               |
-| `opts_collator, opts_fixed`       | a named list used to tune up the search engine\'s settings; see [`stri_opts_collator`](https://stringi.gagolewski.com/rapi/stri_opts_collator.html) and [`stri_opts_fixed`](https://stringi.gagolewski.com/rapi/stri_opts_fixed.html), respectively; `NULL` for the defaults |
+|                                   |                                                                                                                                                                                                  |
+|-----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `str`                             | character vector                                                                                                                                                                                 |
+| `...`                             | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_fixed`, and so on.                                                          |
+| `pattern, fixed, coll, charclass` | character vector defining search patterns; for more details refer to [stringi-search](about_search.md)                                                                                           |
+| `from`                            | integer vector                                                                                                                                                                                   |
+| `negate`                          | single logical value; whether a no-match to a pattern is rather of interest                                                                                                                      |
+| `to`                              | integer vector                                                                                                                                                                                   |
+| `opts_collator, opts_fixed`       | a named list used to tune up the search engine\'s settings; see [`stri_opts_collator`](stri_opts_collator.md) and [`stri_opts_fixed`](stri_opts_fixed.md), respectively; `NULL` for the defaults |
 
 ## Details
 
@@ -76,11 +76,11 @@ Indexes given by `from` or `to` are of course 1-based, i.e., an index 1 denotes 
 
 For negative indexes in `from` or `to`, counting starts at the end of the string. For instance, index -1 denotes the last code point in the string.
 
-If you wish to test for a pattern match at an arbitrary position in `str`, use [`stri_detect`](https://stringi.gagolewski.com/rapi/stri_detect.html).
+If you wish to test for a pattern match at an arbitrary position in `str`, use [`stri_detect`](stri_detect.md).
 
 `stri_startswith` and `stri_endswith` are convenience functions. They call either `stri_*_fixed`, `stri_*_coll`, or `stri_*_charclass`, depending on the argument used. Relying on these underlying functions directly will make your code run slightly faster.
 
-Note that testing for a pattern match at the start or end of a string has not been implemented separately for regex patterns. For that you may use the \'`^`\' and \'`$`\' meta-characters, see [stringi-search-regex](https://stringi.gagolewski.com/rapi/stringi-search-regex.html).
+Note that testing for a pattern match at the start or end of a string has not been implemented separately for regex patterns. For that you may use the \'`^`\' and \'`$`\' meta-characters, see [stringi-search-regex](about_search_regex.md).
 
 ## Value
 
@@ -94,7 +94,7 @@ Each function returns a logical vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_detect: [`about_search`](https://stringi.gagolewski.com/rapi/about_search.html), [`stri_detect`](https://stringi.gagolewski.com/rapi/stri_detect.html)()
+Other search\_detect: [`about_search`](about_search.md), [`stri_detect()`](stri_detect.md)
 
 ## Examples
 

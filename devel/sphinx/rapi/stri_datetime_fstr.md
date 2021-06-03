@@ -2,7 +2,7 @@
 
 ## Description
 
-This function converts [`strptime`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/strptime.html) or [`strftime`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/strftime.html)-style format strings to <span class="pkg">ICU</span> format strings that may be used in [`stri_datetime_parse`](https://stringi.gagolewski.com/rapi/stri_datetime_parse.html) and [`stri_datetime_format`](https://stringi.gagolewski.com/rapi/stri_datetime_format.html) functions.
+This function converts [`strptime`](https://stat.ethz.ch/R-manual/R-devel/library/base/help/strptime.html) or [`strftime`](https://stat.ethz.ch/R-manual/R-devel/library/base/help/strftime.html)-style format strings to <span class="pkg">ICU</span> format strings that may be used in [`stri_datetime_parse`](stri_datetime_format.md) and [`stri_datetime_format`](stri_datetime_format.md) functions.
 
 ## Usage
 
@@ -12,14 +12,14 @@ stri_datetime_fstr(x, ignore_special = TRUE)
 
 ## Arguments
 
-|                  |                                                                                                                                                                                              |
-|------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `x`              | character vector of date/time format strings                                                                                                                                                 |
-| `ignore_special` | if `FALSE`, special identifiers like `"datetime_full"` or `date_relative_short` (see [`stri_datetime_format`](https://stringi.gagolewski.com/rapi/stri_datetime_format.html)) are left as-is |
+|                  |                                                                                                                                                        |
+|------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `x`              | character vector of date/time format strings                                                                                                           |
+| `ignore_special` | if `FALSE`, special identifiers like `"datetime_full"` or `date_relative_short` (see [`stri_datetime_format`](stri_datetime_format.md)) are left as-is |
 
 ## Details
 
-For more details on conversion specifiers please refer to the manual page of [`strptime`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/strptime.html). Most of the formatters of the form `%x`, where `x` is a letter, are supported. Moreover, each `%%` is replaced with `%`.
+For more details on conversion specifiers please refer to the manual page of [`strptime`](https://stat.ethz.ch/R-manual/R-devel/library/base/help/strptime.html). Most of the formatters of the form `%x`, where `x` is a letter, are supported. Moreover, each `%%` is replaced with `%`.
 
 Warnings are given in the case of `%x`, `%X`, `%u`, `%w`, `%g`, `%G`, `%c`, `%U`, and `%W` as in such circumstances either <span class="pkg">ICU</span> does not support the functionality requested using the string format API or there are some inconsistencies between base R and <span class="pkg">ICU</span>.
 
@@ -35,7 +35,7 @@ Returns a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other datetime: [`stri_datetime_add`](https://stringi.gagolewski.com/rapi/stri_datetime_add.html)(), [`stri_datetime_create`](https://stringi.gagolewski.com/rapi/stri_datetime_create.html)(), [`stri_datetime_fields`](https://stringi.gagolewski.com/rapi/stri_datetime_fields.html)(), [`stri_datetime_format`](https://stringi.gagolewski.com/rapi/stri_datetime_format.html)(), [`stri_datetime_now`](https://stringi.gagolewski.com/rapi/stri_datetime_now.html)(), [`stri_datetime_symbols`](https://stringi.gagolewski.com/rapi/stri_datetime_symbols.html)(), [`stri_timezone_get`](https://stringi.gagolewski.com/rapi/stri_timezone_get.html)(), [`stri_timezone_info`](https://stringi.gagolewski.com/rapi/stri_timezone_info.html)(), [`stri_timezone_list`](https://stringi.gagolewski.com/rapi/stri_timezone_list.html)()
+Other datetime: [`stri_datetime_add()`](stri_datetime_add.md), [`stri_datetime_create()`](stri_datetime_create.md), [`stri_datetime_fields()`](stri_datetime_fields.md), [`stri_datetime_format()`](stri_datetime_format.md), [`stri_datetime_now()`](stri_datetime_now.md), [`stri_datetime_symbols()`](stri_datetime_symbols.md), [`stri_timezone_get()`](stri_timezone_set.md), [`stri_timezone_info()`](stri_timezone_info.md), [`stri_timezone_list()`](stri_timezone_list.md)
 
 ## Examples
 

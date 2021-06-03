@@ -18,7 +18,7 @@ stri_enc_info(enc = NULL)
 
 ## Details
 
-An error is raised if the provided encoding is unknown to <span class="pkg">ICU</span> (see [`stri_enc_list`](https://stringi.gagolewski.com/rapi/stri_enc_list.html) for more details).
+An error is raised if the provided encoding is unknown to <span class="pkg">ICU</span> (see [`stri_enc_list`](stri_enc_list.md) for more details).
 
 ## Value
 
@@ -48,4 +48,4 @@ Returns a list with the following components:
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other encoding\_management: [`about_encoding`](https://stringi.gagolewski.com/rapi/about_encoding.html), [`stri_enc_list`](https://stringi.gagolewski.com/rapi/stri_enc_list.html)(), [`stri_enc_mark`](https://stringi.gagolewski.com/rapi/stri_enc_mark.html)(), [`stri_enc_set`](https://stringi.gagolewski.com/rapi/stri_enc_set.html)()
+Other encoding\_management: [`about_encoding`](about_encoding.md), [`stri_enc_list()`](stri_enc_list.md), [`stri_enc_mark()`](stri_enc_mark.md), [`stri_enc_set()`](stri_enc_set.md)

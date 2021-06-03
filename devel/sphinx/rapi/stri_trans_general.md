@@ -20,18 +20,18 @@ stri_trans_general(str, id, rules = FALSE, forward = TRUE)
 
 ## Arguments
 
-|           |                                                                                                                                                               |
-|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`     | character vector                                                                                                                                              |
-| `id`      | a single string with transform identifier, see [`stri_trans_list`](https://stringi.gagolewski.com/rapi/stri_trans_list.html), or custom transliteration rules |
-| `rules`   | if `TRUE`, treat `id` as a string with semicolon-separated transliteration rules (see the <span class="pkg">ICU</span> manual);                               |
-| `forward` | transliteration direction (`TRUE` for forward, `FALSE` for reverse)                                                                                           |
+|           |                                                                                                                                 |
+|-----------|---------------------------------------------------------------------------------------------------------------------------------|
+| `str`     | character vector                                                                                                                |
+| `id`      | a single string with transform identifier, see [`stri_trans_list`](stri_trans_list.md), or custom transliteration rules         |
+| `rules`   | if `TRUE`, treat `id` as a string with semicolon-separated transliteration rules (see the <span class="pkg">ICU</span> manual); |
+| `forward` | transliteration direction (`TRUE` for forward, `FALSE` for reverse)                                                             |
 
 ## Details
 
 <span class="pkg">ICU</span> Transforms were mainly designed to transliterate characters from one script to another (for example, from Greek to Latin, or Japanese Katakana to Latin). However, these services are also capable of handling a much broader range of tasks. In particular, the Transforms include pre-built transformations for case conversions, for normalization conversions, for the removal of given characters, and also for a variety of language and script transliterations. Transforms can be chained together to perform a series of operations and each step of the process can use a UnicodeSet to restrict the characters that are affected.
 
-To get the list of available transforms, call [`stri_trans_list`](https://stringi.gagolewski.com/rapi/stri_trans_list.html).
+To get the list of available transforms, call [`stri_trans_list`](stri_trans_list.md).
 
 Note that transliterators are often combined in sequence to achieve a desired transformation. This is analogous to the composition of mathematical functions. For example, given a script that converts lowercase ASCII characters from Latin script to Katakana script, it is convenient to first (1) separate input base characters and accents, and then (2) convert uppercase to lowercase. To achieve this, a compound transform can be specified as follows: `NFKD; Lower; Latin-Katakana;` (with the default `rules=FALSE`).
 
@@ -53,7 +53,7 @@ Returns a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other transform: [`stri_trans_char`](https://stringi.gagolewski.com/rapi/stri_trans_char.html)(), [`stri_trans_list`](https://stringi.gagolewski.com/rapi/stri_trans_list.html)(), [`stri_trans_nfc`](https://stringi.gagolewski.com/rapi/stri_trans_nfc.html)(), [`stri_trans_tolower`](https://stringi.gagolewski.com/rapi/stri_trans_tolower.html)()
+Other transform: [`stri_trans_char()`](stri_trans_char.md), [`stri_trans_list()`](stri_trans_list.md), [`stri_trans_nfc()`](stri_trans_nf.md), [`stri_trans_tolower()`](stri_trans_casemap.md)
 
 ## Examples
 

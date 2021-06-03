@@ -2,7 +2,7 @@
 
 ## Description
 
-This function gives general statistics for a character vector, e.g., obtained by loading a text file with the [`readLines`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/readLines.html) or [`stri_read_lines`](https://stringi.gagolewski.com/rapi/stri_read_lines.html) function, where each text line\' is represented by a separate string.
+This function gives general statistics for a character vector, e.g., obtained by loading a text file with the [`readLines`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/readLines.html) or [`stri_read_lines`](stri_read_lines.md) function, where each text line\' is represented by a separate string.
 
 ## Usage
 
@@ -44,7 +44,7 @@ Returns an integer vector with the following named elements:
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other stats: [`stri_stats_latex`](https://stringi.gagolewski.com/rapi/stri_stats_latex.html)()
+Other stats: [`stri_stats_latex()`](stri_stats_latex.md)
 
 ## Examples
 

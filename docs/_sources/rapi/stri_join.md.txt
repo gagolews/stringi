@@ -2,7 +2,7 @@
 
 ## Description
 
-These are the <span class="pkg">stringi</span>\'s equivalents of the built-in [`paste`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/paste.html) function. `stri_c` and `stri_paste` are aliases for `stri_join`.
+These are the <span class="pkg">stringi</span>\'s equivalents of the built-in [`paste`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/paste.html) function. `stri_c` and `stri_paste` are aliases for `stri_join`.
 
 ## Usage
 
@@ -33,7 +33,7 @@ If any of the arguments in \'`...`\' is a vector of length 0 (not to be confused
 
 If `collapse` or `sep` has length greater than 1, then only the first string will be used.
 
-In case where there are missing values in any of the input vectors, `NA` is set to the corresponding element. Note that this behavior is different from [`paste`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/paste.html), which treats missing values as ordinary strings like `'NA'`. Moreover, as usual in <span class="pkg">stringi</span>, the resulting strings are always in UTF-8.
+In case where there are missing values in any of the input vectors, `NA` is set to the corresponding element. Note that this behavior is different from [`paste`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/paste.html), which treats missing values as ordinary strings like `'NA'`. Moreover, as usual in <span class="pkg">stringi</span>, the resulting strings are always in UTF-8.
 
 ## Value
 
@@ -47,7 +47,7 @@ Returns a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other join: [`%s+%`](https://stringi.gagolewski.com/rapi/%25s+%25.html)(), [`stri_dup`](https://stringi.gagolewski.com/rapi/stri_dup.html)(), [`stri_flatten`](https://stringi.gagolewski.com/rapi/stri_flatten.html)(), [`stri_join_list`](https://stringi.gagolewski.com/rapi/stri_join_list.html)()
+Other join: [`%s+%()`](operator_add.md), [`stri_dup()`](stri_dup.md), [`stri_flatten()`](stri_flatten.md), [`stri_join_list()`](stri_join_list.md)
 
 ## Examples
 

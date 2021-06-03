@@ -2,7 +2,7 @@
 
 ## Description
 
-`stri_sprintf` (synonym: `stri_string_format`) is a Unicode-aware replacement for and enhancement of the built-in [`sprintf`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/sprintf.html) function. Moreover, `stri_printf` prints formatted strings.
+`stri_sprintf` (synonym: `stri_string_format`) is a Unicode-aware replacement for and enhancement of the built-in [`sprintf`](https://stat.ethz.ch/R-manual/R-devel/library/base/help/sprintf.html) function. Moreover, `stri_printf` prints formatted strings.
 
 ## Usage
 
@@ -48,15 +48,15 @@ stri_printf(
 | `inf_string` | single string to represent the (unsigned) infinity (`NA` allowed)                                                                                                        |
 | `nan_string` | single string to represent the not-a-number (`NA` allowed)                                                                                                               |
 | `use_length` | single logical value; should the number of code points be used when applying modifiers such as `%20s` instead of the total code point width?                             |
-| `file`       | see [`cat`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/cat.html)                                                                                          |
-| `sep`        | see [`cat`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/cat.html)                                                                                          |
-| `append`     | see [`cat`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/cat.html)                                                                                          |
+| `file`       | see [`cat`](https://stat.ethz.ch/R-manual/R-devel/library/base/help/cat.html)                                                                                            |
+| `sep`        | see [`cat`](https://stat.ethz.ch/R-manual/R-devel/library/base/help/cat.html)                                                                                            |
+| `append`     | see [`cat`](https://stat.ethz.ch/R-manual/R-devel/library/base/help/cat.html)                                                                                            |
 
 ## Details
 
 Vectorized over `format` and all vectors passed via `...`.
 
-Unicode code points may have various widths when printed on the console (compare [`stri_width`](https://stringi.gagolewski.com/rapi/stri_width.html)). These functions, by default (see the `use_length` argument), take this into account.
+Unicode code points may have various widths when printed on the console (compare [`stri_width`](stri_width.md)). These functions, by default (see the `use_length` argument), take this into account.
 
 These functions are not locale sensitive. For instance, numbers are always formatted in the \"POSIX\" style, e.g., `-123456.789` (no thousands separator, dot as a fractional separator). Such a feature might be added at a later date, though.
 
@@ -64,7 +64,7 @@ All arguments passed via `...` are evaluated. If some of them are unused, a warn
 
 Note that `stri_printf` treats missing values in `...` as strings `"NA"` by default.
 
-All format specifiers supported [`sprintf`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/sprintf.html) are also available here. For the formatting of integers and floating-point values, currently the system `std::snprintf()` is called, but this may change in the future. Format specifiers are normalized and necessary sanity checks are performed.
+All format specifiers supported [`sprintf`](https://stat.ethz.ch/R-manual/R-devel/library/base/help/sprintf.html) are also available here. For the formatting of integers and floating-point values, currently the system `std::snprintf()` is called, but this may change in the future. Format specifiers are normalized and necessary sanity checks are performed.
 
 Supported conversion specifiers: `dioxX` (integers) `feEgGaA` (floats) and `s` (character strings). Supported flags: `-` (left-align), `+` (force output sign or blank when `NaN` or `NA`; numeric only), `<space>` (output minus or space for a sign; numeric only) `0` (pad with 0s; numeric only), `#` (alternative output of some numerics).
 
@@ -88,7 +88,7 @@ The other functions return a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other length: `%s$%()`, [`stri_isempty`](https://stringi.gagolewski.com/rapi/stri_isempty.html)(), [`stri_length`](https://stringi.gagolewski.com/rapi/stri_length.html)(), [`stri_numbytes`](https://stringi.gagolewski.com/rapi/stri_numbytes.html)(), [`stri_pad_both`](https://stringi.gagolewski.com/rapi/stri_pad_both.html)(), [`stri_width`](https://stringi.gagolewski.com/rapi/stri_width.html)()
+Other length: [`%s$%()`](operator_dollar.md), [`stri_isempty()`](stri_isempty.md), [`stri_length()`](stri_length.md), [`stri_numbytes()`](stri_numbytes.md), [`stri_pad_both()`](stri_pad.md), [`stri_width()`](stri_width.md)
 
 ## Examples
 
@@ -135,14 +135,14 @@ stri_printf("%+10.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_),
 ##         💩
 ##       <NA>
 stri_sprintf("UNIX time %1$f is %1$s.", Sys.time())
-## [1] "UNIX time 1622683623.437171 is 2021-06-03 11:27:03."
+## [1] "UNIX time 1622695679.486651 is 2021-06-03 14:47:59."
 # the following do not work in sprintf()
 stri_sprintf("%1$#- *2$.*3$f", 1.23456, 10, 3)  # two asterisks
 ## [1] " 1.235    "
 stri_sprintf(c("%s", "%f"), pi)  # re-coercion needed
 ## [1] "3.14159265358979" "3.141593"
 stri_sprintf("%1$s is %1$f UNIX time.", Sys.time())  # re-coercion needed
-## [1] "2021-06-03 11:27:03 is 1622683623.440884 UNIX time."
+## [1] "2021-06-03 14:47:59 is 1622695679.490289 UNIX time."
 stri_sprintf(c("%d", "%s"), factor(11:12))  # re-coercion needed
 ## [1] "1"  "12"
 stri_sprintf(c("%s", "%d"), factor(11:12))  # re-coercion needed
