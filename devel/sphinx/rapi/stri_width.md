@@ -20,7 +20,7 @@ stri_width(str)
 
 The Unicode standard does not formalize the notion of a character width. Roughly based on <https://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c>, <https://github.com/nodejs/node/blob/master/src/node_i18n.cc>, and UAX \#11 we proceed as follows. The following code points are of width 0:
 
--   code points with general category (see [stringi-search-charclass](https://stringi.gagolewski.com/rapi/stringi-search-charclass.html)) `Me`, `Mn`, and `Cf`),
+-   code points with general category (see [stringi-search-charclass](../../stringi/help/stringi-search-charclass.html)) `Me`, `Mn`, and `Cf`),
 
 -   `C0` and `C1` control codes (general category `Cc`) - for compatibility with the [`nchar`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/nchar.html) function,
 
@@ -50,7 +50,7 @@ Returns an integer vector of the same length as `str`.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other length: [`%s$%`](https://stringi.gagolewski.com/rapi/%25s$%25.html)(), [`stri_isempty`](https://stringi.gagolewski.com/rapi/stri_isempty.html)(), [`stri_length`](https://stringi.gagolewski.com/rapi/stri_length.html)(), [`stri_numbytes`](https://stringi.gagolewski.com/rapi/stri_numbytes.html)(), [`stri_pad_both`](https://stringi.gagolewski.com/rapi/stri_pad_both.html)(), [`stri_sprintf`](https://stringi.gagolewski.com/rapi/stri_sprintf.html)()
+Other length: `%s$%()`, [`stri_isempty`](https://stringi.gagolewski.com/rapi/stri_isempty.html)(), [`stri_length`](https://stringi.gagolewski.com/rapi/stri_length.html)(), [`stri_numbytes`](https://stringi.gagolewski.com/rapi/stri_numbytes.html)(), [`stri_pad_both`](https://stringi.gagolewski.com/rapi/stri_pad_both.html)(), [`stri_sprintf`](https://stringi.gagolewski.com/rapi/stri_sprintf.html)()
 
 ## Examples
 

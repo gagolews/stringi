@@ -18,11 +18,11 @@ stri_trim(str, side = c("both", "left", "right"), pattern = "\\P{Wspace}")
 
 ## Arguments
 
-|           |                                                                                                                                                                                                          |
-|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`     | a character vector of strings to be trimmed                                                                                                                                                              |
-| `pattern` | a single pattern, specifying character classes that should be preserved (see [stringi-search-charclass](https://stringi.gagolewski.com/rapi/stringi-search-charclass.html)). Defaults to \'`\P{Wspace}`. |
-| `side`    | character \[`stri_trim` only\]; defaults to `'both'`                                                                                                                                                     |
+|           |                                                                                                                                                                                         |
+|-----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `str`     | a character vector of strings to be trimmed                                                                                                                                             |
+| `pattern` | a single pattern, specifying character classes that should be preserved (see [stringi-search-charclass](../../stringi/help/stringi-search-charclass.html)). Defaults to \'`\P{Wspace}`. |
+| `side`    | character \[`stri_trim` only\]; defaults to `'both'`                                                                                                                                    |
 
 ## Details
 
@@ -36,7 +36,7 @@ For replacing pattern matches with arbitrary replacement string, see [`stri_repl
 
 Trimming can also be used where you would normally rely on regular expressions. For instance, you may get `'23.5'` out of `'total of 23.5 bitcoins'`.
 
-For trimming white-spaces, please note the difference between Unicode binary property \'`\p{Wspace}`\' (more universal) and general character category \'`\p{Z}`\', see [stringi-search-charclass](https://stringi.gagolewski.com/rapi/stringi-search-charclass.html).
+For trimming white-spaces, please note the difference between Unicode binary property \'`\p{Wspace}`\' (more universal) and general character category \'`\p{Z}`\', see [stringi-search-charclass](../../stringi/help/stringi-search-charclass.html).
 
 ## Value
 

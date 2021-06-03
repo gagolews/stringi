@@ -14,7 +14,7 @@ stri_locale_list()
 
 Note that some of the services may be unavailable in some locales. Querying for locale-specific services is always performed during the resource request.
 
-See [stringi-locale](https://stringi.gagolewski.com/rapi/stringi-locale.html) for more information.
+See [stringi-locale](../../stringi/help/stringi-locale.html) for more information.
 
 ## Value
 

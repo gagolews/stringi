@@ -58,7 +58,7 @@ stri_endswith_coll(
 |-----------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `str`                             | character vector                                                                                                                                                                                                                                                             |
 | `...`                             | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_fixed`, and so on.                                                                                                                                      |
-| `pattern, fixed, coll, charclass` | character vector defining search patterns; for more details refer to [stringi-search](https://stringi.gagolewski.com/rapi/stringi-search.html)                                                                                                                               |
+| `pattern, fixed, coll, charclass` | character vector defining search patterns; for more details refer to [stringi-search](../../stringi/help/stringi-search.html)                                                                                                                                                |
 | `from`                            | integer vector                                                                                                                                                                                                                                                               |
 | `negate`                          | single logical value; whether a no-match to a pattern is rather of interest                                                                                                                                                                                                  |
 | `to`                              | integer vector                                                                                                                                                                                                                                                               |
@@ -80,7 +80,7 @@ If you wish to test for a pattern match at an arbitrary position in `str`, use [
 
 `stri_startswith` and `stri_endswith` are convenience functions. They call either `stri_*_fixed`, `stri_*_coll`, or `stri_*_charclass`, depending on the argument used. Relying on these underlying functions directly will make your code run slightly faster.
 
-Note that testing for a pattern match at the start or end of a string has not been implemented separately for regex patterns. For that you may use the \'`^`\' and \'`$`\' meta-characters, see [stringi-search-regex](https://stringi.gagolewski.com/rapi/stringi-search-regex.html).
+Note that testing for a pattern match at the start or end of a string has not been implemented separately for regex patterns. For that you may use the \'`^`\' and \'`$`\' meta-characters, see [stringi-search-regex](../../stringi/help/stringi-search-regex.html).
 
 ## Value
 

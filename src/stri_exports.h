@@ -119,7 +119,7 @@ SEXP stri_stats_latex(SEXP str);
 
 // trans_transliterate.cpp:
 SEXP stri_trans_list();
-SEXP stri_trans_general(SEXP str, SEXP id);
+SEXP stri_trans_general(SEXP str, SEXP id, SEXP rules, SEXP forward);
 
 // utils.cpp
 SEXP stri_list2matrix(SEXP x, SEXP byrow=Rf_ScalarLogical(FALSE),

@@ -2,7 +2,7 @@
 
 ## Description
 
-`stri_enc_set` sets the encoding used to re-encode strings internally (i.e., by <span style="font-family: Courier New, Courier; color: #666666;">**R**</span>) declared to be in native encoding, see [stringi-encoding](https://stringi.gagolewski.com/rapi/stringi-encoding.html) and [`stri_enc_mark`](https://stringi.gagolewski.com/rapi/stri_enc_mark.html). `stri_enc_get` returns the currently used default encoding.
+`stri_enc_set` sets the encoding used to re-encode strings internally (i.e., by <span style="font-family: Courier New, Courier; color: #666666;">**R**</span>) declared to be in native encoding, see [stringi-encoding](../../stringi/help/stringi-encoding.html) and [`stri_enc_mark`](https://stringi.gagolewski.com/rapi/stri_enc_mark.html). `stri_enc_get` returns the currently used default encoding.
 
 ## Usage
 
@@ -24,7 +24,7 @@ stri_enc_get()
 
 Note that changing the default encoding may have undesired consequences. Unless you are an expert user and you know what you are doing, `stri_enc_set` should only be used if <span class="pkg">ICU</span> fails to detect your system\'s encoding correctly (while testing <span class="pkg">stringi</span> we only encountered such a situation on a very old Solaris machine). Note that <span class="pkg">ICU</span> tries to match the encoding part of the `LC_CTYPE` category as given by [`Sys.getlocale`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/locales.html).
 
-If you set a default encoding that is neither a superset of ASCII, nor an 8-bit encoding, a warning will be generated, see [stringi-encoding](https://stringi.gagolewski.com/rapi/stringi-encoding.html) for discussion.
+If you set a default encoding that is neither a superset of ASCII, nor an 8-bit encoding, a warning will be generated, see [stringi-encoding](../../stringi/help/stringi-encoding.html) for discussion.
 
 `stri_enc_set` has no effect if the system ICU assumes that the default charset is always UTF-8 (i.e., where the internal `U_CHARSET_IS_UTF8` is defined and set to 1), see [`stri_info`](https://stringi.gagolewski.com/rapi/stri_info.html).
 

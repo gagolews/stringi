@@ -2,7 +2,7 @@
 
 ## Description
 
-A convenience function to tune the <span class="pkg">ICU</span> `BreakIterator`\'s behavior in some text boundary analysis functions, see [stringi-search-boundaries](https://stringi.gagolewski.com/rapi/stringi-search-boundaries.html).
+A convenience function to tune the <span class="pkg">ICU</span> `BreakIterator`\'s behavior in some text boundary analysis functions, see [stringi-search-boundaries](../../stringi/help/stringi-search-boundaries.html).
 
 ## Usage
 
@@ -25,20 +25,20 @@ stri_opts_brkiter(
 
 ## Arguments
 
-|                      |                                                                                                                                                                                                                                                        |
-|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `type`               | single string; either the break iterator type, one of `character`, `line_break`, `sentence`, `word`, or a custom set of ICU break iteration rules; see [stringi-search-boundaries](https://stringi.gagolewski.com/rapi/stringi-search-boundaries.html) |
-| `locale`             | single string, `NULL` or `''` for default locale                                                                                                                                                                                                       |
-| `skip_word_none`     | logical; perform no action for \'words\' that do not fit into any other categories                                                                                                                                                                     |
-| `skip_word_number`   | logical; perform no action for words that appear to be numbers                                                                                                                                                                                         |
-| `skip_word_letter`   | logical; perform no action for words that contain letters, excluding hiragana, katakana, or ideographic characters                                                                                                                                     |
-| `skip_word_kana`     | logical; perform no action for words containing kana characters                                                                                                                                                                                        |
-| `skip_word_ideo`     | logical; perform no action for words containing ideographic characters                                                                                                                                                                                 |
-| `skip_line_soft`     | logical; perform no action for soft line breaks, i.e., positions where a line break is acceptable but not required                                                                                                                                     |
-| `skip_line_hard`     | logical; perform no action for hard, or mandatory line breaks                                                                                                                                                                                          |
-| `skip_sentence_term` | logical; perform no action for sentences ending with a sentence terminator (\'`.`\', \'`,`\', \'`?`\', \'`!`\'), possibly followed by a hard separator (`CR`, `LF`, `PS`, etc.)                                                                        |
-| `skip_sentence_sep`  | logical; perform no action for sentences that do not contain an ending sentence terminator, but are ended by a hard separator or end of input                                                                                                          |
-| `...`                | \[DEPRECATED\] any other arguments passed to this function generate a warning; this argument will be removed in the future                                                                                                                             |
+|                      |                                                                                                                                                                                                                                       |
+|----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `type`               | single string; either the break iterator type, one of `character`, `line_break`, `sentence`, `word`, or a custom set of ICU break iteration rules; see [stringi-search-boundaries](../../stringi/help/stringi-search-boundaries.html) |
+| `locale`             | single string, `NULL` or `''` for default locale                                                                                                                                                                                      |
+| `skip_word_none`     | logical; perform no action for \'words\' that do not fit into any other categories                                                                                                                                                    |
+| `skip_word_number`   | logical; perform no action for words that appear to be numbers                                                                                                                                                                        |
+| `skip_word_letter`   | logical; perform no action for words that contain letters, excluding hiragana, katakana, or ideographic characters                                                                                                                    |
+| `skip_word_kana`     | logical; perform no action for words containing kana characters                                                                                                                                                                       |
+| `skip_word_ideo`     | logical; perform no action for words containing ideographic characters                                                                                                                                                                |
+| `skip_line_soft`     | logical; perform no action for soft line breaks, i.e., positions where a line break is acceptable but not required                                                                                                                    |
+| `skip_line_hard`     | logical; perform no action for hard, or mandatory line breaks                                                                                                                                                                         |
+| `skip_sentence_term` | logical; perform no action for sentences ending with a sentence terminator (\'`.`\', \'`,`\', \'`?`\', \'`!`\'), possibly followed by a hard separator (`CR`, `LF`, `PS`, etc.)                                                       |
+| `skip_sentence_sep`  | logical; perform no action for sentences that do not contain an ending sentence terminator, but are ended by a hard separator or end of input                                                                                         |
+| `...`                | \[DEPRECATED\] any other arguments passed to this function generate a warning; this argument will be removed in the future                                                                                                            |
 
 ## Details
 
