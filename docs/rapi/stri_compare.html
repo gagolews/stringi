@@ -41,7 +41,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="stri_count_boundaries: Count the Number of Text Boundaries" href="stri_count_boundaries.html" />
-    <link rel="prev" title="operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf" href="operator_dollar.html" /> 
+    <link rel="prev" title="operator_dollar: C-Style Formatting with stri_sprintf as a Binary Operator" href="operator_dollar.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.2.9001
+                1.6.2.9004
               </div>
             
           
@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code></span> as a Binary Operator</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">stri_compare: Compare Strings with or without Collation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#description">Description</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
@@ -129,7 +129,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_create.html">stri_datetime_create: Create a Date-Time Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_fields.html">stri_datetime_fields: Get Values for Date and Time Fields</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_format.html">stri_datetime_format: Date and Time Formatting and Parsing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert strptime-Style Format Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert <code class="docutils literal notranslate"><span class="pre">strptime</span></code>-Style Format Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_now.html">stri_datetime_now: Get Current Date and Time</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_symbols.html">stri_datetime_symbols: List Localizable Date-Time Formatting Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_detect.html">stri_detect: Detect a Pattern Match</a></li>
@@ -289,7 +289,7 @@
         <a href="stri_count_boundaries.html" class="btn btn-neutral float-right" title="stri_count_boundaries: Count the Number of Text Boundaries" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
       
       
-        <a href="operator_dollar.html" class="btn btn-neutral float-left" title="operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="operator_dollar.html" class="btn btn-neutral float-left" title="operator_dollar: C-Style Formatting with stri_sprintf as a Binary Operator" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
       
   </div>
   
@@ -344,7 +344,7 @@
 <td><p>additional settings for <code class="docutils literal notranslate"><span class="pre">opts_collator</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">opts_collator</span></code></p></td>
-<td><p>a named list with <span class="pkg">ICU</span> Collator’s options, see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_opts_collator.html"><code class="docutils literal notranslate"><span class="pre">stri_opts_collator</span></code></a>, <code class="docutils literal notranslate"><span class="pre">NULL</span></code> for the default collation options.</p></td>
+<td><p>a named list with <span class="pkg">ICU</span> Collator’s options, see <a class="reference internal" href="stri_opts_collator.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_opts_collator</span></code></span></a>, <code class="docutils literal notranslate"><span class="pre">NULL</span></code> for the default collation options.</p></td>
 </tr>
 </tbody>
 </table>
@@ -354,9 +354,9 @@
 <p>All the functions listed here are vectorized over <code class="docutils literal notranslate"><span class="pre">e1</span></code> and <code class="docutils literal notranslate"><span class="pre">e2</span></code>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">stri_cmp_eq</span></code> tests whether two corresponding strings consist of exactly the same code points, while <code class="docutils literal notranslate"><span class="pre">stri_cmp_neq</span></code> allows to check whether there is any difference between them. These are locale-independent operations: for natural language processing, where the notion of canonical equivalence is more valid, this might not be exactly what you are looking for, see Examples. Please note that <span class="pkg">stringi</span> always silently removes UTF-8 BOMs from input strings, therefore, e.g., <code class="docutils literal notranslate"><span class="pre">stri_cmp_eq</span></code> does not take BOMs into account while comparing strings.</p>
 <p><code class="docutils literal notranslate"><span class="pre">stri_cmp_equiv</span></code> tests for canonical equivalence of two strings and is locale-dependent. Additionally, the <span class="pkg">ICU</span>’s Collator may be tuned up so that, e.g., the comparison is case-insensitive. To test whether two strings are not canonically equivalent, call <code class="docutils literal notranslate"><span class="pre">stri_cmp_nequiv</span></code>.</p>
-<p><code class="docutils literal notranslate"><span class="pre">stri_cmp_le</span></code> tests whether the elements in the first vector are less than or equal to the corresponding elements in the second vector, <code class="docutils literal notranslate"><span class="pre">stri_cmp_ge</span></code> tests whether they are greater or equal, <code class="docutils literal notranslate"><span class="pre">stri_cmp_lt</span></code> if less, and <code class="docutils literal notranslate"><span class="pre">stri_cmp_gt</span></code> if greater, see also, e.g., <a class="reference external" href="https://stringi.gagolewski.com/rapi/%25s%3C%25.html"><code class="docutils literal notranslate"><span class="pre">%s&lt;%</span></code></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">stri_cmp_le</span></code> tests whether the elements in the first vector are less than or equal to the corresponding elements in the second vector, <code class="docutils literal notranslate"><span class="pre">stri_cmp_ge</span></code> tests whether they are greater or equal, <code class="docutils literal notranslate"><span class="pre">stri_cmp_lt</span></code> if less, and <code class="docutils literal notranslate"><span class="pre">stri_cmp_gt</span></code> if greater, see also, e.g., <a class="reference internal" href="operator_compare.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">%s&lt;%</span></code></span></a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">stri_compare</span></code> is an alias to <code class="docutils literal notranslate"><span class="pre">stri_cmp</span></code>. They both perform exactly the same locale-dependent operation. Both functions provide a C library’s <code class="docutils literal notranslate"><span class="pre">strcmp()</span></code> look-and-feel, see Value for details.</p>
-<p>For more information on <span class="pkg">ICU</span>’s Collator and how to tune its settings refer to <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_opts_collator.html"><code class="docutils literal notranslate"><span class="pre">stri_opts_collator</span></code></a>. Note that different locale settings may lead to different results (see the examples below).</p>
+<p>For more information on <span class="pkg">ICU</span>’s Collator and how to tune its settings refer to <a class="reference internal" href="stri_opts_collator.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_opts_collator</span></code></span></a>. Note that different locale settings may lead to different results (see the examples below).</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
@@ -374,7 +374,7 @@
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
-<p>Other locale_sensitive: <a class="reference external" href="https://stringi.gagolewski.com/rapi/%25s%3C%25.html"><code class="docutils literal notranslate"><span class="pre">%s&lt;%</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_locale.html"><code class="docutils literal notranslate"><span class="pre">about_locale</span></code></a>, <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_search_boundaries.html"><code class="docutils literal notranslate"><span class="pre">about_search_boundaries</span></code></a>, <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_search_coll.html"><code class="docutils literal notranslate"><span class="pre">about_search_coll</span></code></a>, <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_count_boundaries.html"><code class="docutils literal notranslate"><span class="pre">stri_count_boundaries</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_duplicated.html"><code class="docutils literal notranslate"><span class="pre">stri_duplicated</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_enc_detect2.html"><code class="docutils literal notranslate"><span class="pre">stri_enc_detect2</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_extract_all_boundaries.html"><code class="docutils literal notranslate"><span class="pre">stri_extract_all_boundaries</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_locate_all_boundaries.html"><code class="docutils literal notranslate"><span class="pre">stri_locate_all_boundaries</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_opts_collator.html"><code class="docutils literal notranslate"><span class="pre">stri_opts_collator</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_order.html"><code class="docutils literal notranslate"><span class="pre">stri_order</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_rank.html"><code class="docutils literal notranslate"><span class="pre">stri_rank</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_sort_key.html"><code class="docutils literal notranslate"><span class="pre">stri_sort_key</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_sort.html"><code class="docutils literal notranslate"><span class="pre">stri_sort</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_split_boundaries.html"><code class="docutils literal notranslate"><span class="pre">stri_split_boundaries</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_trans_tolower.html"><code class="docutils literal notranslate"><span class="pre">stri_trans_tolower</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_unique.html"><code class="docutils literal notranslate"><span class="pre">stri_unique</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_wrap.html"><code class="docutils literal notranslate"><span class="pre">stri_wrap</span></code></a>()</p>
+<p>Other locale_sensitive: <a class="reference internal" href="operator_compare.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">%s&lt;%()</span></code></span></a>, <a class="reference internal" href="about_locale.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_locale</span></code></span></a>, <a class="reference internal" href="about_search_boundaries.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_boundaries</span></code></span></a>, <a class="reference internal" href="about_search_coll.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_coll</span></code></span></a>, <a class="reference internal" href="stri_count_boundaries.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_count_boundaries()</span></code></span></a>, <a class="reference internal" href="stri_duplicated.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_duplicated()</span></code></span></a>, <a class="reference internal" href="stri_enc_detect2.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_detect2()</span></code></span></a>, <a class="reference internal" href="stri_extract_boundaries.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_extract_all_boundaries()</span></code></span></a>, <a class="reference internal" href="stri_locate_boundaries.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_locate_all_boundaries()</span></code></span></a>, <a class="reference internal" href="stri_opts_collator.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_opts_collator()</span></code></span></a>, <a class="reference internal" href="stri_order.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_order()</span></code></span></a>, <a class="reference internal" href="stri_rank.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_rank()</span></code></span></a>, <a class="reference internal" href="stri_sort_key.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_sort_key()</span></code></span></a>, <a class="reference internal" href="stri_sort.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_sort()</span></code></span></a>, <a class="reference internal" href="stri_split_boundaries.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_split_boundaries()</span></code></span></a>, <a class="reference internal" href="stri_trans_casemap.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_tolower()</span></code></span></a>, <a class="reference internal" href="stri_unique.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_unique()</span></code></span></a>, <a class="reference internal" href="stri_wrap.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_wrap()</span></code></span></a></p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
@@ -428,7 +428,7 @@
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="stri_count_boundaries.html" class="btn btn-neutral float-right" title="stri_count_boundaries: Count the Number of Text Boundaries" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="operator_dollar.html" class="btn btn-neutral float-left" title="operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="operator_dollar.html" class="btn btn-neutral float-left" title="operator_dollar: C-Style Formatting with stri_sprintf as a Binary Operator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
@@ -437,7 +437,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-24 11:20:07.
+        Last updated on 2021-06-03T14:48:11+1000.
       </span>
 
     </p>

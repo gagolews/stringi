@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.2.9001
+                1.6.2.9004
               </div>
             
           
@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code></span> as a Binary Operator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count.html">stri_count: Count the Number of Pattern Matches</a></li>
@@ -128,7 +128,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_format.html">stri_datetime_format: Date and Time Formatting and Parsing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert strptime-Style Format Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert <code class="docutils literal notranslate"><span class="pre">strptime</span></code>-Style Format Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_now.html">stri_datetime_now: Get Current Date and Time</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_symbols.html">stri_datetime_symbols: List Localizable Date-Time Formatting Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_detect.html">stri_detect: Detect a Pattern Match</a></li>
@@ -319,10 +319,10 @@
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">time</span></code></p></td>
-<td><p>an object of class <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/DateTimeClasses.html"><code class="docutils literal notranslate"><span class="pre">POSIXct</span></code></a> or an object coercible to</p></td>
+<td><p>an object of class <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/DateTimeClasses.html"><code class="docutils literal notranslate"><span class="pre">POSIXct</span></code></a> (<code class="docutils literal notranslate"><span class="pre">as.POSIXct</span></code> will be called on character vectors and objects of class <code class="docutils literal notranslate"><span class="pre">POSIXlt</span></code>, <code class="docutils literal notranslate"><span class="pre">Date</span></code>, and <code class="docutils literal notranslate"><span class="pre">factor</span></code>)</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tz</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">''</span></code> for the default time zone or a single string with time zone identifier, see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_timezone_list.html"><code class="docutils literal notranslate"><span class="pre">stri_timezone_list</span></code></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">''</span></code> for the default time zone or a single string with time zone identifier, see <a class="reference internal" href="stri_timezone_list.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_list</span></code></span></a></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">locale</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">''</span></code> for the current default locale, or a single string with a locale identifier; a non-Gregorian calendar may be specified by setting <code class="docutils literal notranslate"><span class="pre">&#64;calendar=name</span></code> keyword</p></td>
@@ -339,7 +339,7 @@
 <p>Returns a data frame with the following columns:</p>
 <ol class="simple">
 <li><p>Year (0 is 1BC, -1 is 2BC, etc.)</p></li>
-<li><p>Month (1-based, i.e., 1 stands for the first month, e.g., January; note that the number of months depends on the selected calendar, see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_symbols.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_symbols</span></code></a>)</p></li>
+<li><p>Month (1-based, i.e., 1 stands for the first month, e.g., January; note that the number of months depends on the selected calendar, see <a class="reference internal" href="stri_datetime_symbols.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_symbols</span></code></span></a>)</p></li>
 <li><p>Day</p></li>
 <li><p>Hour (24-h clock)</p></li>
 <li><p>Minute</p></li>
@@ -348,10 +348,10 @@
 <li><p>WeekOfYear (this is locale-dependent)</p></li>
 <li><p>WeekOfMonth (this is locale-dependent)</p></li>
 <li><p>DayOfYear</p></li>
-<li><p>DayOfWeek (1-based, 1 denotes Sunday; see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_symbols.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_symbols</span></code></a>)</p></li>
+<li><p>DayOfWeek (1-based, 1 denotes Sunday; see <a class="reference internal" href="stri_datetime_symbols.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_symbols</span></code></span></a>)</p></li>
 <li><p>Hour12 (12-h clock)</p></li>
-<li><p>AmPm (see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_symbols.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_symbols</span></code></a>)</p></li>
-<li><p>Era (see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_symbols.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_symbols</span></code></a>)</p></li>
+<li><p>AmPm (see <a class="reference internal" href="stri_datetime_symbols.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_symbols</span></code></span></a>)</p></li>
+<li><p>Era (see <a class="reference internal" href="stri_datetime_symbols.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_symbols</span></code></span></a>)</p></li>
 </ol>
 </div>
 <div class="section" id="author-s">
@@ -361,20 +361,20 @@
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
-<p>Other datetime: <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_add.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_add</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_create.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_create</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_format.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_format</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_fstr.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_fstr</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_now.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_now</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_symbols.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_symbols</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_timezone_get.html"><code class="docutils literal notranslate"><span class="pre">stri_timezone_get</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_timezone_info.html"><code class="docutils literal notranslate"><span class="pre">stri_timezone_info</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_timezone_list.html"><code class="docutils literal notranslate"><span class="pre">stri_timezone_list</span></code></a>()</p>
+<p>Other datetime: <a class="reference internal" href="stri_datetime_add.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_add()</span></code></span></a>, <a class="reference internal" href="stri_datetime_create.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_create()</span></code></span></a>, <a class="reference internal" href="stri_datetime_format.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_format()</span></code></span></a>, <a class="reference internal" href="stri_datetime_fstr.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_fstr()</span></code></span></a>, <a class="reference internal" href="stri_datetime_now.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_now()</span></code></span></a>, <a class="reference internal" href="stri_datetime_symbols.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_symbols()</span></code></span></a>, <a class="reference internal" href="stri_timezone_set.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_get()</span></code></span></a>, <a class="reference internal" href="stri_timezone_info.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_info()</span></code></span></a>, <a class="reference internal" href="stri_timezone_list.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_list()</span></code></span></a></p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_fields</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">())</span>
 <span class="c1">##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth</span>
-<span class="c1">## 1 2021     5  24   11     19     55          69         22           5</span>
+<span class="c1">## 1 2021     6   3   14     47     58         720         23           1</span>
 <span class="c1">##   DayOfYear DayOfWeek Hour12 AmPm Era</span>
-<span class="c1">## 1       144         2     11    1   2</span>
+<span class="c1">## 1       154         5      2    2   2</span>
 <span class="nf">stri_datetime_fields</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span>
 <span class="c1">##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth</span>
-<span class="c1">## 1 5781    10  13   11     19     55          72         37           3</span>
+<span class="c1">## 1 5781    10  23   14     47     58         724         38           4</span>
 <span class="c1">##   DayOfYear DayOfWeek Hour12 AmPm Era</span>
-<span class="c1">## 1       248         2     11    1   1</span>
+<span class="c1">## 1       258         5      2    2   1</span>
 <span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span><span class="o">$</span><span class="n">Month</span><span class="p">[</span>
    <span class="nf">stri_datetime_fields</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span><span class="o">$</span><span class="n">Month</span>
 <span class="p">]</span>
@@ -400,7 +400,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-24 11:20:07.
+        Last updated on 2021-06-03T14:48:11+1000.
       </span>
 
     </p>

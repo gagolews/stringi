@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.2.9001
+                1.6.2.9004
               </div>
             
           
@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code></span> as a Binary Operator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count.html">stri_count: Count the Number of Pattern Matches</a></li>
@@ -129,7 +129,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert strptime-Style Format Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert <code class="docutils literal notranslate"><span class="pre">strptime</span></code>-Style Format Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_now.html">stri_datetime_now: Get Current Date and Time</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_symbols.html">stri_datetime_symbols: List Localizable Date-Time Formatting Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_detect.html">stri_detect: Detect a Pattern Match</a></li>
@@ -333,16 +333,16 @@
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">time</span></code></p></td>
-<td><p>an object of class <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/DateTimeClasses.html"><code class="docutils literal notranslate"><span class="pre">POSIXct</span></code></a> or an object coercible to</p></td>
+<td><p>an object of class <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/DateTimeClasses.html"><code class="docutils literal notranslate"><span class="pre">POSIXct</span></code></a> (<code class="docutils literal notranslate"><span class="pre">as.POSIXct</span></code> will be called on character vectors and objects of class <code class="docutils literal notranslate"><span class="pre">POSIXlt</span></code>, <code class="docutils literal notranslate"><span class="pre">Date</span></code>, and <code class="docutils literal notranslate"><span class="pre">factor</span></code>)</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">format</span></code></p></td>
-<td><p>single string, see Details; see also <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_fstr.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_fstr</span></code></a></p></td>
+<td><p>character vector, see Details; see also <a class="reference internal" href="stri_datetime_fstr.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_fstr</span></code></span></a></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tz</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">''</span></code> for the default time zone or a single string with a timezone identifier, see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_timezone_list.html"><code class="docutils literal notranslate"><span class="pre">stri_timezone_list</span></code></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">''</span></code> for the default time zone or a single string with a timezone identifier, see <a class="reference internal" href="stri_timezone_set.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_get</span></code></span></a> and <a class="reference internal" href="stri_timezone_list.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_list</span></code></span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">locale</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">''</span></code> for default locale, or a single string with locale identifier; a non-Gregorian calendar may be specified by setting the <code class="docutils literal notranslate"><span class="pre">&#64;calendar=name</span></code> keyword</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">''</span></code> for the default locale, or a single string with locale identifier; a non-Gregorian calendar may be specified by setting the <code class="docutils literal notranslate"><span class="pre">&#64;calendar=name</span></code> keyword</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p></td>
 <td><p>character vector</p></td>
@@ -355,11 +355,11 @@
 </div>
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
-<p>Vectorized over <code class="docutils literal notranslate"><span class="pre">time</span></code> or <code class="docutils literal notranslate"><span class="pre">str</span></code>.</p>
-<p>By default, <code class="docutils literal notranslate"><span class="pre">stri_datetime_format</span></code> (for the sake of compatibility with the <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/strptime.html"><code class="docutils literal notranslate"><span class="pre">strftime</span></code></a> function, but unlike <code class="docutils literal notranslate"><span class="pre">format.POSIXst</span></code>) formats a date/time object using the current default time zone.</p>
-<p><code class="docutils literal notranslate"><span class="pre">format</span></code> may be one of <code class="docutils literal notranslate"><span class="pre">DT_STYLE</span></code> or <code class="docutils literal notranslate"><span class="pre">DT_relative_STYLE</span></code>, where <code class="docutils literal notranslate"><span class="pre">DT</span></code> is equal to <code class="docutils literal notranslate"><span class="pre">date</span></code>, <code class="docutils literal notranslate"><span class="pre">time</span></code>, or <code class="docutils literal notranslate"><span class="pre">datetime</span></code>, and <code class="docutils literal notranslate"><span class="pre">STYLE</span></code> is equal to <code class="docutils literal notranslate"><span class="pre">full</span></code>, <code class="docutils literal notranslate"><span class="pre">long</span></code>, <code class="docutils literal notranslate"><span class="pre">medium</span></code>, or <code class="docutils literal notranslate"><span class="pre">short</span></code>. This gives a locale-dependent date and/or time format. Note that currently <span class="pkg">ICU</span> does not support <code class="docutils literal notranslate"><span class="pre">relative</span></code> <code class="docutils literal notranslate"><span class="pre">time</span></code> formats, so this flag is currently ignored in such a context.</p>
-<p>Otherwise, <code class="docutils literal notranslate"><span class="pre">format</span></code> is a pattern: a string, where specific sequences of characters are replaced with date and time data from a calendar when formatting or used to generate data for a calendar when parsing. For example, <code class="docutils literal notranslate"><span class="pre">y</span></code> stands for the year. Characters may be used multiple times: <code class="docutils literal notranslate"><span class="pre">yy</span></code> might produce <code class="docutils literal notranslate"><span class="pre">99</span></code>, whereas <code class="docutils literal notranslate"><span class="pre">yyyy</span></code> yields <code class="docutils literal notranslate"><span class="pre">1999</span></code>. For most of the numerical fields, the number of characters specifies the field width. For example, if <code class="docutils literal notranslate"><span class="pre">h</span></code> is the hour, <code class="docutils literal notranslate"><span class="pre">h</span></code> might produce <code class="docutils literal notranslate"><span class="pre">5</span></code>, but <code class="docutils literal notranslate"><span class="pre">hh</span></code> yields <code class="docutils literal notranslate"><span class="pre">05</span></code>. For some characters, the count specifies whether an abbreviated or full form should be used, but may have other choices, as given below.</p>
-<p>Two single quotes represent a literal single quote, either inside or outside single quotes. Text within single quotes is not interpreted in any way (except for two adjacent single quotes). Otherwise all ASCII letter from <code class="docutils literal notranslate"><span class="pre">a</span></code> to <code class="docutils literal notranslate"><span class="pre">z</span></code> and <code class="docutils literal notranslate"><span class="pre">A</span></code> to <code class="docutils literal notranslate"><span class="pre">Z</span></code> are reserved as syntax characters, and require quoting if they are to represent literal characters. In addition, certain ASCII punctuation characters may become variable in the future (e.g., <code class="docutils literal notranslate"><span class="pre">:</span></code> being interpreted as the time separator and <code class="docutils literal notranslate"><span class="pre">/</span></code> as a date separator, and replaced by respective locale-sensitive characters in display).</p>
+<p>Vectorized over <code class="docutils literal notranslate"><span class="pre">format</span></code> and <code class="docutils literal notranslate"><span class="pre">time</span></code> or <code class="docutils literal notranslate"><span class="pre">str</span></code>.</p>
+<p>By default, <code class="docutils literal notranslate"><span class="pre">stri_datetime_format</span></code> (for the sake of compatibility with the <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/help/strftime.html"><code class="docutils literal notranslate"><span class="pre">strftime</span></code></a> function) formats a date/time object using the current default time zone.</p>
+<p><code class="docutils literal notranslate"><span class="pre">format</span></code> may be one of <code class="docutils literal notranslate"><span class="pre">DT_STYLE</span></code> or <code class="docutils literal notranslate"><span class="pre">DT_relative_STYLE</span></code>, where <code class="docutils literal notranslate"><span class="pre">DT</span></code> is equal to <code class="docutils literal notranslate"><span class="pre">date</span></code>, <code class="docutils literal notranslate"><span class="pre">time</span></code>, or <code class="docutils literal notranslate"><span class="pre">datetime</span></code>, and <code class="docutils literal notranslate"><span class="pre">STYLE</span></code> is equal to <code class="docutils literal notranslate"><span class="pre">full</span></code>, <code class="docutils literal notranslate"><span class="pre">long</span></code>, <code class="docutils literal notranslate"><span class="pre">medium</span></code>, or <code class="docutils literal notranslate"><span class="pre">short</span></code>. This gives a locale-dependent date and/or time format. Note that currently <span class="pkg">ICU</span> does not support <code class="docutils literal notranslate"><span class="pre">relative</span></code> <code class="docutils literal notranslate"><span class="pre">time</span></code> formats, thus this flag is currently ignored in such a context.</p>
+<p>Otherwise, <code class="docutils literal notranslate"><span class="pre">format</span></code> is a pattern: a string where specific sequences of characters are replaced with date/time data from a calendar when formatting or used to generate data for a calendar when parsing. For example, <code class="docutils literal notranslate"><span class="pre">y</span></code> stands for ‘year’. Characters may be used multiple times: <code class="docutils literal notranslate"><span class="pre">yy</span></code> might produce <code class="docutils literal notranslate"><span class="pre">99</span></code>, whereas <code class="docutils literal notranslate"><span class="pre">yyyy</span></code> yields <code class="docutils literal notranslate"><span class="pre">1999</span></code>. For most numerical fields, the number of characters specifies the field width. For example, if <code class="docutils literal notranslate"><span class="pre">h</span></code> is the hour, <code class="docutils literal notranslate"><span class="pre">h</span></code> might produce <code class="docutils literal notranslate"><span class="pre">5</span></code>, but <code class="docutils literal notranslate"><span class="pre">hh</span></code> yields <code class="docutils literal notranslate"><span class="pre">05</span></code>. For some characters, the count specifies whether an abbreviated or full form should be used.</p>
+<p>Two single quotes represent a literal single quote, either inside or outside single quotes. Text within single quotes is not interpreted in any way (except for two adjacent single quotes). Otherwise, all ASCII letters from <code class="docutils literal notranslate"><span class="pre">a</span></code> to <code class="docutils literal notranslate"><span class="pre">z</span></code> and <code class="docutils literal notranslate"><span class="pre">A</span></code> to <code class="docutils literal notranslate"><span class="pre">Z</span></code> are reserved as syntax characters, and require quoting if they are to represent literal characters. In addition, certain ASCII punctuation characters may become available in the future (e.g., <code class="docutils literal notranslate"><span class="pre">:</span></code> being interpreted as the time separator and <code class="docutils literal notranslate"><span class="pre">/</span></code> as a date separator, and replaced by respective locale-sensitive characters in display).</p>
 <table class="colwidths-auto docutils align-default">
 <thead>
 <tr class="row-odd"><th class="text-align:left head"><p></p></th>
@@ -816,8 +816,8 @@
 </tr>
 </tbody>
 </table>
-<p>Note that any characters in the pattern that are not in the ranges of <code class="docutils literal notranslate"><span class="pre">[a-z]</span></code> and <code class="docutils literal notranslate"><span class="pre">[A-Z]</span></code> will be treated as quoted text. For instance, characters like <code class="docutils literal notranslate"><span class="pre">:</span></code>, <code class="docutils literal notranslate"><span class="pre">.</span></code>, (a space), <code class="docutils literal notranslate"><span class="pre">#</span></code> and <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> will appear in the resulting time text even if they are not enclosed within single quotes. The single quote is used to “escape” letters. Two single quotes in a row, inside or outside a quoted sequence, represent a “real” single quote.</p>
-<p>Here are some examples:</p>
+<p>Note that any characters in the pattern that are not in the ranges of <code class="docutils literal notranslate"><span class="pre">[a-z]</span></code> and <code class="docutils literal notranslate"><span class="pre">[A-Z]</span></code> will be treated as quoted text. For instance, characters like <code class="docutils literal notranslate"><span class="pre">:</span></code>, <code class="docutils literal notranslate"><span class="pre">.</span></code>, (a space), <code class="docutils literal notranslate"><span class="pre">#</span></code> and <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> will appear in the resulting time text even if they are not enclosed within single quotes. The single quote is used to “escape” the letters. Two single quotes in a row, inside or outside a quoted sequence, represent a “real” single quote.</p>
+<p>A few examples:</p>
 <table class="colwidths-auto docutils align-default">
 <thead>
 <tr class="row-odd"><th class="text-align:left head"><p></p></th>
@@ -825,7 +825,7 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-align:left"><p><strong>Exemplary Pattern</strong></p></td>
+<tr class="row-even"><td class="text-align:left"><p><strong>Example Pattern</strong></p></td>
 <td class="text-align:left"><p><strong>Result</strong></p></td>
 </tr>
 <tr class="row-odd"><td class="text-align:left"><p>yyyy.MM.dd ‘at’ HH:mm:ss zzz</p></td>
@@ -858,7 +858,7 @@
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">stri_datetime_format</span></code> returns a character vector.</p>
-<p><code class="docutils literal notranslate"><span class="pre">stri_datetime_parse</span></code> returns an object of class <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/DateTimeClasses.html"><code class="docutils literal notranslate"><span class="pre">POSIXct</span></code></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">stri_datetime_parse</span></code> returns an object of class <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/DateTimeClasses.html"><code class="docutils literal notranslate"><span class="pre">POSIXct</span></code></a>.</p>
 </div>
 <div class="section" id="author-s">
 <h2>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this headline">¶</a></h2>
@@ -866,23 +866,23 @@
 </div>
 <div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
-<p><em>Formatting Dates and Times</em> - ICU User Guide, <a class="reference external" href="https://unicode-org.github.io/icu/userguide/format_parse/datetime/">https://unicode-org.github.io/icu/userguide/format_parse/datetime/</a></p>
+<p><em>Formatting Dates and Times</em> – ICU User Guide, <a class="reference external" href="https://unicode-org.github.io/icu/userguide/format_parse/datetime/">https://unicode-org.github.io/icu/userguide/format_parse/datetime/</a></p>
 </div>
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
-<p>Other datetime: <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_add.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_add</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_create.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_create</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_fields.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_fields</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_fstr.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_fstr</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_now.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_now</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_datetime_symbols.html"><code class="docutils literal notranslate"><span class="pre">stri_datetime_symbols</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_timezone_get.html"><code class="docutils literal notranslate"><span class="pre">stri_timezone_get</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_timezone_info.html"><code class="docutils literal notranslate"><span class="pre">stri_timezone_info</span></code></a>(), <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_timezone_list.html"><code class="docutils literal notranslate"><span class="pre">stri_timezone_list</span></code></a>()</p>
+<p>Other datetime: <a class="reference internal" href="stri_datetime_add.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_add()</span></code></span></a>, <a class="reference internal" href="stri_datetime_create.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_create()</span></code></span></a>, <a class="reference internal" href="stri_datetime_fields.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_fields()</span></code></span></a>, <a class="reference internal" href="stri_datetime_fstr.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_fstr()</span></code></span></a>, <a class="reference internal" href="stri_datetime_now.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_now()</span></code></span></a>, <a class="reference internal" href="stri_datetime_symbols.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_symbols()</span></code></span></a>, <a class="reference internal" href="stri_timezone_set.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_get()</span></code></span></a>, <a class="reference internal" href="stri_timezone_info.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_info()</span></code></span></a>, <a class="reference internal" href="stri_timezone_list.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_list()</span></code></span></a></p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;2015-02-28&#39;</span><span class="p">,</span> <span class="s">&#39;2015-02-29&#39;</span><span class="p">),</span> <span class="s">&#39;yyyy-MM-dd&#39;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2015-02-28 11:19:55 AEDT&quot; NA</span>
+<span class="c1">## [1] &quot;2015-02-28 14:47:58 AEDT&quot; NA</span>
 <span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;2015-02-28&#39;</span><span class="p">,</span> <span class="s">&#39;2015-02-29&#39;</span><span class="p">),</span> <span class="s">&#39;yyyy-MM-dd&#39;</span><span class="p">,</span> <span class="n">lenient</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2015-02-28 11:19:55 AEDT&quot; &quot;2015-03-01 11:19:55 AEDT&quot;</span>
+<span class="c1">## [1] &quot;2015-02-28 14:47:58 AEDT&quot; &quot;2015-03-01 14:47:58 AEDT&quot;</span>
 <span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="s">&#39;19 lipca 2015&#39;</span><span class="p">,</span> <span class="s">&#39;date_long&#39;</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;pl_PL&#39;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2015-07-19 11:19:55 AEST&quot;</span>
+<span class="c1">## [1] &quot;2015-07-19 14:47:58 AEST&quot;</span>
 <span class="nf">stri_datetime_format</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span> <span class="s">&#39;datetime_relative_medium&#39;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;today, 11:19:55 am&quot;</span>
+<span class="c1">## [1] &quot;today, 2:47:58 pm&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -904,7 +904,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-24 11:20:07.
+        Last updated on 2021-06-03T14:48:11+1000.
       </span>
 
     </p>

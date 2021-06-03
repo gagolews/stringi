@@ -54,16 +54,16 @@ stri_split_charclass(
 
 ## Arguments
 
-|                                          |                                                                                                                                                                                                                                                                                                                                                              |
-|------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`                                    | character vector; strings to search in                                                                                                                                                                                                                                                                                                                       |
-| `...`                                    | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_regex`, `opts_fixed`, and so on                                                                                                                                                                                                         |
-| `pattern, regex, fixed, coll, charclass` | character vector; search patterns; for more details refer to [stringi-search](../../stringi/help/stringi-search.html)                                                                                                                                                                                                                                        |
-| `n`                                      | integer vector, maximal number of strings to return, and, at the same time, maximal number of text boundaries to look for                                                                                                                                                                                                                                    |
-| `omit_empty`                             | logical vector; determines whether empty tokens should be removed from the result (`TRUE` or `FALSE`) or replaced with `NA`s (`NA`)                                                                                                                                                                                                                          |
-| `tokens_only`                            | single logical value; may affect the result if `n` is positive, see Details                                                                                                                                                                                                                                                                                  |
-| `simplify`                               | single logical value; if `TRUE` or `NA`, then a character matrix is returned; otherwise (the default), a list of character vectors is given, see Value                                                                                                                                                                                                       |
-| `opts_collator, opts_fixed, opts_regex`  | a named list used to tune up the search engine\'s settings; see [`stri_opts_collator`](https://stringi.gagolewski.com/rapi/stri_opts_collator.html), [`stri_opts_fixed`](https://stringi.gagolewski.com/rapi/stri_opts_fixed.html), and [`stri_opts_regex`](https://stringi.gagolewski.com/rapi/stri_opts_regex.html), respectively; `NULL` for the defaults |
+|                                          |                                                                                                                                                                                                                                            |
+|------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `str`                                    | character vector; strings to search in                                                                                                                                                                                                     |
+| `...`                                    | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_regex`, `opts_fixed`, and so on                                                                                       |
+| `pattern, regex, fixed, coll, charclass` | character vector; search patterns; for more details refer to [stringi-search](about_search.md)                                                                                                                                             |
+| `n`                                      | integer vector, maximal number of strings to return, and, at the same time, maximal number of text boundaries to look for                                                                                                                  |
+| `omit_empty`                             | logical vector; determines whether empty tokens should be removed from the result (`TRUE` or `FALSE`) or replaced with `NA`s (`NA`)                                                                                                        |
+| `tokens_only`                            | single logical value; may affect the result if `n` is positive, see Details                                                                                                                                                                |
+| `simplify`                               | single logical value; if `TRUE` or `NA`, then a character matrix is returned; otherwise (the default), a list of character vectors is given, see Value                                                                                     |
+| `opts_collator, opts_fixed, opts_regex`  | a named list used to tune up the search engine\'s settings; see [`stri_opts_collator`](stri_opts_collator.md), [`stri_opts_fixed`](stri_opts_fixed.md), and [`stri_opts_regex`](stri_opts_regex.md), respectively; `NULL` for the defaults |
 
 ## Details
 
@@ -73,7 +73,7 @@ If `n` is negative, then all pieces are extracted. Otherwise, if `tokens_only` i
 
 `omit_empty` is applied during the split process: if it is set to `TRUE`, then tokens of zero length are ignored. Thus, empty strings will never appear in the resulting vector. On the other hand, if `omit_empty` is `NA`, then empty tokens are substituted with missing strings.
 
-Empty search patterns are not supported. If you wish to split a string into individual characters, use, e.g., [`stri_split_boundaries`](https://stringi.gagolewski.com/rapi/stri_split_boundaries.html)(str, type=\'character\') for THE Unicode way.
+Empty search patterns are not supported. If you wish to split a string into individual characters, use, e.g., [`stri_split_boundaries(str, type='character')`](stri_split_boundaries.md) for THE Unicode way.
 
 `stri_split` is a convenience function. It calls either `stri_split_regex`, `stri_split_fixed`, `stri_split_coll`, or `stri_split_charclass`, depending on the argument used.
 
@@ -81,7 +81,7 @@ Empty search patterns are not supported. If you wish to split a string into indi
 
 If `simplify=FALSE` (the default), then the functions return a list of character vectors.
 
-Otherwise, [`stri_list2matrix`](https://stringi.gagolewski.com/rapi/stri_list2matrix.html) with `byrow=TRUE` and `n_min=n` arguments is called on the resulting object. In such a case, a character matrix with an appropriate number of rows (according to the length of `str`, `pattern`, etc.) is returned. Note that [`stri_list2matrix`](https://stringi.gagolewski.com/rapi/stri_list2matrix.html)\'s `fill` argument is set to an empty string and `NA`, for `simplify` equal to `TRUE` and `NA`, respectively.
+Otherwise, [`stri_list2matrix`](stri_list2matrix.md) with `byrow=TRUE` and `n_min=n` arguments is called on the resulting object. In such a case, a character matrix with an appropriate number of rows (according to the length of `str`, `pattern`, etc.) is returned. Note that [`stri_list2matrix`](stri_list2matrix.md)\'s `fill` argument is set to an empty string and `NA`, for `simplify` equal to `TRUE` and `NA`, respectively.
 
 ## Author(s)
 
@@ -91,7 +91,7 @@ Otherwise, [`stri_list2matrix`](https://stringi.gagolewski.com/rapi/stri_list2ma
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_split: [`about_search`](https://stringi.gagolewski.com/rapi/about_search.html), [`stri_split_boundaries`](https://stringi.gagolewski.com/rapi/stri_split_boundaries.html)(), [`stri_split_lines`](https://stringi.gagolewski.com/rapi/stri_split_lines.html)()
+Other search\_split: [`about_search`](about_search.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_split_lines()`](stri_split_lines.md)
 
 ## Examples
 

@@ -14,7 +14,7 @@ stri_locale_list()
 
 Note that some of the services may be unavailable in some locales. Querying for locale-specific services is always performed during the resource request.
 
-See [stringi-locale](https://stringi.gagolewski.com/rapi/stringi-locale.html) for more information.
+See [stringi-locale](about_locale.md) for more information.
 
 ## Value
 
@@ -28,7 +28,7 @@ Returns a character vector with locale identifiers that are known to <span class
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other locale\_management: [`about_locale`](https://stringi.gagolewski.com/rapi/about_locale.html), [`stri_locale_info`](https://stringi.gagolewski.com/rapi/stri_locale_info.html)(), [`stri_locale_set`](https://stringi.gagolewski.com/rapi/stri_locale_set.html)()
+Other locale\_management: [`about_locale`](about_locale.md), [`stri_locale_info()`](stri_locale_info.md), [`stri_locale_set()`](stri_locale_set.md)
 
 ## Examples
 

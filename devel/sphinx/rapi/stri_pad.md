@@ -39,13 +39,13 @@ stri_pad(
 
 ## Arguments
 
-|              |                                                                                                                                                                                 |
-|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`        | character vector                                                                                                                                                                |
-| `width`      | integer vector giving minimal output string lengths                                                                                                                             |
-| `pad`        | character vector giving padding code points                                                                                                                                     |
-| `use_length` | single logical value; should the number of code points be used instead of the total code point width (see [`stri_width`](https://stringi.gagolewski.com/rapi/stri_width.html))? |
-| `side`       | \[`stri_pad` only\] single character string; sides on which padding character is added (`left` (default), `right`, or `both`)                                                   |
+|              |                                                                                                                                           |
+|--------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `str`        | character vector                                                                                                                          |
+| `width`      | integer vector giving minimal output string lengths                                                                                       |
+| `pad`        | character vector giving padding code points                                                                                               |
+| `use_length` | single logical value; should the number of code points be used instead of the total code point width (see [`stri_width`](stri_width.md))? |
+| `side`       | \[`stri_pad` only\] single character string; sides on which padding character is added (`left` (default), `right`, or `both`)             |
 
 ## Details
 
@@ -55,7 +55,7 @@ Vectorized over `str`, `width`, and `pad`. Each string in `pad` should consist o
 
 Note that Unicode code points may have various widths when printed on the console and that, by default, the function takes that into account. By changing the state of the `use_length` argument, this function starts acting like each code point was of width 1. This feature should rather be used with text in Latin script.
 
-See [`stri_trim_left`](https://stringi.gagolewski.com/rapi/stri_trim_left.html) (among others) for reverse operation. Also check out [`stri_wrap`](https://stringi.gagolewski.com/rapi/stri_wrap.html) for line wrapping.
+See [`stri_trim_left`](stri_trim.md) (among others) for reverse operation. Also check out [`stri_wrap`](stri_wrap.md) for line wrapping.
 
 ## Value
 
@@ -69,7 +69,7 @@ These functions return a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other length: `%s$%()`, [`stri_isempty`](https://stringi.gagolewski.com/rapi/stri_isempty.html)(), [`stri_length`](https://stringi.gagolewski.com/rapi/stri_length.html)(), [`stri_numbytes`](https://stringi.gagolewski.com/rapi/stri_numbytes.html)(), [`stri_sprintf`](https://stringi.gagolewski.com/rapi/stri_sprintf.html)(), [`stri_width`](https://stringi.gagolewski.com/rapi/stri_width.html)()
+Other length: [`%s$%()`](operator_dollar.md), [`stri_isempty()`](stri_isempty.md), [`stri_length()`](stri_length.md), [`stri_numbytes()`](stri_numbytes.md), [`stri_sprintf()`](stri_sprintf.md), [`stri_width()`](stri_width.md)
 
 ## Examples
 

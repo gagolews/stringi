@@ -12,11 +12,11 @@ stri_rand_strings(n, length, pattern = "[A-Za-z0-9]")
 
 ## Arguments
 
-|           |                                                                                                                                                                        |
-|-----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `n`       | single integer, number of observations                                                                                                                                 |
-| `length`  | integer vector, desired string lengths                                                                                                                                 |
-| `pattern` | character vector specifying character classes to draw elements from, see [stringi-search-charclass](https://stringi.gagolewski.com/rapi/stringi-search-charclass.html) |
+|           |                                                                                                                                |
+|-----------|--------------------------------------------------------------------------------------------------------------------------------|
+| `n`       | single integer, number of observations                                                                                         |
+| `length`  | integer vector, desired string lengths                                                                                         |
+| `pattern` | character vector specifying character classes to draw elements from, see [stringi-search-charclass](about_search_charclass.md) |
 
 ## Details
 
@@ -38,7 +38,7 @@ Returns a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other random: [`stri_rand_lipsum`](https://stringi.gagolewski.com/rapi/stri_rand_lipsum.html)(), [`stri_rand_shuffle`](https://stringi.gagolewski.com/rapi/stri_rand_shuffle.html)()
+Other random: [`stri_rand_lipsum()`](stri_rand_lipsum.md), [`stri_rand_shuffle()`](stri_rand_shuffle.md)
 
 ## Examples
 

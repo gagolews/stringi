@@ -36,7 +36,7 @@ Returns a character vector of length `n_paragraphs`.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other random: [`stri_rand_shuffle`](https://stringi.gagolewski.com/rapi/stri_rand_shuffle.html)(), [`stri_rand_strings`](https://stringi.gagolewski.com/rapi/stri_rand_strings.html)()
+Other random: [`stri_rand_shuffle()`](stri_rand_shuffle.md), [`stri_rand_strings()`](stri_rand_strings.md)
 
 ## Examples
 

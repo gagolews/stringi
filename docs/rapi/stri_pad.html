@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.2.9001
+                1.6.2.9004
               </div>
             
           
@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code></span> as a Binary Operator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count.html">stri_count: Count the Number of Pattern Matches</a></li>
@@ -118,7 +118,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_create.html">stri_datetime_create: Create a Date-Time Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_fields.html">stri_datetime_fields: Get Values for Date and Time Fields</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_format.html">stri_datetime_format: Date and Time Formatting and Parsing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert strptime-Style Format Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert <code class="docutils literal notranslate"><span class="pre">strptime</span></code>-Style Format Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_now.html">stri_datetime_now: Get Current Date and Time</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_symbols.html">stri_datetime_symbols: List Localizable Date-Time Formatting Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_detect.html">stri_detect: Detect a Pattern Match</a></li>
@@ -355,10 +355,10 @@
 <td><p>character vector giving padding code points</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">use_length</span></code></p></td>
-<td><p>single logical value; should the number of code points be used instead of the total code point width (see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_width.html"><code class="docutils literal notranslate"><span class="pre">stri_width</span></code></a>)?</p></td>
+<td><p>single logical value; should the number of code points be used instead of the total code point width (see <a class="reference internal" href="stri_width.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_width</span></code></span></a>)?</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">side</span></code></p></td>
-<td><p>[<code class="docutils literal notranslate"><span class="pre">stri_pad</span></code> only] single character string; sides on which padding character is added (<code class="docutils literal notranslate"><span class="pre">left</span></code>, <code class="docutils literal notranslate"><span class="pre">right</span></code>, or <code class="docutils literal notranslate"><span class="pre">both</span></code>)</p></td>
+<td><p>[<code class="docutils literal notranslate"><span class="pre">stri_pad</span></code> only] single character string; sides on which padding character is added (<code class="docutils literal notranslate"><span class="pre">left</span></code> (default), <code class="docutils literal notranslate"><span class="pre">right</span></code>, or <code class="docutils literal notranslate"><span class="pre">both</span></code>)</p></td>
 </tr>
 </tbody>
 </table>
@@ -368,7 +368,7 @@
 <p>Vectorized over <code class="docutils literal notranslate"><span class="pre">str</span></code>, <code class="docutils literal notranslate"><span class="pre">width</span></code>, and <code class="docutils literal notranslate"><span class="pre">pad</span></code>. Each string in <code class="docutils literal notranslate"><span class="pre">pad</span></code> should consist of a code points of total width equal to 1 or, if <code class="docutils literal notranslate"><span class="pre">use_length</span></code> is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, exactly one code point.</p>
 <p><code class="docutils literal notranslate"><span class="pre">stri_pad</span></code> is a convenience function, which dispatches to <code class="docutils literal notranslate"><span class="pre">stri_pad_*</span></code>.</p>
 <p>Note that Unicode code points may have various widths when printed on the console and that, by default, the function takes that into account. By changing the state of the <code class="docutils literal notranslate"><span class="pre">use_length</span></code> argument, this function starts acting like each code point was of width 1. This feature should rather be used with text in Latin script.</p>
-<p>See <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_trim_left.html"><code class="docutils literal notranslate"><span class="pre">stri_trim_left</span></code></a> (among others) for reverse operation. Also check out <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_wrap.html"><code class="docutils literal notranslate"><span class="pre">stri_wrap</span></code></a> for line wrapping.</p>
+<p>See <a class="reference internal" href="stri_trim.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trim_left</span></code></span></a> (among others) for reverse operation. Also check out <a class="reference internal" href="stri_wrap.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_wrap</span></code></span></a> for line wrapping.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
@@ -381,6 +381,7 @@
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
+<p>Other length: <a class="reference internal" href="operator_dollar.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">%s$%()</span></code></span></a>, <a class="reference internal" href="stri_isempty.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_isempty()</span></code></span></a>, <a class="reference internal" href="stri_length.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_length()</span></code></span></a>, <a class="reference internal" href="stri_numbytes.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_numbytes()</span></code></span></a>, <a class="reference internal" href="stri_sprintf.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_sprintf()</span></code></span></a>, <a class="reference internal" href="stri_width.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_width()</span></code></span></a></p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
@@ -422,7 +423,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-24 11:20:07.
+        Last updated on 2021-06-03T14:48:11+1000.
       </span>
 
     </p>

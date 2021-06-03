@@ -6,9 +6,9 @@ A regular expression is a pattern describing, possibly in a very abstract way, a
 
 ## Details
 
-All `stri_*_regex` functions in <span class="pkg">stringi</span> use the <span class="pkg">ICU</span> regex engine. Its settings may be tuned up (for example to perform case-insensitive search) via the [`stri_opts_regex`](https://stringi.gagolewski.com/rapi/stri_opts_regex.html) function.
+All `stri_*_regex` functions in <span class="pkg">stringi</span> use the <span class="pkg">ICU</span> regex engine. Its settings may be tuned up (for example to perform case-insensitive search) via the [`stri_opts_regex`](stri_opts_regex.md) function.
 
-Regular expression patterns in <span class="pkg">ICU</span> are quite similar in form and behavior to Perl\'s regexes. Their implementation is loosely inspired by JDK 1.4 `java.util.regex`. <span class="pkg">ICU</span> Regular Expressions conform to the Unicode Technical Standard \#18 (see References section) and its features are summarized in the ICU User Guide (see below). A good general introduction to regexes is (Friedl, 2002). Some general topics are also covered in the <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> manual, see [regex](https://stat.ethz.ch/R-manual/R-patched/library/base/html/regex.html).
+Regular expression patterns in <span class="pkg">ICU</span> are quite similar in form and behavior to Perl\'s regexes. Their implementation is loosely inspired by JDK 1.4 `java.util.regex`. <span class="pkg">ICU</span> Regular Expressions conform to the Unicode Technical Standard \#18 (see References section) and its features are summarized in the ICU User Guide (see below). A good general introduction to regexes is (Friedl, 2002). Some general topics are also covered in the <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> manual, see [regex](https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html).
 
 ## <span class="pkg">ICU</span> Regex Operators at a Glance
 
@@ -92,7 +92,7 @@ Here is a list of operators provided by the ICU User Guide on regexes.
 
 `(...)`
 
-:   Capturing parentheses. Range of input that matched the parenthesized sub-expression is available after the match, see [`stri_match`](https://stringi.gagolewski.com/rapi/stri_match.html).
+:   Capturing parentheses. Range of input that matched the parenthesized sub-expression is available after the match, see [`stri_match`](stri_match.md).
 
 `(?:...)`
 
@@ -128,11 +128,11 @@ Here is a list of operators provided by the ICU User Guide on regexes.
 
 `(?ismwx-ismwx:...)`
 
-:   Flag settings. Evaluate the parenthesized expression with the specified flags enabled or `-`disabled, see also [`stri_opts_regex`](https://stringi.gagolewski.com/rapi/stri_opts_regex.html).
+:   Flag settings. Evaluate the parenthesized expression with the specified flags enabled or `-`disabled, see also [`stri_opts_regex`](stri_opts_regex.md).
 
 `(?ismwx-ismwx)`
 
-:   Flag settings. Change the flag settings. Changes apply to the portion of the pattern following the setting. For example, `(?i)` changes to a case insensitive match, see also [`stri_opts_regex`](https://stringi.gagolewski.com/rapi/stri_opts_regex.html).
+:   Flag settings. Change the flag settings. Changes apply to the portion of the pattern following the setting. For example, `(?i)` changes to a case insensitive match, see also [`stri_opts_regex`](stri_opts_regex.md).
 
 ## <span class="pkg">ICU</span> Regex Meta-characters at a Glance
 
@@ -148,7 +148,7 @@ Here is a list of meta-characters provided by the ICU User Guide on regexes.
 
 `\b`
 
-:   Match if the current position is a word boundary. Boundaries occur at the transitions between word (`\w`) and non-word (`\W`) characters, with combining marks ignored. For better word boundaries, see <span class="pkg">ICU</span> Boundary Analysis, e.g., [`stri_extract_all_words`](https://stringi.gagolewski.com/rapi/stri_extract_all_words.html).
+:   Match if the current position is a word boundary. Boundaries occur at the transitions between word (`\w`) and non-word (`\W`) characters, with combining marks ignored. For better word boundaries, see <span class="pkg">ICU</span> Boundary Analysis, e.g., [`stri_extract_all_words`](stri_extract_boundaries.md).
 
 `\B`
 
@@ -280,7 +280,7 @@ Here is a list of meta-characters provided by the ICU User Guide on regexes.
 
 `.`
 
-:   Match any character except for - by default - newline, compare [`stri_opts_regex`](https://stringi.gagolewski.com/rapi/stri_opts_regex.html).
+:   Match any character except for - by default - newline, compare [`stri_opts_regex`](stri_opts_regex.md).
 
 `^`
 
@@ -298,13 +298,13 @@ Here is a list of meta-characters provided by the ICU User Guide on regexes.
 
 :   \[inside sets\] Quotes the following character. Characters that must be quoted to be treated as literals are `[ ] \`; Characters that may need to be quoted, depending on the context are `- &`.
 
-For information on how to define character classes in regexes, refer to [about\_search\_charclass](https://stringi.gagolewski.com/rapi/about_search_charclass.html).
+For information on how to define character classes in regexes, refer to [about\_search\_charclass](about_search_charclass.md).
 
 ## Regex Functions in <span class="pkg">stringi</span>
 
 Note that if a given regex `pattern` is empty, then all the functions in <span class="pkg">stringi</span> give `NA` in result and generate a warning. On a syntax error, a quite informative failure message is shown.
 
-If you wish to search for a fixed pattern, refer to [about\_search\_coll](https://stringi.gagolewski.com/rapi/about_search_coll.html) or [about\_search\_fixed](https://stringi.gagolewski.com/rapi/about_search_fixed.html). They allow to perform a locale-aware text lookup, or a very fast exact-byte search, respectively.
+If you wish to search for a fixed pattern, refer to [about\_search\_coll](about_search_coll.md) or [about\_search\_fixed](about_search_fixed.md). They allow to perform a locale-aware text lookup, or a very fast exact-byte search, respectively.
 
 ## Author(s)
 
@@ -324,6 +324,6 @@ J.E.F. Friedl, *Mastering Regular Expressions*, O\'Reilly, 2002
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_regex: [`about_search`](https://stringi.gagolewski.com/rapi/about_search.html), [`stri_opts_regex`](https://stringi.gagolewski.com/rapi/stri_opts_regex.html)()
+Other search\_regex: [`about_search`](about_search.md), [`stri_opts_regex()`](stri_opts_regex.md)
 
-Other stringi\_general\_topics: [`about_arguments`](https://stringi.gagolewski.com/rapi/about_arguments.html), [`about_encoding`](https://stringi.gagolewski.com/rapi/about_encoding.html), [`about_locale`](https://stringi.gagolewski.com/rapi/about_locale.html), [`about_search_boundaries`](https://stringi.gagolewski.com/rapi/about_search_boundaries.html), [`about_search_charclass`](https://stringi.gagolewski.com/rapi/about_search_charclass.html), [`about_search_coll`](https://stringi.gagolewski.com/rapi/about_search_coll.html), [`about_search_fixed`](https://stringi.gagolewski.com/rapi/about_search_fixed.html), [`about_search`](https://stringi.gagolewski.com/rapi/about_search.html), [`about_stringi`](https://stringi.gagolewski.com/rapi/about_stringi.html)
+Other stringi\_general\_topics: [`about_arguments`](about_arguments.md), [`about_encoding`](about_encoding.md), [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_charclass`](about_search_charclass.md), [`about_search_coll`](about_search_coll.md), [`about_search_fixed`](about_search_fixed.md), [`about_search`](about_search.md), [`about_stringi`](about_stringi.md)

@@ -68,21 +68,21 @@ stri_locate_last_fixed(str, pattern, ..., opts_fixed = NULL)
 
 ## Arguments
 
-|                                          |                                                                                                                                                                                                                                                                                                                                                              |
-|------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`                                    | character vector; strings to search in                                                                                                                                                                                                                                                                                                                       |
-| `...`                                    | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_regex`, `opts_fixed`, and so on                                                                                                                                                                                                         |
-| `mode`                                   | single string; one of: `'first'` (the default), `'all'`, `'last'`                                                                                                                                                                                                                                                                                            |
-| `pattern, regex, fixed, coll, charclass` | character vector; search patterns; for more details refer to [stringi-search](https://stringi.gagolewski.com/rapi/stringi-search.html)                                                                                                                                                                                                                       |
-| `merge`                                  | single logical value; indicates whether consecutive sequences of indexes in the resulting matrix should be merged; `stri_locate_all_charclass` only                                                                                                                                                                                                          |
-| `omit_no_match`                          | single logical value; if `FALSE`, then two missing values will indicate that there was no match; `stri_locate_all_*` only                                                                                                                                                                                                                                    |
-| `opts_collator, opts_fixed, opts_regex`  | a named list used to tune up the search engine\'s settings; see [`stri_opts_collator`](https://stringi.gagolewski.com/rapi/stri_opts_collator.html), [`stri_opts_fixed`](https://stringi.gagolewski.com/rapi/stri_opts_fixed.html), and [`stri_opts_regex`](https://stringi.gagolewski.com/rapi/stri_opts_regex.html), respectively; `NULL` for the defaults |
+|                                          |                                                                                                                                                                                                                                            |
+|------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `str`                                    | character vector; strings to search in                                                                                                                                                                                                     |
+| `...`                                    | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_regex`, `opts_fixed`, and so on                                                                                       |
+| `mode`                                   | single string; one of: `'first'` (the default), `'all'`, `'last'`                                                                                                                                                                          |
+| `pattern, regex, fixed, coll, charclass` | character vector; search patterns; for more details refer to [stringi-search](about_search.md)                                                                                                                                             |
+| `merge`                                  | single logical value; indicates whether consecutive sequences of indexes in the resulting matrix should be merged; `stri_locate_all_charclass` only                                                                                        |
+| `omit_no_match`                          | single logical value; if `FALSE`, then two missing values will indicate that there was no match; `stri_locate_all_*` only                                                                                                                  |
+| `opts_collator, opts_fixed, opts_regex`  | a named list used to tune up the search engine\'s settings; see [`stri_opts_collator`](stri_opts_collator.md), [`stri_opts_fixed`](stri_opts_fixed.md), and [`stri_opts_regex`](stri_opts_regex.md), respectively; `NULL` for the defaults |
 
 ## Details
 
 Vectorized over `str` and `pattern` (with recycling of the elements in the shorter vector if necessary). This allows to, for instance, search for one pattern in each given string, search for each pattern in one given string, and search for the i-th pattern within the i-th string.
 
-The matches may be extracted by calling [`stri_sub`](https://stringi.gagolewski.com/rapi/stri_sub.html) or [`stri_sub_all`](https://stringi.gagolewski.com/rapi/stri_sub_all.html). Alternatively, you may call [`stri_extract`](https://stringi.gagolewski.com/rapi/stri_extract.html) directly.
+The matches may be extracted by calling [`stri_sub`](stri_sub.md) or [`stri_sub_all`](stri_sub_all.md). Alternatively, you may call [`stri_extract`](stri_extract.md) directly.
 
 `stri_locate`, `stri_locate_all`, `stri_locate_first`, and `stri_locate_last` are convenience functions. They just call `stri_locate_*_*`, depending on the arguments used.
 
@@ -102,9 +102,9 @@ For `stri_locate_*_regex`, if the match is of zero length, `end` will be one cha
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_locate: [`about_search`](https://stringi.gagolewski.com/rapi/about_search.html), [`stri_locate_all_boundaries`](https://stringi.gagolewski.com/rapi/stri_locate_all_boundaries.html)()
+Other search\_locate: [`about_search`](about_search.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md)
 
-Other indexing: [`stri_locate_all_boundaries`](https://stringi.gagolewski.com/rapi/stri_locate_all_boundaries.html)(), [`stri_sub_all`](https://stringi.gagolewski.com/rapi/stri_sub_all.html)(), [`stri_sub`](https://stringi.gagolewski.com/rapi/stri_sub.html)()
+Other indexing: [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_sub_all()`](stri_sub_all.md), [`stri_sub()`](stri_sub.md)
 
 ## Examples
 

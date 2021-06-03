@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.2.9001
+                1.6.2.9004
               </div>
             
           
@@ -120,7 +120,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator TODO: call stri_sprintf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code></span> as a Binary Operator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count.html">stri_count: Count the Number of Pattern Matches</a></li>
@@ -128,7 +128,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_create.html">stri_datetime_create: Create a Date-Time Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_fields.html">stri_datetime_fields: Get Values for Date and Time Fields</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_format.html">stri_datetime_format: Date and Time Formatting and Parsing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert strptime-Style Format Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert <code class="docutils literal notranslate"><span class="pre">strptime</span></code>-Style Format Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_now.html">stri_datetime_now: Get Current Date and Time</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_symbols.html">stri_datetime_symbols: List Localizable Date-Time Formatting Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_detect.html">stri_detect: Detect a Pattern Match</a></li>
@@ -305,8 +305,8 @@
 </div>
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
-<p>All <code class="docutils literal notranslate"><span class="pre">stri_*_regex</span></code> functions in <span class="pkg">stringi</span> use the <span class="pkg">ICU</span> regex engine. Its settings may be tuned up (for example to perform case-insensitive search) via the <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_opts_regex.html"><code class="docutils literal notranslate"><span class="pre">stri_opts_regex</span></code></a> function.</p>
-<p>Regular expression patterns in <span class="pkg">ICU</span> are quite similar in form and behavior to Perl’s regexes. Their implementation is loosely inspired by JDK 1.4 <code class="docutils literal notranslate"><span class="pre">java.util.regex</span></code>. <span class="pkg">ICU</span> Regular Expressions conform to the Unicode Technical Standard #18 (see References section) and its features are summarized in the ICU User Guide (see below). A good general introduction to regexes is (Friedl, 2002). Some general topics are also covered in the <span style="font-family: Courier New, Courier; color: #666666;"><strong>R</strong></span> manual, see <a class="reference external" href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/regex.html">regex</a>.</p>
+<p>All <code class="docutils literal notranslate"><span class="pre">stri_*_regex</span></code> functions in <span class="pkg">stringi</span> use the <span class="pkg">ICU</span> regex engine. Its settings may be tuned up (for example to perform case-insensitive search) via the <a class="reference internal" href="stri_opts_regex.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_opts_regex</span></code></span></a> function.</p>
+<p>Regular expression patterns in <span class="pkg">ICU</span> are quite similar in form and behavior to Perl’s regexes. Their implementation is loosely inspired by JDK 1.4 <code class="docutils literal notranslate"><span class="pre">java.util.regex</span></code>. <span class="pkg">ICU</span> Regular Expressions conform to the Unicode Technical Standard #18 (see References section) and its features are summarized in the ICU User Guide (see below). A good general introduction to regexes is (Friedl, 2002). Some general topics are also covered in the <span style="font-family: Courier New, Courier; color: #666666;"><strong>R</strong></span> manual, see <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html">regex</a>.</p>
 </div>
 <div class="section" id="span-class-pkg-icu-span-regex-operators-at-a-glance">
 <h2><span class="pkg">ICU</span> Regex Operators at a Glance<a class="headerlink" href="#span-class-pkg-icu-span-regex-operators-at-a-glance" title="Permalink to this headline">¶</a></h2>
@@ -350,7 +350,7 @@
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">{n,m}+</span></code></dt><dd><p>Match between n and m times. Possessive Match.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">(...)</span></code></dt><dd><p>Capturing parentheses. Range of input that matched the parenthesized sub-expression is available after the match, see <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_match.html"><code class="docutils literal notranslate"><span class="pre">stri_match</span></code></a>.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">(...)</span></code></dt><dd><p>Capturing parentheses. Range of input that matched the parenthesized sub-expression is available after the match, see <a class="reference internal" href="stri_match.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_match</span></code></span></a>.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">(?:...)</span></code></dt><dd><p>Non-capturing parentheses. Groups the included pattern, but does not provide capturing of matching text. Somewhat more efficient than capturing parentheses.</p>
 </dd>
@@ -368,9 +368,9 @@
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">(?&lt;name&gt;...)</span></code></dt><dd><p>Named capture group. The <code class="docutils literal notranslate"><span class="pre">&lt;angle</span> <span class="pre">brackets&gt;</span></code> are literal - they appear in the pattern.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">(?ismwx-ismwx:...)</span></code></dt><dd><p>Flag settings. Evaluate the parenthesized expression with the specified flags enabled or <code class="docutils literal notranslate"><span class="pre">-</span></code>disabled, see also <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_opts_regex.html"><code class="docutils literal notranslate"><span class="pre">stri_opts_regex</span></code></a>.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">(?ismwx-ismwx:...)</span></code></dt><dd><p>Flag settings. Evaluate the parenthesized expression with the specified flags enabled or <code class="docutils literal notranslate"><span class="pre">-</span></code>disabled, see also <a class="reference internal" href="stri_opts_regex.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_opts_regex</span></code></span></a>.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">(?ismwx-ismwx)</span></code></dt><dd><p>Flag settings. Change the flag settings. Changes apply to the portion of the pattern following the setting. For example, <code class="docutils literal notranslate"><span class="pre">(?i)</span></code> changes to a case insensitive match, see also <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_opts_regex.html"><code class="docutils literal notranslate"><span class="pre">stri_opts_regex</span></code></a>.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">(?ismwx-ismwx)</span></code></dt><dd><p>Flag settings. Change the flag settings. Changes apply to the portion of the pattern following the setting. For example, <code class="docutils literal notranslate"><span class="pre">(?i)</span></code> changes to a case insensitive match, see also <a class="reference internal" href="stri_opts_regex.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_opts_regex</span></code></span></a>.</p>
 </dd>
 </dl>
 </div>
@@ -382,7 +382,7 @@
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">\A</span></code></dt><dd><p>Match at the beginning of the input. Differs from <code class="docutils literal notranslate"><span class="pre">^</span></code>. in that <code class="docutils literal notranslate"><span class="pre">\A</span></code> will not match after a new line within the input.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">\b</span></code></dt><dd><p>Match if the current position is a word boundary. Boundaries occur at the transitions between word (<code class="docutils literal notranslate"><span class="pre">\w</span></code>) and non-word (<code class="docutils literal notranslate"><span class="pre">\W</span></code>) characters, with combining marks ignored. For better word boundaries, see <span class="pkg">ICU</span> Boundary Analysis, e.g., <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_extract_all_words.html"><code class="docutils literal notranslate"><span class="pre">stri_extract_all_words</span></code></a>.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">\b</span></code></dt><dd><p>Match if the current position is a word boundary. Boundaries occur at the transitions between word (<code class="docutils literal notranslate"><span class="pre">\w</span></code>) and non-word (<code class="docutils literal notranslate"><span class="pre">\W</span></code>) characters, with combining marks ignored. For better word boundaries, see <span class="pkg">ICU</span> Boundary Analysis, e.g., <a class="reference internal" href="stri_extract_boundaries.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_extract_all_words</span></code></span></a>.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">\B</span></code></dt><dd><p>Match if the current position is not a word boundary.</p>
 </dd>
@@ -448,7 +448,7 @@
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">[pattern]</span></code></dt><dd><p>Match any one character from the set.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">.</span></code></dt><dd><p>Match any character except for - by default - newline, compare <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_opts_regex.html"><code class="docutils literal notranslate"><span class="pre">stri_opts_regex</span></code></a>.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">.</span></code></dt><dd><p>Match any character except for - by default - newline, compare <a class="reference internal" href="stri_opts_regex.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_opts_regex</span></code></span></a>.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">^</span></code></dt><dd><p>Match at the beginning of a line.</p>
 </dd>
@@ -459,12 +459,12 @@
 <dt><code class="docutils literal notranslate"><span class="pre">\</span></code></dt><dd><p>[inside sets] Quotes the following character. Characters that must be quoted to be treated as literals are <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">]</span> <span class="pre">\</span></code>; Characters that may need to be quoted, depending on the context are <code class="docutils literal notranslate"><span class="pre">-</span> <span class="pre">&amp;</span></code>.</p>
 </dd>
 </dl>
-<p>For information on how to define character classes in regexes, refer to <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_search_charclass.html">about_search_charclass</a>.</p>
+<p>For information on how to define character classes in regexes, refer to <a class="reference internal" href="about_search_charclass.html"><span class="doc std std-doc">about_search_charclass</span></a>.</p>
 </div>
 <div class="section" id="regex-functions-in-span-class-pkg-stringi-span">
 <h2>Regex Functions in <span class="pkg">stringi</span><a class="headerlink" href="#regex-functions-in-span-class-pkg-stringi-span" title="Permalink to this headline">¶</a></h2>
 <p>Note that if a given regex <code class="docutils literal notranslate"><span class="pre">pattern</span></code> is empty, then all the functions in <span class="pkg">stringi</span> give <code class="docutils literal notranslate"><span class="pre">NA</span></code> in result and generate a warning. On a syntax error, a quite informative failure message is shown.</p>
-<p>If you wish to search for a fixed pattern, refer to <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_search_coll.html">about_search_coll</a> or <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_search_fixed.html">about_search_fixed</a>. They allow to perform a locale-aware text lookup, or a very fast exact-byte search, respectively.</p>
+<p>If you wish to search for a fixed pattern, refer to <a class="reference internal" href="about_search_coll.html"><span class="doc std std-doc">about_search_coll</span></a> or <a class="reference internal" href="about_search_fixed.html"><span class="doc std std-doc">about_search_fixed</span></a>. They allow to perform a locale-aware text lookup, or a very fast exact-byte search, respectively.</p>
 </div>
 <div class="section" id="author-s">
 <h2>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this headline">¶</a></h2>
@@ -480,8 +480,8 @@
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
-<p>Other search_regex: <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_search.html"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></a>, <a class="reference external" href="https://stringi.gagolewski.com/rapi/stri_opts_regex.html"><code class="docutils literal notranslate"><span class="pre">stri_opts_regex</span></code></a>()</p>
-<p>Other stringi_general_topics: <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_arguments.html"><code class="docutils literal notranslate"><span class="pre">about_arguments</span></code></a>, <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_encoding.html"><code class="docutils literal notranslate"><span class="pre">about_encoding</span></code></a>, <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_locale.html"><code class="docutils literal notranslate"><span class="pre">about_locale</span></code></a>, <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_search_boundaries.html"><code class="docutils literal notranslate"><span class="pre">about_search_boundaries</span></code></a>, <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_search_charclass.html"><code class="docutils literal notranslate"><span class="pre">about_search_charclass</span></code></a>, <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_search_coll.html"><code class="docutils literal notranslate"><span class="pre">about_search_coll</span></code></a>, <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_search_fixed.html"><code class="docutils literal notranslate"><span class="pre">about_search_fixed</span></code></a>, <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_search.html"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></a>, <a class="reference external" href="https://stringi.gagolewski.com/rapi/about_stringi.html"><code class="docutils literal notranslate"><span class="pre">about_stringi</span></code></a></p>
+<p>Other search_regex: <a class="reference internal" href="about_search.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></span></a>, <a class="reference internal" href="stri_opts_regex.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_opts_regex()</span></code></span></a></p>
+<p>Other stringi_general_topics: <a class="reference internal" href="about_arguments.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_arguments</span></code></span></a>, <a class="reference internal" href="about_encoding.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_encoding</span></code></span></a>, <a class="reference internal" href="about_locale.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_locale</span></code></span></a>, <a class="reference internal" href="about_search_boundaries.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_boundaries</span></code></span></a>, <a class="reference internal" href="about_search_charclass.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_charclass</span></code></span></a>, <a class="reference internal" href="about_search_coll.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_coll</span></code></span></a>, <a class="reference internal" href="about_search_fixed.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_fixed</span></code></span></a>, <a class="reference internal" href="about_search.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></span></a>, <a class="reference internal" href="about_stringi.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_stringi</span></code></span></a></p>
 </div>
 </div>
 
@@ -501,7 +501,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-05-24 11:20:07.
+        Last updated on 2021-06-03T14:48:11+1000.
       </span>
 
     </p>

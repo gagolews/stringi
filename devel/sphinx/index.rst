@@ -114,7 +114,7 @@ is greatly appreciated. Thanks!
 
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
     :caption: Other
 
     Source Code (GitHub) <https://github.com/gagolews/stringi>

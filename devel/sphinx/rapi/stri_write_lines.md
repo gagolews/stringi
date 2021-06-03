@@ -28,7 +28,7 @@ stri_write_lines(
 
 ## Details
 
-It is a substitute for the <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> [`writeLines`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/writeLines.html) function, with the ability to easily re-encode the output.
+It is a substitute for the <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> [`writeLines`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/writeLines.html) function, with the ability to easily re-encode the output.
 
 We suggest using the UTF-8 encoding for all text files: thus, it is the default one for the output.
 
@@ -44,4 +44,4 @@ This function returns nothing noteworthy.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other files: [`stri_read_lines`](https://stringi.gagolewski.com/rapi/stri_read_lines.html)(), [`stri_read_raw`](https://stringi.gagolewski.com/rapi/stri_read_raw.html)()
+Other files: [`stri_read_lines()`](stri_read_lines.md), [`stri_read_raw()`](stri_read_raw.md)

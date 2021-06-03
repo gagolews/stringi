@@ -43,15 +43,15 @@ stri_match_last_regex(
 
 ## Arguments
 
-|                  |                                                                                                                                                                               |
-|------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`            | character vector; strings to search in                                                                                                                                        |
-| `...`            | supplementary arguments passed to the underlying functions, including additional settings for `opts_regex`                                                                    |
-| `mode`           | single string; one of: `'first'` (the default), `'all'`, `'last'`                                                                                                             |
-| `pattern, regex` | character vector; search patterns; for more details refer to [stringi-search](https://stringi.gagolewski.com/rapi/stringi-search.html)                                        |
-| `omit_no_match`  | single logical value; if `FALSE`, then a row with missing values will indicate that there was no match; `stri_match_all_*` only                                               |
-| `cg_missing`     | single string to be used if a capture group match is unavailable                                                                                                              |
-| `opts_regex`     | a named list with <span class="pkg">ICU</span> Regex settings, see [`stri_opts_regex`](https://stringi.gagolewski.com/rapi/stri_opts_regex.html); `NULL` for default settings |
+|                  |                                                                                                                                         |
+|------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| `str`            | character vector; strings to search in                                                                                                  |
+| `...`            | supplementary arguments passed to the underlying functions, including additional settings for `opts_regex`                              |
+| `mode`           | single string; one of: `'first'` (the default), `'all'`, `'last'`                                                                       |
+| `pattern, regex` | character vector; search patterns; for more details refer to [stringi-search](about_search.md)                                          |
+| `omit_no_match`  | single logical value; if `FALSE`, then a row with missing values will indicate that there was no match; `stri_match_all_*` only         |
+| `cg_missing`     | single string to be used if a capture group match is unavailable                                                                        |
+| `opts_regex`     | a named list with <span class="pkg">ICU</span> Regex settings, see [`stri_opts_regex`](stri_opts_regex.md); `NULL` for default settings |
 
 ## Details
 
@@ -61,7 +61,7 @@ If no pattern match is detected and `omit_no_match=FALSE`, then `NA`s are includ
 
 Please note: <span class="pkg">ICU</span> regex engine currently does not fully support named capture groups.
 
-`stri_match`, `stri_match_all`, `stri_match_first`, and `stri_match_last` are convenience functions. They just call `stri_match_*_regex` and were provided for consistency with other string searching functions\' wrappers, see, among others, [`stri_extract`](https://stringi.gagolewski.com/rapi/stri_extract.html).
+`stri_match`, `stri_match_all`, `stri_match_first`, and `stri_match_last` are convenience functions. They just call `stri_match_*_regex` and were provided for consistency with other string searching functions\' wrappers, see, among others, [`stri_extract`](stri_extract.md).
 
 ## Value
 
@@ -79,7 +79,7 @@ The first matrix column gives the whole match. The second one corresponds to the
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_extract: [`about_search`](https://stringi.gagolewski.com/rapi/about_search.html), [`stri_extract_all_boundaries`](https://stringi.gagolewski.com/rapi/stri_extract_all_boundaries.html)(), [`stri_extract_all`](https://stringi.gagolewski.com/rapi/stri_extract_all.html)()
+Other search\_extract: [`about_search`](about_search.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_extract_all()`](stri_extract.md)
 
 ## Examples
 
