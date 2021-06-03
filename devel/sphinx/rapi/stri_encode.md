@@ -25,7 +25,7 @@ stri_conv(str, from = NULL, to = NULL, to_raw = FALSE)
 
 `stri_conv` is an alias for `stri_encode`.
 
-Refer to [`stri_enc_list`](https://stringi.gagolewski.com/rapi/stri_enc_list.html) for the list of supported encodings and [stringi-encoding](https://stringi.gagolewski.com/rapi/stringi-encoding.html) for a general discussion.
+Refer to [`stri_enc_list`](https://stringi.gagolewski.com/rapi/stri_enc_list.html) for the list of supported encodings and [stringi-encoding](../../stringi/help/stringi-encoding.html) for a general discussion.
 
 If `from` is either missing, `''`, or `NULL`, and if `str` is a character vector then the marked encodings are used (see [`stri_enc_mark`](https://stringi.gagolewski.com/rapi/stri_enc_mark.html)) -- in such a case `bytes`-declared strings are disallowed. Otherwise, i.e., if `str` is a `raw`-type vector or a list of raw vectors, we assume that the input encoding is the current default encoding as given by [`stri_enc_get`](https://stringi.gagolewski.com/rapi/stri_enc_get.html).
 

@@ -20,7 +20,7 @@ stri_locale_get()
 
 ## Details
 
-See [stringi-locale](https://stringi.gagolewski.com/rapi/stringi-locale.html) for more information on the effect of changing the default locale.
+See [stringi-locale](../../stringi/help/stringi-locale.html) for more information on the effect of changing the default locale.
 
 `stri_locale_get` is the same as [`stri_locale_info`](https://stringi.gagolewski.com/rapi/stri_locale_info.html)(NULL)\$Name.
 
@@ -48,12 +48,12 @@ Other locale\_management: [`about_locale`](https://stringi.gagolewski.com/rapi/a
 ```r
 ## Not run: 
 oldloc <- stri_locale_set('pt_BR')
-## You are now working with stringi_1.6.2.9002 (pt_BR.UTF-8; ICU4C 69.1 [bundle]; Unicode 13.0)
+## You are now working with stringi_1.6.2.9003 (pt_BR.UTF-8; ICU4C 69.1 [bundle]; Unicode 13.0)
 # ... some locale-dependent operations
 # ... note that you may always modify a locale per-call
 # ... changing the default locale is convenient if you perform
 # ... many operations
 stri_locale_set(oldloc) # restore the previous default locale
-## You are now working with stringi_1.6.2.9002 (en_AU.UTF-8; ICU4C 69.1 [bundle]; Unicode 13.0)
+## You are now working with stringi_1.6.2.9003 (en_AU.UTF-8; ICU4C 69.1 [bundle]; Unicode 13.0)
 ## End(Not run)
 ```

@@ -15,15 +15,17 @@
 ## Usage
 
 ```r
-stri_trans_general(str, id)
+stri_trans_general(str, id, rules = FALSE, forward = TRUE)
 ```
 
 ## Arguments
 
-|       |                                                                                                                              |
-|-------|------------------------------------------------------------------------------------------------------------------------------|
-| `str` | character vector                                                                                                             |
-| `id`  | a single string with transform identifier, see [`stri_trans_list`](https://stringi.gagolewski.com/rapi/stri_trans_list.html) |
+|           |                                                                                                                                                               |
+|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `str`     | character vector                                                                                                                                              |
+| `id`      | a single string with transform identifier, see [`stri_trans_list`](https://stringi.gagolewski.com/rapi/stri_trans_list.html), or custom transliteration rules |
+| `rules`   | if `TRUE`, treat `id` as a string with semicolon-separated transliteration rules (see the <span class="pkg">ICU</span> manual);                               |
+| `forward` | transliteration direction (`TRUE` for forward, `FALSE` for reverse)                                                                                           |
 
 ## Details
 
@@ -31,7 +33,9 @@ stri_trans_general(str, id)
 
 To get the list of available transforms, call [`stri_trans_list`](https://stringi.gagolewski.com/rapi/stri_trans_list.html).
 
-Note that transliterators are often combined in sequence to achieve a desired transformation. This is analogous to the composition of mathematical functions. For example, given a script that converts lowercase ASCII characters from Latin script to Katakana script, it is convenient to first (1) separate input base characters and accents, and then (2) convert uppercase to lowercase. To achieve this, a compound transform can be specified as follows: `NFKD; Lower; Latin-Katakana;`
+Note that transliterators are often combined in sequence to achieve a desired transformation. This is analogous to the composition of mathematical functions. For example, given a script that converts lowercase ASCII characters from Latin script to Katakana script, it is convenient to first (1) separate input base characters and accents, and then (2) convert uppercase to lowercase. To achieve this, a compound transform can be specified as follows: `NFKD; Lower; Latin-Katakana;` (with the default `rules=FALSE`).
+
+Custom rule-based transliteration is also supported, see the <span class="pkg">ICU</span> manual and below for some examples.
 
 ## Value
 
@@ -67,12 +71,27 @@ stri_trans_general('stringi', 'upper') # see stri_trans_toupper
 ## [1] "STRINGI"
 stri_trans_general('\u0104', 'nfd; lower') # compound id; see stri_trans_nfd
 ## [1] "ą"
-stri_trans_general('tato nie wraca ranki wieczory', 'pl-pl_FONIPA')
-## [1] "tatɔ ɲɛ vrat͡sa ranki vʲɛt͡ʂɔrɨ"
+stri_trans_general('Marek G\u0105golewski', 'pl-pl_FONIPA')
+## [1] "marɛk ɡɔŋɡɔlɛfski"
 stri_trans_general('\u2620', 'any-name') # character name
 ## [1] "\\N{SKULL AND CROSSBONES}"
 stri_trans_general('\\N{latin small letter a}', 'name-any') # decode name
 ## [1] "a"
 stri_trans_general('\u2620', 'hex/c') # to hex
 ## [1] "\\u2620"
+x <- "\uC11C\uC6B8\uD2B9\uBCC4\uC2DC\u0020\uC885\uB85C\uAD6C\u0020\uC0AC\uC9C1\uB3D9"
+stringi::stri_trans_general(x, "Hangul-Latin")
+## [1] "seoulteugbyeolsi jonglogu sajigdong"
+# Deviate from the ICU rules of Romanisation of Korean,
+# see https://en.wikipedia.org/wiki/%E3%84%B1
+id <- "
+    :: NFD;
+    \u11A8 > k;
+    \u11AE > t;
+    \u11B8 > p;
+    \u1105 > r;
+    :: Hangul-Latin;
+"
+stringi::stri_trans_general(x, id, rules=TRUE)
+## [1] "seoulteukbyeolsi jongrogu sajikdong"
 ```

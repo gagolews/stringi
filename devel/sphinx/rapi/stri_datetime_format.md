@@ -181,11 +181,11 @@ Other datetime: [`stri_datetime_add`](https://stringi.gagolewski.com/rapi/stri_d
 
 ```r
 stri_datetime_parse(c('2015-02-28', '2015-02-29'), 'yyyy-MM-dd')
-## [1] "2015-02-28 16:11:37 AEDT" NA
+## [1] "2015-02-28 11:27:02 AEDT" NA
 stri_datetime_parse(c('2015-02-28', '2015-02-29'), 'yyyy-MM-dd', lenient=TRUE)
-## [1] "2015-02-28 16:11:37 AEDT" "2015-03-01 16:11:37 AEDT"
+## [1] "2015-02-28 11:27:02 AEDT" "2015-03-01 11:27:02 AEDT"
 stri_datetime_parse('19 lipca 2015', 'date_long', locale='pl_PL')
-## [1] "2015-07-19 16:11:37 AEST"
+## [1] "2015-07-19 11:27:02 AEST"
 stri_datetime_format(stri_datetime_now(), 'datetime_relative_medium')
-## [1] "today, 4:11:37 pm"
+## [1] "today, 11:27:02 am"
 ```

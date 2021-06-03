@@ -12,11 +12,11 @@ stri_rand_strings(n, length, pattern = "[A-Za-z0-9]")
 
 ## Arguments
 
-|           |                                                                                                                                                                        |
-|-----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `n`       | single integer, number of observations                                                                                                                                 |
-| `length`  | integer vector, desired string lengths                                                                                                                                 |
-| `pattern` | character vector specifying character classes to draw elements from, see [stringi-search-charclass](https://stringi.gagolewski.com/rapi/stringi-search-charclass.html) |
+|           |                                                                                                                                                       |
+|-----------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `n`       | single integer, number of observations                                                                                                                |
+| `length`  | integer vector, desired string lengths                                                                                                                |
+| `pattern` | character vector specifying character classes to draw elements from, see [stringi-search-charclass](../../stringi/help/stringi-search-charclass.html) |
 
 ## Details
 

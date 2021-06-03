@@ -40,7 +40,7 @@ Refer to the following:
 
 -   [`stri_stats_general`](https://stringi.gagolewski.com/rapi/stri_stats_general.html) and [`stri_stats_latex`](https://stringi.gagolewski.com/rapi/stri_stats_latex.html) for gathering some fancy statistics on a character vector\'s contents.
 
--   [`stri_join`](https://stringi.gagolewski.com/rapi/stri_join.html), [`stri_dup`](https://stringi.gagolewski.com/rapi/stri_dup.html), [`%s+%`](https://stringi.gagolewski.com/rapi/%25s+%25.html), and [`stri_flatten`](https://stringi.gagolewski.com/rapi/stri_flatten.html) for concatenation-based operations.
+-   [`stri_join`](https://stringi.gagolewski.com/rapi/stri_join.html), [`stri_dup`](https://stringi.gagolewski.com/rapi/stri_dup.html), `%s+%`, and [`stri_flatten`](https://stringi.gagolewski.com/rapi/stri_flatten.html) for concatenation-based operations.
 
 -   [`stri_sub`](https://stringi.gagolewski.com/rapi/stri_sub.html) for extracting and replacing substrings, and [`stri_reverse`](https://stringi.gagolewski.com/rapi/stri_reverse.html) for a joyful function to reverse all code points in a string.
 
@@ -50,7 +50,7 @@ Refer to the following:
 
 -   [`stri_trans_tolower`](https://stringi.gagolewski.com/rapi/stri_trans_tolower.html) (among others) for case mapping, i.e., conversion to lower, UPPER, or Title Case, [`stri_trans_nfc`](https://stringi.gagolewski.com/rapi/stri_trans_nfc.html) (among others) for Unicode normalization, [`stri_trans_char`](https://stringi.gagolewski.com/rapi/stri_trans_char.html) for translating individual code points, and [`stri_trans_general`](https://stringi.gagolewski.com/rapi/stri_trans_general.html) for other universal yet powerful text transforms, including transliteration.
 
--   [`stri_cmp`](https://stringi.gagolewski.com/rapi/stri_cmp.html), [`%s<%`](https://stringi.gagolewski.com/rapi/%25s%3C%25.html), [`stri_order`](https://stringi.gagolewski.com/rapi/stri_order.html), [`stri_sort`](https://stringi.gagolewski.com/rapi/stri_sort.html), [`stri_rank`](https://stringi.gagolewski.com/rapi/stri_rank.html), [`stri_unique`](https://stringi.gagolewski.com/rapi/stri_unique.html), and [`stri_duplicated`](https://stringi.gagolewski.com/rapi/stri_duplicated.html) for collation-based, locale-aware operations, see also [about\_locale](https://stringi.gagolewski.com/rapi/about_locale.html).
+-   [`stri_cmp`](https://stringi.gagolewski.com/rapi/stri_cmp.html), `%s<%`, [`stri_order`](https://stringi.gagolewski.com/rapi/stri_order.html), [`stri_sort`](https://stringi.gagolewski.com/rapi/stri_sort.html), [`stri_rank`](https://stringi.gagolewski.com/rapi/stri_rank.html), [`stri_unique`](https://stringi.gagolewski.com/rapi/stri_unique.html), and [`stri_duplicated`](https://stringi.gagolewski.com/rapi/stri_duplicated.html) for collation-based, locale-aware operations, see also [about\_locale](https://stringi.gagolewski.com/rapi/about_locale.html).
 
 -   [`stri_split_lines`](https://stringi.gagolewski.com/rapi/stri_split_lines.html) (among others) to split a string into text lines.
 

@@ -7,8 +7,14 @@ expect_equivalent(stri_trans_general("", "latin-ascii"), "")
 expect_equivalent(stri_trans_general("", NA), NA_character_)
 expect_error(stri_trans_general("", "sagsgsdgsdhrherj48iur"))
 
-expect_equivalent(stri_trans_general(c("gro\u00DF", NA, ""), "latin-ascii"), c("gross",
-    NA, ""))
+expect_equivalent(stri_trans_general(c("gro\u00DF", NA, ""), "latin-ascii"),
+    c("gross", NA, ""))
+
+expect_equivalent(stri_trans_general(c("gro\u00DF", NA, ""), ":: latin-ascii;", rules=TRUE),
+    c("gross", NA, ""))
+
+expect_equivalent(stri_trans_general(c("gro\u00DF", NA, ""), "\u00DF > ss", rules=TRUE),
+    c("gross", NA, ""))
 
 expect_equivalent(stri_trans_general("\u0105\u0104", "lower"), "\u0105\u0105")
 

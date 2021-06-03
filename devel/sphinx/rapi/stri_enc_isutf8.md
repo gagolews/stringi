@@ -22,7 +22,7 @@ stri_enc_isutf8(str)
 
 However, the longer the sequence, the greater the possibility that the result is indeed in UTF-8 -- this is because not all sequences of bytes are valid UTF-8.
 
-This function is independent of the way <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> marks encodings in character strings (see [Encoding](https://stat.ethz.ch/R-manual/R-patched/library/base/html/Encoding.html) and [stringi-encoding](https://stringi.gagolewski.com/rapi/stringi-encoding.html)).
+This function is independent of the way <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> marks encodings in character strings (see [Encoding](https://stat.ethz.ch/R-manual/R-patched/library/base/html/Encoding.html) and [stringi-encoding](../../stringi/help/stringi-encoding.html)).
 
 ## Value
 

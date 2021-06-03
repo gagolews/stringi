@@ -10,6 +10,9 @@
   variable width and precision (both at the same time), etc. Moreover,
   `stri_printf` can be used to display formatted strings conveniently.
 
+* [NEW FEATURE] `stri_trans_general` now supports rule-based
+  as well as reverse-direction transliteration.
+
 * [NEW FEATURE] #434: `stri_datetime_format` and `stri_datetime_parse`
   are now vectorised also with respect to the `format` argument.
 

@@ -18,7 +18,7 @@ stri_enc_list(simplify = TRUE)
 
 ## Details
 
-Apart from given encoding identifiers and their aliases, some other specifiers might additionally be available. This is due to the fact that <span class="pkg">ICU</span> tries to normalize converter names. For instance, `'UTF8'` is also valid, see [stringi-encoding](https://stringi.gagolewski.com/rapi/stringi-encoding.html) for more information.
+Apart from given encoding identifiers and their aliases, some other specifiers might additionally be available. This is due to the fact that <span class="pkg">ICU</span> tries to normalize converter names. For instance, `'UTF8'` is also valid, see [stringi-encoding](../../stringi/help/stringi-encoding.html) for more information.
 
 ## Value
 

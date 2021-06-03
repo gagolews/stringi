@@ -84,11 +84,11 @@ SEXP stri_trans_list()
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END(
-    if (trans_enum) {
-    delete trans_enum;
-    trans_enum = NULL;
-}
-)
+        if (trans_enum) {
+            delete trans_enum;
+            trans_enum = NULL;
+        }
+    )
 }
 
 
@@ -96,26 +96,46 @@ SEXP stri_trans_list()
  *
  * @param str character vector
  * @param id single string
+ * @param rules single bool
+ * @param forward single bool
  * @return character vector
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-19)
+ * @version 1.6.3 (Marek Gagolewski, 2021-06-03)  rules, forward
  */
-SEXP stri_trans_general(SEXP str, SEXP id)
+SEXP stri_trans_general(SEXP str, SEXP id, SEXP rules, SEXP forward)
 {
     PROTECT(str = stri__prepare_arg_string(str, "str"));
     PROTECT(id  = stri__prepare_arg_string_1(id, "id"));
+    bool rules_val = stri__prepare_arg_logical_1_notNA(rules, "rules");
+    bool forward_val = stri__prepare_arg_logical_1_notNA(forward, "forward");
+
     R_len_t str_length = LENGTH(str);
 
     Transliterator* trans = NULL;
     STRI__ERROR_HANDLER_BEGIN(2)
-    StriContainerUTF16  id_cont(id, 1);
+    StriContainerUTF16 id_cont(id, 1);
     if (id_cont.isNA(0)) {
         STRI__UNPROTECT_ALL
         return stri__vector_NA_strings(str_length);
     }
 
     UErrorCode status = U_ZERO_ERROR;
-    trans = Transliterator::createInstance(id_cont.get(0), UTRANS_FORWARD, status);
+    UParseError parserr;
+    if (!rules_val)
+        trans = Transliterator::createInstance(
+            id_cont.get(0),
+            (forward_val?UTRANS_FORWARD:UTRANS_REVERSE),
+            status
+        );
+    else
+        trans = Transliterator::createFromRules(
+            UnicodeString("Rule-based Transliterator"),  // can be anything
+            id_cont.get(0),
+            (forward_val?UTRANS_FORWARD:UTRANS_REVERSE),
+            parserr,
+            status
+        );
     STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
     StriContainerUTF16 str_cont(str, str_length, false); // writable, no recycle
@@ -132,9 +152,9 @@ SEXP stri_trans_general(SEXP str, SEXP id)
     STRI__UNPROTECT_ALL
     return str_cont.toR();
     STRI__ERROR_HANDLER_END(
-    if (trans) {
-    delete trans;
-    trans = NULL;
-}
-)
+        if (trans) {
+            delete trans;
+            trans = NULL;
+        }
+    )
 }

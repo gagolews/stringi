@@ -18,7 +18,7 @@ stri_locale_info(locale = NULL)
 
 ## Details
 
-With this function you may obtain some basic information on any provided locale identifier, even if it is unsupported by <span class="pkg">ICU</span> or if you pass a malformed locale identifier (the one that is not, e.g., of the form Language\_Country). See [stringi-locale](https://stringi.gagolewski.com/rapi/stringi-locale.html) for discussion.
+With this function you may obtain some basic information on any provided locale identifier, even if it is unsupported by <span class="pkg">ICU</span> or if you pass a malformed locale identifier (the one that is not, e.g., of the form Language\_Country). See [stringi-locale](../../stringi/help/stringi-locale.html) for discussion.
 
 This function does not do anything really complicated. In many cases it is similar to a call to [`as.list(stri_split_fixed`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/list.html)(locale, \'\_\', 3L)\[\[1\]\]), with `locale` case mapped. It may be used, however, to get insight on how ICU understands a given locale identifier.
 

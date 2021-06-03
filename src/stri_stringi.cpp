@@ -222,7 +222,7 @@ const R_CallMethodDef cCallMethods[] = {
     STRI__MK_CALL("C_stri_trans_isnfkc",                 stri_trans_isnfkc,               1),
     STRI__MK_CALL("C_stri_trans_isnfkd",                 stri_trans_isnfkd,               1),
     STRI__MK_CALL("C_stri_trans_isnfkc_casefold",        stri_trans_isnfkc_casefold,      1),
-    STRI__MK_CALL("C_stri_trans_general",                stri_trans_general,              2),
+    STRI__MK_CALL("C_stri_trans_general",                stri_trans_general,              4),
     STRI__MK_CALL("C_stri_trans_list",                   stri_trans_list,                 0),
     STRI__MK_CALL("C_stri_trans_nfc",                    stri_trans_nfc,                  1),
     STRI__MK_CALL("C_stri_trans_nfd",                    stri_trans_nfd,                  1),

@@ -48,7 +48,7 @@ stri_match_last_regex(
 | `str`            | character vector; strings to search in                                                                                                                                        |
 | `...`            | supplementary arguments passed to the underlying functions, including additional settings for `opts_regex`                                                                    |
 | `mode`           | single string; one of: `'first'` (the default), `'all'`, `'last'`                                                                                                             |
-| `pattern, regex` | character vector; search patterns; for more details refer to [stringi-search](https://stringi.gagolewski.com/rapi/stringi-search.html)                                        |
+| `pattern, regex` | character vector; search patterns; for more details refer to [stringi-search](../../stringi/help/stringi-search.html)                                                         |
 | `omit_no_match`  | single logical value; if `FALSE`, then a row with missing values will indicate that there was no match; `stri_match_all_*` only                                               |
 | `cg_missing`     | single string to be used if a capture group match is unavailable                                                                                                              |
 | `opts_regex`     | a named list with <span class="pkg">ICU</span> Regex settings, see [`stri_opts_regex`](https://stringi.gagolewski.com/rapi/stri_opts_regex.html); `NULL` for default settings |

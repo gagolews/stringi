@@ -63,9 +63,9 @@ Other datetime: [`stri_datetime_create`](https://stringi.gagolewski.com/rapi/str
 x <- stri_datetime_now()
 stri_datetime_add(x, units='months') <- 2
 print(x)
-## [1] "2021-07-26 16:11:37 AEST"
+## [1] "2021-08-03 11:27:02 AEST"
 stri_datetime_add(x, -2, units='months')
-## [1] "2021-05-26 16:11:37 AEST"
+## [1] "2021-06-03 11:27:02 AEST"
 stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units='years')
 ## [1] "2015-04-20 12:00:00 AEST"
 stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units='years', locale='@calendar=hebrew')

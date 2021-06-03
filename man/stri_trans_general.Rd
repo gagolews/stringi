@@ -4,13 +4,19 @@
 \alias{stri_trans_general}
 \title{General Text Transforms, Including Transliteration}
 \usage{
-stri_trans_general(str, id)
+stri_trans_general(str, id, rules = FALSE, forward = TRUE)
 }
 \arguments{
 \item{str}{character vector}
 
 \item{id}{a single string with transform identifier,
-see \code{\link{stri_trans_list}}}
+see \code{\link{stri_trans_list}}, or custom transliteration rules}
+
+\item{rules}{if \code{TRUE}, treat \code{id} as a string with
+semicolon-separated transliteration rules (see the \pkg{ICU} manual);}
+
+\item{forward}{transliteration direction (\code{TRUE} for forward,
+\code{FALSE} for reverse)}
 }
 \value{
 Returns a character vector.
@@ -50,7 +56,10 @@ from Latin script to Katakana script, it is convenient to first
 (1) separate input base characters and accents, and then (2)
 convert uppercase to lowercase.
 To achieve this, a compound transform can be specified as follows:
-\code{NFKD; Lower; Latin-Katakana;}
+\code{NFKD; Lower; Latin-Katakana;} (with the default \code{rules=FALSE}).
+
+Custom rule-based transliteration is also supported, see the \pkg{ICU}
+manual and below for some examples.
 }
 \examples{
 stri_trans_general('gro\u00df', 'latin-ascii')
@@ -58,10 +67,26 @@ stri_trans_general('stringi', 'latin-greek')
 stri_trans_general('stringi', 'latin-cyrillic')
 stri_trans_general('stringi', 'upper') # see stri_trans_toupper
 stri_trans_general('\u0104', 'nfd; lower') # compound id; see stri_trans_nfd
-stri_trans_general('tato nie wraca ranki wieczory', 'pl-pl_FONIPA')
+stri_trans_general('Marek G\u0105golewski', 'pl-pl_FONIPA')
 stri_trans_general('\u2620', 'any-name') # character name
 stri_trans_general('\\\\N{latin small letter a}', 'name-any') # decode name
 stri_trans_general('\u2620', 'hex/c') # to hex
+
+x <- "\uC11C\uC6B8\uD2B9\uBCC4\uC2DC\u0020\uC885\uB85C\uAD6C\u0020\uC0AC\uC9C1\uB3D9"
+stringi::stri_trans_general(x, "Hangul-Latin")
+# Deviate from the ICU rules of Romanisation of Korean,
+# see https://en.wikipedia.org/wiki/\%E3\%84\%B1
+id <- "
+    :: NFD;
+    \u11A8 > k;
+    \u11AE > t;
+    \u11B8 > p;
+    \u1105 > r;
+    :: Hangul-Latin;
+"
+stringi::stri_trans_general(x, id, rules=TRUE)
+
+
 }
 \references{
 \emph{General Transforms} -- ICU User Guide,

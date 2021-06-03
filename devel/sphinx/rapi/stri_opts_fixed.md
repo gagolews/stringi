@@ -2,7 +2,7 @@
 
 ## Description
 
-A convenience function used to tune up the behavior of `stri_*_fixed` functions, see [stringi-search-fixed](https://stringi.gagolewski.com/rapi/stringi-search-fixed.html).
+A convenience function used to tune up the behavior of `stri_*_fixed` functions, see [stringi-search-fixed](../../stringi/help/stringi-search-fixed.html).
 
 ## Usage
 
@@ -20,7 +20,7 @@ stri_opts_fixed(case_insensitive = FALSE, overlap = FALSE, ...)
 
 ## Details
 
-Case-insensitive matching uses a simple, single-code point case mapping (via ICU\'s `u_toupper()` function). Full case mappings should be used whenever possible because they produce better results by working on whole strings. They also take into account the string context and the language, see [stringi-search-coll](https://stringi.gagolewski.com/rapi/stringi-search-coll.html).
+Case-insensitive matching uses a simple, single-code point case mapping (via ICU\'s `u_toupper()` function). Full case mappings should be used whenever possible because they produce better results by working on whole strings. They also take into account the string context and the language, see [stringi-search-coll](../../stringi/help/stringi-search-coll.html).
 
 Searching for overlapping pattern matches is available in [`stri_extract_all_fixed`](https://stringi.gagolewski.com/rapi/stri_extract_all_fixed.html), [`stri_locate_all_fixed`](https://stringi.gagolewski.com/rapi/stri_locate_all_fixed.html), and [`stri_count_fixed`](https://stringi.gagolewski.com/rapi/stri_count_fixed.html) functions.
 

@@ -42,7 +42,7 @@ Returns a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other join: [`%s+%`](https://stringi.gagolewski.com/rapi/%25s+%25.html)(), [`stri_dup`](https://stringi.gagolewski.com/rapi/stri_dup.html)(), [`stri_flatten`](https://stringi.gagolewski.com/rapi/stri_flatten.html)(), [`stri_join`](https://stringi.gagolewski.com/rapi/stri_join.html)()
+Other join: `%s+%()`, [`stri_dup`](https://stringi.gagolewski.com/rapi/stri_dup.html)(), [`stri_flatten`](https://stringi.gagolewski.com/rapi/stri_flatten.html)(), [`stri_join`](https://stringi.gagolewski.com/rapi/stri_join.html)()
 
 ## Examples
 
