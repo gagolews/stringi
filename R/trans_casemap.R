@@ -96,8 +96,8 @@
 #' stri_trans_tolower(c('AbC', '123', '\u0105\u0104'))
 #' stri_trans_totitle(c('AbC', '123', '\u0105\u0104'))
 #' stri_trans_casefold(c('AbC', '123', '\u0105\u0104'))
-#' stri_trans_totitle('cOOkiE mOnSTeR likes COOKIES. Here HE comes!') # word boundary
-#' stri_trans_totitle('cOOkiE mOnSTeR likes COOKIES. Here HE comes!', type='sentence')
+#' stri_trans_totitle('stringi is a FREE R pAcKaGe. WItH NO StrinGS attached.') # word boundary
+#' stri_trans_totitle('stringi is a FREE R pAcKaGe. WItH NO StrinGS attached.', type='sentence')
 stri_trans_tolower <- function(str, locale = NULL)
 {
     .Call(C_stri_trans_tolower, str, locale)

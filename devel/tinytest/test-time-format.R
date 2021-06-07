@@ -6,11 +6,12 @@ library("stringi")
 expect_true(stri_datetime_fstr(" test123") == "' test123'")
 expect_true(stri_datetime_fstr("%%") == "'%'")
 expect_true(stri_datetime_fstr("%%y%%m%%") == "'%y%m%'")
+expect_true(stri_datetime_fstr("%%y%%%m%%%Y%%%%Y%%") == "'%y%'MM'%'yyyy'%%Y%'")
 expect_true(stri_datetime_fstr("''") == "'\\'\\''")
 expect_true(stri_datetime_fstr("%y") == "yy")
 expect_true(stri_datetime_fstr("%Y") == "yyyy")
-expect_warning(stri_datetime_fstr("%Q"))
-expect_true(suppressWarnings(stri_datetime_fstr("%Q")) == "%?")  # unsupported formatter
+expect_warning(stri_datetime_fstr("%U"))
+expect_error(stri_datetime_fstr("%Q"))
 expect_true(stri_datetime_fstr("!%y!") == "'!'yy'!'")
 expect_true(stri_datetime_fstr("%%%y%%") == "'%'yy'%'")
 
@@ -34,6 +35,8 @@ expect_equivalent(stri_datetime_fstr(NA), NA_character_)
 expect_identical(stri_datetime_fstr(c("%Y-%m-%d", "", NA, "stringi", "'stri'ngi'", "%H-%M-%S")),
     c("yyyy'-'MM'-'dd", "", NA, "'stringi'", "'\\'stri\\'ngi\\''", "HH'-'mm'-'ss"))
 expect_equivalent(stri_datetime_fstr(numeric(0)), character(0))
+expect_identical(stri_datetime_fstr(c("%Y-%d%m", "%d%m-%Y", "%m%d%Y")), c("yyyy'-'ddMM", "ddMM'-'yyyy", "MMddyyyy"))
+
 #    expect_equivalent(stri_datetime_fstr(NA), NA_character_)
 
 
