@@ -320,6 +320,9 @@
 #define MSG__ARG_UNUSED_N \
    "%d arguments have not been used"
 
+#define MSG__PROBLEMATIC_FORMAT_SPECIFIER_CHAR \
+   "conversion specifier '%%%c' might be non-portable/problematic"
+
 #define MSG__INVALID_FORMAT_SPECIFIER \
    "conversion specifier '%%%s' is not valid"
 

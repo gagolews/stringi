@@ -263,6 +263,7 @@ SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale) {
  * @version 0.5-1 (Marek Gagolewski, 2015-02-22) use tz
  * @version 0.5-1 (Marek Gagolewski, 2015-03-01) set tzone attrib on retval
  * @version 1.6.3 (Marek Gagolewski, 2021-05-24) #434: vectorise wrt format
+ * @version 1.6.3 (Marek Gagolewski, 2021-06-07) empty retval should have a class too
  */
 SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP lenient, SEXP tz, SEXP locale) {
     const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
@@ -275,7 +276,12 @@ SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP lenient, SEXP tz, SEXP loca
     R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(format));
     if (vectorize_length <= 0) {
         UNPROTECT(3);
-        return Rf_allocVector(REALSXP, 0);
+        SEXP ret;
+        PROTECT(ret = Rf_allocVector(REALSXP, 0));
+        if (!isNull(tz)) Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("tzone")), tz);
+        stri__set_class_POSIXct(ret);
+        UNPROTECT(1);
+        return ret;
     }
 
     TimeZone* tz_val = stri__prepare_arg_timezone(tz, "tz", true/*allowdefault*/);
@@ -366,4 +372,185 @@ SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP lenient, SEXP tz, SEXP loca
             cal = NULL;
         }
     })
+}
+
+
+
+
+/**
+ * Converts a single strptime/strftime format to the one used by ICU
+ *
+ * @param x
+ * @return a single R string
+ */
+SEXP stri__datetime_fstr_1(const String8& _x)
+{
+    STRI_ASSERT(!_x.isNA());
+    R_len_t n = _x.length();
+    const char* x = _x.c_str();
+
+    std::string buf;
+    buf.reserve(n+1);  // whatever
+
+    R_len_t i=0;
+    bool literal_substring = false;
+    while (i < n) {
+        // consume everything up to the next '%'
+        if (x[i] == '\'') {
+            if (!literal_substring) {
+                literal_substring = true;
+                buf.push_back('\'');
+            }
+            buf.push_back('\\');
+            buf.push_back('\'');
+            i++;
+            continue;
+        }
+
+        if (x[i] != '%') {
+            if (!literal_substring) {
+                literal_substring = true;
+                buf.push_back('\'');
+            }
+
+            buf.push_back(x[i]);
+            i++;
+            continue;
+        }
+
+        // '%' found.
+        i++;
+        if (i >= n)  // dangling %
+            throw StriException(MSG__INVALID_FORMAT_SPECIFIER, "");
+
+        // if "%%", then output '%' and continue looking for the next '%'
+        if (x[i] == '%') {
+            if (!literal_substring) {
+                literal_substring = true;
+                buf.push_back('\'');
+            }
+            buf.push_back('%');
+            i++;
+            continue;
+        }
+
+        if (literal_substring) {
+            literal_substring = false;
+            buf.push_back('\'');
+        }
+
+        char spec = x[i++];
+        switch (spec) {
+            case 'U':
+            case 'V':
+            case 'x':
+            case 'X':
+            case 'u':
+            case 'w':
+            case 'r':
+            case 'g':
+            case 'G':
+            case 'c':
+            Rf_warning(MSG__PROBLEMATIC_FORMAT_SPECIFIER_CHAR, spec);
+            break;
+
+            default:
+            break;
+        }
+
+        switch (spec) {
+            case 'U': buf.append("ww"                     ); break;
+            case 'W': buf.append("ww"                     ); break;
+            case 'g': buf.append("yy"                     ); break;
+            case 'G': buf.append("Y"                      ); break;
+            case 'a': buf.append("ccc"                    ); break;
+            case 'A': buf.append("cccc"                   ); break;
+            case 'b': buf.append("MMM"                    ); break;
+            case 'B': buf.append("MMMM"                   ); break;
+            case 'c': buf.append("eee MMM d HH:mm:ss yyyy"); break;
+            case 'd': buf.append("dd"                     ); break;
+            case 'D': buf.append("MM/dd/yy"               ); break;
+            case 'e': buf.append("d"                      ); break;
+            case 'F': buf.append("yyyy-MM-dd"             ); break;
+            case 'h': buf.append("MMM"                    ); break;
+            case 'H': buf.append("HH"                     ); break;
+            case 'I': buf.append("hh"                     ); break;
+            case 'j': buf.append("D"                      ); break;
+            case 'm': buf.append("MM"                     ); break;
+            case 'M': buf.append("mm"                     ); break;
+            case 'n': buf.append("\n"                     ); break;
+            case 'p': buf.append("a"                      ); break;
+            case 'r': buf.append("hh:mm:ss"               ); break;
+            case 'R': buf.append("HH:mm"                  ); break;
+            case 'S': buf.append("ss"                     ); break;
+            case 't': buf.append("\t"                     ); break;
+            case 'T': buf.append("HH:mm:ss"               ); break;
+            case 'u': buf.append("c"                      ); break;
+            case 'V': buf.append("ww"                     ); break;
+            case 'w': buf.append("c"                      ); break;
+            case 'x': buf.append("yy/MM/dd"               ); break;
+            case 'X': buf.append("HH:mm:ss"               ); break;
+            case 'y': buf.append("yy"                     ); break;
+            case 'Y': buf.append("yyyy"                   ); break;
+            case 'z': buf.append("Z"                      ); break;
+            case 'Z': buf.append("z"                      ); break;
+
+            default:
+                throw StriException(MSG__INVALID_FORMAT_SPECIFIER_SUB, 1, x+i-1);
+        }
+    }
+
+    if (literal_substring) {
+        literal_substring = false;
+        buf.push_back('\'');
+    }
+
+    return Rf_mkCharLenCE(buf.data(), buf.size(), CE_UTF8);
+}
+
+
+
+/**
+ * Convert %Y-%m-%d to yyyy'-'MM'-'dd and stuff (for strptime/strftime <-> ICU)
+ *
+ * @param x character vector
+ *
+ * @return character vector
+ *
+ * @version 1.6.4 (Marek Gagolewski, 2021-06-07)
+ */
+SEXP stri_datetime_fstr(SEXP x)
+{
+    PROTECT(x = stri__prepare_arg_string(x, "x"));
+    R_len_t vectorize_length = LENGTH(x);
+    if (vectorize_length <= 0) {
+        UNPROTECT(1);
+        return Rf_allocVector(STRSXP, 0);
+    }
+
+    STRI__ERROR_HANDLER_BEGIN(1)
+    StriContainerUTF8 x_cont(x, vectorize_length);
+
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+
+    for (
+        R_len_t i = x_cont.vectorize_init();
+        i != x_cont.vectorize_end();
+        i = x_cont.vectorize_next(i)
+    ) {
+        if (x_cont.isNA(i)) {
+            SET_STRING_ELT(ret, i, NA_STRING);
+            continue;
+        }
+
+        SEXP out;
+        STRI__PROTECT(out = stri__datetime_fstr_1(x_cont.get(i)));
+        SET_STRING_ELT(ret, i, out);
+        STRI__UNPROTECT(1);
+    }
+
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

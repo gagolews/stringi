@@ -278,51 +278,9 @@ stri_datetime_parse <- function(
 #' @export
 stri_datetime_fstr <- function(x, ignore_special=TRUE)
 {
-    x <- stri_enc_toutf8(x)
-    if (length(x) <= 0) return(x)
+    x <- .Call(C_stri_datetime_fstr, x)
 
-    # %U, %W -> %V + warn
-    # %x, %X -> warn
-    # %u, %w -> warn
-
-    # problematic entities:
-    warn <- c("%U", "%V", "%x", "%X", "%u", "%w", "%r", "%g", "%G", "%c")
-    search <- c("%U", "%W", "%g", "%G")
-    needle <- c("ww", "ww", "yy", "Y")
-
-    search <- c(search, "%a", "%A", "%b", "%B")
-    needle <- c(needle, "ccc", "cccc", "MMM", "MMMM")
-
-    search <- c(search, "%c", "%d", "%D")
-    needle <- c(needle, "eee MMM d HH:mm:ss yyyy", "dd", "MM/dd/yy")
-
-    search <- c(search, "%e", "%F", "%h", "%H")
-    needle <- c(needle, "d", "yyyy-MM-dd", "MMM", "HH")
-
-    search <- c(search, "%I", "%j", "%m", "%M", "%n", "%p")
-    needle <- c(needle, "hh", "D", "MM", "mm", "\n", "a")
-
-    search <- c(search, "%r", "%R", "%S", "%t", "%T", "%u")
-    needle <- c(needle, "hh:mm:ss", "HH:mm", "ss", "\t", "HH:mm:ss", "c")
-
-    search <- c(search, "%V", "%w", "%x", "%X", "%y", "%Y", "%z", "%Z")
-    needle <- c(needle, "ww", "c", "yy/MM/dd", "HH:mm:ss", "yy", "yyyy", "Z", "z")
-
-    x <- stri_replace_all_fixed(x, "'", "\\'")
-    x <- stri_replace_all_fixed(x, "%%", "%!")  # well, that's not very elegant...
-    x <- stri_replace_all_regex(x, "(?:(?<=[%][A-Za-z])|^(?![%][A-Za-z]))(.+?)(?:(?<![%][A-Za-z])$|(?=[%][A-Za-z]))",
-        "'$1'")
-    if (any(stri_detect_regex(x, stri_flatten(warn, collapse = "|")), na.rm=TRUE))
-        warning(sprintf("Formatters %s might not be 100%% compatible with ICU", stri_flatten(warn,
-            collapse = ", ")))
-    x <- stri_replace_all_fixed(x, search, needle, vectorize_all = FALSE)
-    if (any(stri_detect_regex(x, "%[A-Za-z]"), na.rm=TRUE)) {
-        warning("Unsupported date/time format specifier; ignoring")
-        x <- stri_replace_all_regex(x, "%[A-Za-z]", "%?")  # unsupported formatter
-    }
-    x <- stri_replace_all_fixed(x, "%!", "%")  # well, that's not very elegant...
-
-    if (isFALSE(ignore_special)) {
+    if (length(x) > 0 && isFALSE(ignore_special)) {
         formats <- outer(
             c("date", "time", "datetime", "date_relative", "datetime_relative"),
             c("full", "long", "medium", "short"),
