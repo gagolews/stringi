@@ -1,7 +1,7 @@
 # What Is New in *stringi*
 
 
-## 1.6.2.9xxx (to-be >=1.6.3) (2021-xx-yy)
+## 1.6.2.9xxx (to-be >= 1.6.3) (2021-xx-yy)
 
 * [NEW FEATURE] #420: `stri_sprintf` (alias: `stri_string_format`)
   is a Unicode-aware replacement for and enhancement of the base `sprintf`:
@@ -17,7 +17,7 @@
   are now vectorised also with respect to the `format` argument.
 
 * [NEW FEATURE] `stri_datetime_fstr` has a new argument, `ignore_special`,
-  which default to `TRUE` for backward compatibility.
+  which defaults to `TRUE` for backward compatibility.
 
 * [NEW FEATURE] `stri_datetime_format`, `stri_datetime_add`, and
   `stri_datetime_fields` now call `as.POSIXct` more eagerly.
@@ -32,7 +32,13 @@
   did not throw an exception on an invalid UTF-8
   byte sequence (and merely issues a warning instead).
 
-* [BUGFIX] `stri_datetime_fstr` did not honour `NA_character_`.
+* [BUGFIX] `stri_datetime_fstr` did not honour `NA_character_`
+  and did not parse format strings such as `"%Y%m%d"` correctly.
+  It has now been completely rewritten (in C).
+
+* [BUGFIX] `stri_sprintf` did not propagate missing values in
+  width/precision args passed via `*`. Also, `na_string` has not been
+  trimmed to the desired width in formatters like `"%.1s"`.
 
 
 ## 1.6.2 (2021-05-14)

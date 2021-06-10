@@ -83,8 +83,8 @@ stri_trans_totitle(c('AbC', '123', '\u0105\u0104'))
 ## [1] "Abc" "123" "Ąą"
 stri_trans_casefold(c('AbC', '123', '\u0105\u0104'))
 ## [1] "abc" "123" "ąą"
-stri_trans_totitle('cOOkiE mOnSTeR likes COOKIES. Here HE comes!') # word boundary
-## [1] "Cookie Monster Likes Cookies. Here He Comes!"
-stri_trans_totitle('cOOkiE mOnSTeR likes COOKIES. Here HE comes!', type='sentence')
-## [1] "Cookie monster likes cookies. Here he comes!"
+stri_trans_totitle('stringi is a FREE R pAcKaGe. WItH NO StrinGS attached.') # word boundary
+## [1] "Stringi Is A Free R Package. With No Strings Attached."
+stri_trans_totitle('stringi is a FREE R pAcKaGe. WItH NO StrinGS attached.', type='sentence')
+## [1] "Stringi is a free r package. With no strings attached."
 ```

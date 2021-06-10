@@ -57,7 +57,7 @@
 #' are unused, a warning is generated. Too few arguments result in an error.
 #'
 #' Note that \code{stri_printf} treats missing values in \code{...}
-#' as strings \code{"NA"} by default.
+#' as \code{"NA"} strings by default.
 #'
 #' All format specifiers supported \code{\link[base]{sprintf}} are
 #' also available here. For the formatting of integers and floating-point
