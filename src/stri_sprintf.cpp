@@ -40,6 +40,7 @@
 #include <vector>
 
 
+#define STRI_SPRINTF_NOT_PROVIDED (NA_INTEGER+1)  /* -2**31+2 */
 
 #define STRI_SPRINTF_SPEC_INTEGER "dioxX"
 #define STRI_SPRINTF_SPEC_DOUBLE "feEgGaA"
@@ -66,7 +67,7 @@
 
 /** data types for sprintf
  *
- * @version 1.6.3 (Marek Gagolewski, 2021-05-24)
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-24)
  */
 typedef enum {
     STRI_SPRINTF_TYPE_UNDEFINED=0,
@@ -78,7 +79,7 @@ typedef enum {
 
 /** data types for sprintf
  *
- * @version 1.6.3 (Marek Gagolewski, 2021-05-24)
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-24)
  */
 typedef enum {
     STRI_SPRINTF_FORMAT_STATUS_OK=0,
@@ -89,11 +90,13 @@ typedef enum {
 
 /**
  * if delim found, stops right after delim, modifies jc in place
- * if delim not found, returns NA_INTEGER or throws an error
+ * if delim not found, returns STRI_SPRINTF_NOT_PROVIDED or throws an error
  * ignores leading 0s
  * non-negative values only
  *
- * @version 1.6.3 (Marek Gagolewski, 2021-05-24)
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-24)
+ * @version 1.6.3 (Marek Gagolewski, 2021-06-10)
+ *     return STRI_SPRINTF_NOT_PROVIDED instead of NA_INTEGER
  */
 int stri__atoi_to_delim(
     const char* f,
@@ -123,7 +126,7 @@ int stri__atoi_to_delim(
                     MSG__INVALID_FORMAT_SPECIFIER_SUB, // TODO: error details
                     j1-j0+1, f+j0);
             else
-                return NA_INTEGER;
+                return STRI_SPRINTF_NOT_PROVIDED;
         }
 
         val = val*10 + ((int)f[j++]-(int)'0');  // this ignores leading 0s
@@ -144,7 +147,7 @@ int stri__atoi_to_delim(
  * ignores leading 0s
  * non-negative values only
  *
- * @version 1.6.3 (Marek Gagolewski, 2021-05-24)
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-24)
  */
 int stri__atoi_to_other(const char* f, R_len_t& jc, R_len_t j0, R_len_t j1, int max_val=99999)
 {
@@ -177,7 +180,7 @@ int stri__atoi_to_other(const char* f, R_len_t& jc, R_len_t j0, R_len_t j1, int 
  *
  * @returns index of the first char in STRI_SPRINTF_SPEC_TYPE
  *
- * @version 1.6.3 (Marek Gagolewski, 2021-05-24)
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-24)
  */
 int stri__find_type_spec(const char* f, R_len_t j0, R_len_t n)
 {
@@ -210,7 +213,7 @@ int stri__find_type_spec(const char* f, R_len_t j0, R_len_t n)
 
 /** Enables the fetching of the i-th/next integer/real/string datum from `...`.
  *
- * @version 1.6.3 (Marek Gagolewski, 2021-05-24)
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-24)
  */
 class StriSprintfDataProvider
 {
@@ -283,15 +286,15 @@ public:
     /** Gets the next (i negative) or the i-th integer datum
      *  Can be NA, so check with ... == NA_INTEGER.
      *
-     *  i == NA_INTEGER means "get next unconsumed"
+     *  i == STRI_SPRINTF_NOT_PROVIDED 0 means "get next unconsumed"
      */
-    int getIntegerOrNA(int i=NA_INTEGER)
+    int getIntegerOrNA(int i=STRI_SPRINTF_NOT_PROVIDED)
     {
-        if (i == NA_INTEGER) i = (cur_item++);
+        if (i == STRI_SPRINTF_NOT_PROVIDED) i = (cur_item++);
         // else do not advance cur_item
 
         if (i < 0) throw StriException(MSG__EXPECTED_LARGER);
-        if (i >= narg) throw StriException(MSG__ARG_NEED_MORE);
+        else if (i >= narg) throw StriException(MSG__ARG_NEED_MORE);
 
         if (x_integer[i] == nullptr) {
             SEXP y;
@@ -311,15 +314,15 @@ public:
     /** Gets the next (i negative) or the i-th real datum;
      *  Can be NA, so check with ISNA(...).
      *
-     *  i == NA_INTEGER means "get next unconsumed"
+     *  i == STRI_SPRINTF_NOT_PROVIDED means "get next unconsumed"
      */
-    double getDoubleOrNA(int i=NA_INTEGER)
+    double getDoubleOrNA(int i=STRI_SPRINTF_NOT_PROVIDED)
     {
-        if (i == NA_INTEGER) i = (cur_item++);
+        if (i == STRI_SPRINTF_NOT_PROVIDED) i = (cur_item++);
         // else do not advance cur_item
 
         if (i < 0) throw StriException(MSG__EXPECTED_LARGER);
-        if (i >= narg) throw StriException(MSG__ARG_NEED_MORE);
+        else if (i >= narg) throw StriException(MSG__ARG_NEED_MORE);
 
         if (x_double[i] == nullptr) {
             SEXP y;
@@ -338,15 +341,15 @@ public:
     /** Gets the next (i negative) or the i-th real datum
      *  Can be NA, so check with ....isNA().
      *
-     *  i == NA_INTEGER means "get next unconsumed"
+     *  i == STRI_SPRINTF_NOT_PROVIDED means "get next unconsumed"
      */
-    const String8& getStringOrNA(int i=NA_INTEGER)
+    const String8& getStringOrNA(int i=STRI_SPRINTF_NOT_PROVIDED)
     {
-        if (i == NA_INTEGER) i = (cur_item++);
+        if (i == STRI_SPRINTF_NOT_PROVIDED) i = (cur_item++);
         // else do not advance cur_item
 
         if (i < 0) throw StriException(MSG__EXPECTED_LARGER);
-        if (i >= narg) throw StriException(MSG__ARG_NEED_MORE);
+        else if (i >= narg) throw StriException(MSG__ARG_NEED_MORE);
 
         if (x_string[i] == nullptr) {
             SEXP y;
@@ -367,7 +370,9 @@ public:
 
 /** Parses and stores info on a single sprintf format (conversion) specifier
  *
- * @version 1.6.3 (Marek Gagolewski, 2021-05-24)
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-24)
+ * @version 1.6.3 (Marek Gagolewski, 2021-06-10)
+ *     distinguish between NA_INTEGER and STRI_SPRINTF_NOT_PROVIDED
  */
 class StriSprintfFormatSpec
 {
@@ -381,7 +386,7 @@ private:
     StriSprintfType type;
     char type_spec;
 
-    int which_datum;       // can be NA_INTEGER (== consume next datum)
+    int which_datum;       // can be STRI_SPRINTF_NOT_PROVIDED (== consume next datum)
 
     // see normalise() for info on which options are mutually exclusive etc.
     bool pad_from_right;   // '-'
@@ -389,8 +394,8 @@ private:
     bool sign_space;       // ' '
     bool sign_plus;        // '+'
     bool alternate_output; // '#'
-    int min_width;         // can be NA_INTEGER
-    int precision;         // can be NA_INTEGER or negative (but then like '-')
+    int min_width;         // can be NA_INTEGER or STRI_SPRINTF_NOT_PROVIDED
+    int precision;         // can be NA_INTEGER or STRI_SPRINTF_NOT_PROVIDED or negative (but then like '-')
     // TODO: flag "'" -- localised formatting with ICU
 
 
@@ -430,8 +435,8 @@ public:
         sign_space = false;
         sign_plus = false;
         alternate_output = false;
-        min_width = NA_INTEGER;
-        precision = NA_INTEGER;
+        min_width = STRI_SPRINTF_NOT_PROVIDED;
+        precision = STRI_SPRINTF_NOT_PROVIDED;
         // eEfFgG - default precision = 6
         // aA - default precision = depends on the input
         // dioxX - default precision = 1
@@ -442,7 +447,7 @@ public:
         R_len_t jc = j0;
 
         // 1. optional [0-9]*\$  - which datum is to be formatted?
-        which_datum = NA_INTEGER;
+        which_datum = STRI_SPRINTF_NOT_PROVIDED;
         if (f[jc] >= '0' && f[jc] <= '9') { // trailing 0s will be ignored
             // arg pos spec if digits followed by '$'
             // we can also have '0' flag at this pos, but this will not be
@@ -450,8 +455,8 @@ public:
             which_datum = stri__atoi_to_delim(
                 f, /*by reference*/jc, j0, j1, /*delimiter*/'$', false/*throw_error*/
             );
-            // result can be NA_INTEGER; incorrect indexes will be caught by get*
-            if (which_datum != NA_INTEGER) which_datum--; /*0-based indexing*/
+            // result can be < 0; incorrect indexes will be caught by get*
+            if (which_datum != STRI_SPRINTF_NOT_PROVIDED) which_datum--; /*0-based indexing*/
         }
 
         // 2. optional flags [ +0#-]
@@ -471,12 +476,12 @@ public:
         }
         else if (f[jc] == '*') {  // take from ... args
             jc++;
-            int which_width = NA_INTEGER;
+            int which_width = STRI_SPRINTF_NOT_PROVIDED;
             if (f[jc] >= '0' && f[jc] <= '9') {
                 which_width = stri__atoi_to_delim(
                     f, /*by reference*/jc, j0, j1, /*delimiter*/'$'
                 );
-                if (which_width != NA_INTEGER) which_width--; /*0-based indexing*/
+                if (which_width != STRI_SPRINTF_NOT_PROVIDED) which_width--; /*0-based indexing*/
             }
             min_width = data.getIntegerOrNA(which_width);
         }
@@ -496,12 +501,12 @@ public:
             }
             else if (f[jc] == '*') {  // take from ... args
                 jc++;
-                int which_precision = NA_INTEGER;
+                int which_precision = STRI_SPRINTF_NOT_PROVIDED;
                 if (f[jc] >= '0' && f[jc] <= '9') {
                     which_precision = stri__atoi_to_delim(
                         f, /*by reference*/jc, j0, j1, /*delimiter*/'$'
                     );
-                    if (which_precision != NA_INTEGER) which_precision--; /*0-based indexing*/
+                    if (which_precision != STRI_SPRINTF_NOT_PROVIDED) which_precision--; /*0-based indexing*/
                 }
                 precision = data.getIntegerOrNA(which_precision);
             }
@@ -518,6 +523,7 @@ public:
 
     std::string getFormatString(bool use_sign=true, bool use_pad=true)
     {
+        // note that trimming based on width/length is done elsewhere
         normalise();
         std::string f("%");
         if (alternate_output) f.push_back('#');
@@ -525,8 +531,9 @@ public:
         if (use_sign && sign_plus) f.push_back('+');
         if (use_pad && pad_from_right) f.push_back('-');
         if (use_pad && pad_zero) f.push_back('0');
-        if (use_pad && min_width != NA_INTEGER) f.append(std::to_string(min_width));
-        if (precision != NA_INTEGER) {
+        if (use_pad && min_width > 0)   // and hence not STRI_SPRINTF_NOT_PROVIDED or NA_INTEGER
+            f.append(std::to_string(min_width));
+        if (precision >= 0) {  // and hence not STRI_SPRINTF_NOT_PROVIDED or NA_INTEGER
             f.push_back('.');
             f.append(std::to_string(precision));
         }
@@ -542,16 +549,23 @@ public:
 
         // TODO: warnings when switching off the flags?
 
-        if (min_width != NA_INTEGER && min_width < 0) {
+        if (min_width == NA_INTEGER)
+            ;
+        else if (min_width == STRI_SPRINTF_NOT_PROVIDED)
+            ;
+        else if (min_width == 0)
+            min_width = STRI_SPRINTF_NOT_PROVIDED;
+        else if (min_width < 0) {
             min_width = -min_width;
             pad_from_right = true;
         }
 
-        if (min_width == 0)
-            min_width = NA_INTEGER;
-
-        if (precision != NA_INTEGER && precision < 0)
-            precision = NA_INTEGER;
+        if (precision == NA_INTEGER)
+            ;
+        else if (precision == STRI_SPRINTF_NOT_PROVIDED)
+            ;
+        else if (precision < 0)
+            precision = STRI_SPRINTF_NOT_PROVIDED;
 
         if (pad_from_right)
             pad_zero = false;
@@ -596,8 +610,8 @@ public:
         if (status != STRI_SPRINTF_FORMAT_STATUS_NEEDS_PADDING)
             return status;
 
-        if (min_width == NA_INTEGER)
-            return STRI_SPRINTF_FORMAT_STATUS_OK;
+        if (min_width <= 0)  // includes NA_INTEGER and STRI_SPRINTF_NOT_PROVIDED
+            return STRI_SPRINTF_FORMAT_STATUS_OK;  // no trimming needed
 
         STRI_ASSERT(min_width > 0);
 
@@ -633,12 +647,10 @@ private:
     StriSprintfFormatStatus preformatDatum_doxX(std::string& preformatted_datum, int datum)
     {
         STRI_ASSERT(type_spec != 'i');  // normalised i->d
-        if (datum != NA_INTEGER) {
-            STRI_ASSERT(min_width == NA_INTEGER || min_width >= 0);
-            STRI_ASSERT(precision == NA_INTEGER || precision >= 0);
-
-            R_len_t bufsize = (min_width==NA_INTEGER)?0:min_width;
-            bufsize += (precision==NA_INTEGER)?0:precision;
+        bool isna = (datum == NA_INTEGER || min_width == NA_INTEGER || precision == NA_INTEGER);
+        if (!isna) {
+            R_len_t bufsize = std::max(0, min_width);
+            bufsize += std::max(0, precision);
             bufsize += 128; // "just in case"  (0x, sign, dot, and stuff)
             std::vector<char> buf;
             buf.resize(bufsize);
@@ -651,12 +663,11 @@ private:
 
             return STRI_SPRINTF_FORMAT_STATUS_OK;  /* all in ASCII, padding done by std::snprintf */
         }
+        else if (na_string.isNA())
+            return STRI_SPRINTF_FORMAT_STATUS_IS_NA;
         else {
             STRI_ASSERT(type_spec == 'd' || !sign_plus);
             STRI_ASSERT(type_spec == 'd' || !sign_space);
-
-            if (na_string.isNA())
-                return STRI_SPRINTF_FORMAT_STATUS_IS_NA;
 
             if (sign_plus) {
                 // glibc produces "+nan", but we will output " nan" instead
@@ -666,6 +677,7 @@ private:
                 preformatted_datum.push_back(' ');
             // else no sign
 
+            STRI_ASSERT(!na_string.isNA());
             preformatted_datum.append(na_string.c_str());
             return STRI_SPRINTF_FORMAT_STATUS_NEEDS_PADDING;  /* might need padding (na_string can be fancy Unicode) */
         }
@@ -674,12 +686,10 @@ private:
 
     StriSprintfFormatStatus preformatDatum_feEgGaA(std::string& preformatted_datum, double datum)
     {
-        if (R_FINITE(datum)) {
-            STRI_ASSERT(min_width == NA_INTEGER || min_width >= 0);
-            STRI_ASSERT(precision == NA_INTEGER || precision >= 0);
-
-            R_len_t bufsize = (min_width==NA_INTEGER)?0:min_width;
-            bufsize += (precision==NA_INTEGER)?0:precision;
+        bool isna = (ISNA(datum) || min_width == NA_INTEGER || precision == NA_INTEGER);
+        if (R_FINITE(datum) && !isna) {
+            R_len_t bufsize = std::max(0, min_width);
+            bufsize += std::max(0, precision);
             bufsize += 128; // "just in case"  (0x, sign, dot, and stuff)
             std::vector<char> buf;
             buf.resize(bufsize);
@@ -692,8 +702,15 @@ private:
 
             return STRI_SPRINTF_FORMAT_STATUS_OK;  /* all in ASCII, padding done by std::snprintf */
         }
+        else if (
+            (na_string.isNA() && isna) ||
+            (nan_string.isNA() && ISNAN(datum)) ||
+            (inf_string.isNA() && std::isinf(datum))
+        ) {
+            return STRI_SPRINTF_FORMAT_STATUS_IS_NA;
+        }
         else {
-            if (ISNA(datum) || ISNAN(datum)) {
+            if (isna || ISNAN(datum)) {
                 if (sign_plus) {
                     // glibc produces "+nan", but we will output " nan" instead
                     preformatted_datum.push_back(' ');
@@ -713,19 +730,16 @@ private:
             }
 
             // alternate_output has no effect (use inf_string etc. instead)
-            if (ISNA(datum)) {
-                if (na_string.isNA())
-                    return STRI_SPRINTF_FORMAT_STATUS_IS_NA;
+            if (isna) {
+                STRI_ASSERT(!na_string.isNA());
                 preformatted_datum.append(na_string.c_str());
             }
             else if (ISNAN(datum)) {
-                if (nan_string.isNA())
-                    return STRI_SPRINTF_FORMAT_STATUS_IS_NA;
+                STRI_ASSERT(!nan_string.isNA());
                 preformatted_datum.append(nan_string.c_str());
             }
             else {
-                if (inf_string.isNA())
-                    return STRI_SPRINTF_FORMAT_STATUS_IS_NA;
+                STRI_ASSERT(!inf_string.isNA());
                 preformatted_datum.append(inf_string.c_str());
             }
 
@@ -740,11 +754,11 @@ private:
         STRI_ASSERT(!sign_plus);
         STRI_ASSERT(!sign_space);
         STRI_ASSERT(!alternate_output);
-        STRI_ASSERT(precision == NA_INTEGER || precision >= 0);
 
-        if (!datum.isNA()) {
+        bool isna = (datum.isNA() || min_width == NA_INTEGER || precision == NA_INTEGER);
+        if (!isna) {
             R_len_t datum_size = datum.length();  // this is byte count
-            if (precision != NA_INTEGER) {
+            if (precision >= 0) {
                 if (use_length) {
                     // ha! output no more than <precision> code points
                     datum_size = stri__length_string(datum.c_str(), datum_size, precision);
@@ -756,11 +770,25 @@ private:
             }
             preformatted_datum.append(datum.c_str(), datum_size);
         }
+        else if (na_string.isNA())
+            return STRI_SPRINTF_FORMAT_STATUS_IS_NA;
         else { // isNA
             if (na_string.isNA())
                 return STRI_SPRINTF_FORMAT_STATUS_IS_NA;
 
-            preformatted_datum.append(na_string.c_str());
+            // output na_string, possibly trimmed
+            R_len_t na_string_size = na_string.length();  // this is byte count
+            if (precision >= 0) {
+                if (use_length) {
+                    // ha! output no more than <precision> code points
+                    na_string_size = stri__length_string(na_string.c_str(), na_string_size, precision);
+                }
+                else {
+                    // ho! output code points of total width no more than precision characters
+                    na_string_size = stri__width_string(na_string.c_str(), na_string_size, precision);
+                }
+            }
+            preformatted_datum.append(na_string.c_str(), na_string_size);
         }
 
         return STRI_SPRINTF_FORMAT_STATUS_NEEDS_PADDING;  /* might need padding */
@@ -770,7 +798,7 @@ private:
 
 /** Formats a single string
  *
- * @version 1.6.3 (Marek Gagolewski, 2021-05-24)
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-24)
  */
 SEXP stri__sprintf_1(
     const String8& _f,
@@ -839,7 +867,7 @@ SEXP stri__sprintf_1(
  * @param use_length single logical value
  * @return character vector
  *
- * @version 1.6.3 (Marek Gagolewski, 2021-05-24)
+ * @version 1.6.2 (Marek Gagolewski, 2021-05-24)
 */
 SEXP stri_sprintf(SEXP format, SEXP x, SEXP na_string,
     SEXP inf_string, SEXP nan_string, SEXP use_length)
