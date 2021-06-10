@@ -7,25 +7,33 @@
 \alias{stri_trim_right}
 \title{Trim Characters from the Left and/or Right Side of a String}
 \usage{
-stri_trim_both(str, pattern = "\\\\P{Wspace}")
+stri_trim_both(str, pattern = "\\\\P{Wspace}", negate = FALSE)
 
-stri_trim_left(str, pattern = "\\\\P{Wspace}")
+stri_trim_left(str, pattern = "\\\\P{Wspace}", negate = FALSE)
 
-stri_trim_right(str, pattern = "\\\\P{Wspace}")
+stri_trim_right(str, pattern = "\\\\P{Wspace}", negate = FALSE)
 
-stri_trim(str, side = c("both", "left", "right"), pattern = "\\\\P{Wspace}")
+stri_trim(
+  str,
+  side = c("both", "left", "right"),
+  pattern = "\\\\P{Wspace}",
+  negate = FALSE
+)
 }
 \arguments{
 \item{str}{a character vector of strings to be trimmed}
 
-\item{pattern}{a single pattern, specifying character
-classes that should be preserved (see \link{stringi-search-charclass}).
- Defaults to `\code{\\P\{Wspace\}}.}
+\item{pattern}{a single pattern, specifying the class of characters
+(see \link{stringi-search-charclass}) to
+to be preserved (if \code{negate} is \code{FALSE}; default)
+or trimmed (otherwise)}
+
+\item{negate}{either \code{TRUE} or \code{FALSE}; see \code{pattern}}
 
 \item{side}{character [\code{stri_trim} only]; defaults to \code{'both'}}
 }
 \value{
-All these functions return a character vector.
+All functions return a character vector.
 }
 \description{
 These functions may be used, e.g., to remove unnecessary
@@ -39,12 +47,11 @@ Vectorized over \code{str} and \code{pattern}.
 and \code{stri_trim_right}.
 
 Contrary to many other string processing libraries,
-our trimming functions are universal. A character class,
-given by \code{pattern}, may be adjusted to suit your needs
-(yet, most often you stick to the default value).
+our trimming functions are universal. The class of characters
+to be retained or trimmed can be adjusted.
 
 For replacing pattern matches with
-arbitrary replacement string, see \code{\link{stri_replace}}.
+an arbitrary replacement string, see \code{\link{stri_replace}}.
 
 Trimming can also be used where you would normally rely on
 regular expressions. For instance, you may get
@@ -57,9 +64,9 @@ see \link{stringi-search-charclass}.
 }
 \examples{
 stri_trim_left('               aaa')
-stri_trim_right('r-project.org/', '\\\\p{P}')
+stri_trim_right('r-project.org/', '\\\\P{P}')
 stri_trim_both(' Total of 23.5 bitcoins. ', '\\\\p{N}')
-stri_trim_both(' Total of 23.5 bitcoins. ', '\\\\p{L}')
+stri_trim_both(' Total of 23.5 bitcoins. ', '\\\\P{N}', negate=TRUE)
 
 }
 \seealso{

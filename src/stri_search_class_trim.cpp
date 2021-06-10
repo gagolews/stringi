@@ -60,8 +60,10 @@
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.6.3 (Marek Gagolewski, 2021-06-10) negate
 */
-SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
+SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right, bool negate)
 {
     PROTECT(str = stri__prepare_arg_string(str, "str"));
     PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
@@ -70,7 +72,7 @@ SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
 
     STRI__ERROR_HANDLER_BEGIN(2)
     StriContainerUTF8 str_cont(str, vectorize_length);
-    StriContainerCharClass pattern_cont(pattern, vectorize_length);
+    StriContainerCharClass pattern_cont(pattern, vectorize_length, negate);
 
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
@@ -94,7 +96,7 @@ SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
             UChar32 chr;
             for (R_len_t j=0; j<str_cur_n; ) {
                 U8_NEXT(str_cur_s, j, str_cur_n, chr); // "look ahead"
-                if (chr < 0) // invalid utf-8 sequence
+                if (chr < 0) // invalid UTF-8 sequence
                     throw StriException(MSG__INVALID_UTF8);
                 if (pattern_cur->contains(chr)) {
                     break; // break at first occurrence
@@ -141,10 +143,13 @@ SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *          make StriException-friendly
+ *
+ * @version 1.6.3 (Marek Gagolewski, 2021-06-10) negate
 */
-SEXP stri_trim_both(SEXP str, SEXP pattern)
+SEXP stri_trim_both(SEXP str, SEXP pattern, SEXP negate)
 {
-    return stri__trim_leftright(str, pattern, true, true);
+    bool negate_val = stri__prepare_arg_logical_1_notNA(negate, "negate");
+    return stri__trim_leftright(str, pattern, true, true, negate_val);
 }
 
 
@@ -159,10 +164,13 @@ SEXP stri_trim_both(SEXP str, SEXP pattern)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-04)
  *          Use stri__trim_leftright
+ *
+ * @version 1.6.3 (Marek Gagolewski, 2021-06-10) negate
 */
-SEXP stri_trim_left(SEXP str, SEXP pattern)
+SEXP stri_trim_left(SEXP str, SEXP pattern, SEXP negate)
 {
-    return stri__trim_leftright(str, pattern, true, false);
+    bool negate_val = stri__prepare_arg_logical_1_notNA(negate, "negate");
+    return stri__trim_leftright(str, pattern, true, false, negate_val);
 }
 
 
@@ -177,8 +185,11 @@ SEXP stri_trim_left(SEXP str, SEXP pattern)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-04)
  *          Use stri__trim_leftright
+ *
+ * @version 1.6.3 (Marek Gagolewski, 2021-06-10) negate
 */
-SEXP stri_trim_right(SEXP str, SEXP pattern)
+SEXP stri_trim_right(SEXP str, SEXP pattern, SEXP negate)
 {
-    return stri__trim_leftright(str, pattern, false, true);
+    bool negate_val = stri__prepare_arg_logical_1_notNA(negate, "negate");
+    return stri__trim_leftright(str, pattern, false, true, negate_val);
 }

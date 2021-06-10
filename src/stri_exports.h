@@ -105,9 +105,9 @@ SEXP stri_locale_list();
 SEXP stri_locale_set(SEXP loc);
 
 // trim.cpp:
-SEXP stri_trim_both(SEXP str, SEXP pattern);
-SEXP stri_trim_left(SEXP str, SEXP pattern);
-SEXP stri_trim_right(SEXP str, SEXP pattern);
+SEXP stri_trim_both(SEXP str, SEXP pattern, SEXP negate=Rf_ScalarLogical(FALSE));
+SEXP stri_trim_left(SEXP str, SEXP pattern, SEXP negate=Rf_ScalarLogical(FALSE));
+SEXP stri_trim_right(SEXP str, SEXP pattern, SEXP negate=Rf_ScalarLogical(FALSE));
 
 // random.cpp
 SEXP stri_rand_shuffle(SEXP str);

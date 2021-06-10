@@ -36,7 +36,7 @@ Here is a list of operators provided by the
 ICU User Guide on regexes.
 
 \describe{
-\item{\code{|}}{Alternation. A|B matches either A or B.}
+\item{\code{|}}{Alternation. \code{A|B} matches either A or B.}
 \item{\code{*}}{Match 0 or more times. Match as many times as possible.}
 \item{\code{+}}{Match 1 or more times. Match as many times as possible.}
 \item{\code{?}}{Match zero or one times. Prefer one.}
@@ -175,9 +175,31 @@ Characters that must be quoted to be treated as literals are
    \code{[ ] \\}; Characters that may need to be quoted, depending
    on the context are \code{- &}.}
 }
+}
 
-For information on how to define character classes
-in regexes, refer to \link{about_search_charclass}.
+\section{Character Classes}{
+
+
+The syntax is similar, but not 100\% compatible with the one
+described in \link{about_search_charclass}. In particular,
+whitespaces are not ignored and set-theoretic operations are
+denoted slightly differently. However, taking these differences into
+account, otherwise \link{about_search_charclass} is a good reference
+on the capabilities offered.
+
+The ICU User Guide on regexes lists what follows.
+
+\describe{
+\item{\code{[abc]}}{Match any of the characters a, b, or c}
+\item{\code{[^abc]}}{Negation -- match any character except a, b, or c}
+\item{\code{[A-M]}}{Range -- match any character from A to M (based on Unicode code point ordering)}
+\item{\code{[\\p{L}]}, \code{[\\p{Letter}]}, \code{[\\p{General_Category=Letter}]}, \code{[:letter:]}}{Characters with Unicode Category = Letter (4 equivalent forms)}
+\item{\code{[\\P{Letter}]}}{Negated property -- natch everything except Letters}
+\item{\code{[\\p{numeric_value=9}]}}{Match all numbers with a numeric value of 9}
+\item{\code{[\\p{Letter}&&\\p{script=cyrillic}]}}{Intersection; match the set of all Cyrillic letters}
+\item{\code{[\\p{Letter}--\\p{script=latin}]}}{Set difference; match all non-Latin letters}
+\item{\code{[[a-z][A-Z][0-9]]}, \code{[a-zA-Z0-9]}}{Union; match ASCII letters and digits (2 equivalent forms)}
+}
 }
 
 \section{Regex Functions in \pkg{stringi}}{

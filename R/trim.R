@@ -46,12 +46,11 @@
 #' and \code{stri_trim_right}.
 #'
 #' Contrary to many other string processing libraries,
-#' our trimming functions are universal. A character class,
-#' given by \code{pattern}, may be adjusted to suit your needs
-#' (yet, most often you stick to the default value).
+#' our trimming functions are universal. The class of characters
+#' to be retained or trimmed can be adjusted.
 #'
 #' For replacing pattern matches with
-#' arbitrary replacement string, see \code{\link{stri_replace}}.
+#' an arbitrary replacement string, see \code{\link{stri_replace}}.
 #'
 #' Trimming can also be used where you would normally rely on
 #' regular expressions. For instance, you may get
@@ -63,56 +62,61 @@
 #' see \link{stringi-search-charclass}.
 #'
 #' @param str a character vector of strings to be trimmed
-#' @param pattern a single pattern, specifying character
-#' classes that should be preserved (see \link{stringi-search-charclass}).
-#'  Defaults to `\code{\\P\{Wspace\}}.
+#' @param pattern a single pattern, specifying the class of characters
+#'     (see \link{stringi-search-charclass}) to
+#'     to be preserved (if \code{negate} is \code{FALSE}; default)
+#'     or trimmed (otherwise)
 #' @param side character [\code{stri_trim} only]; defaults to \code{'both'}
+#' @param negate either \code{TRUE} or \code{FALSE}; see \code{pattern}
 #'
-#' @return All these functions return a character vector.
+#'
+#' @return
+#' All functions return a character vector.
+#'
 #'
 #' @examples
 #' stri_trim_left('               aaa')
-#' stri_trim_right('r-project.org/', '\\p{P}')
+#' stri_trim_right('r-project.org/', '\\P{P}')
 #' stri_trim_both(' Total of 23.5 bitcoins. ', '\\p{N}')
-#' stri_trim_both(' Total of 23.5 bitcoins. ', '\\p{L}')
+#' stri_trim_both(' Total of 23.5 bitcoins. ', '\\P{N}', negate=TRUE)
 #'
 #' @aliases stri_trim
 #' @family search_replace
 #' @family search_charclass
 #' @rdname stri_trim
 #' @export
-stri_trim_both <- function(str, pattern = "\\P{Wspace}")
+stri_trim_both <- function(str, pattern="\\P{Wspace}", negate=FALSE)
 {
-    .Call(C_stri_trim_both, str, pattern)
+    .Call(C_stri_trim_both, str, pattern, negate)
 }
 
 
 #' @rdname stri_trim
 #' @export
-stri_trim_left <- function(str, pattern = "\\P{Wspace}")
+stri_trim_left <- function(str, pattern="\\P{Wspace}", negate=FALSE)
 {
-    .Call(C_stri_trim_left, str, pattern)
+    .Call(C_stri_trim_left, str, pattern, negate)
 }
 
 
 #' @rdname stri_trim
 #' @export
-stri_trim_right <- function(str, pattern = "\\P{Wspace}")
+stri_trim_right <- function(str, pattern="\\P{Wspace}", negate=FALSE)
 {
-    .Call(C_stri_trim_right, str, pattern)
+    .Call(C_stri_trim_right, str, pattern, negate)
 }
 
 
 #' @rdname stri_trim
 #' @export
-stri_trim <- function(str, side = c("both", "left", "right"), pattern = "\\P{Wspace}")
+stri_trim <- function(str, side=c("both", "left", "right"), pattern="\\P{Wspace}", negate=FALSE)
 {
     # `both` is default for compatibility with stringr
     side <- match.arg(side)  # this is slow
 
     switch(side,
-        both = stri_trim_both(str, pattern),
-        left = stri_trim_left(str, pattern),
-        right = stri_trim_right(str, pattern)
+        both=stri_trim_both(str, pattern, negate),
+        left=stri_trim_left(str, pattern, negate),
+        right=stri_trim_right(str, pattern, negate)
     )
 }

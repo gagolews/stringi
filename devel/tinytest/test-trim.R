@@ -7,6 +7,11 @@ expect_equivalent(stri_trim_both(character(0)), character(0))
 expect_equivalent(stri_trim_both(NA), NA_character_)
 
 expect_equivalent(stri_trim_both("      "), "")
+expect_equivalent(stri_trim_both("      ", negate=TRUE), "      ")
+expect_equivalent(stri_trim_both("      ", negate=TRUE, pattern="\\p{Wspace}"), "")
+expect_equivalent(stri_trim("      ", side="both", negate=TRUE, pattern="\\p{Wspace}"), "")
+expect_equivalent(stri_trim_left("      ", negate=TRUE, pattern="\\p{Wspace}"), "")
+expect_equivalent(stri_trim_right("      ", negate=TRUE, pattern="\\p{Wspace}"), "")
 expect_equivalent(stri_trim_both(" \tA  "), "A")
 expect_equivalent(stri_trim_both("A \t\n"), "A")
 expect_equivalent(stri_trim_both("     A"), "A")
@@ -19,6 +24,21 @@ expect_equivalent(stri_trim_both(LETTERS), LETTERS)
 expect_equivalent(stri_trim_both(stri_dup(" ", 1:100)), rep("", 100))
 expect_equivalent(stri_trim_both(stri_dup(" \n \t", 1:100)), rep("", 100))
 expect_equivalent(stri_trim_both(stri_dup("\n\t\n", 1:100)), rep("", 100))
+
+
+
+x <- c("    ", "", NA_character_, "a", "   a  ", "   a", "a  ")
+expect_equivalent(stri_trim_both(x), c("", "", NA_character_, "a", "a", "a", "a"))
+expect_equivalent(stri_trim_left(x),  c("", "", NA_character_, "a", "a  ", "a", "a  "))
+expect_equivalent(stri_trim_right(x), c("", "", NA_character_, "a", "   a", "   a", "a"))
+
+expect_equivalent(stri_trim_both(x, pattern="[^\\ ]"), c("", "", NA_character_, "a", "a", "a", "a"))
+expect_equivalent(stri_trim_left(x, pattern="[^\\ ]"),  c("", "", NA_character_, "a", "a  ", "a", "a  "))
+expect_equivalent(stri_trim_right(x, pattern="[^\\ ]"), c("", "", NA_character_, "a", "   a", "   a", "a"))
+
+expect_equivalent(stri_trim_both(x, pattern="[\\ ]", negate=TRUE), c("", "", NA_character_, "a", "a", "a", "a"))
+expect_equivalent(stri_trim_left(x, pattern="[\\ ]", negate=TRUE),  c("", "", NA_character_, "a", "a  ", "a", "a  "))
+expect_equivalent(stri_trim_right(x, pattern="[\\ ]", negate=TRUE), c("", "", NA_character_, "a", "   a", "   a", "a"))
 
 
 # basic tests (ASCII, border-line):
