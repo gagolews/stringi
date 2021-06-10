@@ -3,6 +3,10 @@
 
 ## 1.6.2.9xxx (to-be >= 1.6.3) (2021-xx-yy)
 
+* [DOCUMENTATION] It has been clarified that the syntax of `*_charclass`
+  (e.g., used in `stri_trim*`) differs slightly form regex character
+  classes.
+
 * [NEW FEATURE] #420: `stri_sprintf` (alias: `stri_string_format`)
   is a Unicode-aware replacement for and enhancement of the base `sprintf`:
   it adds a customised handling of `NA`s (on demand), computing field size
@@ -21,6 +25,8 @@
 
 * [NEW FEATURE] `stri_datetime_format`, `stri_datetime_add`, and
   `stri_datetime_fields` now call `as.POSIXct` more eagerly.
+
+* [NEW FEATURE] `stri_trim*` now have a new argument, `negate`.
 
 * [BACKWARD INCOMPATIBILITY] `%s$%` and `%stri$%` now use `stri_sprintf`
   instead of `base::sprintf`.

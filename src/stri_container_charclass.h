@@ -49,6 +49,9 @@
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
  *          New method: locateAll
+ *
+ * @version 1.6.3 (Marek Gagolewski, 2021-06-10)
+ *          negate
  */
 class StriContainerCharClass : public StriContainerBase {
 
@@ -63,7 +66,7 @@ public:
         data = NULL;
     }
 
-    StriContainerCharClass(SEXP rvec, R_len_t _nrecycle)
+    StriContainerCharClass(SEXP rvec, R_len_t _nrecycle, bool negate=false)
     {
 #ifndef NDEBUG
         if (!isString(rvec))
@@ -82,8 +85,12 @@ public:
                 else {
                     UErrorCode status = U_ZERO_ERROR;
                     this->data[i].applyPattern(
-                        UnicodeString::fromUTF8(rvec_cont.get(i).c_str()), status);
+                        UnicodeString::fromUTF8(rvec_cont.get(i).c_str()),
+                        status
+                    );
                     STRI__CHECKICUSTATUS_THROW(status, {delete [] data; data = NULL;})
+                    if (negate)
+                        this->data[i].complement();
                     this->data[i].freeze();
                 }
             }

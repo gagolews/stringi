@@ -88,7 +88,7 @@ Some examples:
    match all non-Latin letters.}
 \item{\code{[[a-z][A-Z][0-9]]} or \code{[a-zA-Z0-9]}}{Implicit union of
    sets -- match ASCII letters and digits (the two forms are equivalent).}
-\item{\code{[:script=Greek:]}}{Alternate POSIX-like syntax for properties --
+\item{\code{[:script=Greek:]}}{Alternative POSIX-like syntax for properties --
    equivalent to \code{\\p{script=Greek}}.}
 }
 }

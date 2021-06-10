@@ -16,7 +16,7 @@ Here is a list of operators provided by the ICU User Guide on regexes.
 
 `|`
 
-:   Alternation. A\|B matches either A or B.
+:   Alternation. `A|B` matches either A or B.
 
 `*`
 
@@ -298,7 +298,47 @@ Here is a list of meta-characters provided by the ICU User Guide on regexes.
 
 :   \[inside sets\] Quotes the following character. Characters that must be quoted to be treated as literals are `[ ] \`; Characters that may need to be quoted, depending on the context are `- &`.
 
-For information on how to define character classes in regexes, refer to [about\_search\_charclass](about_search_charclass.md).
+## Character Classes
+
+The syntax is similar, but not 100% compatible with the one described in [about\_search\_charclass](about_search_charclass.md). In particular, whitespaces are not ignored and set-theoretic operations are denoted slightly differently. However, taking these differences into account, otherwise [about\_search\_charclass](about_search_charclass.md) is a good reference on the capabilities offered.
+
+The ICU User Guide on regexes lists what follows.
+
+`[abc]`
+
+:   Match any of the characters a, b, or c
+
+`[^abc]`
+
+:   Negation -- match any character except a, b, or c
+
+`[A-M]`
+
+:   Range -- match any character from A to M (based on Unicode code point ordering)
+
+`[\p{L}]`, `[\p{Letter}]`, `[\p{General_Category=Letter}]`, `[:letter:]`
+
+:   Characters with Unicode Category = Letter (4 equivalent forms)
+
+`[\P{Letter}]`
+
+:   Negated property -- natch everything except Letters
+
+`[\p{numeric_value=9}]`
+
+:   Match all numbers with a numeric value of 9
+
+`[\p{Letter}&&\p{script=cyrillic}]`
+
+:   Intersection; match the set of all Cyrillic letters
+
+`[\p{Letter}--\p{script=latin}]`
+
+:   Set difference; match all non-Latin letters
+
+`[[a-z][A-Z][0-9]]`, `[a-zA-Z0-9]`
+
+:   Union; match ASCII letters and digits (2 equivalent forms)
 
 ## Regex Functions in <span class="pkg">stringi</span>
 

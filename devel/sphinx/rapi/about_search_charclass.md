@@ -74,7 +74,7 @@ Some examples:
 
 `[:script=Greek:]`
 
-:   Alternate POSIX-like syntax for properties -- equivalent to `\p{script=Greek}`.
+:   Alternative POSIX-like syntax for properties -- equivalent to `\p{script=Greek}`.
 
 ## Unicode properties
 
