@@ -183,8 +183,8 @@ Characters that must be quoted to be treated as literals are
 The syntax is similar, but not 100\% compatible with the one
 described in \link{about_search_charclass}. In particular,
 whitespaces are not ignored and set-theoretic operations are
-denoted slightly differently. However, taking these differences into
-account, otherwise \link{about_search_charclass} is a good reference
+denoted slightly differently. However, other than this
+\link{about_search_charclass} is a good reference
 on the capabilities offered.
 
 The ICU User Guide on regexes lists what follows.
