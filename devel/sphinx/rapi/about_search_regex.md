@@ -300,7 +300,7 @@ Here is a list of meta-characters provided by the ICU User Guide on regexes.
 
 ## Character Classes
 
-The syntax is similar, but not 100% compatible with the one described in [about\_search\_charclass](about_search_charclass.md). In particular, whitespaces are not ignored and set-theoretic operations are denoted slightly differently. However, taking these differences into account, otherwise [about\_search\_charclass](about_search_charclass.md) is a good reference on the capabilities offered.
+The syntax is similar, but not 100% compatible with the one described in [about\_search\_charclass](about_search_charclass.md). In particular, whitespaces are not ignored and set-theoretic operations are denoted slightly differently. However, other than this [about\_search\_charclass](about_search_charclass.md) is a good reference on the capabilities offered.
 
 The ICU User Guide on regexes lists what follows.
 
