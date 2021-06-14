@@ -46,6 +46,8 @@
   width/precision args passed via `*`. Also, `na_string` has not been
   trimmed to the desired width in formatters like `"%.1s"`.
 
+* [BUGFIX] `stri_wrap` did not recognise the width of certain Unicode sequences
+  correctly.
 
 ## 1.6.2 (2021-05-14)
 

@@ -119,3 +119,10 @@ strings <- list(stri_paste("ala ma \u0105 \u00F1 kota i kotek ma alicje oraz dwi
 #       }
 #    }
 
+expect_equivalent(stri_width(stri_wrap(stri_dup("a ", 30), 60)), 59)
+expect_equivalent(stri_width(stri_wrap(stri_dup("\u0105 ", 30), 60)), 59)
+expect_equivalent(stri_width(stri_wrap(stri_dup("\u20AC ", 30), 60)), 59)
+expect_equivalent(stri_width(stri_wrap(stri_dup("\U0001F643 ", 20), 60)), 59)
+expect_equivalent(stri_width(stri_wrap(stri_dup("\U0001F3F3\U0000FE0F\U0000200D\U0001F308 ", 20), 60)), 59)
+
+

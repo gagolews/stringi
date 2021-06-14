@@ -374,7 +374,9 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
         std::vector<R_len_t> end_pos_trim(nwords);
         // detect line endings (fail on a match)
 
+        UChar32 p;
         UChar32 c = 0;
+        bool reset = true;
         R_len_t j = 0;
         R_len_t cur_block = 0;
         R_len_t cur_width_orig = 0;
@@ -384,6 +386,7 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
         R_len_t cur_end_pos_trim = 0;
         while (j < str_cur_n) {
             R_len_t jlast = j;
+            p = c;
             U8_NEXT(str_cur_s, j, str_cur_n, c);
             if (c < 0) // invalid utf-8 sequence
                 throw StriException(MSG__INVALID_UTF8);
@@ -391,7 +394,8 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
             if (uset_linebreaks.contains(c))
                 throw StriException(MSG__NEWLINE_FOUND);
 
-            cur_width_orig += stri__width_char(c);
+            // OLD: cur_width_orig += stri__width_char(c);
+            cur_width_orig += stri__width_char_with_context(c, p, reset);
             ++cur_count_orig;
             if (uset_whitespaces.contains(c)) {
 // OLD: trim all white spaces from the end:
@@ -399,7 +403,8 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
 //           [we have the normalize arg for that]
 
 // NEW: trim just one white space at the end:
-                cur_width_trim = stri__width_char(c);
+                // OLD: cur_width_trim = stri__width_char(c);
+                cur_width_trim = stri__width_char_with_context(c, p, reset);
                 cur_count_trim = 1;
                 cur_end_pos_trim = jlast;
             }
@@ -426,6 +431,7 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
                 cur_count_orig = 0;
                 cur_count_trim = 0;
                 cur_end_pos_trim = j;
+                reset = true;
             }
         }
 

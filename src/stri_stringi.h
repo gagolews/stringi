@@ -61,6 +61,7 @@ UCollator* stri__ucol_open(SEXP opts_collator);
 // length.cpp
 R_len_t stri__numbytes_max(SEXP str);
 int     stri__width_char(UChar32 c);
+int     stri__width_char_with_context(UChar32 c, UChar32 p, bool& reset);
 int     stri__width_string(const char* s, int n, int max_width=NA_INTEGER);
 int     stri__length_string(const char* s, int n, int max_length=NA_INTEGER);
 
