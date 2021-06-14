@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.2.9004
+                1.6.2.9007
               </div>
             
           
@@ -305,13 +305,18 @@
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_trim_both</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">pattern</span> <span class="o">=</span> <span class="s">&quot;\\P{Wspace}&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_trim_both</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">pattern</span> <span class="o">=</span> <span class="s">&quot;\\P{Wspace}&quot;</span><span class="p">,</span> <span class="n">negate</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
 
-<span class="nf">stri_trim_left</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">pattern</span> <span class="o">=</span> <span class="s">&quot;\\P{Wspace}&quot;</span><span class="p">)</span>
+<span class="nf">stri_trim_left</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">pattern</span> <span class="o">=</span> <span class="s">&quot;\\P{Wspace}&quot;</span><span class="p">,</span> <span class="n">negate</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
 
-<span class="nf">stri_trim_right</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">pattern</span> <span class="o">=</span> <span class="s">&quot;\\P{Wspace}&quot;</span><span class="p">)</span>
+<span class="nf">stri_trim_right</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">pattern</span> <span class="o">=</span> <span class="s">&quot;\\P{Wspace}&quot;</span><span class="p">,</span> <span class="n">negate</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
 
-<span class="nf">stri_trim</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">side</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;both&quot;</span><span class="p">,</span> <span class="s">&quot;left&quot;</span><span class="p">,</span> <span class="s">&quot;right&quot;</span><span class="p">),</span> <span class="n">pattern</span> <span class="o">=</span> <span class="s">&quot;\\P{Wspace}&quot;</span><span class="p">)</span>
+<span class="nf">stri_trim</span><span class="p">(</span>
+  <span class="n">str</span><span class="p">,</span>
+  <span class="n">side</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;both&quot;</span><span class="p">,</span> <span class="s">&quot;left&quot;</span><span class="p">,</span> <span class="s">&quot;right&quot;</span><span class="p">),</span>
+  <span class="n">pattern</span> <span class="o">=</span> <span class="s">&quot;\\P{Wspace}&quot;</span><span class="p">,</span>
+  <span class="n">negate</span> <span class="o">=</span> <span class="kc">FALSE</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -328,9 +333,12 @@
 <td><p>a character vector of strings to be trimmed</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pattern</span></code></p></td>
-<td><p>a single pattern, specifying character classes that should be preserved (see <a class="reference internal" href="about_search_charclass.html"><span class="doc std std-doc">stringi-search-charclass</span></a>). Defaults to ‘<code class="docutils literal notranslate"><span class="pre">\P{Wspace}</span></code>.</p></td>
+<td><p>a single pattern, specifying the class of characters (see <a class="reference internal" href="about_search_charclass.html"><span class="doc std std-doc">stringi-search-charclass</span></a>) to to be preserved (if <code class="docutils literal notranslate"><span class="pre">negate</span></code> is <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>; default) or trimmed (otherwise)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">side</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">negate</span></code></p></td>
+<td><p>either <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> or <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>; see <code class="docutils literal notranslate"><span class="pre">pattern</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">side</span></code></p></td>
 <td><p>character [<code class="docutils literal notranslate"><span class="pre">stri_trim</span></code> only]; defaults to <code class="docutils literal notranslate"><span class="pre">'both'</span></code></p></td>
 </tr>
 </tbody>
@@ -340,14 +348,14 @@
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
 <p>Vectorized over <code class="docutils literal notranslate"><span class="pre">str</span></code> and <code class="docutils literal notranslate"><span class="pre">pattern</span></code>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">stri_trim</span></code> is a convenience wrapper over <code class="docutils literal notranslate"><span class="pre">stri_trim_left</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_trim_right</span></code>.</p>
-<p>Contrary to many other string processing libraries, our trimming functions are universal. A character class, given by <code class="docutils literal notranslate"><span class="pre">pattern</span></code>, may be adjusted to suit your needs (yet, most often you stick to the default value).</p>
-<p>For replacing pattern matches with arbitrary replacement string, see <a class="reference internal" href="stri_replace.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_replace</span></code></span></a>.</p>
+<p>Contrary to many other string processing libraries, our trimming functions are universal. The class of characters to be retained or trimmed can be adjusted.</p>
+<p>For replacing pattern matches with an arbitrary replacement string, see <a class="reference internal" href="stri_replace.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_replace</span></code></span></a>.</p>
 <p>Trimming can also be used where you would normally rely on regular expressions. For instance, you may get <code class="docutils literal notranslate"><span class="pre">'23.5'</span></code> out of <code class="docutils literal notranslate"><span class="pre">'total</span> <span class="pre">of</span> <span class="pre">23.5</span> <span class="pre">bitcoins'</span></code>.</p>
 <p>For trimming white-spaces, please note the difference between Unicode binary property ‘<code class="docutils literal notranslate"><span class="pre">\p{Wspace}</span></code>’ (more universal) and general character category ‘<code class="docutils literal notranslate"><span class="pre">\p{Z}</span></code>’, see <a class="reference internal" href="about_search_charclass.html"><span class="doc std std-doc">stringi-search-charclass</span></a>.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
-<p>All these functions return a character vector.</p>
+<p>All functions return a character vector.</p>
 </div>
 <div class="section" id="author-s">
 <h2>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this headline">¶</a></h2>
@@ -363,12 +371,12 @@
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_trim_left</span><span class="p">(</span><span class="s">&#39;               aaa&#39;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;aaa&quot;</span>
-<span class="nf">stri_trim_right</span><span class="p">(</span><span class="s">&#39;r-project.org/&#39;</span><span class="p">,</span> <span class="s">&#39;\\p{P}&#39;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;r-project.org/&quot;</span>
+<span class="nf">stri_trim_right</span><span class="p">(</span><span class="s">&#39;r-project.org/&#39;</span><span class="p">,</span> <span class="s">&#39;\\P{P}&#39;</span><span class="p">)</span>
+<span class="c1">## [1] &quot;r-project.org&quot;</span>
 <span class="nf">stri_trim_both</span><span class="p">(</span><span class="s">&#39; Total of 23.5 bitcoins. &#39;</span><span class="p">,</span> <span class="s">&#39;\\p{N}&#39;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;23.5&quot;</span>
-<span class="nf">stri_trim_both</span><span class="p">(</span><span class="s">&#39; Total of 23.5 bitcoins. &#39;</span><span class="p">,</span> <span class="s">&#39;\\p{L}&#39;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;Total of 23.5 bitcoins&quot;</span>
+<span class="nf">stri_trim_both</span><span class="p">(</span><span class="s">&#39; Total of 23.5 bitcoins. &#39;</span><span class="p">,</span> <span class="s">&#39;\\P{N}&#39;</span><span class="p">,</span> <span class="n">negate</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="c1">## [1] &quot;23.5&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -390,7 +398,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-06-03T14:48:11+1000.
+        Last updated on 2021-06-14T18:40:45+1000.
       </span>
 
     </p>
