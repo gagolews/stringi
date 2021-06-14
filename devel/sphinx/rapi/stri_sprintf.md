@@ -135,14 +135,14 @@ stri_printf("%+10.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_),
 ##         💩
 ##       <NA>
 stri_sprintf("UNIX time %1$f is %1$s.", Sys.time())
-## [1] "UNIX time 1623398258.326312 is 2021-06-11 17:57:38."
+## [1] "UNIX time 1623660029.213585 is 2021-06-14 18:40:29."
 # the following do not work in sprintf()
 stri_sprintf("%1$#- *2$.*3$f", 1.23456, 10, 3)  # two asterisks
 ## [1] " 1.235    "
 stri_sprintf(c("%s", "%f"), pi)  # re-coercion needed
 ## [1] "3.14159265358979" "3.141593"
 stri_sprintf("%1$s is %1$f UNIX time.", Sys.time())  # re-coercion needed
-## [1] "2021-06-11 17:57:38 is 1623398258.328827 UNIX time."
+## [1] "2021-06-14 18:40:29 is 1623660029.215856 UNIX time."
 stri_sprintf(c("%d", "%s"), factor(11:12))  # re-coercion needed
 ## [1] "1"  "12"
 stri_sprintf(c("%s", "%d"), factor(11:12))  # re-coercion needed

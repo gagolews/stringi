@@ -62,7 +62,7 @@ These functions are not locale sensitive. For instance, numbers are always forma
 
 All arguments passed via `...` are evaluated. If some of them are unused, a warning is generated. Too few arguments result in an error.
 
-Note that `stri_printf` treats missing values in `...` as strings `"NA"` by default.
+Note that `stri_printf` treats missing values in `...` as `"NA"` strings by default.
 
 All format specifiers supported [`sprintf`](https://stat.ethz.ch/R-manual/R-devel/library/base/help/sprintf.html) are also available here. For the formatting of integers and floating-point values, currently the system `std::snprintf()` is called, but this may change in the future. Format specifiers are normalized and necessary sanity checks are performed.
 
@@ -135,14 +135,14 @@ stri_printf("%+10.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_),
 ##         💩
 ##       <NA>
 stri_sprintf("UNIX time %1$f is %1$s.", Sys.time())
-## [1] "UNIX time 1622695679.486651 is 2021-06-03 14:47:59."
+## [1] "UNIX time 1623660029.213585 is 2021-06-14 18:40:29."
 # the following do not work in sprintf()
 stri_sprintf("%1$#- *2$.*3$f", 1.23456, 10, 3)  # two asterisks
 ## [1] " 1.235    "
 stri_sprintf(c("%s", "%f"), pi)  # re-coercion needed
 ## [1] "3.14159265358979" "3.141593"
 stri_sprintf("%1$s is %1$f UNIX time.", Sys.time())  # re-coercion needed
-## [1] "2021-06-03 14:47:59 is 1622695679.490289 UNIX time."
+## [1] "2021-06-14 18:40:29 is 1623660029.215856 UNIX time."
 stri_sprintf(c("%d", "%s"), factor(11:12))  # re-coercion needed
 ## [1] "1"  "12"
 stri_sprintf(c("%s", "%d"), factor(11:12))  # re-coercion needed

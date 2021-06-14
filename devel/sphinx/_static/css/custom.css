@@ -5,3 +5,114 @@ table.docutils p {
 .rst-content table.docutils td, .rst-content table.field-list td, .wy-table td {
     vertical-align: top;
 }
+
+.proof-type-exercise {
+    clear: both;
+    background: #EFE1CE;
+    padding: 12px;
+    line-height: 24px;
+    margin-bottom: 24px;
+    box-sizing: border-box;
+}
+
+.proof-type-exercise .proof-title {
+    background: #615550;
+    font-weight: 700;
+    display: block;
+    color: #fff;
+    padding: 6px 12px;
+    margin: -12px -12px 12px;
+}
+
+.proof-content {
+    font-style: italic;
+    padding: 0;
+}
+
+.proof-content p {
+    margin: 0;
+}
+
+
+.proof-type-example {
+    clear: both;
+    background: #EFE1CE;
+    padding: 12px;
+    line-height: 24px;
+    margin-bottom: 24px;
+    box-sizing: border-box;
+}
+
+.proof-type-example .proof-title {
+    background: #615550;
+    font-weight: 700;
+    display: block;
+    color: #fff;
+    padding: 6px 12px;
+    margin: -12px -12px 12px;
+}
+
+
+.rst-content code.literal {
+    color: #000000;
+}
+
+code.notranslate {
+    background: inherit;
+    color: #000000;
+    font-weight: normal;
+    font-size: 90%;
+    border: 0;
+    padding: 0;
+}
+
+strong.command, .rst-content code, .rst-content div[class^="highlight"] pre, .rst-content tt, .rst-content pre, pre, samp, kbd, code {
+    font-family: Ubuntu Mono,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,Courier,monospace;
+    font-size: 90%;
+    font-style: normal;
+}
+
+.wy-menu-vertical p.caption {
+/*     color: #ff303b; */
+}
+
+.wy-side-nav-search, .wy-nav-top {
+/*     background-color: #9d1925; */
+}
+
+.wy-side-nav-search input[type="text"] {
+/*     border-color: #9d1925; */
+}
+
+
+@font-face {
+  font-family: "Ubuntu Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: url("fonts/ubuntumono-regular.woff2") format("woff2"),
+       url("fonts/ubuntumono-regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Ubuntu Mono";
+  font-style: italic;
+  font-weight: 400;
+  src: url("fonts/ubuntumono-regular-italic.woff2") format("woff2"),
+       url("fonts/ubuntumono-regular-italic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Ubuntu Mono";
+  font-style: normal;
+  font-weight: 700;
+  src: url("fonts/ubuntumono-bold.woff2") format("woff2"),
+       url("fonts/ubuntumono-bold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Ubuntu Mono";
+  font-style: italic;
+  font-weight: 700;
+  src: url("fonts/ubuntumono-bold-italic.woff2") format("woff2"),
+       url("fonts/ubuntumono-bold-italic.woff") format("woff");
+}

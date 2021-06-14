@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.2.9004
+                1.6.2.9007
               </div>
             
           
@@ -110,6 +110,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#details">Details</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#span-class-pkg-icu-span-regex-operators-at-a-glance"><span class="pkg">ICU</span> Regex Operators at a Glance</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#span-class-pkg-icu-span-regex-meta-characters-at-a-glance"><span class="pkg">ICU</span> Regex Meta-characters at a Glance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#character-classes">Character Classes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#regex-functions-in-span-class-pkg-stringi-span">Regex Functions in <span class="pkg">stringi</span></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#author-s">Author(s)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#references">References</a></li>
@@ -312,7 +313,7 @@
 <h2><span class="pkg">ICU</span> Regex Operators at a Glance<a class="headerlink" href="#span-class-pkg-icu-span-regex-operators-at-a-glance" title="Permalink to this headline">¶</a></h2>
 <p>Here is a list of operators provided by the ICU User Guide on regexes.</p>
 <dl class="simple myst">
-<dt><code class="docutils literal notranslate"><span class="pre">|</span></code></dt><dd><p>Alternation. A|B matches either A or B.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">|</span></code></dt><dd><p>Alternation. <code class="docutils literal notranslate"><span class="pre">A|B</span></code> matches either A or B.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">*</span></code></dt><dd><p>Match 0 or more times. Match as many times as possible.</p>
 </dd>
@@ -459,7 +460,31 @@
 <dt><code class="docutils literal notranslate"><span class="pre">\</span></code></dt><dd><p>[inside sets] Quotes the following character. Characters that must be quoted to be treated as literals are <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">]</span> <span class="pre">\</span></code>; Characters that may need to be quoted, depending on the context are <code class="docutils literal notranslate"><span class="pre">-</span> <span class="pre">&amp;</span></code>.</p>
 </dd>
 </dl>
-<p>For information on how to define character classes in regexes, refer to <a class="reference internal" href="about_search_charclass.html"><span class="doc std std-doc">about_search_charclass</span></a>.</p>
+</div>
+<div class="section" id="character-classes">
+<h2>Character Classes<a class="headerlink" href="#character-classes" title="Permalink to this headline">¶</a></h2>
+<p>The syntax is similar, but not 100% compatible with the one described in <a class="reference internal" href="about_search_charclass.html"><span class="doc std std-doc">about_search_charclass</span></a>. In particular, whitespaces are not ignored and set-theoretic operations are denoted slightly differently. However, other than this <a class="reference internal" href="about_search_charclass.html"><span class="doc std std-doc">about_search_charclass</span></a> is a good reference on the capabilities offered.</p>
+<p>The ICU User Guide on regexes lists what follows.</p>
+<dl class="simple myst">
+<dt><code class="docutils literal notranslate"><span class="pre">[abc]</span></code></dt><dd><p>Match any of the characters a, b, or c</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">[^abc]</span></code></dt><dd><p>Negation – match any character except a, b, or c</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">[A-M]</span></code></dt><dd><p>Range – match any character from A to M (based on Unicode code point ordering)</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">[\p{L}]</span></code>, <code class="docutils literal notranslate"><span class="pre">[\p{Letter}]</span></code>, <code class="docutils literal notranslate"><span class="pre">[\p{General_Category=Letter}]</span></code>, <code class="docutils literal notranslate"><span class="pre">[:letter:]</span></code></dt><dd><p>Characters with Unicode Category = Letter (4 equivalent forms)</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">[\P{Letter}]</span></code></dt><dd><p>Negated property – natch everything except Letters</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">[\p{numeric_value=9}]</span></code></dt><dd><p>Match all numbers with a numeric value of 9</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">[\p{Letter}&amp;&amp;\p{script=cyrillic}]</span></code></dt><dd><p>Intersection; match the set of all Cyrillic letters</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">[\p{Letter}--\p{script=latin}]</span></code></dt><dd><p>Set difference; match all non-Latin letters</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">[[a-z][A-Z][0-9]]</span></code>, <code class="docutils literal notranslate"><span class="pre">[a-zA-Z0-9]</span></code></dt><dd><p>Union; match ASCII letters and digits (2 equivalent forms)</p>
+</dd>
+</dl>
 </div>
 <div class="section" id="regex-functions-in-span-class-pkg-stringi-span">
 <h2>Regex Functions in <span class="pkg">stringi</span><a class="headerlink" href="#regex-functions-in-span-class-pkg-stringi-span" title="Permalink to this headline">¶</a></h2>
@@ -501,7 +526,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-06-03T14:48:11+1000.
+        Last updated on 2021-06-14T18:40:45+1000.
       </span>
 
     </p>
