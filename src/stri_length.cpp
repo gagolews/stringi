@@ -340,6 +340,66 @@ int stri__width_char(UChar32 c)
 
 
 
+
+/** Get width of a single character (context-dependent)
+ *
+ * inspired by http://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c
+ * and https://github.com/nodejs/node/blob/master/src/node_i18n.cc
+ * but with extras
+ *
+ * @version 1.6.3 (Marek Gagolewski, 2021-06-14)
+ *    stand-alone fun
+ *
+ * @param c code point
+ * @param p previous code point
+ * @return int
+ */
+int stri__width_char_with_context(UChar32 c, UChar32 p, bool& reset)
+{
+    if (reset) {
+        p = 0;
+        reset = false;
+    }
+
+#if U_ICU_VERSION_MAJOR_NUM>=57
+    // UCHAR_EMOJI_* is ICU >= 57
+    if (
+        /*j > 0 &&*/ p == 0x200D /* ZERO WIDTH JOINER */ && (
+            u_hasBinaryProperty(c, UCHAR_EMOJI_MODIFIER) ||
+            u_hasBinaryProperty(c, UCHAR_EMOJI_PRESENTATION) ||
+            c == 0x2640 /* FEMALE */ ||
+            c == 0x2642 /* MALE */ ||
+            c == 0x26A7 /* TRANSGENDER */ ||
+            c == 0x2695 /* HEALTH */ ||
+            c == 0x2696 /* JUDGE */ ||
+            c == 0x1F5E8 /* SPEECH */ ||
+            c == 0x1F32B /* CLOUDS */ ||
+            c == 0x2708 /* PLANE */ ||
+            c == 0x2764 /* HEART */ ||
+            c == 0x2744 /* SNOWFLAKE */ ||
+            c == 0x2620 /* SKULL AND CROSSBONES */
+        )
+    ) {
+        // emoji sequence - ignore (display might not support it)
+        return 0;
+    }
+    else if (
+        /*j > 0 &&*/ (p >= 0x1F1E6 && p <= 0x1F1FF)
+        && (c >= 0x1F1E6 && c <= 0x1F1FF)
+    ) {
+        // E2.0 flag (p counted as of width=2 already)
+        reset = true;  // allow the next flag to be recognised
+        return 0;
+    }
+    else {
+        return stri__width_char(c);
+    }
+#else // U_ICU_VERSION_MAJOR_NUM < 57 - no emoji support
+    return stri__width_char(c);
+#endif
+}
+
+
 /** Get the length (number of Unicode code points) of a single UTF-8 string
  *  or get the position where a substring of <= max_length ends
  *
@@ -401,48 +461,15 @@ int stri__width_string(const char* str_cur_s, int str_cur_n, int max_width)
     UChar32 p;      // previous
     UChar32 c = 0;  // current
     R_len_t j = 0;
+    bool reset = true;
     while (j < str_cur_n) {
         R_len_t prevj = j;
         p = c;
         U8_NEXT(str_cur_s, j, str_cur_n, c);
         if (c < 0)
             throw StriException(MSG__INVALID_UTF8);
-#if U_ICU_VERSION_MAJOR_NUM>=57
-        // UCHAR_EMOJI_* is ICU >= 57
-        if (
-            j > 0 && p == 0x200D /* ZERO WIDTH JOINER */ && (
-                u_hasBinaryProperty(c, UCHAR_EMOJI_MODIFIER) ||
-                u_hasBinaryProperty(c, UCHAR_EMOJI_PRESENTATION) ||
-                c == 0x2640 /* FEMALE */ ||
-                c == 0x2642 /* MALE */ ||
-                c == 0x26A7 /* TRANSGENDER */ ||
-                c == 0x2695 /* HEALTH */ ||
-                c == 0x2696 /* JUDGE */ ||
-                c == 0x1F5E8 /* SPEECH */ ||
-                c == 0x1F32B /* CLOUDS */ ||
-                c == 0x2708 /* PLANE */ ||
-                c == 0x2764 /* HEART */ ||
-                c == 0x2744 /* SNOWFLAKE */ ||
-                c == 0x2620 /* SKULL AND CROSSBONES */
-            )
-        ) {
-            // emoji sequence - ignore (display might not support it)
-            cur_width += 0;
-        }
-        else if (
-            j > 0 && (p >= 0x1F1E6 && p <= 0x1F1FF)
-            && (c >= 0x1F1E6 && c <= 0x1F1FF)
-        ) {
-            // E2.0 flag (p counted as of width=2 already)
-            cur_width += 0;
-            c = 0;  // allow the next flag to be recognised
-        }
-        else {
-            cur_width += stri__width_char(c);
-        }
-#else // U_ICU_VERSION_MAJOR_NUM < 57 - no emoji support
-        cur_width += stri__width_char(c);
-#endif
+
+        cur_width += stri__width_char_with_context(c, p, reset);
 
         // test if max_width exceeded (here; there may be zero-width chars)
         if (max_width != NA_INTEGER && cur_width > max_width)
