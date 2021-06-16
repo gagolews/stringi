@@ -355,3 +355,22 @@ stri_replace_last_regex <- function(str, pattern, replacement, ..., opts_regex =
         opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
     .Call(C_stri_replace_last_regex, str, pattern, replacement, opts_regex)
 }
+
+
+#' Convert gsub-Style Replacement Strings
+#'
+#' @description
+#' Converts a \code{\link[base]{gsub}}-style replacement strings
+#' to those which can be used in \code{\link{stri_replace}}.
+#' In particular, \code{$} becomes \code{\\$} and \code{\\1} becomes \code{$1}.
+#'
+#' @param x character vector
+#'
+#' @return Returns a character vector.
+#'
+#' @family search_replace
+#' @export
+stri_replace_rstr <- function(x)
+{
+    .Call(C_stri_replace_rstr, x)
+}

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>about_search_fixed: Locale-Insensitive Fixed Pattern Matching in stringi &mdash; stringi</title>
+  <title>stri_replace_rstr: Convert gsub-Style Replacement Strings &mdash; stringi</title>
   
 
   
@@ -22,7 +22,7 @@
   
 
   
-    <link rel="canonical" href="https://stringi.gagolewski.com/rapi/about_search_fixed.html" />
+    <link rel="canonical" href="https://stringi.gagolewski.com/rapi/stri_replace_rstr.html" />
 
   
   <!--[if lt IE 9]>
@@ -40,8 +40,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="about_search_regex: Regular Expressions in stringi" href="about_search_regex.html" />
-    <link rel="prev" title="about_search_coll: Locale-Sensitive Text Searching in stringi" href="about_search_coll.html" /> 
+    <link rel="next" title="stri_replace: Replace Occurrences of a Pattern" href="stri_replace.html" />
+    <link rel="prev" title="stri_replace_na: Replace Missing Values in a Character Vector" href="stri_replace_na.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -104,13 +104,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_search_boundaries.html">about_search_boundaries: Text Boundary Analysis in <span class="pkg">stringi</span></a></li>
 <li class="toctree-l2"><a class="reference internal" href="about_search_charclass.html">about_search_charclass: Character Classes in <span class="pkg">stringi</span></a></li>
 <li class="toctree-l2"><a class="reference internal" href="about_search_coll.html">about_search_coll: Locale-Sensitive Text Searching in <span class="pkg">stringi</span></a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">about_search_fixed: Locale-Insensitive Fixed Pattern Matching in <span class="pkg">stringi</span></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#description">Description</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#byte-compare">Byte Compare</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#author-s">Author(s)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#see-also">See Also</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="about_search_fixed.html">about_search_fixed: Locale-Insensitive Fixed Pattern Matching in <span class="pkg">stringi</span></a></li>
 <li class="toctree-l2"><a class="reference internal" href="about_search_regex.html">about_search_regex: Regular Expressions in <span class="pkg">stringi</span></a></li>
 <li class="toctree-l2"><a class="reference internal" href="about_search.html">about_search: String Searching</a></li>
 <li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
@@ -177,7 +171,15 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_read_raw.html">stri_read_raw: Read Text File as Raw</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_remove_empty.html">stri_remove_empty: Remove All Empty Strings from a Character Vector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_replace_na.html">stri_replace_na: Replace Missing Values in a Character Vector</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_replace_rstr.html">stri_replace_rstr: Convert gsub-Style Replacement Strings</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">stri_replace_rstr: Convert gsub-Style Replacement Strings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#description">Description</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#arguments">Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#value">Value</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#author-s">Author(s)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#see-also">See Also</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="stri_replace.html">stri_replace: Replace Occurrences of a Pattern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_reverse.html">stri_reverse: Reverse Each String</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_sort_key.html">stri_sort_key: Sort Keys</a></li>
@@ -268,7 +270,7 @@
         
           <li><a href="../rapi.html">R Package <em>stringi</em> Reference</a> &raquo;</li>
         
-      <li>about_search_fixed: Locale-Insensitive Fixed Pattern Matching in <span class="pkg">stringi</span></li>
+      <li>stri_replace_rstr: Convert gsub-Style Replacement Strings</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -282,10 +284,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="about_search_regex.html" class="btn btn-neutral float-right" title="about_search_regex: Regular Expressions in stringi" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="stri_replace.html" class="btn btn-neutral float-right" title="stri_replace: Replace Occurrences of a Pattern" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
       
       
-        <a href="about_search_coll.html" class="btn btn-neutral float-left" title="about_search_coll: Locale-Sensitive Text Searching in stringi" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="stri_replace_na.html" class="btn btn-neutral float-left" title="stri_replace_na: Replace Missing Values in a Character Vector" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
       
   </div>
   
@@ -294,24 +296,36 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="about-search-fixed-locale-insensitive-fixed-pattern-matching-in-span-class-pkg-stringi-span">
-<h1>about_search_fixed: Locale-Insensitive Fixed Pattern Matching in <span class="pkg">stringi</span><a class="headerlink" href="#about-search-fixed-locale-insensitive-fixed-pattern-matching-in-span-class-pkg-stringi-span" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="stri-replace-rstr-convert-gsub-style-replacement-strings">
+<h1>stri_replace_rstr: Convert gsub-Style Replacement Strings<a class="headerlink" href="#stri-replace-rstr-convert-gsub-style-replacement-strings" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>String searching facilities described here provide a way to locate a specific sequence of bytes in a string. The search engine’s settings may be tuned up (for example to perform case-insensitive search) via a call to the <a class="reference internal" href="stri_opts_fixed.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_opts_fixed</span></code></span></a> function.</p>
+<p>Converts a <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/help/gsub.html"><code class="docutils literal notranslate"><span class="pre">gsub</span></code></a>-style replacement strings to those which can be used in <a class="reference internal" href="stri_replace.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_replace</span></code></span></a>. In particular, <code class="docutils literal notranslate"><span class="pre">$</span></code> becomes <code class="docutils literal notranslate"><span class="pre">\$</span></code> and <code class="docutils literal notranslate"><span class="pre">\1</span></code> becomes <code class="docutils literal notranslate"><span class="pre">$1</span></code>.</p>
 </div>
-<div class="section" id="byte-compare">
-<h2>Byte Compare<a class="headerlink" href="#byte-compare" title="Permalink to this headline">¶</a></h2>
-<p>The fast Knuth-Morris-Pratt search algorithm, with worst time complexity of O(n+p) (<code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">==</span> <span class="pre">length(str)</span></code>, <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">==</span> <span class="pre">length(pattern)</span></code>) is implemented (with some tweaks for very short search patterns).</p>
-<p>Be aware that, for natural language processing, fixed pattern searching might not be what you actually require. It is because a bitwise match will not give correct results in cases of:</p>
-<ol class="simple">
-<li><p>accented letters;</p></li>
-<li><p>conjoined letters;</p></li>
-<li><p>ignorable punctuation;</p></li>
-<li><p>ignorable case,</p></li>
-</ol>
-<p>see also <a class="reference internal" href="about_search_coll.html"><span class="doc std std-doc">about_search_coll</span></a>.</p>
-<p>Note that the conversion of input data to Unicode is done as usual.</p>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_replace_rstr</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="arguments">
+<h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline">¶</a></h2>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">x</span></code></p></td>
+<td><p>character vector</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="value">
+<h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
+<p>Returns a character vector.</p>
 </div>
 <div class="section" id="author-s">
 <h2>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this headline">¶</a></h2>
@@ -320,8 +334,7 @@
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
-<p>Other search_fixed: <a class="reference internal" href="about_search.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></span></a>, <a class="reference internal" href="stri_opts_fixed.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_opts_fixed()</span></code></span></a></p>
-<p>Other stringi_general_topics: <a class="reference internal" href="about_arguments.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_arguments</span></code></span></a>, <a class="reference internal" href="about_encoding.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_encoding</span></code></span></a>, <a class="reference internal" href="about_locale.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_locale</span></code></span></a>, <a class="reference internal" href="about_search_boundaries.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_boundaries</span></code></span></a>, <a class="reference internal" href="about_search_charclass.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_charclass</span></code></span></a>, <a class="reference internal" href="about_search_coll.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_coll</span></code></span></a>, <a class="reference internal" href="about_search_regex.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_regex</span></code></span></a>, <a class="reference internal" href="about_search.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></span></a>, <a class="reference internal" href="about_stringi.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_stringi</span></code></span></a></p>
+<p>Other search_replace: <a class="reference internal" href="about_search.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></span></a>, <a class="reference internal" href="stri_replace.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_replace_all()</span></code></span></a>, <a class="reference internal" href="stri_trim.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trim_both()</span></code></span></a></p>
 </div>
 </div>
 
@@ -331,8 +344,8 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="about_search_regex.html" class="btn btn-neutral float-right" title="about_search_regex: Regular Expressions in stringi" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="about_search_coll.html" class="btn btn-neutral float-left" title="about_search_coll: Locale-Sensitive Text Searching in stringi" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="stri_replace.html" class="btn btn-neutral float-right" title="stri_replace: Replace Occurrences of a Pattern" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="stri_replace_na.html" class="btn btn-neutral float-left" title="stri_replace_na: Replace Missing Values in a Character Vector" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

@@ -77,6 +77,7 @@ rapi/stri_read_lines
 rapi/stri_read_raw
 rapi/stri_remove_empty
 rapi/stri_replace_na
+rapi/stri_replace_rstr
 rapi/stri_replace
 rapi/stri_reverse
 rapi/stri_sort_key

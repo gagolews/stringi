@@ -74,7 +74,8 @@ The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.c
 
 Other search_replace: 
 \code{\link{about_search}},
-\code{\link{stri_replace_all}()}
+\code{\link{stri_replace_all}()},
+\code{\link{stri_replace_rstr}()}
 
 Other search_charclass: 
 \code{\link{about_search_charclass}},

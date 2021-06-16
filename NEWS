@@ -28,6 +28,9 @@
 
 * [NEW FEATURE] `stri_trim*` now have a new argument, `negate`.
 
+* [NEW FEATURE] `stri_replace_rstr` converts `gsub`-style replacement strings
+  to `stri_replace`-style.
+
 * [BACKWARD INCOMPATIBILITY] `%s$%` and `%stri$%` now use `stri_sprintf`
   instead of `base::sprintf`.
 

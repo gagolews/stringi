@@ -97,6 +97,7 @@ Other search_locate:
 
 Other search_replace: 
 \code{\link{stri_replace_all}()},
+\code{\link{stri_replace_rstr}()},
 \code{\link{stri_trim_both}()}
 
 Other search_split: 
