@@ -337,7 +337,7 @@
 <td><p>character vector of strings to reformat</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">width</span></code></p></td>
-<td><p>single integer giving the suggested maximal number of code points per line</p></td>
+<td><p>single integer giving the suggested maximal total width/number of code points per line</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cost_exponent</span></code></p></td>
 <td><p>single numeric value, values not greater than zero will select a greedy word-wrapping algorithm; otherwise this value denotes the exponent in the cost function of a (more aesthetic) dynamic programming-based algorithm (values in [2, 3] are recommended)</p></td>
@@ -376,7 +376,7 @@
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
 <p>Vectorized over <code class="docutils literal notranslate"><span class="pre">str</span></code>.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">whitespace_only</span></code> is <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>, then <span class="pkg">ICU</span>’s line-<code class="docutils literal notranslate"><span class="pre">BreakIterator</span></code> is used to determine text boundaries where a line break is possible. This is a locale-dependent operation. Otherwise, the breaks are only at white-spaces.</p>
-<p>Note that Unicode code points may have various widths when printed on the console and that the function takes that by default into account. By changing the state of the <code class="docutils literal notranslate"><span class="pre">use_length</span></code> argument, this function starts to act like each code point was of width 1. This feature should rather be used with text in Latin script.</p>
+<p>Note that Unicode code points may have various widths when printed on the console and that this function, by default, takes that into account. By changing the state of the <code class="docutils literal notranslate"><span class="pre">use_length</span></code> argument, this function starts to act as if each code point was of width 1.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">normalize</span></code> is <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>, then multiple white spaces between the word boundaries are preserved within each wrapped line. In such a case, none of the strings can contain <code class="docutils literal notranslate"><span class="pre">\r</span></code>, <code class="docutils literal notranslate"><span class="pre">\n</span></code>, or other new line characters, otherwise you will get an error. You should split the input text into lines or, for example, substitute line breaks with spaces before applying this function.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">normalize</span></code> is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, then all consecutive white space (ASCII space, horizontal TAB, CR, LF) sequences are replaced with single ASCII spaces before actual string wrapping. Moreover, <a class="reference internal" href="stri_split_lines.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_split_lines</span></code></span></a> and <a class="reference internal" href="stri_trans_nf.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_nfc</span></code></span></a> is called on the input character vector. This is for compatibility with <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/strwrap.html"><code class="docutils literal notranslate"><span class="pre">strwrap</span></code></a>.</p>
 <p>The greedy algorithm (for <code class="docutils literal notranslate"><span class="pre">cost_exponent</span></code> being non-positive) provides a very simple way for word wrapping. It always puts as many words in each line as possible. This method – contrary to the dynamic algorithm – does not minimize the number of space left at the end of every line. The dynamic algorithm (a.k.a. Knuth’s word wrapping algorithm) is more complex, but it returns text wrapped in a more aesthetic way. This method minimizes the squared (by default, see <code class="docutils literal notranslate"><span class="pre">cost_exponent</span></code>) number of spaces (raggedness) at the end of each line, so the text is mode arranged evenly. Note that the cost of printing the last line is always zero.</p>
@@ -391,7 +391,7 @@
 </div>
 <div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
-<p>D.E. Knuth, M.F. Plass, Breaking paragraphs into lines, <em>Software: Practice and Experience</em> 11(11), 1981, pp. 1119–1184</p>
+<p>D.E. Knuth, M.F. Plass, Breaking paragraphs into lines, <em>Software: Practice and Experience</em> 11(11), 1981, pp. 1119–1184.</p>
 </div>
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
@@ -454,7 +454,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-06-14T18:40:45+1000.
+        Last updated on 2021-06-16T12:25:28+1000.
       </span>
 
     </p>
