@@ -1,10 +1,6 @@
-table.docutils p {
-    white-space: normal;
-}
-
-.rst-content table.docutils td, .rst-content table.field-list td, .wy-table td {
-    vertical-align: top;
-}
+/* --------------------------------------------------------------------------
+   Copyleft (C) 2021, Marek Gagolewski <https://www.gagolewski.com>
+   -------------------------------------------------------------------------- */
 
 .proof-type-exercise {
     clear: both;
@@ -33,7 +29,6 @@ table.docutils p {
     margin: 0;
 }
 
-
 .proof-type-example {
     clear: both;
     background: #EFE1CE;
@@ -52,38 +47,60 @@ table.docutils p {
     margin: -12px -12px 12px;
 }
 
+/* -------------------------------------------------------------------------- */
 
-.rst-content code.literal {
-    color: #000000;
+table.docutils p {
+    white-space: normal;
+}
+
+.rst-content table.docutils td, .rst-content table.field-list td, .wy-table td {
+    vertical-align: top;
+}
+
+/* -------------------------------------------------------------------------- */
+
+.rst-content code.literal, .rst-content tt.literal {
+    color: inherit;
 }
 
 code.notranslate {
     background: inherit;
-    color: #000000;
-    font-weight: normal;
-    font-size: 90%;
+    color: inherit;
+    font-weight: inherit;
+    font-size: inherit;
     border: 0;
     padding: 0;
 }
 
 strong.command, .rst-content code, .rst-content div[class^="highlight"] pre, .rst-content tt, .rst-content pre, pre, samp, kbd, code {
     font-family: Ubuntu Mono,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,Courier,monospace;
-    font-size: 90%;
-    font-style: normal;
+/*     font-size: 90%; */
+/*     font-style: normal; */
 }
 
+.rst-content div[class^="highlight"] pre, .rst-content pre, pre {
+    font-size: 90%;
+/*     font-style: normal; */
+}
+
+
+/* -------------------------------------------------------------------------- */
+
 .wy-menu-vertical p.caption {
-/*     color: #ff303b; */
+/*     color: #ff2929; */
 }
 
 .wy-side-nav-search, .wy-nav-top {
-/*     background-color: #9d1925; */
+/*     background-color: #822222; */
+/*     background-image: linear-gradient(#b32b2b, #822222); */
+    background-image: linear-gradient(#1e70a6, #2980b9);
 }
 
 .wy-side-nav-search input[type="text"] {
-/*     border-color: #9d1925; */
+    border: 0px solid #2980b9;
 }
 
+/* -------------------------------------------------------------------------- */
 
 @font-face {
   font-family: "Ubuntu Mono";
@@ -116,3 +133,5 @@ strong.command, .rst-content code, .rst-content div[class^="highlight"] pre, .rs
   src: url("fonts/ubuntumono-bold-italic.woff2") format("woff2"),
        url("fonts/ubuntumono-bold-italic.woff") format("woff");
 }
+
+/* -------------------------------------------------------------------------- */

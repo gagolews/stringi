@@ -49,11 +49,10 @@
 #' Otherwise, the breaks are only at white-spaces.
 #'
 #' Note that Unicode code points may have various widths when
-#' printed on the console and that the function takes that by default
+#' printed on the console and that this function, by default, takes that
 #' into account. By changing the state of the \code{use_length}
-#' argument, this function starts to act like each code point
-#' was of width 1. This feature should rather be used with
-#' text in Latin script.
+#' argument, this function starts to act as if each code point
+#' was of width 1.
 #'
 #' If \code{normalize} is \code{FALSE},
 #' then multiple white spaces between the word boundaries are
@@ -85,7 +84,7 @@
 #'
 #' @param str character vector of strings to reformat
 #' @param width single integer giving the suggested
-#'        maximal number of code points per line
+#'        maximal total width/number of code points per line
 #' @param cost_exponent single numeric value, values not greater than zero
 #'        will select a greedy word-wrapping algorithm; otherwise
 #'        this value denotes the exponent in the cost function
@@ -125,11 +124,12 @@
 #' cat(stri_wrap(s, 20, 2.0), sep='\n') # dynamic
 #' cat(stri_pad(stri_wrap(s), side='both'), sep='\n')
 #'
-#' @export
 #' @references
 #' D.E. Knuth, M.F. Plass,
 #' Breaking paragraphs into lines, \emph{Software: Practice and Experience} 11(11),
-#' 1981, pp. 1119--1184
+#' 1981, pp. 1119--1184.
+#'
+#' @export
 stri_wrap <- function(str, width = floor(0.9 * getOption("width")),
     cost_exponent = 2,
     simplify = TRUE, normalize = TRUE, normalise = normalize,

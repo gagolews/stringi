@@ -29,7 +29,7 @@ stri_wrap(
 |                   |                                                                                                                                                                                                                                                                |
 |-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `str`             | character vector of strings to reformat                                                                                                                                                                                                                        |
-| `width`           | single integer giving the suggested maximal number of code points per line                                                                                                                                                                                     |
+| `width`           | single integer giving the suggested maximal total width/number of code points per line                                                                                                                                                                         |
 | `cost_exponent`   | single numeric value, values not greater than zero will select a greedy word-wrapping algorithm; otherwise this value denotes the exponent in the cost function of a (more aesthetic) dynamic programming-based algorithm (values in \[2, 3\] are recommended) |
 | `simplify`        | single logical value, see Value                                                                                                                                                                                                                                |
 | `normalize`       | single logical value, see Details                                                                                                                                                                                                                              |
@@ -47,7 +47,7 @@ Vectorized over `str`.
 
 If `whitespace_only` is `FALSE`, then <span class="pkg">ICU</span>\'s line-`BreakIterator` is used to determine text boundaries where a line break is possible. This is a locale-dependent operation. Otherwise, the breaks are only at white-spaces.
 
-Note that Unicode code points may have various widths when printed on the console and that the function takes that by default into account. By changing the state of the `use_length` argument, this function starts to act like each code point was of width 1. This feature should rather be used with text in Latin script.
+Note that Unicode code points may have various widths when printed on the console and that this function, by default, takes that into account. By changing the state of the `use_length` argument, this function starts to act as if each code point was of width 1.
 
 If `normalize` is `FALSE`, then multiple white spaces between the word boundaries are preserved within each wrapped line. In such a case, none of the strings can contain `\r`, `\n`, or other new line characters, otherwise you will get an error. You should split the input text into lines or, for example, substitute line breaks with spaces before applying this function.
 
@@ -65,7 +65,7 @@ If `simplify` is `TRUE`, then a character vector is returned. Otherwise, you wil
 
 ## References
 
-D.E. Knuth, M.F. Plass, Breaking paragraphs into lines, *Software: Practice and Experience* 11(11), 1981, pp. 1119--1184
+D.E. Knuth, M.F. Plass, Breaking paragraphs into lines, *Software: Practice and Experience* 11(11), 1981, pp. 1119--1184.
 
 ## See Also
 

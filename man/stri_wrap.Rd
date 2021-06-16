@@ -24,7 +24,7 @@ stri_wrap(
 \item{str}{character vector of strings to reformat}
 
 \item{width}{single integer giving the suggested
-maximal number of code points per line}
+maximal total width/number of code points per line}
 
 \item{cost_exponent}{single numeric value, values not greater than zero
 will select a greedy word-wrapping algorithm; otherwise
@@ -76,11 +76,10 @@ This is a locale-dependent operation.
 Otherwise, the breaks are only at white-spaces.
 
 Note that Unicode code points may have various widths when
-printed on the console and that the function takes that by default
+printed on the console and that this function, by default, takes that
 into account. By changing the state of the \code{use_length}
-argument, this function starts to act like each code point
-was of width 1. This feature should rather be used with
-text in Latin script.
+argument, this function starts to act as if each code point
+was of width 1.
 
 If \code{normalize} is \code{FALSE},
 then multiple white spaces between the word boundaries are
@@ -123,7 +122,7 @@ cat(stri_pad(stri_wrap(s), side='both'), sep='\n')
 \references{
 D.E. Knuth, M.F. Plass,
 Breaking paragraphs into lines, \emph{Software: Practice and Experience} 11(11),
-1981, pp. 1119--1184
+1981, pp. 1119--1184.
 }
 \seealso{
 The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
