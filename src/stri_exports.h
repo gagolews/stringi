@@ -192,6 +192,8 @@ SEXP stri_split_lines1(SEXP str);
 
 SEXP stri_replace_na(SEXP str, SEXP replacement=Rf_mkString("NA"));
 
+SEXP stri_replace_rstr(SEXP x);
+
 SEXP stri_detect_coll(SEXP str, SEXP pattern,
                       SEXP negate=Rf_ScalarLogical(FALSE), SEXP max_count=Rf_ScalarInteger(-1),
                       SEXP opts_collator=R_NilValue);

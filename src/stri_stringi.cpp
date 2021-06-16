@@ -171,6 +171,7 @@ const R_CallMethodDef cCallMethods[] = {
     STRI__MK_CALL("C_stri_rand_shuffle",                 stri_rand_shuffle,               1),
     STRI__MK_CALL("C_stri_rand_strings",                 stri_rand_strings,               3),
     STRI__MK_CALL("C_stri_replace_na",                   stri_replace_na,                 2),
+    STRI__MK_CALL("C_stri_replace_rstr",                 stri_replace_rstr,               1),
     STRI__MK_CALL("C_stri_replace_all_fixed",            stri_replace_all_fixed,          5),
     STRI__MK_CALL("C_stri_replace_first_fixed",          stri_replace_first_fixed,        4),
     STRI__MK_CALL("C_stri_replace_last_fixed",           stri_replace_last_fixed,         4),

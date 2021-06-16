@@ -100,8 +100,9 @@ is greatly appreciated. Thanks!
 .. toctree::
     :maxdepth: 2
     :caption: stringi
+    :hidden:
 
-    About  <https://stringi.gagolewski.com/>
+    About <self>
     Paper (Draft) <https://stringi.gagolewski.com/_static/vignette/stringi.pdf>
 
 

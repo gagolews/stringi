@@ -212,6 +212,7 @@ The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.c
 
 Other search_replace: 
 \code{\link{about_search}},
+\code{\link{stri_replace_rstr}()},
 \code{\link{stri_trim_both}()}
 }
 \concept{search_replace}

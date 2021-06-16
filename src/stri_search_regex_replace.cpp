@@ -31,6 +31,7 @@
 
 
 #include "stri_stringi.h"
+#include "stri_container_utf8.h"
 #include "stri_container_utf16.h"
 #include "stri_container_regex.h"
 
@@ -330,4 +331,107 @@ SEXP stri_replace_first_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opt
 SEXP stri_replace_last_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex)
 {
     return stri__replace_allfirstlast_regex(str, pattern, replacement, opts_regex, -1);
+}
+
+
+
+
+
+
+/**
+ * Converts a single gsub to stri_replace replacement string
+ *
+ * @param x
+ * @return a single R string
+ */
+SEXP stri__replace_rstr_1(const String8& _x)
+{
+    STRI_ASSERT(!_x.isNA());
+    R_len_t n = _x.length();
+    const char* x = _x.c_str();
+
+    std::string buf;
+    buf.reserve(n+1);  // whatever
+
+    R_len_t i=0;
+    while (i < n) {
+        if (x[i] == '$')
+            buf.append("\\$");
+        else if (x[i] == '\\') {
+            i++;
+            if (i >= n)  {
+                // dangling backslash
+                //throw StriException(MSG__INVALID_FORMAT_SPECIFIER, "");
+                // gsub compatibility:
+                break;
+            }
+
+            if (x[i] == '$')
+                buf.append("\\$");
+            else if (x[i] == '\\')
+                buf.append("\\\\");
+            else if (x[i] >= '1' && x[i] <= '9') {  // \\0 not supported
+                buf.push_back('$');
+                buf.push_back(x[i]);
+                if (i+1 < n && (x[i+1] >= '0' && x[i+1] <= '9'))
+                    buf.push_back('\\');
+            }
+            else
+                buf.push_back(x[i]);
+        }
+        else
+            buf.push_back(x[i]);
+
+        i++;
+    }
+
+    return Rf_mkCharLenCE(buf.data(), buf.size(), CE_UTF8);
+}
+
+
+
+/**
+ * Convert \1 to $1 and $ to \$ and \a to a
+ * (gsub vs. stri_replace replacement strings)
+ *
+ * @param x character vector
+ *
+ * @return character vector
+ *
+ * @version 1.6.4 (Marek Gagolewski, 2021-06-16)
+ */
+SEXP stri_replace_rstr(SEXP x)
+{
+    PROTECT(x = stri__prepare_arg_string(x, "x"));
+    R_len_t vectorize_length = LENGTH(x);
+    if (vectorize_length <= 0) {
+        UNPROTECT(1);
+        return Rf_allocVector(STRSXP, 0);
+    }
+
+    STRI__ERROR_HANDLER_BEGIN(1)
+    StriContainerUTF8 x_cont(x, vectorize_length);
+
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+
+    for (
+        R_len_t i = x_cont.vectorize_init();
+        i != x_cont.vectorize_end();
+        i = x_cont.vectorize_next(i)
+    ) {
+        if (x_cont.isNA(i)) {
+            SET_STRING_ELT(ret, i, NA_STRING);
+            continue;
+        }
+
+        SEXP out;
+        STRI__PROTECT(out = stri__replace_rstr_1(x_cont.get(i)));
+        SET_STRING_ELT(ret, i, out);
+        STRI__UNPROTECT(1);
+    }
+
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

@@ -56,7 +56,7 @@ All functions return a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_replace: [`about_search`](about_search.md), [`stri_replace_all()`](stri_replace.md)
+Other search\_replace: [`about_search`](about_search.md), [`stri_replace_all()`](stri_replace.md), [`stri_replace_rstr()`](stri_replace_rstr.md)
 
 Other search\_charclass: [`about_search_charclass`](about_search_charclass.md), [`about_search`](about_search.md)
 

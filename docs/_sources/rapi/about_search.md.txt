@@ -60,7 +60,7 @@ Other search\_count: [`stri_count_boundaries()`](stri_count_boundaries.md), [`st
 
 Other search\_locate: [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_locate_all()`](stri_locate.md)
 
-Other search\_replace: [`stri_replace_all()`](stri_replace.md), [`stri_trim_both()`](stri_trim.md)
+Other search\_replace: [`stri_replace_all()`](stri_replace.md), [`stri_replace_rstr()`](stri_replace_rstr.md), [`stri_trim_both()`](stri_trim.md)
 
 Other search\_split: [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_split_lines()`](stri_split_lines.md), [`stri_split()`](stri_split.md)
 
