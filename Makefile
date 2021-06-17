@@ -87,12 +87,15 @@ weave-examples:
 sphinx: stop-on-utf8 r rd2myst news weave-examples
 	rm -rf devel/sphinx/_build/
 	cd devel/sphinx && make html
-	echo "*** Browse the generated documentation at"\
+	@echo "*** Browse the generated documentation at"\
 	    "file://`pwd`/devel/sphinx/_build/html/index.html"
 
 docs: sphinx
-	# this is recommended only when publishing an official release
-	# -> updates the package homepage
+	@echo "*** Making 'docs' is only recommended when publishing an"\
+	    "official release, because it updates the package homepage."
+	@echo "*** Therefore, we check if the package version is like 1.2.3"\
+	    "and not 1.2.2.9007."
+	Rscript --vanilla -e "stopifnot(length(unclass(packageVersion('${PKGNAME}'))[[1]]) < 4)"
 	rm -rf devel/sphinx/_build/
 	cd devel/sphinx && make html
 	rm -rf docs/

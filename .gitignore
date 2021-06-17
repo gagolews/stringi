@@ -36,6 +36,7 @@ src-x64/
 # Backup and temporary files:
 *~
 *.backup
+*.cache
 *.bak
 *.tmp
 tmp*

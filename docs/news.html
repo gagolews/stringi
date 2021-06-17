@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.2.9007
+                1.7.0.9.9007
               </div>
             
           
@@ -107,7 +107,7 @@
 <li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">What Is New in <em>stringi</em></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#xxx-to-be-1-6-3-2021-xx-yy">1.6.2.9xxx (to-be &gt;= 1.6.3) (2021-xx-yy)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#xxx-to-be-1-7-1-2021-xx-yy">1.7.0.9xxx (to-be &gt;= 1.7.1) (2021-xx-yy)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id1">1.6.2 (2021-05-14)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id2">1.6.1 (2021-05-05)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id3">1.5.3 (2020-09-04)</a></li>
@@ -222,9 +222,14 @@
             
   <div class="section" id="what-is-new-in-stringi">
 <h1>What Is New in <em>stringi</em><a class="headerlink" href="#what-is-new-in-stringi" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="xxx-to-be-1-6-3-2021-xx-yy">
-<h2>1.6.2.9xxx (to-be &gt;= 1.6.3) (2021-xx-yy)<a class="headerlink" href="#xxx-to-be-1-6-3-2021-xx-yy" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="xxx-to-be-1-7-1-2021-xx-yy">
+<h2>1.7.0.9xxx (to-be &gt;= 1.7.1) (2021-xx-yy)<a class="headerlink" href="#xxx-to-be-1-7-1-2021-xx-yy" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
+<li><p>[BACKWARD INCOMPATIBILITY] <code class="docutils literal notranslate"><span class="pre">%s$%</span></code> and <code class="docutils literal notranslate"><span class="pre">%stri$%</span></code> now use the new <code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code>
+(see below) instead of <code class="docutils literal notranslate"><span class="pre">base::sprintf</span></code>.</p></li>
+<li><p>[BACKWARD INCOMPATIBILITY, BUGFIX, NEW FEATURE] In <code class="docutils literal notranslate"><span class="pre">stri_subset*</span></code>
+and their replacement versions, <code class="docutils literal notranslate"><span class="pre">pattern</span></code> and <code class="docutils literal notranslate"><span class="pre">value</span></code> cannot be longer
+than <code class="docutils literal notranslate"><span class="pre">str</span></code> (but now they are recycled if necessary).</p></li>
 <li><p>[DOCUMENTATION] It has been clarified that the syntax of <code class="docutils literal notranslate"><span class="pre">*_charclass</span></code>
 (e.g., used in <code class="docutils literal notranslate"><span class="pre">stri_trim*</span></code>) differs slightly form regex character
 classes.</p></li>
@@ -245,8 +250,6 @@ which defaults to <code class="docutils literal notranslate"><span class="pre">T
 <li><p>[NEW FEATURE] <code class="docutils literal notranslate"><span class="pre">stri_trim*</span></code> now have a new argument, <code class="docutils literal notranslate"><span class="pre">negate</span></code>.</p></li>
 <li><p>[NEW FEATURE] <code class="docutils literal notranslate"><span class="pre">stri_replace_rstr</span></code> converts <code class="docutils literal notranslate"><span class="pre">gsub</span></code>-style replacement strings
 to <code class="docutils literal notranslate"><span class="pre">stri_replace</span></code>-style.</p></li>
-<li><p>[BACKWARD INCOMPATIBILITY] <code class="docutils literal notranslate"><span class="pre">%s$%</span></code> and <code class="docutils literal notranslate"><span class="pre">%stri$%</span></code> now use <code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code>
-instead of <code class="docutils literal notranslate"><span class="pre">base::sprintf</span></code>.</p></li>
 <li><p>[INTERNAL] <code class="docutils literal notranslate"><span class="pre">stri_prepare_arg*</span></code>s have been refactored, buffer overruns
 in the exception handling subsystem are now avoided.</p></li>
 <li><p>[BUGFIX] Few functions (<code class="docutils literal notranslate"><span class="pre">stri_length</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_enc_toutf32</span></code>, etc.)
@@ -951,7 +954,7 @@ scheduled for milestone 0.1.</p></li>
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-06-16T18:05:34+1000.
+        Last updated on 2021-06-17T18:09:34+1000.
       </span>
 
     </p>

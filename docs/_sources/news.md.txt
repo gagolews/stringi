@@ -1,7 +1,14 @@
 # What Is New in *stringi*
 
 
-## 1.6.2.9xxx (to-be >= 1.6.3) (2021-xx-yy)
+## 1.7.0.9xxx (to-be >= 1.7.1) (2021-xx-yy)
+
+* [BACKWARD INCOMPATIBILITY] `%s$%` and `%stri$%` now use the new `stri_sprintf`
+  (see below) instead of `base::sprintf`.
+
+* [BACKWARD INCOMPATIBILITY, BUGFIX, NEW FEATURE] In `stri_subset*`
+  and their replacement versions, `pattern` and `value` cannot be longer
+  than `str` (but now they are recycled if necessary).
 
 * [DOCUMENTATION] It has been clarified that the syntax of `*_charclass`
   (e.g., used in `stri_trim*`) differs slightly form regex character
@@ -31,9 +38,6 @@
 * [NEW FEATURE] `stri_replace_rstr` converts `gsub`-style replacement strings
   to `stri_replace`-style.
 
-* [BACKWARD INCOMPATIBILITY] `%s$%` and `%stri$%` now use `stri_sprintf`
-  instead of `base::sprintf`.
-
 * [INTERNAL] `stri_prepare_arg*`s have been refactored, buffer overruns
   in the exception handling subsystem are now avoided.
 
@@ -51,6 +55,7 @@
 
 * [BUGFIX] `stri_wrap` did not recognise the width of certain Unicode sequences
   correctly.
+
 
 ## 1.6.2 (2021-05-14)
 

@@ -61,8 +61,7 @@ stri_subset_regex(str, pattern, negate=FALSE, ..., opts_regex=NULL) <- value
 including additional settings for \code{opts_collator}, \code{opts_regex},
 \code{opts_fixed}, and so on}
 
-\item{value}{non-empty character vector of replacement strings
-(no more than the length of \code{str});
+\item{value}{non-empty character vector of replacement strings;
 replacement function only}
 
 \item{pattern, regex, fixed, coll, charclass}{character vector;
@@ -94,10 +93,14 @@ are roughly equivalent (but faster and easier to use) to a call to
 \code{str[\link{stri_detect}(str, ...)] <- value}.
 }
 \details{
-Vectorized over \code{str}, \code{pattern}, and \code{value},
+Vectorized over \code{str} as well as partially over \code{pattern}
+and \code{value},
 with recycling of the elements in the shorter vector if necessary.
-However, as the aim here is to subset \code{str}, the other two
-vectors cannot be longer than the former.
+As the aim here is to subset \code{str}, \code{pattern}
+cannot be longer than the former. Moreover, if the number of
+items to replace is not a multiple of length of \code{value},
+a warning is emitted and the unused elements are ignored.
+Hence, the length of the output will be the same as length of \code{str}.
 
 \code{stri_subset} and \code{stri_subset<-} are convenience functions.
 They call either \code{stri_subset_regex},
