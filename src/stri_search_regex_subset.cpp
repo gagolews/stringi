@@ -161,7 +161,7 @@ SEXP stri_subset_regex_replacement(SEXP str, SEXP pattern, SEXP negate, SEXP opt
         UNPROTECT(3);
         return Rf_allocVector(STRSXP, 0);
     }
-    if (LENGTH(str) < LENGTH(pattern) || LENGTH(str) < LENGTH(value))
+    if (LENGTH(str) < LENGTH(pattern))  // for LENGTH(value), we emit warning later on
         Rf_error(MSG__WARN_RECYCLING_RULE2);
     if ((LENGTH(str) % LENGTH(pattern)) != 0)
         Rf_warning(MSG__WARN_RECYCLING_RULE);
