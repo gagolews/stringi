@@ -109,6 +109,9 @@
 #define MSG__REPLACEMENT_ZERO \
    "replacement has length zero"
 
+#define MSG_REPLACEMENT_MULTIPLE \
+   "number of items to replace is not a multiple of replacement length"
+
 #define MSG__UNCONVERTABLE_CODE_POINT \
    "the Unicode code point \\U%08.8x cannot be converted to destination encoding"
 
@@ -137,7 +140,8 @@
 #define MSG__WARN_RECYCLING_RULE2 \
    "vector length not consistent with other arguments"
 
-
+#define MSG__WARN_EMPTY_VECTOR \
+   "vector has length zero"
 
 #define MSG__EXPECTED_NONNEGATIVE \
    "expected a nonnegative numeric value"

@@ -32,15 +32,16 @@ expect_identical(stri_subset_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0
 expect_identical(stri_subset_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "(?<=\u0106)"), "\u0105\u0106\u0107")  # match of zero length:
 expect_identical(stri_subset_regex(c("", " ", "  "), "^.*$"), c("", " ", "  "))
 expect_identical(stri_subset_regex(c("", " ", "  "), "^.+$"), c(" ", "  "))
-expect_identical(stri_subset_regex("a", c("a", "b", "c")), "a")
+expect_error(stri_subset_regex("a", c("a", "b", "c")))
 expect_identical(stri_subset_regex(c("a", "b", "c"), "a"), "a")
-suppressWarnings(expect_identical(stri_subset_regex(LETTERS[1:2], LETTERS[1:3]),
+expect_warning(stri_subset_regex(LETTERS[1:3], LETTERS[1:2]))
+suppressWarnings(expect_identical(stri_subset_regex(LETTERS[1:3], LETTERS[1:2]),
     LETTERS[1:2]))
-suppressWarnings(expect_identical(stri_subset_regex(LETTERS[1:3], LETTERS[1:5]),
+suppressWarnings(expect_identical(stri_subset_regex(LETTERS[1:5], LETTERS[1:3]),
     LETTERS[1:3]))
-suppressWarnings(expect_identical(stri_subset_regex(LETTERS[1:2], LETTERS[1:5]),
+suppressWarnings(expect_identical(stri_subset_regex(LETTERS[1:7], LETTERS[1:2]),
     LETTERS[1:2]))
-suppressWarnings(expect_identical(stri_subset_regex(LETTERS[1:4], LETTERS[1:5]),
+suppressWarnings(expect_identical(stri_subset_regex(LETTERS[1:8], LETTERS[1:4]),
     LETTERS[1:4]))
 
 s <- c("Lorem", "123", " ", " ", "kota", "4\t\u0105")
@@ -49,7 +50,7 @@ expect_identical(stri_subset_regex(s, p, omit_na = TRUE), s[c(T, F, F, T, T,
     T)])
 expect_identical(stri_subset_regex(s, p, omit_na = FALSE), s[c(T, F, F, T, T,
     T)])
-expect_identical(stri_subset_regex("Lo123\trem", c("[[:alpha:]]", "[4-9]+")),
+expect_identical(stri_subset_regex(rep("Lo123\trem", 2), c("[[:alpha:]]", "[4-9]+")),
     "Lo123\trem")
 
 expect_warning(stri_subset_regex(rep("asd", 5), rep("[A-z]", 2)))
@@ -69,7 +70,12 @@ expect_equivalent(stri_subset_regex("caacbaab", "(a+b)+"), "caacbaab")
 expect_equivalent(stri_subset_regex("caacbacab", "(a+b)+"), "caacbacab")
 expect_equivalent(stri_subset_regex("caacbacacb", "(a+b)+"), character(0))
 
-expect_equivalent(stri_subset_regex("abc", c("a", "b", "d")), c("abc", "abc"))  # this is weird
+expect_warning(`stri_subset_regex<-`(1:3, 1:3, value=1:2))
+expect_identical(suppressWarnings(`stri_subset_regex<-`(1:3, 1:3, value=1:2)), c("1", "2", "1"))
+expect_warning(`stri_subset_regex<-`(1:3, "\\p{N}", value=1:2))
+expect_identical(suppressWarnings(`stri_subset_regex<-`(1:3, "\\p{N}", value=1:2)), c("1", "2", "1"))
+expect_warning(`stri_subset_regex<-`(1:3, c("\\p{N}", "\\p{L}"), value=11:12))
+expect_identical(suppressWarnings(`stri_subset_regex<-`(1:3, c("\\p{N}", "\\p{L}"), value=11:12)), c("11", "2", "12"))
 
 expect_identical(stri_subset_regex(NA, NA, omit_na = TRUE), character(0))
 suppressWarnings(expect_identical(stri_subset_regex("", "", omit_na = TRUE),
@@ -80,7 +86,7 @@ suppressWarnings(expect_identical(stri_subset_regex("", "a", omit_na = TRUE),
     character(0)))
 expect_identical(stri_subset_regex(c("a", "b", NA, "aaa", ""), c("a"), omit_na = TRUE),
     c("a", "aaa"))
-expect_identical(stri_subset_regex("a", c("a", "b", "c"), omit_na = TRUE), "a")
+expect_identical(stri_subset_regex(rep("a", 3), c("a", "b", "c"), omit_na = TRUE), "a")
 
 
 x <- c("", NA, "1")
@@ -117,7 +123,6 @@ expect_identical(x, c("stringi R", NA, "a", "b", "a"))
 
 x <- c("stringi R", "173", "ID457", "7")
 expect_error(stri_subset_regex(x, "7") <- character(0))
-expect_warning(stri_subset_regex(x, c("7", "8")) <- NA)
 expect_error(stri_subset_regex(x, character(0)) <- NA)
 
 x <- c("stringi R", "123", "ID456", "")
@@ -127,3 +132,6 @@ expect_identical(x, c(NA, "123", "ID456", ""))
 x <- c("stringi R", "123", "ID456", "")
 stri_subset_regex(x, "[^0-9]+|^$") <- NA
 expect_identical(x, c(NA, "123", NA, NA))
+
+expect_identical(`stri_subset_regex<-`(c(NA, "2", "3", "4"), c("1", NA, "3", "3"), value="ZZZ"), c(NA, "2", "ZZZ", "4"))
+expect_warning(`stri_subset_regex<-`("1", "", value="1"))

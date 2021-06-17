@@ -23,12 +23,7 @@ expect_identical(stri_subset_charclass(c(NA, "", "ala", "bkb"), "[a]", omit_na =
 
 expect_identical(stri_subset_charclass(c("a", "ab", "abc", "1234"), "\\p{L}"),
     c("a", "ab", "abc"))
-expect_identical(stri_subset_charclass("a\u0105bc", c("\\p{L}", "\\p{Ll}", "\\p{Lu}")),
-    rep("a\u0105bc", 2))
-expect_identical(stri_subset_charclass("a\u0105bc", c("\\p{l}", "\\p{ll}", "\\p{lu}")),
-    rep("a\u0105bc", 2))
-expect_identical(stri_subset_charclass("a\u0105bc", c("\\P{l}", "\\P{ll}", "\\P{lu}")),
-    "a\u0105bc")
+expect_error(stri_subset_charclass("a\u0105bc", c("\\p{L}", "\\p{Ll}", "\\p{Lu}")))
 expect_identical(stri_subset_charclass("a\u0105bc", c("\\p{AlPh_a  bEtic}")), "a\u0105bc")
 expect_identical(stri_subset_charclass("", "\\p{L}"), character(0))
 
@@ -38,7 +33,7 @@ expect_error(stri_subset_charclass("a", "", omit_na = TRUE))
 expect_error(stri_subset_charclass("", "a", omit_na = TRUE))
 expect_identical(stri_subset_charclass(c("a", "b", NA, "aaa", ""), c("[a]"),
     omit_na = TRUE), c("a", "aaa"))
-expect_identical(stri_subset_charclass("a", c("[a]", "[b]", "[c]"), omit_na = TRUE),
+expect_identical(stri_subset_charclass(c("a", "a", "a"), c("[a]", "[b]", "[c]"), omit_na = TRUE),
     "a")
 
 x <- c("", NA, "1")
@@ -75,10 +70,18 @@ expect_identical(x, c("stringi R", NA, "a", "b", "a"))
 
 x <- c("stringi R", "173", "ID457", "7")
 expect_error(stri_subset_charclass(x, "[7]") <- character(0))
-expect_warning(stri_subset_charclass(x, c("[7]", "[8]")) <- NA)
 expect_error(stri_subset_charclass(x, character(0)) <- NA)
 
 x <- c("stringi R", "123", "ID456", "")
 stri_subset(x, charclass = "[sS]") <- NA
 expect_identical(x, c(NA, "123", "ID456", ""))
 
+
+expect_warning(`stri_subset_charclass<-`(1:3, rep("\\p{N}", 3), value=1:2))
+expect_identical(suppressWarnings(`stri_subset_charclass<-`(1:3, rep("\\p{N}", 3), value=1:2)), c("1", "2", "1"))
+expect_warning(`stri_subset_charclass<-`(1:3, "\\p{N}", value=1:2))
+expect_identical(suppressWarnings(`stri_subset_charclass<-`(1:3, "\\p{N}", value=1:2)), c("1", "2", "1"))
+expect_warning(`stri_subset_charclass<-`(1:3, c("\\p{N}", "\\p{L}"), value=11:12))
+expect_identical(suppressWarnings(`stri_subset_charclass<-`(1:3, c("\\p{N}", "\\p{L}"), value=11:12)), c("11", "2", "12"))
+
+expect_identical(`stri_subset_charclass<-`(c(NA, "2", "3", "4"), c("[1]", NA, "[3]", "[3]"), value="ZZZ"), c(NA, "2", "ZZZ", "4"))
