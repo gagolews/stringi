@@ -50,19 +50,22 @@
  *                using std::vector<int> to avoid mem-leaks
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
- *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *    #112: str_prepare_arg* retvals were not PROTECTed from gc
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-04)
- *    FR #122: omit_na arg added
+ *    #122: omit_na arg added
  *
  * @version 1.0-2 (Marek Gagolewski, 2016-01-29)
- *    Issue #214: allow a regex pattern like `.*`  to match an empty string
+ *    #214: allow a regex pattern like `.*`  to match an empty string
  *
  * @version 1.0-3 (Marek Gagolewski, 2016-02-03)
- *    FR #216: `negate` arg added
+ *    #216: `negate` arg added
  *
  * @version 1.4.7 (Marek Gagolewski, 2020-08-24)
  *    Use StriContainerRegexPattern::getRegexOptions
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-17)
+ *    assure LENGTH(pattern) <= LENGTH(str)
  */
 SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate, SEXP opts_regex)
 {
@@ -70,8 +73,17 @@ SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate, SEXP o
     bool omit_na1 = stri__prepare_arg_logical_1_notNA(omit_na, "omit_na");
     PROTECT(str = stri__prepare_arg_string(str, "str"));
     PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
+
+    if (LENGTH(str) > 0 && LENGTH(str) < LENGTH(pattern))
+        Rf_error(MSG__WARN_RECYCLING_RULE2);
+
     R_len_t vectorize_length =
         stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+
+    if (vectorize_length == 0) {
+        UNPROTECT(2);
+        return Rf_allocVector(STRSXP, 0);
+    }
 
     StriRegexMatcherOptions pattern_opts =
         StriContainerRegexPattern::getRegexOptions(opts_regex);
@@ -91,7 +103,7 @@ SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate, SEXP o
             i = pattern_cont.vectorize_next(i))
     {
         STRI__CONTINUE_ON_EMPTY_OR_NA_PATTERN(str_cont, pattern_cont,
-    {if (omit_na1) which[i] = FALSE; else {
+        {if (omit_na1) which[i] = FALSE; else {
                 which[i] = NA_LOGICAL;
                 result_counter++;
             }
@@ -124,45 +136,62 @@ SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate, SEXP o
  * @return character vector
  *
  * @version 1.0-3 (Marek Gagolewski, 2016-02-03)
- *   FR#124
+ *   #124
  *
  * @version 1.0-3 (Marek Gagolewski, 2016-02-03)
- *    FR #216: `negate` arg added
+ *   #216: `negate` arg added
  *
  * @version 1.4.7 (Marek Gagolewski, 2020-08-24)
  *    Use StriContainerRegexPattern::getRegexOptions
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-17)
+ *    assure LENGTH(pattern) and LENGTH(value) <= LENGTH(str)
  */
 SEXP stri_subset_regex_replacement(SEXP str, SEXP pattern, SEXP negate, SEXP opts_regex, SEXP value)
 {
     bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
     PROTECT(str = stri__prepare_arg_string(str, "str"));
-    PROTECT(pattern = stri__prepare_arg_string_1(pattern, "pattern"));
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
     PROTECT(value = stri__prepare_arg_string(value, "value"));
 
-    int vectorize_length = LENGTH(str);
-    int value_length = LENGTH(value);
-    if (value_length == 0)
-        Rf_error(MSG__REPLACEMENT_ZERO);
+    // we are subsetting `str`, therefore recycling is slightly different here
+    if (LENGTH(value) == 0) Rf_error(MSG__REPLACEMENT_ZERO);
+    if (LENGTH(pattern) == 0) Rf_error(MSG__WARN_EMPTY_VECTOR);
+    if (LENGTH(str) == 0) {
+        UNPROTECT(3);
+        return Rf_allocVector(STRSXP, 0);
+    }
+    if (LENGTH(str) < LENGTH(pattern) || LENGTH(str) < LENGTH(value))
+        Rf_error(MSG__WARN_RECYCLING_RULE2);
+    if ((LENGTH(str) % LENGTH(pattern)) != 0)
+        Rf_warning(MSG__WARN_RECYCLING_RULE);
+    R_len_t vectorize_length = LENGTH(str);
 
     StriRegexMatcherOptions pattern_opts =
         StriContainerRegexPattern::getRegexOptions(opts_regex);
     UText* str_text = NULL; // may potentially be slower, but definitely is more convenient!
 
     STRI__ERROR_HANDLER_BEGIN(3)
-    StriContainerUTF8 str_cont(str, vectorize_length);
+    R_len_t value_length = LENGTH(value);
     StriContainerUTF8 value_cont(value, value_length);
+    StriContainerUTF8 str_cont(str, vectorize_length);
     StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_opts);
 
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
-    R_len_t k = 0;
-    for (R_len_t i = str_cont.vectorize_init();
-            i != str_cont.vectorize_end();
-            i = str_cont.vectorize_next(i))
+    std::vector<int> detected(vectorize_length, 0);
+    for (R_len_t i = pattern_cont.vectorize_init();
+            i != pattern_cont.vectorize_end();
+            i = pattern_cont.vectorize_next(i))
     {
+        if (pattern_cont.isNA(i)) {
+            // behave like `[<-`
+            detected[i] = false;
+            continue;
+        }
         STRI__CONTINUE_ON_EMPTY_OR_NA_PATTERN(str_cont, pattern_cont,
-        {SET_STRING_ELT(ret, i, NA_STRING);})
+        {detected[i] = NA_INTEGER;})
 
         UErrorCode status = U_ZERO_ERROR;
         RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
@@ -172,11 +201,19 @@ SEXP stri_subset_regex_replacement(SEXP str, SEXP pattern, SEXP negate, SEXP opt
 
         bool found = matcher->find(status);
         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-        if ((found && !negate_1) || (!found && negate_1))
-            SET_STRING_ELT(ret, i, value_cont.toR((k++)%value_length));
-        else
-            SET_STRING_ELT(ret, i, str_cont.toR(i));
+        detected[i] = ((found && !negate_1) || (!found && negate_1));
     }
+
+    R_len_t k = 0;  // we must traverse `str_cont` in order now
+    for (R_len_t i = 0; i<vectorize_length; ++i) {
+        if (detected[i] == NA_INTEGER)
+            SET_STRING_ELT(ret, i, NA_STRING);
+        else if (detected[i] == 0)
+            SET_STRING_ELT(ret, i, str_cont.toR(i));
+        else
+            SET_STRING_ELT(ret, i, value_cont.toR((k++)%value_length));
+    }
+    if ((k % value_length) != 0) Rf_warning(MSG_REPLACEMENT_MULTIPLE);
 
     if (str_text) {
         utext_close(str_text);

@@ -35,16 +35,17 @@
 #' Select Elements that Match a Given Pattern
 #'
 #' @description
-#' These functions return or modify a sub-vector where there is a match
+#' These functions return or modify a sub-vector where there is a match to
 #' a given pattern. In other words, they
 #' are roughly equivalent (but faster and easier to use) to a call to
 #' \code{str[\link{stri_detect}(str, ...)]} or
 #' \code{str[\link{stri_detect}(str, ...)] <- value}.
 #'
 #' @details
-#' Vectorized over \code{str}, and \code{pattern} or \code{value}
-#' (replacement version) (with recycling
-#' of the elements in the shorter vector if necessary).
+#' Vectorized over \code{str}, \code{pattern}, and \code{value},
+#' with recycling of the elements in the shorter vector if necessary.
+#' However, as the aim here is to subset \code{str}, the other two
+#' vectors cannot be longer than the former.
 #'
 #' \code{stri_subset} and \code{stri_subset<-} are convenience functions.
 #' They call either \code{stri_subset_regex},
@@ -52,37 +53,44 @@
 #' or \code{stri_subset_charclass},
 #' depending on the argument used.
 #'
-#' @param str character vector; strings to search in
+#' @param str character vector; strings to search within
+#'
 #' @param pattern,regex,fixed,coll,charclass character vector;
-#'     search patterns; for more details refer to \link{stringi-search};
-#'     the replacement functions accept only one pattern at a time
+#'     search patterns (no more than the length of \code{str});
+#'     for more details refer to \link{stringi-search}
+#'
 #' @param negate single logical value; whether a no-match is rather of interest
+#'
 #' @param omit_na single logical value; should missing values be excluded
 #' from the result?
+#'
 #' @param opts_collator,opts_fixed,opts_regex a named list used to tune up
 #' the search engine's settings; see
 #' \code{\link{stri_opts_collator}}, \code{\link{stri_opts_fixed}},
 #' and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
 #' for the defaults
+#'
 #' @param ... supplementary arguments passed to the underlying functions,
-#' including additional settings for \code{opts_collator}, \code{opts_regex},
-#' \code{opts_fixed}, and so on
-#' @param value character vector to be substituted with; replacement function only
+#'     including additional settings for \code{opts_collator}, \code{opts_regex},
+#'     \code{opts_fixed}, and so on
 #'
-#' @return The \code{stri_subset} functions return a character vector.
-#' As usual, the output encoding is always UTF-8.
+#' @param value non-empty character vector of replacement strings
+#'     (no more than the length of \code{str});
+#'     replacement function only
 #'
-#' The \code{stri_subset<-} function modifies the \code{str} object 'in-place'.
+#'
+#' @return The \code{stri_subset_*} functions return a character vector.
+#' As usual, the output encoding is UTF-8.
+#'
+#' The \code{stri_subset_*<-} functions modifies \code{str} 'in-place'.
+#'
 #'
 #' @examples
 #' stri_subset_regex(c('stringi R', '123', 'ID456', ''), '^[0-9]+$')
 #'
 #' x <- c('stringi R', '123', 'ID456', '')
-#' stri_subset_regex(x, '[^0-9]+|^$') <- NA
-#' print(x)
-#'
-#' x <- c('stringi R', '123', 'ID456', '')
-#' stri_subset_regex(x, '^[0-9]+$', negate=TRUE) <- NA
+#' `stri_subset_regex<-`(x, '[0-9]+$', negate=TRUE, value=NA)  # returns a copy
+#' stri_subset_regex(x, '[0-9]+$') <- NA  # modifies `x` in-place
 #' print(x)
 #'
 #' @family search_subset
@@ -113,7 +121,7 @@ stri_subset <- function(str, ..., regex, fixed, coll, charclass)
 #' @export
 #' @rdname stri_subset
 #' @usage stri_subset(str, ..., regex, fixed, coll, charclass) <- value
-"stri_subset<-" <- function(str, ..., regex, fixed, coll, charclass, value)
+`stri_subset<-` <- function(str, ..., regex, fixed, coll, charclass, value)
 {
     providedarg <- c(
         regex = !missing(regex),
@@ -212,7 +220,7 @@ stri_subset_regex <- function(str, pattern, omit_na = FALSE, negate = FALSE, ...
 #' @export
 #' @rdname stri_subset
 #' @usage stri_subset_regex(str, pattern, negate=FALSE, ..., opts_regex=NULL) <- value
-"stri_subset_regex<-" <- function(str, pattern, negate = FALSE, ..., opts_regex = NULL,
+`stri_subset_regex<-` <- function(str, pattern, negate = FALSE, ..., opts_regex = NULL,
     value)
 {
     if (!missing(...))

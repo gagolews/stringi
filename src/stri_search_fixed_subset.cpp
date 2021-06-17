@@ -55,16 +55,19 @@
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-04)
- *    FR #122: omit_na arg added
+ *    #122: omit_na arg added
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
- *    FR #110, #23: opts_fixed arg added
+ *    #110, #23: opts_fixed arg added
  *
  * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
  *    use StriByteSearchMatcher
  *
  * @version 1.0-3 (Marek Gagolewski, 2016-02-03)
- *    FR #216: `negate` arg added
+ *    #216: `negate` arg added
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-17)
+ *    assure LENGTH(pattern) <= LENGTH(str)
  */
 SEXP stri_subset_fixed(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate, SEXP opts_fixed)
 {
@@ -74,8 +77,17 @@ SEXP stri_subset_fixed(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate, SEXP o
     PROTECT(str = stri__prepare_arg_string(str, "str"));
     PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
 
-    STRI__ERROR_HANDLER_BEGIN(2)
+    if (LENGTH(str) > 0 && LENGTH(str) < LENGTH(pattern))
+        Rf_error(MSG__WARN_RECYCLING_RULE2);
+
     int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+
+    if (vectorize_length == 0) {
+        UNPROTECT(2);
+        return Rf_allocVector(STRSXP, 0);
+    }
+
+    STRI__ERROR_HANDLER_BEGIN(2)
     StriContainerUTF8 str_cont(str, vectorize_length);
     StriContainerByteSearch pattern_cont(pattern, vectorize_length, pattern_flags);
 
@@ -90,7 +102,7 @@ SEXP stri_subset_fixed(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate, SEXP o
             i = pattern_cont.vectorize_next(i))
     {
         STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-    {if (omit_na1) which[i] = FALSE; else {
+        {if (omit_na1) which[i] = FALSE; else {
                 which[i] = NA_LOGICAL;
                 result_counter++;
             }
@@ -122,49 +134,74 @@ SEXP stri_subset_fixed(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate, SEXP o
  * @return character vector
  *
  * @version 1.0-3 (Marek Gagolewski, 2016-02-02)
- *   FR#124
+ *   #124
  *
- *  @version 1.0-3 (Marek Gagolewski, 2016-02-03)
- *    FR #216: `negate` arg added
+ * @version 1.0-3 (Marek Gagolewski, 2016-02-03)
+ *    #216: `negate` arg added
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-17)
+ *    assure LENGTH(pattern) and LENGTH(value) <= LENGTH(str)
  */
 SEXP stri_subset_fixed_replacement(SEXP str, SEXP pattern, SEXP negate, SEXP opts_fixed, SEXP value)
 {
     bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
     uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
     PROTECT(str = stri__prepare_arg_string(str, "str"));
-    PROTECT(pattern = stri__prepare_arg_string_1(pattern, "pattern"));
+    PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
     PROTECT(value = stri__prepare_arg_string(value, "value"));
 
-    int vectorize_length = LENGTH(str);
-    int value_length = LENGTH(value);
-    if (value_length == 0)
-        Rf_error(MSG__REPLACEMENT_ZERO);
+    // we are subsetting `str`, therefore recycling is slightly different here
+    if (LENGTH(value) == 0) Rf_error(MSG__REPLACEMENT_ZERO);
+    if (LENGTH(pattern) == 0) Rf_error(MSG__WARN_EMPTY_VECTOR);
+    if (LENGTH(str) == 0) {
+        UNPROTECT(3);
+        return Rf_allocVector(STRSXP, 0);
+    }
+    if (LENGTH(str) < LENGTH(pattern) || LENGTH(str) < LENGTH(value))
+        Rf_error(MSG__WARN_RECYCLING_RULE2);
+    if ((LENGTH(str) % LENGTH(pattern)) != 0)
+        Rf_warning(MSG__WARN_RECYCLING_RULE);
+    R_len_t vectorize_length = LENGTH(str);
 
     STRI__ERROR_HANDLER_BEGIN(3)
-    StriContainerUTF8 str_cont(str, vectorize_length);
+    R_len_t value_length = LENGTH(value);
     StriContainerUTF8 value_cont(value, value_length);
+    StriContainerUTF8 str_cont(str, vectorize_length);
     StriContainerByteSearch pattern_cont(pattern, vectorize_length, pattern_flags);
 
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
-    R_len_t k = 0;
-    for (R_len_t i = str_cont.vectorize_init();
-            i != str_cont.vectorize_end();
-            i = str_cont.vectorize_next(i))
+    std::vector<int> detected(vectorize_length, 0);
+    for (R_len_t i = pattern_cont.vectorize_init();
+            i != pattern_cont.vectorize_end();
+            i = pattern_cont.vectorize_next(i))
     {
+        if (pattern_cont.isNA(i)) {
+            // behave like `[<-`
+            detected[i] = false;
+            continue;
+        }
         STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-        {SET_STRING_ELT(ret, i, NA_STRING);},
-        {SET_STRING_ELT(ret, i, (negate_1)?value_cont.toR((k++)%value_length):str_cont.toR(i));} )
+        {detected[i] = NA_INTEGER;},
+        {detected[i] = negate_1;} )
 
         StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
         matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
-        if (((int)(matcher->findFirst() != USEARCH_DONE) && !negate_1) ||
-                ((int)(matcher->findFirst() == USEARCH_DONE) && negate_1))
-            SET_STRING_ELT(ret, i, value_cont.toR((k++)%value_length));
-        else
-            SET_STRING_ELT(ret, i, str_cont.toR(i));
+        detected[i] = (((int)(matcher->findFirst() != USEARCH_DONE) && !negate_1) ||
+                ((int)(matcher->findFirst() == USEARCH_DONE) && negate_1));
     }
+
+    R_len_t k = 0;  // we must traverse `str_cont` in order now
+    for (R_len_t i = 0; i<vectorize_length; ++i) {
+        if (detected[i] == NA_INTEGER)
+            SET_STRING_ELT(ret, i, NA_STRING);
+        else if (detected[i] == 0)
+            SET_STRING_ELT(ret, i, str_cont.toR(i));
+        else
+            SET_STRING_ELT(ret, i, value_cont.toR((k++)%value_length));
+    }
+    if ((k % value_length) != 0) Rf_warning(MSG_REPLACEMENT_MULTIPLE);
 
     STRI__UNPROTECT_ALL
     return ret;
