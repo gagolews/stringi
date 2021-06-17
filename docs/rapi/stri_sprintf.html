@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.2.9007
+                1.7.0.9.9007
               </div>
             
           
@@ -448,14 +448,14 @@
 <span class="c1">##         💩</span>
 <span class="c1">##       &lt;NA&gt;</span>
 <span class="nf">stri_sprintf</span><span class="p">(</span><span class="s">&quot;UNIX time %1$f is %1$s.&quot;</span><span class="p">,</span> <span class="nf">Sys.time</span><span class="p">())</span>
-<span class="c1">## [1] &quot;UNIX time 1623830719.317206 is 2021-06-16 18:05:19.&quot;</span>
+<span class="c1">## [1] &quot;UNIX time 1623917358.968168 is 2021-06-17 18:09:18.&quot;</span>
 <span class="c1"># the following do not work in sprintf()</span>
 <span class="nf">stri_sprintf</span><span class="p">(</span><span class="s">&quot;%1$#- *2$.*3$f&quot;</span><span class="p">,</span> <span class="m">1.23456</span><span class="p">,</span> <span class="m">10</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>  <span class="c1"># two asterisks</span>
 <span class="c1">## [1] &quot; 1.235    &quot;</span>
 <span class="nf">stri_sprintf</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span> <span class="s">&quot;%f&quot;</span><span class="p">),</span> <span class="kc">pi</span><span class="p">)</span>  <span class="c1"># re-coercion needed</span>
 <span class="c1">## [1] &quot;3.14159265358979&quot; &quot;3.141593&quot;</span>
 <span class="nf">stri_sprintf</span><span class="p">(</span><span class="s">&quot;%1$s is %1$f UNIX time.&quot;</span><span class="p">,</span> <span class="nf">Sys.time</span><span class="p">())</span>  <span class="c1"># re-coercion needed</span>
-<span class="c1">## [1] &quot;2021-06-16 18:05:19 is 1623830719.319531 UNIX time.&quot;</span>
+<span class="c1">## [1] &quot;2021-06-17 18:09:18 is 1623917358.970420 UNIX time.&quot;</span>
 <span class="nf">stri_sprintf</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="s">&quot;%s&quot;</span><span class="p">),</span> <span class="nf">factor</span><span class="p">(</span><span class="m">11</span><span class="o">:</span><span class="m">12</span><span class="p">))</span>  <span class="c1"># re-coercion needed</span>
 <span class="c1">## [1] &quot;1&quot;  &quot;12&quot;</span>
 <span class="nf">stri_sprintf</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span> <span class="s">&quot;%d&quot;</span><span class="p">),</span> <span class="nf">factor</span><span class="p">(</span><span class="m">11</span><span class="o">:</span><span class="m">12</span><span class="p">))</span>  <span class="c1"># re-coercion needed</span>
@@ -481,7 +481,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-06-16T18:05:34+1000.
+        Last updated on 2021-06-17T18:09:34+1000.
       </span>
 
     </p>

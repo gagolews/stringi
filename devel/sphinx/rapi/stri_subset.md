@@ -55,7 +55,7 @@ stri_subset_regex(str, pattern, negate=FALSE, ..., opts_regex=NULL) <- value
 |------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `str`                                    | character vector; strings to search within                                                                                                                                                                                                 |
 | `...`                                    | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_regex`, `opts_fixed`, and so on                                                                                       |
-| `value`                                  | non-empty character vector of replacement strings (no more than the length of `str`); replacement function only                                                                                                                            |
+| `value`                                  | non-empty character vector of replacement strings; replacement function only                                                                                                                                                               |
 | `pattern, regex, fixed, coll, charclass` | character vector; search patterns (no more than the length of `str`); for more details refer to [stringi-search](about_search.md)                                                                                                          |
 | `omit_na`                                | single logical value; should missing values be excluded from the result?                                                                                                                                                                   |
 | `negate`                                 | single logical value; whether a no-match is rather of interest                                                                                                                                                                             |
@@ -63,7 +63,7 @@ stri_subset_regex(str, pattern, negate=FALSE, ..., opts_regex=NULL) <- value
 
 ## Details
 
-Vectorized over `str`, `pattern`, and `value`, with recycling of the elements in the shorter vector if necessary. However, as the aim here is to subset `str`, the other two vectors cannot be longer than the former.
+Vectorized over `str` as well as partially over `pattern` and `value`, with recycling of the elements in the shorter vector if necessary. As the aim here is to subset `str`, `pattern` cannot be longer than the former. Moreover, if the number of items to replace is not a multiple of length of `value`, a warning is emitted and the unused elements are ignored. Hence, the length of the output will be the same as length of `str`.
 
 `stri_subset` and `stri_subset<-` are convenience functions. They call either `stri_subset_regex`, `stri_subset_fixed`, `stri_subset_coll`, or `stri_subset_charclass`, depending on the argument used.
 

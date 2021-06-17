@@ -169,7 +169,7 @@ SEXP stri_subset_regex_replacement(SEXP str, SEXP pattern, SEXP negate, SEXP opt
 
     StriRegexMatcherOptions pattern_opts =
         StriContainerRegexPattern::getRegexOptions(opts_regex);
-    UText* str_text = NULL; // may potentially be slower, but definitely is more convenient!
+    UText* str_text = NULL; // might be slower, but definitely is more convenient!
 
     STRI__ERROR_HANDLER_BEGIN(3)
     R_len_t value_length = LENGTH(value);

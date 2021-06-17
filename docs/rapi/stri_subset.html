@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.6.2.9007
+                1.7.0.9.9007
               </div>
             
           
@@ -302,7 +302,7 @@
 <h1>stri_subset: Select Elements that Match a Given Pattern<a class="headerlink" href="#stri-subset-select-elements-that-match-a-given-pattern" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>These functions return or modify a sub-vector where there is a match a given pattern. In other words, they are roughly equivalent (but faster and easier to use) to a call to <code class="docutils literal notranslate"><span class="pre">str[stri_detect(str,</span> <span class="pre">...)]</span></code> or <code class="docutils literal notranslate"><span class="pre">str[stri_detect(str,</span> <span class="pre">...)]</span> <span class="pre">&lt;-</span> <span class="pre">value</span></code>.</p>
+<p>These functions return or modify a sub-vector where there is a match to a given pattern. In other words, they are roughly equivalent (but faster and easier to use) to a call to <code class="docutils literal notranslate"><span class="pre">str[stri_detect(str,</span> <span class="pre">...)]</span></code> or <code class="docutils literal notranslate"><span class="pre">str[stri_detect(str,</span> <span class="pre">...)]</span> <span class="pre">&lt;-</span> <span class="pre">value</span></code>.</p>
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
@@ -359,16 +359,16 @@
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p></td>
-<td><p>character vector; strings to search in</p></td>
+<td><p>character vector; strings to search within</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">...</span></code></p></td>
 <td><p>supplementary arguments passed to the underlying functions, including additional settings for <code class="docutils literal notranslate"><span class="pre">opts_collator</span></code>, <code class="docutils literal notranslate"><span class="pre">opts_regex</span></code>, <code class="docutils literal notranslate"><span class="pre">opts_fixed</span></code>, and so on</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">value</span></code></p></td>
-<td><p>character vector to be substituted with; replacement function only</p></td>
+<td><p>non-empty character vector of replacement strings (no more than the length of <code class="docutils literal notranslate"><span class="pre">str</span></code>); replacement function only</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pattern,</span> <span class="pre">regex,</span> <span class="pre">fixed,</span> <span class="pre">coll,</span> <span class="pre">charclass</span></code></p></td>
-<td><p>character vector; search patterns; for more details refer to <a class="reference internal" href="about_search.html"><span class="doc std std-doc">stringi-search</span></a>; the replacement functions accept only one pattern at a time</p></td>
+<td><p>character vector; search patterns (no more than the length of <code class="docutils literal notranslate"><span class="pre">str</span></code>); for more details refer to <a class="reference internal" href="about_search.html"><span class="doc std std-doc">stringi-search</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">omit_na</span></code></p></td>
 <td><p>single logical value; should missing values be excluded from the result?</p></td>
@@ -384,13 +384,13 @@
 </div>
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
-<p>Vectorized over <code class="docutils literal notranslate"><span class="pre">str</span></code>, and <code class="docutils literal notranslate"><span class="pre">pattern</span></code> or <code class="docutils literal notranslate"><span class="pre">value</span></code> (replacement version) (with recycling of the elements in the shorter vector if necessary).</p>
+<p>Vectorized over <code class="docutils literal notranslate"><span class="pre">str</span></code> as well as partially over <code class="docutils literal notranslate"><span class="pre">pattern</span></code> and <code class="docutils literal notranslate"><span class="pre">value</span></code>, with recycling of the elements in the shorter vector if necessary. As the aim here is to subset <code class="docutils literal notranslate"><span class="pre">str</span></code>, <code class="docutils literal notranslate"><span class="pre">pattern</span></code> cannot be longer than the former. Moreover, if the number of items to replace is not a multiple of length of <code class="docutils literal notranslate"><span class="pre">value</span></code>, a warning is emitted and the unused elements are ignored. Hence, the length of the output will be the same as length of <code class="docutils literal notranslate"><span class="pre">str</span></code>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">stri_subset</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_subset&lt;-</span></code> are convenience functions. They call either <code class="docutils literal notranslate"><span class="pre">stri_subset_regex</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_subset_fixed</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_subset_coll</span></code>, or <code class="docutils literal notranslate"><span class="pre">stri_subset_charclass</span></code>, depending on the argument used.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">stri_subset</span></code> functions return a character vector. As usual, the output encoding is always UTF-8.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">stri_subset&lt;-</span></code> function modifies the <code class="docutils literal notranslate"><span class="pre">str</span></code> object ‘in-place’.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">stri_subset_*</span></code> functions return a character vector. As usual, the output encoding is UTF-8.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">stri_subset_*&lt;-</span></code> functions modifies <code class="docutils literal notranslate"><span class="pre">str</span></code> ‘in-place’.</p>
 </div>
 <div class="section" id="author-s">
 <h2>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this headline">¶</a></h2>
@@ -406,13 +406,11 @@
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_subset_regex</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;stringi R&#39;</span><span class="p">,</span> <span class="s">&#39;123&#39;</span><span class="p">,</span> <span class="s">&#39;ID456&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">),</span> <span class="s">&#39;^[0-9]+$&#39;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;123&quot;</span>
 <span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#39;stringi R&#39;</span><span class="p">,</span> <span class="s">&#39;123&#39;</span><span class="p">,</span> <span class="s">&#39;ID456&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
-<span class="nf">stri_subset_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&#39;[^0-9]+|^$&#39;</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="kc">NA</span>
+<span class="nf">`stri_subset_regex&lt;-`</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&#39;[0-9]+$&#39;</span><span class="p">,</span> <span class="n">negate</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">NA</span><span class="p">)</span>  <span class="c1"># returns a copy</span>
+<span class="c1">## [1] NA      &quot;123&quot;   &quot;ID456&quot; NA</span>
+<span class="nf">stri_subset_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&#39;[0-9]+$&#39;</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="kc">NA</span>  <span class="c1"># modifies `x` in-place</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] NA    &quot;123&quot; NA    NA</span>
-<span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#39;stringi R&#39;</span><span class="p">,</span> <span class="s">&#39;123&#39;</span><span class="p">,</span> <span class="s">&#39;ID456&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
-<span class="nf">stri_subset_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&#39;^[0-9]+$&#39;</span><span class="p">,</span> <span class="n">negate</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="kc">NA</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] NA    &quot;123&quot; NA    NA</span>
+<span class="c1">## [1] &quot;stringi R&quot; NA          NA          &quot;&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -434,7 +432,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-06-16T18:05:34+1000.
+        Last updated on 2021-06-17T18:09:34+1000.
       </span>
 
     </p>
