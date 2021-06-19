@@ -35,7 +35,8 @@
 
 
 #include <unicode/regex.h>
-
+#include <vector>
+#include <vector>
 #include "stri_container_utf16.h"
 
 
@@ -65,6 +66,9 @@ struct StriRegexMatcherOptions {
  *
  * @version 1.3.1 (Marek Gagolewski, 2019-02-06)
  *          #337: warn on empty search pattern here
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-19)
+ *          #153: extract capture group names
  */
 class StriContainerRegexPattern : public StriContainerUTF16 {
 
@@ -74,6 +78,8 @@ private:
     RegexMatcher* lastMatcher; ///< recently used RegexMatcher
     R_len_t lastMatcherIndex;  ///< used by vectorize_getMatcher
 
+    std::vector<std::string> lastCaptureGroupNames;
+    R_len_t lastCaptureGroupNamesIndex;
 
 public:
 
@@ -85,6 +91,8 @@ public:
     ~StriContainerRegexPattern();
     StriContainerRegexPattern& operator=(StriContainerRegexPattern& container);
     RegexMatcher* getMatcher(R_len_t i);
+    const std::vector<std::string>& getCaptureGroupNames(R_len_t i);
+
 };
 
 #endif

@@ -43,6 +43,8 @@ StriContainerRegexPattern::StriContainerRegexPattern()
 {
     this->lastMatcherIndex = -1;
     this->lastMatcher = NULL;
+    this->lastCaptureGroupNamesIndex = -1;
+    //this->lastCaptureGroupNames = ...
     //this->opts = 0;
 }
 
@@ -58,6 +60,8 @@ StriContainerRegexPattern::StriContainerRegexPattern(SEXP rstr, R_len_t _nrecycl
 {
     this->lastMatcherIndex = -1;
     this->lastMatcher = NULL;
+    this->lastCaptureGroupNamesIndex = -1;
+    //this->lastCaptureGroupNames = ...
     this->opts = _opts;
 
     R_len_t n = get_n();
@@ -77,6 +81,8 @@ StriContainerRegexPattern::StriContainerRegexPattern(StriContainerRegexPattern& 
 {
     this->lastMatcherIndex = -1;
     this->lastMatcher = NULL;
+    this->lastCaptureGroupNamesIndex = -1;
+    //this->lastCaptureGroupNames = ...
     this->opts = container.opts;
 }
 
@@ -87,6 +93,8 @@ StriContainerRegexPattern& StriContainerRegexPattern::operator=(StriContainerReg
     (StriContainerUTF16&) (*this) = (StriContainerUTF16&)container;
     this->lastMatcherIndex = -1;
     this->lastMatcher = NULL;
+    this->lastCaptureGroupNamesIndex = -1;
+    //this->lastCaptureGroupNames = ...
     this->opts = container.opts;
     return *this;
 }
@@ -104,22 +112,132 @@ StriContainerRegexPattern::~StriContainerRegexPattern()
 }
 
 
+/** Get names of all capture groups in the i-th regex;
+ * empty string denotes an unnamed group
+ *
+ * it is assumed that vectorize_next() is used:
+ * for i >= this->n the last matcher is returned
+ *
+ * @param i index
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-19)  #153
+ */
+const std::vector<std::string>& StriContainerRegexPattern::getCaptureGroupNames(R_len_t i)
+{
+    STRI_ASSERT(lastMatcherIndex == (i % n));
+    STRI_ASSERT(lastMatcher);
+
+    if (this->lastCaptureGroupNamesIndex == (i % n)) {
+        return lastCaptureGroupNames; // reuse
+    }
+
+    int ngroups = lastMatcher->groupCount();
+    lastCaptureGroupNames = std::vector<std::string>(ngroups);
+    this->lastCaptureGroupNamesIndex = (i % n);
+
+    if (ngroups == 0) return lastCaptureGroupNames;  // nothing to do
+
+#if U_ICU_VERSION_MAJOR_NUM>=55
+    /*
+    Support for named capture groups has been introduced in ICU 55
+    This is not documented, but the named capture group names are like
+    [A-Za-z][A-Za-z0-9]*
+
+    uregex.cpp:1506 in ICU 69.1 has something like:
+    if ((c32 >= 0x41 && c32 <= 0x5a) ||       // A..Z
+        (c32 >= 0x61 && c32 <= 0x7a) ||       // a..z
+        (c32 >= 0x31 && c32 <= 0x39)) {       // 0..9
+    groupName.append(c32);
+    }
+
+    RegexPattern (regex.h) has
+    UHashtable     *fNamedCaptureMap;  // Map from capture group names to numbers.
+    but it's private and we're no friends with it
+
+    here's a simple regex pattern "parser"
+    to extract group names which then be queried using RegexPattern::groupNumberFromName
+
+    #if U_ICU_VERSION_MAJOR_NUM>=55
+    #endif
+
+    */
+
+
+    UErrorCode status = U_ZERO_ERROR;
+    UText* p = lastMatcher->pattern().patternText(status);
+    if (U_FAILURE(status)) throw StriException(status);
+
+    UChar32 c = utext_next32From(p, 0);
+    while (c >= 0) {
+        // this is not necessarily bullet-proof, but, come on,
+        // these are just labels ;)
+        // (\\?<heh>) -- not a named capture group
+        // \\(?<Z>.\\) -- not a capture group
+        // [(?<Z>.)] -- not a capture group
+
+        if (c == '\\') {
+            c = utext_next32(p);  // go to next
+            c = utext_next32(p);  // ignore next
+        }
+        else if (c == '[') {
+            // go to ...] but ignore \]
+            for (c = utext_next32(p); c >= 0 && c != ']'; c = utext_next32(p)) {
+                if (c == '\\') c = utext_next32(p); // ignore what follows
+            }
+            c = utext_next32(p);  // go to next
+        }
+        else if (c == '(') {
+            c = utext_next32(p);
+            if (c != '?') { c = utext_next32(p); continue; }
+            c = utext_next32(p);
+            if (c != '<') { c = utext_next32(p); continue; }
+
+            std::string groupName;
+            for (
+                c = utext_next32(p);
+                (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9');
+                c = utext_next32(p)
+            ) {
+                // technically, first char should be [A-Za-z], but RegexPattern will check that anyway
+                groupName.push_back((char)c);
+            }
+            if (c == '>') {
+                status = U_ZERO_ERROR;
+                int group = lastMatcher->pattern().groupNumberFromName(groupName.c_str(), -1, status);
+                if (U_SUCCESS(status)) {  // if not, just ignore
+                    group--;  // 1-based indexing
+                    //Rprintf("%d %s\n", group, groupName.c_str());
+                    STRI_ASSERT(group >= 0 && group < ngroups);
+                    lastCaptureGroupNames[group] = groupName;
+                }
+            }
+            c = utext_next32(p);;
+        }
+        else
+            c = utext_next32(p);
+    }
+
+#endif  /* U_ICU_VERSION_MAJOR_NUM>=55 */
+    return lastCaptureGroupNames;
+}
+
+
 /** The returned matcher shall not be deleted by the user
  *
- * it is assumed that \code{vectorize_next()} is used:
- * for \code{i >= this->n} the last matcher is returned
+ * it is assumed that vectorize_next() is used:
+ * for i >= this->n the last matcher is returned
  *
  * @param i index
  */
 RegexMatcher* StriContainerRegexPattern::getMatcher(R_len_t i)
 {
     if (lastMatcher) {
-        if (this->lastMatcherIndex == (i % n)) {
+        if (this->lastMatcherIndex >= 0 && this->lastMatcherIndex == (i % n)) {
             return lastMatcher; // reuse
         }
         else {
             delete lastMatcher; // invalidate
-            lastMatcher = NULL;
+            this->lastMatcher = NULL;
         }
     }
 

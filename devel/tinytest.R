@@ -14,7 +14,7 @@ testWarnings <- TRUE
 
 if (testWarnings) {
     t <- run_test_dir("devel/tinytest/", verbose=TRUE)
-    print(t, limit=25, nlong=25)
+    print(t, limit=25, nlong=25, sidefx=TRUE)
 } else {
     oldOptions <- options(warn=10)
     t <- run_test_dir("devel/tinytest/")

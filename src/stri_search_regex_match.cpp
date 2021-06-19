@@ -39,6 +39,7 @@
 using namespace std;
 
 
+
 /**
  * Extract all capture groups of the first/last occurrence
  * of a regex pattern in each string
@@ -67,6 +68,9 @@ using namespace std;
  *
  * @version 1.4.7 (Marek Gagolewski, 2020-08-24)
  *    Use StriContainerRegexPattern::getRegexOptions
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-19)
+ *    #153: named capture groups
  */
 SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP opts_regex, bool first)
 {
@@ -89,9 +93,9 @@ SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP o
     vector< vector< pair<const char*, const char*> > > occurrences(vectorize_length);
     R_len_t occurrences_max = 1;
 
+    StriContainerRegexPattern pattern_cont(pattern, (LENGTH(str)>0)?vectorize_length:LENGTH(pattern), pattern_opts);
     if (LENGTH(str) == 0 && LENGTH(pattern) > 0) {
         // we need to determine the number of capture groups anyway
-        StriContainerRegexPattern pattern_cont(pattern, LENGTH(pattern), pattern_opts);
         for (R_len_t i = pattern_cont.vectorize_init();
                 i != pattern_cont.vectorize_end();
                 i = pattern_cont.vectorize_next(i))
@@ -109,7 +113,6 @@ SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP o
     }
     else
     {
-        StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_opts);
         for (R_len_t i = pattern_cont.vectorize_init();
                 i != pattern_cont.vectorize_end();
                 i = pattern_cont.vectorize_next(i))
@@ -178,10 +181,35 @@ SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP o
                 SET_STRING_ELT(ret, i+j*vectorize_length, cg_missing);
         }
     }
+
+
+    if (pattern_cont.get_n() == 1 && !(pattern_cont).isNA(0)) {  // only if there's 1 pattern, otherwise how to agree names?
+        SEXP dimnames = R_NilValue, tmp;
+        RegexMatcher *matcher = pattern_cont.getMatcher(0); // will be deleted automatically
+        int pattern_cur_groups = matcher->groupCount();
+        const std::vector<std::string>& cgnames = pattern_cont.getCaptureGroupNames(0);
+        STRI_ASSERT((R_len_t)cgnames.size() == pattern_cur_groups);
+        bool has_cgnames = false;
+        for (R_len_t j=0; j<(R_len_t)cgnames.size(); ++j) {
+            if (!cgnames[j].empty()) { has_cgnames = true; break; }
+        }
+
+        if (has_cgnames) {
+            STRI__PROTECT(dimnames = Rf_allocVector(VECSXP, 2));
+            STRI__PROTECT(tmp = Rf_allocVector(STRSXP, pattern_cur_groups+1));
+            //SET_STRING_ELT(colnames, 0, Rf_mkChar("<whole match>"));
+            for (R_len_t j=0; j<pattern_cur_groups; ++j)
+                SET_STRING_ELT(tmp, j+1, Rf_mkCharLenCE(cgnames[j].c_str(), cgnames[j].size(), CE_UTF8));
+            SET_VECTOR_ELT(dimnames, 1, tmp);
+            Rf_setAttrib(ret, R_DimNamesSymbol, dimnames);
+            STRI__UNPROTECT(2);
+        }
+    }
+
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END(if (str_text) utext_close(str_text);)
-    }
+}
 
 
 /**
@@ -246,6 +274,9 @@ SEXP stri_match_last_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP opts_re
  *
  * @version 1.0-2 (Marek Gagolewski, 2016-01-29)
  *    Issue #214: allow a regex pattern like `.*`  to match an empty string
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-19)
+ *    #153: named capture groups
  */
 SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP cg_missing, SEXP opts_regex)
 {
@@ -268,6 +299,7 @@ SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP cg_mi
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
 
+    R_len_t last_i = -1;
     for (R_len_t i = pattern_cont.vectorize_init();
             i != pattern_cont.vectorize_end();
             i = pattern_cont.vectorize_next(i))
@@ -283,8 +315,36 @@ SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP cg_mi
         RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
         int pattern_cur_groups = matcher->groupCount();
 
+        SEXP cur_res, dimnames = R_NilValue, tmp;  // all 3 will be PROTECT'd below
+        if (last_i >= 0 && (last_i % pattern_cont.get_n()) == (i % pattern_cont.get_n())) {
+            // reuse last dimnames
+            STRI__PROTECT(tmp = VECTOR_ELT(ret, last_i));
+            STRI__PROTECT(dimnames = Rf_getAttrib(tmp, R_DimNamesSymbol));
+        }
+        else {
+            const std::vector<std::string>& cgnames = pattern_cont.getCaptureGroupNames(i);
+            STRI_ASSERT((R_len_t)cgnames.size() == pattern_cur_groups);
+            bool has_cgnames = false;
+            for (R_len_t j=0; j<(R_len_t)cgnames.size(); ++j) {
+                if (!cgnames[j].empty()) { has_cgnames = true; break; }
+            }
+
+            if (has_cgnames) {
+                STRI__PROTECT(dimnames = Rf_allocVector(VECSXP, 2));
+                STRI__PROTECT(tmp = Rf_allocVector(STRSXP, pattern_cur_groups+1));
+                //SET_STRING_ELT(colnames, 0, Rf_mkChar("<whole match>"));
+                for (R_len_t j=0; j<pattern_cur_groups; ++j)
+                    SET_STRING_ELT(tmp, j+1, Rf_mkCharLenCE(cgnames[j].c_str(), cgnames[j].size(), CE_UTF8));
+                SET_VECTOR_ELT(dimnames, 1, tmp);
+            }
+        }
+        last_i = i;
+
         if ((str_cont).isNA(i)) {
-            SET_VECTOR_ELT(ret, i, stri__matrix_NA_STRING(1, pattern_cur_groups+1));
+            STRI__PROTECT(cur_res = stri__matrix_NA_STRING(1, pattern_cur_groups+1));
+            if (!isNull(dimnames)) Rf_setAttrib(cur_res, R_DimNamesSymbol, dimnames);
+            SET_VECTOR_ELT(ret, i, cur_res);
+            STRI__UNPROTECT(3);  // cur_res, dimnames, and tmp
             continue;
         }
 
@@ -308,12 +368,14 @@ SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP cg_mi
 
         R_len_t noccurrences = (R_len_t)occurrences.size()/(pattern_cur_groups+1);
         if (noccurrences <= 0) {
-            SET_VECTOR_ELT(ret, i, stri__matrix_NA_STRING(omit_no_match1?0:1, pattern_cur_groups+1));
+            STRI__PROTECT(cur_res = stri__matrix_NA_STRING(omit_no_match1?0:1, pattern_cur_groups+1));
+            if (!isNull(dimnames)) Rf_setAttrib(cur_res, R_DimNamesSymbol, dimnames);
+            SET_VECTOR_ELT(ret, i, cur_res);
+            STRI__UNPROTECT(3);  // cur_res, dimnames, and tmp
             continue;
         }
 
         const char* str_cur_s = str_cont.get(i).c_str();
-        SEXP cur_res;
         STRI__PROTECT(cur_res = Rf_allocMatrix(STRSXP, noccurrences, pattern_cur_groups+1));
         deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
         for (R_len_t j = 0; iter != occurrences.end(); ++j) {
@@ -329,8 +391,10 @@ SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP cg_mi
                                    Rf_mkCharLenCE(str_cur_s+curo.first, curo.second-curo.first, CE_UTF8));
             }
         }
+
+        if (!isNull(dimnames)) Rf_setAttrib(cur_res, R_DimNamesSymbol, dimnames);
         SET_VECTOR_ELT(ret, i, cur_res);
-        STRI__UNPROTECT(1);
+        STRI__UNPROTECT(3);  // cur_res, dimnames, and tmp
     }
 
     if (str_text) {
@@ -340,4 +404,4 @@ SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP cg_mi
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END(if (str_text) utext_close(str_text);)
-    }
+}

@@ -61,7 +61,7 @@ stri_subset_coll(x, "2", negate = TRUE) <- "e"
 expect_identical(x, c("2", NA, "2"))
 
 x <- c("stringi R", "123", "ID456", "", NA)
-stri_subset_coll(x, "1") <- c(NA, "8")
+suppressWarnings(stri_subset_coll(x, "1") <- c(NA, "8"))
 expect_identical(x, c("stringi R", NA, "ID456", "", NA))
 
 x <- c("stringi R", "123", "ID456", "", NA)
@@ -69,7 +69,7 @@ stri_subset_coll(x, "1") <- c(NA)
 expect_identical(x, c("stringi R", NA, "ID456", "", NA))
 
 x <- c(NA, "stringi R", "123", "", "ID456")
-stri_subset_coll(x, "1", negate = TRUE) <- c("A", "B", "C", "D")
+suppressWarnings(stri_subset_coll(x, "1", negate = TRUE) <- c("A", "B", "C", "D"))
 expect_identical(x, c(NA, "A", "123", "B", "C"))
 
 x <- c("stringi R", "123", "ID456", "", NA)
@@ -81,7 +81,7 @@ stri_subset_coll(x, "7") <- c("a", "b")
 expect_identical(x, c("stringi R", "123", NA, "ID456", ""))
 
 x <- c("stringi R", NA, "173", "ID457", "7")
-stri_subset_coll(x, "7") <- c("a", "b")
+suppressWarnings(stri_subset_coll(x, "7") <- c("a", "b"))
 expect_identical(x, c("stringi R", NA, "a", "b", "a"))
 
 x <- c("stringi R", "173", "ID457", "7")

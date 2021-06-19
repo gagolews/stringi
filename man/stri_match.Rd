@@ -77,6 +77,11 @@ Each row corresponds to a different search result.
 
 The first matrix column gives the whole match. The second one corresponds to
 the first capture group, the third -- the second capture group, and so on.
+
+If regular expressions feature a named capture group,
+the matrix columns will be named accordingly.
+However, for \code{stri_match_first*} and \code{stri_match_last*}
+this will only be the case if there is a single pattern.
 }
 \description{
 These functions extract substrings in \code{str} that
@@ -94,9 +99,6 @@ and search for the i-th pattern within the i-th string.
 If no pattern match is detected and \code{omit_no_match=FALSE},
 then \code{NA}s are included in the resulting matrix (matrices), see Examples.
 
-Please note: \pkg{ICU} regex engine currently does not fully support
-named capture groups.
-
 \code{stri_match}, \code{stri_match_all}, \code{stri_match_first},
 and \code{stri_match_last} are convenience functions.
 They just call \code{stri_match_*_regex}  and were
@@ -111,6 +113,9 @@ stri_match_all_regex(c('breakfast=eggs', 'lunch=pizza', 'no food here'),
 stri_match_all_regex(c('breakfast=eggs;lunch=pizza',
    'breakfast=bacon;lunch=spaghetti', 'no food here'),
    '(\\\\w+)=(\\\\w+)')
+stri_match_all_regex(c('breakfast=eggs;lunch=pizza',
+   'breakfast=bacon;lunch=spaghetti', 'no food here'),
+   '(?<when>\\\\w+)=(?<what>\\\\w+)')  # named capture groups
 stri_match_first_regex(c('breakfast=eggs;lunch=pizza',
    'breakfast=bacon;lunch=spaghetti', 'no food here'),
    '(\\\\w+)=(\\\\w+)')
