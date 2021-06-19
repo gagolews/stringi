@@ -188,8 +188,9 @@ invisible(NULL)
 #' just before the current position. Does not alter the input position.
 #' The length of possible strings matched by the look-behind pattern must
 #' not be unbounded (no \code{*} or \code{+} operators.)}
-#' \item{\code{(?<name>...)}}{Named capture group. The \code{<angle brackets>}
-#'  are literal - they appear in the pattern.}
+#' \item{\code{(?<name>...)}}{Named capture group, where \code{name}
+#'     (enclosed within the angle brackets)
+#'     is a sequence like \code{[A-Za-z][A-Za-z0-9]*}}
 #' \item{\code{(?ismwx-ismwx:...)}}{Flag settings. Evaluate the parenthesized
 #' expression with the specified flags enabled or \code{-}disabled,
 #' see also \code{\link{stri_opts_regex}}.}

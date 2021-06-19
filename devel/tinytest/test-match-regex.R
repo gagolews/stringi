@@ -161,3 +161,98 @@ expect_identical(dim(stringi::stri_match_last_regex(c("a", "ab", NA), "(.)(.)"))
 expect_equivalent(stri_locate_last_fixed("agaga", "aga"), matrix(nrow=1, c(3, 5)))
 expect_equivalent(stri_locate_last_coll("agaga", "aga"), matrix(nrow=1, c(3, 5)))
 expect_equivalent(stri_locate_last_regex("agaga", "aga"), matrix(nrow=1, c(1, 3)))
+
+
+expect_equivalent(
+    lapply(
+        stri_match_all_regex(c("abc", "def"), c("(?<a>.)(?<b>.)(?<c>.)")),
+        function(res) dimnames(res)[[2]]
+    ),
+    list(c("", "a", "b", "c"), c("", "a", "b", "c"))
+)
+
+expect_equivalent(
+    lapply(
+        stri_match_all_regex(c("abc"), c("(?<test>.)", "(?<a>.)(?<b>.)(?<c>.)")),
+        function(res) dimnames(res)[[2]]
+    ),
+    list(c("", "test"), c("", "a", "b", "c"))
+)
+
+expect_equivalent(
+    lapply(
+        stri_match_all_regex(c("abc"), c("(?<a>.)(?<b>.)(?<c>.)", "(?<test>.)")),
+        function(res) dimnames(res)[[2]]
+    ),
+    list(c("", "a", "b", "c"), c("", "test"))
+)
+
+
+expect_equivalent(
+    lapply(
+        stri_match_all_regex(rep("abc", 4), c("(?<a>.)(?<b>.)(?<c>.)", "(?<test>.)")),
+        function(res) dimnames(res)[[2]]
+    ),
+    list(c("", "a", "b", "c"), c("", "test"), c("", "a", "b", "c"), c("", "test"))
+)
+
+expect_equivalent(
+    lapply(
+        stri_match_all_regex("abc", c("(?<a>.)(.)(?<c>.)", ".", "(.)")),
+        function(res) dimnames(res)[[2]]
+    ),
+    list(c("", "a", "", "c"), NULL, NULL)
+)
+
+expect_equivalent(
+    lapply(
+        stri_match_all_regex("?<a>.(<b>.)?!?", "(\\?<a>.)\\(?<b>.\\)[(?<c>.)](.)(?<d>.)"),
+        function(res) dimnames(res)[[2]]
+    ),
+    list(c("", "", "", "d"))
+)
+
+expect_equivalent(
+    lapply(
+        stri_match_all_regex(c("abcdef", "", NA), "(?<whole>(?<a>.)(?<b>.)(?<c>.))"),
+        function(res) dimnames(res)[[2]]
+    ),
+    list(c("", "whole", "a", "b", "c"), c("", "whole", "a", "b", "c"), c("", "whole", "a", "b", "c"))
+)
+
+
+expect_equivalent(
+    dimnames(stri_match_first_regex(c(""), c("(?<a>.)(?<b>.)(?<c>.)")))[[2]],
+    c("", "a", "b", "c")
+)
+
+expect_equivalent(
+    dimnames(stri_match_first_regex(NA, c("(?<a>.)(?<b>.)(?<c>.)")))[[2]],
+    c("", "a", "b", "c")
+)
+
+expect_equivalent(
+    dimnames(stri_match_first_regex(character(0), c("(?<a>.)(?<b>.)(?<c>.)")))[[2]],
+    c("", "a", "b", "c")
+)
+
+expect_equivalent(
+    dimnames(stri_match_first_regex(c("abc", "def"), c("(?<a>.)(?<b>.)(?<c>.)")))[[2]],
+    c("", "a", "b", "c")
+)
+
+expect_equivalent(
+    dimnames(stri_match_first_regex(c("abc"), c("(?<test>.)", "(?<a>.)(?<b>.)(?<c>.)")))[[2]],
+    NULL
+)
+
+expect_equivalent(
+    dimnames(stri_match_last_regex(c("abc", "def"), c("(?<a>.)(?<b>.)(?<c>.)")))[[2]],
+    c("", "a", "b", "c")
+)
+
+expect_equivalent(
+    dimnames(stri_match_last_regex(c("abc"), c("(?<test>.)", "(?<a>.)(?<b>.)(?<c>.)")))[[2]],
+    NULL
+)
+

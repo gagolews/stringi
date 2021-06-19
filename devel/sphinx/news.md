@@ -21,6 +21,8 @@
   variable width and precision (both at the same time), etc. Moreover,
   `stri_printf` can be used to display formatted strings conveniently.
 
+* [NEW FEATURE] #153: `stri_match_*_regex` now extracts capture group names.
+
 * [NEW FEATURE] #438: `stri_trans_general` now supports rule-based
   as well as reverse-direction transliteration.
 
