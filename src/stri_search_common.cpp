@@ -66,6 +66,9 @@ void stri__locate_set_dimnames_matrix(SEXP matrix) {
  * @version 0.1-?? (Marek Gagolewski)
  */
 void stri__locate_set_dimnames_list(SEXP list) {
+    R_len_t n = LENGTH(list);
+    if (n <= 0) return;
+
     SEXP dimnames;
     SEXP colnames;
     PROTECT(dimnames = Rf_allocVector(VECSXP, 2));
@@ -74,7 +77,6 @@ void stri__locate_set_dimnames_list(SEXP list) {
     SET_STRING_ELT(colnames, 1, Rf_mkChar(MSG__LOCATE_DIM_END));
     SET_VECTOR_ELT(dimnames, 1, colnames);
 
-    R_len_t n = LENGTH(list);
     for (R_len_t i = 0; i < n; ++i)
         Rf_setAttrib(VECTOR_ELT(list, i), R_DimNamesSymbol, dimnames);
     UNPROTECT(2);
