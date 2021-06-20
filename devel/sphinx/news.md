@@ -24,7 +24,7 @@
 * [NEW FEATURE] #153: `stri_match_*_regex` now extract capture group names.
 
 * [NEW FEATURE] #25: `stri_locate_*_regex` now have a new argument,
-  `capture_groups` which allows for extracting positions of matches
+  `capture_groups`, which allows for extracting positions of matches
   to parenthesised subexpressions.
 
 * [NEW FEATURE] #438: `stri_trans_general` now supports rule-based
