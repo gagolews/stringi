@@ -184,7 +184,7 @@ SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP o
 
     if (pattern_cont.get_n() == 1) {  // only if there's 1 pattern, otherwise how to agree names?
         SEXP dimnames;
-        STRI__PROTECT(dimnames = pattern_cont.getCaptureGroupDimnames(0, true));  // reuses last matcher btw
+        STRI__PROTECT(dimnames = pattern_cont.getCaptureGroupRDimnames(0));  // reuses last matcher btw
         if (!isNull(dimnames)) Rf_setAttrib(ret, R_DimNamesSymbol, dimnames);
         STRI__UNPROTECT(1);
     }
@@ -296,10 +296,10 @@ SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP cg_mi
 
         UErrorCode status = U_ZERO_ERROR;
         RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
-        int pattern_cur_groups = matcher->groupCount();
+        R_len_t pattern_cur_groups = matcher->groupCount();
 
         SEXP cur_res, dimnames;  // all 2 will be PROTECT'd below
-        STRI__PROTECT(dimnames = pattern_cont.getCaptureGroupDimnames(i, true, last_i, ret));
+        STRI__PROTECT(dimnames = pattern_cont.getCaptureGroupRDimnames(i, last_i, ret));
         last_i = i;
 
         if ((str_cont).isNA(i)) {

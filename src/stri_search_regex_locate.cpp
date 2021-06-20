@@ -38,6 +38,48 @@
 using namespace std;
 
 
+/* Coverts deque with (from,to) pairs to a 2-column R matrix
+ *
+ * does not set dimnames
+ *
+ * TODO: <refactor> use also in stri_localte_all_fixed etc.
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-20)
+ */
+SEXP stri__locate_get_fromto_matrix(
+    deque< pair<R_len_t, R_len_t> >& occurrences,
+    StriContainerUTF16& str_cont,
+    R_len_t i,
+    bool omit_no_match1
+) {
+    SEXP ans;
+    R_len_t noccurrences = (R_len_t)occurrences.size();
+
+    if (noccurrences <= 0) {
+        return stri__matrix_NA_INTEGER(omit_no_match1?0:1, 2);
+    }
+
+    PROTECT(ans = Rf_allocMatrix(INTSXP, noccurrences, 2));
+    int* ans_tab = INTEGER(ans);
+    deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
+    for (R_len_t j = 0; iter != occurrences.end(); ++iter, ++j) {
+        pair<R_len_t, R_len_t> match = *iter;
+        ans_tab[j]              = match.first;
+        ans_tab[j+noccurrences] = match.second;
+    }
+
+    // Adjust UChar index -> UChar32 index
+    // (1-2 byte UTF16 to 1 byte UTF32-code points)
+    str_cont.UChar16_to_UChar32_index(
+        i, ans_tab,
+        ans_tab+noccurrences, noccurrences,
+        1, // 0-based index -> 1-based
+        0  // end returns position of next character after match
+    );
+    UNPROTECT(1);
+    return ans;
+}
+
 /** Locate all occurrences of a regex pattern
  *
  * @param str character vector
@@ -72,8 +114,6 @@ using namespace std;
  */
 SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts_regex, SEXP capture_groups)
 {
-    // ??? @TODO: capture_group arg (integer vector which capture group to locate) ???
-    // ??? OR introduce stri_matchpos_*_regex ???
     bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
     bool capture_groups1 = stri__prepare_arg_logical_1_notNA(capture_groups, "capture_groups");
     StriRegexMatcherOptions pattern_opts =
@@ -89,7 +129,7 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
 
-    R_len_t last_i = -1;
+//     R_len_t last_i = -1;
     for (R_len_t i = pattern_cont.vectorize_init();
             i != pattern_cont.vectorize_end();
             i = pattern_cont.vectorize_next(i))
@@ -104,52 +144,74 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
         matcher->reset(str_cont.get(i));
         int found = (int)matcher->find(status);
         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-        if (!found) {
-            SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(omit_no_match1?0:1, 2));
-            continue;
-        }
 
         deque< pair<R_len_t, R_len_t> > occurrences;
-        do {
+        vector< deque< pair<R_len_t, R_len_t> > > cg_occurrences;
+        R_len_t pattern_cur_groups = matcher->groupCount();
+        if (capture_groups1 && pattern_cur_groups > 0)
+            cg_occurrences.resize(pattern_cur_groups);
+        while (found) {
             UErrorCode status = U_ZERO_ERROR;
             int start = (int)matcher->start(status);
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
             int end  =  (int)matcher->end(status);
             STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-
             occurrences.push_back(pair<R_len_t, R_len_t>(start, end));
+
+            if (capture_groups1) {
+                for (R_len_t j=0; j<pattern_cur_groups; ++j) {
+                    start = (int)matcher->start(j+1, status);
+                    STRI__CHECKICUSTATUS_THROW(status, {})
+                    end  =  (int)matcher->end(j+1, status);
+                    STRI__CHECKICUSTATUS_THROW(status, {})
+                    if (start < 0 || end < 0) {
+                        start = NA_INTEGER;
+                        end = NA_INTEGER;
+                    }
+                    cg_occurrences[j].push_back(pair<R_len_t, R_len_t>(start, end));
+                }
+            }
+
             found = (int)matcher->find(status);
             STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-        } while (found);
+        };
 
-        R_len_t noccurrences = (R_len_t)occurrences.size();
         SEXP ans;
-        STRI__PROTECT(ans = Rf_allocMatrix(INTSXP, noccurrences, 2));
-        int* ans_tab = INTEGER(ans);
-        deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
-        for (R_len_t j = 0; iter != occurrences.end(); ++iter, ++j) {
-            pair<R_len_t, R_len_t> match = *iter;
-            ans_tab[j]              = match.first;
-            ans_tab[j+noccurrences] = match.second;
+        STRI__PROTECT(ans = stri__locate_get_fromto_matrix(
+            occurrences, str_cont, i, omit_no_match1));
+
+        if (capture_groups1) {
+            SEXP cgs, names;
+            STRI__PROTECT(cgs = Rf_allocVector(VECSXP, pattern_cur_groups));
+            STRI__PROTECT(names = pattern_cont.getCaptureGroupRNames(i));  // TODO: reuse
+            // last_i = i;
+            for (R_len_t j=0; j<pattern_cur_groups; ++j) {
+                SEXP ans2;
+                STRI__PROTECT(ans2 = stri__locate_get_fromto_matrix(
+                    cg_occurrences[j], str_cont, i, omit_no_match1)
+                );
+                SET_VECTOR_ELT(cgs, j, ans2);
+                STRI__UNPROTECT(1);
+            }
+
+            stri__locate_set_dimnames_list(cgs);  // all matrices get from&to colnames
+            if (!isNull(names)) Rf_setAttrib(cgs, R_NamesSymbol, names);
+            Rf_setAttrib(ans, Rf_ScalarString(Rf_mkChar("capture_groups")), cgs);
+            STRI__UNPROTECT(2);
         }
 
-        // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
-        str_cont.UChar16_to_UChar32_index(i, ans_tab,
-                                          ans_tab+noccurrences, noccurrences,
-                                          1, // 0-based index -> 1-based
-                                          0  // end returns position of next character after match
-                                         );
         SET_VECTOR_ELT(ret, i, ans);
         STRI__UNPROTECT(1);
     }
 
-    stri__locate_set_dimnames_list(ret);
+    stri__locate_set_dimnames_list(ret);  // all matrices get from&to colnames
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
-/** Locate first occurrence of a regex pattern
+/** Locate first/last occurrence of a regex pattern
  *
  * @param str character vector
  * @param pattern character vector
@@ -175,8 +237,9 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
  * @version 1.7.1 (Marek Gagolewski, 2021-06-20)
  *     #25: capture_groups
  */
-SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool first, bool capture_groups1)
-{
+SEXP stri__locate_firstlast_regex(
+    SEXP str, SEXP pattern, SEXP opts_regex, bool first, bool capture_groups1
+) {
     PROTECT(str = stri__prepare_arg_string(str, "str")); // prepare string argument
     PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern")); // prepare string argument
     R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
@@ -230,11 +293,12 @@ SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool 
         }
 
         // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
-        str_cont.UChar16_to_UChar32_index(i,
-                                          ret_tab+i, ret_tab+i+vectorize_length, 1,
-                                          1, // 0-based index -> 1-based
-                                          0  // end returns position of next character after match
-                                         );
+        str_cont.UChar16_to_UChar32_index(
+            i,
+            ret_tab+i, ret_tab+i+vectorize_length, 1,
+            1, // 0-based index -> 1-based
+            0  // end returns position of next character after match
+        );
     }
 
     stri__locate_set_dimnames_matrix(ret);

@@ -147,11 +147,101 @@ expect_equivalent(stri_locate_last_regex(c("", " "), "^.*$"), matrix(c(1, 0,
     1, 1), byrow = TRUE, ncol = 2))
 
 
-# .....
-stri_locate_all_regex(
-    c('breakfast=eggs;lunch=pizza',
-   'breakfast=spam', 'no food here'),
-   '(?<when>\\w+)=(?<what>\\w+)',
-   capture_groups=TRUE
+expect_warning(stri_locate_all_regex("test", "", capture_groups=TRUE))
+expect_equivalent(suppressWarnings(stri_locate_all_regex("test", "", capture_groups=TRUE)),
+    list(cbind(start=NA_integer_, end=NA_integer_)))
+
+expect_warning(stri_locate_first_regex("test", "", capture_groups=TRUE))
+expect_equivalent(suppressWarnings(stri_locate_first_regex("test", "", capture_groups=TRUE)),
+    (cbind(start=NA_integer_, end=NA_integer_)))
+
+expect_warning(stri_locate_last_regex("test", "", capture_groups=TRUE))
+expect_equivalent(suppressWarnings(stri_locate_last_regex("test", "", capture_groups=TRUE)),
+    (cbind(start=NA_integer_, end=NA_integer_)))
+
+
+expect_equivalent(
+    stri_locate_all_regex("abc", "(?<a>.)", capture_groups=TRUE),
+    list(
+        structure(cbind(start=1:3, end=1:3), capture_groups=list(a=cbind(start=1:3, end=1:3)))
+    )
+)
+expect_equivalent(
+    stri_locate_all_regex("abc", "(?<a>.)(.)(?<c>.)", capture_groups=TRUE),
+    list(
+        structure(cbind(start=1, end=3), capture_groups=list(
+            a=cbind(start=1, end=1),
+            cbind(start=2, end=2),
+            c=cbind(start=3, end=3)
+        ))
+    )
+)
+expect_equivalent(
+    stri_locate_all_regex("abc", "(.)(.)(.)", capture_groups=TRUE),
+    list(
+        structure(cbind(start=1, end=3), capture_groups=list(
+            cbind(start=1, end=1),
+            cbind(start=2, end=2),
+            cbind(start=3, end=3)
+        ))
+    )
+)
+
+expect_equivalent(
+    stri_locate_all_regex("abc", c("(?<a>.)", "(?<a>.)(.)(?<c>.)", "(.)(.)"), capture_groups=TRUE),
+    list(
+        structure(cbind(start=1:3, end=1:3), capture_groups=list(a=cbind(start=1:3, end=1:3))),
+        structure(cbind(start=1, end=3), capture_groups=list(
+            a=cbind(start=1, end=1),
+            cbind(start=2, end=2),
+            c=cbind(start=3, end=3)
+        )),
+        structure(cbind(start=1, end=2), capture_groups=list(
+            cbind(start=1, end=1),
+            cbind(start=2, end=2)
+        ))
+    )
+)
+
+expect_equivalent(
+    stri_locate_all_regex(c("", NA, "no"), "(?<a>.)(.)(?<c>.)", capture_groups=TRUE),
+    list(
+        structure(cbind(start=NA_integer_, end=NA_integer_), capture_groups=list(
+            a=cbind(start=NA_integer_, end=NA_integer_),
+            cbind(start=NA_integer_, end=NA_integer_),
+            c=cbind(start=NA_integer_, end=NA_integer_)
+        )),
+        structure(cbind(start=NA_integer_, end=NA_integer_), capture_groups=list(
+            a=cbind(start=NA_integer_, end=NA_integer_),
+            cbind(start=NA_integer_, end=NA_integer_),
+            c=cbind(start=NA_integer_, end=NA_integer_)
+        )),
+        structure(cbind(start=NA_integer_, end=NA_integer_), capture_groups=list(
+            a=cbind(start=NA_integer_, end=NA_integer_),
+            cbind(start=NA_integer_, end=NA_integer_),
+            c=cbind(start=NA_integer_, end=NA_integer_)
+        ))
+    )
+)
+
+expect_equivalent(
+    stri_locate_all_regex(c("", NA, "no"), "(?<a>.)(.)(?<c>.)", capture_groups=TRUE, omit_no_match=TRUE),
+    list(
+        structure(cbind(start=integer(0), end=integer(0)), capture_groups=list(
+            a=cbind(start=integer(0), end=integer(0)),
+            cbind(start=integer(0), end=integer(0)),
+            c=cbind(start=integer(0), end=integer(0))
+        )),
+        structure(cbind(start=NA_integer_, end=NA_integer_), capture_groups=list(
+            a=cbind(start=NA_integer_, end=NA_integer_),
+            cbind(start=NA_integer_, end=NA_integer_),
+            c=cbind(start=NA_integer_, end=NA_integer_)
+        )),
+        structure(cbind(start=integer(0), end=integer(0)), capture_groups=list(
+            a=cbind(start=integer(0), end=integer(0)),
+            cbind(start=integer(0), end=integer(0)),
+            c=cbind(start=integer(0), end=integer(0))
+        ))
+    )
 )
 

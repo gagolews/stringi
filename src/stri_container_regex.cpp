@@ -122,9 +122,54 @@ StriContainerRegexPattern::~StriContainerRegexPattern()
  *
  * @version 1.7.1 (Marek Gagolewski, 2021-06-20)  #153
  */
-SEXP StriContainerRegexPattern::getCaptureGroupDimnames(
-    R_len_t i, bool include_whole_match, R_len_t last_i, SEXP ret
+SEXP StriContainerRegexPattern::getCaptureGroupRNames(
+    R_len_t i  // TODO allow reuse
 ) {
+    // TODO - refactor - too similar to getCaptureGroupRDimnames
+
+    if (this->isNA(i) || this->get(i).length() <= 0)
+        return R_NilValue;
+
+    const std::vector<std::string>& cgnames = this->getCaptureGroupNames(i);
+    R_len_t pattern_cur_groups = cgnames.size();
+    bool has_cgnames = false;
+    for (R_len_t j=0; j<pattern_cur_groups; ++j) {
+        if (!cgnames[j].empty()) { has_cgnames = true; break; }
+    }
+
+    if (has_cgnames) {
+        SEXP tmp;
+        PROTECT(tmp = Rf_allocVector(STRSXP, pattern_cur_groups));
+        //SET_STRING_ELT(colnames, 0, Rf_mkChar("<whole match>"));
+        for (R_len_t j=0; j<pattern_cur_groups; ++j) {
+            SET_STRING_ELT(
+                tmp,
+                j,
+                Rf_mkCharLenCE(cgnames[j].c_str(), cgnames[j].size(), CE_UTF8)
+            );
+        }
+        UNPROTECT(1);
+        return tmp;
+    }
+
+    return R_NilValue;
+}
+
+/** Get dimnames of all capture groups in the i-th regex as an R STRSXP
+ * allows reusing previous
+ *
+ * @param i index
+ * @param include_whole_match whether the first elem should be an additional ""
+ * @param last_i set to -1 to recompute
+ * @param ret might copy dimnames from ret[last_i]
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-20)  #153
+ */
+SEXP StriContainerRegexPattern::getCaptureGroupRDimnames(
+    R_len_t i, R_len_t last_i, SEXP ret
+) {
+    // TODO - refactor - too similar to getCaptureGroupRNames
+
     if (this->isNA(i) || this->get(i).length() <= 0)
         return R_NilValue;
 
@@ -153,12 +198,12 @@ SEXP StriContainerRegexPattern::getCaptureGroupDimnames(
         if (has_cgnames) {
             SEXP tmp, dimnames;
             PROTECT(dimnames = Rf_allocVector(VECSXP, 2));
-            PROTECT(tmp = Rf_allocVector(STRSXP, pattern_cur_groups+((include_whole_match)?1:0)));
+            PROTECT(tmp = Rf_allocVector(STRSXP, pattern_cur_groups+1));
             //SET_STRING_ELT(colnames, 0, Rf_mkChar("<whole match>"));
             for (R_len_t j=0; j<pattern_cur_groups; ++j) {
                 SET_STRING_ELT(
                     tmp,
-                    j+((include_whole_match)?1:0),
+                    j+1,
                     Rf_mkCharLenCE(cgnames[j].c_str(), cgnames[j].size(), CE_UTF8)
                 );
             }
