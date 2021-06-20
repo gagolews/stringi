@@ -112,6 +112,65 @@ StriContainerRegexPattern::~StriContainerRegexPattern()
 }
 
 
+/** Get names of all capture groups in the i-th regex as an R STRSXP
+ * allows reusing previous
+ *
+ * @param i index
+ * @param include_whole_match whether the first elem should be an additional ""
+ * @param last_i set to -1 to recompute
+ * @param ret might copy dimnames from ret[last_i]
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-20)  #153
+ */
+SEXP StriContainerRegexPattern::getCaptureGroupDimnames(
+    R_len_t i, bool include_whole_match, R_len_t last_i, SEXP ret
+) {
+    if (this->isNA(i) || this->get(i).length() <= 0)
+        return R_NilValue;
+
+    // last dimnames could be cached here but then
+    // we'd have to use R_PreserveObject and R_ReleaseObject;
+    // R-ext states "It is less efficient than the normal protection mechanism,
+    // and should be used sparingly."
+    // If a user calls PROTECT and then UNPROTECT on retval, how does this
+    // interfere with R_PreserveObject?
+    if (last_i >= 0 && !isNull(ret) && (last_i % this->get_n()) == (i % this->get_n())) {
+        // reuse last dimnames
+        SEXP tmp, dimnames;
+        PROTECT(tmp = VECTOR_ELT(ret, last_i));
+        PROTECT(dimnames = Rf_getAttrib(tmp, R_DimNamesSymbol));
+        UNPROTECT(2);
+        return dimnames;
+    }
+    else {
+        const std::vector<std::string>& cgnames = this->getCaptureGroupNames(i);
+        R_len_t pattern_cur_groups = cgnames.size();
+        bool has_cgnames = false;
+        for (R_len_t j=0; j<pattern_cur_groups; ++j) {
+            if (!cgnames[j].empty()) { has_cgnames = true; break; }
+        }
+
+        if (has_cgnames) {
+            SEXP tmp, dimnames;
+            PROTECT(dimnames = Rf_allocVector(VECSXP, 2));
+            PROTECT(tmp = Rf_allocVector(STRSXP, pattern_cur_groups+((include_whole_match)?1:0)));
+            //SET_STRING_ELT(colnames, 0, Rf_mkChar("<whole match>"));
+            for (R_len_t j=0; j<pattern_cur_groups; ++j) {
+                SET_STRING_ELT(
+                    tmp,
+                    j+((include_whole_match)?1:0),
+                    Rf_mkCharLenCE(cgnames[j].c_str(), cgnames[j].size(), CE_UTF8)
+                );
+            }
+            SET_VECTOR_ELT(dimnames, 1, tmp);
+            UNPROTECT(2);
+            return dimnames;
+        }
+    }
+    return R_NilValue;
+}
+
+
 /** Get names of all capture groups in the i-th regex;
  * empty string denotes an unnamed group
  *
@@ -124,8 +183,10 @@ StriContainerRegexPattern::~StriContainerRegexPattern()
  */
 const std::vector<std::string>& StriContainerRegexPattern::getCaptureGroupNames(R_len_t i)
 {
-    STRI_ASSERT(lastMatcherIndex == (i % n));
+    STRI_ASSERT(lastMatcherIndex >= 0 && lastMatcherIndex == (i % n));
     STRI_ASSERT(lastMatcher);
+    STRI_ASSERT(!this->isNA(i));
+    STRI_ASSERT(this->get(i).length() > 0);
 
     if (this->lastCaptureGroupNamesIndex == (i % n)) {
         return lastCaptureGroupNames; // reuse
@@ -134,6 +195,7 @@ const std::vector<std::string>& StriContainerRegexPattern::getCaptureGroupNames(
     int ngroups = lastMatcher->groupCount();
     lastCaptureGroupNames = std::vector<std::string>(ngroups);
     this->lastCaptureGroupNamesIndex = (i % n);
+
 
     if (ngroups == 0) return lastCaptureGroupNames;  // nothing to do
 

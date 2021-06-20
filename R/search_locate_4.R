@@ -35,17 +35,17 @@
 #' Locate Occurrences of a Pattern
 #'
 #' @description
-#' These functions may be used, e.g., to find the indexes (positions) where
+#' These functions find the indexes (positions) where
 #' there is a match to some pattern.
 #' The functions \code{stri_locate_all_*} locate all the matches.
 #' \code{stri_locate_first_*} and \code{stri_locate_last_*}
-#' give the first or the last matches, respectively.
+#' give the first and the last matches, respectively.
 #'
 #' @details
 #' Vectorized over \code{str} and \code{pattern} (with recycling
 #' of the elements in the shorter vector if necessary). This allows to,
-#' for instance, search for one pattern in each given string,
-#' search for each pattern in one given string,
+#' for instance, search for one pattern in each string,
+#' search for each pattern in one string,
 #' and search for the i-th pattern within the i-th string.
 #'
 #' The matches may be extracted by calling
@@ -60,21 +60,29 @@
 #' @param pattern,regex,fixed,coll,charclass character vector;
 #'     search patterns; for more details refer to \link{stringi-search}
 #' @param opts_collator,opts_fixed,opts_regex a named list used to tune up
-#' the search engine's settings; see
-#' \code{\link{stri_opts_collator}}, \code{\link{stri_opts_fixed}},
-#' and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
-#' for the defaults
+#'     the search engine's settings; see
+#'     \code{\link{stri_opts_collator}}, \code{\link{stri_opts_fixed}},
+#'     and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
+#'     for the defaults
 #' @param merge single logical value;
-#' indicates whether consecutive sequences of indexes in the resulting
-#' matrix should be merged; \code{stri_locate_all_charclass} only
+#'     indicates whether consecutive sequences of indexes in the resulting
+#'     matrix should be merged; \code{stri_locate_all_charclass} only
 #' @param omit_no_match single logical value; if \code{FALSE},
-#' then two missing values will indicate that there was no match;
-#' \code{stri_locate_all_*} only
+#'     then two missing values will indicate that there was no match;
+#'     \code{stri_locate_all_*} only
+#'
+#' @param capture_groups single logical value;
+#'     whether positions of matches to parenthesized subexpressions
+#'     should be returned to (as \code{capture_groups} attribute);
+#'     \code{stri_locate_*_regex} only
+#'
 #' @param mode single string;
-#' one of: \code{'first'} (the default), \code{'all'}, \code{'last'}
+#'     one of: \code{'first'} (the default), \code{'all'}, \code{'last'}
+#'
 #' @param ... supplementary arguments passed to the underlying functions,
-#' including additional settings for \code{opts_collator}, \code{opts_regex},
-#' \code{opts_fixed}, and so on
+#'     including additional settings for \code{opts_collator},
+#'     \code{opts_regex}, \code{opts_fixed}, and so on
+#'
 #'
 #' @return
 #' For \code{stri_locate_all_*},
@@ -97,11 +105,21 @@
 #' Note that \code{stri_locate_last_regex} searches from start to end,
 #' but skips overlapping matches, see the example below.
 #'
+#' If \code{capture_groups=TRUE}, then the outputs are equipped with
+#' \code{capture_groups} attribute, which is a list of matrices
+#' giving the start-end positions of matches to parenthesized subexpressions.
+#'
 #' @examples
 #' stri_locate_all('XaaaaX',
 #'    regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
-#' stri_locate_all('Bartolini', fixed='i')
-#' stri_locate_all('a b c', charclass='\\p{Zs}') # all white spaces
+#' stri_locate_all('stringi', fixed='i')
+#'
+#' stri_locate_all_regex(
+#'     c('breakfast=eggs;lunch=pizza',
+#'    'breakfast=spam', 'no food here'),
+#'    '(?<when>\\w+)=(?<what>\\w+)',
+#'    capture_groups=TRUE
+#' )  # named capture groups
 #'
 #' stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\p{Ll}')
 #' stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\p{Ll}', merge=FALSE)
@@ -114,7 +132,7 @@
 #'
 #' pat <- stri_paste('\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ',
 #'                   '\u0639\u0644\u064a\u0647 \u0648\u0633\u0644\u0645XYZ')
-#' stri_locate_last_coll('\ufdfa\ufdfa\ufdfaXYZ', pat, strength = 1)
+#' stri_locate_last_coll('\ufdfa\ufdfa\ufdfaXYZ', pat, strength=1)
 #'
 #' stri_locate_all_fixed(c('AaaaaaaA', 'AAAA'), 'a')
 #' stri_locate_all_fixed(c('AaaaaaaA', 'AAAA'), 'a', case_insensitive=TRUE, overlap=TRUE)
@@ -146,6 +164,7 @@
 #' # note the difference - regex searches left to right, with no overlaps:
 #' stri_locate_last_regex("agaga", "aga")
 #'
+#'
 #' @family search_locate
 #' @family indexing
 #'
@@ -153,10 +172,10 @@
 #' @rdname stri_locate
 stri_locate_all <- function(str, ..., regex, fixed, coll, charclass) {
     providedarg <- c(
-        regex = !missing(regex),
-        fixed = !missing(fixed),
-        coll = !missing(coll),
-        charclass = !missing(charclass))
+        regex=!missing(regex),
+        fixed=!missing(fixed),
+        coll=!missing(coll),
+        charclass=!missing(charclass))
 
     if (sum(providedarg) != 1)
         stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
@@ -177,10 +196,10 @@ stri_locate_all <- function(str, ..., regex, fixed, coll, charclass) {
 stri_locate_first <- function(str, ..., regex, fixed, coll, charclass)
 {
     providedarg <- c(
-        regex = !missing(regex),
-        fixed = !missing(fixed),
-        coll = !missing(coll),
-        charclass = !missing(charclass))
+        regex=!missing(regex),
+        fixed=!missing(fixed),
+        coll=!missing(coll),
+        charclass=!missing(charclass))
 
     if (sum(providedarg) != 1)
         stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
@@ -201,10 +220,10 @@ stri_locate_first <- function(str, ..., regex, fixed, coll, charclass)
 stri_locate_last <- function(str, ..., regex, fixed, coll, charclass)
 {
     providedarg <- c(
-        regex = !missing(regex),
-        fixed = !missing(fixed),
-        coll = !missing(coll),
-        charclass = !missing(charclass))
+        regex=!missing(regex),
+        fixed=!missing(fixed),
+        coll=!missing(coll),
+        charclass=!missing(charclass))
 
     if (sum(providedarg) != 1)
         stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
@@ -223,24 +242,24 @@ stri_locate_last <- function(str, ..., regex, fixed, coll, charclass)
 #' @export
 #' @rdname stri_locate
 stri_locate <- function(str, ..., regex, fixed, coll, charclass,
-    mode = c("first", "all", "last"))
+    mode=c("first", "all", "last"))
 {
     # `first` is default for compatibility with stringr
     mode <- match.arg(mode)  # this is slow
 
     switch(mode,
-        first = stri_locate_first(str, ..., regex = regex, fixed = fixed,
-            coll = coll, charclass = charclass),
-        last = stri_locate_last(str, ..., regex = regex,
-            fixed = fixed, coll = coll, charclass = charclass),
-        all = stri_locate_all(str, ..., regex = regex, fixed = fixed,
-            coll = coll, charclass = charclass))
+        first=stri_locate_first(str, ..., regex=regex, fixed=fixed,
+            coll=coll, charclass=charclass),
+        last=stri_locate_last(str, ..., regex=regex,
+            fixed=fixed, coll=coll, charclass=charclass),
+        all=stri_locate_all(str, ..., regex=regex, fixed=fixed,
+            coll=coll, charclass=charclass))
 }
 
 
 #' @export
 #' @rdname stri_locate
-stri_locate_all_charclass <- function(str, pattern, merge = TRUE, omit_no_match = FALSE)
+stri_locate_all_charclass <- function(str, pattern, merge=TRUE, omit_no_match=FALSE)
 {
     .Call(C_stri_locate_all_charclass, str, pattern, merge, omit_no_match)
 }
@@ -265,7 +284,7 @@ stri_locate_last_charclass <- function(str, pattern)
 #' @export
 #' @rdname stri_locate
 stri_locate_all_coll <- function(str, pattern,
-    omit_no_match = FALSE, ..., opts_collator = NULL)
+    omit_no_match=FALSE, ..., opts_collator=NULL)
 {
     if (!missing(...))
         opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
@@ -275,7 +294,7 @@ stri_locate_all_coll <- function(str, pattern,
 
 #' @export
 #' @rdname stri_locate
-stri_locate_first_coll <- function(str, pattern, ..., opts_collator = NULL)
+stri_locate_first_coll <- function(str, pattern, ..., opts_collator=NULL)
 {
     if (!missing(...))
         opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
@@ -285,7 +304,7 @@ stri_locate_first_coll <- function(str, pattern, ..., opts_collator = NULL)
 
 #' @export
 #' @rdname stri_locate
-stri_locate_last_coll <- function(str, pattern, ..., opts_collator = NULL)
+stri_locate_last_coll <- function(str, pattern, ..., opts_collator=NULL)
 {
     if (!missing(...))
         opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
@@ -295,37 +314,37 @@ stri_locate_last_coll <- function(str, pattern, ..., opts_collator = NULL)
 
 #' @export
 #' @rdname stri_locate
-stri_locate_all_regex <- function(str, pattern, omit_no_match = FALSE, ..., opts_regex = NULL)
+stri_locate_all_regex <- function(str, pattern, omit_no_match=FALSE, capture_groups=FALSE, ..., opts_regex=NULL)
 {
     if (!missing(...))
         opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
-    .Call(C_stri_locate_all_regex, str, pattern, omit_no_match, opts_regex)
+    .Call(C_stri_locate_all_regex, str, pattern, omit_no_match, opts_regex, capture_groups)
 }
 
 
 #' @export
 #' @rdname stri_locate
-stri_locate_first_regex <- function(str, pattern, ..., opts_regex = NULL)
+stri_locate_first_regex <- function(str, pattern, capture_groups=FALSE, ..., opts_regex=NULL)
 {
     if (!missing(...))
         opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
-    .Call(C_stri_locate_first_regex, str, pattern, opts_regex)
+    .Call(C_stri_locate_first_regex, str, pattern, opts_regex, capture_groups)
 }
 
 
 #' @export
 #' @rdname stri_locate
-stri_locate_last_regex <- function(str, pattern, ..., opts_regex = NULL)
+stri_locate_last_regex <- function(str, pattern, capture_groups=FALSE, ..., opts_regex=NULL)
 {
     if (!missing(...))
         opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
-    .Call(C_stri_locate_last_regex, str, pattern, opts_regex)
+    .Call(C_stri_locate_last_regex, str, pattern, opts_regex, capture_groups)
 }
 
 
 #' @export
 #' @rdname stri_locate
-stri_locate_all_fixed <- function(str, pattern, omit_no_match = FALSE, ..., opts_fixed = NULL)
+stri_locate_all_fixed <- function(str, pattern, omit_no_match=FALSE, ..., opts_fixed=NULL)
 {
     if (!missing(...))
         opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
@@ -335,7 +354,7 @@ stri_locate_all_fixed <- function(str, pattern, omit_no_match = FALSE, ..., opts
 
 #' @export
 #' @rdname stri_locate
-stri_locate_first_fixed <- function(str, pattern, ..., opts_fixed = NULL)
+stri_locate_first_fixed <- function(str, pattern, ..., opts_fixed=NULL)
 {
     if (!missing(...))
         opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
@@ -345,7 +364,7 @@ stri_locate_first_fixed <- function(str, pattern, ..., opts_fixed = NULL)
 
 #' @export
 #' @rdname stri_locate
-stri_locate_last_fixed <- function(str, pattern, ..., opts_fixed = NULL)
+stri_locate_last_fixed <- function(str, pattern, ..., opts_fixed=NULL)
 {
     if (!missing(...))
         opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))

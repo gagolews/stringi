@@ -44,7 +44,7 @@ unchanged [replacement function only]}
 index ranges provided. Its replacement version allows to substitute
 (in-place) parts of
 a string with given replacement strings. \code{stri_sub_replace}
-is its \pkg{magrittr}'s pipe-operator-friendly variant that returns
+is its forward pipe operator-friendly variant that returns
 a copy of the input vector.
 
 For extracting/replacing multiple substrings from/within each string, see

@@ -57,13 +57,26 @@ stri_locate_all_regex(
   str,
   pattern,
   omit_no_match = FALSE,
+  capture_groups = FALSE,
   ...,
   opts_regex = NULL
 )
 
-stri_locate_first_regex(str, pattern, ..., opts_regex = NULL)
+stri_locate_first_regex(
+  str,
+  pattern,
+  capture_groups = FALSE,
+  ...,
+  opts_regex = NULL
+)
 
-stri_locate_last_regex(str, pattern, ..., opts_regex = NULL)
+stri_locate_last_regex(
+  str,
+  pattern,
+  capture_groups = FALSE,
+  ...,
+  opts_regex = NULL
+)
 
 stri_locate_all_fixed(
   str,
@@ -81,8 +94,8 @@ stri_locate_last_fixed(str, pattern, ..., opts_fixed = NULL)
 \item{str}{character vector; strings to search in}
 
 \item{...}{supplementary arguments passed to the underlying functions,
-including additional settings for \code{opts_collator}, \code{opts_regex},
-\code{opts_fixed}, and so on}
+including additional settings for \code{opts_collator},
+\code{opts_regex}, \code{opts_fixed}, and so on}
 
 \item{mode}{single string;
 one of: \code{'first'} (the default), \code{'all'}, \code{'last'}}
@@ -103,6 +116,11 @@ the search engine's settings; see
 \code{\link{stri_opts_collator}}, \code{\link{stri_opts_fixed}},
 and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
 for the defaults}
+
+\item{capture_groups}{single logical value;
+whether positions of matches to parenthesized subexpressions
+should be returned to (as \code{capture_groups} attribute);
+\code{stri_locate_*_regex} only}
 }
 \value{
 For \code{stri_locate_all_*},
@@ -124,19 +142,23 @@ For \code{stri_locate_*_regex}, if the match is of zero length,
 \code{end} will be one character less than \code{start}.
 Note that \code{stri_locate_last_regex} searches from start to end,
 but skips overlapping matches, see the example below.
+
+If \code{capture_groups=TRUE}, then the outputs are equipped with
+\code{capture_groups} attribute, which is a list of matrices
+giving the start-end positions of matches to parenthesized subexpressions.
 }
 \description{
-These functions may be used, e.g., to find the indexes (positions) where
+These functions find the indexes (positions) where
 there is a match to some pattern.
 The functions \code{stri_locate_all_*} locate all the matches.
 \code{stri_locate_first_*} and \code{stri_locate_last_*}
-give the first or the last matches, respectively.
+give the first and the last matches, respectively.
 }
 \details{
 Vectorized over \code{str} and \code{pattern} (with recycling
 of the elements in the shorter vector if necessary). This allows to,
-for instance, search for one pattern in each given string,
-search for each pattern in one given string,
+for instance, search for one pattern in each string,
+search for each pattern in one string,
 and search for the i-th pattern within the i-th string.
 
 The matches may be extracted by calling
@@ -150,8 +172,14 @@ They just call \code{stri_locate_*_*}, depending on the arguments used.
 \examples{
 stri_locate_all('XaaaaX',
    regex=c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
-stri_locate_all('Bartolini', fixed='i')
-stri_locate_all('a b c', charclass='\\\\p{Zs}') # all white spaces
+stri_locate_all('stringi', fixed='i')
+
+stri_locate_all_regex(
+    c('breakfast=eggs;lunch=pizza',
+   'breakfast=spam', 'no food here'),
+   '(?<when>\\\\w+)=(?<what>\\\\w+)',
+   capture_groups=TRUE
+)  # named capture groups
 
 stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\\\p{Ll}')
 stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\\\p{Ll}', merge=FALSE)
@@ -164,7 +192,7 @@ stri_locate_last_coll(c('Yy\u00FD', 'AAA'), 'y', strength=1, locale='sk_SK')
 
 pat <- stri_paste('\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ',
                   '\u0639\u0644\u064a\u0647 \u0648\u0633\u0644\u0645XYZ')
-stri_locate_last_coll('\ufdfa\ufdfa\ufdfaXYZ', pat, strength = 1)
+stri_locate_last_coll('\ufdfa\ufdfa\ufdfaXYZ', pat, strength=1)
 
 stri_locate_all_fixed(c('AaaaaaaA', 'AAAA'), 'a')
 stri_locate_all_fixed(c('AaaaaaaA', 'AAAA'), 'a', case_insensitive=TRUE, overlap=TRUE)
@@ -195,6 +223,7 @@ stri_locate_last_fixed("agaga", "aga")
 stri_locate_last_coll("agaga", "aga")
 # note the difference - regex searches left to right, with no overlaps:
 stri_locate_last_regex("agaga", "aga")
+
 
 }
 \seealso{

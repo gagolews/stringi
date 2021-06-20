@@ -182,28 +182,11 @@ SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP o
         }
     }
 
-
-    if (pattern_cont.get_n() == 1 && !(pattern_cont).isNA(0)) {  // only if there's 1 pattern, otherwise how to agree names?
-        SEXP dimnames = R_NilValue, tmp;
-        RegexMatcher *matcher = pattern_cont.getMatcher(0); // will be deleted automatically
-        int pattern_cur_groups = matcher->groupCount();
-        const std::vector<std::string>& cgnames = pattern_cont.getCaptureGroupNames(0);
-        STRI_ASSERT((R_len_t)cgnames.size() == pattern_cur_groups);
-        bool has_cgnames = false;
-        for (R_len_t j=0; j<(R_len_t)cgnames.size(); ++j) {
-            if (!cgnames[j].empty()) { has_cgnames = true; break; }
-        }
-
-        if (has_cgnames) {
-            STRI__PROTECT(dimnames = Rf_allocVector(VECSXP, 2));
-            STRI__PROTECT(tmp = Rf_allocVector(STRSXP, pattern_cur_groups+1));
-            //SET_STRING_ELT(colnames, 0, Rf_mkChar("<whole match>"));
-            for (R_len_t j=0; j<pattern_cur_groups; ++j)
-                SET_STRING_ELT(tmp, j+1, Rf_mkCharLenCE(cgnames[j].c_str(), cgnames[j].size(), CE_UTF8));
-            SET_VECTOR_ELT(dimnames, 1, tmp);
-            Rf_setAttrib(ret, R_DimNamesSymbol, dimnames);
-            STRI__UNPROTECT(2);
-        }
+    if (pattern_cont.get_n() == 1) {  // only if there's 1 pattern, otherwise how to agree names?
+        SEXP dimnames;
+        STRI__PROTECT(dimnames = pattern_cont.getCaptureGroupDimnames(0, true));  // reuses last matcher btw
+        if (!isNull(dimnames)) Rf_setAttrib(ret, R_DimNamesSymbol, dimnames);
+        STRI__UNPROTECT(1);
     }
 
     STRI__UNPROTECT_ALL
@@ -315,36 +298,15 @@ SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP cg_mi
         RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
         int pattern_cur_groups = matcher->groupCount();
 
-        SEXP cur_res, dimnames = R_NilValue, tmp;  // all 3 will be PROTECT'd below
-        if (last_i >= 0 && (last_i % pattern_cont.get_n()) == (i % pattern_cont.get_n())) {
-            // reuse last dimnames
-            STRI__PROTECT(tmp = VECTOR_ELT(ret, last_i));
-            STRI__PROTECT(dimnames = Rf_getAttrib(tmp, R_DimNamesSymbol));
-        }
-        else {
-            const std::vector<std::string>& cgnames = pattern_cont.getCaptureGroupNames(i);
-            STRI_ASSERT((R_len_t)cgnames.size() == pattern_cur_groups);
-            bool has_cgnames = false;
-            for (R_len_t j=0; j<(R_len_t)cgnames.size(); ++j) {
-                if (!cgnames[j].empty()) { has_cgnames = true; break; }
-            }
-
-            if (has_cgnames) {
-                STRI__PROTECT(dimnames = Rf_allocVector(VECSXP, 2));
-                STRI__PROTECT(tmp = Rf_allocVector(STRSXP, pattern_cur_groups+1));
-                //SET_STRING_ELT(colnames, 0, Rf_mkChar("<whole match>"));
-                for (R_len_t j=0; j<pattern_cur_groups; ++j)
-                    SET_STRING_ELT(tmp, j+1, Rf_mkCharLenCE(cgnames[j].c_str(), cgnames[j].size(), CE_UTF8));
-                SET_VECTOR_ELT(dimnames, 1, tmp);
-            }
-        }
+        SEXP cur_res, dimnames;  // all 2 will be PROTECT'd below
+        STRI__PROTECT(dimnames = pattern_cont.getCaptureGroupDimnames(i, true, last_i, ret));
         last_i = i;
 
         if ((str_cont).isNA(i)) {
             STRI__PROTECT(cur_res = stri__matrix_NA_STRING(1, pattern_cur_groups+1));
             if (!isNull(dimnames)) Rf_setAttrib(cur_res, R_DimNamesSymbol, dimnames);
             SET_VECTOR_ELT(ret, i, cur_res);
-            STRI__UNPROTECT(3);  // cur_res, dimnames, and tmp
+            STRI__UNPROTECT(2);  // cur_res, dimnames
             continue;
         }
 
@@ -371,12 +333,14 @@ SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP cg_mi
             STRI__PROTECT(cur_res = stri__matrix_NA_STRING(omit_no_match1?0:1, pattern_cur_groups+1));
             if (!isNull(dimnames)) Rf_setAttrib(cur_res, R_DimNamesSymbol, dimnames);
             SET_VECTOR_ELT(ret, i, cur_res);
-            STRI__UNPROTECT(3);  // cur_res, dimnames, and tmp
+            STRI__UNPROTECT(2);  // cur_res, dimnames
             continue;
         }
 
-        const char* str_cur_s = str_cont.get(i).c_str();
         STRI__PROTECT(cur_res = Rf_allocMatrix(STRSXP, noccurrences, pattern_cur_groups+1));
+        if (!isNull(dimnames)) Rf_setAttrib(cur_res, R_DimNamesSymbol, dimnames);
+
+        const char* str_cur_s = str_cont.get(i).c_str();
         deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
         for (R_len_t j = 0; iter != occurrences.end(); ++j) {
             pair<R_len_t, R_len_t> curo = *iter;
@@ -392,9 +356,8 @@ SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP cg_mi
             }
         }
 
-        if (!isNull(dimnames)) Rf_setAttrib(cur_res, R_DimNamesSymbol, dimnames);
         SET_VECTOR_ELT(ret, i, cur_res);
-        STRI__UNPROTECT(3);  // cur_res, dimnames, and tmp
+        STRI__UNPROTECT(2);  // cur_res, dimnames
     }
 
     if (str_text) {

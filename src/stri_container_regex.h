@@ -93,6 +93,8 @@ public:
     RegexMatcher* getMatcher(R_len_t i);
     const std::vector<std::string>& getCaptureGroupNames(R_len_t i);
 
+    SEXP getCaptureGroupDimnames(R_len_t i, bool include_whole_match, R_len_t last_i=-1, SEXP ret=R_NilValue);
+
 };
 
 #endif

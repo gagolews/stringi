@@ -59,7 +59,7 @@ Vectorized over `str` and `pattern` (with recycling of the elements in the short
 
 If no pattern match is detected and `omit_no_match=FALSE`, then `NA`s are included in the resulting matrix (matrices), see Examples.
 
-`stri_match`, `stri_match_all`, `stri_match_first`, and `stri_match_last` are convenience functions. They just call `stri_match_*_regex` and were provided for consistency with other string searching functions\' wrappers, see, among others, [`stri_extract`](stri_extract.md).
+`stri_match`, `stri_match_all`, `stri_match_first`, and `stri_match_last` are convenience functions. They merely call `stri_match_*_regex` and are provided for consistency with other string searching functions\' wrappers, see, among others, [`stri_extract`](stri_extract.md).
 
 ## Value
 

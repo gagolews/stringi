@@ -2,7 +2,7 @@
 
 ## Description
 
-`stri_sub` extracts particular substrings at code point-based index ranges provided. Its replacement version allows to substitute (in-place) parts of a string with given replacement strings. `stri_sub_replace` is its <span class="pkg">magrittr</span>\'s pipe-operator-friendly variant that returns a copy of the input vector.
+`stri_sub` extracts particular substrings at code point-based index ranges provided. Its replacement version allows to substitute (in-place) parts of a string with given replacement strings. `stri_sub_replace` is its forward pipe operator-friendly variant that returns a copy of the input vector.
 
 For extracting/replacing multiple substrings from/within each string, see [`stri_sub_all`](stri_sub_all.md).
 

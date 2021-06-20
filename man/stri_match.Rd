@@ -101,7 +101,7 @@ then \code{NA}s are included in the resulting matrix (matrices), see Examples.
 
 \code{stri_match}, \code{stri_match_all}, \code{stri_match_first},
 and \code{stri_match_last} are convenience functions.
-They just call \code{stri_match_*_regex}  and were
+They merely call \code{stri_match_*_regex} and are
 provided for consistency with other string searching functions' wrappers,
 see, among others, \code{\link{stri_extract}}.
 }
