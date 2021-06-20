@@ -1,9 +1,6 @@
 library("tinytest")
 library("stringi")
 
-
-
-
 expect_equivalent(stri_locate_all_regex(NA, character(0)), list())
 expect_equivalent(stri_locate_all_regex(character(0), NA), list())
 expect_equivalent(stri_locate_all_regex(LETTERS, character(0)), list())
@@ -111,7 +108,7 @@ suppressWarnings(expect_equivalent(stri_locate_last_regex("", "abc"), matrix(c(N
 suppressWarnings(expect_equivalent(stri_locate_last_regex("", ""), matrix(c(NA_integer_,
     NA_integer_))))
 
-expect_equivalent(stri_locate_last_regex("X\u0104\u0105\u0106X", "\u0104", stri_opts_regex(case_insensitive = TRUE)),
+expect_equivalent(stri_locate_last_regex("X\u0104\u0105\u0106X", "\u0104", case_insensitive = TRUE),
     matrix(c(3L, 3L)))
 expect_equivalent(stri_locate_last_regex("X\u0104\u0105\u0106X", "\u0105"), matrix(c(3L, 3L)))
 expect_equivalent(stri_locate_last_regex("X\u9999\u9998\u9997X", "\u9998"), matrix(c(3L,
@@ -120,7 +117,7 @@ expect_equivalent(stri_locate_last_regex("X\U00024B62\U00024B63\U00024B64X", "\U
     3L)))
 
 # ICU 4.8.1 - problems with UREGEX_LITERAL on clang:
-expect_equivalent(stri_locate_last_regex("X\U00024B62\U00024B63\U00024B64X", "\U00024B63", stri_opts_regex(literal = TRUE)),
+expect_equivalent(stri_locate_last_regex("X\U00024B62\U00024B63\U00024B64X", "\U00024B63", literal = TRUE),
     matrix(c(3L, 3L)))
 
 expect_equivalent(stri_locate_last_regex("aaa", "aa"), matrix(c(1L, 2L)))
@@ -148,4 +145,13 @@ expect_equivalent(stri_locate_last_regex(c("\u0105\u0106\u0107", "\u0105\u0107")
     c(3, NA, 2, NA)))  # match of zero length:
 expect_equivalent(stri_locate_last_regex(c("", " "), "^.*$"), matrix(c(1, 0,
     1, 1), byrow = TRUE, ncol = 2))
+
+
+# .....
+stri_locate_all_regex(
+    c('breakfast=eggs;lunch=pizza',
+   'breakfast=spam', 'no food here'),
+   '(?<when>\\w+)=(?<what>\\w+)',
+   capture_groups=TRUE
+)
 

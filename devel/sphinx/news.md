@@ -21,7 +21,11 @@
   variable width and precision (both at the same time), etc. Moreover,
   `stri_printf` can be used to display formatted strings conveniently.
 
-* [NEW FEATURE] #153: `stri_match_*_regex` now extracts capture group names.
+* [NEW FEATURE] #153: `stri_match_*_regex` now extract capture group names.
+
+* [NEW FEATURE] #25: `stri_locate_*_regex` now have a new argument,
+  `capture_groups` which allows for extracting positions of matches
+  to parenthesised subexpressions.
 
 * [NEW FEATURE] #438: `stri_trans_general` now supports rule-based
   as well as reverse-direction transliteration.
@@ -40,7 +44,7 @@
 * [NEW FEATURE] `stri_replace_rstr` converts `gsub`-style replacement strings
   to `stri_replace`-style.
 
-* [INTERNAL] `stri_prepare_arg*`s have been refactored, buffer overruns
+* [INTERNAL] `stri_prepare_arg*` have been refactored, buffer overruns
   in the exception handling subsystem are now avoided.
 
 * [BUGFIX] Few functions (`stri_length`, `stri_enc_toutf32`, etc.)

@@ -43,6 +43,8 @@ using namespace std;
  * @param str character vector
  * @param pattern character vector
  * @param opts_regex list
+ * @param omit_no_match single logical value
+ * @param capture_groups single logical value
  * @return list of integer matrices (2 columns)
  *
  * @version 0.1-?? (Bartek Tartanus)
@@ -64,12 +66,16 @@ using namespace std;
  *
  * @version 1.4.7 (Marek Gagolewski, 2020-08-24)
  *    Use StriContainerRegexPattern::getRegexOptions
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-20)
+ *     #25: capture_groups
  */
-SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts_regex)
+SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts_regex, SEXP capture_groups)
 {
     // ??? @TODO: capture_group arg (integer vector which capture group to locate) ???
     // ??? OR introduce stri_matchpos_*_regex ???
     bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
+    bool capture_groups1 = stri__prepare_arg_logical_1_notNA(capture_groups, "capture_groups");
     StriRegexMatcherOptions pattern_opts =
         StriContainerRegexPattern::getRegexOptions(opts_regex);
     PROTECT(str = stri__prepare_arg_string(str, "str")); // prepare string argument
@@ -83,12 +89,15 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
 
+    R_len_t last_i = -1;
     for (R_len_t i = pattern_cont.vectorize_init();
             i != pattern_cont.vectorize_end();
             i = pattern_cont.vectorize_next(i))
     {
-        STRI__CONTINUE_ON_EMPTY_OR_NA_PATTERN(str_cont, pattern_cont,
-                                              SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));)
+        STRI__CONTINUE_ON_EMPTY_OR_NA_PATTERN(
+            str_cont, pattern_cont,
+            SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));
+        )
 
         UErrorCode status = U_ZERO_ERROR;
         RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
@@ -145,7 +154,8 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
  * @param str character vector
  * @param pattern character vector
  * @param opts_regex list
- * @param firs logical - search for the first or the last occurrence?
+ * @param first search for the first or the last occurrence?
+ * @param capture_groups1 extract individual capture groups too?
  * @return list of integer matrices (2 columns)
  *
  * @version 0.1-?? (Bartek Tartanus)
@@ -161,8 +171,11 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
  *
  * @version 1.0-2 (Marek Gagolewski, 2016-01-29)
  *    Issue #214: allow a regex pattern like `.*`  to match an empty string
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-20)
+ *     #25: capture_groups
  */
-SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool first)
+SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool first, bool capture_groups1)
 {
     PROTECT(str = stri__prepare_arg_string(str, "str")); // prepare string argument
     PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern")); // prepare string argument
@@ -236,6 +249,7 @@ SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool 
  * @param str character vector
  * @param pattern character vector
  * @param opts_regex list
+ * @param capture_groups single logical value
  * @return list of integer matrices (2 columns)
  *
  * @version 0.1-?? (Bartek Tartanus)
@@ -245,10 +259,14 @@ SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool 
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-19)
  *          Use StriContainerRegexPattern + opts_regex
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-20)
+ *     #25: capture_groups
  */
-SEXP stri_locate_first_regex(SEXP str, SEXP pattern, SEXP opts_regex)
+SEXP stri_locate_first_regex(SEXP str, SEXP pattern, SEXP opts_regex, SEXP capture_groups)
 {
-    return stri__locate_firstlast_regex(str, pattern, opts_regex, true);
+    bool capture_groups1 = stri__prepare_arg_logical_1_notNA(capture_groups, "capture_groups");
+    return stri__locate_firstlast_regex(str, pattern, opts_regex, true, capture_groups1);
 }
 
 
@@ -256,6 +274,7 @@ SEXP stri_locate_first_regex(SEXP str, SEXP pattern, SEXP opts_regex)
  * @param str character vector
  * @param pattern character vector
  * @param opts_regex list
+ * @param capture_groups single logical value
  * @return list of integer matrices (2 columns)
  *
  * @version 0.1-?? (Bartlomiej Tartanus, 2013-06-10)
@@ -263,8 +282,12 @@ SEXP stri_locate_first_regex(SEXP str, SEXP pattern, SEXP opts_regex)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-19)
  *          Use StriContainerRegexPattern + opts_regex
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-20)
+ *     #25: capture_groups
  */
-SEXP stri_locate_last_regex(SEXP str, SEXP pattern, SEXP opts_regex)
+SEXP stri_locate_last_regex(SEXP str, SEXP pattern, SEXP opts_regex, SEXP capture_groups)
 {
-    return stri__locate_firstlast_regex(str, pattern, opts_regex, false);
+    bool capture_groups1 = stri__prepare_arg_logical_1_notNA(capture_groups, "capture_groups");
+    return stri__locate_firstlast_regex(str, pattern, opts_regex, false, capture_groups1);
 }

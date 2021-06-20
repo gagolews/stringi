@@ -2,7 +2,7 @@
 
 ## Description
 
-`stri_sub_all` extracts multiple substrings from each string. Its replacement version substitutes (in-place) multiple substrings with the corresponding replacement strings. `stri_sub_replace_all` (alias `stri_sub_all_replace`) is <span class="pkg">magrittr</span>\'s pipe-operator-friendly variant, returning a copy of the input vector.
+`stri_sub_all` extracts multiple substrings from each string. Its replacement version substitutes (in-place) multiple substrings with the corresponding replacement strings. `stri_sub_replace_all` (alias `stri_sub_all_replace`) is its forward pipe operator-friendly variant, returning a copy of the input vector.
 
 For extracting/replacing single substrings from/within each string, see [`stri_sub`](stri_sub.md).
 

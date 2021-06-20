@@ -46,7 +46,7 @@ Its replacement versions return a character vector.
 Its replacement version substitutes (in-place) multiple substrings with the
 corresponding replacement strings.
 \code{stri_sub_replace_all} (alias \code{stri_sub_all_replace})
-is \pkg{magrittr}'s pipe-operator-friendly variant, returning
+is its forward pipe operator-friendly variant, returning
 a copy of the input vector.
 
 For extracting/replacing single substrings from/within each string, see

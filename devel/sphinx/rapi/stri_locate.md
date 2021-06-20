@@ -2,7 +2,7 @@
 
 ## Description
 
-These functions may be used, e.g., to find the indexes (positions) where there is a match to some pattern. The functions `stri_locate_all_*` locate all the matches. `stri_locate_first_*` and `stri_locate_last_*` give the first or the last matches, respectively.
+These functions find the indexes (positions) where there is a match to some pattern. The functions `stri_locate_all_*` locate all the matches. `stri_locate_first_*` and `stri_locate_last_*` give the first and the last matches, respectively.
 
 ## Usage
 
@@ -45,13 +45,26 @@ stri_locate_all_regex(
   str,
   pattern,
   omit_no_match = FALSE,
+  capture_groups = FALSE,
   ...,
   opts_regex = NULL
 )
 
-stri_locate_first_regex(str, pattern, ..., opts_regex = NULL)
+stri_locate_first_regex(
+  str,
+  pattern,
+  capture_groups = FALSE,
+  ...,
+  opts_regex = NULL
+)
 
-stri_locate_last_regex(str, pattern, ..., opts_regex = NULL)
+stri_locate_last_regex(
+  str,
+  pattern,
+  capture_groups = FALSE,
+  ...,
+  opts_regex = NULL
+)
 
 stri_locate_all_fixed(
   str,
@@ -77,10 +90,11 @@ stri_locate_last_fixed(str, pattern, ..., opts_fixed = NULL)
 | `merge`                                  | single logical value; indicates whether consecutive sequences of indexes in the resulting matrix should be merged; `stri_locate_all_charclass` only                                                                                        |
 | `omit_no_match`                          | single logical value; if `FALSE`, then two missing values will indicate that there was no match; `stri_locate_all_*` only                                                                                                                  |
 | `opts_collator, opts_fixed, opts_regex`  | a named list used to tune up the search engine\'s settings; see [`stri_opts_collator`](stri_opts_collator.md), [`stri_opts_fixed`](stri_opts_fixed.md), and [`stri_opts_regex`](stri_opts_regex.md), respectively; `NULL` for the defaults |
+| `capture_groups`                         | single logical value; whether positions of matches to parenthesized subexpressions should be returned to (as `capture_groups` attribute); `stri_locate_*_regex` only                                                                       |
 
 ## Details
 
-Vectorized over `str` and `pattern` (with recycling of the elements in the shorter vector if necessary). This allows to, for instance, search for one pattern in each given string, search for each pattern in one given string, and search for the i-th pattern within the i-th string.
+Vectorized over `str` and `pattern` (with recycling of the elements in the shorter vector if necessary). This allows to, for instance, search for one pattern in each string, search for each pattern in one string, and search for the i-th pattern within the i-th string.
 
 The matches may be extracted by calling [`stri_sub`](stri_sub.md) or [`stri_sub_all`](stri_sub_all.md). Alternatively, you may call [`stri_extract`](stri_extract.md) directly.
 
@@ -93,6 +107,8 @@ For `stri_locate_all_*`, a list of integer matrices is returned. Each list eleme
 `stri_locate_first_*` and `stri_locate_last_*` return an integer matrix with two columns, giving the start and end positions of the first or the last matches, respectively, and two `NA`s if and only if they are not found.
 
 For `stri_locate_*_regex`, if the match is of zero length, `end` will be one character less than `start`. Note that `stri_locate_last_regex` searches from start to end, but skips overlapping matches, see the example below.
+
+If `capture_groups=TRUE`, then the outputs are equipped with `capture_groups` attribute, which is a list of matrices giving the start-end positions of matches to parenthesized subexpressions.
 
 ## Author(s)
 
@@ -133,16 +149,29 @@ stri_locate_all('XaaaaX',
 ##      start end
 ## [1,]     2   3
 ## [2,]     4   5
-stri_locate_all('Bartolini', fixed='i')
+stri_locate_all('stringi', fixed='i')
 ## [[1]]
 ##      start end
-## [1,]     7   7
-## [2,]     9   9
-stri_locate_all('a b c', charclass='\\p{Zs}') # all white spaces
+## [1,]     4   4
+## [2,]     7   7
+stri_locate_all_regex(
+    c('breakfast=eggs;lunch=pizza',
+   'breakfast=spam', 'no food here'),
+   '(?<when>\\w+)=(?<what>\\w+)',
+   capture_groups=TRUE
+)  # named capture groups
 ## [[1]]
 ##      start end
-## [1,]     2   2
-## [2,]     4   4
+## [1,]     1  14
+## [2,]    16  26
+## 
+## [[2]]
+##      start end
+## [1,]     1  14
+## 
+## [[3]]
+##      start end
+## [1,]    NA  NA
 stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\p{Ll}')
 ## [[1]]
 ##      start end
@@ -206,7 +235,7 @@ stri_locate_last_coll(c('Yy\u00FD', 'AAA'), 'y', strength=1, locale='sk_SK')
 ## [2,]    NA  NA
 pat <- stri_paste('\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ',
                   '\u0639\u0644\u064a\u0647 \u0648\u0633\u0644\u0645XYZ')
-stri_locate_last_coll('\ufdfa\ufdfa\ufdfaXYZ', pat, strength = 1)
+stri_locate_last_coll('\ufdfa\ufdfa\ufdfaXYZ', pat, strength=1)
 ##      start end
 ## [1,]     3   6
 stri_locate_all_fixed(c('AaaaaaaA', 'AAAA'), 'a')
