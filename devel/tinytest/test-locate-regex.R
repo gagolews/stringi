@@ -147,27 +147,31 @@ expect_equivalent(stri_locate_last_regex(c("", " "), "^.*$"), matrix(c(1, 0,
     1, 1), byrow = TRUE, ncol = 2))
 
 
+
+# expect_equal tests attributes too
+
 expect_warning(stri_locate_all_regex("test", "", capture_groups=TRUE))
-expect_equivalent(suppressWarnings(stri_locate_all_regex("test", "", capture_groups=TRUE)),
-    list(cbind(start=NA_integer_, end=NA_integer_)))
+expect_equal(suppressWarnings(stri_locate_all_regex("test", "", capture_groups=TRUE)),
+    list(structure(cbind(start=NA_integer_, end=NA_integer_), capture_groups=list())))
+
 
 expect_warning(stri_locate_first_regex("test", "", capture_groups=TRUE))
-expect_equivalent(suppressWarnings(stri_locate_first_regex("test", "", capture_groups=TRUE)),
-    (cbind(start=NA_integer_, end=NA_integer_)))
+expect_equal(suppressWarnings(stri_locate_first_regex("test", "", capture_groups=TRUE)),
+    structure(cbind(start=NA_integer_, end=NA_integer_), capture_groups=list()))
 
 expect_warning(stri_locate_last_regex("test", "", capture_groups=TRUE))
-expect_equivalent(suppressWarnings(stri_locate_last_regex("test", "", capture_groups=TRUE)),
-    (cbind(start=NA_integer_, end=NA_integer_)))
+expect_equal(suppressWarnings(stri_locate_last_regex("test", "", capture_groups=TRUE)),
+    structure(cbind(start=NA_integer_, end=NA_integer_), capture_groups=list()))
 
 
-expect_equivalent(
-    stri_locate_all_regex("abc", "(?<a>.)", capture_groups=TRUE),
+expect_equal(
+    stri_locate_all_regex("a\U0001f600c", "(?<a>.)", capture_groups=TRUE),
     list(
         structure(cbind(start=1:3, end=1:3), capture_groups=list(a=cbind(start=1:3, end=1:3)))
     )
 )
-expect_equivalent(
-    stri_locate_all_regex("abc", "(?<a>.)(.)(?<c>.)", capture_groups=TRUE),
+expect_equal(
+    stri_locate_all_regex("\U0001f600b\U0001f601", "(?<a>.)(.)(?<c>.)", capture_groups=TRUE),
     list(
         structure(cbind(start=1, end=3), capture_groups=list(
             a=cbind(start=1, end=1),
@@ -176,8 +180,8 @@ expect_equivalent(
         ))
     )
 )
-expect_equivalent(
-    stri_locate_all_regex("abc", "(.)(.)(.)", capture_groups=TRUE),
+expect_equal(
+    stri_locate_all_regex("\U0001f601\U0001f600\U0001f602", "(.)(.)(.)", capture_groups=TRUE),
     list(
         structure(cbind(start=1, end=3), capture_groups=list(
             cbind(start=1, end=1),
@@ -187,7 +191,7 @@ expect_equivalent(
     )
 )
 
-expect_equivalent(
+expect_equal(
     stri_locate_all_regex("abc", c("(?<a>.)", "(?<a>.)(.)(?<c>.)", "(.)(.)"), capture_groups=TRUE),
     list(
         structure(cbind(start=1:3, end=1:3), capture_groups=list(a=cbind(start=1:3, end=1:3))),
@@ -203,7 +207,7 @@ expect_equivalent(
     )
 )
 
-expect_equivalent(
+expect_equal(
     stri_locate_all_regex(c("", NA, "no"), "(?<a>.)(.)(?<c>.)", capture_groups=TRUE),
     list(
         structure(cbind(start=NA_integer_, end=NA_integer_), capture_groups=list(
@@ -224,7 +228,7 @@ expect_equivalent(
     )
 )
 
-expect_equivalent(
+expect_equal(
     stri_locate_all_regex(c("", NA, "no"), "(?<a>.)(.)(?<c>.)", capture_groups=TRUE, omit_no_match=TRUE),
     list(
         structure(cbind(start=integer(0), end=integer(0)), capture_groups=list(
@@ -245,3 +249,53 @@ expect_equivalent(
     )
 )
 
+library("tinytest")
+library("stringi")
+
+expect_equal(
+    stri_locate_first_regex(c("\U0001f601\U0001f600\U0001f602def", "ghi", "jk", NA), "(?<a>.)(..)", capture_groups=TRUE),
+    structure(
+        cbind(start=c(1, 1, NA_integer_, NA_integer_), end=c(3, 3, NA_integer_, NA_integer_)),
+        capture_groups=list(
+            a=cbind(start=c(1, 1, NA_integer_, NA_integer_), end=c(1, 1, NA_integer_, NA_integer_)),
+            cbind(start=c(2, 2, NA_integer_, NA_integer_), end=c(3, 3, NA_integer_, NA_integer_))
+        )
+    )
+)
+
+expect_equal(
+    stri_locate_last_regex(c("\U0001f601\U0001f600\U0001f602def", "ghi", "jk", NA), "(?<a>.)(..)", capture_groups=TRUE),
+    structure(
+        cbind(start=c(4, 1, NA_integer_, NA_integer_), end=c(6, 3, NA_integer_, NA_integer_)),
+        capture_groups=list(
+            a=cbind(start=c(4, 1, NA_integer_, NA_integer_), end=c(4, 1, NA_integer_, NA_integer_)),
+            cbind(start=c(5, 2, NA_integer_, NA_integer_), end=c(6, 3, NA_integer_, NA_integer_))
+        )
+    )
+)
+
+expect_equal(
+    stri_locate_first_regex("\U0001f601\U0001f600\U0001f602abc", c("(?<a>.)", "(?<a>.)(.)(?<c>.)", "(.)(.)", "(.)asfsa(.)ffe(.)gege(.)"), capture_groups=TRUE),
+    structure(
+        cbind(start=c(1, 1, 1, NA_integer_), end=c(1, 3, 2, NA_integer_)),
+        capture_groups=list(
+            cbind(start=c(1, 1, 1, NA_integer_), end=c(1, 1, 1, NA_integer_)),
+            cbind(start=c(NA_integer_, 2, 2, NA_integer_), end=c(NA_integer_, 2, 2, NA_integer_)),
+            cbind(start=c(NA_integer_, 3, NA_integer_, NA_integer_), end=c(NA_integer_, 3, NA_integer_, NA_integer_)),
+            cbind(start=c(NA_integer_, NA_integer_, NA_integer_, NA_integer_), end=c(NA_integer_, NA_integer_, NA_integer_, NA_integer_))
+        )
+    )
+)
+
+expect_equal(
+    stri_locate_last_regex("\U0001f601\U0001f600\U0001f602abc", c("(?<a>.)", "(?<a>.)(.)(?<c>.)", "(.)(.)", "(.)asfsa(.)ffe(.)gege(.)"), capture_groups=TRUE),
+    structure(
+        cbind(start=c(6, 4, 5, NA_integer_), end=c(6, 6, 6, NA_integer_)),
+        capture_groups=list(
+            cbind(start=c(6, 4, 5, NA_integer_), end=c(6, 4, 5, NA_integer_)),
+            cbind(start=c(NA_integer_, 5, 6, NA_integer_), end=c(NA_integer_, 5, 6, NA_integer_)),
+            cbind(start=c(NA_integer_, 6, NA_integer_, NA_integer_), end=c(NA_integer_, 6, NA_integer_, NA_integer_)),
+            cbind(start=c(NA_integer_, NA_integer_, NA_integer_, NA_integer_), end=c(NA_integer_, NA_integer_, NA_integer_, NA_integer_))
+        )
+    )
+)
