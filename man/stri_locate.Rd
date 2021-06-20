@@ -146,6 +146,8 @@ but skips overlapping matches, see the example below.
 If \code{capture_groups=TRUE}, then the outputs are equipped with
 \code{capture_groups} attribute, which is a list of matrices
 giving the start-end positions of matches to parenthesized subexpressions.
+Similarly to \code{stri_match_regex}, capture group names are extracted
+unless looking for first/last occurrences of many different patterns.
 }
 \description{
 These functions find the indexes (positions) where

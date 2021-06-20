@@ -42,6 +42,8 @@ using namespace std;
  *
  * does not set dimnames
  *
+ * @param i if < 0, then adjust indexes of all is
+ *
  * TODO: <refactor> use also in stri_localte_all_fixed etc.
  *
  * @version 1.7.1 (Marek Gagolewski, 2021-06-20)
@@ -70,12 +72,26 @@ SEXP stri__locate_get_fromto_matrix(
 
     // Adjust UChar index -> UChar32 index
     // (1-2 byte UTF16 to 1 byte UTF32-code points)
-    str_cont.UChar16_to_UChar32_index(
-        i, ans_tab,
-        ans_tab+noccurrences, noccurrences,
-        1, // 0-based index -> 1-based
-        0  // end returns position of next character after match
-    );
+    if (i < 0) {
+        STRI_ASSERT(noccurrences == str_cont.get_nrecycle());
+        for (i=0; i<noccurrences; ++i) {
+            if (str_cont.isNA(i) || ans_tab[i] == NA_INTEGER) continue;
+            str_cont.UChar16_to_UChar32_index(
+                i, ans_tab+i,
+                ans_tab+i+noccurrences, 1,
+                1, // 0-based index -> 1-based
+                0  // end returns position of next character after match
+            );
+        }
+    }
+    else {
+        str_cont.UChar16_to_UChar32_index(
+            i, ans_tab,
+            ans_tab+noccurrences, noccurrences,
+            1, // 0-based index -> 1-based
+            0  // end returns position of next character after match
+        );
+    }
     UNPROTECT(1);
     return ans;
 }
@@ -134,51 +150,65 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
             i != pattern_cont.vectorize_end();
             i = pattern_cont.vectorize_next(i))
     {
-        STRI__CONTINUE_ON_EMPTY_OR_NA_PATTERN(
-            str_cont, pattern_cont,
-            SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));
-        )
+        if ((pattern_cont).isNA(i) || (pattern_cont).get(i).length() <= 0) {
+            if (!(pattern_cont).isNA(i))
+                Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
+            SEXP ans;
+            STRI__PROTECT(ans = stri__matrix_NA_INTEGER(1, 2));
+            if (capture_groups1) {
+                SEXP ans2;
+                STRI__PROTECT(ans2 = Rf_allocVector(VECSXP, 0));
+                Rf_setAttrib(ans, Rf_ScalarString(Rf_mkChar("capture_groups")), ans2);
+                STRI__UNPROTECT(1);
+            }
+            SET_VECTOR_ELT(ret, i, ans);
+            STRI__UNPROTECT(1);
+            continue;
+        }
 
         UErrorCode status = U_ZERO_ERROR;
         RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
-        matcher->reset(str_cont.get(i));
-        int found = (int)matcher->find(status);
-        STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-
         deque< pair<R_len_t, R_len_t> > occurrences;
         vector< deque< pair<R_len_t, R_len_t> > > cg_occurrences;
         R_len_t pattern_cur_groups = matcher->groupCount();
         if (capture_groups1 && pattern_cur_groups > 0)
             cg_occurrences.resize(pattern_cur_groups);
-        while (found) {
-            UErrorCode status = U_ZERO_ERROR;
-            int start = (int)matcher->start(status);
-            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-            int end  =  (int)matcher->end(status);
-            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-            occurrences.push_back(pair<R_len_t, R_len_t>(start, end));
 
-            if (capture_groups1) {
-                for (R_len_t j=0; j<pattern_cur_groups; ++j) {
-                    start = (int)matcher->start(j+1, status);
-                    STRI__CHECKICUSTATUS_THROW(status, {})
-                    end  =  (int)matcher->end(j+1, status);
-                    STRI__CHECKICUSTATUS_THROW(status, {})
-                    if (start < 0 || end < 0) {
-                        start = NA_INTEGER;
-                        end = NA_INTEGER;
+        if (!(str_cont).isNA(i)) {
+            matcher->reset(str_cont.get(i));
+            int found = (int)matcher->find(status);
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+
+            while (found) {
+                UErrorCode status = U_ZERO_ERROR;
+                int start = (int)matcher->start(status);
+                STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+                int end  =  (int)matcher->end(status);
+                STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+                occurrences.push_back(pair<R_len_t, R_len_t>(start, end));
+
+                if (capture_groups1) {
+                    for (R_len_t j=0; j<pattern_cur_groups; ++j) {
+                        start = (int)matcher->start(j+1, status);
+                        STRI__CHECKICUSTATUS_THROW(status, {})
+                        end  =  (int)matcher->end(j+1, status);
+                        STRI__CHECKICUSTATUS_THROW(status, {})
+                        if (start < 0 || end < 0) {
+                            start = NA_INTEGER;
+                            end = NA_INTEGER;
+                        }
+                        cg_occurrences[j].push_back(pair<R_len_t, R_len_t>(start, end));
                     }
-                    cg_occurrences[j].push_back(pair<R_len_t, R_len_t>(start, end));
                 }
-            }
 
-            found = (int)matcher->find(status);
-            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-        };
+                found = (int)matcher->find(status);
+                STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+            };
+        }
 
         SEXP ans;
         STRI__PROTECT(ans = stri__locate_get_fromto_matrix(
-            occurrences, str_cont, i, omit_no_match1));
+            occurrences, str_cont, i, omit_no_match1 && !(str_cont).isNA(i)));
 
         if (capture_groups1) {
             SEXP cgs, names;
@@ -188,7 +218,7 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
             for (R_len_t j=0; j<pattern_cur_groups; ++j) {
                 SEXP ans2;
                 STRI__PROTECT(ans2 = stri__locate_get_fromto_matrix(
-                    cg_occurrences[j], str_cont, i, omit_no_match1)
+                    cg_occurrences[j], str_cont, i, omit_no_match1 && !(str_cont).isNA(i))
                 );
                 SET_VECTOR_ELT(cgs, j, ans2);
                 STRI__UNPROTECT(1);
@@ -255,6 +285,9 @@ SEXP stri__locate_firstlast_regex(
     STRI__PROTECT(ret = Rf_allocMatrix(INTSXP, vectorize_length, 2));
     int* ret_tab = INTEGER(ret);
 
+    deque< deque< pair<R_len_t, R_len_t> > > cg_occurrences;
+    //cg_occurrences[i] -- i-th capture group
+
     for (R_len_t i = pattern_cont.vectorize_init();
             i != pattern_cont.vectorize_end();
             i = pattern_cont.vectorize_next(i))
@@ -266,6 +299,18 @@ SEXP stri__locate_firstlast_regex(
         RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
         matcher->reset(str_cont.get(i));
 
+        R_len_t pattern_cur_groups = matcher->groupCount();
+        if (capture_groups1 && pattern_cur_groups > 0) {
+            while ((R_len_t)cg_occurrences.size() < pattern_cur_groups) {
+                cg_occurrences.push_back(
+                    deque< pair<R_len_t, R_len_t> >(
+                        vectorize_length,
+                        pair<R_len_t, R_len_t>(NA_INTEGER, NA_INTEGER)
+                    )
+                );
+            }
+        }
+
         UErrorCode status = U_ZERO_ERROR;
         int m_res = (int)matcher->find(status);
         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
@@ -274,6 +319,19 @@ SEXP stri__locate_firstlast_regex(
             STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
             ret_tab[i+vectorize_length] = (int)matcher->end(status);
             STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+
+            if (capture_groups1) {
+                for (R_len_t j=0; j<pattern_cur_groups; ++j) {
+                    int start = (int)matcher->start(j+1, status);
+                    STRI__CHECKICUSTATUS_THROW(status, {})
+                    int end  =  (int)matcher->end(j+1, status);
+                    STRI__CHECKICUSTATUS_THROW(status, {})
+                    if (start >= 0 && end >= 0) { // NAs already otherwise
+                        cg_occurrences[j][i].first  = start;
+                        cg_occurrences[j][i].second = end;
+                    }
+                }
+            }
         }
         else
             continue; // no match
@@ -289,6 +347,19 @@ SEXP stri__locate_firstlast_regex(
                 STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
                 ret_tab[i+vectorize_length] = (int)matcher->end(status);
                 STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+
+                if (capture_groups1) {
+                    for (R_len_t j=0; j<pattern_cur_groups; ++j) {
+                        int start = (int)matcher->start(j+1, status);
+                        STRI__CHECKICUSTATUS_THROW(status, {})
+                        int end  =  (int)matcher->end(j+1, status);
+                        STRI__CHECKICUSTATUS_THROW(status, {})
+                        if (start >= 0 && end >= 0) { // NAs already otherwise
+                            cg_occurrences[j][i].first  = start;
+                            cg_occurrences[j][i].second = end;
+                        }
+                    }
+                }
             }
         }
 
@@ -299,6 +370,33 @@ SEXP stri__locate_firstlast_regex(
             1, // 0-based index -> 1-based
             0  // end returns position of next character after match
         );
+    }
+
+    if (capture_groups1) {
+        SEXP cgs;
+        R_len_t pattern_cur_groups = (R_len_t)cg_occurrences.size();
+        STRI__PROTECT(cgs = Rf_allocVector(VECSXP, pattern_cur_groups));
+        // last_i = i;
+        for (R_len_t j=0; j<pattern_cur_groups; ++j) {
+            SEXP ans2;
+            STRI__PROTECT(ans2 = stri__locate_get_fromto_matrix(
+                cg_occurrences[j], str_cont, -1, false)
+            );
+            SET_VECTOR_ELT(cgs, j, ans2);
+            STRI__UNPROTECT(1);
+        }
+
+        stri__locate_set_dimnames_list(cgs);  // all matrices get from&to colnames
+
+        if (pattern_cont.get_n() == 1) {
+            SEXP names;
+            // only if there's 1 pattern, otherwise how to agree names?
+            STRI__PROTECT(names = pattern_cont.getCaptureGroupRNames(0));  // TODO: reuse
+            if (!isNull(names)) Rf_setAttrib(cgs, R_NamesSymbol, names);
+            STRI__UNPROTECT(1);
+        }
+        Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("capture_groups")), cgs);
+        STRI__UNPROTECT(1);
     }
 
     stri__locate_set_dimnames_matrix(ret);
