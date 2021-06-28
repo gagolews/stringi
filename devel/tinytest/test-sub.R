@@ -23,7 +23,7 @@ expect_identical(stri_sub(s, matrix(as.double(1:6), ncol=2)), stri_sub(s, as.dou
     as.double(4:6)))
 expect_identical(stri_sub(s, matrix(1:6, ncol=2)), stri_sub(s, 1:3, 4:6))
 expect_warning(stri_sub(s, matrix(1:6, ncol=2), to=-1))
-expect_identical(stri_sub(s, length=-1:1), c("", "", "a"))
+expect_identical(stri_sub(s, length=-1:1), c(NA, "", "a"))
 
 expect_identical(stri_sub("\u0105\u0104\u0103\u0102\u0101", 1:5, 1:5), stri_extract_all_regex("\u0105\u0104\u0103\u0102\u0101",
     ".")[[1]])
@@ -40,12 +40,12 @@ expect_identical(stri_sub("abcde", 3, -2), "cd")
 
 expect_identical(stri_sub("123", -1), "3")
 expect_identical(stri_sub("123", -3), "123")
-expect_identical(stri_sub("123", 3, length=-1:3), c("", "", "3", "3", "3"))
-expect_identical(stri_sub("123", 2, length=-1:3), c("", "", "2", "23", "23"))
-expect_identical(stri_sub("123", 1, length=-1:3), c("", "", "1", "12", "123"))
-expect_identical(stri_sub("123", -1, length=-1:3), c("", "", "3", "3", "3"))
-expect_identical(stri_sub("123", -2, length=-1:3), c("", "", "2", "23", "23"))
-expect_identical(stri_sub("123", -3, length=-1:3), c("", "", "1", "12", "123"))
+expect_identical(stri_sub("123", 3, length=-1:3),  c(NA, "", "3", "3", "3"))
+expect_identical(stri_sub("123", 2, length=-1:3),  c(NA, "", "2", "23", "23"))
+expect_identical(stri_sub("123", 1, length=-1:3),  c(NA, "", "1", "12", "123"))
+expect_identical(stri_sub("123", -1, length=-1:3), c(NA, "", "3", "3", "3"))
+expect_identical(stri_sub("123", -2, length=-1:3), c(NA, "", "2", "23", "23"))
+expect_identical(stri_sub("123", -3, length=-1:3), c(NA, "", "1", "12", "123"))
 
 expect_identical({
     s <- "test"
@@ -262,6 +262,9 @@ expect_identical(stri_sub_all(character(0)), list())
 expect_identical(stri_sub_all("abc"), list("abc"))
 expect_identical(stri_sub_all(c("abc", NA, "def", "")), as.list(c("abc", NA,
     "def", "")))
+
+expect_identical(stri_sub_all("abc", 1, length=(-1):1), list(c(NA_character_, "", "a")))
+expect_identical(stri_sub_all("abc", 1, length=as.list((-1):1)), list(NA_character_, "", "a"))
 
 expect_identical(stri_sub_all("abc", list(1:3)), list(c("abc", "bc", "c")))
 expect_identical(stri_sub_all("abc", list(3:1)), list(rev(c("abc", "bc", "c"))))
