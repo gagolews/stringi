@@ -6,6 +6,10 @@
 * [BACKWARD INCOMPATIBILITY] `%s$%` and `%stri$%` now use the new `stri_sprintf`
   (see below) instead of `base::sprintf`.
 
+* [BACKWARD INCOMPATIBILITY] In `stri_sub<-` and `stri_sub_all<-`,
+  providing a negative `length` from now on does not result in the corresponding
+  input string being altered.
+
 * [BACKWARD INCOMPATIBILITY, BUGFIX, NEW FEATURE] In `stri_subset*`
   and their replacement versions, `pattern` and `value` cannot be longer
   than `str` (but now they are recycled if necessary).

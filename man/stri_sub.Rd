@@ -37,7 +37,7 @@ unchanged [replacement function only]}
 }
 \value{
 \code{stri_sub} and \code{stri_sub_replace} return a character vector.
-\code{stri_sub<-} changes the \code{str} object in-place.
+\code{stri_sub<-} changes the \code{str} object 'in-place'.
 }
 \description{
 \code{stri_sub} extracts particular substrings at code point-based
@@ -75,10 +75,11 @@ and \code{\link{stri_locate_last}}. If extraction based on
 
 In \code{stri_sub}, out-of-bound indexes are silently
 corrected. If \code{from} > \code{to}, then an empty string is returned.
+Negative \code{length} yields an empty string.
 
 In \code{stri_sub<-}, some configurations of indexes may work as
 substring 'injection' at the front, back, or in middle.
-
+Negative \code{length} does not alter the corresponding input string.
 
 If both \code{to} and \code{length} are provided,
 \code{length} has priority over \code{to}.
