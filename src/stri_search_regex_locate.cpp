@@ -44,7 +44,7 @@ using namespace std;
  *
  * @param i if < 0, then adjust indexes of all is
  *
- * TODO: <refactor> use also in stri_localte_all_fixed etc.
+ * TODO: <refactor> use also in stri_locate_all_fixed etc.
  *
  * @version 1.7.1 (Marek Gagolewski, 2021-06-20)
  */
