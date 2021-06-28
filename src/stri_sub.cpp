@@ -324,11 +324,6 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_n
             continue;
         }
 
-        if (!to_tab && cur_to/*length*/ < 0) {
-            SET_STRING_ELT(ret, i, str_cont.toR(i));
-            continue;
-        }
-
         if (cur_from == NA_INTEGER || cur_to == NA_INTEGER || value_cont.isNA(i)) {
             if (omit_na_1) {
                 SET_STRING_ELT(ret, i, str_cont.toR(i));
@@ -336,6 +331,11 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_n
             else {
                 SET_STRING_ELT(ret, i, NA_STRING);
             }
+            continue;
+        }
+
+        if (!to_tab && cur_to/*length*/ < 0) {
+            SET_STRING_ELT(ret, i, str_cont.toR(i));
             continue;
         }
 
