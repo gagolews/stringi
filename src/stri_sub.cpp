@@ -138,28 +138,31 @@ inline void stri__sub_get_indices(StriContainerUTF8_indexable& str_cont, R_len_t
  * @return character vector
  *
  * @version 0.1-?? (Bartek Tartanus)
- *          stri_sub
+ *    stri_sub
  *
  * @version 0.1-?? (Marek Gagolewski)
- *          use StriContainerUTF8 and stri__UChar32_to_UTF8_index
+ *    Use StriContainerUTF8 and stri__UChar32_to_UTF8_index
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-01)
- *          use StriContainerUTF8's UChar32-to-UTF8 index
+ *    Use StriContainerUTF8's UChar32-to-UTF8 index
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
- *          make StriException-friendly
+ *    Make StriException-friendly
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-20)
- *          Use StriContainerUTF8_indexable
+ *    Use StriContainerUTF8_indexable
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-03)
- *          Use stri__sub_prepare_from_to_length()
+ *    Use stri__sub_prepare_from_to_length()
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  *
  * @version 0.5-9003 (Marek Gagolewski, 2015-08-05)
  *    Bugfix #183: floating point exception when to or length is an empty vector
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-28)
+ *    Negative length yields NA
  */
 SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
 {
@@ -202,10 +205,15 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
         }
 
         if (length_tab) {
-            if (cur_to <= 0) {
+            if (cur_to == 0) {
                 SET_STRING_ELT(ret, i, R_BlankString);
                 continue;
             }
+            else if (cur_to < 0) {
+                SET_STRING_ELT(ret, i, NA_STRING);
+                continue;
+            }
+
             cur_to = cur_from + cur_to - 1;
             if (cur_from < 0 && cur_to >= 0) cur_to = -1;
         }
@@ -334,7 +342,7 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_n
             continue;
         }
 
-        if (!to_tab && cur_to/*length*/ < 0) {
+        if (!to_tab && cur_to/*length*/ < 0) {  // so not NA
             SET_STRING_ELT(ret, i, str_cont.toR(i));
             continue;
         }
@@ -392,6 +400,9 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_n
  *
  * @version 1.3.2 (Marek Gagolewski, 2019-02-21)
  *    #30: new function
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-28)
+ *    negative length yields NA
  */
 SEXP stri_sub_all(SEXP str, SEXP from, SEXP to, SEXP length)
 {
@@ -559,7 +570,7 @@ SEXP stri__sub_replacement_all_single(
             STRING_ELT(value, i%value_len) == NA_STRING ||
             (!to_tab && cur_to/*length*/ < 0)
         ) {
-            // omit_na is true
+            // omit_na is true or negative length
             continue;
         }
 

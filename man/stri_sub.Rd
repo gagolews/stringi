@@ -75,7 +75,7 @@ and \code{\link{stri_locate_last}}. If extraction based on
 
 In \code{stri_sub}, out-of-bound indexes are silently
 corrected. If \code{from} > \code{to}, then an empty string is returned.
-Negative \code{length} yields an empty string.
+Negative \code{length} results in the corresponding output being \code{NA}.
 
 In \code{stri_sub<-}, some configurations of indexes may work as
 substring 'injection' at the front, back, or in middle.
@@ -91,15 +91,10 @@ include byte order marks, Bidirectional text marks, and so on.
 Handle with care.
 }
 \examples{
-s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
-stri_sub(s, from=1:3*6, to=21)
-stri_sub(s, from=c(1,7,13), length=5)
-stri_sub(s, from=1, length=1:3)
-stri_sub(s, -17, -7)
-stri_sub(s, -5, length=4)
-(stri_sub(s, 1, 5) <- 'stringi')
-(stri_sub(s, -6, length=5) <- '.')
-(stri_sub(s, 1, 1:3) <- 1:2)
+s <- c("spam, spam, bacon, and spam", "eggs and spam")
+stri_sub(s, from=-4)
+stri_sub(s, from=1, length=c(10, 4))
+(stri_sub(s, 1, 4) <- 'stringi')
 
 x <- c('12 3456 789', 'abc', '', NA, '667')
 stri_sub(x, stri_locate_first_regex(x, '[0-9]+')) # see stri_extract_first
@@ -110,15 +105,8 @@ stri_sub_replace(x, stri_locate_first_regex(x, '[0-9]+'),
 stri_sub_replace(x, stri_locate_last_regex(x, '[0-9]+'),
     omit_na=TRUE, replacement='***') # see stri_replace_last
 
-stri_sub(x, stri_locate_first_regex(x, '[0-9]+'), omit_na=TRUE) <- '***'
-print(x)
 
-# to fetch first code points of at most a given width, use stri_sprintf:
-x <- "\u200b\u200b\u200b\u200b\U0001F3F4\U000E0067\U000E0062\U000E0073\U000E0063\U000E0074\U000E007Fabcd"
-stri_sprintf("\%.*s", 0:8, x)
-
-
-\dontrun{x \%>\% stri_sub_replace(1, 5, replacement='new_substring')}
+\dontrun{x |> stri_sub_replace(1, 5, replacement='new_substring')}
 }
 \seealso{
 The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
