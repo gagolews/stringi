@@ -35,6 +35,7 @@
 #include "stri_string8buf.h"
 #include <stdexcept>
 
+
 /***
  * used both in stri_sub and stri_sub_replacement
  *
@@ -273,6 +274,9 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
  *
  * @version 1.4.3 (Marek Gagolewski, 2019-03-12)
  *    #346: na_omit for `value`
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-28)
+ *    negative length does not alter input
  */
 SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_na, SEXP value)
 {
@@ -319,6 +323,12 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_n
             SET_STRING_ELT(ret, i, NA_STRING);
             continue;
         }
+
+        if (!to_tab && cur_to/*length*/ < 0) {
+            SET_STRING_ELT(ret, i, str_cont.toR(i));
+            continue;
+        }
+
         if (cur_from == NA_INTEGER || cur_to == NA_INTEGER || value_cont.isNA(i)) {
             if (omit_na_1) {
                 SET_STRING_ELT(ret, i, str_cont.toR(i));
@@ -457,10 +467,14 @@ SEXP stri_sub_all(SEXP str, SEXP from, SEXP to, SEXP length)
  * @version 1.4.4 (Marek Gagolewski, 2019-03-13)-
  *    #348: UBSAN runtime error: null pointer passed as argument 1,
  *     which is declared to never be null
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-28)
+ *    negative length does not alter input
  */
-SEXP stri__sub_replacement_all_single(SEXP curs,
-                                      SEXP from, SEXP to, SEXP length, bool omit_na_1, SEXP value)
-{
+SEXP stri__sub_replacement_all_single(
+    SEXP curs,
+    SEXP from, SEXP to, SEXP length, bool omit_na_1, SEXP value
+) {
     // curs is a CHARSXP in UTF-8
 
     PROTECT(value = stri_enc_toutf8(value,
@@ -539,7 +553,12 @@ SEXP stri__sub_replacement_all_single(SEXP curs,
         R_len_t cur_from     = from_tab[i % from_len];
         R_len_t cur_to       = (to_tab)?to_tab[i % to_len]:length_tab[i % length_len];
 
-        if (cur_from == NA_INTEGER || cur_to == NA_INTEGER || STRING_ELT(value, i%value_len) == NA_STRING) {
+        if (
+            cur_from == NA_INTEGER ||
+            cur_to == NA_INTEGER ||
+            STRING_ELT(value, i%value_len) == NA_STRING ||
+            (!to_tab && cur_to/*length*/ < 0)
+        ) {
             // omit_na is true
             continue;
         }
@@ -639,6 +658,9 @@ SEXP stri__sub_replacement_all_single(SEXP curs,
  *
  * @version 1.4.3 (Marek Gagolewski, 2019-03-12)
  *    #346: na_omit for `value`
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-28)
+ *    negative length does not alter input
  */
 SEXP stri_sub_replacement_all(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_na, SEXP value)
 {
