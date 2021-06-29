@@ -237,9 +237,6 @@ stri_locate_all_fixed(x, "yes", get_length=TRUE, omit_no_match=TRUE)
 stri_locate_first_fixed(x, "yes")
 stri_locate_first_fixed(x, "yes", get_length=TRUE)
 
-stri_locate_first_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\\\p{Ll}')
-stri_locate_first_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\\\p{Ll}', merge=FALSE)
-
 # Use regex positive-lookahead to locate overlapping pattern matches:
 stri_locate_all_regex('ACAGAGACTTTAGATAGAGAAGA', '(?=AGA)')
 # note that start > end here (match of length zero)
