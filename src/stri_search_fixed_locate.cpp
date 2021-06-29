@@ -65,8 +65,11 @@ using namespace std;
  *
  * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
  *    use StriByteSearchMatcher
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-29)
+ *     get_length
  */
-SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP opts_fixed, bool first)
+SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP opts_fixed, bool first, bool get_length1)
 {
     uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
     PROTECT(str = stri__prepare_arg_string(str, "str"));
@@ -79,7 +82,7 @@ SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP opts_fixed, bool 
 
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocMatrix(INTSXP, vectorize_length, 2));
-    stri__locate_set_dimnames_matrix(ret);
+    stri__locate_set_dimnames_matrix(ret, get_length1);
     int* ret_tab = INTEGER(ret);
 
     for (R_len_t i = pattern_cont.vectorize_init();
@@ -88,8 +91,11 @@ SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP opts_fixed, bool 
     {
         ret_tab[i]                  = NA_INTEGER;
         ret_tab[i+vectorize_length] = NA_INTEGER;
-        STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-                ;/*nothing*/, ;/*nothing*/)
+        STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(
+            str_cont, pattern_cont,
+            ;/*nothing on NA - keep NA_INTEGER*/,
+            { if (get_length1) ret_tab[i] = ret_tab[i+vectorize_length] = -1; }
+        )
 
         StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
         matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
@@ -100,7 +106,7 @@ SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP opts_fixed, bool 
             start = matcher->findLast();
         }
 
-        if (start != USEARCH_DONE) {
+        if (start != USEARCH_DONE) {  // there is a match
             ret_tab[i]                  = start;
             ret_tab[i+vectorize_length] = start+matcher->getMatchedLength();
 
@@ -110,7 +116,14 @@ SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP opts_fixed, bool 
                                            1, // 0-based index -> 1-based
                                            0  // end returns position of next character after match
                                           );
+
+            if (get_length1) ret_tab[i+vectorize_length] -= ret_tab[i] - 1;  // to->length
         }
+        else if (get_length1) {
+            // not found
+            ret_tab[i+vectorize_length] = ret_tab[i] = -1;
+        }
+        // else NA_INTEGER already
     }
 
     STRI__UNPROTECT_ALL
@@ -139,10 +152,14 @@ SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP opts_fixed, bool 
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    FR #110, #23: opts_fixed arg added
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-29)
+ *     get_length
  */
-SEXP stri_locate_first_fixed(SEXP str, SEXP pattern, SEXP opts_fixed)
+SEXP stri_locate_first_fixed(SEXP str, SEXP pattern, SEXP opts_fixed, SEXP get_length)
 {
-    return stri__locate_firstlast_fixed(str, pattern, opts_fixed, true);
+    bool get_length1 = stri__prepare_arg_logical_1_notNA(get_length, "get_length");
+    return stri__locate_firstlast_fixed(str, pattern, opts_fixed, true, get_length1);
 }
 
 
@@ -166,10 +183,14 @@ SEXP stri_locate_first_fixed(SEXP str, SEXP pattern, SEXP opts_fixed)
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    FR #110, #23: opts_fixed arg added
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-29)
+ *     get_length
  */
-SEXP stri_locate_last_fixed(SEXP str, SEXP pattern, SEXP opts_fixed)
+SEXP stri_locate_last_fixed(SEXP str, SEXP pattern, SEXP opts_fixed, SEXP get_length)
 {
-    return stri__locate_firstlast_fixed(str, pattern, opts_fixed, false);
+    bool get_length1 = stri__prepare_arg_logical_1_notNA(get_length, "get_length");
+    return stri__locate_firstlast_fixed(str, pattern, opts_fixed, false, get_length1);
 }
 
 
@@ -191,21 +212,25 @@ SEXP stri_locate_last_fixed(SEXP str, SEXP pattern, SEXP opts_fixed)
  *          stri_locate_fixed now uses byte search only
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
- *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *    #112: str_prepare_arg* retvals were not PROTECTed from gc
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
- *    FR #117: omit_no_match arg added
+ *    #117: omit_no_match arg added
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
- *    FR #110, #23: opts_fixed arg added
+ *    #110, #23: opts_fixed arg added
  *
  * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
  *    use StriByteSearchMatcher
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-29)
+ *     get_length
  */
-SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts_fixed)
+SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts_fixed, SEXP get_length)
 {
     uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed, /*allow_overlap*/true);
     bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
+    bool get_length1 = stri__prepare_arg_logical_1_notNA(get_length, "get_length");
     PROTECT(str = stri__prepare_arg_string(str, "str"));
     PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
 
@@ -223,14 +248,14 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
     {
         STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
                 SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));,
-                SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(omit_no_match1?0:1, 2));)
+                SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(omit_no_match1?0:1, 2, get_length1?-1:NA_INTEGER));)
 
         StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
         matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
 
         int start = matcher->findFirst();
         if (start == USEARCH_DONE) { // no matches at all
-            SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(omit_no_match1?0:1, 2));
+            SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(omit_no_match1?0:1, 2, get_length1?-1:NA_INTEGER));
             continue;
         }
 
@@ -257,11 +282,17 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
                                        1, // 0-based index -> 1-based
                                        0  // end returns position of next character after match
                                       );
+
+        if (get_length1) {
+            for (R_len_t j=0; j < noccurrences; ++j)
+                ans_tab[j+noccurrences] -= ans_tab[j] - 1;  // to->length
+        }
+
         SET_VECTOR_ELT(ret, i, ans);
         STRI__UNPROTECT(1);
     }
 
-    stri__locate_set_dimnames_list(ret);
+    stri__locate_set_dimnames_list(ret, get_length1);
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )

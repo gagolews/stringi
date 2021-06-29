@@ -6,7 +6,7 @@
 \alias{stri_count_coll}
 \alias{stri_count_fixed}
 \alias{stri_count_regex}
-\title{Count the Number of Pattern Matches}
+\title{Count the Number of Pattern Occurrences}
 \usage{
 stri_count(str, ..., regex, fixed, coll, charclass)
 

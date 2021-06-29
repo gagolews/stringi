@@ -64,3 +64,37 @@ expect_equivalent(stri_locate_all_words(c("    \t   ", "stri\u0105gi", NA), omit
     list(matrix(integer(0), ncol = 2), matrix(c(1, 7), ncol = 2), matrix(c(NA,
         NA), ncol = 2)))
 
+
+
+###############################################################################
+#### get_length
+
+expect_equal(
+    stri_locate_first_boundaries(c("aba zeza", "", "z", NA), type="word", get_length=TRUE),
+    cbind(start=c(1L, -1L, 1L, NA), length=c(3L, -1L, 1L, NA))
+)
+
+expect_equal(
+    stri_locate_last_boundaries(c("aba zeza", "", "z", NA), type="word", get_length=TRUE),
+    cbind(start=c(5L, -1L, 1L, NA), length=c(4L, -1L, 1L, NA))
+)
+
+expect_equal(
+    stri_locate_all_boundaries(c("aba zeza", "", "z", NA), type="word", get_length=TRUE, omit_no_match=FALSE, skip_word_none = TRUE),
+    list(
+        cbind(start=c(1L, 5L), length=c(3L, 4L)),
+        cbind(start=c(-1L), length=c(-1L)),
+        cbind(start=1L, length=1L),
+        cbind(start=c(NA_integer_), length=c(NA_integer_))
+    )
+)
+
+expect_equal(
+    stri_locate_all_boundaries(c("aba zeza", "", "z", NA), type="word", get_length=TRUE, omit_no_match=TRUE, skip_word_none = TRUE),
+    list(
+        cbind(start=c(1L, 5L), length=c(3L, 4L)),
+        cbind(start=integer(0), length=integer(0)),
+        cbind(start=1L, length=1L),
+        cbind(start=c(NA_integer_), length=c(NA_integer_))
+    )
+)

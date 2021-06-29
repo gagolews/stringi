@@ -17,7 +17,7 @@
 \alias{stri_locate_all_fixed}
 \alias{stri_locate_first_fixed}
 \alias{stri_locate_last_fixed}
-\title{Locate Occurrences of a Pattern}
+\title{Locate Pattern Occurrences}
 \usage{
 stri_locate_all(str, ..., regex, fixed, coll, charclass)
 
@@ -35,29 +35,49 @@ stri_locate(
   mode = c("first", "all", "last")
 )
 
-stri_locate_all_charclass(str, pattern, merge = TRUE, omit_no_match = FALSE)
+stri_locate_all_charclass(
+  str,
+  pattern,
+  merge = TRUE,
+  omit_no_match = FALSE,
+  get_length = FALSE
+)
 
-stri_locate_first_charclass(str, pattern)
+stri_locate_first_charclass(str, pattern, get_length = FALSE)
 
-stri_locate_last_charclass(str, pattern)
+stri_locate_last_charclass(str, pattern, get_length = FALSE)
 
 stri_locate_all_coll(
   str,
   pattern,
   omit_no_match = FALSE,
+  get_length = FALSE,
   ...,
   opts_collator = NULL
 )
 
-stri_locate_first_coll(str, pattern, ..., opts_collator = NULL)
+stri_locate_first_coll(
+  str,
+  pattern,
+  get_length = FALSE,
+  ...,
+  opts_collator = NULL
+)
 
-stri_locate_last_coll(str, pattern, ..., opts_collator = NULL)
+stri_locate_last_coll(
+  str,
+  pattern,
+  get_length = FALSE,
+  ...,
+  opts_collator = NULL
+)
 
 stri_locate_all_regex(
   str,
   pattern,
   omit_no_match = FALSE,
   capture_groups = FALSE,
+  get_length = FALSE,
   ...,
   opts_regex = NULL
 )
@@ -66,6 +86,7 @@ stri_locate_first_regex(
   str,
   pattern,
   capture_groups = FALSE,
+  get_length = FALSE,
   ...,
   opts_regex = NULL
 )
@@ -74,6 +95,7 @@ stri_locate_last_regex(
   str,
   pattern,
   capture_groups = FALSE,
+  get_length = FALSE,
   ...,
   opts_regex = NULL
 )
@@ -82,13 +104,26 @@ stri_locate_all_fixed(
   str,
   pattern,
   omit_no_match = FALSE,
+  get_length = FALSE,
   ...,
   opts_fixed = NULL
 )
 
-stri_locate_first_fixed(str, pattern, ..., opts_fixed = NULL)
+stri_locate_first_fixed(
+  str,
+  pattern,
+  get_length = FALSE,
+  ...,
+  opts_fixed = NULL
+)
 
-stri_locate_last_fixed(str, pattern, ..., opts_fixed = NULL)
+stri_locate_last_fixed(
+  str,
+  pattern,
+  get_length = FALSE,
+  ...,
+  opts_fixed = NULL
+)
 }
 \arguments{
 \item{str}{character vector; strings to search in}
@@ -107,19 +142,23 @@ search patterns; for more details refer to \link{stringi-search}}
 indicates whether consecutive sequences of indexes in the resulting
 matrix should be merged; \code{stri_locate_all_charclass} only}
 
-\item{omit_no_match}{single logical value; if \code{FALSE},
-then two missing values will indicate that there was no match;
+\item{omit_no_match}{single logical value; if \code{TRUE},
+a no-match will be indicated by a matrix with 0 rows
 \code{stri_locate_all_*} only}
 
-\item{opts_collator, opts_fixed, opts_regex}{a named list used to tune up
-the search engine's settings; see
+\item{get_length}{single logical value; if \code{FALSE} (default),
+generate \emph{from-to} matrices; otherwise, output
+\emph{from-length} ones}
+
+\item{opts_collator, opts_fixed, opts_regex}{named list used to tune up
+the selected search engine's settings; see
 \code{\link{stri_opts_collator}}, \code{\link{stri_opts_fixed}},
 and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
 for the defaults}
 
 \item{capture_groups}{single logical value;
 whether positions of matches to parenthesized subexpressions
-should be returned to (as \code{capture_groups} attribute);
+should be returned too (as \code{capture_groups} attribute);
 \code{stri_locate_*_regex} only}
 }
 \value{
@@ -128,9 +167,8 @@ a list of integer matrices is returned. Each list element
 represents the results of a separate search scenario.
 The first column gives the start positions
 of the matches, and the second column gives the end positions.
-Moreover, you may get two \code{NA}s in one row
-for no match (if \code{omit_no_match} is \code{FALSE})
-or \code{NA} arguments.
+Moreover, two \code{NA}s in a row denote \code{NA} arguments
+or a no-match (the latter only if \code{omit_no_match} is \code{FALSE}).
 
 \code{stri_locate_first_*} and \code{stri_locate_last_*}
 return an integer matrix with
@@ -143,7 +181,11 @@ For \code{stri_locate_*_regex}, if the match is of zero length,
 Note that \code{stri_locate_last_regex} searches from start to end,
 but skips overlapping matches, see the example below.
 
-If \code{capture_groups=TRUE}, then the outputs are equipped with
+Setting \code{get_length=TRUE} results in the 2nd column representing
+the length of the match instead of the end position. In this case,
+negative length denotes a no-match.
+
+If \code{capture_groups=TRUE}, then the outputs are equipped with the
 \code{capture_groups} attribute, which is a list of matrices
 giving the start-end positions of matches to parenthesized subexpressions.
 Similarly to \code{stri_match_regex}, capture group names are extracted
@@ -172,59 +214,35 @@ and \code{stri_locate_last} are convenience functions.
 They just call \code{stri_locate_*_*}, depending on the arguments used.
 }
 \examples{
-stri_locate_all('XaaaaX',
-   regex=c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
 stri_locate_all('stringi', fixed='i')
 
+stri_locate_first_coll('hladn\u00FD', 'HLADNY', strength=1, locale='sk_SK')
+
 stri_locate_all_regex(
-    c('breakfast=eggs;lunch=pizza',
-   'breakfast=spam', 'no food here'),
+    c('breakfast=eggs;lunch=pizza', 'breakfast=spam', 'no food here'),
    '(?<when>\\\\w+)=(?<what>\\\\w+)',
    capture_groups=TRUE
 )  # named capture groups
 
-stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\\\p{Ll}')
-stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\\\p{Ll}', merge=FALSE)
-stri_locate_first_charclass('AaBbCc', '\\\\p{Ll}')
-stri_locate_last_charclass('AaBbCc', '\\\\p{Ll}')
+stri_locate_all_fixed("abababa", "ABA", case_insensitive=TRUE, overlap=TRUE)
+stri_locate_first_fixed("ababa", "aba")
+stri_locate_last_fixed("ababa", "aba")  # starts from end
+stri_locate_last_regex("ababa", "aba")  # no overlaps, from left to right
 
-stri_locate_all_coll(c('AaaaaaaA', 'AAAA'), 'a')
-stri_locate_first_coll(c('Yy\u00FD', 'AAA'), 'y', strength=2, locale='sk_SK')
-stri_locate_last_coll(c('Yy\u00FD', 'AAA'), 'y', strength=1, locale='sk_SK')
+x <- c("yes yes", "no", NA)
+stri_locate_all_fixed(x, "yes")
+stri_locate_all_fixed(x, "yes", omit_no_match=TRUE)
+stri_locate_all_fixed(x, "yes", get_length=TRUE)
+stri_locate_all_fixed(x, "yes", get_length=TRUE, omit_no_match=TRUE)
+stri_locate_first_fixed(x, "yes")
+stri_locate_first_fixed(x, "yes", get_length=TRUE)
 
-pat <- stri_paste('\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ',
-                  '\u0639\u0644\u064a\u0647 \u0648\u0633\u0644\u0645XYZ')
-stri_locate_last_coll('\ufdfa\ufdfa\ufdfaXYZ', pat, strength=1)
-
-stri_locate_all_fixed(c('AaaaaaaA', 'AAAA'), 'a')
-stri_locate_all_fixed(c('AaaaaaaA', 'AAAA'), 'a', case_insensitive=TRUE, overlap=TRUE)
-stri_locate_first_fixed(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
-stri_locate_last_fixed(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
-
-#first row is 1-2 like in locate_first
-stri_locate_all_fixed('bbbbb', 'bb')
-stri_locate_first_fixed('bbbbb', 'bb')
-
-# but last row is 3-4, unlike in locate_last,
-# keep this in mind [overlapping pattern match OK]!
-stri_locate_last_fixed('bbbbb', 'bb')
-
-stri_locate_all_regex('XaaaaX',
-   c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
-stri_locate_first_regex('XaaaaX',
-   c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
-stri_locate_last_regex('XaaaaX',
-   c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
+stri_locate_first_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\\\p{Ll}')
+stri_locate_first_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\\\p{Ll}', merge=FALSE)
 
 # Use regex positive-lookahead to locate overlapping pattern matches:
 stri_locate_all_regex('ACAGAGACTTTAGATAGAGAAGA', '(?=AGA)')
-# note that start > end here (match of 0 length)
-
-# Searching for the last occurrence:
-stri_locate_last_fixed("agaga", "aga")
-stri_locate_last_coll("agaga", "aga")
-# note the difference - regex searches left to right, with no overlaps:
-stri_locate_last_regex("agaga", "aga")
+# note that start > end here (match of length zero)
 
 
 }

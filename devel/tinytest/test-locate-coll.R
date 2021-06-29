@@ -107,3 +107,37 @@ expect_equivalent(stri_locate_last_coll(c("a", ""), "a"), matrix(c(1, NA, 1,
 expect_equivalent(stri_locate_last_coll("aaaab", "ab"), matrix(4:5))
 expect_equivalent(stri_locate_last_coll("bababababaab", "aab"), matrix(5:6 *
     2))
+
+
+###############################################################################
+#### get_length
+
+expect_equal(
+    stri_locate_first_coll(c("baba", "", "z", NA), "a", get_length=TRUE),
+    cbind(start=c(2L, -1L, -1L, NA), length=c(1L, -1L, -1L, NA))
+)
+
+expect_equal(
+    stri_locate_last_coll(c("baba", "", "z", NA), "a", get_length=TRUE),
+    cbind(start=c(4L, -1L, -1L, NA), length=c(1L, -1L, -1L, NA))
+)
+
+expect_equal(
+    stri_locate_all_coll(c("baba", "", "z", NA), "a", get_length=TRUE, omit_no_match=FALSE),
+    list(
+        cbind(start=c(2L, 4L), length=c(1L, 1L)),
+        cbind(start=c(-1L), length=c(-1L)),
+        cbind(start=c(-1L), length=c(-1L)),
+        cbind(start=c(NA_integer_), length=c(NA_integer_))
+    )
+)
+
+expect_equal(
+    stri_locate_all_coll(c("baba", "", "z", NA), "a", get_length=TRUE, omit_no_match=TRUE),
+    list(
+        cbind(start=c(2L, 4L), length=c(1L, 1L)),
+        cbind(start=integer(0), length=integer(0)),
+        cbind(start=integer(0), length=integer(0)),
+        cbind(start=c(NA_integer_), length=c(NA_integer_))
+    )
+)

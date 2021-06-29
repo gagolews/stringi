@@ -17,7 +17,7 @@
 \alias{stri_replace_all_regex}
 \alias{stri_replace_first_regex}
 \alias{stri_replace_last_regex}
-\title{Replace Occurrences of a Pattern}
+\title{Replace Pattern Occurrences}
 \usage{
 stri_replace_all(str, replacement, ..., regex, fixed, coll, charclass)
 

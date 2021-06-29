@@ -199,9 +199,18 @@ SEXP stri_detect_coll(SEXP str, SEXP pattern,
     SEXP opts_collator=R_NilValue);
 SEXP stri_count_coll(SEXP str, SEXP pattern, SEXP opts_collator=R_NilValue);
 SEXP stri_locate_all_coll(SEXP str, SEXP pattern,
-    SEXP omit_no_match=Rf_ScalarLogical(FALSE), SEXP opts_collator=R_NilValue);
-SEXP stri_locate_first_coll(SEXP str, SEXP pattern, SEXP opts_collator=R_NilValue);
-SEXP stri_locate_last_coll(SEXP str, SEXP pattern, SEXP opts_collator=R_NilValue);
+    SEXP omit_no_match=Rf_ScalarLogical(FALSE),
+    SEXP opts_collator=R_NilValue,
+    SEXP get_length=Rf_ScalarLogical(FALSE)
+);
+SEXP stri_locate_first_coll(
+    SEXP str, SEXP pattern, SEXP opts_collator=R_NilValue,
+    SEXP get_length=Rf_ScalarLogical(FALSE)
+);
+SEXP stri_locate_last_coll(
+    SEXP str, SEXP pattern, SEXP opts_collator=R_NilValue,
+    SEXP get_length=Rf_ScalarLogical(FALSE)
+);
 SEXP stri_extract_first_coll(SEXP str, SEXP pattern, SEXP opts_collator=R_NilValue);
 SEXP stri_extract_last_coll(SEXP str, SEXP pattern, SEXP opts_collator=R_NilValue);
 SEXP stri_extract_all_coll(SEXP str, SEXP pattern,
@@ -230,15 +239,30 @@ SEXP stri_detect_fixed(SEXP str, SEXP pattern,
     SEXP negate=Rf_ScalarLogical(FALSE), SEXP max_count=Rf_ScalarInteger(-1),
     SEXP opts_fixed=R_NilValue);
 SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP opts_fixed=R_NilValue);
-SEXP stri_locate_all_fixed(SEXP str, SEXP pattern,
-    SEXP omit_no_match=Rf_ScalarLogical(FALSE), SEXP opts_fixed=R_NilValue);
-SEXP stri_locate_first_fixed(SEXP str, SEXP pattern, SEXP opts_fixed=R_NilValue);
-SEXP stri_locate_last_fixed(SEXP str, SEXP pattern, SEXP opts_fixed=R_NilValue);
-SEXP stri_extract_first_fixed(SEXP str, SEXP pattern, SEXP opts_fixed=R_NilValue);
-SEXP stri_extract_last_fixed(SEXP str, SEXP pattern, SEXP opts_fixed=R_NilValue);
-SEXP stri_extract_all_fixed(SEXP str, SEXP pattern,
+SEXP stri_locate_all_fixed(
+    SEXP str, SEXP pattern,
+    SEXP omit_no_match=Rf_ScalarLogical(FALSE), SEXP opts_fixed=R_NilValue,
+    SEXP get_length=Rf_ScalarLogical(FALSE)
+);
+SEXP stri_locate_first_fixed(
+    SEXP str, SEXP pattern, SEXP opts_fixed=R_NilValue,
+    SEXP get_length=Rf_ScalarLogical(FALSE)
+);
+SEXP stri_locate_last_fixed(
+    SEXP str, SEXP pattern, SEXP opts_fixed=R_NilValue,
+    SEXP get_length=Rf_ScalarLogical(FALSE)
+);
+SEXP stri_extract_first_fixed(
+    SEXP str, SEXP pattern, SEXP opts_fixed=R_NilValue
+);
+SEXP stri_extract_last_fixed(
+    SEXP str, SEXP pattern, SEXP opts_fixed=R_NilValue
+);
+SEXP stri_extract_all_fixed(
+    SEXP str, SEXP pattern,
     SEXP simplify=Rf_ScalarLogical(FALSE),
-    SEXP omit_no_match=Rf_ScalarLogical(FALSE), SEXP opts_fixed=R_NilValue);
+    SEXP omit_no_match=Rf_ScalarLogical(FALSE), SEXP opts_fixed=R_NilValue
+);
 SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement,
     SEXP vectorize_all=Rf_ScalarLogical(TRUE), SEXP opts_fixed=R_NilValue);
 SEXP stri_replace_first_fixed(SEXP str, SEXP pattern, SEXP replacement,
@@ -260,22 +284,27 @@ SEXP stri_subset_fixed_replacement(SEXP str, SEXP pattern, SEXP negate, SEXP opt
 
 SEXP stri_detect_regex(
     SEXP str, SEXP pattern,
-    SEXP negate=Rf_ScalarLogical(FALSE), SEXP max_count=Rf_ScalarInteger(-1),
+    SEXP negate=Rf_ScalarLogical(FALSE),
+    SEXP max_count=Rf_ScalarInteger(-1),
     SEXP opts_regex=R_NilValue
 );
 SEXP stri_count_regex(SEXP str, SEXP pattern, SEXP opts_regex=R_NilValue);
 SEXP stri_locate_all_regex(
     SEXP str, SEXP pattern,
-    SEXP omit_no_match=Rf_ScalarLogical(FALSE), SEXP opts_regex=R_NilValue,
-    SEXP capture_groups=Rf_ScalarLogical(FALSE)
+    SEXP omit_no_match=Rf_ScalarLogical(FALSE),
+    SEXP opts_regex=R_NilValue,
+    SEXP capture_groups=Rf_ScalarLogical(FALSE),
+    SEXP get_length=Rf_ScalarLogical(FALSE)
 );
 SEXP stri_locate_first_regex(
     SEXP str, SEXP pattern, SEXP opts_regex=R_NilValue,
-    SEXP capture_groups=Rf_ScalarLogical(FALSE)
+    SEXP capture_groups=Rf_ScalarLogical(FALSE),
+    SEXP get_length=Rf_ScalarLogical(FALSE)
 );
 SEXP stri_locate_last_regex(
     SEXP str, SEXP pattern, SEXP opts_regex=R_NilValue,
-    SEXP capture_groups=Rf_ScalarLogical(FALSE)
+    SEXP capture_groups=Rf_ScalarLogical(FALSE),
+    SEXP get_length=Rf_ScalarLogical(FALSE)
 );
 SEXP stri_replace_all_regex(
     SEXP str, SEXP pattern, SEXP replacement,
@@ -320,10 +349,18 @@ SEXP stri_extract_last_charclass(SEXP str, SEXP pattern);
 SEXP stri_extract_all_charclass(SEXP str, SEXP pattern,
     SEXP merge=Rf_ScalarLogical(TRUE), SEXP simplify=Rf_ScalarLogical(FALSE),
     SEXP omit_no_match=Rf_ScalarLogical(FALSE));
-SEXP stri_locate_first_charclass(SEXP str, SEXP pattern);
-SEXP stri_locate_last_charclass(SEXP str, SEXP pattern);
-SEXP stri_locate_all_charclass(SEXP str, SEXP pattern,
-    SEXP merge=Rf_ScalarLogical(TRUE), SEXP omit_no_match=Rf_ScalarLogical(FALSE));
+SEXP stri_locate_first_charclass(
+    SEXP str, SEXP pattern, SEXP get_length=Rf_ScalarLogical(FALSE)
+);
+SEXP stri_locate_last_charclass(
+    SEXP str, SEXP pattern, SEXP get_length=Rf_ScalarLogical(FALSE)
+);
+SEXP stri_locate_all_charclass(
+    SEXP str, SEXP pattern,
+    SEXP merge=Rf_ScalarLogical(TRUE),
+    SEXP omit_no_match=Rf_ScalarLogical(FALSE),
+    SEXP get_length=Rf_ScalarLogical(FALSE)
+);
 SEXP stri_replace_last_charclass(SEXP str, SEXP pattern, SEXP replacement);
 SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement);
 SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement,
@@ -342,10 +379,21 @@ SEXP stri_extract_all_boundaries(SEXP str, SEXP simplify,
     SEXP omit_no_match=Rf_ScalarLogical(FALSE), SEXP opts_brkiter=R_NilValue);
 SEXP stri_extract_first_boundaries(SEXP str, SEXP opts_brkiter=R_NilValue);
 SEXP stri_extract_last_boundaries(SEXP str, SEXP opts_brkiter=R_NilValue);
-SEXP stri_locate_all_boundaries(SEXP str,
-    SEXP omit_no_match=Rf_ScalarLogical(FALSE), SEXP opts_brkiter=R_NilValue);
-SEXP stri_locate_first_boundaries(SEXP str, SEXP opts_brkiter=R_NilValue);
-SEXP stri_locate_last_boundaries(SEXP str, SEXP opts_brkiter=R_NilValue);
+SEXP stri_locate_all_boundaries(
+    SEXP str, SEXP omit_no_match=Rf_ScalarLogical(FALSE),
+    SEXP opts_brkiter=R_NilValue,
+    SEXP get_length=Rf_ScalarLogical(FALSE)
+);
+SEXP stri_locate_first_boundaries(
+    SEXP str,
+    SEXP opts_brkiter=R_NilValue,
+    SEXP get_length=Rf_ScalarLogical(FALSE)
+);
+SEXP stri_locate_last_boundaries(
+    SEXP str,
+    SEXP opts_brkiter=R_NilValue,
+    SEXP get_length=Rf_ScalarLogical(FALSE)
+);
 SEXP stri_split_boundaries(SEXP str, SEXP n=Rf_ScalarInteger(-1),
     SEXP tokens_only=Rf_ScalarLogical(FALSE),
     SEXP simplify=Rf_ScalarLogical(FALSE), SEXP opts_brkiter=R_NilValue);

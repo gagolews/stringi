@@ -17,7 +17,7 @@
 \alias{stri_extract_all_fixed}
 \alias{stri_extract_first_fixed}
 \alias{stri_extract_last_fixed}
-\title{Extract Occurrences of a Pattern}
+\title{Extract Pattern Occurrences}
 \usage{
 stri_extract_all(str, ..., regex, fixed, coll, charclass)
 

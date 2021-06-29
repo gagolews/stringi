@@ -50,7 +50,7 @@ SEXP    stri__vector_NA_integers(R_len_t howmany);
 SEXP    stri__vector_NA_strings(R_len_t howmany);
 SEXP    stri__vector_empty_strings(R_len_t howmany);
 SEXP    stri__emptyList();
-SEXP    stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol);
+SEXP    stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol, int filler=NA_INTEGER);  // TODO: other ones can be generalised too
 SEXP    stri__matrix_NA_STRING(R_len_t nrow, R_len_t ncol);
 int     stri__match_arg(const char* option, const char** set);
 
@@ -66,10 +66,10 @@ int     stri__width_string(const char* s, int n, int max_width=NA_INTEGER);
 int     stri__length_string(const char* s, int n, int max_length=NA_INTEGER);
 
 // prepare_arg.cpp:
-SEXP stri__prepare_arg_string_1(SEXP x,     const char* argname);
-SEXP stri__prepare_arg_double_1(SEXP x,     const char* argname, bool factors_as_strings=true);
-SEXP stri__prepare_arg_integer_1(SEXP x,    const char* argname, bool factors_as_strings=true);
-SEXP stri__prepare_arg_logical_1(SEXP x,    const char* argname);
+SEXP stri__prepare_arg_string_1(SEXP x,  const char* argname);
+SEXP stri__prepare_arg_double_1(SEXP x,  const char* argname, bool factors_as_strings=true);
+SEXP stri__prepare_arg_integer_1(SEXP x, const char* argname, bool factors_as_strings=true);
+SEXP stri__prepare_arg_logical_1(SEXP x, const char* argname);
 
 const char* stri__copy_string_Ralloc(SEXP, const char* argname);
 const char* stri__prepare_arg_string_1_notNA(SEXP x,  const char* argname);
@@ -108,8 +108,14 @@ SEXP stri__prepare_arg_POSIXct(SEXP x,      const char* argname);
 
 
 // search
-void stri__locate_set_dimnames_list(SEXP list);
-void stri__locate_set_dimnames_matrix(SEXP matrix);
+void stri__locate_set_dimnames_list(
+    SEXP list,
+    bool get_length=false
+);
+void stri__locate_set_dimnames_matrix(
+    SEXP matrix,
+    bool get_length=false
+);
 
 
 // date/time

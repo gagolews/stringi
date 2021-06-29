@@ -8,7 +8,11 @@ suppressWarnings(expect_equivalent(stri_locate_all_regex("abc", ""), list(matrix
     NA_integer_)))))
 suppressWarnings(expect_equivalent(stri_locate_all_regex("", "abc"), list(matrix(c(NA_integer_,
     NA_integer_)))))
+suppressWarnings(expect_equivalent(stri_locate_all_regex("", "abc", get_length=TRUE), list(matrix(c(-1,
+    -1)))))
 suppressWarnings(expect_equivalent(stri_locate_all_regex("", ""), list(matrix(c(NA_integer_,
+    NA_integer_)))))
+suppressWarnings(expect_equivalent(stri_locate_all_regex("", "", get_length=TRUE), list(matrix(c(NA_integer_,
     NA_integer_)))))
 
 expect_equivalent(as.integer(stri_locate_all_regex(NA, "[a-z]")[[1]]), c(NA_integer_,
@@ -16,6 +20,8 @@ expect_equivalent(as.integer(stri_locate_all_regex(NA, "[a-z]")[[1]]), c(NA_inte
 expect_equivalent(as.integer(stri_locate_all_regex("?", "[a-z]")[[1]]), c(NA_integer_,
     NA_integer_))
 expect_equivalent(as.integer(stri_locate_all_regex("?", "[a-z]", omit_no_match = TRUE)[[1]]),
+    integer(0))
+expect_equivalent(as.integer(stri_locate_all_regex("?", "[a-z]", omit_no_match = TRUE, get_length=TRUE)[[1]]),
     integer(0))
 
 expect_equivalent(stri_locate_all_regex("1a\u0105a", "\u0105"), list(matrix(c(3, 3))))
@@ -148,6 +154,9 @@ expect_equivalent(stri_locate_last_regex(c("", " "), "^.*$"), matrix(c(1, 0,
 
 
 
+##############################################################################
+###### capture groups
+
 # expect_equal tests attributes too
 
 expect_warning(stri_locate_all_regex("test", "", capture_groups=TRUE))
@@ -249,8 +258,67 @@ expect_equal(
     )
 )
 
-library("tinytest")
-library("stringi")
+
+
+expect_equal(
+    stri_locate_all_regex("abc", c("(?<a>.)", "(?<a>.)(.)(?<c>.)", "(.)(.)"), capture_groups=TRUE, get_length=TRUE),
+    list(
+        structure(cbind(start=1:3, length=c(1, 1, 1)), capture_groups=list(a=cbind(start=1:3, length=c(1, 1, 1)))),
+        structure(cbind(start=1, length=3), capture_groups=list(
+            a=cbind(start=1, length=1),
+            cbind(start=2, length=1),
+            c=cbind(start=3, length=1)
+        )),
+        structure(cbind(start=1, length=2), capture_groups=list(
+            cbind(start=1, length=1),
+            cbind(start=2, length=1)
+        ))
+    )
+)
+
+expect_equal(
+    stri_locate_all_regex(c("", NA, "no"), "(?<a>.)(.)(?<c>.)", capture_groups=TRUE, get_length=TRUE),
+    list(
+        structure(cbind(start=-1, length=-1), capture_groups=list(
+            a=cbind(start=-1, length=-1),
+            cbind(start=-1, length=-1),
+            c=cbind(start=-1, length=-1)
+        )),
+        structure(cbind(start=NA_integer_, length=NA_integer_), capture_groups=list(
+            a=cbind(start=NA_integer_, length=NA_integer_),
+            cbind(start=NA_integer_, length=NA_integer_),
+            c=cbind(start=NA_integer_, length=NA_integer_)
+        )),
+        structure(cbind(start=-1, length=-1), capture_groups=list(
+            a=cbind(start=-1, length=-1),
+            cbind(start=-1, length=-1),
+            c=cbind(start=-1, length=-1)
+        ))
+    )
+)
+
+expect_equal(
+    stri_locate_all_regex(c("", NA, "no"), "(?<a>.)(.)(?<c>.)", capture_groups=TRUE, omit_no_match=TRUE, get_length=TRUE),
+    list(
+        structure(cbind(start=integer(0), length=integer(0)), capture_groups=list(
+            a=cbind(start=integer(0), length=integer(0)),
+            cbind(start=integer(0), length=integer(0)),
+            c=cbind(start=integer(0), length=integer(0))
+        )),
+        structure(cbind(start=NA_integer_, length=NA_integer_), capture_groups=list(
+            a=cbind(start=NA_integer_, length=NA_integer_),
+            cbind(start=NA_integer_, length=NA_integer_),
+            c=cbind(start=NA_integer_, length=NA_integer_)
+        )),
+        structure(cbind(start=integer(0), length=integer(0)), capture_groups=list(
+            a=cbind(start=integer(0), length=integer(0)),
+            cbind(start=integer(0), length=integer(0)),
+            c=cbind(start=integer(0), length=integer(0))
+        ))
+    )
+)
+
+
 
 expect_equal(
     stri_locate_first_regex(c("\U0001f601\U0001f600\U0001f602def", "ghi", "jk", NA), "(?<a>.)(..)", capture_groups=TRUE),
@@ -299,3 +367,329 @@ expect_equal(
         )
     )
 )
+
+
+
+expect_equal(
+    stri_locate_first_regex(c("\U0001f601\U0001f600\U0001f602def", "ghi", "jk", NA), "(?<a>.)(..)", capture_groups=TRUE, get_length=TRUE),
+    structure(
+        cbind(start=c(1, 1, -1, NA_integer_), length=c(3, 3, -1, NA_integer_)),
+        capture_groups=list(
+            a=cbind(start=c(1, 1, -1, NA_integer_), length=c(1, 1, -1, NA_integer_)),
+            cbind(start=c(2, 2, -1, NA_integer_), length=c(2, 2, -1, NA_integer_))
+        )
+    )
+)
+
+expect_equal(
+    stri_locate_last_regex(c("\U0001f601\U0001f600\U0001f602def", "ghi", "jk", NA), "(?<a>.)(..)", capture_groups=TRUE, get_length=TRUE),
+    structure(
+        cbind(start=c(4, 1, -1, NA_integer_), length=c(3, 3, -1, NA_integer_)),
+        capture_groups=list(
+            a=cbind(start=c(4, 1, -1, NA_integer_), length=c(1, 1, -1, NA_integer_)),
+            cbind(start=c(5, 2, -1, NA_integer_), length=c(2, 2, -1, NA_integer_))
+        )
+    )
+)
+
+expect_equal(
+    stri_locate_first_regex("\U0001f601\U0001f600\U0001f602abc", c("(?<a>.)", "(?<a>.)(.)(?<c>.)", "(.)(.)", "(.)asfsa(.)ffe(.)gege(.)"), capture_groups=TRUE, get_length=TRUE),
+    structure(
+        cbind(start=c(1, 1, 1, -1), length=c(1, 3, 2, -1)),
+        capture_groups=list(
+            cbind(start=c(1, 1, 1, -1), length=c(1, 1, 1, -1)),
+            cbind(start=c(NA, 2, 2, -1), length=c(NA, 1, 1, -1)),
+            cbind(start=c(NA, 3, NA, -1), length=c(NA, 1, NA, -1)),
+            cbind(start=c(NA, NA, NA, -1), length=c(NA, NA, NA, -1))
+        )
+    )
+)
+
+expect_equal(
+    stri_locate_last_regex("\U0001f601\U0001f600\U0001f602abc", c("(?<a>.)", "(?<a>.)(.)(?<c>.)", "(.)(.)", "(.)asfsa(.)ffe(.)gege(.)"), capture_groups=TRUE, get_length=TRUE),
+    structure(
+        cbind(start=c(6, 4, 5, -1), length=c(1, 3, 2, -1)),
+        capture_groups=list(
+            cbind(start=c(6, 4, 5, -1), length=c(1, 1, 1, -1)),
+            cbind(start=c(NA, 5, 6, -1), length=c(NA, 1, 1, -1)),
+            cbind(start=c(NA, 6, NA, -1), length=c(NA, 1, NA, -1)),
+            cbind(start=c(NA, NA, NA, -1), length=c(NA, NA, NA, -1))
+        )
+    )
+)
+
+
+expect_equal(
+    stri_locate_first_regex(NA, "(?<a>.)", capture_groups=TRUE),
+    structure(cbind(start=NA_integer_, end=NA_integer_),
+        capture_groups=list(
+            a=cbind(start=NA_integer_, end=NA_integer_)
+        )
+    )
+)
+
+
+expect_equal(
+    stri_locate_last_regex(NA, "(?<a>.)", capture_groups=TRUE),
+    structure(cbind(start=NA_integer_, end=NA_integer_),
+        capture_groups=list(
+            a=cbind(start=NA_integer_, end=NA_integer_)
+        )
+    )
+)
+
+
+expect_equal(
+    stri_locate_all_regex(NA, "(?<a>.)", capture_groups=TRUE),
+    list(structure(cbind(start=NA_integer_, end=NA_integer_),
+        capture_groups=list(
+            a=cbind(start=NA_integer_, end=NA_integer_)
+        )
+    ))
+)
+
+
+
+expect_equal(
+    stri_locate_first_regex(NA, "(?<a>.)", get_length=TRUE, capture_groups=TRUE),
+    structure(cbind(start=NA_integer_, length=NA_integer_),
+        capture_groups=list(
+            a=cbind(start=NA_integer_, length=NA_integer_)
+        )
+    )
+)
+
+
+expect_equal(
+    stri_locate_last_regex(NA, "(?<a>.)", get_length=TRUE, capture_groups=TRUE),
+    structure(cbind(start=NA_integer_, length=NA_integer_),
+        capture_groups=list(
+            a=cbind(start=NA_integer_, length=NA_integer_)
+        )
+    )
+)
+
+
+expect_equal(
+    stri_locate_all_regex(NA, "(?<a>.)", get_length=TRUE, capture_groups=TRUE),
+    list(structure(cbind(start=NA_integer_, length=NA_integer_),
+        capture_groups=list(
+            a=cbind(start=NA_integer_, length=NA_integer_)
+        )
+    ))
+)
+
+
+
+################################################################################
+### capture groups - conditional
+
+expect_equal(
+    stri_locate_all_regex(c("azabaz", "a", "az", "b", NA), "(?<a>a)(?<z>z)?", capture_groups=TRUE, get_length=FALSE),
+    list(
+        structure(
+            cbind(start=c(1L, 3L, 5L), end=c(2L, 3L, 6L)),
+            capture_groups=list(
+                a=cbind(start=c(1L, 3L, 5L), end=c(1L, 3L, 5L)),
+                z=cbind(start=c(2L, NA, 6L), end=c(2L, NA, 6L))
+            )
+        ),
+        structure(
+            cbind(start=c(1L), end=c(1L)),
+            capture_groups=list(
+                a=cbind(start=c(1L), end=c(1L)),
+                z=cbind(start=c(NA_integer_), end=c(NA_integer_))
+            )
+        ),
+        structure(
+            cbind(start=c(1L), end=c(2L)),
+            capture_groups=list(
+                a=cbind(start=c(1L), end=c(1L)),
+                z=cbind(start=c(2L), end=c(2L))
+            )
+        ),
+        structure(
+            cbind(start=c(NA_integer_), end=c(NA_integer_)),
+            capture_groups=list(
+                a=cbind(start=c(NA_integer_), end=c(NA_integer_)),
+                z=cbind(start=c(NA_integer_), end=c(NA_integer_))
+            )
+        ),
+        structure(
+            cbind(start=c(NA_integer_), end=c(NA_integer_)),
+            capture_groups=list(
+                a=cbind(start=c(NA_integer_), end=c(NA_integer_)),
+                z=cbind(start=c(NA_integer_), end=c(NA_integer_))
+            )
+        )
+    )
+)
+
+expect_equal(
+    stri_locate_all_regex(c("azabaz", "a", "az", "b", NA), "(?<a>a)(?<z>z)?", capture_groups=TRUE, get_length=FALSE, omit_no_match=TRUE),
+    list(
+        structure(
+            cbind(start=c(1L, 3L, 5L), end=c(2L, 3L, 6L)),
+            capture_groups=list(
+                a=cbind(start=c(1L, 3L, 5L), end=c(1L, 3L, 5L)),
+                z=cbind(start=c(2L, NA, 6L), end=c(2L, NA, 6L))
+            )
+        ),
+        structure(
+            cbind(start=c(1L), end=c(1L)),
+            capture_groups=list(
+                a=cbind(start=c(1L), end=c(1L)),
+                z=cbind(start=c(NA_integer_), end=c(NA_integer_))
+            )
+        ),
+        structure(
+            cbind(start=c(1L), end=c(2L)),
+            capture_groups=list(
+                a=cbind(start=c(1L), end=c(1L)),
+                z=cbind(start=c(2L), end=c(2L))
+            )
+        ),
+        structure(
+            cbind(start=integer(0), end=integer(0)),
+            capture_groups=list(
+                a=cbind(start=integer(0), end=integer(0)),
+                z=cbind(start=integer(0), end=integer(0))
+            )
+        ),
+        structure(
+            cbind(start=c(NA_integer_), end=c(NA_integer_)),
+            capture_groups=list(
+                a=cbind(start=c(NA_integer_), end=c(NA_integer_)),
+                z=cbind(start=c(NA_integer_), end=c(NA_integer_))
+            )
+        )
+    )
+)
+
+expect_equal(
+    stri_locate_first_regex(c("azabaz", "a", "az", "b", NA), "(?<a>a)(?<z>z)?", capture_groups=TRUE, get_length=FALSE),
+    structure(
+        cbind(start=c(1L, 1L, 1L, NA, NA), end=c(2L, 1L, 2L, NA, NA)),
+        capture_groups=list(
+            a=cbind(start=c(1L, 1L, 1L, NA, NA), end=c(1L, 1L, 1L, NA, NA)),
+            z=cbind(start=c(2L, NA, 2L, NA, NA), end=c(2L, NA, 2L, NA, NA))
+        )
+    )
+)
+
+expect_equal(
+    stri_locate_last_regex(c("azabaz", "a", "az", "b", NA), "(?<a>a)(?<z>z)?", capture_groups=TRUE, get_length=FALSE),
+    structure(
+        cbind(start=c(5L, 1L, 1L, NA, NA), end=c(6L, 1L, 2L, NA, NA)),
+        capture_groups=list(
+            a=cbind(start=c(5L, 1L, 1L, NA, NA), end=c(5L, 1L, 1L, NA, NA)),
+            z=cbind(start=c(6L, NA, 2L, NA, NA), end=c(6L, NA, 2L, NA, NA))
+        )
+    )
+)
+
+
+expect_equal(
+    stri_locate_all_regex(c("azabaz", "a", "az", "b", NA), "(?<a>a)(?<z>z)?", capture_groups=TRUE, get_length=TRUE),
+    list(
+        structure(
+            cbind(start=c(1L, 3L, 5L), length=c(2L, 1L, 2L)),
+            capture_groups=list(
+                a=cbind(start=c(1L, 3L, 5L), length=c(1L, 1L, 1L)),
+                z=cbind(start=c(2L, -1L, 6L), length=c(1L, -1L, 1L))
+            )
+        ),
+        structure(
+            cbind(start=c(1L), length=c(1L)),
+            capture_groups=list(
+                a=cbind(start=c(1L), length=c(1L)),
+                z=cbind(start=c(-1L), length=c(-1L))
+            )
+        ),
+        structure(
+            cbind(start=c(1L), length=c(2L)),
+            capture_groups=list(
+                a=cbind(start=c(1L), length=c(1L)),
+                z=cbind(start=c(2L), length=c(1L))
+            )
+        ),
+        structure(
+            cbind(start=c(-1L), length=c(-1L)),
+            capture_groups=list(
+                a=cbind(start=c(-1L), length=c(-1L)),
+                z=cbind(start=c(-1L), length=c(-1L))
+            )
+        ),
+        structure(
+            cbind(start=c(NA_integer_), length=c(NA_integer_)),
+            capture_groups=list(
+                a=cbind(start=c(NA_integer_), length=c(NA_integer_)),
+                z=cbind(start=c(NA_integer_), length=c(NA_integer_))
+            )
+        )
+    )
+)
+
+expect_equal(
+    stri_locate_all_regex(c("azabaz", "a", "az", "b", NA), "(?<a>a)(?<z>z)?", capture_groups=TRUE, get_length=TRUE, omit_no_match=TRUE),
+    list(
+        structure(
+            cbind(start=c(1L, 3L, 5L), length=c(2L, 1L, 2L)),
+            capture_groups=list(
+                a=cbind(start=c(1L, 3L, 5L), length=c(1L, 1L, 1L)),
+                z=cbind(start=c(2L, -1L, 6L), length=c(1L, -1L, 1L))
+            )
+        ),
+        structure(
+            cbind(start=c(1L), length=c(1L)),
+            capture_groups=list(
+                a=cbind(start=c(1L), length=c(1L)),
+                z=cbind(start=c(-1L), length=c(-1L))
+            )
+        ),
+        structure(
+            cbind(start=c(1L), length=c(2L)),
+            capture_groups=list(
+                a=cbind(start=c(1L), length=c(1L)),
+                z=cbind(start=c(2L), length=c(1L))
+            )
+        ),
+        structure(
+            cbind(start=integer(0), length=integer(0)),
+            capture_groups=list(
+                a=cbind(start=integer(0), length=integer(0)),
+                z=cbind(start=integer(0), length=integer(0))
+            )
+        ),
+        structure(
+            cbind(start=c(NA_integer_), length=c(NA_integer_)),
+            capture_groups=list(
+                a=cbind(start=c(NA_integer_), length=c(NA_integer_)),
+                z=cbind(start=c(NA_integer_), length=c(NA_integer_))
+            )
+        )
+    )
+)
+
+expect_equal(
+    stri_locate_first_regex(c("azabaz", "a", "az", "b", NA), "(?<a>a)(?<z>z)?", capture_groups=TRUE, get_length=TRUE),
+    structure(
+        cbind(start=c(1L, 1L, 1L, -1L, NA), length=c(2L, 1L, 2L, -1L, NA)),
+        capture_groups=list(
+            a=cbind(start=c(1L, 1L, 1L, -1L, NA), length=c(1L, 1L, 1L, -1L, NA)),
+            z=cbind(start=c(2L, -1L, 2L, -1L, NA), length=c(1L, -1L, 1L, -1L, NA))
+        )
+    )
+)
+
+expect_equal(
+    stri_locate_last_regex(c("azabaz", "a", "az", "b", NA), "(?<a>a)(?<z>z)?", capture_groups=TRUE, get_length=TRUE),
+    structure(
+        cbind(start=c(5L, 1L, 1L, -1L, NA), length=c(2L, 1L, 2L, -1L, NA)),
+        capture_groups=list(
+            a=cbind(start=c(5L, 1L, 1L, -1L, NA), length=c(1L, 1L, 1L, -1L, NA)),
+            z=cbind(start=c(6L, -1L, 2L, -1L, NA), length=c(1L, -1L, 1L, -1L, NA))
+        )
+    )
+)
+
