@@ -32,7 +32,7 @@
 
 
 #' @title
-#' Detect a Pattern Match
+#' Detect Pattern Occurrences
 #'
 #' @description
 #' These functions determine, for each string in \code{str},
@@ -129,13 +129,15 @@ stri_detect <- function(str, ..., regex, fixed, coll, charclass)
 
 #' @export
 #' @rdname stri_detect
-stri_detect_fixed <- function(str, pattern, negate = FALSE, max_count = -1, ...,
-    opts_fixed = NULL)
-{
+stri_detect_fixed <- function(
+    str, pattern, negate=FALSE, max_count=-1, ...,
+    opts_fixed=NULL
+) {
     if (!missing(...))
         opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
     .Call(C_stri_detect_fixed, str, pattern, negate, max_count, opts_fixed)
 }
+
 
 #' @export
 #' @rdname stri_detect
@@ -147,9 +149,10 @@ stri_detect_charclass <- function(str, pattern, negate = FALSE, max_count = -1)
 
 #' @export
 #' @rdname stri_detect
-stri_detect_coll <- function(str, pattern, negate = FALSE,
-    max_count = -1, ..., opts_collator = NULL)
-{
+stri_detect_coll <- function(
+    str, pattern, negate = FALSE,
+    max_count = -1, ..., opts_collator = NULL
+) {
     if (!missing(...))
         opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
     .Call(C_stri_detect_coll, str, pattern, negate, max_count, opts_collator)
@@ -158,10 +161,11 @@ stri_detect_coll <- function(str, pattern, negate = FALSE,
 
 #' @export
 #' @rdname stri_detect
-stri_detect_regex <- function(str, pattern, negate = FALSE,
+stri_detect_regex <- function(
+    str, pattern, negate = FALSE,
     max_count = -1, ...,
-    opts_regex = NULL)
-{
+    opts_regex = NULL
+) {
     if (!missing(...))
         opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
     .Call(C_stri_detect_regex, str, pattern, negate, max_count, opts_regex)

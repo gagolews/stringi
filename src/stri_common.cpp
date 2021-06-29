@@ -253,20 +253,20 @@ SEXP stri__emptyList()
 }
 
 
-/** Creates an integer matrix filled with NA_INTEGER
+/** Creates an integer matrix filled with NA_INTEGER (or something else)
  *
  * @param nrow number of rows
  * @param ncol number of columns
  *
  * @version 0.1-?? (Marek Gagolewski)
  */
-SEXP stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol)
+SEXP stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol, int filler)
 {
     SEXP x;
     PROTECT(x = Rf_allocMatrix(INTSXP, nrow, ncol));
     int* ians = INTEGER(x);
     for (R_len_t i=0; i<nrow*ncol; ++i)
-        ians[i] = NA_INTEGER;
+        ians[i] = filler;
     UNPROTECT(1);
     return x;
 }

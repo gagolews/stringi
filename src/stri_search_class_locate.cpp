@@ -62,8 +62,11 @@ using namespace std;
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-29)
+ *     get_length
  */
-SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first)
+SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first, bool get_length1)
 {
     PROTECT(str = stri__prepare_arg_string(str, "str"));
     PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
@@ -76,7 +79,7 @@ SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first)
 
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocMatrix(INTSXP, vectorize_length, 2));
-    stri__locate_set_dimnames_matrix(ret);
+    stri__locate_set_dimnames_matrix(ret, get_length1);
     int* ret_tab = INTEGER(ret);
 
     for (R_len_t i = pattern_cont.vectorize_init();
@@ -89,6 +92,11 @@ SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first)
         if (str_cont.isNA(i) || pattern_cont.isNA(i))
             continue;
 
+        if (get_length1) {
+            ret_tab[i]                  = -1;
+            ret_tab[i+vectorize_length] = -1;
+        }
+
         const UnicodeSet* pattern_cur = &pattern_cont.get(i);
         R_len_t     str_cur_n = str_cont.get(i).length();
         const char* str_cur_s = str_cont.get(i).c_str();
@@ -98,16 +106,16 @@ SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first)
 
         for (j=0; j<str_cur_n; ) {
             U8_NEXT(str_cur_s, j, str_cur_n, chr);
-            if (chr < 0) // invalid utf-8 sequence
+            if (chr < 0) // invalid UTF-8 sequence
                 throw StriException(MSG__INVALID_UTF8);
             k++; // 1-based index
             if (pattern_cur->contains(chr)) {
                 ret_tab[i]      = k;
+                ret_tab[i+vectorize_length] = get_length1 ? 1 : ret_tab[i];
                 if (first) break; // that's enough for first
                 // note that for last, we can't go backwards from the end, as we need a proper index!
             }
         }
-        ret_tab[i+vectorize_length] = ret_tab[i];
     }
 
     STRI__UNPROTECT_ALL
@@ -124,10 +132,14 @@ SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first)
  * @return matrix with 2 columns
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-04)
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-29)
+ *     get_length
  */
-SEXP stri_locate_first_charclass(SEXP str, SEXP pattern)
+SEXP stri_locate_first_charclass(SEXP str, SEXP pattern, SEXP get_length)
 {
-    return stri__locate_firstlast_charclass(str, pattern, true);
+    bool get_length1 = stri__prepare_arg_logical_1_notNA(get_length, "get_length");
+    return stri__locate_firstlast_charclass(str, pattern, true, get_length1);
 }
 
 
@@ -139,10 +151,14 @@ SEXP stri_locate_first_charclass(SEXP str, SEXP pattern)
  * @return matrix with 2 columns
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-04)
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-29)
+ *     get_length
  */
-SEXP stri_locate_last_charclass(SEXP str, SEXP pattern)
+SEXP stri_locate_last_charclass(SEXP str, SEXP pattern, SEXP get_length)
 {
-    return stri__locate_firstlast_charclass(str, pattern, false);
+    bool get_length1 = stri__prepare_arg_logical_1_notNA(get_length, "get_length");
+    return stri__locate_firstlast_charclass(str, pattern, false, get_length1);
 }
 
 
@@ -180,10 +196,14 @@ SEXP stri_locate_last_charclass(SEXP str, SEXP pattern)
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
  *    FR #117: omit_no_match arg added
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-29)
+ *     get_length
  */
-SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP omit_no_match)
+SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP omit_no_match, SEXP get_length)
 {
     bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
+    bool get_length1 = stri__prepare_arg_logical_1_notNA(get_length, "get_length");
     bool merge_cur = stri__prepare_arg_logical_1_notNA(merge, "merge");
     PROTECT(str     = stri__prepare_arg_string(str, "str"));
     PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern"));
@@ -215,7 +235,7 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP omit_no_
 
         R_len_t noccurrences = (R_len_t)occurrences.size();
         if (noccurrences == 0) {
-            SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(omit_no_match1?0:1, 2));
+            SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(omit_no_match1?0:1, 2, get_length1?-1:NA_INTEGER));
             continue;
         }
 
@@ -226,13 +246,13 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP omit_no_
         for (R_len_t f = 0; iter != occurrences.end(); ++iter, ++f) {
             pair<R_len_t, R_len_t> curoccur = *iter;
             cur_res_int[f] = curoccur.first+1; // 0-based => 1-based
-            cur_res_int[f+noccurrences] = curoccur.second;
+            cur_res_int[f+noccurrences] = get_length1?(curoccur.second-cur_res_int[f]+1):curoccur.second;
         }
         SET_VECTOR_ELT(ret, i, cur_res);
         STRI__UNPROTECT(1)
     }
 
-    stri__locate_set_dimnames_list(ret);
+    stri__locate_set_dimnames_list(ret, get_length1);
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)

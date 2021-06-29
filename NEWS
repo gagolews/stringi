@@ -18,7 +18,7 @@
   than `str` (but now they are recycled if necessary).
 
 * [DOCUMENTATION] It has been clarified that the syntax of `*_charclass`
-  (e.g., used in `stri_trim*`) differs slightly form regex character
+  (e.g., used in `stri_trim*`) differs slightly from regex character
   classes.
 
 * [NEW FEATURE] #420: `stri_sprintf` (alias: `stri_string_format`)
@@ -33,6 +33,10 @@
 * [NEW FEATURE] #25: `stri_locate_*_regex` now have a new argument,
   `capture_groups`, which allows for extracting positions of matches
   to parenthesised subexpressions.
+
+* [NEW FEATURE] `stri_locate_*` now have a new argument, `get_length`,
+  whose setting may result in generating *from-length* matrices
+  (instead of *from-to* ones).
 
 * [NEW FEATURE] #438: `stri_trans_general` now supports rule-based
   as well as reverse-direction transliteration.

@@ -32,7 +32,7 @@
 
 
 #' @title
-#' Count the Number of Pattern Matches
+#' Count the Number of Pattern Occurrences
 #'
 #' @description
 #' These functions count the number of occurrences

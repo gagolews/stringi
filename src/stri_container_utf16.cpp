@@ -329,11 +329,14 @@ SEXP StriContainerUTF16::toR(R_len_t i) const
  * @param adj2 adjust for \code{i2}
  *
  * @version 0.5-1 (Marek Gagolewski, 2014-12-21)
- *    #132 incorrect behavior for i2[j2] == i2[j2+1]
+ *    #132 incorrect behaviour for i2[j2] == i2[j2+1]
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-29) ignore NA and negative indexes
  */
-void StriContainerUTF16::UChar16_to_UChar32_index(R_len_t i,
-        int* i1, int* i2, const int ni, int adj1, int adj2)
-{
+void StriContainerUTF16::UChar16_to_UChar32_index(
+    R_len_t i,
+    int* i1, int* i2, const int ni, int adj1, int adj2
+) {
     const UnicodeString* str_data = &(this->get(i));
     const UChar* cstr = str_data->getBuffer();
     const int nstr = str_data->length();
@@ -344,9 +347,11 @@ void StriContainerUTF16::UChar16_to_UChar32_index(R_len_t i,
     int i16 = 0;
     int i32 = 0;
     while (i16 < nstr && (j1 < ni || j2 < ni)) {
+
         while (j1 < ni && i1[j1] <= i16) {
+            if (i1[j1] == NA_INTEGER || i1[j1] < 0) { ++j1; continue; }
 #ifndef NDEBUG
-            if (j1 < ni-1 && i1[j1] > i1[j1+1])
+            if (j1 < ni-1 && i1[j1+1] != NA_INTEGER && i1[j1+1] >= 0 && i1[j1] > i1[j1+1])
                 throw StriException("DEBUG: stri__UChar16_to_UChar32_index 1");
 #endif
             i1[j1] = i32 + adj1;
@@ -354,8 +359,9 @@ void StriContainerUTF16::UChar16_to_UChar32_index(R_len_t i,
         }
 
         while (j2 < ni && i2[j2] <= i16) {
+            if (i2[j2] == NA_INTEGER || i2[j2] < 0) { ++j2; continue; }
 #ifndef NDEBUG
-            if (j2 < ni-1 && i2[j2] > i2[j2+1])
+            if (j2 < ni-1 && i2[j2+1] != NA_INTEGER && i2[j2+1] >= 0 && i2[j2] > i2[j2+1])
                 throw StriException("DEBUG: stri__UChar16_to_UChar32_index 2");
 #endif
             i2[j2] = i32 + adj2;
@@ -369,6 +375,7 @@ void StriContainerUTF16::UChar16_to_UChar32_index(R_len_t i,
 
     // CONVERT LAST:
     while (j1 < ni && i1[j1] <= nstr) {
+        if (i1[j1] == NA_INTEGER || i1[j1] < 0) { ++j1; continue; }
 //#ifndef NDEBUG
 //      if (j1 < ni-1 && i1[j1] >= i1[j1+1])
 //         throw StriException("DEBUG: stri__UChar16_to_UChar32_index 3");
@@ -378,6 +385,7 @@ void StriContainerUTF16::UChar16_to_UChar32_index(R_len_t i,
     }
 
     while (j2 < ni && i2[j2] <= nstr) {
+        if (i2[j2] == NA_INTEGER || i2[j2] < 0) { ++j2; continue; }
 //#ifndef NDEBUG
 //      if (j2 < ni-1 && i2[j2] >= i2[j2+1])
 //         throw StriException("DEBUG: stri__UChar16_to_UChar32_index 4");

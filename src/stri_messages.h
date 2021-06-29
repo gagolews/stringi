@@ -219,6 +219,9 @@
 #define MSG__LOCATE_DIM_END \
    "end"
 
+#define MSG__LOCATE_DIM_LENGTH \
+   "length"
+
 #define MSG__NEWLINE_FOUND \
    "newline character found in a string"
 

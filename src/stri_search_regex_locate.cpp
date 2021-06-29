@@ -38,7 +38,7 @@
 using namespace std;
 
 
-/* Coverts deque with (from,to) pairs to a 2-column R matrix
+/* Coverts a deque with (from,to) pairs to a 2-column R matrix
  *
  * does not set dimnames
  *
@@ -52,13 +52,16 @@ SEXP stri__locate_get_fromto_matrix(
     deque< pair<R_len_t, R_len_t> >& occurrences,
     StriContainerUTF16& str_cont,
     R_len_t i,
-    bool omit_no_match1
+    bool omit_no_match1,
+    bool get_length1
 ) {
     SEXP ans;
     R_len_t noccurrences = (R_len_t)occurrences.size();
 
     if (noccurrences <= 0) {
-        return stri__matrix_NA_INTEGER(omit_no_match1?0:1, 2);
+        return stri__matrix_NA_INTEGER(
+            omit_no_match1?0:1, 2, get_length1?-1:NA_INTEGER
+        );
     }
 
     PROTECT(ans = Rf_allocMatrix(INTSXP, noccurrences, 2));
@@ -75,7 +78,8 @@ SEXP stri__locate_get_fromto_matrix(
     if (i < 0) {
         STRI_ASSERT(noccurrences == str_cont.get_nrecycle());
         for (i=0; i<noccurrences; ++i) {
-            if (str_cont.isNA(i) || ans_tab[i] == NA_INTEGER) continue;
+            if (str_cont.isNA(i) || (ans_tab[i] == NA_INTEGER || ans_tab[i] < 0))
+                continue;
             str_cont.UChar16_to_UChar32_index(
                 i, ans_tab+i,
                 ans_tab+i+noccurrences, 1,
@@ -92,9 +96,18 @@ SEXP stri__locate_get_fromto_matrix(
             0  // end returns position of next character after match
         );
     }
+
+    if (get_length1) {
+        for (R_len_t j = 0; j < noccurrences; ++j) {
+            if (ans_tab[j] != NA_INTEGER && ans_tab[j] >= 0)
+                ans_tab[j+noccurrences] -= ans_tab[j] - 1;
+        }
+    }
+
     UNPROTECT(1);
     return ans;
 }
+
 
 /** Locate all occurrences of a regex pattern
  *
@@ -127,11 +140,15 @@ SEXP stri__locate_get_fromto_matrix(
  *
  * @version 1.7.1 (Marek Gagolewski, 2021-06-20)
  *     #25: capture_groups
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-29)
+ *     get_length
  */
-SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts_regex, SEXP capture_groups)
+SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts_regex, SEXP capture_groups, SEXP get_length)
 {
     bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
     bool capture_groups1 = stri__prepare_arg_logical_1_notNA(capture_groups, "capture_groups");
+    bool get_length1 = stri__prepare_arg_logical_1_notNA(get_length, "get_length");
     StriRegexMatcherOptions pattern_opts =
         StriContainerRegexPattern::getRegexOptions(opts_regex);
     PROTECT(str = stri__prepare_arg_string(str, "str")); // prepare string argument
@@ -193,11 +210,15 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
                         STRI__CHECKICUSTATUS_THROW(status, {})
                         end  =  (int)matcher->end(j+1, status);
                         STRI__CHECKICUSTATUS_THROW(status, {})
-                        if (start < 0 || end < 0) {
-                            start = NA_INTEGER;
-                            end = NA_INTEGER;
+                        if (start >= 0 && end >= 0) {  // e.g., conditional capture group
+                            cg_occurrences[j].push_back(pair<R_len_t, R_len_t>(start, end));
                         }
-                        cg_occurrences[j].push_back(pair<R_len_t, R_len_t>(start, end));
+                        else {
+                            cg_occurrences[j].push_back(pair<R_len_t, R_len_t>(
+                                get_length1?-1:NA_INTEGER,
+                                get_length1?-1:NA_INTEGER
+                            ));
+                        }
                     }
                 }
 
@@ -207,8 +228,13 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
         }
 
         SEXP ans;
-        STRI__PROTECT(ans = stri__locate_get_fromto_matrix(
-            occurrences, str_cont, i, omit_no_match1 && !(str_cont).isNA(i)));
+        if (str_cont.isNA(i))
+            STRI__PROTECT(ans = stri__matrix_NA_INTEGER(1, 2))
+        else
+            STRI__PROTECT(ans = stri__locate_get_fromto_matrix(
+                occurrences, str_cont, i,
+                omit_no_match1, get_length1)
+            );
 
         if (capture_groups1) {
             SEXP cgs, names;
@@ -217,14 +243,17 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
             // last_i = i;
             for (R_len_t j=0; j<pattern_cur_groups; ++j) {
                 SEXP ans2;
-                STRI__PROTECT(ans2 = stri__locate_get_fromto_matrix(
-                    cg_occurrences[j], str_cont, i, omit_no_match1 && !(str_cont).isNA(i))
-                );
+                if (str_cont.isNA(i))
+                    STRI__PROTECT(ans2 = stri__matrix_NA_INTEGER(1, 2))
+                else
+                    STRI__PROTECT(ans2 = stri__locate_get_fromto_matrix(
+                        cg_occurrences[j], str_cont, i, omit_no_match1, get_length1)
+                    );
                 SET_VECTOR_ELT(cgs, j, ans2);
                 STRI__UNPROTECT(1);
             }
 
-            stri__locate_set_dimnames_list(cgs);  // all matrices get from&to colnames
+            stri__locate_set_dimnames_list(cgs, get_length1);  // all matrices get from&to colnames
             if (!isNull(names)) Rf_setAttrib(cgs, R_NamesSymbol, names);
             Rf_setAttrib(ans, Rf_ScalarString(Rf_mkChar("capture_groups")), cgs);
             STRI__UNPROTECT(2);
@@ -234,7 +263,7 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
         STRI__UNPROTECT(1);
     }
 
-    stri__locate_set_dimnames_list(ret);  // all matrices get from&to colnames
+    stri__locate_set_dimnames_list(ret, get_length1);  // all matrices get from&to colnames
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
@@ -266,9 +295,12 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
  *
  * @version 1.7.1 (Marek Gagolewski, 2021-06-20)
  *     #25: capture_groups
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-29)
+ *     get_length
  */
 SEXP stri__locate_firstlast_regex(
-    SEXP str, SEXP pattern, SEXP opts_regex, bool first, bool capture_groups1
+    SEXP str, SEXP pattern, SEXP opts_regex, bool first, bool capture_groups1, bool get_length1
 ) {
     PROTECT(str = stri__prepare_arg_string(str, "str")); // prepare string argument
     PROTECT(pattern = stri__prepare_arg_string(pattern, "pattern")); // prepare string argument
@@ -294,10 +326,20 @@ SEXP stri__locate_firstlast_regex(
     {
         ret_tab[i]                  = NA_INTEGER;
         ret_tab[i+vectorize_length] = NA_INTEGER;
-        STRI__CONTINUE_ON_EMPTY_OR_NA_PATTERN(str_cont, pattern_cont, ;/*nothing*/)
+
+        if ((pattern_cont).isNA(i) || (pattern_cont).get(i).length() <= 0) {
+            if (!(pattern_cont).isNA(i))
+                Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
+            continue;
+        }
+
+        // if str is NA, we may still be generating capture_groups
+        if (!(str_cont).isNA(i) && get_length1) {
+            ret_tab[i]                  = -1;
+            ret_tab[i+vectorize_length] = -1;
+        }
 
         RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
-        matcher->reset(str_cont.get(i));
 
         R_len_t pattern_cur_groups = matcher->groupCount();
         if (capture_groups1 && pattern_cur_groups > 0) {
@@ -305,16 +347,35 @@ SEXP stri__locate_firstlast_regex(
                 cg_occurrences.push_back(
                     deque< pair<R_len_t, R_len_t> >(
                         vectorize_length,
-                        pair<R_len_t, R_len_t>(NA_INTEGER, NA_INTEGER)
+                        pair<R_len_t, R_len_t>(
+                            NA_INTEGER,
+                            NA_INTEGER
+                        )
                     )
                 );
             }
         }
 
+        if ((str_cont).isNA(i)) {
+            continue;
+        }
+
+        matcher->reset(str_cont.get(i));
+
         UErrorCode status = U_ZERO_ERROR;
         int m_res = (int)matcher->find(status);
         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-        if (m_res) { //find first matches
+        if (!m_res) {
+            if (capture_groups1 && get_length1) {
+                for (R_len_t j=0; j<pattern_cur_groups; ++j) {
+                    cg_occurrences[j][i].first  = -1;
+                    cg_occurrences[j][i].second = -1;
+                }
+            }
+            continue;  // no match
+        }
+
+        while (1) {
             ret_tab[i] = (int)matcher->start(status);
             STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
             ret_tab[i+vectorize_length] = (int)matcher->end(status);
@@ -326,41 +387,23 @@ SEXP stri__locate_firstlast_regex(
                     STRI__CHECKICUSTATUS_THROW(status, {})
                     int end  =  (int)matcher->end(j+1, status);
                     STRI__CHECKICUSTATUS_THROW(status, {})
-                    if (start >= 0 && end >= 0) { // NAs already otherwise
+                    if (start >= 0 && end >= 0) {  // e.g., conditional capture group
                         cg_occurrences[j][i].first  = start;
                         cg_occurrences[j][i].second = end;
                     }
-                }
-            }
-        }
-        else
-            continue; // no match
-
-        if (!first) { // continue searching
-            while (1) {
-                UErrorCode status = U_ZERO_ERROR;
-                m_res = (int)matcher->find(status);
-                STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-                if (!m_res) break;
-
-                ret_tab[i]                  = (int)matcher->start(status);
-                STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-                ret_tab[i+vectorize_length] = (int)matcher->end(status);
-                STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-
-                if (capture_groups1) {
-                    for (R_len_t j=0; j<pattern_cur_groups; ++j) {
-                        int start = (int)matcher->start(j+1, status);
-                        STRI__CHECKICUSTATUS_THROW(status, {})
-                        int end  =  (int)matcher->end(j+1, status);
-                        STRI__CHECKICUSTATUS_THROW(status, {})
-                        if (start >= 0 && end >= 0) { // NAs already otherwise
-                            cg_occurrences[j][i].first  = start;
-                            cg_occurrences[j][i].second = end;
-                        }
+                    else {
+                        cg_occurrences[j][i].first  = get_length1?-1:NA_INTEGER;
+                        cg_occurrences[j][i].second = get_length1?-1:NA_INTEGER;
                     }
                 }
             }
+
+            if (first)
+                break;  // only first match
+
+            m_res = (int)matcher->find(status);
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+            if (!m_res) break;
         }
 
         // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
@@ -370,6 +413,10 @@ SEXP stri__locate_firstlast_regex(
             1, // 0-based index -> 1-based
             0  // end returns position of next character after match
         );
+
+        if (get_length1 && ret_tab[i] != NA_INTEGER && ret_tab[i] >= 0)
+            ret_tab[i+vectorize_length] -= ret_tab[i] - 1;
+
     }
 
     if (capture_groups1) {
@@ -380,13 +427,13 @@ SEXP stri__locate_firstlast_regex(
         for (R_len_t j=0; j<pattern_cur_groups; ++j) {
             SEXP ans2;
             STRI__PROTECT(ans2 = stri__locate_get_fromto_matrix(
-                cg_occurrences[j], str_cont, -1, false)
+                cg_occurrences[j], str_cont, -1, false, get_length1)
             );
             SET_VECTOR_ELT(cgs, j, ans2);
             STRI__UNPROTECT(1);
         }
 
-        stri__locate_set_dimnames_list(cgs);  // all matrices get from&to colnames
+        stri__locate_set_dimnames_list(cgs, get_length1);  // all matrices get from&to colnames
 
         if (pattern_cont.get_n() == 1) {
             SEXP names;
@@ -399,7 +446,7 @@ SEXP stri__locate_firstlast_regex(
         STRI__UNPROTECT(1);
     }
 
-    stri__locate_set_dimnames_matrix(ret);
+    stri__locate_set_dimnames_matrix(ret, get_length1);
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
@@ -424,11 +471,15 @@ SEXP stri__locate_firstlast_regex(
  *
  * @version 1.7.1 (Marek Gagolewski, 2021-06-20)
  *     #25: capture_groups
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-29)
+ *     get_length
  */
-SEXP stri_locate_first_regex(SEXP str, SEXP pattern, SEXP opts_regex, SEXP capture_groups)
+SEXP stri_locate_first_regex(SEXP str, SEXP pattern, SEXP opts_regex, SEXP capture_groups, SEXP get_length)
 {
     bool capture_groups1 = stri__prepare_arg_logical_1_notNA(capture_groups, "capture_groups");
-    return stri__locate_firstlast_regex(str, pattern, opts_regex, true, capture_groups1);
+    bool get_length1 = stri__prepare_arg_logical_1_notNA(get_length, "get_length");
+    return stri__locate_firstlast_regex(str, pattern, opts_regex, true, capture_groups1, get_length1);
 }
 
 
@@ -447,9 +498,13 @@ SEXP stri_locate_first_regex(SEXP str, SEXP pattern, SEXP opts_regex, SEXP captu
  *
  * @version 1.7.1 (Marek Gagolewski, 2021-06-20)
  *     #25: capture_groups
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-29)
+ *     get_length
  */
-SEXP stri_locate_last_regex(SEXP str, SEXP pattern, SEXP opts_regex, SEXP capture_groups)
+SEXP stri_locate_last_regex(SEXP str, SEXP pattern, SEXP opts_regex, SEXP capture_groups, SEXP get_length)
 {
     bool capture_groups1 = stri__prepare_arg_logical_1_notNA(capture_groups, "capture_groups");
-    return stri__locate_firstlast_regex(str, pattern, opts_regex, false, capture_groups1);
+    bool get_length1 = stri__prepare_arg_logical_1_notNA(get_length, "get_length");
+    return stri__locate_firstlast_regex(str, pattern, opts_regex, false, capture_groups1, get_length1);
 }

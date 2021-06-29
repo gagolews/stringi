@@ -32,7 +32,7 @@
 
 
 #' @title
-#' Extract Occurrences of a Pattern
+#' Extract Pattern Occurrences
 #'
 #' @description
 #' These functions extract all substrings matching a given pattern.

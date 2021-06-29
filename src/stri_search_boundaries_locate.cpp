@@ -42,12 +42,17 @@
  * @param str character vector
  * @param opts_brkiter list
  * @param first looking for first or last match?
+ *
  * @return integer matrix (2 columns)
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-05)
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-29)
+ *     get_length
  */
-SEXP stri__locate_firstlast_boundaries(SEXP str, SEXP opts_brkiter, bool first)
-{
+SEXP stri__locate_firstlast_boundaries(
+    SEXP str, SEXP opts_brkiter, bool first, bool get_length1
+) {
     PROTECT(str = stri__prepare_arg_string(str, "str"));
     StriBrkIterOptions opts_brkiter2(opts_brkiter, "line_break");
 
@@ -58,7 +63,7 @@ SEXP stri__locate_firstlast_boundaries(SEXP str, SEXP opts_brkiter, bool first)
 
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocMatrix(INTSXP, str_length, 2));
-    stri__locate_set_dimnames_matrix(ret);
+    stri__locate_set_dimnames_matrix(ret, get_length1);
     int* ret_tab = INTEGER(ret);
 
     for (R_len_t i = 0; i < str_length; ++i)
@@ -66,18 +71,32 @@ SEXP stri__locate_firstlast_boundaries(SEXP str, SEXP opts_brkiter, bool first)
         ret_tab[i]            = NA_INTEGER;
         ret_tab[i+str_length] = NA_INTEGER;
 
-        if (str_cont.isNA(i) || str_cont.get(i).length() == 0) continue;
+        if (str_cont.isNA(i))
+            continue;
+
+        if (get_length1) {
+            ret_tab[i]            = -1;
+            ret_tab[i+str_length] = -1;
+        }
+
+        if (str_cont.get(i).length() == 0) {
+            continue;
+        }
 
         brkiter.setupMatcher(str_cont.get(i).c_str(), str_cont.get(i).length());
         pair<R_len_t,R_len_t> curpair;
 
         if (first) {
             brkiter.first();
-            if (!brkiter.next(curpair)) continue;
+            if (!brkiter.next(curpair)) {
+                continue;
+            }
         }
         else {
             brkiter.last();
-            if (!brkiter.previous(curpair)) continue;
+            if (!brkiter.previous(curpair)) {
+                continue;
+            }
         }
 
         ret_tab[i]            = curpair.first;
@@ -89,6 +108,8 @@ SEXP stri__locate_firstlast_boundaries(SEXP str, SEXP opts_brkiter, bool first)
                                        1, // 0-based index -> 1-based
                                        0  // end returns position of next character after match
                                       );
+
+        if (get_length1) ret_tab[i+str_length] -= ret_tab[i] - 1;  // to->length
     }
 
     STRI__UNPROTECT_ALL
@@ -105,10 +126,14 @@ SEXP stri__locate_firstlast_boundaries(SEXP str, SEXP opts_brkiter, bool first)
  * @return integer matrix (2 columns)
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-05)
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-29)
+ *     get_length
  */
-SEXP stri_locate_first_boundaries(SEXP str, SEXP opts_brkiter)
+SEXP stri_locate_first_boundaries(SEXP str, SEXP opts_brkiter, SEXP get_length)
 {
-    return stri__locate_firstlast_boundaries(str, opts_brkiter, true);
+    bool get_length1 = stri__prepare_arg_logical_1_notNA(get_length, "get_length");
+    return stri__locate_firstlast_boundaries(str, opts_brkiter, true, get_length1);
 }
 
 
@@ -120,10 +145,14 @@ SEXP stri_locate_first_boundaries(SEXP str, SEXP opts_brkiter)
  * @return integer matrix (2 columns)
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-05)
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-29)
+ *     get_length
  */
-SEXP stri_locate_last_boundaries(SEXP str, SEXP opts_brkiter)
+SEXP stri_locate_last_boundaries(SEXP str, SEXP opts_brkiter, SEXP get_length)
 {
-    return stri__locate_firstlast_boundaries(str, opts_brkiter, false);
+    bool get_length1 = stri__prepare_arg_logical_1_notNA(get_length, "get_length");
+    return stri__locate_firstlast_boundaries(str, opts_brkiter, false, get_length1);
 }
 
 
@@ -151,10 +180,14 @@ SEXP stri_locate_last_boundaries(SEXP str, SEXP opts_brkiter)
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-02)
  *          use StriRuleBasedBreakIterator
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-29)
+ *     get_length
  */
-SEXP stri_locate_all_boundaries(SEXP str, SEXP omit_no_match, SEXP opts_brkiter)
+SEXP stri_locate_all_boundaries(SEXP str, SEXP omit_no_match, SEXP opts_brkiter, SEXP get_length)
 {
     bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
+    bool get_length1 = stri__prepare_arg_logical_1_notNA(get_length, "get_length");
     PROTECT(str = stri__prepare_arg_string(str, "str"));
     StriBrkIterOptions opts_brkiter2(opts_brkiter, "line_break");
 
@@ -183,7 +216,10 @@ SEXP stri_locate_all_boundaries(SEXP str, SEXP omit_no_match, SEXP opts_brkiter)
 
         R_len_t noccurrences = (R_len_t)occurrences.size();
         if (noccurrences <= 0) {
-            SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(omit_no_match1?0:1, 2));
+            SET_VECTOR_ELT(
+                ret, i,
+                stri__matrix_NA_INTEGER(omit_no_match1?0:1, 2, get_length1?-1:NA_INTEGER)
+            );
             continue;
         }
 
@@ -193,7 +229,7 @@ SEXP stri_locate_all_boundaries(SEXP str, SEXP omit_no_match, SEXP opts_brkiter)
         deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
         for (R_len_t j = 0; iter != occurrences.end(); ++iter, ++j) {
             pair<R_len_t, R_len_t> cur_match = *iter;
-            ans_tab[j]             = cur_match.first;
+            ans_tab[j]              = cur_match.first;
             ans_tab[j+noccurrences] = cur_match.second;
         }
 
@@ -203,11 +239,18 @@ SEXP stri_locate_all_boundaries(SEXP str, SEXP omit_no_match, SEXP opts_brkiter)
                                        1, // 0-based index -> 1-based
                                        0  // end returns position of next character after match
                                       );
+
+        if (get_length1) {
+            for (R_len_t j=0; j < noccurrences; ++j)
+                ans_tab[j+noccurrences] -= ans_tab[j] - 1;  // to->length
+        }
+
+
         SET_VECTOR_ELT(ret, i, ans);
         STRI__UNPROTECT(1);
     }
 
-    stri__locate_set_dimnames_list(ret);
+    stri__locate_set_dimnames_list(ret, get_length1);
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END({ /* nothing special t.b.d. on error */ })

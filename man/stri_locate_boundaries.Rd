@@ -12,29 +12,40 @@
 stri_locate_all_boundaries(
   str,
   omit_no_match = FALSE,
+  get_length = FALSE,
   ...,
   opts_brkiter = NULL
 )
 
-stri_locate_last_boundaries(str, ..., opts_brkiter = NULL)
+stri_locate_last_boundaries(str, get_length = FALSE, ..., opts_brkiter = NULL)
 
-stri_locate_first_boundaries(str, ..., opts_brkiter = NULL)
+stri_locate_first_boundaries(str, get_length = FALSE, ..., opts_brkiter = NULL)
 
-stri_locate_all_words(str, omit_no_match = FALSE, locale = NULL)
+stri_locate_all_words(
+  str,
+  omit_no_match = FALSE,
+  locale = NULL,
+  get_length = FALSE
+)
 
-stri_locate_last_words(str, locale = NULL)
+stri_locate_last_words(str, locale = NULL, get_length = FALSE)
 
-stri_locate_first_words(str, locale = NULL)
+stri_locate_first_words(str, locale = NULL, get_length = FALSE)
 }
 \arguments{
 \item{str}{character vector or an object coercible to}
 
-\item{omit_no_match}{single logical value; if \code{FALSE},
-then two missing values will indicate that there are no text boundaries}
+\item{omit_no_match}{single logical value; if \code{TRUE},
+a no-match will be indicated by a matrix with 0 rows
+\code{stri_locate_all_*} only}
+
+\item{get_length}{single logical value; if \code{FALSE} (default),
+generate \emph{from-to} matrices; otherwise, output
+\emph{from-length} ones}
 
 \item{...}{additional settings for \code{opts_brkiter}}
 
-\item{opts_brkiter}{a named list with \pkg{ICU} BreakIterator's settings,
+\item{opts_brkiter}{named list with \pkg{ICU} BreakIterator's settings,
 see \code{\link{stri_opts_brkiter}};
 \code{NULL} for default break iterator, i.e., \code{line_break}}
 
@@ -43,19 +54,11 @@ the conventions of the default locale, or a single string with
 locale identifier, see \link{stringi-locale}}
 }
 \value{
-For \code{stri_locate_all_*}, a list of \code{length(str)} integer matrices
-is returned. The first column gives the start positions
-of substrings between located boundaries, and the second column gives
-the end positions. The indexes are code point-based, thus
-they may be passed, e.g., to \code{\link{stri_sub}} or \code{\link{stri_sub_all}}.
-Note that you get two \code{NA}s in one row
-if there is no match (and \code{omit_no_match} is \code{FALSE})
-or there are missing data in the input vector.
-
-\code{stri_locate_first_*} and \code{stri_locate_last_*},
-return an integer matrix with
-two columns, giving the start and end positions of the first
-or the last matches, respectively, and two \code{NA}s if there is no match.
+\code{stri_locate_all_*} yields a list of \code{length(str)}
+integer matrices.
+\code{stri_locate_first_*} and \code{stri_locate_last_*} generate
+return an integer matrix.
+See \code{\link{stri_locate}} for more details.
 }
 \description{
 These functions locate text boundaries
@@ -71,12 +74,12 @@ For more information on text boundary analysis
 performed by \pkg{ICU}'s \code{BreakIterator}, see
 \link{stringi-search-boundaries}.
 
-In case of \code{stri_locate_*_words},
+For \code{stri_locate_*_words},
 just like in \code{\link{stri_extract_all_words}} and \code{\link{stri_count_words}},
 \pkg{ICU}'s word \code{BreakIterator} iterator is used
 to locate the word boundaries, and all non-word characters
 (\code{UBRK_WORD_NONE} rule status) are ignored.
-This is function is equivalent to a call to
+This function is equivalent to a call to
 \code{stri_locate_*_boundaries(str, type='word', skip_word_none=TRUE, locale=locale)}
 }
 \examples{
@@ -87,8 +90,12 @@ stri_locate_all_boundaries(test, type='sentence')
 stri_locate_all_boundaries(test, type='character')
 stri_locate_all_words(test)
 
-stri_extract_all_boundaries('Mr. Jones and Mrs. Brown are very happy.
-So am I, Prof. Smith.', type='sentence', locale='en_US@ss=standard') # ICU >= 56 only
+stri_extract_all_boundaries(
+    'Mr. Jones and Mrs. Brown are very happy. So am I, Prof. Smith.',
+    type='sentence',
+    locale='en_US@ss=standard' # ICU >= 56 only
+)
+
 
 }
 \seealso{

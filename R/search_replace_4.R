@@ -32,7 +32,7 @@
 
 
 #' @title
-#' Replace Occurrences of a Pattern
+#' Replace Pattern Occurrences
 #'
 #' @description
 #' These functions replace, with the given replacement string, every/first/last

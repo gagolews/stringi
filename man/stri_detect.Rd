@@ -6,7 +6,7 @@
 \alias{stri_detect_charclass}
 \alias{stri_detect_coll}
 \alias{stri_detect_regex}
-\title{Detect a Pattern Match}
+\title{Detect Pattern Occurrences}
 \usage{
 stri_detect(str, ..., regex, fixed, coll, charclass)
 

@@ -44,14 +44,20 @@ using namespace std;
  * @param matrix R matrix with two columns
  *
  * @version 0.1-?? (Marek Gagolewski)
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-29) name_col1, name_col2
  */
-void stri__locate_set_dimnames_matrix(SEXP matrix) {
+void stri__locate_set_dimnames_matrix(
+    SEXP matrix, bool get_length
+) {
     SEXP dimnames;
     SEXP colnames;
     PROTECT(dimnames = Rf_allocVector(VECSXP, 2));
     PROTECT(colnames = Rf_allocVector(STRSXP, 2));
     SET_STRING_ELT(colnames, 0, Rf_mkChar(MSG__LOCATE_DIM_START));
-    SET_STRING_ELT(colnames, 1, Rf_mkChar(MSG__LOCATE_DIM_END));
+    SET_STRING_ELT(colnames, 1, Rf_mkChar(
+        get_length?MSG__LOCATE_DIM_LENGTH:MSG__LOCATE_DIM_END
+    ));
     SET_VECTOR_ELT(dimnames, 0, R_NilValue);
     SET_VECTOR_ELT(dimnames, 1, colnames);
     Rf_setAttrib(matrix, R_DimNamesSymbol, dimnames);
@@ -64,8 +70,12 @@ void stri__locate_set_dimnames_matrix(SEXP matrix) {
  * @param matrix R matrix with two columns
  *
  * @version 0.1-?? (Marek Gagolewski)
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-29) name_col1, name_col2
  */
-void stri__locate_set_dimnames_list(SEXP list) {
+void stri__locate_set_dimnames_list(
+    SEXP list, bool get_length
+) {
     R_len_t n = LENGTH(list);
     if (n <= 0) return;
 
@@ -74,7 +84,9 @@ void stri__locate_set_dimnames_list(SEXP list) {
     PROTECT(dimnames = Rf_allocVector(VECSXP, 2));
     PROTECT(colnames = Rf_allocVector(STRSXP, 2));
     SET_STRING_ELT(colnames, 0, Rf_mkChar(MSG__LOCATE_DIM_START));
-    SET_STRING_ELT(colnames, 1, Rf_mkChar(MSG__LOCATE_DIM_END));
+    SET_STRING_ELT(colnames, 1, Rf_mkChar(
+        get_length?MSG__LOCATE_DIM_LENGTH:MSG__LOCATE_DIM_END
+    ));
     SET_VECTOR_ELT(dimnames, 1, colnames);
 
     for (R_len_t i = 0; i < n; ++i)
