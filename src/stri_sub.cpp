@@ -40,6 +40,10 @@
  * used both in stri_sub and stri_sub_replacement
  *
  * @return number of objects PROTECTEd
+ *
+ * @version ??? (Marek Gagolewski, 20??-??-??)
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-06-30) allow (from,length) matrices
  */
 R_len_t stri__sub_prepare_from_to_length(SEXP& from, SEXP& to, SEXP& length,
         R_len_t& from_len, R_len_t& to_len, R_len_t& length_len,
@@ -57,7 +61,7 @@ R_len_t stri__sub_prepare_from_to_length(SEXP& from, SEXP& to, SEXP& length,
             UNPROTECT(1); // t
             Rf_error(MSG__ARG_EXPECTED_MATRIX_WITH_GIVEN_COLUMNS, "from", 2);
         }
-        UNPROTECT(1); // t
+        UNPROTECT(1);  // t
     }
 
     sub_protected++;
@@ -65,10 +69,34 @@ R_len_t stri__sub_prepare_from_to_length(SEXP& from, SEXP& to, SEXP& length,
     /* may remove R_DimSymbol */
 
     if (from_ismatrix) {
-        from_len      = LENGTH(from)/2;
-        to_len        = from_len;
-        from_tab      = INTEGER(from);
-        to_tab        = from_tab+from_len;
+        bool fromlength_matrix = false;
+        SEXP t;
+        PROTECT(t = Rf_getAttrib(from, R_DimNamesSymbol));
+        if (!isNull(t)) {
+            SEXP t2;
+            PROTECT(t2 = VECTOR_ELT(t, 1));
+            if (
+                isString(t2) && LENGTH(t2) == 2 &&
+                strcmp("length", CHAR(STRING_ELT(t2, 1))) == 0
+            ) {
+                fromlength_matrix = true;
+            }
+            UNPROTECT(1);  // t2
+        }
+        UNPROTECT(1);  // t
+
+        if (fromlength_matrix) {
+            from_len      = LENGTH(from)/2;
+            length_len    = from_len;
+            from_tab      = INTEGER(from);
+            length_tab    = from_tab+from_len;
+        }
+        else {
+            from_len      = LENGTH(from)/2;
+            to_len        = from_len;
+            from_tab      = INTEGER(from);
+            to_tab        = from_tab+from_len;
+        }
         //PROTECT(to); /* fake - not to provoke stack imbalance */
         //PROTECT(length); /* fake - not to provoke stack imbalance */
     }
