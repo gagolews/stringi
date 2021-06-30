@@ -2,28 +2,45 @@ library("tinytest")
 library("stringi")
 
 
-s <- c("ala ma \u0105 \u00F1 \u0105 kota i kotek ma alicje oraz dwie gruszeczki oraz gruby czarny pies ma kotka ale nie ma alibaby")
+s <- c("\U0001F3F3\u0105 \U0000FE0F\U0000200D\U0001F308ala ma \u0105 \u00F1 \u0105 kota i kotek ma alicje oraz dwie gruszeczki oraz gruby czarny pies ma kotka ale nie ma alibaby")
 expect_identical(stri_sub(s), s)
 expect_identical(stri_sub("12", 1, 2), "12")
 expect_identical(stri_sub("12", 2, 2), "2")
 expect_identical(stri_sub("12", 1, 1), "1")
-expect_identical(stri_sub(s, 1:4, 3:4), c("ala", "la ", "a", " "))
+expect_identical(stri_sub(s, 1:4, 3:4), c("\U0001F3F3\u0105 ", "\u0105 \U0000FE0F", " ", "\U0000FE0F"))
 expect_identical(stri_sub(character(0)), character(0))
 expect_identical(stri_sub("test", from=numeric(0), to=1), character(0))
 expect_identical(stri_sub("test", to=numeric(0), from=1), character(0))
 expect_identical(stri_sub("test", length=numeric(0), from=1), character(0))
 expect_identical(stri_sub(c(NA, "ala"), 1:4, length=1), c(NA, "l", NA, ""))
-expect_identical(stri_sub(s, c(1, NA), 1), c("a", NA))
+expect_identical(stri_sub(s, c(1, NA), 1), c("\U0001F3F3", NA))
 expect_identical(stri_sub(s, 1:2, NA), c(NA_character_, NA))
 expect_identical(stri_sub(s, 2, stri_length(s) - 1), stri_sub(s, 2, -2))
 expect_identical(stri_sub(s, 10, 8), "")
 expect_identical(stri_sub(s, 1, stri_length(s) + 10), s)
+
 #for=two column matrix
 expect_identical(stri_sub(s, matrix(as.double(1:6), ncol=2)), stri_sub(s, as.double(1:3),
     as.double(4:6)))
 expect_identical(stri_sub(s, matrix(1:6, ncol=2)), stri_sub(s, 1:3, 4:6))
 expect_warning(stri_sub(s, matrix(1:6, ncol=2), to=-1))
-expect_identical(stri_sub(s, length=-1:1), c(NA, "", "a"))
+
+s2 <- c(s, "", NA, "abc", " abc ")
+expect_identical(
+    `stri_sub<-`(s2, stri_locate_first_regex(s2, "\\S+", get_length=TRUE), value="\U0001F308"),
+    stri_replace_first_regex(s2, "\\S+", "\U0001F308")
+)
+expect_identical(
+    `stri_sub_all<-`(s2, stri_locate_all_regex(s2, "\\S+", get_length=TRUE), value="\U0001F308"),
+    stri_replace_all_regex(s2, "\\S+", "\U0001F308")
+)
+
+expect_identical(stri_sub(s, cbind(1:5, length=1:5)), stri_sub(s, from=1:5, length=1:5))
+expect_identical(stri_sub_all(s, list(cbind(1:5, length=1:5))), stri_sub_all(s, from=list(1:5), length=list(1:5)))
+expect_identical(stri_sub_all(s, list(cbind(1:5, length=1:5), cbind(1:5, length=rep(2, 5)))), stri_sub_all(s, from=list(1:5, 1:5), length=list(1:5, rep(2, 5))))
+
+
+expect_identical(stri_sub(s, length=-1:1), c(NA, "", "\U0001F3F3"))
 
 expect_identical(stri_sub("\u0105\u0104\u0103\u0102\u0101", 1:5, 1:5), stri_extract_all_regex("\u0105\u0104\u0103\u0102\u0101",
     ".")[[1]])
@@ -384,7 +401,12 @@ expect_identical(stri_sub_replace_all(x, stri_locate_all_regex(x, "[0-9]+"),
 expect_identical(stri_sub_replace_all(x, stri_locate_all_regex(x, "[0-9]+"),
     omit_na=TRUE, value=list(c("1", "2", "3"), "whatever", "4", "whatever",
         "whatever")), c("1 2 htf 3", "abc", "4", "", NA))
-
+expect_identical(stri_sub_replace_all(x, stri_locate_all_regex(x, "[0-9]+", get_length=TRUE),
+    value=list("1", "whatever", "3", "whatever", "whatever")),
+    stri_replace_all_regex(x, "[0-9]+", c("1", "whatever", "3", "whatever", "whatever")))
+expect_identical(stri_sub_replace_all(x, stri_locate_all_regex(x, "[0-9]+", get_length=TRUE),
+    value=list(c("1", "2", "3"), "whatever", "4", "whatever",
+        "whatever")), c("1 2 htf 3", "abc", "4", "", NA))
 
 
 expect_identical(stri_sub_replace_all(x[1], rbind(c(1, 3), c(NA, NA), c(7, -1)),
@@ -411,3 +433,8 @@ expect_equal(x, "BBCDEF")
 x <- c("12 3456 789", "abc", "", NA, "667")
 stri_sub_all(x, stri_locate_all_regex(x, "[0-9]+", omit_no_match=TRUE)) <- "***"
 expect_identical(x, c("*** *** ***", "abc", "", NA, "***"))
+
+
+
+
+
