@@ -36,7 +36,7 @@
 #include <stdexcept>
 
 
-/***
+/**
  * used both in stri_sub and stri_sub_replacement
  *
  * @return number of objects PROTECTEd
@@ -44,13 +44,15 @@
  * @version ??? (Marek Gagolewski, 20??-??-??)
  *
  * @version 1.7.1 (Marek Gagolewski, 2021-06-30) allow (from,length) matrices
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-07-08) use_matrix
  */
 R_len_t stri__sub_prepare_from_to_length(SEXP& from, SEXP& to, SEXP& length,
         R_len_t& from_len, R_len_t& to_len, R_len_t& length_len,
-        int*& from_tab, int*& to_tab, int*& length_tab)
+        int*& from_tab, int*& to_tab, int*& length_tab, bool use_matrix_1)
 {
     R_len_t sub_protected = 0;
-    bool from_ismatrix = Rf_isMatrix(from);
+    bool from_ismatrix = use_matrix_1 && Rf_isMatrix(from);
     if (from_ismatrix) {
         SEXP t;
         PROTECT(t = Rf_getAttrib(from, R_DimSymbol));
@@ -128,7 +130,7 @@ R_len_t stri__sub_prepare_from_to_length(SEXP& from, SEXP& to, SEXP& length,
 }
 
 
-/***
+/**
  * used both in stri_sub and stri_sub_replacement
  */
 inline void stri__sub_get_indices(StriContainerUTF8_indexable& str_cont, R_len_t& i,
@@ -191,10 +193,14 @@ inline void stri__sub_get_indices(StriContainerUTF8_indexable& str_cont, R_len_t
  *
  * @version 1.7.1 (Marek Gagolewski, 2021-06-28)
  *    Negative length yields NA
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-07-08)
+ *    use_matrix
  */
-SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
+SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length, SEXP use_matrix)
 {
     PROTECT(str = stri__prepare_arg_string(str, "str"));
+    bool use_matrix_1 = stri__prepare_arg_logical_1_notNA(use_matrix, "use_matrix");
 
     R_len_t str_len       = LENGTH(str);
     R_len_t from_len      = 0;
@@ -206,7 +212,7 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
 
     R_len_t sub_protected =  1+  /* how many objects to PROTECT on ret? */
                              stri__sub_prepare_from_to_length(from, to, length,
-                                     from_len, to_len, length_len, from_tab, to_tab, length_tab);
+                                     from_len, to_len, length_len, from_tab, to_tab, length_tab, use_matrix_1);
 
     R_len_t vectorize_len = stri__recycling_rule(true, 3,
                             str_len, from_len, (to_len>length_len)?to_len:length_len);
@@ -313,12 +319,16 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
  *
  * @version 1.7.1 (Marek Gagolewski, 2021-06-28)
  *    negative length does not alter input
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-07-08)
+ *    use_matrix
  */
-SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_na, SEXP value)
+SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_na, SEXP value, SEXP use_matrix)
 {
     PROTECT(str   = stri__prepare_arg_string(str, "str"));
     PROTECT(value = stri__prepare_arg_string(value, "value"));
     bool omit_na_1 = stri__prepare_arg_logical_1_notNA(omit_na, "omit_na");
+    bool use_matrix_1 = stri__prepare_arg_logical_1_notNA(use_matrix, "use_matrix");
 
     R_len_t value_len     = LENGTH(value);
     R_len_t str_len       = LENGTH(str);
@@ -331,7 +341,7 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_n
 
     R_len_t sub_protected =  2+ /* how many objects to PROTECT on ret? */
                              stri__sub_prepare_from_to_length(from, to, length,
-                                     from_len, to_len, length_len, from_tab, to_tab, length_tab);
+                                     from_len, to_len, length_len, from_tab, to_tab, length_tab, use_matrix_1);
 
     R_len_t vectorize_len = stri__recycling_rule(true, 4,
                             str_len, value_len, from_len, (to_len>length_len)?to_len:length_len);
@@ -431,13 +441,17 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_n
  *
  * @version 1.7.1 (Marek Gagolewski, 2021-06-28)
  *    negative length yields NA
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-07-08)
+ *    use_matrix
  */
-SEXP stri_sub_all(SEXP str, SEXP from, SEXP to, SEXP length)
+SEXP stri_sub_all(SEXP str, SEXP from, SEXP to, SEXP length, SEXP use_matrix)
 {
     PROTECT(str    = stri__prepare_arg_string(str, "str"));
     PROTECT(from   = stri__prepare_arg_list(from, "from"));
     PROTECT(to     = stri__prepare_arg_list(to, "to"));
     PROTECT(length = stri__prepare_arg_list(length, "length"));
+//     bool use_matrix_1 = stri__prepare_arg_logical_1_notNA(use_matrix, "use_matrix");
 
     R_len_t str_len       = LENGTH(str);
     R_len_t from_len      = LENGTH(from);
@@ -474,16 +488,19 @@ SEXP stri_sub_all(SEXP str, SEXP from, SEXP to, SEXP length)
         UNPROTECT(1); //tmp
 
         if (!isNull(to)) {
-            PROTECT(tmp = stri_sub(str_tmp,
-                                   VECTOR_ELT(from, i%from_len), VECTOR_ELT(to, i%LENGTH(to)), R_NilValue));
+            PROTECT(tmp = stri_sub(
+                str_tmp, VECTOR_ELT(from, i%from_len), VECTOR_ELT(to, i%LENGTH(to)), R_NilValue, use_matrix
+            ));
         }
         else if (!isNull(length)) {
-            PROTECT(tmp = stri_sub(str_tmp,
-                                   VECTOR_ELT(from, i%from_len), R_NilValue, VECTOR_ELT(length, i%LENGTH(length))));
+            PROTECT(tmp = stri_sub(
+                str_tmp, VECTOR_ELT(from, i%from_len), R_NilValue, VECTOR_ELT(length, i%LENGTH(length)), use_matrix
+            ));
         }
         else {
-            PROTECT(tmp = stri_sub(str_tmp,
-                                   VECTOR_ELT(from, i%from_len), R_NilValue, R_NilValue));
+            PROTECT(tmp = stri_sub(
+                str_tmp, VECTOR_ELT(from, i%from_len), R_NilValue, R_NilValue, use_matrix
+            ));
         }
 
         SET_VECTOR_ELT(ret, i, tmp);
@@ -509,15 +526,17 @@ SEXP stri_sub_all(SEXP str, SEXP from, SEXP to, SEXP length)
  *
  * @version 1.7.1 (Marek Gagolewski, 2021-06-28)
  *    negative length does not alter input
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-07-08)
+ *    use_matrix
  */
 SEXP stri__sub_replacement_all_single(
     SEXP curs,
-    SEXP from, SEXP to, SEXP length, bool omit_na_1, SEXP value
+    SEXP from, SEXP to, SEXP length, bool omit_na_1, bool use_matrix_1, SEXP value
 ) {
     // curs is a CHARSXP in UTF-8
 
-    PROTECT(value = stri_enc_toutf8(value,
-                                    Rf_ScalarLogical(FALSE), Rf_ScalarLogical(FALSE)));
+    PROTECT(value = stri_enc_toutf8(value, Rf_ScalarLogical(FALSE), Rf_ScalarLogical(FALSE)));
     R_len_t value_len     = LENGTH(value);
 
     R_len_t from_len      = 0; // see below
@@ -529,7 +548,7 @@ SEXP stri__sub_replacement_all_single(
 
     R_len_t sub_protected = 1+ /* how many objects to PROTECT on ret? */
                             stri__sub_prepare_from_to_length(from, to, length,
-                                    from_len, to_len, length_len, from_tab, to_tab, length_tab);
+                                    from_len, to_len, length_len, from_tab, to_tab, length_tab, use_matrix_1);
 
     R_len_t vectorize_len = stri__recycling_rule(true, 2, // does not care about value_len
                             from_len, (to_len>length_len)?to_len:length_len);
@@ -700,8 +719,11 @@ SEXP stri__sub_replacement_all_single(
  *
  * @version 1.7.1 (Marek Gagolewski, 2021-06-28)
  *    negative length does not alter input
+ *
+ * @version 1.7.1 (Marek Gagolewski, 2021-07-08)
+ *    use_matrix
  */
-SEXP stri_sub_replacement_all(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_na, SEXP value)
+SEXP stri_sub_replacement_all(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_na, SEXP value, SEXP use_matrix)
 {
     //PROTECT(str    = stri__prepare_arg_string(str, "str"));
     PROTECT(str = stri_enc_toutf8(str, Rf_ScalarLogical(FALSE), Rf_ScalarLogical(FALSE)));
@@ -710,6 +732,7 @@ SEXP stri_sub_replacement_all(SEXP str, SEXP from, SEXP to, SEXP length, SEXP om
     PROTECT(length = stri__prepare_arg_list(length, "length"));
     PROTECT(value  = stri__prepare_arg_list(value, "value"));
     bool omit_na_1 = stri__prepare_arg_logical_1_notNA(omit_na, "omit_na");
+    bool use_matrix_1 = stri__prepare_arg_logical_1_notNA(use_matrix, "use_matrix");
 
     R_len_t str_len       = LENGTH(str);
     R_len_t from_len      = LENGTH(from);
@@ -747,19 +770,19 @@ SEXP stri_sub_replacement_all(SEXP str, SEXP from, SEXP to, SEXP length, SEXP om
             PROTECT(tmp = stri__sub_replacement_all_single(curs,
                           VECTOR_ELT(from, i%from_len),
                           VECTOR_ELT(to, i%LENGTH(to)), R_NilValue,
-                          omit_na_1, VECTOR_ELT(value, i%value_len)));
+                          omit_na_1, use_matrix_1, VECTOR_ELT(value, i%value_len)));
         }
         else if (!isNull(length)) {
             PROTECT(tmp = stri__sub_replacement_all_single(curs,
                           VECTOR_ELT(from, i%from_len),
                           R_NilValue, VECTOR_ELT(length, i%LENGTH(length)),
-                          omit_na_1, VECTOR_ELT(value, i%value_len)));
+                          omit_na_1, use_matrix_1, VECTOR_ELT(value, i%value_len)));
         }
         else {
             PROTECT(tmp = stri__sub_replacement_all_single(curs,
                           VECTOR_ELT(from, i%from_len),
                           R_NilValue, R_NilValue,
-                          omit_na_1, VECTOR_ELT(value, i%value_len)));
+                          omit_na_1, use_matrix_1, VECTOR_ELT(value, i%value_len)));
         }
 
         SET_STRING_ELT(ret, i, tmp);

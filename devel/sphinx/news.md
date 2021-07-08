@@ -17,6 +17,12 @@
   and their replacement versions, `pattern` and `value` cannot be longer
   than `str` (but now they are recycled if necessary).
 
+* [BACKWARD INCOMPATIBILITY, NEW FEATURE] `stri_sub*` now accept the
+  `from` argument being a matrix like `cbind(from, length=length)`.
+  Unnamed columns or any other names are still interpreted as `cbind(from, to)`.
+  Also, the new argument `use_matrix` can be used to disable
+  the special treatment of such matrices.
+
 * [DOCUMENTATION] It has been clarified that the syntax of `*_charclass`
   (e.g., used in `stri_trim*`) differs slightly from regex character
   classes.

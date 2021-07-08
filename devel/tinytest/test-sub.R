@@ -40,6 +40,9 @@ expect_identical(stri_sub_all(s, list(cbind(1:5, length=1:5))), stri_sub_all(s, 
 expect_identical(stri_sub_all(s, list(cbind(1:5, length=1:5), cbind(1:5, length=rep(2, 5)))), stri_sub_all(s, from=list(1:5, 1:5), length=list(1:5, rep(2, 5))))
 
 
+expect_identical(stri_sub(s, cbind(1:5, length=1:5), length=5, use_matrix=FALSE), stri_sub(s, from=c(1:5, 1:5), length=5))
+expect_identical(stri_sub_all(s, list(cbind(1:5, length=1:5)), length=5, use_matrix=FALSE), stri_sub_all(s, from=list(c(1:5, 1:5)), length=5))
+
 expect_identical(stri_sub(s, length=-1:1), c(NA, "", "\U0001F3F3"))
 
 expect_identical(stri_sub("\u0105\u0104\u0103\u0102\u0101", 1:5, 1:5), stri_extract_all_regex("\u0105\u0104\u0103\u0102\u0101",

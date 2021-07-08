@@ -6,7 +6,7 @@
 \alias{stri_sub_replace}
 \title{Extract a Substring From or Replace a Substring In a Character Vector}
 \usage{
-stri_sub(str, from = 1L, to = -1L, length)
+stri_sub(str, from = 1L, to = -1L, length, use_matrix = TRUE)
 
 stri_sub(str, from=1L, to=-1L, length, omit_na=FALSE) <- value
 
@@ -16,6 +16,7 @@ stri_sub_replace(..., replacement, value = replacement)
 \item{str}{character vector}
 
 \item{from}{integer vector giving the start indexes; alternatively,
+if \code{use_matrix=TRUE},
 a two-column matrix of type \code{cbind(from, to)}
 (unnamed columns or the 2nd column named other than \code{length})
 or \code{cbind(from, length=length)} (2nd column named \code{length})}
@@ -26,7 +27,9 @@ or \code{cbind(from, length=length)} (2nd column named \code{length})}
 \item{length}{integer vector giving the substring lengths;
 mutually exclusive with \code{to} and \code{from} being a matrix}
 
-\item{omit_na}{a single logical value; indicates whether missing values
+\item{use_matrix}{single logical value; see \code{from}}
+
+\item{omit_na}{single logical value; indicates whether missing values
 in any of the indexes or in \code{value} leave the corresponding input string
 unchanged [replacement function only]}
 
