@@ -98,7 +98,7 @@ stri_replace_last_regex(str, pattern, replacement, ..., opts_regex = NULL)
 
 By default, all the functions are vectorized over `str`, `pattern`, `replacement` (with recycling of the elements in the shorter vector if necessary). Input that is not part of any match is left unchanged; each match is replaced in the result by the replacement string.
 
-However, for `stri_replace_all*`, if `vectorize_all` is `FALSE`, the each substring matching any of the supplied `pattern`s is replaced by a corresponding `replacement` string. In such a case, the vectorization is over `str`, and - independently - over `pattern` and `replacement`. In other words, this is equivalent to something like `for (i in 1:npatterns) str <- stri_replace_all(str, pattern[i], replacement[i]`. Note that you must set `length(pattern) >= length(replacement)`.
+However, for `stri_replace_all*`, if `vectorize_all` is `FALSE`, then each substring matching any of the supplied `pattern`s is replaced by a corresponding `replacement` string. In such a case, the vectorization is over `str`, and - independently - over `pattern` and `replacement`. In other words, this is equivalent to something like `for (i in 1:npatterns) str <- stri_replace_all(str, pattern[i], replacement[i]`. Note that you must set `length(pattern) >= length(replacement)`.
 
 In case of `stri_replace_*_regex`, the replacement string may contain references to capture groups (in round parentheses). References are of the form `$n`, where `n` is the number of the capture group (`$1` denotes the first group). For the literal `$`, escape it with a backslash. Moreover, `${name}` are used for named capture groups.
 

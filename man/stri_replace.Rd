@@ -138,7 +138,7 @@ Input that is not part of any match is left unchanged;
 each match is replaced in the result by the replacement string.
 
 However, for \code{stri_replace_all*}, if \code{vectorize_all} is \code{FALSE},
-the each substring matching any of the supplied \code{pattern}s
+then each substring matching any of the supplied \code{pattern}s
 is replaced by a corresponding \code{replacement} string.
 In such a case, the vectorization is over \code{str},
 and - independently - over \code{pattern} and \code{replacement}.
