@@ -146,8 +146,10 @@
 #' @family indexing
 #' @rdname stri_sub
 #' @export
-stri_sub <- function(str, from = 1L, to = -1L, length, use_matrix=TRUE, ignore_negative_length=FALSE)
-{
+stri_sub <- function(
+    str, from = 1L, to = -1L, length,
+    use_matrix=TRUE, ignore_negative_length=FALSE
+) {
     if (missing(length)) {
         if (isTRUE(use_matrix) && is.matrix(from) && !missing(to)) {
             warning("argument `to` is ignored in the current context")
@@ -168,9 +170,10 @@ stri_sub <- function(str, from = 1L, to = -1L, length, use_matrix=TRUE, ignore_n
 
 #' @rdname stri_sub
 #' @export
-#' @usage stri_sub(str, from=1L, to=-1L, length, omit_na=FALSE) <- value
-`stri_sub<-` <- function(str, from = 1L, to = -1L, length, omit_na=FALSE, use_matrix=TRUE, value)
-{
+#' @usage stri_sub(str, from=1L, to=-1L, length, omit_na=FALSE, use_matrix=TRUE) <- value
+`stri_sub<-` <- function(
+    str, from = 1L, to = -1L, length, omit_na=FALSE, use_matrix=TRUE, value
+) {
     if (missing(length)) {
         if (isTRUE(use_matrix) && is.matrix(from) && !missing(to)) {
             warning("argument `to` is ignored in this context")
@@ -289,8 +292,10 @@ stri_sub_replace <- function(..., replacement, value = replacement)
 #' @family indexing
 #' @rdname stri_sub_all
 #' @export
-stri_sub_all <- function(str, from = list(1L), to = list(-1L), length, use_matrix=TRUE, ignore_negative_length=TRUE)
-{
+stri_sub_all <- function(
+    str, from = list(1L), to = list(-1L), length,
+    use_matrix=TRUE, ignore_negative_length=TRUE
+) {
     if (!is.list(from))
         from <- list(from)
 
@@ -315,10 +320,11 @@ stri_sub_all <- function(str, from = list(1L), to = list(-1L), length, use_matri
 
 #' @rdname stri_sub_all
 #' @export
-#' @usage stri_sub_all(str, from=list(1L), to=list(-1L), length, omit_na=FALSE) <- value
-`stri_sub_all<-` <- function(str, from = list(1L), to = list(-1L), length,
-    omit_na=FALSE, use_matrix=TRUE, value)
-{
+#' @usage stri_sub_all(str, from=list(1L), to=list(-1L), length, omit_na=FALSE, use_matrix=TRUE) <- value
+`stri_sub_all<-` <- function(
+    str, from = list(1L), to = list(-1L), length,
+    omit_na=FALSE, use_matrix=TRUE, value
+) {
     if (!is.list(from))
         from <- list(from)
     if (!is.list(value))
@@ -345,8 +351,8 @@ stri_sub_all <- function(str, from = list(1L), to = list(-1L), length, use_matri
 
 #' @rdname stri_sub_all
 #' @export
-stri_sub_replace_all <- function(..., replacement, value = replacement)
-    `stri_sub_all<-`(...,  value = value)
+stri_sub_replace_all <- function(..., replacement, value=replacement)
+    `stri_sub_all<-`(...,  value=value)
 
 
 #' @rdname stri_sub_all
