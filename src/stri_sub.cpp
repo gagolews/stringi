@@ -195,12 +195,13 @@ inline void stri__sub_get_indices(StriContainerUTF8_indexable& str_cont, R_len_t
  *    Negative length yields NA
  *
  * @version 1.7.1 (Marek Gagolewski, 2021-07-08)
- *    use_matrix
+ *    use_matrix, ignore_negative_length
  */
-SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length, SEXP use_matrix)
+SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length, SEXP use_matrix, SEXP ignore_negative_length)
 {
     PROTECT(str = stri__prepare_arg_string(str, "str"));
     bool use_matrix_1 = stri__prepare_arg_logical_1_notNA(use_matrix, "use_matrix");
+    bool ignore_negative_length_1 = stri__prepare_arg_logical_1_notNA(ignore_negative_length, "ignore_negative_length");
 
     R_len_t str_len       = LENGTH(str);
     R_len_t from_len      = 0;
@@ -227,6 +228,7 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length, SEXP use_matrix)
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_len));
 
+    R_len_t num_negative_length = 0;
     for (R_len_t i = str_cont.vectorize_init();
             i != str_cont.vectorize_end();
             i = str_cont.vectorize_next(i))
@@ -245,6 +247,7 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length, SEXP use_matrix)
             }
             else if (cur_to < 0) {
                 SET_STRING_ELT(ret, i, NA_STRING);
+                num_negative_length++;
                 continue;
             }
 
@@ -265,6 +268,29 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length, SEXP use_matrix)
         else {
             // maybe a warning here?
             SET_STRING_ELT(ret, i, Rf_mkCharLen(NULL, 0));
+        }
+    }
+
+    if (num_negative_length > 0 && ignore_negative_length_1) {
+        // stringx: ignore items corresponding to length<0
+        STRI_ASSERT(length_tab)
+
+        SEXP ret_old = ret;
+        STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_len-num_negative_length));
+        R_len_t k = 0;
+        for (R_len_t i = str_cont.vectorize_init();
+            i != str_cont.vectorize_end();
+            i = str_cont.vectorize_next(i))
+        {
+            R_len_t cur_from     = from_tab[i % from_len];
+            R_len_t cur_to       = length_tab[i % length_len];
+            if (!str_cont.isNA(i) && cur_from != NA_INTEGER && cur_to != NA_INTEGER && cur_to < 0) {
+                // ignore
+            }
+            else {
+                SET_STRING_ELT(ret, k, STRING_ELT(ret_old, i));
+                ++k;
+            }
         }
     }
 
@@ -489,17 +515,17 @@ SEXP stri_sub_all(SEXP str, SEXP from, SEXP to, SEXP length, SEXP use_matrix)
 
         if (!isNull(to)) {
             PROTECT(tmp = stri_sub(
-                str_tmp, VECTOR_ELT(from, i%from_len), VECTOR_ELT(to, i%LENGTH(to)), R_NilValue, use_matrix
+                str_tmp, VECTOR_ELT(from, i%from_len), VECTOR_ELT(to, i%LENGTH(to)), R_NilValue, use_matrix, /*ignore_negative_length*/Rf_ScalarLogical(TRUE)
             ));
         }
         else if (!isNull(length)) {
             PROTECT(tmp = stri_sub(
-                str_tmp, VECTOR_ELT(from, i%from_len), R_NilValue, VECTOR_ELT(length, i%LENGTH(length)), use_matrix
+                str_tmp, VECTOR_ELT(from, i%from_len), R_NilValue, VECTOR_ELT(length, i%LENGTH(length)), use_matrix, /*ignore_negative_length*/Rf_ScalarLogical(TRUE)
             ));
         }
         else {
             PROTECT(tmp = stri_sub(
-                str_tmp, VECTOR_ELT(from, i%from_len), R_NilValue, R_NilValue, use_matrix
+                str_tmp, VECTOR_ELT(from, i%from_len), R_NilValue, R_NilValue, use_matrix, /*ignore_negative_length*/Rf_ScalarLogical(TRUE)
             ));
         }
 

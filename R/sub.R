@@ -82,7 +82,7 @@
 #' \code{length} has priority over \code{to}.
 #'
 #' Note that for some Unicode strings, the extracted substrings might not
-#' be well-formed, especially if input strings are not NFC-normalized
+#' be well-formed, especially if input strings are not normalized
 #' (see \code{\link{stri_trans_nfc}}),
 #' include byte order marks, Bidirectional text marks, and so on.
 #' Handle with care.
@@ -149,7 +149,7 @@ stri_sub <- function(str, from = 1L, to = -1L, length, use_matrix=TRUE)
             warning("argument `to` is ignored in the current context")
             to <- NULL
         }
-        .Call(C_stri_sub, str, from, to, NULL, use_matrix)
+        .Call(C_stri_sub, str, from, to, NULL, use_matrix, FALSE)
     } else {
         if (!missing(to))
             warning("argument `to` is ignored in the current context")
@@ -157,7 +157,7 @@ stri_sub <- function(str, from = 1L, to = -1L, length, use_matrix=TRUE)
             warning("argument `length` is ignored in the current context")
             length <- NULL
         }
-        .Call(C_stri_sub, str, from, NULL, length, use_matrix)
+        .Call(C_stri_sub, str, from, NULL, length, use_matrix, FALSE)
     }
 }
 
@@ -234,7 +234,7 @@ stri_sub_replace <- function(..., replacement, value = replacement)
 #' with respect to \code{from} and must be mutually disjoint.
 #' Negative \code{length} does not result in any altering of the
 #' corresponding input string. On the other hand, in \code{stri_sub_all},
-#' this yields \code{NA}.
+#' this make the corresponding chunk be ignored.
 #'
 #' @param str character vector
 #'

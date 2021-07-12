@@ -192,7 +192,7 @@ const R_CallMethodDef cCallMethods[] = {
     STRI__MK_CALL("C_stri_startswith_fixed",             stri_startswith_fixed,           5),
     STRI__MK_CALL("C_stri_stats_general",                stri_stats_general,              1),
     STRI__MK_CALL("C_stri_stats_latex",                  stri_stats_latex,                1),
-    STRI__MK_CALL("C_stri_sub",                          stri_sub,                        5),
+    STRI__MK_CALL("C_stri_sub",                          stri_sub,                        6),
     STRI__MK_CALL("C_stri_sub_all",                      stri_sub_all,                    5),
     STRI__MK_CALL("C_stri_sub_replacement",              stri_sub_replacement,            7),
     STRI__MK_CALL("C_stri_sub_replacement_all",          stri_sub_replacement_all,        7),

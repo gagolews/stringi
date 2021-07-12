@@ -85,7 +85,7 @@ In the replacement function, the index ranges must be sorted
 with respect to \code{from} and must be mutually disjoint.
 Negative \code{length} does not result in any altering of the
 corresponding input string. On the other hand, in \code{stri_sub_all},
-this yields \code{NA}.
+this make the corresponding chunk be ignored.
 }
 \examples{
 x <- c('12 3456 789', 'abc', '', NA, '667')

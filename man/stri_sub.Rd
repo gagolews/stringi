@@ -92,7 +92,7 @@ If both \code{to} and \code{length} are provided,
 \code{length} has priority over \code{to}.
 
 Note that for some Unicode strings, the extracted substrings might not
-be well-formed, especially if input strings are not NFC-normalized
+be well-formed, especially if input strings are not normalized
 (see \code{\link{stri_trans_nfc}}),
 include byte order marks, Bidirectional text marks, and so on.
 Handle with care.
