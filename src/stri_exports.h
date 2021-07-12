@@ -90,7 +90,7 @@ SEXP stri_reverse(SEXP s);
 // sub.cpp
 SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length, SEXP use_matrix=Rf_ScalarLogical(TRUE), SEXP ignore_negative_length=Rf_ScalarLogical(FALSE));
 SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_na, SEXP value, SEXP use_matrix=Rf_ScalarLogical(TRUE));
-SEXP stri_sub_all(SEXP str, SEXP from, SEXP to, SEXP length, SEXP use_matrix=Rf_ScalarLogical(TRUE));
+SEXP stri_sub_all(SEXP str, SEXP from, SEXP to, SEXP length, SEXP use_matrix=Rf_ScalarLogical(TRUE), SEXP ignore_negative_length=Rf_ScalarLogical(TRUE));
 SEXP stri_sub_replacement_all(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_na, SEXP value, SEXP use_matrix=Rf_ScalarLogical(TRUE));
 
 // encoding_management.cpp:

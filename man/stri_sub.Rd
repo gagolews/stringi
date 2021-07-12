@@ -6,7 +6,14 @@
 \alias{stri_sub_replace}
 \title{Extract a Substring From or Replace a Substring In a Character Vector}
 \usage{
-stri_sub(str, from = 1L, to = -1L, length, use_matrix = TRUE)
+stri_sub(
+  str,
+  from = 1L,
+  to = -1L,
+  length,
+  use_matrix = TRUE,
+  ignore_negative_length = FALSE
+)
 
 stri_sub(str, from=1L, to=-1L, length, omit_na=FALSE) <- value
 
@@ -28,6 +35,9 @@ or \code{cbind(from, length=length)} (2nd column named \code{length})}
 mutually exclusive with \code{to} and \code{from} being a matrix}
 
 \item{use_matrix}{single logical value; see \code{from}}
+
+\item{ignore_negative_length}{single logical value; whether
+negative lengths should be ignored or result in missing values}
 
 \item{omit_na}{single logical value; indicates whether missing values
 in any of the indexes or in \code{value} leave the corresponding input string
@@ -82,7 +92,8 @@ and \code{\link{stri_locate_last}}. If extraction based on
 
 In \code{stri_sub}, out-of-bound indexes are silently
 corrected. If \code{from} > \code{to}, then an empty string is returned.
-Negative \code{length} results in the corresponding output being \code{NA}.
+By default, negative \code{length} results in the corresponding output being
+\code{NA}, see \code{ignore_negative_length}, though.
 
 In \code{stri_sub<-}, some configurations of indexes may work as
 substring 'injection' at the front, back, or in middle.
