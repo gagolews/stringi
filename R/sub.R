@@ -72,7 +72,8 @@
 #'
 #' In \code{stri_sub}, out-of-bound indexes are silently
 #' corrected. If \code{from} > \code{to}, then an empty string is returned.
-#' Negative \code{length} results in the corresponding output being \code{NA}.
+#' By default, negative \code{length} results in the corresponding output being
+#' \code{NA}, see \code{ignore_negative_length}, though.
 #'
 #' In \code{stri_sub<-}, some configurations of indexes may work as
 #' substring 'injection' at the front, back, or in middle.
@@ -113,7 +114,10 @@
 #' @param replacement alias of \code{value} [wherever applicable]
 #'
 #' @param value a character vector defining the replacement strings
-#'   [replacement function only]
+#'     [replacement function only]
+#'
+#' @param ignore_negative_length single logical value; whether
+#'     negative lengths should be ignored or result in missing values
 #'
 #' @param ... arguments to be passed to \code{stri_sub<-}
 #'
@@ -142,14 +146,14 @@
 #' @family indexing
 #' @rdname stri_sub
 #' @export
-stri_sub <- function(str, from = 1L, to = -1L, length, use_matrix=TRUE)
+stri_sub <- function(str, from = 1L, to = -1L, length, use_matrix=TRUE, ignore_negative_length=FALSE)
 {
     if (missing(length)) {
         if (isTRUE(use_matrix) && is.matrix(from) && !missing(to)) {
             warning("argument `to` is ignored in the current context")
             to <- NULL
         }
-        .Call(C_stri_sub, str, from, to, NULL, use_matrix, FALSE)
+        .Call(C_stri_sub, str, from, to, NULL, use_matrix, ignore_negative_length)
     } else {
         if (!missing(to))
             warning("argument `to` is ignored in the current context")
@@ -157,7 +161,7 @@ stri_sub <- function(str, from = 1L, to = -1L, length, use_matrix=TRUE)
             warning("argument `length` is ignored in the current context")
             length <- NULL
         }
-        .Call(C_stri_sub, str, from, NULL, length, use_matrix, FALSE)
+        .Call(C_stri_sub, str, from, NULL, length, use_matrix, ignore_negative_length)
     }
 }
 
@@ -234,7 +238,8 @@ stri_sub_replace <- function(..., replacement, value = replacement)
 #' with respect to \code{from} and must be mutually disjoint.
 #' Negative \code{length} does not result in any altering of the
 #' corresponding input string. On the other hand, in \code{stri_sub_all},
-#' this make the corresponding chunk be ignored.
+#' this make the corresponding chunk be ignored,
+#' see \code{ignore_negative_length}, though.
 #'
 #' @param str character vector
 #'
@@ -260,6 +265,9 @@ stri_sub_replace <- function(..., replacement, value = replacement)
 #' @param value a list of character vectors defining the replacement strings
 #'     [replacement function only]
 #'
+#' @param ignore_negative_length single logical value; whether
+#'     negative lengths should be ignored or result in missing values
+#'
 #' @param ... arguments to be passed to \code{stri_sub_all<-}
 #'
 #'
@@ -281,7 +289,7 @@ stri_sub_replace <- function(..., replacement, value = replacement)
 #' @family indexing
 #' @rdname stri_sub_all
 #' @export
-stri_sub_all <- function(str, from = list(1L), to = list(-1L), length, use_matrix=TRUE)
+stri_sub_all <- function(str, from = list(1L), to = list(-1L), length, use_matrix=TRUE, ignore_negative_length=TRUE)
 {
     if (!is.list(from))
         from <- list(from)
@@ -291,7 +299,7 @@ stri_sub_all <- function(str, from = list(1L), to = list(-1L), length, use_matri
             to <- list(to)
         }
 
-        .Call(C_stri_sub_all, str, from, to, NULL, use_matrix)
+        .Call(C_stri_sub_all, str, from, to, NULL, use_matrix, ignore_negative_length)
     } else {
         if (!missing(to))
             warning("argument `to` is ignored in this context")
@@ -300,7 +308,7 @@ stri_sub_all <- function(str, from = list(1L), to = list(-1L), length, use_matri
             length <- list(length)
         }
 
-        .Call(C_stri_sub_all, str, from, NULL, length, use_matrix)
+        .Call(C_stri_sub_all, str, from, NULL, length, use_matrix, ignore_negative_length)
     }
 }
 

@@ -181,11 +181,11 @@ Other datetime: [`stri_datetime_add()`](stri_datetime_add.md), [`stri_datetime_c
 
 ```r
 stri_datetime_parse(c('2015-02-28', '2015-02-29'), 'yyyy-MM-dd')
-## [1] "2015-02-28 18:50:32 AEDT" NA
+## [1] "2015-02-28 14:53:16 AEDT" NA
 stri_datetime_parse(c('2015-02-28', '2015-02-29'), 'yyyy-MM-dd', lenient=TRUE)
-## [1] "2015-02-28 18:50:32 AEDT" "2015-03-01 18:50:32 AEDT"
+## [1] "2015-02-28 14:53:16 AEDT" "2015-03-01 14:53:16 AEDT"
 stri_datetime_parse('19 lipca 2015', 'date_long', locale='pl_PL')
-## [1] "2015-07-19 18:50:32 AEST"
+## [1] "2015-07-19 14:53:16 AEST"
 stri_datetime_format(stri_datetime_now(), 'datetime_relative_medium')
-## [1] "today, 6:50:32 pm"
+## [1] "today, 2:53:16 pm"
 ```

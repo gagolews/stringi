@@ -7,7 +7,14 @@
 \alias{stri_sub_all_replace}
 \title{Extract or Replace Multiple Substrings}
 \usage{
-stri_sub_all(str, from = list(1L), to = list(-1L), length, use_matrix = TRUE)
+stri_sub_all(
+  str,
+  from = list(1L),
+  to = list(-1L),
+  length,
+  use_matrix = TRUE,
+  ignore_negative_length = TRUE
+)
 
 stri_sub_all(str, from=list(1L), to=list(-1L), length, omit_na=FALSE) <- value
 
@@ -29,6 +36,9 @@ or \code{cbind(from, length=length)} (2nd column named \code{length})}
 \item{length}{list of integer vectors giving the substring lengths}
 
 \item{use_matrix}{single logical value; see \code{from}}
+
+\item{ignore_negative_length}{single logical value; whether
+negative lengths should be ignored or result in missing values}
 
 \item{omit_na}{single logical value; indicates whether missing values
 in any of the indexes or in \code{value} leave the part of the
@@ -85,7 +95,8 @@ In the replacement function, the index ranges must be sorted
 with respect to \code{from} and must be mutually disjoint.
 Negative \code{length} does not result in any altering of the
 corresponding input string. On the other hand, in \code{stri_sub_all},
-this make the corresponding chunk be ignored.
+this make the corresponding chunk be ignored,
+see \code{ignore_negative_length}, though.
 }
 \examples{
 x <- c('12 3456 789', 'abc', '', NA, '667')

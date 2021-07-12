@@ -469,9 +469,9 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_n
  *    negative length yields NA
  *
  * @version 1.7.1 (Marek Gagolewski, 2021-07-08)
- *    use_matrix
+ *    use_matrix, ignore_negative_length
  */
-SEXP stri_sub_all(SEXP str, SEXP from, SEXP to, SEXP length, SEXP use_matrix)
+SEXP stri_sub_all(SEXP str, SEXP from, SEXP to, SEXP length, SEXP use_matrix, SEXP ignore_negative_length)
 {
     PROTECT(str    = stri__prepare_arg_string(str, "str"));
     PROTECT(from   = stri__prepare_arg_list(from, "from"));
@@ -515,17 +515,17 @@ SEXP stri_sub_all(SEXP str, SEXP from, SEXP to, SEXP length, SEXP use_matrix)
 
         if (!isNull(to)) {
             PROTECT(tmp = stri_sub(
-                str_tmp, VECTOR_ELT(from, i%from_len), VECTOR_ELT(to, i%LENGTH(to)), R_NilValue, use_matrix, /*ignore_negative_length*/Rf_ScalarLogical(TRUE)
+                str_tmp, VECTOR_ELT(from, i%from_len), VECTOR_ELT(to, i%LENGTH(to)), R_NilValue, use_matrix, ignore_negative_length
             ));
         }
         else if (!isNull(length)) {
             PROTECT(tmp = stri_sub(
-                str_tmp, VECTOR_ELT(from, i%from_len), R_NilValue, VECTOR_ELT(length, i%LENGTH(length)), use_matrix, /*ignore_negative_length*/Rf_ScalarLogical(TRUE)
+                str_tmp, VECTOR_ELT(from, i%from_len), R_NilValue, VECTOR_ELT(length, i%LENGTH(length)), use_matrix, ignore_negative_length
             ));
         }
         else {
             PROTECT(tmp = stri_sub(
-                str_tmp, VECTOR_ELT(from, i%from_len), R_NilValue, R_NilValue, use_matrix, /*ignore_negative_length*/Rf_ScalarLogical(TRUE)
+                str_tmp, VECTOR_ELT(from, i%from_len), R_NilValue, R_NilValue, use_matrix, ignore_negative_length
             ));
         }
 
