@@ -283,8 +283,8 @@ expect_identical(stri_sub_all("abc"), list("abc"))
 expect_identical(stri_sub_all(c("abc", NA, "def", "")), as.list(c("abc", NA,
     "def", "")))
 
-expect_identical(stri_sub_all("abc", 1, length=(-1):1), list(c(NA_character_, "", "a")))
-expect_identical(stri_sub_all("abc", 1, length=as.list((-1):1)), list(NA_character_, "", "a"))
+expect_identical(stri_sub_all("abc", 1, length=(-1):1), list(c("", "a")))
+expect_identical(stri_sub_all("abc", 1, length=as.list((-1):1)), list(character(0), "", "a"))
 
 expect_identical(stri_sub_all("abc", list(1:3)), list(c("abc", "bc", "c")))
 expect_identical(stri_sub_all("abc", list(3:1)), list(rev(c("abc", "bc", "c"))))
