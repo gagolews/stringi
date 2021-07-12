@@ -563,10 +563,6 @@ SEXP stri__sub_replacement_all_single(
         return NA_STRING;
     }
 
-    if (vectorize_len % value_len != 0)
-        Rf_warning(MSG__WARN_RECYCLING_RULE2);
-
-
     const char* curs_s = CHAR(curs); // already in UTF-8  // TODO: ALTREP will be problematic?
     R_len_t curs_n = LENGTH(curs);
 
@@ -590,6 +586,8 @@ SEXP stri__sub_replacement_all_single(
         }
     }
 
+
+
     // get the number of code points in curs, if required (for negative indexes)
     R_len_t curs_m = -1;
     if (IS_ASCII(curs)) curs_m = curs_n;
@@ -605,6 +603,7 @@ SEXP stri__sub_replacement_all_single(
     STRI__ERROR_HANDLER_BEGIN(sub_protected)
     std::vector<char> buf; // convenience >> speed
 
+    R_len_t num_replaced = 0;
     R_len_t last_pos = 0;
     R_len_t byte_pos = 0;
     for (R_len_t i=0; i<vectorize_len; ++i) {
@@ -620,6 +619,8 @@ SEXP stri__sub_replacement_all_single(
             // omit_na is true or negative length
             continue;
         }
+
+        num_replaced++;
 
         if (cur_from < 0) cur_from = curs_m+cur_from+1;
         if (cur_from <= 0) cur_from = 1;
@@ -689,6 +690,10 @@ SEXP stri__sub_replacement_all_single(
             throw StriException(MSG__MEM_ALLOC_ERROR);
         memcpy(buf.data()+buf_size, curs_s+byte_pos, curs_n-byte_pos);
     }
+
+    // only warn if not NA
+    if (num_replaced > 0 && vectorize_len % value_len != 0)
+        Rf_warning(MSG__WARN_RECYCLING_RULE2);
 
     SEXP ret;
     STRI__PROTECT(ret = Rf_mkCharLenCE(buf.data(), buf.size(), CE_UTF8));
