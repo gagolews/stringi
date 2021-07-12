@@ -11,7 +11,9 @@
   input string being altered.
 
 * [BACKWARD INCOMPATIBILITY, NEW FEATURE] In `stri_sub` and `stri_sub_all`,
-  negative `length` results in the corresponding output being `NA`.
+  negative `length` results in the corresponding output being `NA`
+  or not extracted, depending on the setting of the new argument
+  `ignore_negative_length`.
 
 * [BACKWARD INCOMPATIBILITY, BUGFIX, NEW FEATURE] In `stri_subset*`
   and their replacement versions, `pattern` and `value` cannot be longer
