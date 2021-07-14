@@ -280,7 +280,8 @@ stri_datetime_fstr <- function(x, ignore_special=TRUE)
 {
     x <- .Call(C_stri_datetime_fstr, x)
 
-    if (length(x) > 0 && isFALSE(ignore_special)) {
+    ignore_special <- (is.logical(ignore_special) && length(ignore_special) == 1L && !is.na(ignore_special) && ignore_special)  # isTRUE(ignore_special)
+    if (length(x) > 0 && !ignore_special) {
         formats <- outer(
             c("date", "time", "datetime", "date_relative", "datetime_relative"),
             c("full", "long", "medium", "short"),
