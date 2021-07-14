@@ -16,7 +16,14 @@ stri_sub_all(
   ignore_negative_length = TRUE
 )
 
-stri_sub_all(str, from=list(1L), to=list(-1L), length, omit_na=FALSE, use_matrix=TRUE) <- value
+stri_sub_all(
+  str,
+  from = list(1L),
+  to = list(-1L),
+  length,
+  omit_na = FALSE,
+  use_matrix = TRUE
+) <- value
 
 stri_sub_replace_all(..., replacement, value = replacement)
 

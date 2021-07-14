@@ -1,4 +1,4 @@
-# stri\_extract: Extract Occurrences of a Pattern
+# stri\_extract: Extract Pattern Occurrences
 
 ## Description
 

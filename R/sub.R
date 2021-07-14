@@ -170,7 +170,6 @@ stri_sub <- function(
 
 #' @rdname stri_sub
 #' @export
-#' @usage stri_sub(str, from=1L, to=-1L, length, omit_na=FALSE, use_matrix=TRUE) <- value
 `stri_sub<-` <- function(
     str, from = 1L, to = -1L, length, omit_na=FALSE, use_matrix=TRUE, value
 ) {
@@ -320,7 +319,6 @@ stri_sub_all <- function(
 
 #' @rdname stri_sub_all
 #' @export
-#' @usage stri_sub_all(str, from=list(1L), to=list(-1L), length, omit_na=FALSE, use_matrix=TRUE) <- value
 `stri_sub_all<-` <- function(
     str, from = list(1L), to = list(-1L), length,
     omit_na=FALSE, use_matrix=TRUE, value

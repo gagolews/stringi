@@ -110,8 +110,14 @@ Supported flags: \code{-} (left-align),
 stri_printf("\%4s=\%.3f", c("e", "e\u00b2", "\u03c0", "\u03c0\u00b2"),
     c(exp(1), exp(2), pi, pi^2))
 
-x <- c("xxabcd", "xx\u0105\u0106\u0107\u0108",
-    "\u200b\u200b\u200b\u200b\U0001F3F4\U000E0067\U000E0062\U000E0073\U000E0063\U000E0074\U000E007Fabcd")
+x <- c(
+  "xxabcd",
+  "xx\u0105\u0106\u0107\u0108",
+  stri_paste(
+    "\u200b\u200b\u200b\u200b",
+    "\U0001F3F4\U000E0067\U000E0062\U000E0073\U000E0063\U000E0074\U000E007F",
+    "abcd"
+  ))
 stri_printf("[\%10s]", x)  # minimum width = 10
 stri_printf("[\%-10.3s]", x)  # output of max width = 3, but pad to width of 10
 stri_printf("[\%10s]", x, use_length=TRUE)  # minimum number of Unicode code points = 10

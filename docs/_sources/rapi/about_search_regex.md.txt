@@ -124,7 +124,7 @@ Here is a list of operators provided by the ICU User Guide on regexes.
 
 `(?<name>...)`
 
-:   Named capture group. The `<angle brackets>` are literal - they appear in the pattern.
+:   Named capture group, where `name` (enclosed within the angle brackets) is a sequence like `[A-Za-z][A-Za-z0-9]*`
 
 `(?ismwx-ismwx:...)`
 
