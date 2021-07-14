@@ -72,6 +72,9 @@ The contributions from Bartłomiej Tartanus and
 `many others <https://github.com/gagolews/stringi/graphs/contributors>`_
 is greatly appreciated. Thanks!
 
+Also check out `stringx <https://stringx.gagolewski.com/>`_
+for a set of wrappers around *stringi* with a base R-compatible API.
+
 ..  COMMENT
     This should be part of some other section maybe.
 

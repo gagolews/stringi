@@ -102,8 +102,14 @@ stri_printf("%4s=%.3f", c("e", "e\u00b2", "\u03c0", "\u03c0\u00b2"),
 ##   e²=7.389
 ##    π=3.142
 ##   π²=9.870
-x <- c("xxabcd", "xx\u0105\u0106\u0107\u0108",
-    "\u200b\u200b\u200b\u200b\U0001F3F4\U000E0067\U000E0062\U000E0073\U000E0063\U000E0074\U000E007Fabcd")
+x <- c(
+  "xxabcd",
+  "xx\u0105\u0106\u0107\u0108",
+  stri_paste(
+    "\u200b\u200b\u200b\u200b",
+    "\U0001F3F4\U000E0067\U000E0062\U000E0073\U000E0063\U000E0074\U000E007F",
+    "abcd"
+  ))
 stri_printf("[%10s]", x)  # minimum width = 10
 ## [    xxabcd]
 ## [    xxąĆćĈ]
@@ -135,14 +141,14 @@ stri_printf("%+10.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_),
 ##         💩
 ##       <NA>
 stri_sprintf("UNIX time %1$f is %1$s.", Sys.time())
-## [1] "UNIX time 1626079572.573133 is 2021-07-12 18:46:12."
+## [1] "UNIX time 1626223556.341771 is 2021-07-14 10:45:56."
 # the following do not work in sprintf()
 stri_sprintf("%1$#- *2$.*3$f", 1.23456, 10, 3)  # two asterisks
 ## [1] " 1.235    "
 stri_sprintf(c("%s", "%f"), pi)  # re-coercion needed
 ## [1] "3.14159265358979" "3.141593"
 stri_sprintf("%1$s is %1$f UNIX time.", Sys.time())  # re-coercion needed
-## [1] "2021-07-12 18:46:12 is 1626079572.575506 UNIX time."
+## [1] "2021-07-14 10:45:56 is 1626223556.344068 UNIX time."
 stri_sprintf(c("%d", "%s"), factor(11:12))  # re-coercion needed
 ## [1] "1"  "12"
 stri_sprintf(c("%s", "%d"), factor(11:12))  # re-coercion needed

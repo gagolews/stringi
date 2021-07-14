@@ -1,4 +1,4 @@
-# stri\_detect: Detect a Pattern Match
+# stri\_detect: Detect Pattern Occurrences
 
 ## Description
 

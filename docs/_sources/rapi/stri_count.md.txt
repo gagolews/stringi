@@ -1,4 +1,4 @@
-# stri\_count: Count the Number of Pattern Matches
+# stri\_count: Count the Number of Pattern Occurrences
 
 ## Description
 

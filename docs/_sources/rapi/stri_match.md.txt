@@ -59,9 +59,7 @@ Vectorized over `str` and `pattern` (with recycling of the elements in the short
 
 If no pattern match is detected and `omit_no_match=FALSE`, then `NA`s are included in the resulting matrix (matrices), see Examples.
 
-Please note: <span class="pkg">ICU</span> regex engine currently does not fully support named capture groups.
-
-`stri_match`, `stri_match_all`, `stri_match_first`, and `stri_match_last` are convenience functions. They just call `stri_match_*_regex` and were provided for consistency with other string searching functions\' wrappers, see, among others, [`stri_extract`](stri_extract.md).
+`stri_match`, `stri_match_all`, `stri_match_first`, and `stri_match_last` are convenience functions. They merely call `stri_match_*_regex` and are provided for consistency with other string searching functions\' wrappers, see, among others, [`stri_extract`](stri_extract.md).
 
 ## Value
 
@@ -70,6 +68,8 @@ For `stri_match_all*`, a list of character matrices is returned. Each list eleme
 For `stri_match_first*` and `stri_match_last*` a character matrix is returned. Each row corresponds to a different search result.
 
 The first matrix column gives the whole match. The second one corresponds to the first capture group, the third -- the second capture group, and so on.
+
+If regular expressions feature a named capture group, the matrix columns will be named accordingly. However, for `stri_match_first*` and `stri_match_last*` this will only be the case if there is a single pattern.
 
 ## Author(s)
 
@@ -123,6 +123,22 @@ stri_match_all_regex(c('breakfast=eggs;lunch=pizza',
 ## [[3]]
 ##      [,1] [,2] [,3]
 ## [1,] NA   NA   NA
+stri_match_all_regex(c('breakfast=eggs;lunch=pizza',
+   'breakfast=bacon;lunch=spaghetti', 'no food here'),
+   '(?<when>\\w+)=(?<what>\\w+)')  # named capture groups
+## [[1]]
+##                       when        what   
+## [1,] "breakfast=eggs" "breakfast" "eggs" 
+## [2,] "lunch=pizza"    "lunch"     "pizza"
+## 
+## [[2]]
+##                        when        what       
+## [1,] "breakfast=bacon" "breakfast" "bacon"    
+## [2,] "lunch=spaghetti" "lunch"     "spaghetti"
+## 
+## [[3]]
+##         when what
+## [1,] NA NA   NA
 stri_match_first_regex(c('breakfast=eggs;lunch=pizza',
    'breakfast=bacon;lunch=spaghetti', 'no food here'),
    '(\\w+)=(\\w+)')

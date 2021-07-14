@@ -15,7 +15,7 @@ stri_sub(
   ignore_negative_length = FALSE
 )
 
-stri_sub(str, from=1L, to=-1L, length, omit_na=FALSE, use_matrix=TRUE) <- value
+stri_sub(str, from = 1L, to = -1L, length, omit_na = FALSE, use_matrix = TRUE) <- value
 
 stri_sub_replace(..., replacement, value = replacement)
 }

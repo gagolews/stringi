@@ -1,4 +1,4 @@
-# **stringi**
+# [**stringi**](https://stringi.gagolewski.com/)
 
 ### THE String Processing Package for *R*
 
@@ -12,6 +12,9 @@
 
 > Paper on **stringi** (draft version — any comments are welcome)
 is available at https://stringi.gagolewski.com/_static/vignette/stringi.pdf.
+
+> Check out [**stringx**](https://stringx.gagolewski.com/) for a set of wrappers
+around **stringi** with a base R-compatible API.
 
 
 **stringi**  (pronounced “stringy”, IPA [strinɡi]) is THE *R*

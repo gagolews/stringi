@@ -1,10 +1,10 @@
 # What Is New in *stringi*
 
 
-## 1.7.0.9xxx (to-be >= 1.7.1) (2021-xx-yy)
+## 1.7.1 (2021-07-14)
 
 * [BACKWARD INCOMPATIBILITY] `%s$%` and `%stri$%` now use the new `stri_sprintf`
-  (see below) instead of `base::sprintf`.
+  (see below) function instead of `base::sprintf`.
 
 * [BACKWARD INCOMPATIBILITY, NEW FEATURE] In `stri_sub<-` and `stri_sub_all<-`,
   providing a negative `length` from now on does not result in the corresponding
@@ -12,7 +12,7 @@
 
 * [BACKWARD INCOMPATIBILITY, NEW FEATURE] In `stri_sub` and `stri_sub_all`,
   negative `length` results in the corresponding output being `NA`
-  or not extracted, depending on the setting of the new argument
+  or not extracted at all, depending on the setting of the new argument
   `ignore_negative_length`.
 
 * [BACKWARD INCOMPATIBILITY, BUGFIX, NEW FEATURE] In `stri_subset*`
@@ -73,10 +73,6 @@
 * [BUGFIX] `stri_datetime_fstr` did not honour `NA_character_`
   and did not parse format strings such as `"%Y%m%d"` correctly.
   It has now been completely rewritten (in C).
-
-* [BUGFIX] `stri_sprintf` did not propagate missing values in
-  width/precision args passed via `*`. Also, `na_string` has not been
-  trimmed to the desired width in formatters like `"%.1s"`.
 
 * [BUGFIX] `stri_wrap` did not recognise the width of certain Unicode sequences
   correctly.
