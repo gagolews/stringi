@@ -150,8 +150,9 @@ stri_sub <- function(
     str, from = 1L, to = -1L, length,
     use_matrix=TRUE, ignore_negative_length=FALSE
 ) {
+    use_matrix <- (is.logical(use_matrix) && base::length(use_matrix) == 1L && !is.na(use_matrix) && use_matrix) # isTRUE(use_matrix)
     if (missing(length)) {
-        if (isTRUE(use_matrix) && is.matrix(from) && !missing(to)) {
+        if (use_matrix && is.matrix(from) && !missing(to)) {
             warning("argument `to` is ignored in the current context")
             to <- NULL
         }
@@ -159,7 +160,7 @@ stri_sub <- function(
     } else {
         if (!missing(to))
             warning("argument `to` is ignored in the current context")
-        if (isTRUE(use_matrix) && is.matrix(from)) {
+        if (use_matrix && is.matrix(from)) {
             warning("argument `length` is ignored in the current context")
             length <- NULL
         }
@@ -173,8 +174,9 @@ stri_sub <- function(
 `stri_sub<-` <- function(
     str, from = 1L, to = -1L, length, omit_na=FALSE, use_matrix=TRUE, value
 ) {
+    use_matrix <- (is.logical(use_matrix) && base::length(use_matrix) == 1L && !is.na(use_matrix) && use_matrix) # isTRUE(use_matrix)
     if (missing(length)) {
-        if (isTRUE(use_matrix) && is.matrix(from) && !missing(to)) {
+        if (use_matrix && is.matrix(from) && !missing(to)) {
             warning("argument `to` is ignored in this context")
             to <- NULL
         }
@@ -182,7 +184,7 @@ stri_sub <- function(
     } else {
         if (!missing(to))
             warning("argument `to` is ignored in this context")
-        if (isTRUE(use_matrix) && is.matrix(from)) {
+        if (use_matrix && is.matrix(from)) {
             warning("argument `length` is ignored in this context")
             length <- NULL
         }

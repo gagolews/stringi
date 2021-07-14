@@ -65,7 +65,7 @@
 #' @export
 stri_enc_list <- function(simplify=TRUE)
 {
-    simplify <- isTRUE(simplify)
+    simplify <- (is.logical(simplify) && length(simplify) == 1L && !is.na(simplify) && simplify)  # isTRUE(simplify)
 
     ret <- .Call(C_stri_enc_list)
     if (simplify) {
