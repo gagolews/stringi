@@ -342,8 +342,14 @@ SEXP stri__prepare_arg_string(SEXP x, const char* argname, bool allow_error)
         if (Rf_isVectorList(x) && !stri__check_list_of_scalars(x))
             Rf_warning(MSG__WARN_LIST_COERCION);
 
-        if (allow_error) return stri__call_as_character((void*)x);
-        else return R_tryCatchError(stri__call_as_character, (void*)x, stri__handler_null, NULL);
+#if defined(R_VERSION) && R_VERSION >= R_Version(3, 5, 0)
+        if (allow_error)
+            return stri__call_as_character((void*)x);
+        else
+            return R_tryCatchError(stri__call_as_character, (void*)x, stri__handler_null, NULL);
+#else
+        return stri__call_as_character((void*)x);
+#endif
     }
     else if ((bool)isString(x))
         return x; // return as-is
@@ -407,6 +413,7 @@ SEXP stri__prepare_arg_double(SEXP x, const char* argname, bool factors_as_strin
 //         return x;
 
         // as.double(as.character(x))
+#if defined(R_VERSION) && R_VERSION >= R_Version(3, 5, 0)
         if (allow_error)
             PROTECT(x = stri__call_as_character((void*)x));
         else {
@@ -416,6 +423,9 @@ SEXP stri__prepare_arg_double(SEXP x, const char* argname, bool factors_as_strin
                 return x;
             }
         }
+#else
+        PROTECT(x = stri__call_as_character((void*)x));
+#endif
         PROTECT(x = Rf_coerceVector(x, REALSXP));
         UNPROTECT(2);
         return x;
@@ -425,8 +435,14 @@ SEXP stri__prepare_arg_double(SEXP x, const char* argname, bool factors_as_strin
         if (Rf_isVectorList(x) && !stri__check_list_of_scalars(x))
             Rf_warning(MSG__WARN_LIST_COERCION);
 
-        if (allow_error) return stri__call_as_double((void*)x);
-        else return R_tryCatchError(stri__call_as_double, (void*)x, stri__handler_null, NULL);
+#if defined(R_VERSION) && R_VERSION >= R_Version(3, 5, 0)
+        if (allow_error)
+            return stri__call_as_double((void*)x);
+        else
+            return R_tryCatchError(stri__call_as_double, (void*)x, stri__handler_null, NULL);
+#else
+        return stri__call_as_double((void*)x);
+#endif
     }
     else if ((bool)isReal(x))
         return x; //return as-is
@@ -489,6 +505,7 @@ SEXP stri__prepare_arg_integer(SEXP x, const char* argname, bool factors_as_stri
 //         return x;
 
         // as.integer(as.character(x))
+#if defined(R_VERSION) && R_VERSION >= R_Version(3, 5, 0)
         if (allow_error)
             PROTECT(x = stri__call_as_character((void*)x));
         else {
@@ -498,6 +515,9 @@ SEXP stri__prepare_arg_integer(SEXP x, const char* argname, bool factors_as_stri
                 return x;
             }
         }
+#else
+        PROTECT(x = stri__call_as_character((void*)x));
+#endif
         PROTECT(x = Rf_coerceVector(x, INTSXP));
         UNPROTECT(2);
         return x;
@@ -507,8 +527,14 @@ SEXP stri__prepare_arg_integer(SEXP x, const char* argname, bool factors_as_stri
         if (Rf_isVectorList(x) && !stri__check_list_of_scalars(x))
             Rf_warning(MSG__WARN_LIST_COERCION);
 
-        if (allow_error) return stri__call_as_integer((void*)x);
-        else return R_tryCatchError(stri__call_as_integer, (void*)x, stri__handler_null, NULL);
+#if defined(R_VERSION) && R_VERSION >= R_Version(3, 5, 0)
+        if (allow_error)
+            return stri__call_as_integer((void*)x);
+        else
+            return R_tryCatchError(stri__call_as_integer, (void*)x, stri__handler_null, NULL);
+#else
+        return stri__call_as_integer((void*)x);
+#endif
     }
     else if (Rf_isInteger(x))
         return x; // return as-is
@@ -571,16 +597,28 @@ SEXP stri__prepare_arg_logical(SEXP x, const char* argname, bool allow_error)
 //         PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
 //         PROTECT(x = Rf_coerceVector(x, LGLSXP));
 //         UNPROTECT(3);
-        if (allow_error) return stri__call_as_logical((void*)x);
-        else return R_tryCatchError(stri__call_as_logical, (void*)x, stri__handler_null, NULL);
+#if defined(R_VERSION) && R_VERSION >= R_Version(3, 5, 0)
+        if (allow_error)
+            return stri__call_as_logical((void*)x);
+        else
+            return R_tryCatchError(stri__call_as_logical, (void*)x, stri__handler_null, NULL);
+#else
+        return stri__call_as_logical((void*)x);
+#endif
     }
     else if (Rf_isVectorList(x) || isObject(x))
     {
         if (Rf_isVectorList(x) && !stri__check_list_of_scalars(x))
             Rf_warning(MSG__WARN_LIST_COERCION);
 
-        if (allow_error) return stri__call_as_logical((void*)x);
-        else return R_tryCatchError(stri__call_as_logical, (void*)x, stri__handler_null, NULL);
+#if defined(R_VERSION) && R_VERSION >= R_Version(3, 5, 0)
+        if (allow_error)
+            return stri__call_as_logical((void*)x);
+        else
+            return R_tryCatchError(stri__call_as_logical, (void*)x, stri__handler_null, NULL);
+#else
+        return stri__call_as_logical((void*)x);
+#endif
     }
     else if ((bool)isLogical(x))
         return x; // return as-is
@@ -636,6 +674,7 @@ SEXP stri__prepare_arg_raw(SEXP x, const char* argname, bool factors_as_strings,
 //         UNPROTECT(3);
 //         return x;
         // as.raw(as.character(x))
+#if defined(R_VERSION) && R_VERSION >= R_Version(3, 5, 0)
         if (allow_error)
             PROTECT(x = stri__call_as_character((void*)x));
         else {
@@ -645,6 +684,9 @@ SEXP stri__prepare_arg_raw(SEXP x, const char* argname, bool factors_as_strings,
                 return x;
             }
         }
+#else
+        PROTECT(x = stri__call_as_character((void*)x));
+#endif
         PROTECT(x = Rf_coerceVector(x, RAWSXP));
         UNPROTECT(2);
         return x;
@@ -654,8 +696,14 @@ SEXP stri__prepare_arg_raw(SEXP x, const char* argname, bool factors_as_strings,
         if (Rf_isVectorList(x) && !stri__check_list_of_scalars(x))
             Rf_warning(MSG__WARN_LIST_COERCION);
 
-        if (allow_error) return stri__call_as_raw((void*)x);
-        else return R_tryCatchError(stri__call_as_raw, (void*)x, stri__handler_null, NULL);
+#if defined(R_VERSION) && R_VERSION >= R_Version(3, 5, 0)
+        if (allow_error)
+            return stri__call_as_raw((void*)x);
+        else
+            return R_tryCatchError(stri__call_as_raw, (void*)x, stri__handler_null, NULL);
+#else
+        return stri__call_as_raw((void*)x);
+#endif
     }
     else if (TYPEOF(x) == RAWSXP)
         return x; // return as-is
