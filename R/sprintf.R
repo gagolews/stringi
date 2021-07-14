@@ -229,11 +229,8 @@ stri_printf <- function(
     if (!is.list(e2))
         e2 <- list(e2)
 
-    .Call(C_stri_sprintf, e1, e2,
-        na_string=NA_character_,
-        inf_string="Inf",
-        nan_string="NaN",
-        use_length=FALSE)
+    na_string <- NA_character_
+    .Call(C_stri_sprintf, e1, e2, na_string, "Inf", "NaN", FALSE)
 
 #  old version: based on base::sprintf
 #     # this is stringi, assure UTF-8 output and proper NA handling!

@@ -1,6 +1,12 @@
 # What Is New in *stringi*
 
 
+## 1.7.2 (2021-07-14)
+
+* [BUGFIX] Workaround for a bug in `tools::checkFF` failing
+   when `NA_character_` is passed to `.Call`.
+
+
 ## 1.7.1 (2021-07-14)
 
 * [BACKWARD INCOMPATIBILITY] `%s$%` and `%stri$%` now use the new `stri_sprintf`
