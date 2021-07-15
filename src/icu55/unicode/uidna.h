@@ -570,7 +570,7 @@ enum {
  *         in which case it will be greater than destCapacity.
  * @deprecated ICU 55 Use UTS #46 instead via uidna_openUTS46() or class IDNA.
  */
-/*U_DEPRECATED*/ int32_t U_EXPORT2
+U_CAPI /*avoid compiler warning-stringi U_DEPRECATED*/ int32_t U_EXPORT2
 uidna_toASCII(const UChar* src, int32_t srcLength,
               UChar* dest, int32_t destCapacity,
               int32_t options,
@@ -669,7 +669,7 @@ uidna_toUnicode(const UChar* src, int32_t srcLength,
  *         in which case it will be greater than destCapacity.
  * @deprecated ICU 55 Use UTS #46 instead via uidna_openUTS46() or class IDNA.
  */
-/*U_DEPRECATED*/ int32_t U_EXPORT2
+U_CAPI /*avoid compiler warning-stringi U_DEPRECATED*/ int32_t U_EXPORT2
 uidna_IDNToASCII(  const UChar* src, int32_t srcLength,
                    UChar* dest, int32_t destCapacity,
                    int32_t options,

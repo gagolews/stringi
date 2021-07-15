@@ -28,6 +28,9 @@ r-icu-system:
 r-icu-bundle:
 	R CMD INSTALL . --configure-args='--disable-pkg-config'
 
+r-icu-bundle55:
+	R CMD INSTALL . --configure-args='--disable-cxx11 --disable-pkg-config'
+
 reload: r
 	# https://github.com/gagolews/home_bin
 	if [ `whoami` = "gagolews" ]; then \
@@ -64,7 +67,7 @@ check-revdep: r
 	Rscript -e 'revdepcheck::revdep_report()'
 	# TODO export revdep/*.md
 
-check-kalibera: build
+check-rchk: build
 	# https://github.com/kalibera/rchk
 	cd .. && docker run -v `pwd`:/rchk/packages kalibera/rchk:latest \
 	    /rchk/packages/`ls -t ${PKGNAME}*.tar.gz | head -1` | \
