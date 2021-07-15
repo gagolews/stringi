@@ -1,10 +1,16 @@
 # What Is New in *stringi*
 
 
+## 1.7.3 (2021-07-15)
+
+* [BUGFIX] Fixed the previous patch of ICU55 causing a build failure on,
+  amongst others, CRAN's Solaris-based target.
+
+
 ## 1.7.2 (2021-07-14)
 
 * [BUGFIX] Workaround for a bug in `tools::checkFF` failing
-   when `NA_character_` is passed to `.Call`.
+  when `NA_character_` is passed to `.Call`.
 
 
 ## 1.7.1 (2021-07-14)

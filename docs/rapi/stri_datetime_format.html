@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.7.2
+                1.7.3
               </div>
             
           
@@ -877,13 +877,13 @@
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;2015-02-28&#39;</span><span class="p">,</span> <span class="s">&#39;2015-02-29&#39;</span><span class="p">),</span> <span class="s">&#39;yyyy-MM-dd&#39;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2015-02-28 20:20:26 AEDT&quot; NA</span>
+<span class="c1">## [1] &quot;2015-02-28 10:01:34 AEDT&quot; NA</span>
 <span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;2015-02-28&#39;</span><span class="p">,</span> <span class="s">&#39;2015-02-29&#39;</span><span class="p">),</span> <span class="s">&#39;yyyy-MM-dd&#39;</span><span class="p">,</span> <span class="n">lenient</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2015-02-28 20:20:26 AEDT&quot; &quot;2015-03-01 20:20:26 AEDT&quot;</span>
+<span class="c1">## [1] &quot;2015-02-28 10:01:34 AEDT&quot; &quot;2015-03-01 10:01:34 AEDT&quot;</span>
 <span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="s">&#39;19 lipca 2015&#39;</span><span class="p">,</span> <span class="s">&#39;date_long&#39;</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;pl_PL&#39;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2015-07-19 20:20:26 AEST&quot;</span>
+<span class="c1">## [1] &quot;2015-07-19 10:01:34 AEST&quot;</span>
 <span class="nf">stri_datetime_format</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span> <span class="s">&#39;datetime_relative_medium&#39;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;today, 8:20:26 pm&quot;</span>
+<span class="c1">## [1] &quot;today, 10:01:34 am&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -905,7 +905,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-07-14T20:21:01+1000.
+        Last updated on 2021-07-15T10:02:09+1000.
       </span>
 
     </p>
