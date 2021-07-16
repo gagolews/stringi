@@ -80,7 +80,7 @@
 
 * [BUGFIX] Few functions (`stri_length`, `stri_enc_toutf32`, etc.)
   did not throw an exception on an invalid UTF-8
-  byte sequence (and merely issues a warning instead).
+  byte sequence (and merely issued a warning instead).
 
 * [BUGFIX] `stri_datetime_fstr` did not honour `NA_character_`
   and did not parse format strings such as `"%Y%m%d"` correctly.
