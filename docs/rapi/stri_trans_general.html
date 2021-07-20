@@ -385,11 +385,11 @@
 <span class="c1">## [1] &quot;a&quot;</span>
 <span class="nf">stri_trans_general</span><span class="p">(</span><span class="s">&#39;\u2620&#39;</span><span class="p">,</span> <span class="s">&#39;hex/c&#39;</span><span class="p">)</span> <span class="c1"># to hex</span>
 <span class="c1">## [1] &quot;\\u2620&quot;</span>
-<span class="n">x</span> <span class="o">&lt;-</span> <span class="s">&quot;\uC11C\uC6B8\uD2B9\uBCC4\uC2DC\u0020\uC885\uB85C\uAD6C\u0020\uC0AC\uC9C1\uB3D9&quot;</span>
+<span class="n">x</span> <span class="o">&lt;-</span> <span class="s">&quot;\uC885\uB85C\uAD6C \uC0AC\uC9C1\uB3D9&quot;</span>
 <span class="n">stringi</span><span class="o">::</span><span class="nf">stri_trans_general</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;Hangul-Latin&quot;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;seoulteugbyeolsi jonglogu sajigdong&quot;</span>
-<span class="c1"># Deviate from the ICU rules of Romanisation of Korean,</span>
-<span class="c1"># see https://en.wikipedia.org/wiki/%E3%84%B1</span>
+<span class="c1">## [1] &quot;jonglogu sajigdong&quot;</span>
+<span class="c1"># Deviate from the ICU rules of romanisation of Korean,</span>
+<span class="c1"># see https://en.wikipedia.org/wiki/Romanization_of_Korean</span>
 <span class="n">id</span> <span class="o">&lt;-</span> <span class="s">&quot;</span>
 <span class="s">    :: NFD;</span>
 <span class="s">    \u11A8 &gt; k;</span>
@@ -399,7 +399,7 @@
 <span class="s">    :: Hangul-Latin;</span>
 <span class="s">&quot;</span>
 <span class="n">stringi</span><span class="o">::</span><span class="nf">stri_trans_general</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="n">rules</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-<span class="c1">## [1] &quot;seoulteukbyeolsi jongrogu sajikdong&quot;</span>
+<span class="c1">## [1] &quot;jongrogu sajikdong&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -421,7 +421,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-07-15T13:05:33+1000.
+        Last updated on 2021-07-20T18:21:59+1000.
       </span>
 
     </p>

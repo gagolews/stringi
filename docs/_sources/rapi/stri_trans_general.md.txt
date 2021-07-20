@@ -79,11 +79,11 @@ stri_trans_general('\\N{latin small letter a}', 'name-any') # decode name
 ## [1] "a"
 stri_trans_general('\u2620', 'hex/c') # to hex
 ## [1] "\\u2620"
-x <- "\uC11C\uC6B8\uD2B9\uBCC4\uC2DC\u0020\uC885\uB85C\uAD6C\u0020\uC0AC\uC9C1\uB3D9"
+x <- "\uC885\uB85C\uAD6C \uC0AC\uC9C1\uB3D9"
 stringi::stri_trans_general(x, "Hangul-Latin")
-## [1] "seoulteugbyeolsi jonglogu sajigdong"
-# Deviate from the ICU rules of Romanisation of Korean,
-# see https://en.wikipedia.org/wiki/%E3%84%B1
+## [1] "jonglogu sajigdong"
+# Deviate from the ICU rules of romanisation of Korean,
+# see https://en.wikipedia.org/wiki/Romanization_of_Korean
 id <- "
     :: NFD;
     \u11A8 > k;
@@ -93,5 +93,5 @@ id <- "
     :: Hangul-Latin;
 "
 stringi::stri_trans_general(x, id, rules=TRUE)
-## [1] "seoulteukbyeolsi jongrogu sajikdong"
+## [1] "jongrogu sajikdong"
 ```
