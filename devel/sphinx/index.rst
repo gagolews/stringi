@@ -49,7 +49,7 @@ and many more.
 *stringi* is among the most often downloaded `R <https://r-project.org/>`_
 packages. |downloads1| |downloads2|
 
-You can obtain it from `CRAN <https://cran.r-project.org/web/packages/stringi/>`_
+You can obtain it from `CRAN <https://cran.r-project.org/package=stringi>`_
 by calling:
 
 .. code-block:: r
@@ -65,7 +65,7 @@ It is distributed under the open source BSD-3-clause
 
 The package's API was inspired by that of the early (pre-tidyverse; v0.6.2)
 version of Hadley Wickham's
-`stringr <https://cran.r-project.org/web/packages/stringr/>`_
+`stringr <https://cran.r-project.org/package=stringr>`_
 package (and since the 2015 v1.0.0 *stringr* is powered by *stringi*).
 Moreover, Hadley suggested quite a few new package features.
 The contributions from Bartłomiej Tartanus and
@@ -123,7 +123,7 @@ for a set of wrappers around *stringi* with a base R-compatible API.
 
     Source Code (GitHub) <https://github.com/gagolews/stringi>
     Bug Tracker and Feature Suggestions <https://github.com/gagolews/stringi/issues>
-    CRAN Entry <https://cran.r-project.org/web/packages/stringi/>
+    CRAN Entry <https://cran.r-project.org/package=stringi>
     Author's Homepage <https://www.gagolewski.com/>
     C++ API — Rcpp Example <https://github.com/gagolews/ExampleRcppStringi>
     news.md
