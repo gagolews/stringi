@@ -38,6 +38,7 @@
 #include "stri_string8buf.h"
 #include <cstring>
 #include <vector>
+#include <deque>
 
 
 #define STRI_SPRINTF_NOT_PROVIDED (NA_INTEGER+1)  /* -2**31+2 */
@@ -214,6 +215,8 @@ int stri__find_type_spec(const char* f, R_len_t j0, R_len_t n)
 /** Enables the fetching of the i-th/next integer/real/string datum from `...`.
  *
  * @version 1.6.2 (Marek Gagolewski, 2021-05-24)
+ * @version 1.7.4 (Marek Gagolewski, 2021-08-05)
+ *     #449: segfaults; use R_PreserveObject
  */
 class StriSprintfDataProvider
 {
@@ -224,7 +227,7 @@ private:
     std::vector< StriContainerInteger* > x_integer;
     std::vector< StriContainerDouble* > x_double;
     std::vector< StriContainerUTF8* > x_string;
-    R_len_t nprotect;
+    std::deque< SEXP > protected_objects;
     R_len_t cur_elem;  // 0..vectorize_length-1
     R_len_t cur_item;  // 0..narg-1
 
@@ -239,8 +242,7 @@ public:
         vectorize_length(vectorize_length),
         x_integer(narg, nullptr),
         x_double(narg, nullptr),
-        x_string(narg, nullptr),
-        nprotect(0)
+        x_string(narg, nullptr)
     {
         STRI_ASSERT(Rf_isVectorList(x));
         cur_elem = -1;
@@ -266,7 +268,10 @@ public:
             }
             if (this_unused) num_unused++;
         }
-        if (nprotect > 0) UNPROTECT(nprotect);
+
+        for (R_len_t j=0; j<(R_len_t)protected_objects.size(); ++j) {
+            R_ReleaseObject(protected_objects[j]);
+        }
 
         if (warn_if_arg_unused) {
             if (num_unused == 1)
@@ -301,7 +306,9 @@ public:
             // the following may call Rf_error:
             PROTECT(y = stri__prepare_arg_integer(VECTOR_ELT(x, i), "...",
                 false/*factors_as_strings*/, false/*allow_error*/));
-            nprotect++;
+            R_PreserveObject(y);
+            protected_objects.push_back(y);
+            UNPROTECT(1);
             if (isNull(y)) throw StriException(MSG__ARG_EXPECTED_INTEGER, "...");
             x_integer[i] = new StriContainerInteger(y, vectorize_length);
         }
@@ -329,7 +336,9 @@ public:
             // the following may call Rf_error:
             PROTECT(y = stri__prepare_arg_double(VECTOR_ELT(x, i), "...",
                 false/*factors_as_strings*/, false/*allow_error*/));
-            nprotect++;
+            R_PreserveObject(y);
+            protected_objects.push_back(y);
+            UNPROTECT(1);
             if (isNull(y)) throw StriException(MSG__ARG_EXPECTED_NUMERIC, "...");
             x_double[i] = new StriContainerDouble(y, vectorize_length);
         }
@@ -356,7 +365,9 @@ public:
             // the following may call Rf_error:
             PROTECT(y = stri__prepare_arg_string(VECTOR_ELT(x, i), "...",
                 false/*allow_error*/));
-            nprotect++;
+            R_PreserveObject(y);
+            protected_objects.push_back(y);
+            UNPROTECT(1);
             if (isNull(y)) throw StriException(MSG__ARG_EXPECTED_STRING, "...");
             x_string[i] = new StriContainerUTF8(y, vectorize_length);
         }
@@ -377,7 +388,7 @@ public:
 class StriSprintfFormatSpec
 {
 private:
-    StriSprintfDataProvider& data;
+    StriSprintfDataProvider* data;
     const String8& na_string;
     const String8& inf_string;
     const String8& nan_string;
@@ -404,7 +415,7 @@ public:
         const char* f,
         R_len_t j0,
         R_len_t j1,
-        StriSprintfDataProvider& data,
+        StriSprintfDataProvider* data,
         const String8& na_string,
         const String8& inf_string,
         const String8& nan_string,
@@ -483,7 +494,7 @@ public:
                 );
                 if (which_width != STRI_SPRINTF_NOT_PROVIDED) which_width--; /*0-based indexing*/
             }
-            min_width = data.getIntegerOrNA(which_width);
+            min_width = data->getIntegerOrNA(which_width);
         }
         // else if . -- treated below
         // else if type spec like dfgxo -- treated below
@@ -508,7 +519,7 @@ public:
                     );
                     if (which_precision != STRI_SPRINTF_NOT_PROVIDED) which_precision--; /*0-based indexing*/
                 }
-                precision = data.getIntegerOrNA(which_precision);
+                precision = data->getIntegerOrNA(which_precision);
             }
             // else error, exception thrown below
         }
@@ -595,15 +606,15 @@ public:
     {
         StriSprintfFormatStatus status;
         if (type == STRI_SPRINTF_TYPE_INTEGER) {
-            int datum = data.getIntegerOrNA(which_datum);
+            int datum = data->getIntegerOrNA(which_datum);
             status = preformatDatum_doxX(preformatted_datum/*by reference*/, datum);
         }
         else if (type == STRI_SPRINTF_TYPE_DOUBLE) {
-            double datum = data.getDoubleOrNA(which_datum);
+            double datum = data->getDoubleOrNA(which_datum);
             status = preformatDatum_feEgGaA(preformatted_datum/*by reference*/, datum);
         }
         else { // string
-            const String8& datum = data.getStringOrNA(which_datum);
+            const String8& datum = data->getStringOrNA(which_datum);
             status = preformatDatum_s(preformatted_datum, datum);
         }
 
@@ -802,7 +813,7 @@ private:
  */
 SEXP stri__sprintf_1(
     const String8& _f,
-    StriSprintfDataProvider& data,
+    StriSprintfDataProvider* data,
     const String8& na_string,
     const String8& inf_string,
     const String8& nan_string,
@@ -925,7 +936,7 @@ SEXP stri_sprintf(SEXP format, SEXP x, SEXP na_string,
     StriContainerUTF8 inf_string_cont(inf_string, 1);
     StriContainerUTF8 nan_string_cont(nan_string, 1);
 
-    StriSprintfDataProvider data(x, vectorize_length);
+    StriSprintfDataProvider* data = new StriSprintfDataProvider(x, vectorize_length);
 
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
@@ -945,7 +956,7 @@ SEXP stri_sprintf(SEXP format, SEXP x, SEXP na_string,
         // Let's keep the code simple; the possibility of having
         // *-fields of different max widths/numbers of different precisions
         // makes the process quite complicated anyway.
-        data.reset(i);
+        data->reset(i);
 
         SEXP out;
         STRI__PROTECT(out = stri__sprintf_1(
@@ -961,7 +972,9 @@ SEXP stri_sprintf(SEXP format, SEXP x, SEXP na_string,
     }
 
     // there was no error, we may want to warn about unused args
-    data.warn_if_arg_unused = true;
+    data->warn_if_arg_unused = true;
+    delete data;  // need to be deleted before UNPROTECTing the x list
+    data = NULL;
 
     STRI__UNPROTECT_ALL
     return ret;

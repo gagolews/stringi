@@ -35,7 +35,6 @@
 #include "stri_ucnv.h"
 #include "stri_string8buf.h"
 
-
 /**
  * Default constructor
  *
