@@ -62,8 +62,8 @@
 #include <unicode/timezone.h>
 using namespace icu;
 
-#define USE_RINTERNALS
-#define R_NO_REMAP
+// #define USE_RINTERNALS  removed 2021-08-12 - do not use anymore
+// #define R_NO_REMAP      removed 2021-08-12 - do not use anymore
 #include <R.h>
 #include <Rversion.h>
 #include <Rinternals.h>

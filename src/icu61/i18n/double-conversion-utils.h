@@ -46,9 +46,7 @@
 #include "uassert.h"
 #define ASSERT U_ASSERT
 
-// stringi patch - Marek Gagolewskim
-#define USE_RINTERNALS
-#define R_NO_REMAP
+// stringi patch - Marek Gagolewski
 #include <R.h>
 #include <Rversion.h>
 #include <Rinternals.h>
