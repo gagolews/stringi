@@ -46,8 +46,6 @@
     // Use the predefined value.
 #else
 #ifdef U_STRINGI_PATCHES
-// #define USE_RINTERNALS
-// #define R_NO_REMAP
 // #include <R.h>
 extern "C" void Rf_error(const char *str, ...);
 #   define UPRV_UNREACHABLE (Rf_error("Internal error in ICU: UPRV_UNREACHABLE"))
