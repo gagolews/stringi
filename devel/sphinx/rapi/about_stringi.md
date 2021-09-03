@@ -40,7 +40,7 @@ Refer to the following:
 
 -   [`stri_stats_general`](stri_stats_general.md) and [`stri_stats_latex`](stri_stats_latex.md) for gathering some fancy statistics on a character vector\'s contents.
 
--   [`stri_join`](stri_join.md), [`stri_dup`](stri_dup.md), [`%s+%`](operator_add.md), and [`stri_flatten`](stri_flatten.md) for concatenation-based operations.
+-   [`stri_join`](stri_join.md), [`stri_dup`](stri_dup.md), [`%s+%`](+25s+2B+25.md), and [`stri_flatten`](stri_flatten.md) for concatenation-based operations.
 
 -   [`stri_sub`](stri_sub.md) for extracting and replacing substrings, and [`stri_reverse`](stri_reverse.md) for a joyful function to reverse all code points in a string.
 
@@ -50,7 +50,7 @@ Refer to the following:
 
 -   [`stri_trans_tolower`](stri_trans_casemap.md) (among others) for case mapping, i.e., conversion to lower, UPPER, or Title Case, [`stri_trans_nfc`](stri_trans_nf.md) (among others) for Unicode normalization, [`stri_trans_char`](stri_trans_char.md) for translating individual code points, and [`stri_trans_general`](stri_trans_general.md) for other universal yet powerful text transforms, including transliteration.
 
--   [`stri_cmp`](stri_compare.md), [`%s<%`](operator_compare.md), [`stri_order`](stri_order.md), [`stri_sort`](stri_sort.md), [`stri_rank`](stri_rank.md), [`stri_unique`](stri_unique.md), and [`stri_duplicated`](stri_duplicated.md) for collation-based, locale-aware operations, see also [about\_locale](about_locale.md).
+-   [`stri_cmp`](stri_compare.md), [`%s<%`](+25s+3C+25.md), [`stri_order`](stri_order.md), [`stri_sort`](stri_sort.md), [`stri_rank`](stri_rank.md), [`stri_unique`](stri_unique.md), and [`stri_duplicated`](stri_duplicated.md) for collation-based, locale-aware operations, see also [about\_locale](about_locale.md).
 
 -   [`stri_split_lines`](stri_split_lines.md) (among others) to split a string into text lines.
 
@@ -70,7 +70,7 @@ Marek Gagolewski, with contributions from Bartek Tartanus and many others. ICU4C
 
 *<span class="pkg">stringi</span> Package homepage*, <https://stringi.gagolewski.com/>
 
-*ICU -- International Components for Unicode*, <http://site.icu-project.org/>
+*ICU -- International Components for Unicode*, <https://icu.unicode.org/>
 
 *ICU4C API Documentation*, <https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/>
 

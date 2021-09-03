@@ -115,13 +115,17 @@ interesting facilities and topics.
 }
 
 \references{
-\emph{\pkg{stringi} Package homepage}, \url{https://stringi.gagolewski.com/}
+\emph{\pkg{stringi} Package homepage},
+\url{https://stringi.gagolewski.com/}
 
-\emph{ICU -- International Components for Unicode}, \url{http://site.icu-project.org/}
+\emph{ICU -- International Components for Unicode},
+\url{https://icu.unicode.org/}
 
-\emph{ICU4C API Documentation}, \url{https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/}
+\emph{ICU4C API Documentation},
+\url{https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/}
 
-\emph{The Unicode Consortium}, \url{https://home.unicode.org/}
+\emph{The Unicode Consortium},
+\url{https://home.unicode.org/}
 
 \emph{UTF-8, a transformation format of ISO 10646} -- RFC 3629,
 \url{https://tools.ietf.org/html/rfc3629}

@@ -99,8 +99,6 @@ docs: sphinx
 	@echo "*** Therefore, we check if the package version is like 1.2.3"\
 	    "and not 1.2.2.9007."
 	Rscript --vanilla -e "stopifnot(length(unclass(packageVersion('${PKGNAME}'))[[1]]) < 4)"
-	rm -rf devel/sphinx/_build/
-	cd devel/sphinx && make html
 	rm -rf docs/
 	mkdir docs/
 	cp -rf devel/sphinx/_build/html/* docs/

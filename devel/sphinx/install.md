@@ -28,7 +28,7 @@ The stringi package depends on the ICU4C >= 55 library.
 
 If we install the package from sources and either:
 
-* this requirement is not met (check out http://site.icu-project.org/download,
+* this requirement is not met (check out <https://icu.unicode.org/download>,
    the `libicu-devel` rpm on Fedora/CentOS/OpenSUSE,
    `libicu-dev` on Ubuntu/Debian, etc.),
 

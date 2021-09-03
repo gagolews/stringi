@@ -39,7 +39,7 @@ Returns a single string, i.e., a character vector of length 1.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other join: [`%s+%()`](operator_add.md), [`stri_dup()`](stri_dup.md), [`stri_join_list()`](stri_join_list.md), [`stri_join()`](stri_join.md)
+Other join: [`%s+%()`](+25s+2B+25.md), [`stri_dup()`](stri_dup.md), [`stri_join_list()`](stri_join_list.md), [`stri_join()`](stri_join.md)
 
 ## Examples
 
