@@ -9,7 +9,7 @@ stringi: THE String Processing Package for R
 
 
 
-Thanks to `ICU <https://www.icu-project.org>`_,
+Thanks to `ICU <https://icu.unicode.org/>`_,
 *stringi* fully supports a wide range
 of `Unicode <https://www.unicode.org/>`_ standards
 (see also `this video <https://www.youtube.com/watch?v=-n2nlPHEMG8>`_).

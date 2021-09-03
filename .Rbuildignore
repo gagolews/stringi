@@ -30,6 +30,7 @@ kate-swp$
 ^m4
 ^aclocal\.m4$
 ^\.gitignore$
+^\.grepexclude$
 ^\.travis\.yml$
 ^\.vscode
 ^\.nojekyll

@@ -1,0 +1,7 @@
+devel/sphinx/rapi/*
+devel/sphinx/chapter/*
+devel/sphinx/_build/*
+.*
+docs/*
+man/*
+

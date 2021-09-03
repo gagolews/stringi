@@ -69,7 +69,7 @@ These functions return a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other length: [`%s$%()`](operator_dollar.md), [`stri_isempty()`](stri_isempty.md), [`stri_length()`](stri_length.md), [`stri_numbytes()`](stri_numbytes.md), [`stri_sprintf()`](stri_sprintf.md), [`stri_width()`](stri_width.md)
+Other length: [`%s$%()`](+25s+24+25.md), [`stri_isempty()`](stri_isempty.md), [`stri_length()`](stri_length.md), [`stri_numbytes()`](stri_numbytes.md), [`stri_sprintf()`](stri_sprintf.md), [`stri_width()`](stri_width.md)
 
 ## Examples
 

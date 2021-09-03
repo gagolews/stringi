@@ -20,7 +20,7 @@ around **stringi** with a base R-compatible API.
 **stringi**  (pronounced “stringy”, IPA [strinɡi]) is THE *R*
 package for string/text/natural language processing.
 It is very fast, consistent, convenient, and — thanks to the
-[ICU – International Components for Unicode](http://site.icu-project.org/)
+[ICU – International Components for Unicode](https://icu.unicode.org/)
 library — portable across all locales and platforms.
 
 Available features include:
