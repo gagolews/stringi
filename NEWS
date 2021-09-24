@@ -5,6 +5,9 @@
 
 * [DOCUMENTATION] ICU Project site has been moved to <https://icu.unicode.org/>.
 
+* TO DO..  The macro `AC_LANG_CPLUSPLUS' is obsolete. #457
+
+
 
 ## 1.7.4 (2021-08-12)
 
