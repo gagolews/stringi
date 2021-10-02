@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.7.4
+                1.7.5
               </div>
             
           
@@ -93,7 +93,8 @@
               <p class="caption"><span class="caption-text">stringi</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://stringi.gagolewski.com/_static/vignette/stringi.pdf">Paper (Draft)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weave/example.html">Example Use case: Data preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference Manual</span></p>
 <ul class="current">
@@ -368,18 +369,18 @@
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_fields</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">())</span>
 <span class="c1">##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth</span>
-<span class="c1">## 1 2021     9   3   10     33     17          37         36           1</span>
+<span class="c1">## 1 2021    10   2   15     20      3         375         40           1</span>
 <span class="c1">##   DayOfYear DayOfWeek Hour12 AmPm Era</span>
-<span class="c1">## 1       246         6     10    1   2</span>
+<span class="c1">## 1       275         7      3    2   2</span>
 <span class="nf">stri_datetime_fields</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span>
 <span class="c1">##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth</span>
-<span class="c1">## 1 5781    13  26   10     33     17          40         51           4</span>
+<span class="c1">## 1 5782     1  26   15     20      3         379          4           4</span>
 <span class="c1">##   DayOfYear DayOfWeek Hour12 AmPm Era</span>
-<span class="c1">## 1       350         6     10    1   1</span>
+<span class="c1">## 1        26         7      3    2   1</span>
 <span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span><span class="o">$</span><span class="n">Month</span><span class="p">[</span>
    <span class="nf">stri_datetime_fields</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span><span class="o">$</span><span class="n">Month</span>
 <span class="p">]</span>
-<span class="c1">## [1] &quot;Elul&quot;</span>
+<span class="c1">## [1] &quot;Tishri&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -401,7 +402,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-09-03T10:33:42+1000.
+        Last updated on 2021-10-02T15:20:23+1000.
       </span>
 
     </p>

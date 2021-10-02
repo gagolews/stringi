@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.7.4
+                1.7.5
               </div>
             
           
@@ -93,7 +93,8 @@
               <p class="caption"><span class="caption-text">stringi</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://stringi.gagolewski.com/_static/vignette/stringi.pdf">Paper (Draft)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weave/example.html">Example Use case: Data preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference Manual</span></p>
 <ul class="current">
@@ -374,9 +375,9 @@
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">stri_datetime_now</span><span class="p">()</span>
 <span class="nf">stri_datetime_add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s">&#39;months&#39;</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="m">2</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2021-11-03 10:33:16 AEDT&quot;</span>
+<span class="c1">## [1] &quot;2021-12-02 15:20:02 AEDT&quot;</span>
 <span class="nf">stri_datetime_add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">-2</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s">&#39;months&#39;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2021-09-03 10:33:16 AEST&quot;</span>
+<span class="c1">## [1] &quot;2021-10-02 15:20:02 AEST&quot;</span>
 <span class="nf">stri_datetime_add</span><span class="p">(</span><span class="nf">stri_datetime_create</span><span class="p">(</span><span class="m">2014</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">20</span><span class="p">),</span> <span class="m">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s">&#39;years&#39;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;2015-04-20 12:00:00 AEST&quot;</span>
 <span class="nf">stri_datetime_add</span><span class="p">(</span><span class="nf">stri_datetime_create</span><span class="p">(</span><span class="m">2014</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">20</span><span class="p">),</span> <span class="m">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s">&#39;years&#39;</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span>
@@ -404,7 +405,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-09-03T10:33:42+1000.
+        Last updated on 2021-10-02T15:20:23+1000.
       </span>
 
     </p>

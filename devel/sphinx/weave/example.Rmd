@@ -1,0 +1,144 @@
+Example Use Case: Data Preparation
+==================================
+
+```{r echo=FALSE, results="asis", message=FALSE}
+source("common.R")
+opts_chunk$set(cache.path="cache/example_")
+```
+
+What follows is a short case study where we prepare a
+web-scraped data set for further processing.
+
+Assume we wish to gather and analyse climate data for major cities
+around the world based on information downloaded from Wikipedia. For
+each location from a given list of settlements (e.g., fetched from one
+of the pages linked under
+<https://en.wikipedia.org/wiki/Lists_of_cities>), we would like to
+harvest the relevant temperature and precipitation data. Without harm in
+generality, let us focus on the city of Melbourne, VIC, Australia.
+
+The parsing of the city's Wikipedia page can be done by means of the
+functions from the *xml2* {cite}`xml2` and *rvest* {cite}`rvest` packages.
+
+```{r html-example-1}
+library("xml2")
+library("rvest")
+```
+
+First, let us load and parse the HTML file downloaded on 2020--09--17
+(see <https://github.com/gagolews/stringi/tree/master/docs/_static/vignette>):
+
+```{r html-example-2}
+f <- read_html("20200917_wikipedia_melbourne.html")
+```
+
+Second, we extract all `table` elements and gather them in a list of
+HTML nodes, `all_tables`. We then extract the underlying raw text data
+and store them in a character vector named `text_tables`.
+
+```{r html-example-3}
+all_tables <- html_nodes(f, "table")
+text_tables <- sapply(all_tables, html_text)
+str(text_tables, nchar.max=65, vec.len=5, strict.width="wrap") # preview
+```
+
+Most Wikipedia pages related to particular cities include a table
+labelled as "Climate data". We need to pinpoint it amongst all the other
+tables. For this, we will rely on *stringi*'s `stri_detect_fixed()`
+function that, in the configuration below, is used to extract the index
+of the relevant table.
+
+```{r html-example-4}
+library("stringi")
+(idx <- which(stri_detect_fixed(text_tables, "climate data",
+  case_insensitive=TRUE, max_count=1)))
+```
+
+Let's use *rvest*'s `html_table()` to convert the above table
+to a data frame object.
+
+```{r html-example-5,results="hide"}
+(x <- as.data.frame(html_table(all_tables[[idx]], fill=TRUE)))
+```
+
+```{r html-example-6,echo=FALSE}
+.x <- x[c(1, 2, 3, ncol(x))]
+.x[,3] <- "..."
+names(.x)[3] <- "..."
+print(.x)
+```
+
+It is evident that this object requires some significant cleansing and
+transforming before it can be subject to any statistical analyses.
+First, for the sake of convenience, let us convert it to a character
+matrix so that the processing of all the cells can be vectorised (a
+matrix in R is just a single "long" vector, whereas a data frame is a
+list of many atomic vectors).
+
+```{r html-example-7}
+x <- as.matrix(x)
+```
+
+The `as.numeric()` function will find the parsing of the Unicode MINUS
+SIGN (U+2212, "−") difficult, therefore let us call the transliterator
+first in order to replace it (and other potentially problematic
+characters) with its simpler equivalent:
+
+```{r html-example-8}
+x[, ] <- stri_trans_general(x, "Publishing-Any; Any-ASCII")
+```
+
+Note that it is the first row of the matrix that defines the column
+names. Moreover, the last row just gives the data source and hence may
+be removed.
+
+```{r html-example-9}
+dimnames(x) <- list(x[, 1], x[1, ])  # row, column names
+x <- x[2:(nrow(x) - 1), 2:ncol(x)]   # skip 1st/last row and 1st column
+x[, c(1, ncol(x))]                   # example columns
+```
+
+Commas that are used as thousands separators (commas surrounded by
+digits) should be dropped:
+
+```{r html-example-10}
+x[, ] <- stri_replace_all_regex(x, "(?<=\\d),(?=\\d)", "")
+```
+
+The numbers and alternative units in parentheses are redundant,
+therefore these should be taken care of as well:
+
+```{r html-example-11}
+x[, ] <- stri_replace_all_regex(x,
+  "(\\d+(?:\\.\\d+)?)\\(\\d+(?:\\.\\d+)?\\)", "$1")
+dimnames(x)[[1]] <- stri_replace_all_fixed(dimnames(x)[[1]],
+  c(" (°F)", " (inches)"), c("", ""), vectorise_all=FALSE)
+```
+
+At last, `as.numeric()` can be used to re-interpret all the strings as
+numbers:
+
+```{r html-example-12}
+x <- structure(as.numeric(x), dim=dim(x), dimnames=dimnames(x))
+x[, c(1, 6, ncol(x))]  # example columns
+```
+
+We now have a cleansed matrix at our disposal. We can, for instance,
+compute the monthly temperature ranges:
+
+```{r html-example-13}
+x["Record high °C", -ncol(x)] - x["Record low °C", -ncol(x)]
+```
+
+or the average daily precipitation:
+
+```{r html-example-14}
+sum(x["Average rainfall mm", -ncol(x)]) / 365.25
+```
+
+and so forth.
+
+For the climate data on other cities, very similar operations will need
+to be performed -- the whole process of scraping and cleansing data can
+be automated quite easily.
+

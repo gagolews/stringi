@@ -85,11 +85,15 @@ news:
 	cd devel/sphinx && cp ../../NEWS news.md
 	cd devel/sphinx && cp ../../INSTALL install.md
 
+weave:
+	cd devel/sphinx/weave && make && cd ../../../
+	devel/sphinx/fix-code-blocks.sh devel/sphinx/weave
+
 weave-examples:
 	cd devel/sphinx/rapi && Rscript -e "Rd2rst::weave_examples('${PKGNAME}', '.')"
 	devel/sphinx/fix-code-blocks.sh devel/sphinx/rapi
 
-sphinx: stop-on-utf8 r rd2myst news weave-examples
+sphinx: stop-on-utf8 r rd2myst weave news weave-examples
 	rm -rf devel/sphinx/_build/
 	cd devel/sphinx && make html
 	@echo "*** Browse the generated documentation at"\
