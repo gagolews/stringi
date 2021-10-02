@@ -6,16 +6,18 @@ dnl
 dnl @category Cxx
 dnl @author Todd Veldhuizen
 dnl @author Luc Maisonobe <luc@spaceroots.org>
-dnl @version 2004-02-04
 dnl @license AllPermissive
+dnl @version 2021-10-02
+
+dnl Marek's 2021-10-02 update: replace obsolete AC_TRY_COMPILE, AC_LANG_CPLUSPLUS
 
 AC_DEFUN([AC_CXX_NAMESPACES],
 [AC_CACHE_CHECK(whether the compiler implements namespaces,
 ac_cv_cxx_namespaces,
 [AC_LANG_SAVE
- AC_LANG_CPLUSPLUS
- AC_TRY_COMPILE([namespace Outer { namespace Inner { int i = 0; }}],
-                [using namespace Outer::Inner; return i;],
+ AC_LANG([C++])
+ AC_LINK_IFELSE([AC_LANG_PROGRAM([[namespace Outer { namespace Inner { int i = 0; }}]],
+                [[using namespace Outer::Inner; return i;]])],
  ac_cv_cxx_namespaces=yes, ac_cv_cxx_namespaces=no)
  AC_LANG_RESTORE
 ])

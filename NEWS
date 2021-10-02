@@ -14,7 +14,8 @@
 
 * [DOCUMENTATION] ICU Project site has been moved to <https://icu.unicode.org/>.
 
-* TO DO..  #457: The macro `AC_LANG_CPLUSPLUS' was obsolete.
+* [BUILD TIME] #457: The `autoconf` macros `AC_LANG_CPLUSPLUS`
+  and `AC_TRY_COMPILE` were obsolete.
 
 * TO DO..  #458: 'embedded nul in string'
 
