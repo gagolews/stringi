@@ -67,6 +67,7 @@ stri_search_regex_subset.cpp \
 stri_sort.cpp \
 stri_sprintf.cpp \
 stri_stats.cpp \
+stri_string8.cpp \
 stri_stringi.cpp \
 stri_sub.cpp \
 stri_test.cpp \

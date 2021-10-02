@@ -17,7 +17,8 @@
 * [BUILD TIME] #457: The `autoconf` macros `AC_LANG_CPLUSPLUS`
   and `AC_TRY_COMPILE` were obsolete.
 
-* TO DO..  #458: 'embedded nul in string'
+* [BUGFIX] #458: Passing ALTREP objects no longer yields
+  'embeded nul in string' errors.
 
 
 ## 1.7.4 (2021-08-12)

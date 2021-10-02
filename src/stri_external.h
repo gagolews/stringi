@@ -71,7 +71,9 @@ using namespace icu;
 #include <Rdefines.h>
 #include <R_ext/Rdynload.h>
 
-#ifndef ALTREP
+#if R_VERSION >= R_Version(3, 5, 0)
+
+#else
 /* ALTREP is R>=3.5.0 */
 #define ALTREP(x) (0)
 #endif
