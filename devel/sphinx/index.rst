@@ -76,6 +76,9 @@ Also check out `stringx <https://stringx.gagolewski.com/>`_
 for a set of wrappers around *stringi* with a base R-compatible API.
 
 ..  COMMENT
+    :cite:`stringi`
+
+..  COMMENT
     This should be part of some other section maybe.
 
     Base R functions are not suitable for natural language processing.

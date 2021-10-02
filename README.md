@@ -8,10 +8,7 @@
 ![RStudio CRAN mirror downloads](http://cranlogs.r-pkg.org/badges/last-day/stringi)
 
 
-> Online reference manual is available at https://stringi.gagolewski.com/.
-
-> Paper on **stringi** (draft version — any comments are welcome)
-is available at https://stringi.gagolewski.com/_static/vignette/stringi.pdf.
+> A comprehensive tutorial and reference manual is available at https://stringi.gagolewski.com/.
 
 > Check out [**stringx**](https://stringx.gagolewski.com/) for a set of wrappers
 around **stringi** with a base R-compatible API.
@@ -50,12 +47,15 @@ version of Hadley Wickham's
 package (and since the 2015 v1.0.0 *stringr* is powered by *stringi*).
 
 
-
 **Homepage**: https://stringi.gagolewski.com/
 
 **CRAN Entry**: https://cran.r-project.org/web/packages/stringi/
 
 [How to access the stringi C++ API from within an Rcpp-based R package](https://github.com/gagolews/ExampleRcppStringi)
+
+**Citation**: M. Gagolewski,
+[*stringi*: Fast and portable character string processing in R](https://stringi.gagolewski.com/_static/vignette/stringi.pdf),
+*Journal of Statistical Software*, 2021, to appear.
 
 **System Requirements**: *R >= 3.1*, *ICU4C >= 55* (refer to the
 [INSTALL](https://raw.githubusercontent.com/gagolews/stringi/master/INSTALL)
@@ -80,3 +80,4 @@ in proprietary or commercial products.
 
 **Changes**: see the
 [NEWS](https://raw.githubusercontent.com/gagolews/stringi/master/NEWS) file.
+

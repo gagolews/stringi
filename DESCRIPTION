@@ -1,9 +1,9 @@
 Package: stringi
 Version: 1.7.4.9001
-Date: 2021-09-24
+Date: 2021-10-02
 Title: Character String Processing Facilities
-Description: A multitude of character string/text/natural language
-    processing tools: pattern searching (e.g., with 'Java'-like regular
+Description: A collection of character string/text/natural language
+    processing tools for pattern searching (e.g., with 'Java'-like regular
     expressions or the 'Unicode' collation algorithm), random string generation,
     case mapping, string transliteration, concatenation, sorting, padding,
     wrapping, Unicode normalisation, date-time formatting and parsing,
@@ -24,9 +24,8 @@ Imports:
 Biarch: TRUE
 License: file LICENSE
 Author: Marek Gagolewski [aut, cre, cph] (<https://orcid.org/0000-0003-0637-6028>),
-    Bartek Tartanus [ctb],
-    and others (stringi source code);
+    Bartek Tartanus [ctb], and others (stringi source code);
     Unicode, Inc. and others (ICU4C source code, Unicode Character Database)
 Maintainer: Marek Gagolewski <marek@gagolewski.com>
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Encoding: UTF-8
