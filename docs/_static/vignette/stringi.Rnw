@@ -7,57 +7,7 @@
 
 
 %  \documentclass[nojss]{jss}
-\documentclass[nojss]{jss}\usepackage[]{graphicx}\usepackage[]{color}
-% maxwidth is the original width if it is less than linewidth
-% otherwise use linewidth (to make sure the graphics do not exceed the margin)
-\makeatletter
-\def\maxwidth{ %
-  \ifdim\Gin@nat@width>\linewidth
-    \linewidth
-  \else
-    \Gin@nat@width
-  \fi
-}
-\makeatother
-
-\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
-\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
-\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
-\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
-\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
-\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
-\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
-\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
-\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
-\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
-\let\hlipl\hlkwb
-
-\usepackage{framed}
-\makeatletter
-\newenvironment{kframe}{%
- \def\at@end@of@kframe{}%
- \ifinner\ifhmode%
-  \def\at@end@of@kframe{\end{minipage}}%
-  \begin{minipage}{\columnwidth}%
- \fi\fi%
- \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
- \colorbox{shadecolor}{##1}\hskip-\fboxsep
-     % There is no \\@totalrightmargin, so:
-     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
- \MakeFramed {\advance\hsize-\width
-   \@totalleftmargin\z@ \linewidth\hsize
-   \@setminipage}}%
- {\par\unskip\endMakeFramed%
- \at@end@of@kframe}
-\makeatother
-
-\definecolor{shadecolor}{rgb}{.97, .97, .97}
-\definecolor{messagecolor}{rgb}{0, 0, 0}
-\definecolor{warningcolor}{rgb}{1, 0, 1}
-\definecolor{errorcolor}{rgb}{1, 0, 0}
-\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
-
-\usepackage{alltt}
+\documentclass[nojss]{jss}
 \hypersetup{xetex,colorlinks=true}
 \usepackage{xltxtra}
 
@@ -138,7 +88,7 @@ expressions, data cleansing, natural language processing, R}
   E-mail: \email{m.gagolewski@deakin.edu.au}\\
   URL: \url{https://www.gagolewski.com/}
 }
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
 \begin{document}
 
 {\color{blue}
@@ -152,7 +102,42 @@ URL \url{https://stringi.gagolewski.com}.
 }
 
 
+<<echo=FALSE, results="hide", message=FALSE>>=
+#options(prompt="R> ", continue="+  ")
+library("knitr")
+#knitr::render_sweave()
+#knitr::knitr_hooks$set(chunk=knitr::render_sweave())
 
+opts_chunk$set(
+#  fig.height=3.5,
+#  fig.width=6,
+#  dev=c("CairoPDF", "CairoSVG"),
+#  out.width=NULL,
+#  dpi=300,
+#  dev.args=list(pointsize=11),
+#  fig.show="hold",
+#  fig.lp='fig:',
+  tidy=FALSE,
+  error=FALSE,
+  autodep=TRUE,
+  cache=TRUE
+)
+
+library("stringi")
+stri_locale_set("en_AU")
+library("stringr")
+set.seed(123)
+
+options(width=77)
+options(useFancyQuotes=FALSE)
+options(encoding="UTF-8")
+options(digits=5)
+options(max.print=99)
+options(scipen=10)
+options(showWarnCalls=FALSE)
+#options(stringsAsFactors=FALSE) # default in R 4.0
+##########################################################################
+@
 
 
 
@@ -343,7 +328,7 @@ out below using a monospaced font) is worth hundreds of words.
 
 \medskip
 All code chunk outputs presented in this paper were obtained in
-\proglang{R}~4.1.1.
+\proglang{R}~\Sexpr{paste(R.Version()[6:7], collapse=".")}.
 The \proglang{R} environment itself and all the packages used herein
 are available from CRAN (the Comprehensive \proglang{R} Archive Network)
 at \url{https://CRAN.R-project.org/}.
@@ -352,29 +337,26 @@ fetch the object of our focus.
 By calling:
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{library}\hlstd{(}\hlstr{"stringi"}\hlstd{)}
-\hlkwd{cat}\hlstd{(}\hlkwd{stri_info}\hlstd{(}\hlkwc{short}\hlstd{=}\hlnum{TRUE}\hlstd{))}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
+<<results="hide">>=
+library("stringi")
+cat(stri_info(short=TRUE))
+@
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{verbatim}
-## stringi_1.7.4 (en_AU.UTF-8; ICU4C 69.1 [bundle]; Unicode 13.0)
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<echo=FALSE>>=
+##########################################################################
+############## TODO: del me - debug only!!! ##########################################################################
+stopifnot(!stringi::stri_info()$ICU.system)
+stopifnot(packageVersion("stringi") >= package_version("1.7.4"))
+cat(stri_wrap(stri_info(short=TRUE), 78), sep="\n")
+##########################################################################
+@
 
 
 \noindent
 we can load and attach the package's namespace
 and display some basic information thereon.
 Hence, below we shall be working with
-\pkg{stringi} 1.7.4, however, as the package's
+\pkg{stringi} \Sexpr{packageVersion("stringi")}, however, as the package's
 API is considered stable, the presented material should be relevant to
 any later versions.
 
@@ -405,47 +387,28 @@ can be done by means of the functions from the
 \pkg{xml2} \citep{xml2}
 and \pkg{rvest} \citep{rvest} packages.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{library}\hlstd{(}\hlstr{"xml2"}\hlstd{)}
-\hlkwd{library}\hlstd{(}\hlstr{"rvest"}\hlstd{)}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
+<<html-example-1>>=
+library("xml2")
+library("rvest")
+@
 
 First, let us load and parse the \proglang{HTML} file
 downloaded on 2020--09--17 (see the accompanying supplementary files):
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{f} \hlkwb{<-} \hlkwd{read_html}\hlstd{(}\hlstr{"20200917_wikipedia_melbourne.html"}\hlstd{)}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
+<<html-example-2>>=
+f <- read_html("20200917_wikipedia_melbourne.html")
+@
 
 Second, we extract all \code{table} elements and gather them
 in a list of \proglang{HTML} nodes, \code{all\_tables}.
 We then extract the underlying raw text data and store them in a
 character vector named \code{text\_tables}.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{all_tables} \hlkwb{<-} \hlkwd{html_nodes}\hlstd{(f,} \hlstr{"table"}\hlstd{)}
-\hlstd{text_tables} \hlkwb{<-} \hlkwd{sapply}\hlstd{(all_tables, html_text)}
-\hlkwd{str}\hlstd{(text_tables,} \hlkwc{nchar.max}\hlstd{=}\hlnum{65}\hlstd{,} \hlkwc{vec.len}\hlstd{=}\hlnum{5}\hlstd{,} \hlkwc{strict.width}\hlstd{=}\hlstr{"wrap"}\hlstd{)} \hlcom{# preview}
-\end{alltt}
-\begin{verbatim}
-## chr [1:45] "MelbourneVictoriaFrom top, left to right: Flinde"| __truncated__
-##    "Mean max temp\n Mean min temp\n Annual rainfal"| __truncated__ "This
-##    section needs additional citations for veri"| __truncated__ "Climate data
-##    for Melbourne Regional Office (1991"| __truncated__ "Country of Birth
-##    (2016)[178]Birthplace[N 1]\nPop"| __truncated__ ...
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<html-example-3>>=
+all_tables <- html_nodes(f, "table")
+text_tables <- sapply(all_tables, html_text)
+str(text_tables, nchar.max=65, vec.len=5, strict.width="wrap") # preview
+@
 
 Most~Wikipedia pages related to particular cities
 include a table labelled as ``Climate data''.
@@ -454,18 +417,11 @@ For this, we will rely on \pkg{stringi}'s
 \code{stri_detect_fixed()} function that, in the configuration
 below, is used to extract the index of the relevant table.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{library}\hlstd{(}\hlstr{"stringi"}\hlstd{)}
-\hlstd{(idx} \hlkwb{<-} \hlkwd{which}\hlstd{(}\hlkwd{stri_detect_fixed}\hlstd{(text_tables,} \hlstr{"climate data"}\hlstd{,}
-  \hlkwc{case_insensitive}\hlstd{=}\hlnum{TRUE}\hlstd{,} \hlkwc{max_count}\hlstd{=}\hlnum{1}\hlstd{)))}
-\end{alltt}
-\begin{verbatim}
-## [1] 4
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<html-example-4>>=
+library("stringi")
+(idx <- which(stri_detect_fixed(text_tables, "climate data",
+  case_insensitive=TRUE, max_count=1)))
+@
 
 Of course, the detailed description of all the facilities
 brought by \pkg{stringi} is covered below.
@@ -473,56 +429,20 @@ In the meantime, let us use \pkg{rvest}'s \code{html\_table()}
 to convert the above table to a data frame object.
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{(x} \hlkwb{<-} \hlkwd{as.data.frame}\hlstd{(}\hlkwd{html_table}\hlstd{(all_tables[[idx]],} \hlkwc{fill}\hlstd{=}\hlnum{TRUE}\hlstd{)))}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
+<<html-example-5,results="hide">>=
+(x <- as.data.frame(html_table(all_tables[[idx]], fill=TRUE)))
+@
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{verbatim}
-##    Climate data for Melbourne Regional Office (1991–2015)
-## 1                                                   Month
-## 2                                     Record high °C (°F)
-## 3                                    Average high °C (°F)
-## 4                                      Daily mean °C (°F)
-## 5                                     Average low °C (°F)
-## 6                                      Record low °C (°F)
-## 7                            Average rainfall mm (inches)
-## 8                              Average rainy days (≥ 1mm)
-## 9                 Average afternoon relative humidity (%)
-## 10                            Mean monthly sunshine hours
-## 11             Source: Bureau of Meteorology.[85][86][87]
-##    Climate data for Melbourne Regional Office (1991–2015).1 ...
-## 1                                                       Jan ...
-## 2                                               45.6(114.1) ...
-## 3                                                27.0(80.6) ...
-## 4                                                21.6(70.9) ...
-## 5                                                16.1(61.0) ...
-## 6                                                 5.5(41.9) ...
-## 7                                                44.2(1.74) ...
-## 8                                                       5.6 ...
-## 9                                                        47 ...
-## 10                                                      279 ...
-## 11               Source: Bureau of Meteorology.[85][86][87] ...
-##    Climate data for Melbourne Regional Office (1991–2015).3
-## 1                                                      Year
-## 2                                               46.4(115.5)
-## 3                                                20.8(69.4)
-## 4                                                16.2(61.2)
-## 5                                                11.6(52.9)
-## 6                                                −2.8(27.0)
-## 7                                              600.9(23.66)
-## 8                                                      90.6
-## 9                                                        51
-## 10                                                    2,191
-## 11               Source: Bureau of Meteorology.[85][86][87]
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<html-example-6,echo=FALSE>>=
+##########################################################################
+############## TODO: del me - debug only!!!
+##########################################################################
+.x <- x[c(1, 2, 3, ncol(x))]
+.x[,3] <- "..."
+names(.x)[3] <- "..."
+print(.x)
+##########################################################################
+@
 
 It is evident that this object requires some significant cleansing
 and transforming before it can be subject to any statistical analyses.
@@ -531,129 +451,66 @@ matrix so that the processing of all the cells can be vectorised
 (a matrix in \proglang{R} is just a single ``long'' vector,
 whereas a data frame is a list of many atomic vectors).
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlkwd{as.matrix}\hlstd{(x)}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
+<<html-example-7>>=
+x <- as.matrix(x)
+@
 
 The \code{as.numeric()} function will find the parsing of
 the Unicode MINUS SIGN (U+2212, ``−'') difficult,
 therefore let us call the transliterator first in order to replace it
 (and other potentially problematic characters) with its simpler equivalent:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x[, ]} \hlkwb{<-} \hlkwd{stri_trans_general}\hlstd{(x,} \hlstr{"Publishing-Any; Any-ASCII"}\hlstd{)}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
+<<html-example-8>>=
+x[, ] <- stri_trans_general(x, "Publishing-Any; Any-ASCII")
+@
 
 Note that it is the first row of the matrix that defines the column names.
 Moreover, the last row just gives the data source and hence may be removed.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{dimnames}\hlstd{(x)} \hlkwb{<-} \hlkwd{list}\hlstd{(x[,} \hlnum{1}\hlstd{], x[}\hlnum{1}\hlstd{, ])}  \hlcom{# row, column names}
-\hlstd{x} \hlkwb{<-} \hlstd{x[}\hlnum{2}\hlopt{:}\hlstd{(}\hlkwd{nrow}\hlstd{(x)} \hlopt{-} \hlnum{1}\hlstd{),} \hlnum{2}\hlopt{:}\hlkwd{ncol}\hlstd{(x)]}   \hlcom{# skip 1st/last row and 1st column}
-\hlstd{x[,} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlkwd{ncol}\hlstd{(x))]}                   \hlcom{# example columns}
-\end{alltt}
-\begin{verbatim}
-##                                         Jan           Year          
-## Record high °C (°F)                     "45.6(114.1)" "46.4(115.5)" 
-## Average high °C (°F)                    "27.0(80.6)"  "20.8(69.4)"  
-## Daily mean °C (°F)                      "21.6(70.9)"  "16.2(61.2)"  
-## Average low °C (°F)                     "16.1(61.0)"  "11.6(52.9)"  
-## Record low °C (°F)                      "5.5(41.9)"   "-2.8(27.0)"  
-## Average rainfall mm (inches)            "44.2(1.74)"  "600.9(23.66)"
-## Average rainy days (>= 1mm)             "5.6"         "90.6"        
-## Average afternoon relative humidity (%) "47"          "51"          
-## Mean monthly sunshine hours             "279"         "2,191"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<html-example-9>>=
+dimnames(x) <- list(x[, 1], x[1, ])  # row, column names
+x <- x[2:(nrow(x) - 1), 2:ncol(x)]   # skip 1st/last row and 1st column
+x[, c(1, ncol(x))]                   # example columns
+@
 
 Commas that are used as thousands separators (commas surrounded
 by digits) should be dropped:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x[, ]} \hlkwb{<-} \hlkwd{stri_replace_all_regex}\hlstd{(x,} \hlstr{"(?<=\textbackslash{}\textbackslash{}d),(?=\textbackslash{}\textbackslash{}d)"}\hlstd{,} \hlstr{""}\hlstd{)}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
+<<html-example-10>>=
+x[, ] <- stri_replace_all_regex(x, "(?<=\\d),(?=\\d)", "")
+@
 
 The numbers and alternative units in parentheses are redundant,
 therefore these should be taken care of as well:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x[, ]} \hlkwb{<-} \hlkwd{stri_replace_all_regex}\hlstd{(x,}
-  \hlstr{"(\textbackslash{}\textbackslash{}d+(?:\textbackslash{}\textbackslash{}.\textbackslash{}\textbackslash{}d+)?)\textbackslash{}\textbackslash{}(\textbackslash{}\textbackslash{}d+(?:\textbackslash{}\textbackslash{}.\textbackslash{}\textbackslash{}d+)?\textbackslash{}\textbackslash{})"}\hlstd{,} \hlstr{"$1"}\hlstd{)}
-\hlkwd{dimnames}\hlstd{(x)[[}\hlnum{1}\hlstd{]]} \hlkwb{<-} \hlkwd{stri_replace_all_fixed}\hlstd{(}\hlkwd{dimnames}\hlstd{(x)[[}\hlnum{1}\hlstd{]],}
-  \hlkwd{c}\hlstd{(}\hlstr{" (°F)"}\hlstd{,} \hlstr{" (inches)"}\hlstd{),} \hlkwd{c}\hlstd{(}\hlstr{""}\hlstd{,} \hlstr{""}\hlstd{),} \hlkwc{vectorise_all}\hlstd{=}\hlnum{FALSE}\hlstd{)}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
+<<html-example-11>>=
+x[, ] <- stri_replace_all_regex(x,
+  "(\\d+(?:\\.\\d+)?)\\(\\d+(?:\\.\\d+)?\\)", "$1")
+dimnames(x)[[1]] <- stri_replace_all_fixed(dimnames(x)[[1]],
+  c(" (°F)", " (inches)"), c("", ""), vectorise_all=FALSE)
+@
 
 At last, \code{as.numeric()} can be used to re-interpret all the strings
 as numbers:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlkwd{structure}\hlstd{(}\hlkwd{as.numeric}\hlstd{(x),} \hlkwc{dim}\hlstd{=}\hlkwd{dim}\hlstd{(x),} \hlkwc{dimnames}\hlstd{=}\hlkwd{dimnames}\hlstd{(x))}
-\hlstd{x[,} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{6}\hlstd{,} \hlkwd{ncol}\hlstd{(x))]}  \hlcom{# example columns}
-\end{alltt}
-\begin{verbatim}
-##                                           Jan   Jun   Year
-## Record high °C                           45.6  22.4   46.4
-## Average high °C                          27.0  15.1   20.8
-## Daily mean °C                            21.6  11.7   16.2
-## Average low °C                           16.1   8.2   11.6
-## Record low °C                             5.5  -2.2   -2.8
-## Average rainfall mm                      44.2  49.5  600.9
-## Average rainy days (>= 1mm)               5.6   8.6   90.6
-## Average afternoon relative humidity (%)  47.0  61.0   51.0
-## Mean monthly sunshine hours             279.0 108.0 2191.0
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<html-example-12>>=
+x <- structure(as.numeric(x), dim=dim(x), dimnames=dimnames(x))
+x[, c(1, 6, ncol(x))]  # example columns
+@
 
 We now have a cleansed matrix at our disposal.
 We can, for instance, compute the monthly temperature ranges:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x[}\hlstr{"Record high °C"}\hlstd{,} \hlopt{-}\hlkwd{ncol}\hlstd{(x)]} \hlopt{-} \hlstd{x[}\hlstr{"Record low °C"}\hlstd{,} \hlopt{-}\hlkwd{ncol}\hlstd{(x)]}
-\end{alltt}
-\begin{verbatim}
-##  Jan  Feb  Mar  Apr  May  Jun  Jul  Aug  Sep  Oct  Nov  Dec 
-## 40.1 41.9 38.9 33.4 29.8 24.6 26.1 28.6 31.9 36.8 38.4 39.3
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<html-example-13>>=
+x["Record high °C", -ncol(x)] - x["Record low °C", -ncol(x)]
+@
 
 \noindent
 or the average daily precipitation:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{sum}\hlstd{(x[}\hlstr{"Average rainfall mm"}\hlstd{,} \hlopt{-}\hlkwd{ncol}\hlstd{(x)])} \hlopt{/} \hlnum{365.25}
-\end{alltt}
-\begin{verbatim}
-## [1] 1.6463
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<html-example-14>>=
+sum(x["Average rainfall mm", -ncol(x)]) / 365.25
+@
 
 \noindent
 and so forth.
@@ -714,37 +571,18 @@ all occurrences of a substring as-is.
 Individual character (or code point) strings can be entered using
 double quotes or apostrophes:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstr{"spam"}  \hlcom{# or 'spam'}
-\end{alltt}
-\begin{verbatim}
-## [1] "spam"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+"spam"  # or 'spam'
+@
 
 However, as the  \proglang{R} language does not feature any
 classical scalar types, strings are wrapped around atomic vectors
 of type ``\code{character}'':
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{typeof}\hlstd{(}\hlstr{"spam"}\hlstd{)}  \hlcom{# object type; see also is.character() and is.vector()}
-\end{alltt}
-\begin{verbatim}
-## [1] "character"
-\end{verbatim}
-\begin{alltt}
-\hlkwd{length}\hlstd{(}\hlstr{"spam"}\hlstd{)}  \hlcom{# how many strings are in this vector?}
-\end{alltt}
-\begin{verbatim}
-## [1] 1
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+typeof("spam")  # object type; see also is.character() and is.vector()
+length("spam")  # how many strings are in this vector?
+@
 
 \noindent
 Hence, we will be using the terms ``string'' and ``character vector
@@ -758,36 +596,19 @@ regardless of their size.
 For instance, given the following character vector:
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{pythons} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"Graham Chapman"}\hlstd{,} \hlstr{"John Cleese"}\hlstd{,} \hlstr{"Terry Gilliam"}\hlstd{,}
-  \hlstr{"Eric Idle"}\hlstd{,} \hlstr{"Terry Jones"}\hlstd{,} \hlstr{"Michael Palin"}\hlstd{)}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
+<<>>=
+pythons <- c("Graham Chapman", "John Cleese", "Terry Gilliam",
+  "Eric Idle", "Terry Jones", "Michael Palin")
+@
 
 \noindent
 we can separate the first and the last names from
 each other (assuming for simplicity that no middle names are given),
 using just a single function call:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{(pythons} \hlkwb{<-} \hlkwd{stri_split_fixed}\hlstd{(pythons,} \hlstr{" "}\hlstd{,} \hlkwc{simplify}\hlstd{=}\hlnum{TRUE}\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-##      [,1]      [,2]     
-## [1,] "Graham"  "Chapman"
-## [2,] "John"    "Cleese" 
-## [3,] "Terry"   "Gilliam"
-## [4,] "Eric"    "Idle"   
-## [5,] "Terry"   "Jones"  
-## [6,] "Michael" "Palin"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+(pythons <- stri_split_fixed(pythons, " ", simplify=TRUE))
+@
 
 \noindent
 Due to {vectorisation}, we can generally
@@ -814,16 +635,9 @@ for example the multiplication:
 
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{c}\hlstd{(}\hlnum{10}\hlstd{,} \hlopt{-}\hlnum{1}\hlstd{)} \hlopt{*} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{3}\hlstd{,} \hlnum{4}\hlstd{)}  \hlcom{# == c(10, -1, 10, -1) * c(1, 2, 3, 4)}
-\end{alltt}
-\begin{verbatim}
-## [1] 10 -2 30 -4
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+c(10, -1) * c(1, 2, 3, 4)  # == c(10, -1, 10, -1) * c(1, 2, 3, 4)
+@
 
 \noindent
 Calling ``\code{x * y}'' multiplies the corresponding components
@@ -851,82 +665,43 @@ as an illustration:
 \begin{itemize}
 \item many strings -- one pattern:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_count_fixed}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"abcd"}\hlstd{,} \hlstr{"abcabc"}\hlstd{,} \hlstr{"abdc"}\hlstd{,} \hlstr{"dab"}\hlstd{,} \hlnum{NA}\hlstd{),} \hlstr{"abc"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1]  1  2  0  0 NA
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_count_fixed(c("abcd", "abcabc", "abdc", "dab", NA), "abc")
+@
 
 (there is 1 occurrence of \code{"abc"} in \code{"abcd"},
 2 in \code{"abcabc"}, and so forth);
 
 \item one string -- many patterns:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_count_fixed}\hlstd{(}\hlstr{"abcdeabc"}\hlstd{,} \hlkwd{c}\hlstd{(}\hlstr{"def"}\hlstd{,} \hlstr{"bc"}\hlstd{,} \hlstr{"abc"}\hlstd{,} \hlnum{NA}\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-## [1]  0  2  2 NA
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_count_fixed("abcdeabc", c("def", "bc", "abc", NA))
+@
 
 (\code{"def"} does not occur in \code{"abcdeabc"},
 \code{"bc"} can be found therein twice, etc.);
 
 \item each string -- its own corresponding pattern:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_count_fixed}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"abca"}\hlstd{,} \hlstr{"def"}\hlstd{,} \hlstr{"ghi"}\hlstd{),} \hlkwd{c}\hlstd{(}\hlstr{"a"}\hlstd{,} \hlstr{"z"}\hlstd{,} \hlstr{"h"}\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-## [1] 2 0 1
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_count_fixed(c("abca", "def", "ghi"), c("a", "z", "h"))
+@
 
 (there are two \code{"a"}s in \code{"abca"},
 no \code{"z"} in \code{"def"}, and one \code{"h"} in \code{"ghi"});
 
 \item each row in a matrix -- its own corresponding pattern:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{(haystack} \hlkwb{<-} \hlkwd{matrix}\hlstd{(}  \hlcom{# example input}
-  \hlkwd{do.call}\hlstd{(stri_join,}
-    \hlkwd{expand.grid}\hlstd{(}
-      \hlkwd{c}\hlstd{(}\hlstr{"a"}\hlstd{,} \hlstr{"b"}\hlstd{,} \hlstr{"c"}\hlstd{),} \hlkwd{c}\hlstd{(}\hlstr{"a"}\hlstd{,} \hlstr{"b"}\hlstd{,} \hlstr{"c"}\hlstd{),} \hlkwd{c}\hlstd{(}\hlstr{"a"}\hlstd{,} \hlstr{"b"}\hlstd{,} \hlstr{"c"}\hlstd{)}
-    \hlstd{)),} \hlkwc{nrow}\hlstd{=}\hlnum{3}\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-##      [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] 
-## [1,] "aaa" "aba" "aca" "aab" "abb" "acb" "aac" "abc" "acc"
-## [2,] "baa" "bba" "bca" "bab" "bbb" "bcb" "bac" "bbc" "bcc"
-## [3,] "caa" "cba" "cca" "cab" "cbb" "ccb" "cac" "cbc" "ccc"
-\end{verbatim}
-\begin{alltt}
-\hlstd{needle} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"a"}\hlstd{,} \hlstr{"b"}\hlstd{,} \hlstr{"c"}\hlstd{)}
-\hlkwd{matrix}\hlstd{(}\hlkwd{stri_count_fixed}\hlstd{(haystack, needle),}  \hlcom{# call to stringi}
-  \hlkwc{nrow}\hlstd{=}\hlnum{3}\hlstd{,} \hlkwc{dimnames}\hlstd{=}\hlkwd{list}\hlstd{(needle,} \hlkwa{NULL}\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-##   [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9]
-## a    3    2    2    2    1    1    2    1    1
-## b    1    2    1    2    3    2    1    2    1
-## c    1    1    2    1    1    2    2    2    3
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+(haystack <- matrix(  # example input
+  do.call(stri_join,
+    expand.grid(
+      c("a", "b", "c"), c("a", "b", "c"), c("a", "b", "c")
+    )), nrow=3))
+needle <- c("a", "b", "c")
+matrix(stri_count_fixed(haystack, needle),  # call to stringi
+  nrow=3, dimnames=list(needle, NULL))
+@
 
 (this looks for \code{"a"} in the 1st row of
 \code{haystack}, \code{"b"} in the 2nd row, and \code{"c"} in the 3rd;
@@ -951,28 +726,13 @@ apply matrix transpose twice (\code{t(stri_count_fixed(t(haystack), needle))}).
 \item all strings -- all patterns:
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{haystack} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"aaa"}\hlstd{,} \hlstr{"bbb"}\hlstd{,} \hlstr{"ccc"}\hlstd{,} \hlstr{"abc"}\hlstd{,} \hlstr{"cba"}\hlstd{,} \hlstr{"aab"}\hlstd{,} \hlstr{"bab"}\hlstd{,} \hlstr{"acc"}\hlstd{)}
-\hlstd{needle} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"a"}\hlstd{,} \hlstr{"b"}\hlstd{,} \hlstr{"c"}\hlstd{)}
-\hlkwd{structure}\hlstd{(}
-  \hlkwd{outer}\hlstd{(haystack, needle, stri_count_fixed),}
-  \hlkwc{dimnames}\hlstd{=}\hlkwd{list}\hlstd{(haystack, needle))}  \hlcom{# add row and column names}
-\end{alltt}
-\begin{verbatim}
-##     a b c
-## aaa 3 0 0
-## bbb 0 3 0
-## ccc 0 0 3
-## abc 1 1 1
-## cba 1 1 1
-## aab 2 1 0
-## bab 1 2 0
-## acc 1 0 2
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+haystack <- c("aaa", "bbb", "ccc", "abc", "cba", "aab", "bab", "acc")
+needle <- c("a", "b", "c")
+structure(
+  outer(haystack, needle, stri_count_fixed),
+  dimnames=list(haystack, needle))  # add row and column names
+@
 
 (which computes the counts over the Cartesian product
 of the two arguments);
@@ -994,24 +754,10 @@ strings.
 \pkg{stringi}, however, does enforce the consistent
 propagation of missing values (like arithmetic operations):
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{paste}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{NA_character_}\hlstd{,} \hlstr{"b"}\hlstd{,} \hlstr{"c"}\hlstd{),} \hlstr{"x"}\hlstd{,} \hlnum{1}\hlopt{:}\hlnum{2}\hlstd{)}  \hlcom{# base R}
-\end{alltt}
-\begin{verbatim}
-## [1] "NA x 1" "b x 2"  "c x 1"
-\end{verbatim}
-\begin{alltt}
-\hlkwd{stri_join}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{NA_character_}\hlstd{,} \hlstr{"b"}\hlstd{,} \hlstr{"c"}\hlstd{),} \hlstr{"x"}\hlstd{,} \hlnum{1}\hlopt{:}\hlnum{2}\hlstd{)}  \hlcom{# stringi}
-\end{alltt}
-
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning in stri\_join(c(NA\_character\_, "{}b"{}, "{}c"{}), "{}x"{}, 1:2): longer object length is not a multiple of shorter object length}}\begin{verbatim}
-## [1] NA    "bx2" "cx1"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+paste(c(NA_character_, "b", "c"), "x", 1:2)  # base R
+stri_join(c(NA_character_, "b", "c"), "x", 1:2)  # stringi
+@
 
 For dealing with missing values, we may rely on the
 convenience functions such as \code{stri_omit_na()} or
@@ -1057,17 +803,10 @@ as the input (with recycling rule in place if necessary).
 
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{haystack} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"bacon"}\hlstd{,} \hlstr{"spam"}\hlstd{,} \hlstr{"jam, spam, bacon, and spam"}\hlstd{)}
-\hlkwd{stri_extract_first_regex}\hlstd{(haystack,} \hlstr{"\textbackslash{}\textbackslash{}b\textbackslash{}\textbackslash{}w\{1,4\}\textbackslash{}\textbackslash{}b"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] NA     "spam" "jam"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+haystack <- c("bacon", "spam", "jam, spam, bacon, and spam")
+stri_extract_first_regex(haystack, "\\b\\w{1,4}\\b")
+@
 
 Note that a no-match (here, we have been looking for words
 of at most 4 characters)
@@ -1079,23 +818,9 @@ On the other hand, \code{stri_extract_all_regex()}
 identifies all occurrences of a pattern, whose counts may differ from input to input,
 therefore it yields a list of character vectors.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_extract_all_regex}\hlstd{(haystack,} \hlstr{"\textbackslash{}\textbackslash{}b\textbackslash{}\textbackslash{}w\{1,4\}\textbackslash{}\textbackslash{}b"}\hlstd{,} \hlkwc{omit_no_match}\hlstd{=}\hlnum{TRUE}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-## character(0)
-## 
-## [[2]]
-## [1] "spam"
-## 
-## [[3]]
-## [1] "jam"  "spam" "and"  "spam"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_extract_all_regex(haystack, "\\b\\w{1,4}\\b", omit_no_match=TRUE)
+@
 
 If the 3rd argument was not specified, a no-match
 would be represented by a missing value (for consistency with the
@@ -1117,14 +842,10 @@ despite the fact that they can be trivially reduced to a series of
 other calls.
 In particular, writing:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_sub_all}\hlstd{(haystack,}
-  \hlkwd{stri_locate_all_regex}\hlstd{(haystack,} \hlstr{"\textbackslash{}\textbackslash{}b\textbackslash{}\textbackslash{}w\{1,4\}\textbackslash{}\textbackslash{}b"}\hlstd{,} \hlkwc{omit_no_match}\hlstd{=}\hlnum{TRUE}\hlstd{))}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
+<<results="hide">>=
+stri_sub_all(haystack,
+  stri_locate_all_regex(haystack, "\\b\\w{1,4}\\b", omit_no_match=TRUE))
+@
 
 \noindent
 yields the same result as in the previous example,
@@ -1263,56 +984,31 @@ have been rewritten from scratch with speed and portability in mind.
 For example, here are some timings of string concatenation:
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlkwd{stri_rand_strings}\hlstd{(}\hlkwd{length}\hlstd{(LETTERS)} \hlopt{*} \hlnum{1000}\hlstd{,} \hlnum{1000}\hlstd{)}
-\hlstd{microbenchmark}\hlopt{::}\hlkwd{microbenchmark}\hlstd{(}
-  \hlkwc{join2}\hlstd{=}\hlkwd{stri_join}\hlstd{(LETTERS, x,} \hlkwc{sep}\hlstd{=}\hlstr{""}\hlstd{,} \hlkwc{collapse}\hlstd{=}\hlstr{", "}\hlstd{),}
-  \hlkwc{join3}\hlstd{=}\hlkwd{stri_join}\hlstd{(x, LETTERS, x,} \hlkwc{sep}\hlstd{=}\hlstr{""}\hlstd{,} \hlkwc{collapse}\hlstd{=}\hlstr{", "}\hlstd{),}
-  \hlkwc{r_paste2}\hlstd{=}\hlkwd{paste}\hlstd{(LETTERS, x,} \hlkwc{sep}\hlstd{=}\hlstr{""}\hlstd{,} \hlkwc{collapse}\hlstd{=}\hlstr{", "}\hlstd{),}
-  \hlkwc{r_paste3}\hlstd{=}\hlkwd{paste}\hlstd{(x, LETTERS, x,} \hlkwc{sep}\hlstd{=}\hlstr{""}\hlstd{,} \hlkwc{collapse}\hlstd{=}\hlstr{", "}\hlstd{)}
-\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## Unit: milliseconds
-##      expr     min      lq    mean  median      uq     max neval
-##     join2  35.520  36.950  49.907  37.359  48.415  92.546   100
-##     join3  79.256  83.561  88.068  84.182  91.533 152.904   100
-##  r_paste2  91.120  95.665 112.532  99.024 114.853 171.701   100
-##  r_paste3 190.893 201.956 243.964 264.924 272.475 310.661   100
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<performance1,cache=TRUE>>=
+x <- stri_rand_strings(length(LETTERS) * 1000, 1000)
+microbenchmark::microbenchmark(
+  join2=stri_join(LETTERS, x, sep="", collapse=", "),
+  join3=stri_join(x, LETTERS, x, sep="", collapse=", "),
+  r_paste2=paste(LETTERS, x, sep="", collapse=", "),
+  r_paste3=paste(x, LETTERS, x, sep="", collapse=", ")
+)
+@
 
 Another example -- timings of fixed pattern searching:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlkwd{stri_rand_strings}\hlstd{(}\hlnum{100}\hlstd{,} \hlnum{100000}\hlstd{,} \hlstr{"[actg]"}\hlstd{)}
-\hlstd{y} \hlkwb{<-} \hlstr{"acca"}
-\hlstd{microbenchmark}\hlopt{::}\hlkwd{microbenchmark}\hlstd{(}
-  \hlkwc{fixed}\hlstd{=}\hlkwd{stri_locate_all_fixed}\hlstd{(x, y),}
-  \hlkwc{regex}\hlstd{=}\hlkwd{stri_locate_all_regex}\hlstd{(x, y),}
-  \hlkwc{coll}\hlstd{=}\hlkwd{stri_locate_all_coll}\hlstd{(x, y),}
-  \hlkwc{r_tre}\hlstd{=}\hlkwd{gregexpr}\hlstd{(y, x),}
-  \hlkwc{r_pcre}\hlstd{=}\hlkwd{gregexpr}\hlstd{(y, x,} \hlkwc{perl}\hlstd{=}\hlnum{TRUE}\hlstd{),}
-  \hlkwc{r_fixed}\hlstd{=}\hlkwd{gregexpr}\hlstd{(y, x,} \hlkwc{fixed}\hlstd{=}\hlnum{TRUE}\hlstd{)}
-\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## Unit: milliseconds
-##     expr      min      lq     mean   median       uq      max neval
-##    fixed   5.0097   5.173   5.2386   5.1945   5.2562   5.9541   100
-##    regex 115.2815 116.205 117.2227 116.8521 118.1444 122.2590   100
-##     coll 420.0686 424.757 426.5984 426.1803 427.9800 437.8152   100
-##    r_tre 130.6598 132.098 133.2256 132.7224 133.6728 140.1607   100
-##   r_pcre  76.3878  77.536  78.1141  77.9131  78.3949  81.2092   100
-##  r_fixed  45.1295  45.738  46.0227  45.8944  46.1677  49.2137   100
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<performance2,echo=-1,cache=TRUE>>=
+set.seed(123)
+x <- stri_rand_strings(100, 100000, "[actg]")
+y <- "acca"
+microbenchmark::microbenchmark(
+  fixed=stri_locate_all_fixed(x, y),
+  regex=stri_locate_all_regex(x, y),
+  coll=stri_locate_all_coll(x, y),
+  r_tre=gregexpr(y, x),
+  r_pcre=gregexpr(y, x, perl=TRUE),
+  r_fixed=gregexpr(y, x, fixed=TRUE)
+)
+@
 
 
 \paragraph{Different default argument and greater configurability.}
@@ -1357,42 +1053,24 @@ the number of entities in each string.
 
 Let us consider the following character vector:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"spam"}\hlstd{,} \hlstr{"你好"}\hlstd{,} \hlstr{"\textbackslash{}u200b\textbackslash{}u200b\textbackslash{}u200b"}\hlstd{,} \hlnum{NA_character_}\hlstd{,} \hlstr{""}\hlstd{)}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- c("spam", "你好", "\u200b\u200b\u200b", NA_character_, "")
+@
 
 The \code{x} object consists of 5 character strings:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{length}\hlstd{(x)}
-\end{alltt}
-\begin{verbatim}
-## [1] 5
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+length(x)
+@
 
 
 \code{stri_length()} computes the length of each string.
 More precisely, the function gives the number of Unicode code points
 in each string, see Section~\ref{Sec:codepoints} for more details.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_length}\hlstd{(x)}
-\end{alltt}
-\begin{verbatim}
-## [1]  4  2  3 NA  0
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_length(x)
+@
 
 \noindent
 The first string carries 4 ASCII (English) letters,
@@ -1418,16 +1096,9 @@ might be of width 0 (e.g., the above ZERO WIDTH SPACE, U+200B).
 
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_width}\hlstd{(x)}
-\end{alltt}
-\begin{verbatim}
-## [1]  4  4  0 NA  0
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_width(x)
+@
 
 \noindent
 
@@ -1453,17 +1124,10 @@ Below we describe the functions that are related to string concatenation.
 To join  the corresponding strings in two character vectors,
 we may use the binary \code{\%s+\%} operator:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"tasty"}\hlstd{,} \hlstr{"delicious"}\hlstd{,} \hlstr{"yummy"}\hlstd{,} \hlnum{NA}\hlstd{)}
-\hlstd{x} \hlopt{%s+%} \hlstr{" "} \hlopt{%s+%} \hlkwd{c}\hlstd{(}\hlstr{"spam"}\hlstd{,} \hlstr{"bacon"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "tasty spam"      "delicious bacon" "yummy spam"      NA
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- c("tasty", "delicious", "yummy", NA)
+x %s+% " " %s+% c("spam", "bacon")
+@
 
 
 
@@ -1474,16 +1138,9 @@ we may use the binary \code{\%s+\%} operator:
 The elements in a character vector can be joined (``aggregated'')
 to form a single string via a call to  \code{stri\_flatten()}:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_flatten}\hlstd{(}\hlkwd{stri_omit_na}\hlstd{(x),} \hlkwc{collapse}\hlstd{=}\hlstr{", "}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "tasty, delicious, yummy"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_flatten(stri_omit_na(x), collapse=", ")
+@
 
 \noindent
 Note that the token separator, given by the \code{collapse} argument,
@@ -1496,16 +1153,9 @@ Both the \code{\%s+\%} operator and the \code{stri\_flatten()} function
 are generalised by
 \code{stri\_join()} (alias: \code{stri\_paste()}, \code{stri\_c()}):
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_join}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"X"}\hlstd{,} \hlstr{"Y"}\hlstd{,} \hlstr{"Z"}\hlstd{),} \hlnum{1}\hlopt{:}\hlnum{6}\hlstd{,} \hlstr{"a"}\hlstd{)}  \hlcom{# sep="", collapse=NULL}
-\end{alltt}
-\begin{verbatim}
-## [1] "X1a" "Y2a" "Z3a" "X4a" "Y5a" "Z6a"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_join(c("X", "Y", "Z"), 1:6, "a")  # sep="", collapse=NULL
+@
 
 By default, the \code{sep} argument, which controls how corresponding
 strings are delimited, is set to the empty string
@@ -1514,16 +1164,9 @@ Moreover, \code{collapse} is \code{NULL}, which means that
 the resulting outputs will not be joined to form a single string.
 This can be changed if need be:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_join}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"X"}\hlstd{,} \hlstr{"Y"}\hlstd{,} \hlstr{"Z"}\hlstd{),} \hlnum{1}\hlopt{:}\hlnum{6}\hlstd{,} \hlstr{"a"}\hlstd{,} \hlkwc{sep}\hlstd{=}\hlstr{"_"}\hlstd{,} \hlkwc{collapse}\hlstd{=}\hlstr{", "}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "X_1_a, Y_2_a, Z_3_a, X_4_a, Y_5_a, Z_6_a"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_join(c("X", "Y", "Z"), 1:6, "a", sep="_", collapse=", ")
+@
 
 
 
@@ -1544,16 +1187,9 @@ To duplicate given strings, we call
 \code{stri\_dup()} or the \code{\%s*\%} operator:
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_dup}\hlstd{(letters[}\hlnum{1}\hlopt{:}\hlnum{5}\hlstd{],} \hlnum{1}\hlopt{:}\hlnum{5}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "a"     "bb"    "ccc"   "dddd"  "eeeee"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_dup(letters[1:5], 1:5)
+@
 
 The above is synonymous with \code{letters[1:5] \%s*\% 1:5}.
 
@@ -1562,17 +1198,10 @@ The above is synonymous with \code{letters[1:5] \%s*\% 1:5}.
 There is also a convenience function that applies \code{stri\_flatten()}
 on each character vector in a given list:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{words} \hlkwb{<-} \hlkwd{list}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"spam"}\hlstd{,} \hlstr{"bacon"}\hlstd{,} \hlstr{"sausage"}\hlstd{,} \hlstr{"spam"}\hlstd{),} \hlkwd{c}\hlstd{(}\hlstr{"eggs"}\hlstd{,} \hlstr{"spam"}\hlstd{))}
-\hlkwd{stri_join_list}\hlstd{(words,} \hlkwc{sep}\hlstd{=}\hlstr{", "}\hlstd{)}  \hlcom{# collapse=NULL}
-\end{alltt}
-\begin{verbatim}
-## [1] "spam, bacon, sausage, spam" "eggs, spam"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+words <- list(c("spam", "bacon", "sausage", "spam"), c("eggs", "spam"))
+stri_join_list(words, sep=", ")  # collapse=NULL
+@
 
 
 
@@ -1608,52 +1237,26 @@ indexing with a character vector is also possible.}.
 
 For example, here is how to select specific elements in a vector:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"spam"}\hlstd{,} \hlstr{"buckwheat"}\hlstd{,} \hlstr{""}\hlstd{,} \hlnum{NA}\hlstd{,} \hlstr{"bacon"}\hlstd{)}
-\hlstd{x[}\hlnum{1}\hlopt{:}\hlnum{3}\hlstd{]}                           \hlcom{# from 1st to 3rd string}
-\end{alltt}
-\begin{verbatim}
-## [1] "spam"      "buckwheat" ""
-\end{verbatim}
-\begin{alltt}
-\hlstd{x[}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlkwd{length}\hlstd{(x))]}               \hlcom{# 1st and last}
-\end{alltt}
-\begin{verbatim}
-## [1] "spam"  "bacon"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- c("spam", "buckwheat", "", NA, "bacon")
+x[1:3]                           # from 1st to 3rd string
+x[c(1, length(x))]               # 1st and last
+@
 
 \noindent
 Exclusion of elements at specific positions can be performed like:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x[}\hlopt{-}\hlnum{1}\hlstd{]}                            \hlcom{# all but 1st}
-\end{alltt}
-\begin{verbatim}
-## [1] "buckwheat" ""          NA          "bacon"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x[-1]                            # all but 1st
+@
 
 \noindent
 Filtering based on a logical vector can be used to extract
 strings fulfilling desired criteria:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x[}\hlopt{!}\hlkwd{stri_isempty}\hlstd{(x)} \hlopt{& !}\hlkwd{is.na}\hlstd{(x)]}
-\end{alltt}
-\begin{verbatim}
-## [1] "spam"      "buckwheat" "bacon"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x[!stri_isempty(x) & !is.na(x)]
+@
 
 
 \paragraph{Extracting substrings.}
@@ -1662,36 +1265,17 @@ sequences of code points.
 To extract specific substrings from each string in a collection,
 we can use the \code{stri\_sub()} function.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{y} \hlkwb{<-} \hlstr{"spam, egg, spam, spam, bacon, and spam"}
-\hlkwd{stri_sub}\hlstd{(y,} \hlnum{18}\hlstd{)}             \hlcom{# from 18th code point to end}
-\end{alltt}
-\begin{verbatim}
-## [1] "spam, bacon, and spam"
-\end{verbatim}
-\begin{alltt}
-\hlkwd{stri_sub}\hlstd{(y,} \hlnum{12}\hlstd{,} \hlkwc{to}\hlstd{=}\hlnum{15}\hlstd{)}      \hlcom{# from 12th to 15th code point (inclusive)}
-\end{alltt}
-\begin{verbatim}
-## [1] "spam"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+y <- "spam, egg, spam, spam, bacon, and spam"
+stri_sub(y, 18)             # from 18th code point to end
+stri_sub(y, 12, to=15)      # from 12th to 15th code point (inclusive)
+@
 
 Negative indices count from the end of a string.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_sub}\hlstd{(y,} \hlopt{-}\hlnum{15}\hlstd{,} \hlkwc{length}\hlstd{=}\hlnum{5}\hlstd{)}  \hlcom{# 5 code points from 15th last}
-\end{alltt}
-\begin{verbatim}
-## [1] "bacon"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_sub(y, -15, length=5)  # 5 code points from 15th last
+@
 
 
 
@@ -1702,26 +1286,12 @@ comes in handy. It extracts multiple (possibly different) substrings
 from all the strings provided:
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{(z} \hlkwb{<-} \hlkwd{stri_sub_all}\hlstd{(}
-              \hlkwd{c}\hlstd{(}\hlstr{"spam"}\hlstd{,}     \hlstr{"bacon"}\hlstd{,} \hlstr{"sorghum"}\hlstd{),}
-  \hlkwc{from}   \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{3}\hlstd{,} \hlnum{4}\hlstd{),} \hlopt{-}\hlnum{3}\hlstd{,}      \hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,} \hlnum{4}\hlstd{)),}
-  \hlkwc{length} \hlstd{=} \hlkwd{list}\hlstd{(}\hlnum{1}\hlstd{,}           \hlnum{3}\hlstd{,}      \hlkwd{c}\hlstd{(}\hlnum{4}\hlstd{,} \hlnum{3}\hlstd{))))}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-## [1] "s" "a" "m"
-## 
-## [[2]]
-## [1] "con"
-## 
-## [[3]]
-## [1] "orgh" "ghu"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+(z <- stri_sub_all(
+              c("spam",     "bacon", "sorghum"),
+  from   = list(c(1, 3, 4), -3,      c(2, 4)),
+  length = list(1,           3,      c(4, 3))))
+@
 
 As the number of substrings to extract from each string might vary,
 the result is a list of character strings.
@@ -1753,26 +1323,10 @@ functions (see below for details).
 
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{(from_to} \hlkwb{<-} \hlkwd{matrix}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{8}\hlstd{,} \hlkwc{ncol}\hlstd{=}\hlnum{2}\hlstd{,} \hlkwc{byrow}\hlstd{=}\hlnum{TRUE}\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-##      [,1] [,2]
-## [1,]    1    2
-## [2,]    3    4
-## [3,]    5    6
-## [4,]    7    8
-\end{verbatim}
-\begin{alltt}
-\hlkwd{stri_sub}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"abcdefgh"}\hlstd{,} \hlstr{"ijklmnop"}\hlstd{), from_to)}
-\end{alltt}
-\begin{verbatim}
-## [1] "ab" "kl" "ef" "op"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+(from_to <- matrix(1:8, ncol=2, byrow=TRUE))
+stri_sub(c("abcdefgh", "ijklmnop"), from_to)
+@
 
 \noindent
 Due to recycling, this has extracted
@@ -1781,20 +1335,9 @@ at 3:4 from the 2nd one, 5:6 from the 1st, and 7:8 from the 2nd again.
 
 Note the difference between the above output and the following one:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_sub_all}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"abcdefgh"}\hlstd{,} \hlstr{"ijklmnop"}\hlstd{), from_to)}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-## [1] "ab" "cd" "ef" "gh"
-## 
-## [[2]]
-## [1] "ij" "kl" "mn" "op"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_sub_all(c("abcdefgh", "ijklmnop"), from_to)
+@
 
 This time, we extract four identical sections from each of the two inputs.
 
@@ -1815,17 +1358,10 @@ extraction will be based on the extracted chunk size.
 of a character vector with some chunks replaced by other
 strings:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_sub_replace}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"abcde"}\hlstd{,} \hlstr{"ABCDE"}\hlstd{),}
-  \hlkwc{from}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,} \hlnum{4}\hlstd{),} \hlkwc{length}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{),} \hlkwc{replacement}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{"X"}\hlstd{,} \hlstr{"uvw"}\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-## [1] "aXcde"  "ABCuvw"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_sub_replace(c("abcde", "ABCDE"),
+  from=c(2, 4), length=c(1, 2), replacement=c("X", "uvw"))
+@
 
 \noindent
 The above replaced ``\code{b}'' (the length-1 substring
@@ -1838,20 +1374,13 @@ with ``\code{uvw}''.
 Similarly, \code{stri\_sub\_replace\_all()} replaces
 multiple substrings within each string in a character vector:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_sub_replace_all}\hlstd{(}
-                   \hlkwd{c}\hlstd{(}\hlstr{"abcde"}\hlstd{,}  \hlstr{"ABCDE"}\hlstd{),}
-  \hlkwc{from}        \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,} \hlnum{4}\hlstd{),}  \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}    \hlnum{3}\hlstd{,}   \hlnum{6}\hlstd{)),}
-  \hlkwc{length}      \hlstd{=} \hlkwd{list}\hlstd{(}  \hlnum{1}\hlstd{,}      \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}    \hlnum{2}\hlstd{,}   \hlnum{0}\hlstd{)),}
-  \hlkwc{replacement} \hlstd{=} \hlkwd{list}\hlstd{(}  \hlstr{"Z"}\hlstd{,}    \hlkwd{c}\hlstd{(}\hlstr{"uu"}\hlstd{,} \hlstr{"v"}\hlstd{,} \hlstr{"wwww"}\hlstd{)))}
-\end{alltt}
-\begin{verbatim}
-## [1] "aZcZe"      "uuABvEwwww"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_sub_replace_all(
+                   c("abcde",  "ABCDE"),
+  from        = list(c(2, 4),  c(0,    3,   6)),
+  length      = list(  1,      c(0,    2,   0)),
+  replacement = list(  "Z",    c("uu", "v", "wwww")))
+@
 
 \noindent
 Note how we have obtained the insertion of new content
@@ -1862,18 +1391,11 @@ at the start and the end of the 2nd input.
 The corresponding {replacement functions} modify
 a character vector in-place:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{y} \hlkwb{<-} \hlstr{"spam, egg, spam, spam, bacon, and spam"}
-\hlkwd{stri_sub}\hlstd{(y,} \hlnum{7}\hlstd{,} \hlkwc{length}\hlstd{=}\hlnum{3}\hlstd{)} \hlkwb{<-} \hlstr{"spam"}  \hlcom{# in-place replacement, egg → spam}
-\hlkwd{print}\hlstd{(y)}                            \hlcom{# y has changed}
-\end{alltt}
-\begin{verbatim}
-## [1] "spam, spam, spam, spam, bacon, and spam"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+y <- "spam, egg, spam, spam, bacon, and spam"
+stri_sub(y, 7, length=3) <- "spam"  # in-place replacement, egg → spam
+print(y)                            # y has changed
+@
 
 Note that the state of \code{y} has changed in such a way that the
 substring of length 3 starting at the 7th code point
@@ -1881,18 +1403,11 @@ was replaced by a length-4 content.
 
 Many replacements within a single string are also possible:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{y} \hlkwb{<-} \hlstr{"aa bb cc"}
-\hlkwd{stri_sub_all}\hlstd{(y,} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{4}\hlstd{,} \hlnum{7}\hlstd{),} \hlkwc{length}\hlstd{=}\hlnum{2}\hlstd{)} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"A"}\hlstd{,} \hlstr{"BB"}\hlstd{,} \hlstr{"CCC"}\hlstd{)}
-\hlkwd{print}\hlstd{(y)}                            \hlcom{# y has changed}
-\end{alltt}
-\begin{verbatim}
-## [1] "A BB CCC"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+y <- "aa bb cc"
+stri_sub_all(y, c(1, 4, 7), length=2) <- c("A", "BB", "CCC")
+print(y)                            # y has changed
+@
 
 \noindent
 This has replaced 3 length-2 chunks within \code{y} with new content.
@@ -1921,16 +1436,9 @@ operator or, equivalently, the \code{stri\_cmp\_eq()} function.
 Moreover, \code{\%s!==\%} and \code{stri\_cmp\_neq()}
 implement the not-equal-to relation.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstr{"actg"} \hlopt{%s===%} \hlkwd{c}\hlstd{(}\hlstr{"ACTG"}\hlstd{,} \hlstr{"actg"}\hlstd{,} \hlstr{"act"}\hlstd{,} \hlstr{"actga"}\hlstd{,} \hlnum{NA}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] FALSE  TRUE FALSE FALSE    NA
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+"actg" %s===% c("ACTG", "actg", "act", "actga", NA)
+@
 
 Due to recycling, the first string was compared against the
 5 strings in the 2nd operand. There is only 1 exact match.
@@ -2003,16 +1511,9 @@ see Section~\ref{Sec:regex} and Section~\ref{Sec:collator}.
 The \code{stri_count_fixed()} function counts the number of
 times a fixed pattern occurs in a given string.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_count_fixed}\hlstd{(}\hlstr{"abcabcdefabcabcabdc"}\hlstd{,} \hlstr{"abc"}\hlstd{)}  \hlcom{# search pattern is "abc"}
-\end{alltt}
-\begin{verbatim}
-## [1] 4
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_count_fixed("abcabcdefabcabcabdc", "abc")  # search pattern is "abc"
+@
 
 
 
@@ -2040,38 +1541,19 @@ see Section~\ref{Sec:collator} (and partially Section~\ref{Sec:regex}) for a wor
 case-insensitive matching.
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_count_fixed}\hlstd{(}\hlstr{"ACTGACGacgggACg"}\hlstd{,} \hlstr{"acg"}\hlstd{,} \hlkwc{case_insensitive}\hlstd{=}\hlnum{TRUE}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] 3
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_count_fixed("ACTGACGacgggACg", "acg", case_insensitive=TRUE)
+@
 
 Second, we can indicate our interest in detecting
 overlapping pattern matches or whether searching should continue
 at the end of each match
 (the latter being the default behaviour):
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_count_fixed}\hlstd{(}\hlstr{"acatgacaca"}\hlstd{,} \hlstr{"aca"}\hlstd{)}  \hlcom{# overlap=FALSE (default)}
-\end{alltt}
-\begin{verbatim}
-## [1] 2
-\end{verbatim}
-\begin{alltt}
-\hlkwd{stri_count_fixed}\hlstd{(}\hlstr{"acatgacaca"}\hlstd{,} \hlstr{"aca"}\hlstd{,} \hlkwc{overlap}\hlstd{=}\hlnum{TRUE}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] 3
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_count_fixed("acatgacaca", "aca")  # overlap=FALSE (default)
+stri_count_fixed("acatgacaca", "aca", overlap=TRUE)
+@
 
 
 
@@ -2105,17 +1587,10 @@ A somewhat simplified version of the above search task involves asking
 whether a pattern occurs in a string at all. Such an operation can be
 performed with a call to \code{stri\_detect\_fixed()}.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"abc"}\hlstd{,} \hlstr{"abcd"}\hlstd{,} \hlstr{"def"}\hlstd{,} \hlstr{"xyzabc"}\hlstd{,} \hlstr{"uabdc"}\hlstd{,} \hlstr{"dab"}\hlstd{,} \hlnum{NA}\hlstd{,} \hlstr{"abc"}\hlstd{)}
-\hlkwd{stri_detect_fixed}\hlstd{(x,} \hlstr{"abc"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1]  TRUE  TRUE FALSE  TRUE FALSE FALSE    NA  TRUE
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- c("abc", "abcd", "def", "xyzabc", "uabdc", "dab", NA, "abc")
+stri_detect_fixed(x, "abc")
+@
 
 We can also indicate that a no-match is rather of our  interest
 by passing \code{negate=TRUE}.
@@ -2124,16 +1599,9 @@ once a given number of matches has been found
 in the \code{haystack} vector (as a whole),
 which can speed up the processing of larger data sets:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_detect_fixed}\hlstd{(x,} \hlstr{"abc"}\hlstd{,} \hlkwc{negate}\hlstd{=}\hlnum{TRUE}\hlstd{,} \hlkwc{max_count}\hlstd{=}\hlnum{2}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] FALSE FALSE  TRUE FALSE  TRUE    NA    NA    NA
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_detect_fixed(x, "abc", negate=TRUE, max_count=2)
+@
 
 \noindent
 This can be useful in scenarios such as ``find the first 2 matching
@@ -2147,22 +1615,10 @@ or end of a string has not been implemented separately for \code{regex} patterns
 which support \code{"\textasciicircum"} and \code{"\$"} anchors that  serve exactly this very purpose.}
 with a pattern match:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_startswith_fixed}\hlstd{(x,} \hlstr{"abc"}\hlstd{)}  \hlcom{# from=1 - match at start}
-\end{alltt}
-\begin{verbatim}
-## [1]  TRUE  TRUE FALSE FALSE FALSE FALSE    NA  TRUE
-\end{verbatim}
-\begin{alltt}
-\hlkwd{stri_endswith_fixed}\hlstd{(x,} \hlstr{"abc"}\hlstd{)}    \hlcom{# to=-1 - match at end}
-\end{alltt}
-\begin{verbatim}
-## [1]  TRUE FALSE FALSE  TRUE FALSE FALSE    NA  TRUE
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_startswith_fixed(x, "abc")  # from=1 - match at start
+stri_endswith_fixed(x, "abc")    # to=-1 - match at end
+@
 
 
 \medskip
@@ -2172,16 +1628,9 @@ This is why we have a specialised (and hence slightly faster)
 function that  returns only the strings that match a given pattern.
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_subset_fixed}\hlstd{(x,} \hlstr{"abc"}\hlstd{,} \hlkwc{omit_na}\hlstd{=}\hlnum{TRUE}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "abc"    "abcd"   "xyzabc" "abc"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_subset_fixed(x, "abc", omit_na=TRUE)
+@
 
 The above is equivalent to \code{x[which(stri_detect_fixed(x, "abc"))]}
 (note the argument responsible for the removal of missing values),
@@ -2196,17 +1645,10 @@ Also, it works well with the forward pipe operator, as we can write
 
 There is also a replacement version of this function:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_subset_fixed}\hlstd{(x,} \hlstr{"abc"}\hlstd{)} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"*****"}\hlstd{,} \hlstr{"***"}\hlstd{)}  \hlcom{# modifies x in-place}
-\hlkwd{print}\hlstd{(x)}  \hlcom{# x has changed}
-\end{alltt}
-\begin{verbatim}
-## [1] "*****" "***"   "def"   "*****" "uabdc" "dab"   NA      "***"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_subset_fixed(x, "abc") <- c("*****", "***")  # modifies x in-place
+print(x)  # x has changed
+@
 
 
 
@@ -2220,31 +1662,11 @@ aim to pinpoint the positions of pattern matches.
 First, we may be interested in getting to know the location of the
 first or the last pattern occurrence:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"aga"}\hlstd{,} \hlstr{"actg"}\hlstd{,} \hlnum{NA}\hlstd{,} \hlstr{"AGagaGAgaga"}\hlstd{)}
-\hlkwd{stri_locate_first_fixed}\hlstd{(x,} \hlstr{"aga"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-##      start end
-## [1,]     1   3
-## [2,]    NA  NA
-## [3,]    NA  NA
-## [4,]     3   5
-\end{verbatim}
-\begin{alltt}
-\hlkwd{stri_locate_last_fixed}\hlstd{(x,} \hlstr{"aga"}\hlstd{,} \hlkwc{get_length}\hlstd{=}\hlnum{TRUE}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-##      start length
-## [1,]     1      3
-## [2,]    -1     -1
-## [3,]    NA     NA
-## [4,]     9      3
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- c("aga", "actg", NA, "AGagaGAgaga")
+stri_locate_first_fixed(x, "aga")
+stri_locate_last_fixed(x, "aga", get_length=TRUE)
+@
 
 \noindent
 In both examples we obtain a two-column matrix
@@ -2259,34 +1681,9 @@ Second, we may be yearning for the locations of all the matching
 substrings. As the number of possible answers may vary from string to string,
 the result is a list of index matrices.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_locate_all_fixed}\hlstd{(x,} \hlstr{"aga"}\hlstd{,} \hlkwc{overlap}\hlstd{=}\hlnum{TRUE}\hlstd{,} \hlkwc{case_insensitive}\hlstd{=}\hlnum{TRUE}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-##      start end
-## [1,]     1   3
-## 
-## [[2]]
-##      start end
-## [1,]    NA  NA
-## 
-## [[3]]
-##      start end
-## [1,]    NA  NA
-## 
-## [[4]]
-##      start end
-## [1,]     1   3
-## [2,]     3   5
-## [3,]     5   7
-## [4,]     7   9
-## [5,]     9  11
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_locate_all_fixed(x, "aga", overlap=TRUE, case_insensitive=TRUE)
+@
 
 \noindent
 Note again that a no-match is indicated by a single-row matrix
@@ -2303,33 +1700,11 @@ However, if merely the extraction of the matching substrings is needed,
 it will be more convenient to rely on the functions from the
 \code{stri\_extract()} family:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_extract_first_fixed}\hlstd{(x,} \hlstr{"aga"}\hlstd{,} \hlkwc{case_insensitive}\hlstd{=}\hlnum{TRUE}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "aga" NA    NA    "AGa"
-\end{verbatim}
-\begin{alltt}
-\hlkwd{stri_extract_all_fixed}\hlstd{(x,} \hlstr{"aga"}\hlstd{,}
-  \hlkwc{overlap}\hlstd{=}\hlnum{TRUE}\hlstd{,} \hlkwc{case_insensitive}\hlstd{=}\hlnum{TRUE}\hlstd{,} \hlkwc{omit_no_match}\hlstd{=}\hlnum{TRUE}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-## [1] "aga"
-## 
-## [[2]]
-## character(0)
-## 
-## [[3]]
-## [1] NA
-## 
-## [[4]]
-## [1] "AGa" "aga" "aGA" "Aga" "aga"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_extract_first_fixed(x, "aga", case_insensitive=TRUE)
+stri_extract_all_fixed(x, "aga",
+  overlap=TRUE, case_insensitive=TRUE, omit_no_match=TRUE)
+@
 
 
 
@@ -2341,17 +1716,10 @@ it will be more convenient to rely on the functions from the
 In order to replace each match with a corresponding
 replacement string, we can refer to \code{stri\_replace\_all()}:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"aga"}\hlstd{,} \hlstr{"actg"}\hlstd{,} \hlnum{NA}\hlstd{,} \hlstr{"ggAGAGAgaGAca"}\hlstd{,} \hlstr{"agagagaga"}\hlstd{)}
-\hlkwd{stri_replace_all_fixed}\hlstd{(x,} \hlstr{"aga"}\hlstd{,} \hlstr{"~"}\hlstd{,} \hlkwc{case_insensitive}\hlstd{=}\hlnum{TRUE}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "~"         "actg"      NA          "gg~G~GAca" "~g~ga"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- c("aga", "actg", NA, "ggAGAGAgaGAca", "agagagaga")
+stri_replace_all_fixed(x, "aga", "~", case_insensitive=TRUE)
+@
 
 Note that the inputs that are not part of any match are left unchanged.
 The input object is left unchanged, because it is not a replacement
@@ -2365,31 +1733,15 @@ we can set the \code{vectorise_all} argument of \code{stri_replace_all()}
 to \code{FALSE}.
 Compare the following:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_replace_all_fixed}\hlstd{(}\hlstr{"The quick brown fox jumped over the lazy dog."}\hlstd{,}
-  \hlkwd{c}\hlstd{(}\hlstr{"quick"}\hlstd{,} \hlstr{"brown"}\hlstd{,}      \hlstr{"fox"}\hlstd{,} \hlstr{"lazy"}\hlstd{,}    \hlstr{"dog"}\hlstd{),}
-  \hlkwd{c}\hlstd{(}\hlstr{"slow"}\hlstd{,}  \hlstr{"yellow-ish"}\hlstd{,} \hlstr{"hen"}\hlstd{,} \hlstr{"spamity"}\hlstd{,} \hlstr{"llama"}\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-## [1] "The slow brown fox jumped over the lazy dog."      
-## [2] "The quick yellow-ish fox jumped over the lazy dog."
-## [3] "The quick brown hen jumped over the lazy dog."     
-## [4] "The quick brown fox jumped over the spamity dog."  
-## [5] "The quick brown fox jumped over the lazy llama."
-\end{verbatim}
-\begin{alltt}
-\hlkwd{stri_replace_all_fixed}\hlstd{(}\hlstr{"The quick brown fox jumped over the lazy dog."}\hlstd{,}
-  \hlkwd{c}\hlstd{(}\hlstr{"quick"}\hlstd{,} \hlstr{"brown"}\hlstd{,}      \hlstr{"fox"}\hlstd{,} \hlstr{"lazy"}\hlstd{,} \hlstr{"dog"}\hlstd{),}
-  \hlkwd{c}\hlstd{(}\hlstr{"slow"}\hlstd{,}  \hlstr{"yellow-ish"}\hlstd{,} \hlstr{"hen"}\hlstd{,} \hlstr{"spamity"}\hlstd{,} \hlstr{"llama"}\hlstd{),}
-  \hlkwc{vectorise_all}\hlstd{=}\hlnum{FALSE}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "The slow yellow-ish hen jumped over the spamity llama."
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_replace_all_fixed("The quick brown fox jumped over the lazy dog.",
+  c("quick", "brown",      "fox", "lazy",    "dog"),
+  c("slow",  "yellow-ish", "hen", "spamity", "llama"))
+stri_replace_all_fixed("The quick brown fox jumped over the lazy dog.",
+  c("quick", "brown",      "fox", "lazy", "dog"),
+  c("slow",  "yellow-ish", "hen", "spamity", "llama"),
+  vectorise_all=FALSE)
+@
 
 \noindent
 Here, for every string in the \code{haystack}, we observe the vectorisation
@@ -2411,30 +1763,10 @@ where the \code{needles} define the delimiters that separate
 the inputs into tokens,
 we call \code{stri\_split()}:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"a,b,c,d"}\hlstd{,} \hlstr{"e"}\hlstd{,} \hlstr{""}\hlstd{,} \hlnum{NA}\hlstd{,} \hlstr{"f,g,,,h,i,,j,"}\hlstd{)}
-\hlkwd{stri_split_fixed}\hlstd{(x,} \hlstr{","}\hlstd{,} \hlkwc{omit_empty}\hlstd{=}\hlnum{TRUE}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-## [1] "a" "b" "c" "d"
-## 
-## [[2]]
-## [1] "e"
-## 
-## [[3]]
-## character(0)
-## 
-## [[4]]
-## [1] NA
-## 
-## [[5]]
-## [1] "f" "g" "h" "i" "j"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- c("a,b,c,d", "e", "", NA, "f,g,,,h,i,,j,")
+stri_split_fixed(x, ",", omit_empty=TRUE)
+@
 
 The result is a list of character vectors, as each string
 in the \code{haystack}
@@ -2607,16 +1939,9 @@ meaning to the regex engine:
 Any regular expression that does not contain the above
 behaves like a fixed pattern:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_count_regex}\hlstd{(}\hlstr{"spam, eggs, spam, bacon, sausage, and spam"}\hlstd{,} \hlstr{"spam"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] 3
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_count_regex("spam, eggs, spam, bacon, sausage, and spam", "spam")
+@
 
 There are hence 3 occurrences of a pattern that is comprised
 of 4 code points, ``\code{s}'' followed by ``\code{p}'',
@@ -2628,16 +1953,9 @@ This does not mean, though, that it considers canonically
 equivalent strings as equal,
 see Section~\ref{Sec:Equivalence} for a discussion and a workaround.}:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_detect_regex}\hlstd{(}\hlstr{"groß"}\hlstd{,} \hlstr{"GROSS"}\hlstd{,} \hlkwc{case_insensitive}\hlstd{=}\hlnum{TRUE}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] TRUE
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_detect_regex("groß", "GROSS", case_insensitive=TRUE)
+@
 
 If we wish to include a special character as part of a regular expression --
 so that it is treated literally -- we will need to escape it with  a backslash,
@@ -2645,16 +1963,9 @@ so that it is treated literally -- we will need to escape it with  a backslash,
 has a special meaning to \proglang{R}, see \code{help("Quotes")},
 therefore it needs to be preceded by another backslash.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_count_regex}\hlstd{(}\hlstr{"spam..."}\hlstd{,} \hlstr{"\textbackslash{}\textbackslash{}."}\hlstd{)}   \hlcom{# "\textbackslash{}\textbackslash{}" is a way to input a single \textbackslash{}}
-\end{alltt}
-\begin{verbatim}
-## [1] 3
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_count_regex("spam...", "\\.")   # "\\" is a way to input a single \
+@
 
 In other words, the \proglang{R} string \code{"\textbackslash\textbackslash."}
 is seen by the regex engine as ``\code{\textbackslash.}'' and interpreted
@@ -2666,18 +1977,10 @@ like \code{r"(\textbackslash.)"}.
 \paragraph{Matching any character.}
 The (unescaped) dot, ``\code{.}'', matches any code point except the newline.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlstr{"Ham, spam,\textbackslash{}njam, SPAM, eggs, and spam"}
-\hlkwd{stri_extract_all_regex}\hlstd{(x,} \hlstr{"..am"}\hlstd{,} \hlkwc{case_insensitive}\hlstd{=}\hlnum{TRUE}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-## [1] "spam" "SPAM" "spam"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- "Ham, spam,\njam, SPAM, eggs, and spam"
+stri_extract_all_regex(x, "..am", case_insensitive=TRUE)
+@
 
 The above matches non-overlapping length-4 substrings that
 end with ``\code{am}''.
@@ -2687,17 +1990,9 @@ by the need to maintain the compatibility with tools such as \pkg{grep}
 (when searching within text files in a line-by-line manner).
 This behaviour can be altered by setting the \code{dot_all} option to \code{TRUE}.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_extract_all_regex}\hlstd{(x,} \hlstr{"..am"}\hlstd{,} \hlkwc{dot_all}\hlstd{=}\hlnum{TRUE}\hlstd{,} \hlkwc{case_insensitive}\hlstd{=}\hlnum{TRUE}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-## [1] "spam"  "\njam" "SPAM"  "spam"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_extract_all_regex(x, "..am", dot_all=TRUE, case_insensitive=TRUE)
+@
 
 
 
@@ -2710,17 +2005,9 @@ For instance, ``\code{[abc]}'' denotes the set $\{\mathtt{a},\mathtt{b},\mathtt{
 Moreover, in:
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_extract_all_regex}\hlstd{(x,} \hlstr{"[hj]am"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-## [1] "jam"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_extract_all_regex(x, "[hj]am")
+@
 
 
 \noindent
@@ -2754,18 +2041,10 @@ Hence, ``\code{[\^{}abc]}'' matches any code point except ``\code{a}'',
 ``\code{b}'', and ``\code{c}''.
 Here is an example where we seek any substring that consists of 3 non-spaces.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlstr{"Nobody expects the Spanish Inquisition!"}
-\hlkwd{stri_extract_all_regex}\hlstd{(x,} \hlstr{"[^ ][^ ][^ ]"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-##  [1] "Nob" "ody" "exp" "ect" "the" "Spa" "nis" "Inq" "uis" "iti" "on!"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- "Nobody expects the Spanish Inquisition!"
+stri_extract_all_regex(x, "[^ ][^ ][^ ]")
+@
 
 
 
@@ -2781,18 +2060,9 @@ we were used to relying on specific code ranges; e.g.,
 characters with codes between U+0061 and U+007A, i.e., lowercase letters
 of the English (Latin) alphabet.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_extract_all_regex}\hlstd{(}\hlstr{"In 2020, Gągolewski had fun once."}\hlstd{,} \hlstr{"[0-9A-Za-z]"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-##  [1] "I" "n" "2" "0" "2" "0" "G" "g" "o" "l" "e" "w" "s" "k" "i" "h" "a" "d"
-## [19] "f" "u" "n" "o" "n" "c" "e"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_extract_all_regex("In 2020, Gągolewski had fun once.", "[0-9A-Za-z]")
+@
 
 
 
@@ -2812,34 +2082,11 @@ Sets of characters from each category can be referred to,
 amongst others, by using the ``\code{\textbackslash{}p\{category\}}''
 (or, equivalently, ``\code{[\textbackslash{}p\{category\}]}'') syntax:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlstr{"aąbßÆAĄB你123,.;'! \textbackslash{}t-+=[]©←→”„²³¾"}
-\hlstd{p} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"\textbackslash{}\textbackslash{}p\{L\}"}\hlstd{,} \hlstr{"\textbackslash{}\textbackslash{}p\{Ll\}"}\hlstd{,} \hlstr{"\textbackslash{}\textbackslash{}p\{Lu\}"}\hlstd{,} \hlstr{"\textbackslash{}\textbackslash{}p\{N\}"}\hlstd{,} \hlstr{"\textbackslash{}\textbackslash{}p\{P\}"}\hlstd{,} \hlstr{"\textbackslash{}\textbackslash{}p\{S\}"}\hlstd{)}
-\hlkwd{structure}\hlstd{(}\hlkwd{stri_extract_all_regex}\hlstd{(x, p),} \hlkwc{names}\hlstd{=p)}
-\end{alltt}
-\begin{verbatim}
-## $`\\p{L}`
-## [1] "a"  "ą"  "b"  "ß"  "Æ"  "A"  "Ą"  "B"  "你"
-## 
-## $`\\p{Ll}`
-## [1] "a" "ą" "b" "ß"
-## 
-## $`\\p{Lu}`
-## [1] "Æ" "A" "Ą" "B"
-## 
-## $`\\p{N}`
-## [1] "1" "2" "3" "²" "³" "¾"
-## 
-## $`\\p{P}`
-##  [1] "," "." ";" "'" "!" "-" "[" "]" "”" "„"
-## 
-## $`\\p{S}`
-## [1] "+" "=" "©" "←" "→"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- "aąbßÆAĄB你123,.;'! \t-+=[]©←→”„²³¾"
+p <- c("\\p{L}", "\\p{Ll}", "\\p{Lu}", "\\p{N}", "\\p{P}", "\\p{S}")
+structure(stri_extract_all_regex(x, p), names=p)
+@
 
 The above yield a match to: arbitrary letters, lowercase letters, uppercase letters,
 numbers, punctuation marks, and symbols, respectively.
@@ -2848,24 +2095,10 @@ numbers, punctuation marks, and symbols, respectively.
 Characters' binary properties and scripts can also be referenced in a similar manner.
 Some other noteworthy classes include:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{p} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"\textbackslash{}\textbackslash{}w"}\hlstd{,} \hlstr{"\textbackslash{}\textbackslash{}d"}\hlstd{,} \hlstr{"\textbackslash{}\textbackslash{}s"}\hlstd{)}
-\hlkwd{structure}\hlstd{(}\hlkwd{stri_extract_all_regex}\hlstd{(x, p),} \hlkwc{names}\hlstd{=p)}
-\end{alltt}
-\begin{verbatim}
-## $`\\w`
-##  [1] "a"  "ą"  "b"  "ß"  "Æ"  "A"  "Ą"  "B"  "你" "1"  "2"  "3" 
-## 
-## $`\\d`
-## [1] "1" "2" "3"
-## 
-## $`\\s`
-## [1] " "  "\t"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+p <- c("\\w", "\\d", "\\s")
+structure(stri_extract_all_regex(x, p), names=p)
+@
 
 These give: word characters, decimal digits (``\code{\textbackslash{}p\{Nd\}}''),
 and spaces (``\code{[\textbackslash{}t\textbackslash{}n\textbackslash{}f\textbackslash{}r\textbackslash{}p\{Z\}]}''),
@@ -2894,20 +2127,10 @@ is true.
 Base \proglang{R} with \pkg{PCRE} yields on the current
 author's machine:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlstr{",./|\textbackslash{}\textbackslash{}<>?;:'\textbackslash{}"[]\{\}-=_+()*&^%$€#@!`~×‒„”"}
-\hlkwd{regmatches}\hlstd{(x,} \hlkwd{gregexpr}\hlstd{(}\hlstr{"[[:punct:]]"}\hlstd{, x,} \hlkwc{perl}\hlstd{=}\hlnum{TRUE}\hlstd{))}  \hlcom{# base R}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-##  [1] ","  "."  "/"  "|"  "\\" "<"  ">"  "?"  ";"  ":"  "'"  "\"" "["  "]" 
-## [15] "{"  "}"  "-"  "="  "_"  "+"  "("  ")"  "*"  "&"  "^"  "%"  "$"  "#" 
-## [29] "@"  "!"  "`"  "~"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- ",./|\\<>?;:'\"[]{}-=_+()*&^%$€#@!`~×‒„”"
+regmatches(x, gregexpr("[[:punct:]]", x, perl=TRUE))  # base R
+@
 
 
 However, the details of the characters' belongingness
@@ -2916,33 +2139,16 @@ Therefore, the reader might obtain different results when calling the above.
 
 \pkg{ICU}, on the other hand, always gives:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_extract_all_regex}\hlstd{(x,} \hlstr{"[[:punct:]]"}\hlstd{)}    \hlcom{# equivalently: \textbackslash{}p\{P\}}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-##  [1] ","  "."  "/"  "\\" "?"  ";"  ":"  "'"  "\"" "["  "]"  "{"  "}"  "-" 
-## [15] "_"  "("  ")"  "*"  "&"  "%"  "#"  "@"  "!"  "‒"  "„"  "”"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_extract_all_regex(x, "[[:punct:]]")    # equivalently: \p{P}
+@
 
 Here, \code{[:punct:]} is merely a synonym for \code{\textbackslash{}p\{P\}}.
 Further, \code{\textbackslash{}p\{S\}} captures symbols:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_extract_all_regex}\hlstd{(x,} \hlstr{"\textbackslash{}\textbackslash{}p\{S\}"}\hlstd{)}         \hlcom{# symbols}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-##  [1] "|" "<" ">" "=" "+" "^" "$" "€" "`" "~" "×"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_extract_all_regex(x, "\\p{S}")         # symbols
+@
 
 
 We strongly recommend, wherever possible, the use of the portable
@@ -2957,18 +2163,10 @@ The alternation operator, ``\code{|}'',
 matches either its left or its right branch,
 for instance:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlstr{"spam, egg, ham, jam, algae, and an amalgam of spam, all al dente"}
-\hlkwd{stri_extract_all_regex}\hlstd{(x,} \hlstr{"spam|ham"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-## [1] "spam" "ham"  "spam"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- "spam, egg, ham, jam, algae, and an amalgam of spam, all al dente"
+stri_extract_all_regex(x, "spam|ham")
+@
 
 ``\code{|}'' has a very low precedence. Therefore, if we wish to
 introduce an alternative of subexpressions,
@@ -2989,55 +2187,32 @@ Some parenthesised subexpressions -- those in which the opening bracket is follo
 In particular, ``\code{(?\#...)}'' denotes a free-format comment
 that is ignored by the regex parser:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_extract_all_regex}\hlstd{(x,}
-  \hlstr{"(?# match 'sp' or 'h')(sp|h)(?# and 'am')am|(?# or match 'egg')egg"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-## [1] "spam" "egg"  "ham"  "spam"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_extract_all_regex(x,
+  "(?# match 'sp' or 'h')(sp|h)(?# and 'am')am|(?# or match 'egg')egg")
+@
 
 \noindent
 Nevertheless, constructing more sophisticated regexes by concatenating
 subfragments thereof may sometimes be more readable:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_extract_all_regex}\hlstd{(x,}
-  \hlkwd{stri_join}\hlstd{(}
-      \hlstr{"(sp|h)"}\hlstd{,}   \hlcom{# match either 'sp' or 'h'}
-      \hlstr{"am"}\hlstd{,}       \hlcom{# followed by 'am'}
-    \hlstr{"|"}\hlstd{,}            \hlcom{# ... or ...}
-      \hlstr{"egg"}       \hlcom{# just match 'egg'}
-\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-## [1] "spam" "egg"  "ham"  "spam"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_extract_all_regex(x,
+  stri_join(
+      "(sp|h)",   # match either 'sp' or 'h'
+      "am",       # followed by 'am'
+    "|",            # ... or ...
+      "egg"       # just match 'egg'
+))
+@
 
 
 What is more, e.g., ``\code{(?i)}'' enables the \code{case\_insensitive}
 mode.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_count_regex}\hlstd{(}\hlstr{"Spam spam SPAMITY spAm"}\hlstd{,} \hlstr{"(?i)spam"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] 4
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_count_regex("Spam spam SPAMITY spAm", "(?i)spam")
+@
 
 For more regex flags, we kindly refer the reader to Table~\ref{Tab:regex_opts} again.
 
@@ -3069,28 +2244,14 @@ repeated subexpression as many times as possible. The ``\code{?}'' suffix
 as few occurrences as possible (to obtain a match still).
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlstr{"sp(AM)(maps)(SP)am"}
-\hlkwd{stri_extract_all_regex}\hlstd{(x,}
-  \hlkwd{c}\hlstd{(}\hlstr{"\textbackslash{}\textbackslash{}(.+\textbackslash{}\textbackslash{})"}\hlstd{,}    \hlcom{# [[1]] greedy}
-    \hlstr{"\textbackslash{}\textbackslash{}(.+?\textbackslash{}\textbackslash{})"}\hlstd{,}   \hlcom{# [[2]] lazy}
-    \hlstr{"\textbackslash{}\textbackslash{}([^)]+\textbackslash{}\textbackslash{})"}  \hlcom{# [[3]] greedy (but clever)}
-\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-## [1] "(AM)(maps)(SP)"
-## 
-## [[2]]
-## [1] "(AM)"   "(maps)" "(SP)"  
-## 
-## [[3]]
-## [1] "(AM)"   "(maps)" "(SP)"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- "sp(AM)(maps)(SP)am"
+stri_extract_all_regex(x,
+  c("\\(.+\\)",    # [[1]] greedy
+    "\\(.+?\\)",   # [[2]] lazy
+    "\\([^)]+\\)"  # [[3]] greedy (but clever)
+))
+@
 
 The first regex is greedy: it matches an opening bracket,
 then as many characters as possible (including ``\code{)}'')
@@ -3104,21 +2265,10 @@ Let us stress that the quantifier is applied to the subexpression
 that stands directly before it. Grouping parentheses can be used in case
 they are needed.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_extract_all_regex}\hlstd{(}\hlstr{"12, 34.5, 678.901234, 37...629, ..."}\hlstd{,}
-  \hlkwd{c}\hlstd{(}\hlstr{"\textbackslash{}\textbackslash{}d+\textbackslash{}\textbackslash{}.\textbackslash{}\textbackslash{}d+"}\hlstd{,} \hlstr{"\textbackslash{}\textbackslash{}d+(\textbackslash{}\textbackslash{}.\textbackslash{}\textbackslash{}d+)?"}\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-## [1] "34.5"       "678.901234"
-## 
-## [[2]]
-## [1] "12"         "34.5"       "678.901234" "37"         "629"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_extract_all_regex("12, 34.5, 678.901234, 37...629, ...",
+  c("\\d+\\.\\d+", "\\d+(\\.\\d+)?"))
+@
 
 Here, the first regex matches digits, a dot, and another series of digits.
 The second one finds digits which are possibly (but not necessarily)
@@ -3135,20 +2285,11 @@ exponential matching times (e.g., ``\code{(a+)+b}'' applied on \code{"aaaa...aaa
 If such patterns are expected, setting the \code{time\_limit} or \code{stack\_limit}
 option is recommended.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{system.time}\hlstd{(}\hlkwd{tryCatch}\hlstd{(\{}
-  \hlkwd{stri_detect_regex}\hlstd{(}\hlstr{"a"} \hlopt{%s*%} \hlnum{1000} \hlopt{%s+%} \hlstr{"c"}\hlstd{,} \hlstr{"(a+)+b"}\hlstd{,} \hlkwc{time_limit}\hlstd{=}\hlnum{1e5}\hlstd{)}
-\hlstd{\},} \hlkwc{error}\hlstd{=}\hlkwa{function}\hlstd{(}\hlkwc{e}\hlstd{)} \hlkwd{cat}\hlstd{(}\hlstr{"stopped."}\hlstd{)))}
-\end{alltt}
-\begin{verbatim}
-## stopped.
-##    user  system elapsed 
-##  16.818   0.000  16.823
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<time-limit, cache=TRUE, error=TRUE>>=
+system.time(tryCatch({
+  stri_detect_regex("a" %s*% 1000 %s+% "c", "(a+)+b", time_limit=1e5)
+}, error=function(e) cat("stopped.")))
+@
 
 
 Nevertheless, oftentimes such regexes can be naturally
@@ -3180,21 +2321,10 @@ versions of \code{stri\_extract()} that are sensitive to the presence
 of capture groups:
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlstr{"name='Sir Launcelot', quest='Seek the Grail', favecolour='blue'"}
-\hlkwd{stri_match_all_regex}\hlstd{(x,} \hlstr{"(\textbackslash{}\textbackslash{}w+)='(.+?)'"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-##      [,1]                     [,2]         [,3]            
-## [1,] "name='Sir Launcelot'"   "name"       "Sir Launcelot" 
-## [2,] "quest='Seek the Grail'" "quest"      "Seek the Grail"
-## [3,] "favecolour='blue'"      "favecolour" "blue"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- "name='Sir Launcelot', quest='Seek the Grail', favecolour='blue'"
+stri_match_all_regex(x, "(\\w+)='(.+?)'")
+@
 
 The findings are presented in a matrix form. The first column
 gives the complete matches, the second column stores the matches to the
@@ -3209,20 +2339,9 @@ Also, named capture groups defined like
 since version 1.7.1 of our package (for historical notes see
 \citealp{namedCapture}).
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_match_all_regex}\hlstd{(x,} \hlstr{"(?:\textbackslash{}\textbackslash{}w+)='(?<value>.+?)'"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-##                               value           
-## [1,] "name='Sir Launcelot'"   "Sir Launcelot" 
-## [2,] "quest='Seek the Grail'" "Seek the Grail"
-## [3,] "favecolour='blue'"      "blue"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_match_all_regex(x, "(?:\\w+)='(?<value>.+?)'")
+@
 
 
 
@@ -3231,33 +2350,10 @@ The \code{capture_groups} attribute in \code{stri_locate_*_regex}
 enables us to pinpoint the matches to the parenthesised subexpressions
 as well:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_locate_all_regex}\hlstd{(x,} \hlstr{"(?<key>\textbackslash{}\textbackslash{}w+)='(?<value>.+?)'"}\hlstd{,}
-  \hlkwc{capture_groups}\hlstd{=}\hlnum{TRUE}\hlstd{,} \hlkwc{get_length}\hlstd{=}\hlnum{TRUE}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-##      start length
-## [1,]     1     20
-## [2,]    23     22
-## [3,]    47     17
-## attr(,"capture_groups")
-## attr(,"capture_groups")$key
-##      start length
-## [1,]     1      4
-## [2,]    23      5
-## [3,]    47     10
-## 
-## attr(,"capture_groups")$value
-##      start length
-## [1,]     7     13
-## [2,]    30     14
-## [3,]    59      4
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_locate_all_regex(x, "(?<key>\\w+)='(?<value>.+?)'",
+  capture_groups=TRUE, get_length=TRUE)
+@
 
 \noindent
 Note that each item in the resulting list
@@ -3276,30 +2372,16 @@ Here, the match in its entirety is denoted with ``\code{\$0}'',  then
 Moreover, ``\code{\textbackslash{}\$}'' gives the dollar-sign.
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_replace_all_regex}\hlstd{(x,} \hlstr{"(\textbackslash{}\textbackslash{}w+)='(.+?)'"}\hlstd{,} \hlstr{"$2 is a $1"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "Sir Launcelot is a name, Seek the Grail is a quest, blue is a favecolour"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_replace_all_regex(x, "(\\w+)='(.+?)'", "$2 is a $1")
+@
 
 Named capture groups can be referred to too:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_replace_all_regex}\hlstd{(x,} \hlstr{"(?<key>\textbackslash{}\textbackslash{}w+)='(?<value>.+?)'"}\hlstd{,}
-  \hlstr{"$\{value\} is a $\{key\}"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "Sir Launcelot is a name, Seek the Grail is a quest, blue is a favecolour"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_replace_all_regex(x, "(?<key>\\w+)='(?<value>.+?)'",
+  "${value} is a ${key}")
+@
 
 \paragraph{Back-referencing.}
 Matches to capture groups can also be part of the regexes themselves.
@@ -3309,21 +2391,10 @@ has been consumed by the first capture group.
 Even though, in general, parsing \proglang{HTML} code with regexes is
 not recommended, let us consider the following examples:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_extract_all_regex}\hlstd{(}\hlstr{"<strong><em>spam</em></strong><code>eggs</code>"}\hlstd{,}
-  \hlkwd{c}\hlstd{(}\hlstr{"<[a-z]+>.*?</[a-z]+>"}\hlstd{,} \hlstr{"<([a-z]+)>.*?</\textbackslash{}\textbackslash{}1>"}\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-## [1] "<strong><em>spam</em>" "<code>eggs</code>"    
-## 
-## [[2]]
-## [1] "<strong><em>spam</em></strong>" "<code>eggs</code>"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_extract_all_regex("<strong><em>spam</em></strong><code>eggs</code>",
+  c("<[a-z]+>.*?</[a-z]+>", "<([a-z]+)>.*?</\\1>"))
+@
 
 
 The second regex guarantees that the match will include all characters
@@ -3348,23 +2419,11 @@ at a given abstract position within a string.
 start and end of the string
 (or each line within a string, if the \code{multi_line} option is set to \code{TRUE}).
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"spam egg"}\hlstd{,} \hlstr{"bacon spam"}\hlstd{,} \hlstr{"spam"}\hlstd{,} \hlstr{"egg spam bacon"}\hlstd{,} \hlstr{"sausage"}\hlstd{)}
-\hlstd{p} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"spam"}\hlstd{,} \hlstr{"^spam"}\hlstd{,} \hlstr{"spam$"}\hlstd{,} \hlstr{"spam$|^spam"}\hlstd{,} \hlstr{"^spam$"}\hlstd{)}
-\hlkwd{structure}\hlstd{(}\hlkwd{outer}\hlstd{(x, p, stri_detect_regex),} \hlkwc{dimnames}\hlstd{=}\hlkwd{list}\hlstd{(x, p))}
-\end{alltt}
-\begin{verbatim}
-##                 spam ^spam spam$ spam$|^spam ^spam$
-## spam egg        TRUE  TRUE FALSE        TRUE  FALSE
-## bacon spam      TRUE FALSE  TRUE        TRUE  FALSE
-## spam            TRUE  TRUE  TRUE        TRUE   TRUE
-## egg spam bacon  TRUE FALSE FALSE       FALSE  FALSE
-## sausage        FALSE FALSE FALSE       FALSE  FALSE
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- c("spam egg", "bacon spam", "spam", "egg spam bacon", "sausage")
+p <- c("spam", "^spam", "spam$", "spam$|^spam", "^spam$")
+structure(outer(x, p, stri_detect_regex), dimnames=list(x, p))
+@
 
 The 5 regular expressions match ``\code{spam}'', respectively,
 anywhere within the string, at the beginning,
@@ -3385,17 +2444,9 @@ all stand-alone numbers\footnote{This regular expression
 is provided for didactic purposes only.}:
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_extract_all_regex}\hlstd{(}\hlstr{"12, 34.5, J23, 37.629cm"}\hlstd{,} \hlstr{"\textbackslash{}\textbackslash{}b\textbackslash{}\textbackslash{}d+(\textbackslash{}\textbackslash{}.\textbackslash{}\textbackslash{}d+)?+\textbackslash{}\textbackslash{}b"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-## [1] "12"   "34.5"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_extract_all_regex("12, 34.5, J23, 37.629cm", "\\b\\d+(\\.\\d+)?+\\b")
+@
 
 Note the possessive quantifier, ``\code{?+}'':
 try matching a dot and a sequence of digits,
@@ -3414,21 +2465,10 @@ their negated (``negative look-behind/ahead'') versions.
 
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_extract_all_regex}\hlstd{(}\hlstr{"I like spam, spam, eggs, and spam."}\hlstd{,}
-  \hlkwd{c}\hlstd{(}\hlstr{"\textbackslash{}\textbackslash{}w+(?=[,.])"}\hlstd{,} \hlstr{"\textbackslash{}\textbackslash{}w++(?![,.])"}\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-## [1] "spam" "spam" "eggs" "spam"
-## 
-## [[2]]
-## [1] "I"    "like" "and"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_extract_all_regex("I like spam, spam, eggs, and spam.",
+  c("\\w+(?=[,.])", "\\w++(?![,.])"))
+@
 
 The first regex captures words that end with ``\code{,}'' or ``\code{.}''.
 The second one matches words that end neither with ``\code{,}'' nor ``\code{.}''.
@@ -3529,31 +2569,18 @@ and Section~\ref{Sec:datetime} for ``\code{@calendar=hebrew}'', amongst others).
 \paragraph{Listing locales.}
 To list the available locale identifiers, we call \code{stri_locale_list()}.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{length}\hlstd{(}\hlkwd{stri_locale_list}\hlstd{())}
-\end{alltt}
-\begin{verbatim}
-## [1] 784
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+length(stri_locale_list())
+@
 
 \noindent
 As the number of supported locales is very high, here we shall
 display only 5 randomly chosen ones:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{sample}\hlstd{(}\hlkwd{stri_locale_list}\hlstd{(),} \hlnum{5}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "nl_CW"      "pt_CH"      "ff_Latn_SL" "en_PH"      "en_HK"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<echo=-1>>=
+set.seed(514678)
+sample(stri_locale_list(), 5)
+@
 
 
 
@@ -3577,13 +2604,9 @@ For more details regarding the configure/build process of \pkg{stringi},
 refer to the \code{INSTALL} file.}.
 To force building \pkg{ICU} from sources, we may call:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{install.packages}\hlstd{(}\hlstr{"stringi"}\hlstd{,} \hlkwc{configure.args}\hlstd{=}\hlstr{"--disable-pkg-config"}\hlstd{)}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
+<<eval=FALSE>>=
+install.packages("stringi", configure.args="--disable-pkg-config")
+@
 
 Overall, if a requested service is unavailable
 in a given locale, the best possible match is returned.
@@ -3600,16 +2623,9 @@ in the very rare case of improper automatic locale detection.
 
 As we have stated in the introduction, in this paper we use:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_locale_get}\hlstd{()}
-\end{alltt}
-\begin{verbatim}
-## [1] "en_AU"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_locale_get()
+@
 
 \noindent
 i.e., the Australian-English locale
@@ -3643,39 +2659,20 @@ can be performed by calling \code{\%s==\%} and, more generally,
 In the example below we have: a followed by ogonek (two code points)
 vs a with ogonek (single code point).
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstr{"a\textbackslash{}u0328"} \hlopt{%s==%} \hlstr{"ą"}             \hlcom{# a, ogonek == a with ogonek}
-\end{alltt}
-\begin{verbatim}
-## [1] TRUE
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+"a\u0328" %s==% "ą"             # a, ogonek == a with ogonek
+@
 
 
 
 There are also functions for removing and indicating
 duplicated elements in a character vector:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"Gągolewski"}\hlstd{,} \hlstr{"Gagolewski"}\hlstd{,} \hlstr{"Ga\textbackslash{}u0328golewski"}\hlstd{)}
-\hlkwd{stri_unique}\hlstd{(x)}
-\end{alltt}
-\begin{verbatim}
-## [1] "Gągolewski" "Gagolewski"
-\end{verbatim}
-\begin{alltt}
-\hlkwd{stri_duplicated}\hlstd{(x)}  \hlcom{# from_last=FALSE}
-\end{alltt}
-\begin{verbatim}
-## [1] FALSE FALSE  TRUE
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- c("Gągolewski", "Gagolewski", "Ga\u0328golewski")
+stri_unique(x)
+stri_duplicated(x)  # from_last=FALSE
+@
 
 Moreover, \code{stri_duplicated_any()}
 returns the index of the first non-unique element.
@@ -3704,42 +2701,21 @@ and \code{stri_rank()} ranks strings within a vector.
 For instance, here is a comparison in the current default locale
 (Australian-English):
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstr{"chaotic"} \hlopt{%s<%} \hlstr{"hard"}  \hlcom{# c < h}
-\end{alltt}
-\begin{verbatim}
-## [1] TRUE
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+"chaotic" %s<% "hard"  # c < h
+@
 
 Similar comparison in Polish:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_cmp_lt}\hlstd{(}\hlstr{"chłodny"}\hlstd{,} \hlstr{"hardy"}\hlstd{,} \hlkwc{locale}\hlstd{=}\hlstr{"pl_PL"}\hlstd{)}  \hlcom{# c < h}
-\end{alltt}
-\begin{verbatim}
-## [1] TRUE
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_cmp_lt("chłodny", "hardy", locale="pl_PL")  # c < h
+@
 
 And now for something completely different -- the Slovak language:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_cmp_lt}\hlstd{(}\hlstr{"chladný"}\hlstd{,} \hlstr{"hladný"}\hlstd{,} \hlkwc{locale}\hlstd{=}\hlstr{"sk_SK"}\hlstd{)} \hlcom{# ch > h}
-\end{alltt}
-\begin{verbatim}
-## [1] FALSE
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_cmp_lt("chladný", "hladný", locale="sk_SK") # ch > h
+@
 
 
 
@@ -3754,44 +2730,20 @@ and are sorted after ``\code{h}'':
 
 Compare the ordering of Polish and Slovak words:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_sort}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"chłodny"}\hlstd{,} \hlstr{"hardy"}\hlstd{,} \hlstr{"cichy"}\hlstd{,} \hlstr{"cenny"}\hlstd{),} \hlkwc{locale}\hlstd{=}\hlstr{"pl_PL"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "cenny"   "chłodny" "cichy"   "hardy"
-\end{verbatim}
-\begin{alltt}
-\hlkwd{stri_sort}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"cudný"}\hlstd{,} \hlstr{"chladný"}\hlstd{,} \hlstr{"hladný"}\hlstd{,} \hlstr{"čudný"}\hlstd{),} \hlkwc{locale}\hlstd{=}\hlstr{"sk_SK"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "cudný"   "čudný"   "hladný"  "chladný"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_sort(c("chłodny", "hardy", "cichy", "cenny"), locale="pl_PL")
+stri_sort(c("cudný", "chladný", "hladný", "čudný"), locale="sk_SK")
+@
 
 
 
 An opposite situation is called an expansion:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{german_k_words} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"können"}\hlstd{,} \hlstr{"kondensieren"}\hlstd{,} \hlstr{"kochen"}\hlstd{,} \hlstr{"korrelieren"}\hlstd{)}
-\hlkwd{stri_sort}\hlstd{(german_k_words,} \hlkwc{locale}\hlstd{=}\hlstr{"de_DE"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "kochen"       "kondensieren" "können"       "korrelieren"
-\end{verbatim}
-\begin{alltt}
-\hlkwd{stri_sort}\hlstd{(german_k_words,} \hlkwc{locale}\hlstd{=}\hlstr{"de_DE@collation=phonebook"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "kochen"       "können"       "kondensieren" "korrelieren"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+german_k_words <- c("können", "kondensieren", "kochen", "korrelieren")
+stri_sort(german_k_words, locale="de_DE")
+stri_sort(german_k_words, locale="de_DE@collation=phonebook")
+@
 
 
 In the latter example, where we used the German phone-book order,
@@ -3876,16 +2828,9 @@ The \code{strength} option controls the Collator's ``attention to detail''.
 For instance, it can be used to make the ligature ``ff'' (U+FB00)
 compare equal to the two-letter sequence ``f{}f'':
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_cmp_equiv}\hlstd{(}\hlstr{"\textbackslash{}ufb00"}\hlstd{,} \hlstr{"ff"}\hlstd{,} \hlkwc{strength}\hlstd{=}\hlnum{2}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] TRUE
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_cmp_equiv("\ufb00", "ff", strength=2)
+@
 
 \noindent
 which is not the case at the default strength level (3).
@@ -3919,23 +2864,11 @@ in the processing of Hiragana text.
 Note which strings are deemed equivalent when
 considering different collation strengths:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"gro\textbackslash{}u00df"}\hlstd{,} \hlstr{"gross"}\hlstd{,} \hlstr{"GROSS"}\hlstd{,} \hlstr{"Gro\textbackslash{}u00df"}\hlstd{,} \hlstr{"Gross"}\hlstd{)}
-\hlkwd{stri_unique}\hlstd{(x,} \hlkwc{strength}\hlstd{=}\hlnum{1}\hlstd{)}                  \hlcom{# ß == ss, case insensitive}
-\end{alltt}
-\begin{verbatim}
-## [1] "groß"
-\end{verbatim}
-\begin{alltt}
-\hlkwd{stri_unique}\hlstd{(x,} \hlkwc{strength}\hlstd{=}\hlnum{2}\hlstd{)}                  \hlcom{# ß != ss, case insensitive}
-\end{alltt}
-\begin{verbatim}
-## [1] "groß"  "gross"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- c("gro\u00df", "gross", "GROSS", "Gro\u00df", "Gross")
+stri_unique(x, strength=1)                  # ß == ss, case insensitive
+stri_unique(x, strength=2)                  # ß != ss, case insensitive
+@
 }
 
 
@@ -3947,53 +2880,27 @@ tertiary differences (case).
 Also, introducing an extra case level yields
 a case sensitive comparison that ignores secondary differences:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_unique}\hlstd{(x,} \hlkwc{strength}\hlstd{=}\hlnum{1}\hlstd{,} \hlkwc{case_level}\hlstd{=}\hlnum{TRUE}\hlstd{)} \hlcom{# ß == ss, case sensitive}
-\end{alltt}
-\begin{verbatim}
-## [1] "groß"  "GROSS" "Groß"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_unique(x, strength=1, case_level=TRUE) # ß == ss, case sensitive
+@
 
 
 \paragraph{Ignoring some punctuation.}
 Here are some effects of changing the  \code{alternate\_shifted} option,
 which allows for ignoring some punctuation marks:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"code point"}\hlstd{,} \hlstr{"code-point"}\hlstd{,} \hlstr{"codepoint"}\hlstd{,} \hlstr{"CODE POINT"}\hlstd{,} \hlstr{"CodePoint"}\hlstd{)}
-\hlkwd{stri_unique}\hlstd{(x,} \hlkwc{alternate_shifted}\hlstd{=}\hlnum{TRUE}\hlstd{)}  \hlcom{# strength=3}
-\end{alltt}
-\begin{verbatim}
-## [1] "code point" "CODE POINT" "CodePoint"
-\end{verbatim}
-\begin{alltt}
-\hlkwd{stri_unique}\hlstd{(x,} \hlkwc{alternate_shifted}\hlstd{=}\hlnum{TRUE}\hlstd{,} \hlkwc{strength}\hlstd{=}\hlnum{2}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "code point"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- c("code point", "code-point", "codepoint", "CODE POINT", "CodePoint")
+stri_unique(x, alternate_shifted=TRUE)  # strength=3
+stri_unique(x, alternate_shifted=TRUE, strength=2)
+@
 
 In the latter case, all strings are considered equivalent.
 Ignoring case but not punctuation yields:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_unique}\hlstd{(x,} \hlkwc{strength}\hlstd{=}\hlnum{2}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "code point" "code-point" "codepoint"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_unique(x, strength=2)
+@
 
 
 
@@ -4006,22 +2913,10 @@ to  the last accent difference. Such a behaviour can be applied
 either by setting the French-Canadian locale or by passing the \code{french=TRUE}
 option to the Collator.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_sort}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"cote"}\hlstd{,} \hlstr{"côte"}\hlstd{,} \hlstr{"coté"}\hlstd{,} \hlstr{"côté"}\hlstd{),} \hlkwc{locale}\hlstd{=}\hlstr{"fr_FR"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "cote" "coté" "côte" "côté"
-\end{verbatim}
-\begin{alltt}
-\hlkwd{stri_sort}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"cote"}\hlstd{,} \hlstr{"côte"}\hlstd{,} \hlstr{"coté"}\hlstd{,} \hlstr{"côté"}\hlstd{),} \hlkwc{locale}\hlstd{=}\hlstr{"fr_CA"}\hlstd{)} \hlcom{# french=TRUE}
-\end{alltt}
-\begin{verbatim}
-## [1] "cote" "côte" "coté" "côté"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_sort(c("cote", "côte", "coté", "côté"), locale="fr_FR")
+stri_sort(c("cote", "côte", "coté", "côté"), locale="fr_CA") # french=TRUE
+@
 
 
 
@@ -4032,17 +2927,10 @@ code points are being compared one by one, from left to right,
 and once a difference
 is detected, the result is returned immediately.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"a1"}\hlstd{,} \hlstr{"a2"}\hlstd{,} \hlstr{"a11"}\hlstd{,} \hlstr{"a1"}\hlstd{,} \hlstr{"a99"}\hlstd{,} \hlstr{"a10"}\hlstd{,} \hlstr{"a100"}\hlstd{,} \hlstr{"a2"}\hlstd{,} \hlstr{"a9"}\hlstd{,} \hlstr{"a2"}\hlstd{)}
-\hlkwd{stri_sort}\hlstd{(x)}
-\end{alltt}
-\begin{verbatim}
-##  [1] "a1"   "a1"   "a10"  "a100" "a11"  "a2"   "a2"   "a2"   "a9"   "a99"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- c("a1", "a2", "a11", "a1", "a99", "a10", "a100", "a2", "a9", "a2")
+stri_sort(x)
+@
 
 For example, \code{"a99"} is ordered after \code{"a100"},
 because \code{"a" == "a"} (first characters are equal)
@@ -4051,16 +2939,9 @@ but then \code{"9" > "1"} (second characters are already different).
 Let us, however, note the effect of setting the \code{numeric} option
 on the sorting of strings that involves numbers:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_sort}\hlstd{(x,} \hlkwc{numeric}\hlstd{=}\hlnum{TRUE}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-##  [1] "a1"   "a1"   "a2"   "a2"   "a2"   "a9"   "a10"  "a11"  "a99"  "a100"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_sort(x, numeric=TRUE)
+@
 
 
 
@@ -4068,27 +2949,11 @@ on the sorting of strings that involves numbers:
 Here is an example of sorting a data frame
 with respect to two criteria:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{X} \hlkwb{<-} \hlkwd{data.frame}\hlstd{(}\hlkwc{a}\hlstd{=x,} \hlkwc{b}\hlstd{=}\hlkwd{runif}\hlstd{(}\hlkwd{length}\hlstd{(x)))}
-\hlstd{X[}\hlkwd{order}\hlstd{(}\hlopt{-}\hlkwd{stri_rank}\hlstd{(X}\hlopt{$}\hlstd{a,} \hlkwc{numeric}\hlstd{=}\hlnum{TRUE}\hlstd{), X}\hlopt{$}\hlstd{b), ]}
-\end{alltt}
-\begin{verbatim}
-##       a        b
-## 7  a100 0.528105
-## 5   a99 0.940467
-## 3   a11 0.408977
-## 6   a10 0.045556
-## 9    a9 0.551435
-## 10   a2 0.456615
-## 2    a2 0.788305
-## 8    a2 0.892419
-## 1    a1 0.287578
-## 4    a1 0.883017
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<echo=-1>>=
+set.seed(123)
+X <- data.frame(a=x, b=runif(length(x)))
+X[order(-stri_rank(X$a, numeric=TRUE), X$b), ]
+@
 
 The object is now ordered by the first column decreasingly
 (using a ``numeric'' order) and ties are resolved based on increasing
@@ -4141,22 +3006,10 @@ They are slower than them, but are more appropriate in NLP activities.
 
 For instance:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_detect_coll}\hlstd{(}\hlstr{"Er ist so groß."}\hlstd{,} \hlstr{"GROSS"}\hlstd{,} \hlkwc{strength}\hlstd{=}\hlnum{1}\hlstd{,} \hlkwc{locale}\hlstd{=}\hlstr{"de_AT"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] TRUE
-\end{verbatim}
-\begin{alltt}
-\hlkwd{stri_detect_coll}\hlstd{(}\hlstr{"On je chladný"}\hlstd{,} \hlstr{"chladny"}\hlstd{,} \hlkwc{strength}\hlstd{=}\hlnum{1}\hlstd{,} \hlkwc{locale}\hlstd{=}\hlstr{"sk_SK"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] TRUE
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_detect_coll("Er ist so groß.", "GROSS", strength=1, locale="de_AT")
+stri_detect_coll("On je chladný", "chladny", strength=1, locale="sk_SK")
+@
 
 
 
@@ -4204,43 +3057,22 @@ versions:
 For example:
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlstr{"The\textbackslash{}u00a0above-mentioned    features are useful. "} \hlopt{%s+%}
-  \hlstr{"My hovercraft is full of eels, eggs, and spam."}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- "The\u00a0above-mentioned    features are useful. " %s+%
+  "My hovercraft is full of eels, eggs, and spam."
+@
 
 Number of sentences:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_count_boundaries}\hlstd{(x,} \hlkwc{type}\hlstd{=}\hlstr{"sentence"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] 2
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_count_boundaries(x, type="sentence")
+@
 
 The list of all the words:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_extract_all_words}\hlstd{(x)}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-##  [1] "The"        "above"      "mentioned"  "features"   "are"       
-##  [6] "useful"     "My"         "hovercraft" "is"         "full"      
-## [11] "of"         "eels"       "eggs"       "and"        "spam"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_extract_all_words(x)
+@
 
 
 
@@ -4264,16 +3096,9 @@ This can be used to centre, left-, or right-align a message
 when printed with, e.g.,  \code{cat()}.
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{cat}\hlstd{(}\hlkwd{stri_pad}\hlstd{(}\hlstr{"SPAMITY SPAM"}\hlstd{,} \hlkwc{width}\hlstd{=}\hlnum{77}\hlstd{,} \hlkwc{side}\hlstd{=}\hlstr{"both"}\hlstd{,} \hlkwc{pad}\hlstd{=}\hlstr{"."}\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-## ................................SPAMITY SPAM.................................
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+cat(stri_pad("SPAMITY SPAM", width=77, side="both", pad="."))
+@
 
 
 
@@ -4285,17 +3110,10 @@ when printed with, e.g.,  \code{cat()}.
 A dual operation is that of trimming from the left or right side
 of strings:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlstr{"      spam, eggs, and lovely spam.\textbackslash{}n"}
-\hlkwd{stri_trim}\hlstd{(x)}  \hlcom{# side="both"}
-\end{alltt}
-\begin{verbatim}
-## [1] "spam, eggs, and lovely spam."
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- "      spam, eggs, and lovely spam.\n"
+stri_trim(x)  # side="both"
+@
 
 
 
@@ -4308,25 +3126,11 @@ However, there is also an option (\code{cost\_exponent=0})
 to use the greedy alignment,
 for compatibility with the built-in \code{strwrap()}.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlkwd{stri_rand_lipsum}\hlstd{(}\hlnum{1}\hlstd{)}  \hlcom{# random text paragraph}
-\hlkwd{cat}\hlstd{(}\hlkwd{stri_wrap}\hlstd{(x,} \hlkwc{width}\hlstd{=}\hlnum{74}\hlstd{,} \hlkwc{indent}\hlstd{=}\hlnum{8}\hlstd{,} \hlkwc{exdent}\hlstd{=}\hlnum{4}\hlstd{,} \hlkwc{prefix}\hlstd{=}\hlstr{"> "}\hlstd{),} \hlkwc{sep}\hlstd{=}\hlstr{"\textbackslash{}n"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## >         Lorem ipsum dolor sit amet, quis donec pretium auctor, quis id.
-## >     Mauris rhoncus donec amet egestas sagittis ipsum per. Sed, sociis
-## >     amet. Aliquam fusce dictumst sed vehicula ultrices arcu. Eros,
-## >     netus et. Amet amet mi vestibulum vitae dapibus ut felis. Magnis
-## >     in vestibulum egestas massa curabitur a ut, eget in in facilisis.
-## >     Etiam odio fermentum sit ante ridiculus sit elit. Sapien torquent
-## >     fermentum tortor gravida ornare sapien consequat et sem turpis. Hac
-## >     vel lacus habitasse et id non. Metus habitasse sed lacinia nibh ex
-## >     metus. Amet nam vestibulum ornare tincidunt massa sed ullamcorper.
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<echo=-1>>=
+set.seed(1233)
+x <- stri_rand_lipsum(1)  # random text paragraph
+cat(stri_wrap(x, width=74, indent=8, exdent=4, prefix="> "), sep="\n")
+@
 
 
 
@@ -4342,17 +3146,9 @@ The function is also available as a binary operator \code{\%s\$\%},
 which is similar to \proglang{Python}'s \code{\%} overloaded for
 objects of type \code{str}.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{cat}\hlstd{(}\hlkwd{stri_sprintf}\hlstd{(}\hlstr{"[%6s]"}\hlstd{,} \hlkwd{c}\hlstd{(}\hlstr{"abcd"}\hlstd{,} \hlstr{"\textbackslash{}u200b\textbackslash{}u200b\textbackslash{}u200bąß²€"}\hlstd{)),} \hlkwc{sep}\hlstd{=}\hlstr{"\textbackslash{}n"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [  abcd]
-## [  ​​​ąß²€]
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+cat(stri_sprintf("[%6s]", c("abcd", "\u200b\u200b\u200bąß²€")), sep="\n")
+@
 
 The above guarantees that the two output strings are
 of at least width of 6 (plus the square brackets).
@@ -4368,16 +3164,10 @@ uniformly sampled (with replacement) from a given set.
 
 For example, here are 5 random ACTG strings of lengths from 2 to 6:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_rand_strings}\hlstd{(}\hlnum{5}\hlstd{,} \hlnum{2}\hlopt{:}\hlnum{6}\hlstd{,} \hlstr{"[ACTG]"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "CT"     "CTT"    "AGTG"   "CTCGG"  "ATAACT"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<echo=-1>>=
+set.seed(123)
+stri_rand_strings(5, 2:6, "[ACTG]")
+@
 
 
 
@@ -4406,28 +3196,11 @@ that can change the total number of code points in a string.
 
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_trans_toupper}\hlstd{(}\hlstr{"groß"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "GROSS"
-\end{verbatim}
-\begin{alltt}
-\hlkwd{stri_trans_tolower}\hlstd{(}\hlstr{"Iİ"}\hlstd{,} \hlkwc{locale}\hlstd{=}\hlstr{"tr_TR"}\hlstd{)}               \hlcom{# Turkish}
-\end{alltt}
-\begin{verbatim}
-## [1] "ıi"
-\end{verbatim}
-\begin{alltt}
-\hlkwd{stri_trans_totitle}\hlstd{(}\hlstr{"ijsvrij yoghurt"}\hlstd{,} \hlkwc{locale}\hlstd{=}\hlstr{"nl_NL"}\hlstd{)}  \hlcom{# Dutch}
-\end{alltt}
-\begin{verbatim}
-## [1] "IJsvrij Yoghurt"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_trans_toupper("groß")
+stri_trans_tolower("Iİ", locale="tr_TR")               # Turkish
+stri_trans_totitle("ijsvrij yoghurt", locale="nl_NL")  # Dutch
+@
 
 
 
@@ -4438,16 +3211,9 @@ that can change the total number of code points in a string.
 \paragraph{Mapping between specific characters.}
 When a fast 1-to-1 code point translation is required, we can call:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_trans_char}\hlstd{(}\hlstr{"GATAAATCTGGTCTTATTTCC"}\hlstd{,} \hlstr{"ACGT"}\hlstd{,} \hlstr{"tgca"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "ctatttagaccagaataaagg"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_trans_char("GATAAATCTGGTCTTATTTCC", "ACGT", "tgca")
+@
 
 Here, ``\code{A}'', ``\code{C}'', ``\code{G}'', and ``\code{T}''
 is replaced with
@@ -4460,34 +3226,19 @@ is replaced with
 defined by \pkg{ICU}, whose catalogue can be accessed by calling
 \code{stri_trans_list()}.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{sample}\hlstd{(}\hlkwd{stri_trans_list}\hlstd{(),} \hlnum{9}\hlstd{)}  \hlcom{# a few random entries}
-\end{alltt}
-\begin{verbatim}
-## [1] "Any-und_FONIPA" "Any-FCD"        "Deva-Guru"      "yo-yo_BJ"      
-## [5] "Taml-Orya"      "Tamil-Arabic"   "hy-ar"          "de-ASCII"      
-## [9] "Any-Kana"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<echo=-1>>=
+set.seed(12345)
+sample(stri_trans_list(), 9)  # a few random entries
+@
 
 For example, below we apply a transliteration chain:
 first, we convert to upper case, and then we convert characters
 in the Latin script to ASCII.
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_trans_general}\hlstd{(}\hlstr{"groß© żółć La Niña köszönöm"}\hlstd{,} \hlstr{"upper; latin-ascii"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "GROSS(C) ZOLC LA NINA KOSZONOM"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_trans_general("groß© żółć La Niña köszönöm", "upper; latin-ascii")
+@
 
 
 Custom rule-based transliteration is also
@@ -4517,29 +3268,18 @@ In base \proglang{R}, dealing with temporal data in regional
 settings other than the current locale is somewhat difficult.
 For instance, many will find the task of parsing the following Polish date problematic:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlstr{"28 września 2021 r., godz. 17:17:32"}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- "28 września 2021 r., godz. 17:17:32"
+@
 
 \pkg{stringi} connects to the \pkg{ICU} date and time
 services so that this becomes an easy exercise:
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_datetime_parse}\hlstd{(x,} \hlstr{"dd MMMM yyyy 'r., godz.' HH:mm:ss"}\hlstd{,}
-  \hlkwc{locale}\hlstd{=}\hlstr{"pl_PL"}\hlstd{,} \hlkwc{tz}\hlstd{=}\hlstr{"Europe/Warsaw"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "2021-09-28 17:17:32 CEST"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_datetime_parse(x, "dd MMMM yyyy 'r., godz.' HH:mm:ss",
+  locale="pl_PL", tz="Europe/Warsaw")
+@
 
 This function returns an object of class \code{POSIXct},
 for compatibility with base \proglang{R}.
@@ -4551,47 +3291,26 @@ See the \pkg{ICU} User Guide on {Formatting Dates and Times},
 \code{strftime()}- and \code{strptime()}-like
 templates can be converted with \code{stri_datetime_fstr()}:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_datetime_parse}\hlstd{(x,}
-  \hlkwd{stri_datetime_fstr}\hlstd{(}\hlstr{"%d %B %Y r., godz. %H:%M:%S"}\hlstd{),}
-  \hlkwc{locale}\hlstd{=}\hlstr{"pl_PL"}\hlstd{,} \hlkwc{tz}\hlstd{=}\hlstr{"Europe/Warsaw"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "2021-09-28 17:17:32 CEST"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_datetime_parse(x,
+  stri_datetime_fstr("%d %B %Y r., godz. %H:%M:%S"),
+  locale="pl_PL", tz="Europe/Warsaw")
+@
 
 
 
 For example, here is how we can access different calendars:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_datetime_format}\hlstd{(}
-  \hlkwd{stri_datetime_create}\hlstd{(}\hlnum{2020}\hlstd{,} \hlnum{1}\hlopt{:}\hlnum{12}\hlstd{,} \hlnum{1}\hlstd{),}
-  \hlstr{"date_long"}\hlstd{,}
-  \hlkwc{locale}\hlstd{=}\hlstr{"@calendar=hebrew"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-##  [1] "4 Tevet 5780"    "6 Shevat 5780"   "5 Adar 5780"     "7 Nisan 5780"   
-##  [5] "7 Iyar 5780"     "9 Sivan 5780"    "9 Tamuz 5780"    "11 Av 5780"     
-##  [9] "12 Elul 5780"    "13 Tishri 5781"  "14 Heshvan 5781" "15 Kislev 5781"
-\end{verbatim}
-\begin{alltt}
-\hlkwd{stri_datetime_format}\hlstd{(}
-  \hlkwd{stri_datetime_create}\hlstd{(}\hlnum{2020}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,} \hlnum{8}\hlstd{),} \hlkwd{c}\hlstd{(}\hlnum{4}\hlstd{,} \hlnum{7}\hlstd{)),}
-  \hlstr{"date_full"}\hlstd{,}
-  \hlkwc{locale}\hlstd{=}\hlstr{"ja_JP@calendar=japanese"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "令和2年2月4日火曜日" "令和2年8月7日金曜日"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_datetime_format(
+  stri_datetime_create(2020, 1:12, 1),
+  "date_long",
+  locale="@calendar=hebrew")
+stri_datetime_format(
+  stri_datetime_create(2020, c(2, 8), c(4, 7)),
+  "date_full",
+  locale="ja_JP@calendar=japanese")
+@
 
 \noindent
 Above we have selected the Hebrew calendar within the
@@ -4630,20 +3349,12 @@ In particular, here is the number of the code points in
 some popular categories (compare Section~\ref{Sec:RegexIndividualChars}),
 such as letters, numbers, and the like.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{z} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"\textbackslash{}\textbackslash{}p\{L\}"}\hlstd{,} \hlstr{"\textbackslash{}\textbackslash{}p\{Ll\}"}\hlstd{,} \hlstr{"\textbackslash{}\textbackslash{}p\{Lu\}"}\hlstd{,} \hlstr{"\textbackslash{}\textbackslash{}p\{N\}"}\hlstd{,} \hlstr{"\textbackslash{}\textbackslash{}p\{P\}"}\hlstd{,} \hlstr{"\textbackslash{}\textbackslash{}p\{S\}"}\hlstd{,}
-  \hlstr{"\textbackslash{}\textbackslash{}w"}\hlstd{,} \hlstr{"\textbackslash{}\textbackslash{}d"}\hlstd{,} \hlstr{"\textbackslash{}\textbackslash{}s"}\hlstd{)}
-\hlkwd{structure}\hlstd{(}\hlkwd{stri_count_regex}\hlstd{(}\hlkwd{stri_enc_fromutf32}\hlstd{(}
-  \hlkwd{setdiff}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{0x10ffff}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{0xd800}\hlopt{:}\hlnum{0xf8ff}\hlstd{))), z),} \hlkwc{names}\hlstd{=z)}
-\end{alltt}
-\begin{verbatim}
-##  \\p{L} \\p{Ll} \\p{Lu}  \\p{N}  \\p{P}  \\p{S}     \\w     \\d     \\s 
-##  131241    2155    1791    1781     798    7564  134564     650      25
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+z <- c("\\p{L}", "\\p{Ll}", "\\p{Lu}", "\\p{N}", "\\p{P}", "\\p{S}",
+  "\\w", "\\d", "\\s")
+structure(stri_count_regex(stri_enc_fromutf32(
+  setdiff(1:0x10ffff, c(0xd800:0xf8ff))), z), names=z)
+@
 
 Yet, most of the code points are still unallocated.
 The Unicode standard is occasionally updated, e.g., the
@@ -4658,16 +3369,9 @@ For instance, the code point that we are used to denoting as U+007A
 7A${}_{16}$ corresponds to decimal 122) encodes the lower case letter ``z''.
 To input such a code point in \proglang{R}, we write:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstr{"\textbackslash{}u007A"}  \hlcom{# or "\textbackslash{}U0000007A"}
-\end{alltt}
-\begin{verbatim}
-## [1] "z"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+"\u007A"  # or "\U0000007A"
+@
 
 
 For communicating with \pkg{ICU} and other libraries,
@@ -4675,17 +3379,10 @@ we may need to escape a given string, for example, as follows
 (recall that to input a backslash in \proglang{R},
 we must escape it with another backslash).
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlstr{"zß你好"}
-\hlkwd{stri_escape_unicode}\hlstd{(x)}
-\end{alltt}
-\begin{verbatim}
-## [1] "z\\u00df\\u4f60\\u597d"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- "zß你好"
+stri_escape_unicode(x)
+@
 
 
 
@@ -4708,23 +3405,11 @@ of representing the code points as sequences of bytes.
 The two most popular encodings in the Unicode family are
 UTF-8 and UTF-16:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlstr{"abz0ąß你好!"}
-\hlkwd{stri_encode}\hlstd{(x,} \hlkwc{to}\hlstd{=}\hlstr{"UTF-8"}\hlstd{,} \hlkwc{to_raw}\hlstd{=}\hlnum{TRUE}\hlstd{)[[}\hlnum{1}\hlstd{]]}
-\end{alltt}
-\begin{verbatim}
-##  [1] 61 62 7a 30 c4 85 c3 9f e4 bd a0 e5 a5 bd 21
-\end{verbatim}
-\begin{alltt}
-\hlkwd{stri_encode}\hlstd{(x,} \hlkwc{to}\hlstd{=}\hlstr{"UTF-16LE"}\hlstd{,} \hlkwc{to_raw}\hlstd{=}\hlnum{TRUE}\hlstd{)[[}\hlnum{1}\hlstd{]]}  \hlcom{# little-endian}
-\end{alltt}
-\begin{verbatim}
-##  [1] 61 00 62 00 7a 00 30 00 05 01 df 00 60 4f 7d 59 21 00
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- "abz0ąß你好!"
+stri_encode(x, to="UTF-8", to_raw=TRUE)[[1]]
+stri_encode(x, to="UTF-16LE", to_raw=TRUE)[[1]]  # little-endian
+@
 
 \proglang{R}'s current platform-default encoding, which we shall
 refer to as the native encoding, is defined via the
@@ -4770,20 +3455,10 @@ the data in a manner similar to the built-in \code{readLines()} function
 
 For instance, below we read a text file encoded in ISO-8859-1:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlkwd{stri_read_lines}\hlstd{(}\hlstr{"ES_latin1.txt"}\hlstd{,} \hlkwc{encoding}\hlstd{=}\hlstr{"ISO-8859-1"}\hlstd{)}
-\hlkwd{head}\hlstd{(x,} \hlnum{4}\hlstd{)}  \hlcom{# x is in UTF-8 now}
-\end{alltt}
-\begin{verbatim}
-## [1] "CANTO DE CALÍOPE - Miguel de Cervantes"
-## [2] ""                                      
-## [3] "Al dulce son de mi templada lira,"     
-## [4] "prestad, pastores, el oído atento:"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- stri_read_lines("ES_latin1.txt", encoding="ISO-8859-1")
+head(x, 4)  # x is in UTF-8 now
+@
 
 
 We can call \code{stri_write_lines()} to write the contents
@@ -4799,56 +3474,24 @@ a certain functions that can aid in encoding detection.
 First, we can read the resource in form of a raw-type vector:
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlkwd{stri_read_raw}\hlstd{(}\hlstr{"ES_latin1.txt"}\hlstd{)}
-\hlkwd{head}\hlstd{(x,} \hlnum{24}\hlstd{)}  \hlcom{# vector of type raw}
-\end{alltt}
-\begin{verbatim}
-##  [1] 43 41 4e 54 4f 20 44 45 20 43 41 4c cd 4f 50 45 20 2d 20 4d 69 67 75 65
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- stri_read_raw("ES_latin1.txt")
+head(x, 24)  # vector of type raw
+@
 
 Then, to guess the encoding, we can call, e.g.:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_enc_isascii}\hlstd{(x)}
-\end{alltt}
-\begin{verbatim}
-## [1] FALSE
-\end{verbatim}
-\begin{alltt}
-\hlkwd{stri_enc_isutf8}\hlstd{(x)}   \hlcom{# false positives are possible}
-\end{alltt}
-\begin{verbatim}
-## [1] FALSE
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_enc_isascii(x)
+stri_enc_isutf8(x)   # false positives are possible
+@
 
 \noindent
 Alternatively, we can use:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_enc_detect}\hlstd{(x)}  \hlcom{# based on heuristics}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-##     Encoding Language Confidence
-## 1 ISO-8859-1       es       0.81
-## 2 ISO-8859-2       ro       0.36
-## 3 ISO-8859-9       tr       0.20
-## 4   UTF-16BE                0.10
-## 5   UTF-16LE                0.10
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_enc_detect(x)  # based on heuristics
+@
 
 \noindent
 Nevertheless, encoding detection is an operation that relies on heuristics,
@@ -4866,13 +3509,9 @@ on different underlying libraries, the current function is portable
 across operating systems.
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{y} \hlkwb{<-} \hlkwd{stri_encode}\hlstd{(x,} \hlkwc{from}\hlstd{=}\hlstr{"ISO-8859-1"}\hlstd{,} \hlkwc{to}\hlstd{=}\hlstr{"UTF-8"}\hlstd{)}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
+<<>>=
+y <- stri_encode(x, from="ISO-8859-1", to="UTF-8")
+@
 
 \code{stri_enc_list()}  provides a list of
 supported encodings and their aliases in many different forms.
@@ -4882,19 +3521,9 @@ Encoding specifiers are normalised automatically, e.g.,
 
 Splitting the output  into text lines gives:
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{tail}\hlstd{(}\hlkwd{stri_split_lines1}\hlstd{(y),} \hlnum{4}\hlstd{)}  \hlcom{# spoiler alert!}
-\end{alltt}
-\begin{verbatim}
-## [1] "A Homero iguala si a escrebir intenta," 
-## [2] "y a tanto llega de su pluma el vuelo,"  
-## [3] "cuanto es verdad que a todos es notorio"
-## [4] "el alto ingenio de don DIEGO OSORIO."
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+tail(stri_split_lines1(y), 4)  # spoiler alert!
+@
 
 
 
@@ -4923,25 +3552,11 @@ Unicode normalisation forms C (Canonical composition, NFC) and D
 (Canonical decomposition, NFD) can be applied so that they
 will compare equal using bytewise matching \citep{usa15:normalization}.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlstr{"a\textbackslash{}u0328 ą"}   \hlcom{# a, combining ogonek, space, a with ogonek}
-\hlkwd{stri_enc_toutf32}\hlstd{(}  \hlcom{# code points as decimals}
-  \hlkwd{c}\hlstd{(x,} \hlkwd{stri_trans_nfc}\hlstd{(x),} \hlkwd{stri_trans_nfd}\hlstd{(x)))}
-\end{alltt}
-\begin{verbatim}
-## [[1]]
-## [1]  97 808  32 261
-## 
-## [[2]]
-## [1] 261  32 261
-## 
-## [[3]]
-## [1]  97 808  32  97 808
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+x <- "a\u0328 ą"   # a, combining ogonek, space, a with ogonek
+stri_enc_toutf32(  # code points as decimals
+  c(x, stri_trans_nfc(x), stri_trans_nfd(x)))
+@
 
 Above we see some example code points before, after NFC,
 and after NFD normalisation, respectively.
@@ -4955,16 +3570,9 @@ the removal of the formatting distinctions (font variants,
 subscripts, superscripts, etc.) is desired. For example:
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{stri_trans_nfkd}\hlstd{(}\hlstr{"r²︷"}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] "r2{"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+<<>>=
+stri_trans_nfkd("r²︷")
+@
 
 Such text might be much easier to process or analyse statistically.
 

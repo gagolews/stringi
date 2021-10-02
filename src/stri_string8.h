@@ -139,6 +139,10 @@ public:
                 this->m_str = (char*)(str); // we know what we're doing
                 // str is zero-terminated
             }
+#ifndef NDEBUG
+            for (R_len_t i=0; i<this->m_n; ++i)
+                STRI_ASSERT(this->m_str[i] != '\0');
+#endif
         }
     }
 

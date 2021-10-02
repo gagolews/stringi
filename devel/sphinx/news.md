@@ -3,7 +3,21 @@
 
 ## 1.7.4.9xxx (under development)
 
+* [DOCUMENTATION] Paper on *stringi* has been accepted for
+  publication in *Journal of Statistical Software*,
+  see <https://stringi.gagolewski.com/_static/vignette/stringi.pdf>
+  for a draft version.
+
+* [DOCUMENTATION] TO DO... The *stringi* website at
+  <https://stringi.gagolewski.com> now features a comprehensive tutorial
+  based on the aforementioned paper.
+
 * [DOCUMENTATION] ICU Project site has been moved to <https://icu.unicode.org/>.
+
+* [BUILD TIME] #457: The `autoconf` macros `AC_LANG_CPLUSPLUS`
+  and `AC_TRY_COMPILE` were obsolete.
+
+* TO DO..  #458: 'embedded nul in string'
 
 
 ## 1.7.4 (2021-08-12)
@@ -134,7 +148,7 @@
   The update to ICU brings Unicode 13.0 and CLDR 39 support.
 
 * [DOCUMENTATION] A draft version of a paper on `stringi` is now available at
-  https://stringi.gagolewski.com/_static/vignette/stringi.pdf
+  <https://stringi.gagolewski.com/_static/vignette/stringi.pdf>.
 
 * [GENERAL] stringi now requires R >= 3.1 (`CXX_STD` of `CXX11` or `CXX1X`).
 
@@ -163,8 +177,9 @@
 
 ## 1.5.3 (2020-09-04)
 
-* [DOCUMENTATION] stringi home page has moved to https://stringi.gagolewski.com
-  and now includes a comprehensive reference manual.
+* [DOCUMENTATION] stringi home page has moved to
+  <https://stringi.gagolewski.com> and now includes a comprehensive reference
+  manual.
 
 * [NEW FEATURE] #400: `%s$%` and `%stri$%` are now binary operators
   that call base R's `sprintf()`.
@@ -447,7 +462,7 @@ documentation object `stri_datetime_format`: `...`
 ## 1.0-1 (2015-10-22)
 
 * [GENERAL] #88: C API is now available for use in, e.g., Rcpp packages, see
-  https://github.com/gagolews/ExampleRcppStringi for an example.
+  <https://github.com/gagolews/ExampleRcppStringi> for an example.
 
 * [BUGFIX] #183: Floating point exception raised in `stri_sub()` and
   `stri_sub<-()` when `to` or `length` was a zero-length numeric vector.
