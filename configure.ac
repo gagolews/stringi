@@ -19,7 +19,7 @@
 
 ##### INIT ####################################################################
 
-AC_INIT(stringi, 1.6, https://stringi.gagolewski.com)
+AC_INIT([stringi],[1.7],[https://stringi.gagolewski.com])
 
 ICU_VERSION_NEEDED="55" # minimal version of ICU4C required to build stringi
 # We still support ICU 55.1 because of... yes, Solaris.
@@ -208,7 +208,7 @@ MSG_CONFIG_FAIL="
 
 # this is inspired by the "Writing R Extensions" manual:
 # determine R_HOME directory...
-AC_MSG_CHECKING(for R_HOME)
+AC_MSG_CHECKING([for R_HOME])
 if test -z "${R_HOME}"; then
     R_HOME=`R RHOME` # set R_HOME if it has not been set already
 fi
@@ -222,7 +222,7 @@ AC_SUBST(R_HOME)
 
 
 # ...and then R_PATH
-AC_MSG_CHECKING(for R)
+AC_MSG_CHECKING([for R])
 R_PATH="${R_HOME}/bin/R" # see "Writing R Extensions"
 if test ! -e "${R_PATH}"; then
     # if it was determined by calling `R RHOME`, then this is likely a bug
@@ -242,7 +242,7 @@ else
     AC_MSG_RESULT(little)
 fi
 
-AC_MSG_CHECKING(for R >= 3.1.0 for C++11 use)
+AC_MSG_CHECKING([for R >= 3.1.0 for C++11 use])
 R_GE_31=`"${R_PATH}" --vanilla --slave -e 'cat(if (getRversion() >= numeric_version("3.1.0")) "yes" else "no")'`
 if test "x$R_GE_31" = "xyes"; then
     AC_MSG_RESULT([yes])
@@ -260,7 +260,7 @@ else
     fi
 fi
 
-AC_MSG_CHECKING(for R < 3.4.0 for CXX1X flag use)
+AC_MSG_CHECKING([for R < 3.4.0 for CXX1X flag use])
 R_GE_34=`"${R_PATH}" --vanilla --slave -e 'cat(if (getRversion() >= numeric_version("3.4.0")) "yes" else "no")'`
 if test "x$R_GE_34" = "xyes"; then
     AC_MSG_RESULT([no])
@@ -381,7 +381,7 @@ while true; do
 
 
     # set ICUDT_DIR
-    AC_MSG_CHECKING(for local ICUDT_DIR)
+    AC_MSG_CHECKING([for local ICUDT_DIR])
     if test "x$ICUDT_DIR_FORCE" = "xyes"; then
     # Remember to update the configure.win file too
         ICUDT_DIR="icu${ICU_BUNDLE_VERSION}/data"
@@ -389,7 +389,7 @@ while true; do
     AC_MSG_RESULT($ICUDT_DIR)
 
 
-    AC_LANG(C)
+    AC_LANG([C])
     AC_PROG_CC
 
     AC_CHECK_HEADER([elf.h], [
@@ -402,9 +402,9 @@ while true; do
     #
     # If this is the case, return 0
     check_cpp() {
-        AC_LANG(C++)
+        AC_LANG([C++])
         AC_PROG_CXX
-        AC_MSG_CHECKING(whether the C++ compiler supports the long long type)
+        AC_MSG_CHECKING([whether the C++ compiler supports the long long type])
         AC_LINK_IFELSE([AC_LANG_SOURCE([
             #include <iostream>
             using namespace std;
@@ -431,7 +431,7 @@ while true; do
             return 1
         fi
 
-        AC_MSG_CHECKING(whether std::map is available)
+        AC_MSG_CHECKING([whether std::map is available])
         AC_LINK_IFELSE([AC_LANG_SOURCE([
             #include <iostream>
             #include <map>
@@ -486,7 +486,7 @@ while true; do
         fi
 
         # check if pkg-config knows about icu-i18n
-        AC_MSG_CHECKING(with pkg-config for the system ICU4C)
+        AC_MSG_CHECKING([with pkg-config for the system ICU4C])
         if ! `"${PKG_CONFIG}" --exists icu-i18n icu-uc`; then
             # pkg config doesn't know about icu-i18n
             AC_MSG_RESULT(no)
@@ -500,7 +500,7 @@ while true; do
         AC_MSG_RESULT($ICU_VERSION)
 
         # check for a suitable version
-        AC_MSG_CHECKING(for ICU4C >= $ICU_VERSION_NEEDED)
+        AC_MSG_CHECKING([for ICU4C >= $ICU_VERSION_NEEDED])
         #VERSION_CHECK=`expr $ICU_VERSION ">=" $ICU_VERSION_NEEDED`
         #if test "$VERSION_CHECK" != "1" ; then
         if ! `"${PKG_CONFIG}" --atleast-version=${ICU_VERSION_NEEDED} icu-i18n icu-uc`; then
@@ -532,7 +532,7 @@ while true; do
         LDFLAGS="${LDFLAGS} ${ICU_LDFLAGS}"
         LIBS="${LIBS} ${ICU_LIBS}"
 
-        AC_LANG(C++)
+        AC_LANG([C++])
 
         AC_MSG_CHECKING([whether an ICU4C-based project can be built])
         AC_LINK_IFELSE([AC_LANG_SOURCE([
@@ -778,7 +778,7 @@ while true; do
 
         if test ${ICU_BUNDLE_VERSION} -le 60; then
             # ICU >=61 doesn't provide any .c files anymore
-            AC_LANG(C)
+            AC_LANG([C])
             AC_MSG_CHECKING([whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/umapfile.c])
             AC_COMPILE_IFELSE([
                 AC_LANG_SOURCE([`${CAT} src/icu${ICU_BUNDLE_VERSION}/common/umapfile.c`])
@@ -802,7 +802,7 @@ while true; do
             ])
         fi
 
-        AC_LANG(C++)
+        AC_LANG([C++])
         AC_MSG_CHECKING([whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp])
         AC_COMPILE_IFELSE([
             AC_LANG_SOURCE([`${CAT} src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp`])
@@ -827,7 +827,7 @@ while true; do
         ])
 
         if test ${ICU_BUNDLE_VERSION} -gt 60; then
-            AC_LANG(C++)
+            AC_LANG([C++])
             AC_MSG_CHECKING([whether we may compile src/icu${ICU_BUNDLE_VERSION}/i18n/number_affixutils.cpp])
             AC_COMPILE_IFELSE([
                 AC_LANG_SOURCE([`${CAT} src/icu${ICU_BUNDLE_VERSION}/i18n/number_affixutils.cpp`])
@@ -857,7 +857,7 @@ while true; do
 
         if test ${ICU_BUNDLE_VERSION} -ge 69; then
 
-            AC_MSG_CHECKING(whether alignof(std::max_align_t) is available)
+            AC_MSG_CHECKING([whether alignof(std::max_align_t) is available])
             AC_LINK_IFELSE([AC_LANG_SOURCE([
                 #include <iostream>
                 #include <cstddef>
@@ -873,7 +873,7 @@ while true; do
                 old_with_extra_cxxflags="${with_extra_cxxflags}"
                 with_extra_cxxflags="${with_extra_cxxflags} -DSTRINGI_MAX_ALIGN_T_STD"
                 CXXFLAGS="${CXXFLAGS} -D_XPG6"
-                AC_MSG_CHECKING(whether alignof(::max_align_t) is available)
+                AC_MSG_CHECKING([whether alignof(::max_align_t) is available])
                 AC_LINK_IFELSE([AC_LANG_SOURCE([
                     #include <iostream>
                     #include <cstddef>
