@@ -31,7 +31,7 @@ of `Unicode <https://www.unicode.org/>`_ standards
     ## [1] "cudný"   "čudný"   "hladný"  "chladný"
 
 
-*stringi* gives you plenty of functions related to data cleansing,
+*stringi* provides you with plenty of functions related to data cleansing,
 information extraction, and natural language processing:
 
 * string concatenation, padding, wrapping, and substring extraction,
@@ -59,7 +59,8 @@ by calling:
 
 
 
-*stringi*'s source code is hosted on `GitHub <https://github.com/gagolews/stringi>`_.
+*stringi*'s source code is hosted on
+`GitHub <https://github.com/gagolews/stringi>`_.
 It is distributed under the open source BSD-3-clause
 `license <https://raw.githubusercontent.com/gagolews/stringi/master/LICENSE>`_.
 
@@ -75,8 +76,6 @@ is greatly appreciated. Thanks!
 Also check out `stringx <https://stringx.gagolewski.com/>`_
 for a set of wrappers around *stringi* with a base R-compatible API.
 
-..  COMMENT
-    :cite:`stringi`
 
 ..  COMMENT
     This should be part of some other section maybe.
@@ -109,7 +108,15 @@ for a set of wrappers around *stringi* with a base R-compatible API.
     :hidden:
 
     About <self>
-    Paper (Draft) <https://stringi.gagolewski.com/_static/vignette/stringi.pdf>
+    weave/design_principles
+    weave/basic_operations
+    weave/codepoint_comparing
+    weave/regular_expressions
+    weave/collation
+    weave/other_operations
+    weave/input_output
+    weave/example
+    z_bibliography
 
 
 .. toctree::

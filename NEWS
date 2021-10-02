@@ -1,16 +1,15 @@
 # What Is New in *stringi*
 
 
-## 1.7.4.9xxx (under development)
+## 1.7.5 (2021-10-02)
 
 * [DOCUMENTATION] Paper on *stringi* has been accepted for
   publication in *Journal of Statistical Software*,
   see <https://stringi.gagolewski.com/_static/vignette/stringi.pdf>
   for a draft version.
 
-* [DOCUMENTATION] TO DO... The *stringi* website at
-  <https://stringi.gagolewski.com> now features a comprehensive tutorial
-  based on the aforementioned paper.
+* [DOCUMENTATION] The *stringi* website at <https://stringi.gagolewski.com>
+  now features a comprehensive tutorial based on the aforementioned paper.
 
 * [DOCUMENTATION] ICU Project site has been moved to <https://icu.unicode.org/>.
 

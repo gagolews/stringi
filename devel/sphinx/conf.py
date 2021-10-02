@@ -40,7 +40,7 @@ extensions = [
     'myst_parser',
     'sphinx.ext.mathjax',
     'sphinx_rtd_theme',
-    #'sphinxcontrib.bibtex',
+    'sphinxcontrib.bibtex',
 ]
 
 myst_enable_extensions = ["deflist"]
@@ -77,5 +77,5 @@ html_css_files = ['css/custom.css']
 
 pygments_style = 'colorful'
 
-# bibtex_bibfiles = ['bibliography.bib']
-# bibtex_default_style = 'alpha'
+bibtex_bibfiles = ['bibliography.bib']
+bibtex_default_style = 'alpha'
