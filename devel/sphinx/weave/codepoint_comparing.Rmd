@@ -1,3 +1,4 @@
+(Sec:fixed)=
 Code-Pointwise Comparing
 ========================
 
@@ -15,7 +16,7 @@ a nucleotide sequence in a DNA profile and querying for system resources
 based on file names or UUIDs. Such tasks, due to their simplicity, can
 be performed very efficiently.
 
-Testing for equality of strings
+Testing for Equality of Strings
 -------------------------------
 
 To quickly test whether the corresponding strings in two character
@@ -31,27 +32,9 @@ relation.
 Due to recycling, the first string was compared against the 5 strings in
 the 2nd operand. There is only 1 exact match.
 
-1.0p4.8cmX **Name(s) & **Meaning\
-`stri_count()` & count pattern matches\
-`stri_detect()` & detect pattern matches\
-`stri_endswith()` & \[all but `regex`\] detect pattern matches at end of
-string\
-`stri_extract_all()`, `stri_extract_first()`, `stri_extract_last()` &
-extract pattern matches\
-`stri_locate_all()`, `stri_locate_first()`, `stri_locate_last()` &
-locate pattern matches\
-`stri_match_all()`, `stri_match_first()`, `stri_match_last()` &
-\[`regex` only\] extract matches to regex capture groups\
-`stri_replace_all()`, `stri_replace_first()`, `stri_replace_last()` &
-substitute pattern matches with some replacement strings\
-`stri_split()` & split up a string at pattern matches\
-`stri_startswith()` & \[all but `regex`\] detect pattern matches at
-start of string\
-`stri_subset()`, `‘stri_subset<-‘()` & return or replace strings that
-contain pattern matches\
-****
 
-Searching for fixed strings
+
+Searching for Fixed Strings
 ---------------------------
 
 For detecting if a string contains a given fixed substring
@@ -60,18 +43,30 @@ worst time complexity of $O(n+p)$ (where $n$ is the length of the string
 and $p$ is the length of the pattern), has been implemented in *stringi*
 (with numerous tweaks for even faster matching).
 
-Table [\[Tab:searchfuns\]](#Tab:searchfuns){reference-type="ref"
-reference="Tab:searchfuns"} lists the string search functions available
+The table below lists the string search functions available
 in *stringi*. Below we explain their behaviour in the context of fixed
 pattern matching. Notably, their description is quite detailed, because
 -- as we shall soon find out -- the corresponding operations are
 available for the two other search engines: based on regular expressions
-and the *ICU* Collator, see Section [6](#Sec:regex){reference-type="ref"
-reference="Sec:regex"} and
-Section [7](#Sec:collator){reference-type="ref"
-reference="Sec:collator"}.
+and the *ICU* Collator, see {ref}`Sec:regex` and {ref}`Sec:collator`.
 
-Counting matches
+| Name(s)                                                             | Meaning                                                         |
+| ------------------------------------------------------------------- | --------------------------------------------------------------- |
+| `stri_count()`                                                      | count pattern matches                                           |
+| `stri_detect()`                                                     | detect pattern matches                                          |
+| `stri_endswith()`                                                   | \[all but `regex`\] detect pattern matches at end of string     |
+| `stri_extract_all()`, `stri_extract_first()`, `stri_extract_last()` | extract pattern matches                                         |
+| `stri_locate_all()`, `stri_locate_first()`, `stri_locate_last()`    | locate pattern matches                                          |
+| `stri_match_all()`, `stri_match_first()`, `stri_match_last()`       | \[`regex` only\] extract matches to regex capture groups        |
+| `stri_replace_all()`, `stri_replace_first()`, `stri_replace_last()` | substitute pattern matches with some replacement strings        |
+| `stri_split()`                                                      | split up a string at pattern matches                            |
+| `stri_startswith()`                                                 | \[all but `regex`\] detect pattern matches at start of string   |
+| `stri_subset()`, `‘stri_subset<-‘()`                                | return or replace strings that contain pattern matches          |
+
+
+
+
+Counting Matches
 ----------------
 
 The `stri_count_fixed()` function counts the number of times a fixed
@@ -97,7 +92,7 @@ be forwarded as follows:
 c("abcabcdefabcabcabdc", "cba", NA) |> stri_count_fixed("abc")
 ```
 
-Search engine options
+Search Engine Options
 ---------------------
 
 The pattern matching engine may be tuned up by passing further arguments
@@ -111,10 +106,8 @@ First, we may switch on the simplistic[^3] case-insensitive matching.
 [^3]: Which is not suitable for real-world NLP tasks, as it assumes that
     changing the case of a single code point always produces one and
     only one item; This way, `"groß"` does not compare equal to
-    `"GROSS"`, see Section [7](#Sec:collator){reference-type="ref"
-    reference="Sec:collator"} (and partially
-    Section [6](#Sec:regex){reference-type="ref" reference="Sec:regex"})
-    for a workaround.
+    `"GROSS"`, see {ref}`Sec:collator` (and to some extent
+    {ref}`Sec:regex`) for a workaround.
 
 ```{r }
 stri_count_fixed("ACTGACGacgggACg", "acg", case_insensitive=TRUE)
@@ -137,7 +130,7 @@ matches (defaults to `FALSE`); available in `stri_extract_all_fixed()`,
 `stri_locate_all_fixed()`, and `stri_count_fixed()`\
 ****
 
-Detecting and subsetting patterns
+Detecting and Subsetting Patterns
 ---------------------------------
 
 A somewhat simplified version of the above search task involves asking
@@ -198,7 +191,7 @@ stri_subset_fixed(x, "abc") <- c("*****", "***")  # modifies x in-place
 print(x)  # x has changed
 ```
 
-Locating and extracting patterns
+Locating and Extracting Patterns
 --------------------------------
 
 The functions from the `stri_locate()` family aim to pinpoint the
@@ -243,7 +236,7 @@ stri_extract_all_fixed(x, "aga",
   overlap=TRUE, case_insensitive=TRUE, omit_no_match=TRUE)
 ```
 
-Replacing pattern occurrences
+Replacing Pattern Occurrences
 -----------------------------
 
 In order to replace each match with a corresponding replacement string,

@@ -1,3 +1,4 @@
+(Sec:io)=
 Input and Output
 ================
 
@@ -11,7 +12,8 @@ operability of text processing applications between different platforms.
 In particular, we discuss how to assure that data read from various
 input connections are interpreted in the correct manner.
 
-Dealing with Unicode code points {#Sec:codepoints}
+(Sec:codepoints)=
+Dealing with Unicode Code Points
 --------------------------------
 
 The Unicode Standard (as well as the Universal Coded Character Set,
@@ -20,8 +22,7 @@ together with their corresponding code points -- integers between 0 and
 1,114,111 (or 0000${}_{16}$ and 10FFFF${}_{16}$ in hexadecimal notation,
 see <https://www.unicode.org/charts/>). In particular, here is the
 number of the code points in some popular categories (compare
-Section [6.1](#Sec:RegexIndividualChars){reference-type="ref"
-reference="Sec:RegexIndividualChars"}), such as letters, numbers, and
+{ref}`Sec:RegexIndividualChars`), such as letters, numbers, and
 the like.
 
 
@@ -68,7 +69,8 @@ be unable to display certain code points correctly (due to, e.g.,
 missing fonts), the correctness of their processing with *stringi* is
 still guaranteed by *ICU*.
 
-Character encodings {#Sec:encoding}
+(Sec:encoding)=
+Character Encodings
 -------------------
 
 When storing strings in RAM or on the disk, we need to decide upon the
@@ -112,8 +114,9 @@ pipelines, *stringi* always[^18] outputs UTF-8 data.
 
 
 
-Reading and writing text files and converting between encodings {#Sec:read_lines}
----------------------------------------------------------------
+(Sec:read_lines)=
+Reading and Writing Text Files
+------------------------------
 
 According to a report by W3Techs[^19], as of 2021--09--28, 97.3% of
 websites use UTF-8. Nevertheless, other encodings can still be
@@ -122,14 +125,15 @@ encountered.
 [^19]: See
     <https://w3techs.com/technologies/cross/character_encoding/ranking>.
 
-#### Reading and writing text files.
 
 If we know the encoding of a text file in advance, `stri_read_lines()`
 can be used to read the data in a manner similar to the built-in
 `readLines()` function (but with a much easier access to encoding
 conversion):
 
-For instance, below we read a text file encoded in ISO-8859-1:
+For instance, below we read a text file
+(see <https://github.com/gagolews/stringi/tree/master/docs/_static/vignette>)
+encoded in ISO-8859-1:
 
 
 ```r
@@ -145,9 +149,11 @@ We can call `stri_write_lines()` to write the contents of a character
 vector to a file (each string will constitute a separate text line),
 with any output encoding.
 
-#### Detecting encoding.
 
-However, if a file's encoding is not known in advance, there are a
+Detecting Encodings
+-------------------
+
+If a file's encoding is not known in advance, there are a
 certain functions that can aid in encoding detection. First, we can read
 the resource in form of a raw-type vector:
 
@@ -186,7 +192,10 @@ Nevertheless, encoding detection is an operation that relies on
 heuristics, therefore there is a chance that the output might be
 imprecise or even misleading.
 
-#### Converting encodings.
+
+Converting Between Encodings
+----------------------------
+
 
 Knowing the desired source and destination encoding precisely,
 `stri_encode()` can be called to perform the conversion. Contrary to the
@@ -213,11 +222,11 @@ tail(stri_split_lines1(y), 4)  # spoiler alert!
 ## [4] "el alto ingenio de don DIEGO OSORIO."
 ```
 
-Normalising strings {#Sec:normalisation}
+(Sec:normalisation)=
+Normalising Strings
 -------------------
 
-In Section [7.2](#Sec:Equivalence){reference-type="ref"
-reference="Sec:Equivalence"} we have provided some examples of
+In {ref}`Sec:Equivalence` we have provided some examples of
 canonically equivalent strings whose code point representation was
 different. Unicode normalisation forms C (Canonical composition, NFC)
 and D (Canonical decomposition, NFD) can be applied so that they will

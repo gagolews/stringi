@@ -1,3 +1,4 @@
+(Sec:regex)=
 Regular Expressions
 ===================
 
@@ -16,15 +17,13 @@ addresses, or URLs.
 
 Theoretically, the concept of regular pattern matching dates back to the
 so-called regular languages and finite state automata {cite}`kleene`, see
-also {cite}`hopcroftullman;automata`. Regexes in the form as we know today
+also {cite}`hopcroftullman` and {cite}`automata`. Regexes in the form as we know today
 have already been present in one of the pre-Unix implementations of the
 command-line text editor *qed* ({cite}`qed`; the predecessor of the
 well-known *sed*).
 
 Base R gives access to two different regex matching engines (via
-functions such as `gregexpr()` and `grep()`, see
-Table [2](#Tab:oldstringr){reference-type="ref"
-reference="Tab:oldstringr"}):
+functions such as `gregexpr()` and `grep()`):
 
 -   ERE[^5] (extended regular expressions that conform to the
     POSIX.2-1992 standard); used by default,
@@ -60,8 +59,7 @@ Below we provide a concise yet comprehensive introduction to the topic
 from the perspective of the *stringi* package users. This time we will
 use the pattern search routines whose names end with the `*_regex()`
 suffix. Apart from `stri_detect_regex()`, `stri_locate_all_regex()`, and
-so forth, in Section [6.4](#Sec:Capturing){reference-type="ref"
-reference="Sec:Capturing"} we introduce `stri_match_all_regex()`.
+so forth, in {ref}`Sec:Capturing` we introduce `stri_match_all_regex()`.
 Moreover,
 Table [\[Tab:regex\_opts\]](#Tab:regex_opts){reference-type="ref"
 reference="Tab:regex_opts"} lists the available options for the regex
@@ -77,7 +75,7 @@ terminators; otherwise its matching stops at a line end\
 `literal` & logical; defaults to `FALSE`; whether to treat the entire
 pattern as a literal string; note that in most cases the code-pointwise
 string search facilities (`*_fixed()` functions described in
-Section [5](#Sec:fixed){reference-type="ref" reference="Sec:fixed"}) are
+{ref}`Sec:fixed` are
 faster\
 `multi_line`& logical; defaults to `FALSE`; if set, "`$`" and "`^`"
 recognise line terminators within a string; otherwise, they match only
@@ -86,10 +84,7 @@ at start and end of the input\
 line ending, i.e., U+000A, is honoured as a terminator by "`.`", "`$`",
 and "`^`"\
 `uword`& logical; defaults to `FALSE`; whether to use the Unicode
-definition of word boundaries (see
-Section [8.1](#Sec:BoundaryAnalysis){reference-type="ref"
-reference="Sec:BoundaryAnalysis"}), which are quite different from the
-traditional regex word boundaries\
+definition of word boundaries (see {ref}`Sec:BoundaryAnalysis`), which are quite different from the traditional regex word boundaries\
 `error_on_unknown_escapes` & logical; defaults to `FALSE`; whether
 unrecognised backslash-escaped characters trigger an error; by default,
 unknown backslash-escaped ASCII letters represent themselves\
@@ -102,7 +97,8 @@ desirable if poorly written regexes are expected on input; 0 for no
 limit (the default)\
 ****
 
-Matching individual characters {#Sec:RegexIndividualChars}
+(Sec:RegexIndividualChars)=
+Matching Individual Characters
 ------------------------------
 
 We begin by discussing different ways to define character sets. In this
@@ -149,9 +145,8 @@ stri_detect_regex("groß", "GROSS", case_insensitive=TRUE)
 ```
 
 [^7]: This does not mean, though, that it considers canonically
-    equivalent strings as equal, see
-    Section [7.2](#Sec:Equivalence){reference-type="ref"
-    reference="Sec:Equivalence"} for a discussion and a workaround.
+    equivalent strings as equal, see {ref}`Sec:Equivalence` for
+    discussion and a workaround.
 
 If we wish to include a special character as part of a regular
 expression -- so that it is treated literally -- we will need to escape
@@ -170,7 +165,8 @@ In other words, the R string `"\\."` is seen by the regex engine as
 since R 4.0 we can also input the so-called literal strings like
 `r"(\.)"`.
 
-#### Matching any character.
+
+### Matching Any Character
 
 The (unescaped) dot, "`.`", matches any code point except the newline.
 
@@ -197,7 +193,7 @@ stri_extract_all_regex(x, "..am", dot_all=TRUE, case_insensitive=TRUE)
 ## [1] "spam"  "\njam" "SPAM"  "spam"
 ```
 
-#### Defining character sets.
+### Defining Character Sets
 
 Sets of characters can be introduced by enumerating their members within
 a pair of square brackets. For instance, "`[abc]`" denotes the set
@@ -228,7 +224,7 @@ non-literally: $$\text{
 backslash-escape must be used. For example, "`[\[\]\\]`" matches the
 backslash or a square bracket.
 
-#### Complementing sets.
+### Complementing Sets
 
 Including "`^`" after the opening square bracket denotes the set
 complement. Hence, "`[^abc]`" matches any code point except "`a`",
@@ -243,11 +239,10 @@ stri_extract_all_regex(x, "[^ ][^ ][^ ]")
 ##  [1] "Nob" "ody" "exp" "ect" "the" "Spa" "nis" "Inq" "uis" "iti" "on!"
 ```
 
-#### Defining Code Point Ranges.
+### Defining Code Point Ranges
 
 Each Unicode code point can be referenced by its unique numeric
-identifier, see Section [9.1](#Sec:codepoints){reference-type="ref"
-reference="Sec:codepoints"} for more details. For instance, "`a`" is
+identifier, see {ref}`Sec:codepoints` for more details. For instance, "`a`" is
 assigned code U+0061 and "`z`" is mapped to U+007A. In the pre-Unicode
 era (mostly with regards to the ASCII codes, $\le$ U+007F, representing
 English letters, decimal digits, some punctuation characters, and a few
@@ -271,7 +266,7 @@ Nowadays, in the processing of text in natural languages, this notation
 should rather be avoided. Note the missing "`ą`" (Polish "`a`" with
 ogonek) in the result.
 
-#### Using predefined character sets.
+### Using Predefined Character Sets
 
 Each code point is assigned a unique general category, which can be
 thought of as a character's class, see {cite}`usa44:ucd`. Sets of characters
@@ -330,7 +325,8 @@ Moreover, e.g., the upper-cased "`\P{category}`" and "`\W`" are
 equivalent to "`[^\p{category}]`" and "`[^\w]`", respectively, i.e.,
 denote their complements.
 
-#### Avoiding POSIX classes.
+
+### Avoiding POSIX Classes
 
 The use of the POSIX-like character classes should be avoided, because
 they are generally not well-defined.
@@ -380,8 +376,11 @@ stri_extract_all_regex(x, "\\p{S}")         # symbols
 We strongly recommend, wherever possible, the use of the portable
 "`[\p{P}\p{S}]`" as an alternative to the *PCRE*'s "`[:punct:]`".
 
-Alternating and grouping subexpressions
+
+Alternating and Grouping Subexpressions
 ---------------------------------------
+
+### Alternation Operator
 
 The alternation operator, "`|`", matches either its left or its right
 branch, for instance:
@@ -402,13 +401,15 @@ or "`ham`".
 [^8]: Which have the side-effect of creating new capturing groups, see
     below for a discussion.
 
+### Grouping Subexpressions
+
 Also, matching is always done left-to-right, on a first-come,
 first-served basis. Hence, if the left branch is a subset of the right
 one, the latter will never be matched. In particular,
 "`(al|alga|algae)`" can only match "`al`". To fix this, we can write
 "`(algae|alga|al))`".
 
-#### Non-grouping parentheses.
+### Non-grouping Parentheses
 
 Some parenthesised subexpressions -- those in which the opening bracket
 is followed by the question mark -- have a distinct meaning. In
@@ -529,7 +530,7 @@ Here, the first regex matches digits, a dot, and another series of
 digits. The second one finds digits which are possibly (but not
 necessarily) followed by a dot and a digit sequence.
 
-#### Performance notes.
+### Performance Notes
 
 *ICU*, just like *PCRE*, uses a nondeterministic finite automaton-type
 algorithm. Hence, due to backtracking, some ill-defined regexes can lead
@@ -557,14 +558,15 @@ data.
 See also the *re2r* (a wrapper around the *RE2* library; {cite}`re2r`)
 package's documentation and the references therein for a discussion.
 
-Capture groups and references thereto {#Sec:Capturing}
+(Sec:Capturing)=
+Capture Groups and References Thereto
 -------------------------------------
 
 Round-bracketed subexpressions carry one additional characteristic: they
 form the so-called capture groups that can be extracted separately or be
 referred to in other parts of the same regex.
 
-#### Extracting capture group matches.
+### Extracting Capture Group Matches
 
 The above is evident when we use the versions of `stri_extract()` that
 are sensitive to the presence of capture groups:
@@ -599,7 +601,7 @@ stri_match_all_regex(x, "(?:\\w+)='(?<value>.+?)'")
 ## [3,] "favecolour='blue'"      "blue"
 ```
 
-#### Locating capture group matches.
+### Locating Capture Group Matches
 
 The `capture_groups` attribute in `stri_locate__regex` enables us to
 pinpoint the matches to the parenthesised subexpressions as well:
@@ -632,7 +634,7 @@ Note that each item in the resulting list is equipped with a
 `attr(result[[1]], "capture_groups")[[2]]` extracts the locations of the
 matches to the 2nd capture group in the first input string.
 
-#### Replacing with capture group matches.
+### Replacing with Capture Group Matches
 
 Matches to particular capture groups can be recalled in replacement
 strings when using `stri_replace()`. Here, the match in its entirety is
@@ -655,7 +657,7 @@ stri_replace_all_regex(x, "(?<key>\\w+)='(?<value>.+?)'",
 ## [1] "Sir Launcelot is a name, Seek the Grail is a quest, blue is a favecolour"
 ```
 
-#### Back-referencing.
+### Back-Referencing
 
 Matches to capture groups can also be part of the regexes themselves.
 For example, "`\1`" denotes whatever has been consumed by the first
@@ -687,7 +689,8 @@ Anchoring
 Lastly, let us mention the ways to match a pattern at a given abstract
 position within a string.
 
-#### Matching at the beginning or end of a string.
+
+### Matching at the Beginning or End of a String
 
 "`^`" and "`$`" match, respectively, start and end of the string (or
 each line within a string, if the `multi_line` option is set to `TRUE`).
@@ -709,7 +712,8 @@ The 5 regular expressions match "`spam`", respectively, anywhere within
 the string, at the beginning, at the end, at the beginning or end, and
 in strings that are equal to the pattern itself.
 
-#### Matching at word boundaries.
+
+### Matching at Word Boundaries
 
 Furthermore, "`\b`" matches at a "word boundary", e.g., near spaces,
 punctuation marks, or at the start/end of a string (i.e., wherever there
@@ -732,7 +736,8 @@ Note the possessive quantifier, "`?+`": try matching a dot and a
 sequence of digits, and if it is present but not followed by a word
 boundary, do not retry by matching a word boundary only.
 
-#### Looking behind and ahead.
+
+### Looking Behind and Ahead
 
 There are also ways to guarantee that a pattern occurrence begins or
 ends with a match to some subexpression: "`(?<=...)...`" is the
