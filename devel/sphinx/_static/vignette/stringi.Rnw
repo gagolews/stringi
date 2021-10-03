@@ -1011,7 +1011,7 @@ microbenchmark::microbenchmark(
 @
 
 
-\paragraph{Different default argument and greater configurability.}
+\paragraph{Different default arguments and greater configurability.}
 Some functions in \pkg{stringi} have different,
 more natural default arguments,
 e.g., \code{paste()} has \code{sep=" "} but

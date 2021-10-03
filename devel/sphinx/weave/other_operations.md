@@ -1,3 +1,4 @@
+(Sec:other)=
 Other Operations
 ================
 
@@ -9,7 +10,10 @@ In the sequel, we cover the functions that deal with text boundary
 detection, random string generation, date/time formatting and parsing,
 amongst others.
 
-Analysing text boundaries {#Sec:BoundaryAnalysis}
+
+
+(Sec:BoundaryAnalysis)=
+Analysing Text Boundaries
 -------------------------
 
 Text boundary analysis aims at locating linguistic delimiters for the
@@ -61,17 +65,15 @@ stri_extract_all_words(x)
 ## [11] "of"         "eels"       "eggs"       "and"        "spam"
 ```
 
-Trimming, padding, and other formatting
+Trimming, Padding, and Other Formatting
 ---------------------------------------
 
 The following functions can be used for pretty-printing character
 strings or text on the console, dynamically generating reports (e.g.,
-with `Sweave()` or *knitr*; see {cite}`knitr`), or creating text files (e.g.,
-with `stri_write_lines()`; see
-Section [9.3](#Sec:read_lines){reference-type="ref"
-reference="Sec:read_lines"}).
+with `Sweave()` or *knitr*; see {cite}`knitr`), or creating text files
+(e.g., with `stri_write_lines()`; see {ref}`Sec:read_lines`).
 
-#### Padding.
+### Padding
 
 `stri_pad()` pads strings with some character so that they reach the
 desired widths (as in `stri_width()`). This can be used to centre,
@@ -83,7 +85,7 @@ cat(stri_pad("SPAMITY SPAM", width=77, side="both", pad="."))
 ## ................................SPAMITY SPAM.................................
 ```
 
-#### Trimming.
+### Trimming
 
 A dual operation is that of trimming from the left or right side of
 strings:
@@ -95,7 +97,7 @@ stri_trim(x)  # side="both"
 ## [1] "spam, eggs, and lovely spam."
 ```
 
-#### Word wrapping.
+### Word Wrapping
 
 The `stri_wrap()` function splits each (possibly long) string in a
 character vector into chunks of at most a given width. By default, the
@@ -119,7 +121,7 @@ cat(stri_wrap(x, width=74, indent=8, exdent=4, prefix="> "), sep="\n")
 ## >     metus. Amet nam vestibulum ornare tincidunt massa sed ullamcorper.
 ```
 
-#### Applying string templates.
+### Applying String Templates
 
 `stri_sprintf()` is a Unicode-aware rewrite of the built-in `sprintf()`
 function. In particular, it enables formatting and padding based on
@@ -145,7 +147,7 @@ of 6 (plus the square brackets).
 ## [1] "pi='3.1'"    "pi='3.14'"   "pi='3.142'"  "pi='3.1416'"
 ```
 
-Generating random strings
+Generating Random Strings
 -------------------------
 
 Apart from `stri_rand_lipsum()`, which produces random-ish text
@@ -169,8 +171,7 @@ stri_rand_strings(1, 8, "[\\p{script=Katakana}&\\p{L}]")
 ## [1] "ﾐｮㇿ𛅧ｧｱヾㇷ"
 ```
 
-See Section [6.1](#Sec:RegexIndividualChars){reference-type="ref"
-reference="Sec:RegexIndividualChars"} and
+See {ref}`Sec:RegexIndividualChars` and
 `help("stringi-search-charclass")` for different ways to specify
 character sets.
 
@@ -183,7 +184,7 @@ well-defined, possibly context-aware, rules. It may be useful, amongst
 others, when \"normalising\" pieces of strings or identifiers so that
 they can be more easily compared with each other.
 
-#### Case mapping.
+### Case Mapping
 
 Mapping to upper, lower, or title case is a language- and
 context-sensitive operation that can change the total number of code
@@ -199,7 +200,7 @@ stri_trans_totitle("ijsvrij yoghurt", locale="nl_NL")  # Dutch
 ## [1] "IJsvrij Yoghurt"
 ```
 
-#### Mapping between specific characters.
+### Mapping Between Specific Characters
 
 When a fast 1-to-1 code point translation is required, we can call:
 
@@ -212,7 +213,7 @@ stri_trans_char("GATAAATCTGGTCTTATTTCC", "ACGT", "tgca")
 Here, "`A`", "`C`", "`G`", and "`T`" is replaced with "`t`", "`g`",
 "`c`", and "`a`", respectively.
 
-#### General transforms.
+### General Transforms
 
 `stri_trans_general()` provides access to a wide range of text
 transforms defined by *ICU*, whose catalogue can be accessed by calling
@@ -245,7 +246,8 @@ alphabets.
     <https://unicode-org.github.io/icu/userguide/transforms/general/>.
 
 
-Parsing and formatting date and time {#Sec:datetime}
+(Sec:datetime)=
+Parsing and Formatting Date and Time
 ------------------------------------
 
 In base R, dealing with temporal data in regional settings other than

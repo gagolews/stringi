@@ -1,3 +1,4 @@
+(Sec:collator)=
 Collation
 =========
 
@@ -33,7 +34,7 @@ we can parameterise the *ICU* services so as to deliver the results that
 reflect the expectations of a specific user community, such as the
 speakers of different languages and their various regional variants.
 
-#### Specifying locales.
+### Specifying Locales
 
 A locale specifier[^11] is of the form `"Language"`,
 `"Language_Country"`, or `"Language_Country_Variant"`, where:
@@ -42,8 +43,7 @@ Moreover, following the "`@`" symbol, semicolon-separated "`key=value`"
 pairs can be appended to the locale specifier, in order to customise
 some locale-sensitive services even further (see below for an example
 using "`@collation=phonebook`" and
-Section [8.5](#Sec:datetime){reference-type="ref"
-reference="Sec:datetime"} for "`@calendar=hebrew`", amongst others).
+{ref}`Sec:datetime` for "`@calendar=hebrew`", amongst others).
 
 
 [^11]: Locale specifiers in *ICU* are platform-independent. This is not
@@ -51,7 +51,7 @@ reference="Sec:datetime"} for "`@calendar=hebrew`", amongst others).
     we have `"Polish_Poland"` on Windows vs `"pl_PL"` on Linux.
 
 
-#### Listing locales.
+### Listing Locales
 
 To list the available locale identifiers, we call `stri_locale_list()`.
 
@@ -70,7 +70,7 @@ sample(stri_locale_list(), 5)
 ## [1] "nl_CW"      "pt_CH"      "ff_Latn_SL" "en_PH"      "en_HK"
 ```
 
-#### Querying for locale-specific services.
+### Querying for Locale-Specific Services
 
 The availability of locale-specific services can only be determined
 during the request for a particular resource[^12], which may depend on
@@ -99,7 +99,7 @@ best possible match is returned.
     the configure/build process of *stringi*, refer to the `INSTALL`
     file.
 
-#### Default locale.
+### Default Locale
 
 Each locale-sensitive operation in *stringi* selects the current default
 locale if no locale has been explicitly requested, i.e., when a
@@ -121,7 +121,8 @@ stri_locale_get()
 i.e., the Australian-English locale (which formats dates like "29
 September 2021" and uses metric units of measurement).
 
-Testing string equivalence {#Sec:Equivalence}
+(Sec:Equivalence)=
+Testing String Equivalence
 --------------------------
 
 In Unicode, some characters may have multiple representations. For
@@ -160,7 +161,7 @@ stri_duplicated(x)  # from_last=FALSE
 Moreover, `stri_duplicated_any()` returns the index of the first
 non-unique element.
 
-Linear ordering of strings
+Linear Ordering of Strings
 --------------------------
 
 Operators such that `%s<%`, `%<=%`, etc., and the corresponding
@@ -225,7 +226,8 @@ stri_sort(german_k_words, locale="de_DE@collation=phonebook")
 In the latter example, where we used the German phone-book order, `"ö"`
 is treated as `"oe"`.
 
-Collator options {#Sec:collator_opts}
+(Sec:collator_opts)=
+Collator Options
 ----------------
 
 Table [1](#Tab:collator_opts){reference-type="ref"
@@ -242,7 +244,7 @@ attract the kind reader's attention to some of them.
   `uppercase_first`     logical; `NA` (default) orders upper and lower case letters in accordance to their tertiary weights, `TRUE` forces upper case letters to sort before lower case letters, `FALSE` does the opposite
   `numeric`             logical; if `TRUE`, a collation key for the numeric value of substrings of digits is generated; this is a way to make `"100"` ordered after `"2"`; defaults to `FALSE`
   `case_level`          logical; if `TRUE`, an extra case level (positioned before the third level) is generated; defaults to `FALSE`
-  `normalisation`       logical; if `TRUE`, then an incremental check is performed to see whether input data are in the FCD ("fast C or D") form; if data are not in the FCD form, the incremental NFD normalisation is performed, see Section [9.4](#Sec:normalisation){reference-type="ref" reference="Sec:normalisation"}; defaults to `FALSE`
+  `normalisation`       logical; if `TRUE`, then an incremental check is performed to see whether input data are in the FCD ("fast C or D") form; if data are not in the FCD form, the incremental NFD normalisation is performed, see {ref}`Sec:normalisation`; defaults to `FALSE`
   `alternate_shifted`   logical; if `FALSE` (default), all code points with non-ignorable primary weights are handled in the same way; `TRUE` causes the code points with primary weights that are less than or equal to the variable top value to be ignored on the primary level and moved to the quaternary level; this can be used to, e.g., ignore punctuation, see the examples provided
   `french`              logical; `TRUE` results in secondary weights being considered backwards, i.e., ordering according to the last accent difference -- nowadays only used in Canadian-French; defaults to `FALSE`
 
@@ -251,7 +253,9 @@ attract the kind reader's attention to some of them.
   passed to `stri_opts_collator()`.
 :::
 
-#### Collation strength.
+
+
+### Collation Strength
 
 The Unicode Collation Algorithm {cite}`uts10:collation` can go beyond simple
 canonical equivalence: it can treat some other (depending on the
@@ -300,7 +304,9 @@ stri_unique(x, strength=1, case_level=TRUE) # ß == ss, case sensitive
 ## [1] "Gągolewski"
 ```
 
-#### Ignoring some punctuation.
+
+
+### Ignoring Some Punctuation
 
 Here are some effects of changing the `alternate_shifted` option, which
 allows for ignoring some punctuation marks:
@@ -323,7 +329,7 @@ stri_unique(x, strength=2)
 ## [1] "code point" "code-point" "codepoint"
 ```
 
-#### Backward secondary sorting.
+### Backward Secondary Sorting
 
 The French Canadian Sorting Standard CAN/CSA Z243.4.1 (historically this
 had been the default for all French locales) requires the word ordering
@@ -339,7 +345,7 @@ stri_sort(c("cote", "côte", "coté", "côté"), locale="fr_CA") # french=TRUE
 ## [1] "cote" "côte" "coté" "côté"
 ```
 
-#### Sorting numerals.
+### Sorting Numerals
 
 By default, just like in base R and most other programming languages, a
 lexicographic ordering is used: the corresponding code points are being
@@ -389,10 +395,11 @@ The object is now ordered by the first column decreasingly (using a
 "numeric" order) and ties are resolved based on increasing values in the
 second column.
 
-#### A note on compatibility equivalence.
 
-In Section [9.4](#Sec:normalisation){reference-type="ref"
-reference="Sec:normalisation"} we describe different ways to normalise
+
+### A Note on Compatibility Equivalence
+
+In {ref}`Sec:normalisation` we describe different ways to normalise
 canonically equivalent code point sequences so that they are represented
 by the same code points, which can account for some negligible
 differences (as in the "a with ogonek" example above).
@@ -405,22 +412,23 @@ means of different glyphs, for instance "¼" (U+00BC) vs "`1/4`" or
 "$\mathbb{R}$" vs "R". In the latter case, whether these should be
 treated as equal, depends on the context (e.g., this can be the set of
 real numbers vs one's favourite programming language). Compatibility
-decompositions (NFKC, NFKD) mentioned in
-Section [9.4](#Sec:normalisation){reference-type="ref"
-reference="Sec:normalisation"} or other types of transliteration can be
+decompositions (NFKC, NFKD) mentioned in the section on
+{ref}`Sec:normalisation` or other types of transliteration can be
 used to normalise strings so that such differences are not accounted
 for.
 
 Also, for "fuzzy" matching of strings, the *stringdist* package
 {cite}`stringdist` might be helpful.
 
-Searching for fixed strings revisited
+
+
+Searching for Fixed Strings Revisited
 -------------------------------------
 
 The *ICU* Collator can also be utilised where there is a need to locate
 the occurrences of simple textual patterns. The counterparts of the
-string search functions described in
-Section [5](#Sec:fixed){reference-type="ref" reference="Sec:fixed"} have
+string search functions described in the section on
+{ref}`Sec:fixed` have
 their names ending with `*_coll()`. They are slower than them, but are
 more appropriate in NLP activities.
 

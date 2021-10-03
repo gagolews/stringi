@@ -25,7 +25,7 @@ library("rvest")
 ```
 
 First, let us load and parse the HTML file downloaded on 2020--09--17
-(see the accompanying supplementary files):
+(see <https://github.com/gagolews/stringi/tree/master/docs/_static/vignette>):
 
 
 ```r

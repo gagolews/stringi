@@ -1,5 +1,9 @@
 # Copyright (c) 2013-2021, Marek Gagolewski <https://www.gagolewski.com>
 
+sphinx-delme-tmp: weave
+	rm -rf devel/sphinx/_build/
+	cd devel/sphinx && make html
+
 
 .PHONY:  r check build clean purge sphinx docs test
 

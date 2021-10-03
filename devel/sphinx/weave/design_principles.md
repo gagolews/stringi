@@ -1,4 +1,4 @@
-General design principles
+General Design Principles
 =========================
 
 
@@ -7,12 +7,11 @@ General design principles
 
 
 The API of the early releases of *stringi* has been designed so as to be
-fairly compatible with that of the 0.6.2 version of the *stringr*
-package {cite}`Wickham2010:stringr` (dated 2012; see
-Table [2](#Tab:oldstringr){reference-type="ref"
-reference="Tab:oldstringr"}), with some fixes in the consistency of the
+fairly compatible with that of the 0.6.2 version of the [*stringr*](https://stringr.tidyverse.org/)
+package {cite}`Wickham2010:stringr` (dated 2012[^footstringr]),
+with some fixes in the consistency of the
 handling of missing values and zero-length vectors, amongst others.
-However, instead of being merely thin wrappers around base R functions,
+However, instead of being merely thin wrappers around base R[^footstringx] functions,
 which we have identified as not necessarily portable across platforms
 and not really suitable for natural language processing tasks, all the
 functionality has been implemented from the ground up, with the use of
@@ -23,48 +22,53 @@ the *stringi* API is stable. Future releases are aiming for as much
 backward compatibility as possible so that other software projects can
 safely rely on it.
 
-Interestingly, in 2015 the aforementioned
-*stringr* package has been rewritten as a set of wrappers around some of
-the *stringi* functions instead of the base R ones. In Section 14.7 of
-*R for Data Science* {cite}`GrolemundWickham2017:rdatascience` we read:
-**stringr* is useful when you're learning because it exposes a minimal
-set of functions, which have been carefully picked to handle the most
-common string manipulation functions. *stringi*, on the other hand, is
-designed to be comprehensive. It contains almost every function you
-might ever need: *stringi* has 250 functions to *stringr*'s 49*. Also,
-it is worth noting that the recently-introduced *stringx* package
-{cite}`stringx` supplies a *stringi*-based set of portable and efficient
-replacements for and enhancements of the base R functions.
+[^footstringr]: Interestingly, in 2015 the aforementioned
+    *stringr* package has been rewritten as a set of wrappers around some of
+    the *stringi* functions instead of the base R ones. In Section 14.7 of
+    *R for Data Science* {cite}`GrolemundWickham2017:rdatascience` we read:
+    "*stringr* is useful when you're learning because it exposes a minimal
+    set of functions, which have been carefully picked to handle the most
+    common string manipulation functions. *stringi*, on the other hand, is
+    designed to be comprehensive. It contains almost every function you
+    might ever need: *stringi* has 250 functions to *stringr*'s 49".
 
-::: {#Tab:oldstringr}
-  *stringr* 0.6.2                        **Base R 4.1**                                  **Purpose**
-  -------------------------------------- ----------------------------------------------- ----------------------------------------------------------------
-  `str_c()`                              `paste()`, `paste0()`, also `sprintf()`         join strings
-  `str_count()`                          `gregexpr()`                                    count pattern matches
-  `str_detect()`                         `grepl()`                                       detect pattern matches
-  `str_dup()`                            `strrep()`                                      duplicate strings
-  `str_extract()`, `str_extract_all()`   `regmatches()` with `regexpr()`, `gregexpr()`   extract (first, all) pattern matches
-  `str_length()`                         `nchar()`                                       compute string length
-                                         `nchar(type="width")`                           compute string width
-  `str_locate()`, `str_locate_all()`     `regexpr()`, `gregexpr()`                       locate (first, all) pattern matches
-  `str_match()`, `str_match_all()`       `regmatches()` with `regexec()`, `gregexec()`   extract (first, all) matches to regex capture groups
-  `str_pad()`                                                                            add whitespaces at beginning or end
-  `str_replace()`, `str_replace_all()`   `sub()`, `gsub()`                               replace (first, all) pattern matches with a replacement string
-  `str_split()`, `str_split_fixed()`     `strsplit()`                                    split up a string into pieces
-  `str_sub()`                            `substr()`, `substring()`                       extract or replace substrings
-  `str_trim()`                           `trimws()`                                      remove whitespaces from beginning or end
-  `str_wrap()`                           `strwrap()`                                     split strings into text lines
-  `word()`                                                                               extract words from a sentence
-                                         `startsWith()`, `endsWith()`                    determine if strings start or end with a pattern match
-                                         `tolower()`, `toupper()`                        case mapping and folding
-                                         `chartr()`                                      transliteration
-                                         `sprintf()`                                     string formatting
-                                         `strftime()`, `strptime()`                      date-time formatting and parsing
+[^footstringx]: See also the new
+    [*stringx*](https://stringx.gagolewski.com) {cite}`stringx` package
+    which supplies a set of portable and efficient
+    replacements for and enhancements of the base R functions
+    (based on *stringi*).
 
-  : [\[Tab:oldstringr\]]{#Tab:oldstringr label="Tab:oldstringr"}
-  Functions in (the historical) *stringr* 0.6.2 and their counterparts
-  in base R 4.1.
-:::
+
+
+<!--
+Functions in (the historical) *stringr* 0.6.2 and their counterparts in base R 4.1.
+:name: tab-oldstringr
+
+| *stringr* 0.6.2                        | **Base R 4.1**                                  | **Purpose**                                                      |
+| -------------------------------------- | ----------------------------------------------- | ---------------------------------------------------------------- |
+| `str_c()`                              | `paste()`, `paste0()`, also `sprintf()`         | join strings                                                     |
+| `str_count()`                          | `gregexpr()`                                    | count pattern matches                                            |
+| `str_detect()`                         | `grepl()`                                       | detect pattern matches                                           |
+| `str_dup()`                            | `strrep()`                                      | duplicate strings                                                |
+| `str_extract()`, `str_extract_all()`   | `regmatches()` with `regexpr()`, `gregexpr()`   | extract (first, all) pattern matches                             |
+| `str_length()`                         | `nchar()`                                       | compute string length                                            |
+|                                        | `nchar(type="width")`                           | compute string width                                             |
+| `str_locate()`, `str_locate_all()`     | `regexpr()`, `gregexpr()`                       | locate (first, all) pattern matches                              |
+| `str_match()`, `str_match_all()`       | `regmatches()` with `regexec()`, `gregexec()`   | extract (first, all) matches to regex capture groups             |
+| `str_pad()`                            |                                                 | add whitespaces at beginning or end                              |
+| `str_replace()`, `str_replace_all()`   | `sub()`, `gsub()`                               | replace (first, all) pattern matches with a replacement string   |
+| `str_split()`, `str_split_fixed()`     | `strsplit()`                                    | split up a string into pieces                                    |
+| `str_sub()`                            | `substr()`, `substring()`                       | extract or replace substrings                                    |
+| `str_trim()`                           | `trimws()`                                      | remove whitespaces from beginning or end                         |
+| `str_wrap()`                           | `strwrap()`                                     | split strings into text lines                                    |
+| `word()`                               |                                                 | extract words from a sentence                                    |
+|                                        | `startsWith()`, `endsWith()`                    | determine if strings start or end with a pattern match           |
+|                                        | `tolower()`, `toupper()`                        | case mapping and folding                                         |
+|                                        | `chartr()`                                      | transliteration                                                  |
+|                                        | `sprintf()`                                     | string formatting                                                |
+|                                        | `strftime()`, `strptime()`                      | date-time formatting and parsing                                 |
+-->
+
 
 Naming
 ------
@@ -134,7 +138,7 @@ Due to vectorisation, we can generally avoid using the `for`- and
 `while`-loops ("for each string in a vector..."), which makes the code
 much more readable, maintainable, and faster to execute.
 
-Acting elementwise with recycling
+Acting Elementwise with Recycling
 ---------------------------------
 
 Binary and higher-arity operations in R are oftentimes vectorised with
@@ -169,122 +173,148 @@ the arguments' recycling, using the call to
 `stri_count_fixed(haystack, needle)` (which looks for a needle in a
 haystack) as an illustration:
 
-\begin{itemize}
-\item many strings -- one pattern:
+* many strings -- one pattern:
 
-\begin{verbatim}<<>>=
-stri_count_fixed(c("abcd", "abcabc", "abdc", "dab", NA), "abc")
-@\end{verbatim}
+    
+    ```r
+    stri_count_fixed(c("abcd", "abcabc", "abdc", "dab", NA), "abc")
+    ```
+    
+    ```
+    ## [1]  1  2  0  0 NA
+    ```
 
-(there is 1 occurrence of \texttt{"abc"} in \texttt{"abcd"},
-2 in \texttt{"abcabc"}, and so forth);
+    (there is 1 occurrence of `"abc"` in `"abcd"`,
+    2 in `"abcabc"`, and so forth);
 
-\item one string -- many patterns:
+* one string -- many patterns:
 
-\begin{verbatim}<<>>=
-stri_count_fixed("abcdeabc", c("def", "bc", "abc", NA))
-@\end{verbatim}
+    
+    ```r
+    stri_count_fixed("abcdeabc", c("def", "bc", "abc", NA))
+    ```
+    
+    ```
+    ## [1]  0  2  2 NA
+    ```
 
-(\texttt{"def"} does not occur in \texttt{"abcdeabc"},
-\texttt{"bc"} can be found therein twice, etc.);
+    (`"def"` does not occur in `"abcdeabc"`,
+    `"bc"` can be found therein twice, etc.);
 
-\item each string -- its own corresponding pattern:
+* each string -- its own corresponding pattern:
 
-\begin{verbatim}<<>>=
-stri_count_fixed(c("abca", "def", "ghi"), c("a", "z", "h"))
-@\end{verbatim}
+    
+    ```r
+    stri_count_fixed(c("abca", "def", "ghi"), c("a", "z", "h"))
+    ```
+    
+    ```
+    ## [1] 2 0 1
+    ```
 
-(there are two \texttt{"a"}s in \texttt{"abca"},
-no \texttt{"z"} in \texttt{"def"}, and one \texttt{"h"} in \texttt{"ghi"});
+    (there are two `"a"`s in `"abca"`,
+    no `"z"` in `"def"`, and one `"h"` in `"ghi"`);
 
-\item each row in a matrix -- its own corresponding pattern:
+* each row in a matrix -- its own corresponding pattern:
 
-\begin{verbatim}<<>>=
-(haystack <- matrix(  # example input
-  do.call(stri_join,
-    expand.grid(
-      c("a", "b", "c"), c("a", "b", "c"), c("a", "b", "c")
-    )), nrow=3))
-needle <- c("a", "b", "c")
-matrix(stri_count_fixed(haystack, needle),  # call to stringi
-  nrow=3, dimnames=list(needle, NULL))
-@\end{verbatim}
+    
+    ```r
+    (haystack <- matrix(  # example input
+    do.call(stri_join,
+        expand.grid(
+        c("a", "b", "c"), c("a", "b", "c"), c("a", "b", "c")
+        )), nrow=3))
+    ```
+    
+    ```
+    ##      [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] 
+    ## [1,] "aaa" "aba" "aca" "aab" "abb" "acb" "aac" "abc" "acc"
+    ## [2,] "baa" "bba" "bca" "bab" "bbb" "bcb" "bac" "bbc" "bcc"
+    ## [3,] "caa" "cba" "cca" "cab" "cbb" "ccb" "cac" "cbc" "ccc"
+    ```
+    
+    ```r
+    needle <- c("a", "b", "c")
+    matrix(stri_count_fixed(haystack, needle),  # call to stringi
+    nrow=3, dimnames=list(needle, NULL))
+    ```
+    
+    ```
+    ##   [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9]
+    ## a    3    2    2    2    1    1    2    1    1
+    ## b    1    2    1    2    3    2    1    2    1
+    ## c    1    1    2    1    1    2    2    2    3
+    ```
 
-(this looks for \texttt{"a"} in the 1st row of
-\texttt{haystack}, \texttt{"b"} in the 2nd row, and \texttt{"c"} in the 3rd;
-in particular, there are 3 \texttt{"a"}s in \texttt{"aaa"}, 2 in \texttt{"aba"},
-and 1 \texttt{"b"} in \texttt{"baa"};
-this is possible due to the fact that matrices are
-represented as ``flat'' vectors of length \texttt{nrow*ncol},
-whose elements are read in a column-major ({Fortran}) order;
-therefore, here,
-pattern \texttt{"a"} is being sought in the 1st, 4th, 7th,
-\dots{} string in \texttt{haystack}, i.e., \texttt{"aaa"}, \texttt{"aba"}, \texttt{"aca"}, \dots;
-pattern \texttt{"b"} in the 2nd, 5th, 8th, \dots{} string;
-and \texttt{"c"} in the 3rd, 6th, 9th, \dots{} one);
+    (this looks for `"a"` in the 1st row of
+    `haystack`, `"b"` in the 2nd row, and `"c"` in the 3rd;
+    in particular, there are 3 `"a"`s in `"aaa"`, 2 in `"aba"`,
+    and 1 `"b"` in `"baa"`;
+    this is possible due to the fact that matrices are
+    represented as "flat" vectors of length `nrow*ncol`,
+    whose elements are read in a column-major (Fortran) order;
+    therefore, here,
+    pattern "a" is being sought in the 1st, 4th, 7th, ...
+    string in `haystack`, i.e., `"aaa"`, `"aba"`, `"aca"`, ...;
+    pattern `"b"` in the 2nd, 5th, 8th, ... string;
+    and `"c"` in the 3rd, 6th, 9th, ... one);
 
-\medskip
-On a side note, to match different patterns
-with respect to each column, we can (amongst others)
-apply matrix transpose twice (\texttt{t(stri_count_fixed(t(haystack), needle))}).
+    On a side note, to match different patterns
+    with respect to each column, we can (amongst others)
+    apply matrix transpose twice (`t(stri_count_fixed(t(haystack), needle))`).
 
-% or use the \texttt{rep()} function to properly replicate the \textit{needles}:
+* all strings -- all patterns:
 
-% <<>>=
-% (At <- t(haystack))  # example haystack
-% needle <- rep(c("a", "b", "c"), each=nrow(At))
-% matrix(stri_count_fixed(At, needle), ncol=3)
-% @
-%
-% A similar search in the case of a data frame-type input
-% (any list of character vectors of identical lengths)
-% can be performed by means of a call to \texttt{mapply()}:
-%
-%
-%
-% <<>>=
-% (At.df <- as.data.frame(At))
-% mapply(stri_count_fixed, At.df, c("a", "b", "c"))
-% @
+    
+    ```r
+    haystack <- c("aaa", "bbb", "ccc", "abc", "cba", "aab", "bab", "acc")
+    needle <- c("a", "b", "c")
+    structure(
+    outer(haystack, needle, stri_count_fixed),
+    dimnames=list(haystack, needle))  # add row and column names
+    ```
+    
+    ```
+    ##     a b c
+    ## aaa 3 0 0
+    ## bbb 0 3 0
+    ## ccc 0 0 3
+    ## abc 1 1 1
+    ## cba 1 1 1
+    ## aab 2 1 0
+    ## bab 1 2 0
+    ## acc 1 0 2
+    ```
 
-\item all strings -- all patterns:
+    (which computes the counts over the Cartesian product
+    of the two arguments)
 
-% TODO: better not use outer -- do not rep needle
+    This is equivalent to:
 
-\begin{verbatim}<<>>=
-haystack <- c("aaa", "bbb", "ccc", "abc", "cba", "aab", "bab", "acc")
-needle <- c("a", "b", "c")
-structure(
-  outer(haystack, needle, stri_count_fixed),
-  dimnames=list(haystack, needle))  # add row and column names
-@\end{verbatim}
-
-(which computes the counts over the Cartesian product
-of the two arguments);
-
-% \ifnotJSSversion
-Equivalently:
-
-\begin{verbatim}<<>>=
-matrix(
-  stri_count_fixed(rep(haystack, each=length(needle)), needle),
-  byrow=TRUE, ncol=length(needle), dimnames=list(haystack, needle))
-@\end{verbatim}
-% \fi
-
-\end{itemize}
-
-
-% NOTE:
-% In `stri_subset*`
-%   and their replacement versions, `pattern` and `value` cannot be longer
-%   than `str` (but now they are recycled if necessary).
+    
+    ```r
+    matrix(
+    stri_count_fixed(rep(haystack, each=length(needle)), needle),
+    byrow=TRUE, ncol=length(needle), dimnames=list(haystack, needle))
+    ```
+    
+    ```
+    ##     a b c
+    ## aaa 3 0 0
+    ## bbb 0 3 0
+    ## ccc 0 0 3
+    ## abc 1 1 1
+    ## cba 1 1 1
+    ## aab 2 1 0
+    ## bab 1 2 0
+    ## acc 1 0 2
+    ```
 
 
 
 
 
-Missing values
+Missing Values
 --------------
 
 Some base R string processing functions, e.g., `paste()`, treat missing
@@ -304,7 +334,7 @@ stri_join(c(NA_character_, "b", "c"), "x", 1:2)  # stringi
 For dealing with missing values, we may rely on the convenience
 functions such as `stri_omit_na()` or `stri_replace_na()`.
 
-Data flow
+Data Flow
 ---------
 
 All vector-like arguments (including factors and objects) in *stringi*
@@ -372,7 +402,8 @@ stri_sub_all(haystack,
 yields the same result as in the previous example, but refers to
 `haystack` twice.
 
-Further deviations from base R
+
+Further Deviations from Base R
 ------------------------------
 
 *stringi* can be used as a replacement of the existing string processing
@@ -382,18 +413,17 @@ propagating missing values and empty vectors consistently, and following
 coherent naming conventions, our functions deviate from their classic
 counterparts even further.
 
-#### Following Unicode standards.
 
+**Following Unicode Standards.**
 Thanks to the comprehensive coverage of the most important services
 provided by *ICU*, its users gain access to collation, pattern
 searching, normalisation, transliteration, etc., that follow the recent
 Unicode standards for text processing in any locale. Due to this, as we
-state in Section [9.2](#Sec:encoding){reference-type="ref"
-reference="Sec:encoding"}, all inputs are converted to Unicode and
+state in {ref}`Sec:encoding`, all inputs are converted to Unicode and
 outputs are always in UTF-8.
 
-#### Portability issues in base R.
 
+**Portability Issues in Base R.**
 As we have mentioned in the introduction, base R string operations have
 traditionally been limited in scope. There also might be some issues
 with regards to their portability, reasons for which may be plentiful.
@@ -410,38 +440,48 @@ only optional and does not provide access to any other Unicode services.
 For example, let us consider the matching of "all letters" by means of
 the built-in `gregexpr()` function and the *TRE* (`perl=FALSE`) and
 *PCRE* (`perl=TRUE`) libraries using a POSIX-like and Unicode-style
-character set (see Section [6](#Sec:regex){reference-type="ref"
-reference="Sec:regex"} for more details):
+character set (see {ref}`Sec:regex` for more details):
+
+```r
+x <- "AEZaezĄĘŻąęż"  # "AEZaez\u0104\u0118\u017b\u0105\u0119\u017c"
+stri_sub(x, gregexpr("[[:alpha:]]", x, perl=FALSE)[[1]], length=1)
+stri_sub(x, gregexpr("[[:alpha:]]", x, perl=TRUE)[[1]],  length=1)
+stri_sub(x, gregexpr("\\p{L}", x, perl=TRUE)[[1]],       length=1)
+```
 
 On Ubuntu Linux 20.04 (UTF-8 locale), the respective outputs are:
 
-\"A\" \"E\" \"Z\" \"a\" \"e\" \"z\" \"Ą\" \"Ę\" \"Ż\" \"ą\" \"ę\" \"ż\"
-\[1\] \"A\" \"E\" \"Z\" \"a\" \"e\" \"z\" \[1\] \"A\" \"E\" \"Z\" \"a\"
-\"e\" \"z\" \"Ą\" \"Ę\" \"Ż\" \"ą\" \"ę\" \"ż\"
+```r
+## [1] "A" "E" "Z" "a" "e" "z" "Ą" "Ę" "Ż" "ą" "ę" "ż"
+## [1] "A" "E" "Z" "a" "e" "z"
+## [1] "A" "E" "Z" "a" "e" "z" "Ą" "Ę" "Ż" "ą" "ę" "ż"
+```
 
-On Windows, when `x` is marked as UTF-8 (see Section
-[9.2](#Sec:encoding){reference-type="ref" reference="Sec:encoding"}),
-the author obtained:
+On Windows, when `x` is marked as UTF-8
+(see {ref}`Sec:encoding`), the author obtained:
 
-\"A\" \"E\" \"Z\" \"a\" \"e\" \"z\" \[1\] \"A\" \"E\" \"Z\" \"a\" \"e\"
-\"z\" \[1\] \"A\" \"E\" \"Z\" \"a\" \"e\" \"z\" \"Ą\" \"Ę\" \"Ż\" \"ą\"
-\"ę\" \"ż\"
+```r
+## [1] "A" "E" "Z" "a" "e" "z"
+## [1] "A" "E" "Z" "a" "e" "z"
+## [1] "A" "E" "Z" "a" "e" "z" "Ą" "Ę" "Ż" "ą" "ę" "ż"
+```
 
 And again on Windows using the Polish locale but `x` marked as
 natively-encoded (CP-1250 in this case):
 
-\"A\" \"E\" \"Z\" \"a\" \"e\" \"z\" \"Ę\" \"ę\" \[1\] \"A\" \"E\" \"Z\"
-\"a\" \"e\" \"z\" \"Ą\" \"Ę\" \"Ż\" \"ą\" \"ę\" \"ż\" \[1\] \"A\" \"E\"
-\"Z\" \"a\" \"e\" \"z\" \"Ę\" \"ę\"
+```r
+## [1] "A" "E" "Z" "a" "e" "z" "Ę" "ę"
+## [1] "A" "E" "Z" "a" "e" "z" "Ą" "Ę" "Ż" "ą" "ę" "ż"
+## [1] "A" "E" "Z" "a" "e" "z" "Ę" "ę"
+```
 
-As we mention in Section [7](#Sec:collator){reference-type="ref"
-reference="Sec:collator"}, when *stringi* links to *ICU* built from
-sources
-(`install.packages("stringi", configure.args="–disable-pkg-config")`),
+As we mention in {ref}`Sec:collator`, when *stringi* links to
+*ICU* built from sources
+(`install.packages("stringi", configure.args="--disable-pkg-config")`),
 we are always guaranteed to get the same results on every platform.
 
-#### High performance of *stringi*.
 
+**High Performance of *stringi*.**
 Because of the aforementioned reasons, functions in *stringi* do not
 refer to their base R counterparts. The operations that do not rely on
 *ICU* services have been rewritten from scratch with speed and
@@ -459,10 +499,10 @@ microbenchmark::microbenchmark(
 )
 ## Unit: milliseconds
 ##      expr     min      lq    mean  median      uq     max neval
-##     join2  35.359  35.950  46.507  36.495  48.291  79.938   100
-##     join3  80.719  81.575  85.708  82.128  90.114 128.734   100
-##  r_paste2  91.636  92.913 108.051  95.759 114.150 159.463   100
-##  r_paste3 192.719 195.715 231.373 247.175 252.926 274.260   100
+##     join2  35.055  35.843  47.088  37.069  53.653  85.487   100
+##     join3  79.598  80.815  85.678  81.562  91.717 128.963   100
+##  r_paste2  90.511  91.802 108.026  97.838 112.744 162.961   100
+##  r_paste3 190.622 193.449 229.653 244.515 251.249 280.253   100
 ```
 
 Another example -- timings of fixed pattern searching:
@@ -489,16 +529,17 @@ microbenchmark::microbenchmark(
 ##  r_fixed  52.4524  53.0642  53.6158  53.3177  53.6758  57.4354   100
 ```
 
-#### Different default argument and greater configurability.
 
+**Different Default Arguments and Greater Configurability.**
 Some functions in *stringi* have different, more natural default
 arguments, e.g., `paste()` has `sep=" "` but `stri_join()` has `sep=""`.
 Also, as there is no one-fits-all solution to all problems, many
 arguments have been introduced for more detailed tuning.
 
-#### Preserving attributes.
 
+
+**Preserving Attributes.**
 Generally, *stringi* preserves no object attributes whatsoever, but a
 user can make sure themself that this is becomes the case, e.g., by
 calling "`x[] <- stri_...(x, ...)`" or
-"`‘attributes<-‘(stri_...(x, ...), attributes(x))`".
+"\``attributes<-`\``(stri_...(x, ...), attributes(x))`".
