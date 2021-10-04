@@ -1,13 +1,10 @@
-Example Use case: Data preparation
+Example Use Case: Data Preparation
 ==================================
 
 
 > This tutorial is based on the [paper on *stringi*](https://stringi.gagolewski.com/_static/vignette/stringi.pdf) that will appear in the *Journal of Statistical Software*.
 
-Before going into details on the broad array of facilities offered by
-the *stringi* package itself, let us first demonstrate that string
-processing is indeed a relevant part of statistical data analysis
-workflows. What follows is a short case study where we prepare a
+What follows is a short case study where we prepare a
 web-scraped data set for further processing.
 
 Assume we wish to gather and analyse climate data for major cities
@@ -19,7 +16,8 @@ harvest the relevant temperature and precipitation data. Without harm in
 generality, let us focus on the city of Melbourne, VIC, Australia.
 
 The parsing of the city's Wikipedia page can be done by means of the
-functions from the *xml2* [@xml2] and *rvest* [@rvest] packages.
+functions from the [*xml2*](https://CRAN.R-project.org/package=xml2)
+and [*rvest*](https://CRAN.R-project.org/package=rvest) packages.
 
 
 ```r
@@ -27,8 +25,8 @@ library("xml2")
 library("rvest")
 ```
 
-First, let us load and parse the HTML file downloaded on 2020--09--17
-(see the accompanying supplementary files):
+First, let us load and parse the HTML file downloaded on 2020-09-17
+(see <https://github.com/gagolews/stringi/tree/master/docs/_static/vignette>):
 
 
 ```r
@@ -65,9 +63,8 @@ library("stringi")
 ## [1] 4
 ```
 
-Of course, the detailed description of all the facilities brought by
-*stringi* is covered below. In the meantime, let us use *rvest*'s
-`html_table()` to convert the above table to a data frame object.
+Let's use *rvest*'s `html_table()` to convert the above table
+to a data frame object.
 
 
 ```r
@@ -217,5 +214,5 @@ and so forth.
 
 For the climate data on other cities, very similar operations will need
 to be performed -- the whole process of scraping and cleansing data can
-be automated quite easily. The above functions are not only convenient
-to use, but also efficient and portable across different platforms.
+be automated quite easily.
+

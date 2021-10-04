@@ -93,7 +93,14 @@
               <p class="caption"><span class="caption-text">stringi</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../weave/example.html">Example Use case: Data preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weave/design_principles.html">General Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weave/basic_operations.html">Basic String Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weave/codepoint_comparing.html">Code-Pointwise Comparing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weave/regular_expressions.html">Regular Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weave/collation.html">Collation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weave/other_operations.html">Other Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weave/input_output.html">Input and Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weave/example.html">Example Use Case: Data Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference Manual</span></p>
@@ -369,14 +376,14 @@
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_fields</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">())</span>
 <span class="c1">##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth</span>
-<span class="c1">## 1 2021    10   2   15     20      3         375         40           1</span>
+<span class="c1">## 1 2021    10   4   11     45     49         347         41           2</span>
 <span class="c1">##   DayOfYear DayOfWeek Hour12 AmPm Era</span>
-<span class="c1">## 1       275         7      3    2   2</span>
+<span class="c1">## 1       277         2     11    1   2</span>
 <span class="nf">stri_datetime_fields</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span>
 <span class="c1">##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth</span>
-<span class="c1">## 1 5782     1  26   15     20      3         379          4           4</span>
+<span class="c1">## 1 5782     1  28   11     45     49         351          5           5</span>
 <span class="c1">##   DayOfYear DayOfWeek Hour12 AmPm Era</span>
-<span class="c1">## 1        26         7      3    2   1</span>
+<span class="c1">## 1        28         2     11    1   1</span>
 <span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span><span class="o">$</span><span class="n">Month</span><span class="p">[</span>
    <span class="nf">stri_datetime_fields</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span><span class="o">$</span><span class="n">Month</span>
 <span class="p">]</span>
@@ -402,7 +409,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-10-02T15:20:23+1000.
+        Last updated on 2021-10-04T11:46:09+1100.
       </span>
 
     </p>

@@ -1,17 +1,18 @@
 # What Is New in *stringi*
 
 
-## 1.7.5 (2021-10-02)
+## 1.7.5 (2021-10-04)
 
 * [DOCUMENTATION] Paper on *stringi* has been accepted for
-  publication in *Journal of Statistical Software*,
+  publication in the *Journal of Statistical Software*,
   see <https://stringi.gagolewski.com/_static/vignette/stringi.pdf>
   for a draft version.
 
 * [DOCUMENTATION] The *stringi* website at <https://stringi.gagolewski.com>
   now features a comprehensive tutorial based on the aforementioned paper.
 
-* [DOCUMENTATION] ICU Project site has been moved to <https://icu.unicode.org/>.
+* [DOCUMENTATION] The *ICU* Project site has been moved to
+  <https://icu.unicode.org/>.
 
 * [BUILD TIME] #457: The `autoconf` macros `AC_LANG_CPLUSPLUS`
   and `AC_TRY_COMPILE` were obsolete.

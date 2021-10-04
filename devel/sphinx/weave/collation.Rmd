@@ -16,15 +16,12 @@ the most suitable approach to the processing of natural-language texts.
 In particular, a code-pointwise matching neither takes accented and
 conjoined letters nor ignorable punctuation and case into account.
 
-The *ICU* Collation Service[^10] provides the basis for string
+The [*ICU* Collation Service](https://unicode-org.github.io/icu/userguide/collation/) provides the basis for string
 comparison activities such as string sorting and searching, or
 determining if two strings are equivalent. This time, though, due to its
-conformance to the Unicode Collation Algorithm {cite}`uts10:collation`, we
+conformance to the [Unicode Collation Algorithm](https://www.unicode.org/reports/tr10/), we
 may expect that the generated results will meet the requirements of the
 culturally correct natural language processing in any locale.
-
-[^10]: See the *ICU* User Guide on Collation,
-    <https://unicode-org.github.io/icu/userguide/collation/>.
 
 
 Locales
@@ -38,8 +35,28 @@ speakers of different languages and their various regional variants.
 
 ### Specifying Locales
 
-A locale specifier[^11] is of the form `"Language"`,
+A locale specifier[^footlocale] is of the form `"Language"`,
 `"Language_Country"`, or `"Language_Country_Variant"`, where:
+
+* `Language` is, most frequently, a two- or three-letter code that conforms to
+    the ISO-639-1 or ISO-630-2 standard, respectively;
+    e.g., `"en"` or `"eng"` for English, `"es"` or `"spa"`
+    for Spanish, `"zh"` or `"zho"` for Chinese, and `"mas"` for Masai
+    (which lacks the corresponding two-letter code);
+    however, more specific language identifiers may also be
+    available, e.g., `"zh_Hans"` for Simplified-
+    and `"zh_Hant"` for Traditional-Chinese
+    or `"sr_Cyrl"` for Cyrillic- and `"sr_Latn"` for Latin-Serbian;
+
+* `Country` is a two-letter code following the ISO-3166 standard
+    that enables different language conventions within the same language;
+    e.g., the US-English (`"en_US"`) and Australian-English (`"en_AU"`)
+    not only observe some differences in spelling and vocabulary but also
+    in the units of measurement;
+
+* `Variant` is an identifier indicating a preference towards
+    some convention within the same country; e.g., `"de_DE_PREEURO"`
+    formats currency values using the pre-2002 Deutsche Mark (DEM).
 
 Moreover, following the "`@`" symbol, semicolon-separated "`key=value`"
 pairs can be appended to the locale specifier, in order to customise
@@ -48,7 +65,7 @@ using "`@collation=phonebook`" and
 {ref}`Sec:datetime` for "`@calendar=hebrew`", amongst others).
 
 
-[^11]: Locale specifiers in *ICU* are platform-independent. This is not
+[^footlocale]: Locale specifiers in *ICU* are platform-independent. This is not
     the case for their base-R counterparts, see `help("locales")`, e.g.,
     we have `"Polish_Poland"` on Windows vs `"pl_PL"` on Linux.
 
@@ -61,7 +78,7 @@ To list the available locale identifiers, we call `stri_locale_list()`.
 length(stri_locale_list())
 ```
 
-As the number of supported locales is very high, here we shall display
+As the number of supported locales is very high, here we'll display
 only 5 randomly chosen ones:
 
 ```{r echo=-1}
@@ -72,14 +89,15 @@ sample(stri_locale_list(), 5)
 ### Querying for Locale-Specific Services
 
 The availability of locale-specific services can only be determined
-during the request for a particular resource[^12], which may depend on
+during the request for a particular resource
+(for more details, see the [*ICU* User Guide on Locales](https://unicode-org.github.io/icu/userguide/locale/)), which may depend on
 the *ICU* library version actually in use as well as the way the *ICU*
 Data Library (*icudt*) has been packaged. Therefore, for maximum
 portability, it is best to rely on the *ICU* library bundle that is
 shipped with *stringi*. This is the case on Windows and macOS, whose
 users typically download the pre-compiled versions of the package from
 CRAN. However, on various flavours of GNU/Linux and other Unix-based
-systems, the system *ICU* is used more eagerly[^13]. To force building
+systems, the system *ICU* is used more eagerly[^footsystemicu]. To force building
 *ICU* from sources, we may call:
 
 ```{r eval=FALSE}
@@ -89,10 +107,8 @@ install.packages("stringi", configure.args="--disable-pkg-config")
 Overall, if a requested service is unavailable in a given locale, the
 best possible match is returned.
 
-[^12]: For more details, see the *ICU* User Guide on Locales,
-    <https://unicode-org.github.io/icu/userguide/locale/>.
 
-[^13]: See, e.g., software packages `libicu-dev` on Debian/Ubuntu or
+[^footsystemicu]: See, e.g., software packages `libicu-dev` on Debian/Ubuntu or
     `libicu-devel` on RHL/Fedora/OpenSUSE. For more details regarding
     the configure/build process of *stringi*, refer to the `INSTALL`
     file.
@@ -101,9 +117,7 @@ best possible match is returned.
 
 Each locale-sensitive operation in *stringi* selects the current default
 locale if no locale has been explicitly requested, i.e., when a
-function's `locale` argument (see
-Table [1](#Tab:collator_opts){reference-type="ref"
-reference="Tab:collator_opts"}) is left alone in its "`NULL`" state. The
+function's `locale` argument is left alone in its "`NULL`" state. The
 default locale is initially set to match the system locale on the
 current platform, and may be changed with `stri_locale_set()`, e.g., in
 the very rare case of improper automatic locale detection.
@@ -155,14 +169,14 @@ non-unique element.
 Linear Ordering of Strings
 --------------------------
 
-Operators such that `%s<%`, `%<=%`, etc., and the corresponding
+Operators such as `%s<%`, `%<=%`, etc., and the corresponding
 functions `stri_cmp_lt()` ("less than"), `stri_cmp_le()` ("less than or
 equal"), etc., implement locale-sensitive linear orderings of strings.
 Moreover, `stri_sort()` returns the lexicographically-sorted version of
 a given input vector, `stri_order()` yields the corresponding (stable)
 ordering permutation, and `stri_rank()` ranks strings within a vector.
 
-For instance, here is a comparison in the current default locale
+For instance, here's a comparison in the current default locale
 (Australian-English):
 
 ```{r }
@@ -209,34 +223,30 @@ is treated as `"oe"`.
 Collator Options
 ----------------
 
-Table [1](#Tab:collator_opts){reference-type="ref"
-reference="Tab:collator_opts"} lists the options that can be passed to
+The table below lists the options that can be passed to
 `stri_opts_collator()` via the dot-dot-dot parameter, "`...`", in all
-the functions that rely on the *ICU* Collator. Below we would like to
-attract the kind reader's attention to some of them.
+the functions that rely on the *ICU* Collator. Below we
+we play with some of them.
 
-::: {#Tab:collator_opts}
-  **Option**            **Purpose**
-  --------------------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  `locale`              a string specifying the locale to use; `NULL` (default) or `""` for the current default locale as indicated by `stri_locale_get()`
-  `strength`            an integer in $\{1,2,3,4\}$ defining collation strength; 1 for the most permissive collation rules, 4 for the strictest ones; defaults to 3
-  `uppercase_first`     logical; `NA` (default) orders upper and lower case letters in accordance to their tertiary weights, `TRUE` forces upper case letters to sort before lower case letters, `FALSE` does the opposite
-  `numeric`             logical; if `TRUE`, a collation key for the numeric value of substrings of digits is generated; this is a way to make `"100"` ordered after `"2"`; defaults to `FALSE`
-  `case_level`          logical; if `TRUE`, an extra case level (positioned before the third level) is generated; defaults to `FALSE`
-  `normalisation`       logical; if `TRUE`, then an incremental check is performed to see whether input data are in the FCD ("fast C or D") form; if data are not in the FCD form, the incremental NFD normalisation is performed, see {ref}`Sec:normalisation`; defaults to `FALSE`
-  `alternate_shifted`   logical; if `FALSE` (default), all code points with non-ignorable primary weights are handled in the same way; `TRUE` causes the code points with primary weights that are less than or equal to the variable top value to be ignored on the primary level and moved to the quaternary level; this can be used to, e.g., ignore punctuation, see the examples provided
-  `french`              logical; `TRUE` results in secondary weights being considered backwards, i.e., ordering according to the last accent difference -- nowadays only used in Canadian-French; defaults to `FALSE`
 
-  : [\[Tab:collator\_opts\]]{#Tab:collator_opts
-  label="Tab:collator_opts"} Options for the *ICU* Collator that can be
-  passed to `stri_opts_collator()`.
-:::
+| Option                | Purpose
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `locale`              | a string specifying the locale to use; `NULL` (default) or `""` for the current default locale as indicated by `stri_locale_get()`                                                                                                                                                                                                                                       |
+| `strength`            | an integer in *{1,2,3,4}* defining collation strength; 1 for the most permissive collation rules, 4 for the strictest ones; defaults to 3                                                                                                                                                                                                                              |
+| `uppercase_first`     | logical; `NA` (default) orders upper and lower case letters in accordance to their tertiary weights, `TRUE` forces upper case letters to sort before lower case letters, `FALSE` does the opposite                                                                                                                                                                       |
+| `numeric`             | logical; if `TRUE`, a collation key for the numeric value of substrings of digits is generated; this is a way to make `"100"` ordered after `"2"`; defaults to `FALSE`                                                                                                                                                                                                   |
+| `case_level`          | logical; if `TRUE`, an extra case level (positioned before the third level) is generated; defaults to `FALSE`                                                                                                                                                                                                                                                            |
+| `normalisation`       | logical; if `TRUE`, then an incremental check is performed to see whether input data are in the FCD ("fast C or D") form; if data are not in the FCD form, the incremental NFD normalisation is performed, see {ref}`Sec:normalisation`; defaults to `FALSE`                                                                                                             |
+| `alternate_shifted`   | logical; if `FALSE` (default), all code points with non-ignorable primary weights are handled in the same way; `TRUE` causes the code points with primary weights that are less than or equal to the variable top value to be ignored on the primary level and moved to the quaternary level; this can be used to, e.g., ignore punctuation, see the examples provided   |
+| `french`              | logical; `TRUE` results in secondary weights being considered backwards, i.e., ordering according to the last accent difference -- nowadays only used in Canadian-French; defaults to `FALSE`                                                                                                                                                                            |
+
 
 
 
 ### Collation Strength
 
-The Unicode Collation Algorithm {cite}`uts10:collation` can go beyond simple
+The [Unicode Collation Algorithm](https://www.unicode.org/reports/tr10/)
+can go beyond simple
 canonical equivalence: it can treat some other (depending on the
 context) differences as negligible too.
 
@@ -356,12 +366,13 @@ canonically equivalent code point sequences so that they are represented
 by the same code points, which can account for some negligible
 differences (as in the "a with ogonek" example above).
 
-Apart from ignoring punctuation and case, the Unicode Standard Annex
-\#15 {cite}`usa15:normalization` also discusses the so-called compatibility
+Apart from ignoring punctuation and case, the
+[Unicode Standard Annex \#15](https://www.unicode.org/reports/tr15/)
+also discusses the so-called compatibility
 equivalence of strings. This is a looser form of similarity; it is
 observed where there is the same abstract content, yet displayed by
 means of different glyphs, for instance "¼" (U+00BC) vs "`1/4`" or
-"$\mathbb{R}$" vs "R". In the latter case, whether these should be
+"ℝ" vs "R". In the latter case, whether these should be
 treated as equal, depends on the context (e.g., this can be the set of
 real numbers vs one's favourite programming language). Compatibility
 decompositions (NFKC, NFKD) mentioned in the section on
@@ -369,8 +380,9 @@ decompositions (NFKC, NFKD) mentioned in the section on
 used to normalise strings so that such differences are not accounted
 for.
 
-Also, for "fuzzy" matching of strings, the *stringdist* package
-{cite}`stringdist` might be helpful.
+Also, for "fuzzy" matching of strings,
+the [*stringdist*](https://CRAN.R-project.org/package=stringdist) package
+might be useful.
 
 
 

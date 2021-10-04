@@ -9,7 +9,7 @@ opts_chunk$set(cache.path="cache/codepont_comparing_")
 ```
 
 
-There are many circumstances where we are faced with testing whether two
+There are many settings where we are faced with testing whether two
 strings (or parts thereof) consist of exactly the same Unicode code
 points, in exactly the same order. These include, for instance, matching
 a nucleotide sequence in a DNA profile and querying for system resources
@@ -33,14 +33,14 @@ Due to recycling, the first string was compared against the 5 strings in
 the 2nd operand. There is only 1 exact match.
 
 
-
+(Sec:strsearch)=
 Searching for Fixed Strings
 ---------------------------
 
 For detecting if a string contains a given fixed substring
 (code-pointwisely), the fast KMP {cite}`KnuthETAL1977:kmp` algorithm, with
-worst time complexity of $O(n+p)$ (where $n$ is the length of the string
-and $p$ is the length of the pattern), has been implemented in *stringi*
+worst time complexity of *O(n+p)* (where *n* is the length of the string
+and *p* is the length of the pattern), has been implemented in *stringi*
 (with numerous tweaks for even faster matching).
 
 The table below lists the string search functions available
@@ -97,13 +97,18 @@ Search Engine Options
 
 The pattern matching engine may be tuned up by passing further arguments
 to the search functions (via "`...`"; they are redirected as-is to
-`stri_opts_fixed()`).
-Table [\[Tab:fixed\_opts\]](#Tab:fixed_opts){reference-type="ref"
-reference="Tab:fixed_opts"} gives the list of available options.
+`stri_opts_fixed()`). The table below gives the list of available options.
 
-First, we may switch on the simplistic[^3] case-insensitive matching.
+| Option             | Purpose                                                                                                                                                                             |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `case_insensitive` | logical; whether to enable the simple case-insensitive matching (defaults to `FALSE`)                                                                                               |
+| `overlap`          | logical; whether to enable the detection of overlapping matches (defaults to `FALSE`); available in `stri_extract_all_fixed()`, `stri_locate_all_fixed()`, and `stri_count_fixed()` |
 
-[^3]: Which is not suitable for real-world NLP tasks, as it assumes that
+
+
+First, we may switch on the simplistic[^footfixedcase] case-insensitive matching.
+
+[^footfixedcase]: Which is not suitable for real-world NLP tasks, as it assumes that
     changing the case of a single code point always produces one and
     only one item; This way, `"groß"` does not compare equal to
     `"GROSS"`, see {ref}`Sec:collator` (and to some extent
@@ -122,13 +127,6 @@ stri_count_fixed("acatgacaca", "aca")  # overlap=FALSE (default)
 stri_count_fixed("acatgacaca", "aca", overlap=TRUE)
 ```
 
-1.0p4cmX **Option &**Purpose\
-`case_insensitive` & logical; whether to enable the simple
-case-insensitive matching (defaults to `FALSE`)\
-`overlap` & logical; whether to enable the detection of overlapping
-matches (defaults to `FALSE`); available in `stri_extract_all_fixed()`,
-`stri_locate_all_fixed()`, and `stri_count_fixed()`\
-****
 
 Detecting and Subsetting Patterns
 ---------------------------------
@@ -155,7 +153,7 @@ stri_detect_fixed(x, "abc", negate=TRUE, max_count=2)
 This can be useful in scenarios such as "find the first 2 matching
 resource IDs".
 
-There are also functions that verify whether a string starts or ends[^4]
+There are also functions that verify whether a string starts or ends[^footanchor]
 with a pattern match:
 
 ```{r }
@@ -163,10 +161,10 @@ stri_startswith_fixed(x, "abc")  # from=1 - match at start
 stri_endswith_fixed(x, "abc")    # to=-1 - match at end
 ```
 
-[^4]: Note that testing for a pattern match at the start or end of a
+[^footanchor]: Note that testing for a pattern match at the start or end of a
     string has not been implemented separately for `regex` patterns,
     which support `"^"` and `"$"` anchors that serve exactly this very
-    purpose.
+    purpose, see {ref}`Sec:regex`.
 
 Pattern detection is often performed in conjunction with character
 vector subsetting. This is why we have a specialised (and hence slightly

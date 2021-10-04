@@ -17,9 +17,12 @@ However, instead of being merely thin wrappers around base R[^footstringx] funct
 which we have identified as not necessarily portable across platforms
 and not really suitable for natural language processing tasks, all the
 functionality has been implemented from the ground up, with the use of
-*ICU* services wherever applicable. Since the initial release, an
+[*ICU*](https://icu.unicode.org/) services wherever applicable.
+Since the initial release, an
 abundance of new features has been added and the package can now be
-considered a comprehensive workhorse for text data processing. Note that
+considered a comprehensive workhorse for text data processing.
+
+Note that
 the *stringi* API is stable. Future releases are aiming for as much
 backward compatibility as possible so that other software projects can
 safely rely on it.
@@ -35,7 +38,7 @@ safely rely on it.
     might ever need: *stringi* has 250 functions to *stringr*'s 49".
 
 [^footstringx]: See also the new
-    [*stringx*](https://stringx.gagolewski.com) {cite}`stringx` package
+    [*stringx*](https://stringx.gagolewski.com) package
     which supplies a set of portable and efficient
     replacements for and enhancements of the base R functions
     (based on *stringi*).
@@ -131,7 +134,7 @@ Acting Elementwise with Recycling
 
 Binary and higher-arity operations in R are oftentimes vectorised with
 respect to all arguments (or at least to the crucial, non-optional
-ones). As a prototype, let us consider the binary arithmetic, logical,
+ones). As a prototype, let's consider the binary arithmetic, logical,
 or comparison operators (and, to some extent, `paste()`, `strrep()`, and
 more generally `mapply()`), for example the multiplication:
 
@@ -141,7 +144,7 @@ c(10, -1) * c(1, 2, 3, 4)  # == c(10, -1, 10, -1) * c(1, 2, 3, 4)
 
 Calling "`x * y`" multiplies the corresponding components of the two
 vectors elementwisely. As one operand happens to be shorter than
-another, the former is recycled as many times as necessary to match the
+the other, the former is recycled as many times as necessary to match the
 length of the latter (there would be a warning if partial recycling
 occurred). Also, acting on a zero-length input always yields an empty
 vector.
@@ -153,8 +156,8 @@ functions are vectorised with respect to both the `haystack` and the
 `needle` arguments (and, e.g., the replacement string, if applicable).
 
 Some users, unaware of this rule, might find this behaviour unintuitive
-at the beginning and thus miss out on how powerful it is. Therefore, let
-us enumerate the most noteworthy scenarios that are possible thanks to
+at the beginning and thus miss out on how powerful it is. Therefore, let's
+enumerate the most noteworthy scenarios that are possible thanks to
 the arguments' recycling, using the call to
 `stri_count_fixed(haystack, needle)` (which looks for a needle in a
 haystack) as an illustration:
@@ -245,7 +248,7 @@ Missing Values
 --------------
 
 Some base R string processing functions, e.g., `paste()`, treat missing
-values as literal `"NA"` strings. *stringi*, however, does enforce the
+values as literal `"NA"` strings. *stringi*, however, *does* enforce the
 consistent propagation of missing values (like arithmetic operations):
 
 ```{r }
@@ -298,10 +301,10 @@ listed as the first one (e.g., in base R we have
 `grepl(needle, haystack)` vs `stri_detect(haystack, needle)` here). This
 makes the functions more intuitive to use, but also more forward pipe
 operator-friendly (either when using "`|>`" introduced in R 4.1 or
-"`%>%`" from *magrittr*).
+"`%>%`" from [*magrittr*](https://magrittr.tidyverse.org/)).
 
 Furthermore, for increased convenience, some functions have been added
-despite the fact that they can be trivially reduced to a series of other
+despite the fact that they can  trivially be reduced to a series of other
 calls. In particular, writing:
 
 ```{r results="hide"}
@@ -337,7 +340,8 @@ outputs are always in UTF-8.
 As we have mentioned in the introduction, base R string operations have
 traditionally been limited in scope. There also might be some issues
 with regards to their portability, reasons for which may be plentiful.
-For instance, varied versions of the *PCRE* (8.x or 10.x) pattern
+For instance, varied versions of the [*PCRE*](https://www.pcre.org/)
+(8.x or 10.x) pattern
 matching libraries may be linked to during the compilation of R. On
 Windows, there is a custom implementation of *iconv* that has a set of
 character encoding IDs not fully compatible with that on GNU/Linux: to
@@ -348,7 +352,8 @@ comparing strings (e.g., using the "`<=`" operator), however this is
 only optional and does not provide access to any other Unicode services.
 
 For example, let us consider the matching of "all letters" by means of
-the built-in `gregexpr()` function and the *TRE* (`perl=FALSE`) and
+the built-in `gregexpr()` function and the [*TRE*](https://github.com/laurikari/tre/)
+(`perl=FALSE`) and
 *PCRE* (`perl=TRUE`) libraries using a POSIX-like and Unicode-style
 character set (see {ref}`Sec:regex` for more details):
 
@@ -368,7 +373,7 @@ On Ubuntu Linux 20.04 (UTF-8 locale), the respective outputs are:
 ```
 
 On Windows, when `x` is marked as UTF-8
-(see {ref}`Sec:encoding`), the author obtained:
+(see {ref}`Sec:encoding`), the current author obtained:
 
 ```r
 ## [1] "A" "E" "Z" "a" "e" "z"

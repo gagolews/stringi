@@ -21,7 +21,7 @@ Dealing with Unicode Code Points
 The Unicode Standard (as well as the Universal Coded Character Set,
 i.e., ISO/IEC 10646) currently defines over 140,000 abstract characters
 together with their corresponding code points -- integers between 0 and
-1,114,111 (or 0000${}_{16}$ and 10FFFF${}_{16}$ in hexadecimal notation,
+1,114,111 (or 0000 and 10FFFF in hexadecimal notation,
 see <https://www.unicode.org/charts/>). In particular, here is the
 number of the code points in some popular categories (compare
 {ref}`Sec:RegexIndividualChars`), such as letters, numbers, and
@@ -40,9 +40,9 @@ supplemented with over 1,000 emojis.
 
 The first 255 code points are identical to the ones defined by ISO/IEC
 8859-1 (ISO Latin-1; "Western European"), which itself extends US-ASCII
-(codes $\le 127=\text{7F}{}_{16}$). For instance, the code point that we
+(codes ≤ U+007f). For instance, the code point that we
 are used to denoting as U+007A (the "U+" prefix is followed by a
-sequence of hexadecimal digits; 7A${}_{16}$ corresponds to decimal 122)
+sequence of hexadecimal digits; U+007A corresponds to decimal 122)
 encodes the lower case letter "z". To input such a code point in R, we
 write:
 
@@ -59,7 +59,7 @@ x <- "zß你好"
 stri_escape_unicode(x)
 ```
 
-It is worth noting that despite the fact that some output devices might
+Even though some output devices might
 be unable to display certain code points correctly (due to, e.g.,
 missing fonts), the correctness of their processing with *stringi* is
 still guaranteed by *ICU*.
@@ -78,13 +78,13 @@ stri_encode(x, to="UTF-8", to_raw=TRUE)[[1]]
 stri_encode(x, to="UTF-16LE", to_raw=TRUE)[[1]]  # little-endian
 ```
 
-R's current platform-default encoding, which we shall refer to as the
+R's current platform-default encoding, which we'll refer to as the
 native encoding, is defined via the `LC_CTYPE` locale category in
 `Sys.getlocale()`. This is the representation assumed, e.g., when
 reading data from the standard input or from files (e.g., when `scan()`
 is called). For instance, Central European versions of Windows will
 assume the "`windows-1250`" code page. MacOS as well as most Linux boxes
-work with UTF-8 by default[^17]
+work with UTF-8 by default[^footucrt].
 
 All strings in R have an associated encoding mark which can be read by
 calling `Encoding()` or, more conveniently, `stri_enc_mark()`. Most
@@ -96,13 +96,13 @@ available for UTF-16 data). Over the years, this has proven a robust,
 efficient, and maximally portable design choice -- Unicode can be
 thought of as a superset of every other encoding. Moreover, in order to
 guarantee the correctness and high performance of the string processing
-pipelines, *stringi* always[^18] outputs UTF-8 data.
+pipelines, *stringi* always[^footuftout] outputs UTF-8 data.
 
-[^17]: It is expected that future R releases will support UTF-8 natively
+[^footucrt]: It is expected that future R releases will support UTF-8 natively
     thanks to the Universal C Runtime (UCRT) that is available for
     Windows 10.
 
-[^18]: With a few obvious exceptions, such as `stri_encode()`.
+[^footuftout]: Okay, with a few obvious exceptions, such as `stri_encode()`.
 
 
 
@@ -110,12 +110,12 @@ pipelines, *stringi* always[^18] outputs UTF-8 data.
 Reading and Writing Text Files
 ------------------------------
 
-According to a report by W3Techs[^19], as of 2021--09--28, 97.3% of
+According to a report by
+[W3Techs](https://w3techs.com/technologies/cross/character_encoding/ranking),
+as of 2021-09-28, 97.3% of
 websites use UTF-8. Nevertheless, other encodings can still be
 encountered.
 
-[^19]: See
-    <https://w3techs.com/technologies/cross/character_encoding/ranking>.
 
 
 If we know the encoding of a text file in advance, `stri_read_lines()`
@@ -194,11 +194,12 @@ tail(stri_split_lines1(y), 4)  # spoiler alert!
 Normalising Strings
 -------------------
 
-In {ref}`Sec:Equivalence` we have provided some examples of
+In the section on {ref}`Sec:Equivalence` we've provided some examples of
 canonically equivalent strings whose code point representation was
-different. Unicode normalisation forms C (Canonical composition, NFC)
-and D (Canonical decomposition, NFD) can be applied so that they will
-compare equal using bytewise matching {cite}`usa15:normalization`.
+different. Unicode [normalisation](https://www.unicode.org/reports/tr15/)
+forms C (Canonical composition, NFC)
+and D (Canonical decomposition, NFD) can be applied so that they'll
+compare equal using bytewise matching.
 
 ```{r }
 x <- "a\u0328 ą"   # a, combining ogonek, space, a with ogonek

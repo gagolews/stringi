@@ -41,7 +41,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="R Package stringi Reference" href="rapi.html" />
-    <link rel="prev" title="Example Use case: Data preparation" href="weave/example.html" /> 
+    <link rel="prev" title="Example Use Case: Data Preparation" href="weave/example.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -93,7 +93,14 @@
               <p class="caption"><span class="caption-text">stringi</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="index.html">About</a></li>
-<li class="toctree-l1"><a class="reference internal" href="weave/example.html">Example Use case: Data preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="weave/design_principles.html">General Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="weave/basic_operations.html">Basic String Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="weave/codepoint_comparing.html">Code-Pointwise Comparing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="weave/regular_expressions.html">Regular Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="weave/collation.html">Collation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="weave/other_operations.html">Other Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="weave/input_output.html">Input and Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="weave/example.html">Example Use Case: Data Preparation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">References</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#how-to-cite">How to Cite</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#bibliography">Bibliography</a></li>
@@ -179,7 +186,7 @@
         <a href="rapi.html" class="btn btn-neutral float-right" title="R Package stringi Reference" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
       
       
-        <a href="weave/example.html" class="btn btn-neutral float-left" title="Example Use case: Data preparation" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="weave/example.html" class="btn btn-neutral float-left" title="Example Use Case: Data Preparation" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
       
   </div>
   
@@ -198,8 +205,41 @@ cite <span id="id1">[<a class="reference internal" href="#id3">Gag21</a>]</span>
 <div class="section" id="bibliography">
 <h2>Bibliography<a class="headerlink" href="#bibliography" title="Permalink to this headline">¶</a></h2>
 <p id="id2"><dl class="citation">
+<dt class="label" id="id24"><span class="brackets">Fri06</span></dt>
+<dd><p>J.E.F. Friedl. <em>Mastering Regular Expressions</em>. O'Reilly, 2006.</p>
+</dd>
 <dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id1">Gag21</a></span></dt>
-<dd><p>Marek Gagolewski. stringi: Fast and portable character string processing in R. <em>Journal of Statistical Software</em>, 2021. to appear.</p>
+<dd><p>M. Gagolewski. stringi: Fast and portable character string processing in R. <em>Journal of Statistical Software</em>, 2021. to appear.</p>
+</dd>
+<dt class="label" id="id30"><span class="brackets">Hoc19</span></dt>
+<dd><p>T.D. Hocking. Comparing namedCapture with other R packages for regular expressions. <em>The R Journal</em>, 11/2:328–346, 2019.</p>
+</dd>
+<dt class="label" id="id28"><span class="brackets">HU79</span></dt>
+<dd><p>J.E. Hopcroft and J.D. Ullman. <em>Introduction to Automata Theory, Languages, and Computation</em>. Addison-Wesley, 1979.</p>
+</dd>
+<dt class="label" id="id25"><span class="brackets">Kle51</span></dt>
+<dd><p>S.C. Kleene. Representation of events in nerve nets and finite automata. Technical Report RM-704, The RAND Corporation, Santa Monica, CA, 1951. <span>URL <a class="reference external" href="#"></a></span>https://www.rand.org/content/dam/rand/pubs/research_memoranda/2008/RM704.pdf.</p>
+</dd>
+<dt class="label" id="id23"><span class="brackets">KMP77</span></dt>
+<dd><p>D. Knuth, J.H. Morris, and V. Pratt. Fast pattern matching in strings. <em>SIAM Journal on Computing</em>, 6(2):323–350, 1977.</p>
+</dd>
+<dt class="label" id="id21"><span class="brackets">KP81</span></dt>
+<dd><p>D.E. Knuth and M.F. Plass. Breaking paragraphs into lines. <em>Software: Practice and Experience</em>, 11:1119–1184, 1981.</p>
+</dd>
+<dt class="label" id="id26"><span class="brackets">RS59</span></dt>
+<dd><p>M. Rabin and D. Scott. Finite automata and their decision problems. <em>IBM Journal of Research and Development</em>, 3:114–125, 1959.</p>
+</dd>
+<dt class="label" id="id27"><span class="brackets">RT70</span></dt>
+<dd><p>D.M. Ritchie and K.L. Thompson. QED text editor. Technical Report 70107-002, Bell Telephone Laboratories, Inc., 1970. URL: <a class="reference external" href="https://wayback.archive-it.org/all/20150203071645/http://cm.bell-labs.com/cm/cs/who/dmr/qedman.pdf">https://wayback.archive-it.org/all/20150203071645/http://cm.bell-labs.com/cm/cs/who/dmr/qedman.pdf</a>.</p>
+</dd>
+<dt class="label" id="id11"><span class="brackets">Wic10</span></dt>
+<dd><p>H. Wickham. stringr: Modern, consistent string processing. <em>The R Journal</em>, 2(2):38–40, 2010.</p>
+</dd>
+<dt class="label" id="id10"><span class="brackets">WG17</span></dt>
+<dd><p>H. Wickham and G. Grolemund. <em>R for Data Science</em>. O'Reilly, 2017.</p>
+</dd>
+<dt class="label" id="id34"><span class="brackets">Xie15</span></dt>
+<dd><p>Y. Xie. <em>Dynamic Documents with R and knitr</em>. Chapman and Hall/CRC, 2015.</p>
 </dd>
 </dl>
 </p>
@@ -227,7 +267,7 @@ cite <span id="id1">[<a class="reference internal" href="#id3">Gag21</a>]</span>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="rapi.html" class="btn btn-neutral float-right" title="R Package stringi Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="weave/example.html" class="btn btn-neutral float-left" title="Example Use case: Data preparation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="weave/example.html" class="btn btn-neutral float-left" title="Example Use Case: Data Preparation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
@@ -236,7 +276,7 @@ cite <span id="id1">[<a class="reference internal" href="#id3">Gag21</a>]</span>
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-10-02T15:20:23+1000.
+        Last updated on 2021-10-04T11:46:09+1100.
       </span>
 
     </p>

@@ -14,7 +14,7 @@ defining systematic patterns which can be sought in character strings.
 Examples of such patterns include: specific fixed substrings, emojis of
 any kind, stand-alone sequences of lower-case Latin letters ("words"),
 substrings that can be interpreted as real numbers (with or without
-fractional part, also in scientific notation), telephone numbers, email
+fractional parts, also in scientific notation), telephone numbers, email
 addresses, or URLs.
 
 Theoretically, the concept of regular pattern matching dates back to the
@@ -27,31 +27,35 @@ well-known *sed*).
 Base R gives access to two different regex matching engines (via
 functions such as `gregexpr()` and `grep()`):
 
--   ERE[^5] (extended regular expressions that conform to the
-    POSIX.2-1992 standard); used by default,
+-   ERE (extended regular expressions that conform to the
+    POSIX.2-1992 standard;
+    via the [*TRE*](https://github.com/laurikari/tre/) library);
+    used by default,
 
--   PCRE[^6] (Perl-compatible regular expressions); activated when
-    `perl=TRUE` is set.
+-   PCRE (Perl-compatible regular expressions;
+    via the [*PCRE2*](https://www.pcre.org/) library);
+    activated when `perl=TRUE` is set.
 
-Other matchers are implemented in the *ore* ({cite}`ore`; via the *Onigmo*
-library) and *re2r* ({cite}`re2r`; *RE2*) packages.
+Other matchers are implemented in the [*ore*](https://CRAN.R-project.org/package=ore), [*re2r*](https://github.com/qinwf/re2r),
+and [*re2*](https://github.com/girishji/re2/) packages.
 
-[^5]: Via the *TRE* library (<https://github.com/laurikari/tre/>).
-
-[^6]: Via the *PCRE2* library (<https://www.pcre.org/>).
 
 
 *Stringi*, on the other hand, provides access to the regex engine
-implemented in *ICU*, which was inspired by Java's *util.regex* in *JDK
-1.4*. Their syntax is mostly compatible with that of *PCRE*, although
+implemented in [*ICU*](https://icu.unicode.org/),
+which was inspired by Java's *util.regex* in
+*JDK 1.4*. Their syntax is mostly compatible with that of *PCRE*, although
 certain more advanced facets might not be supported (e.g., recursive
-patters). On the other hand, *ICU* regexes fully conform to the Unicode
-Technical Standard \#18 {cite}`uts18:regex` and hence provide comprehensive
-support for Unicode.
+patters). On the other hand, *ICU* regexes fully conform to the
+[Unicode Technical Standard \#18](https://www.unicode.org/reports/tr18/)
+and hence provide comprehensive support for Unicode.
 
 It is worth noting that most programming languages as well as advanced
-text editors and development environments (including *Kate*, *Eclipse*,
-*VSCode*, and *RStudio*) support finding or replacing patters with
+text editors and development environments
+(including [*Kate*](https://kate-editor.org/),
+[*Eclipse*](https://www.eclipse.org/ide/),
+[*VSCode*](https://code.visualstudio.com/),
+and [*RStudio*](https://www.rstudio.com/products/rstudio/)) support finding or replacing patters with
 regexes. Therefore, they should be amongst the instruments at every data
 scientist's disposal. One general introduction to regexes is {cite}`friedl`.
 The *ICU* flavour is summarised at
@@ -62,42 +66,22 @@ from the perspective of the *stringi* package users. This time we will
 use the pattern search routines whose names end with the `*_regex()`
 suffix. Apart from `stri_detect_regex()`, `stri_locate_all_regex()`, and
 so forth, in {ref}`Sec:Capturing` we introduce `stri_match_all_regex()`.
-Moreover,
-Table [\[Tab:regex\_opts\]](#Tab:regex_opts){reference-type="ref"
-reference="Tab:regex_opts"} lists the available options for the regex
+Moreover, the table below lists the available options for the regex
 engine.
 
-1.0p4.6cmX **Option &**Purpose\
-`case_insensitive`& logical; defaults to `FALSE`; whether to enable
-(full) case-insensitive matching\
-`comments`& logical; defaults to `FALSE`; whether to allow white spaces
-and comments within patterns\
-`dot_all`& logical; defaults to `FALSE`; if set, "`.`" matches line
-terminators; otherwise its matching stops at a line end\
-`literal` & logical; defaults to `FALSE`; whether to treat the entire
-pattern as a literal string; note that in most cases the code-pointwise
-string search facilities (`*_fixed()` functions described in
-{ref}`Sec:fixed` are
-faster\
-`multi_line`& logical; defaults to `FALSE`; if set, "`$`" and "`^`"
-recognise line terminators within a string; otherwise, they match only
-at start and end of the input\
-`unix_lines` & logical; defaults to `FALSE`; when enabled, only the Unix
-line ending, i.e., U+000A, is honoured as a terminator by "`.`", "`$`",
-and "`^`"\
-`uword`& logical; defaults to `FALSE`; whether to use the Unicode
-definition of word boundaries (see {ref}`Sec:BoundaryAnalysis`), which are quite different from the traditional regex word boundaries\
-`error_on_unknown_escapes` & logical; defaults to `FALSE`; whether
-unrecognised backslash-escaped characters trigger an error; by default,
-unknown backslash-escaped ASCII letters represent themselves\
-`time_limit` & integer; processing time limit for match operations in
-$\sim$milliseconds (depends on the CPU speed); 0 for no limit (the
-default)\
-`stack_limit` & integer; maximal size, in bytes, of the heap storage
-available for the matcher's backtracking stack; setting a limit is
-desirable if poorly written regexes are expected on input; 0 for no
-limit (the default)\
-****
+| Option                     | Purpose                                                                                                                                                                                                                    |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `case_insensitive`         | logical; defaults to `FALSE`; whether to enable (full) case-insensitive matching                                                                                                                                           |
+| `comments`                 | logical; defaults to `FALSE`; whether to allow white spaces and comments within patterns                                                                                                                                   |
+| `dot_all`                  | logical; defaults to `FALSE`; if set, "`.`" matches line terminators; otherwise its matching stops at a line end                                                                                                           |
+| `literal`                  | logical; defaults to `FALSE`; whether to treat the entire pattern as a literal string; note that in most cases the code-pointwise string search facilities (`*_fixed()` functions described in {ref}`Sec:fixed` are faster |
+| `multi_line`               | logical; defaults to `FALSE`; if set, "`$`" and "`^`" recognise line terminators within a string; otherwise, they match only at start and end of the input                                                                 |
+| `unix_lines`               | logical; defaults to `FALSE`; when enabled, only the Unix line ending, i.e., U+000A, is honoured as a terminator by "`.`", "`$`", and "`^`"                                                                                |
+| `uword`                    | logical; defaults to `FALSE`; whether to use the Unicode definition of word boundaries (see {ref}`Sec:BoundaryAnalysis`), which are quite different from the traditional regex word boundaries                             |
+| `error_on_unknown_escapes` | logical; defaults to `FALSE`; whether unrecognised backslash-escaped characters trigger an error; by default, unknown backslash-escaped ASCII letters represent themselves                                                 |
+| `time_limit`               | integer; processing time limit for match operations in ~milliseconds (depends on the CPU speed); 0 for no limit (the default)                                                                                              |
+| `stack_limit`              | integer; maximal size, in bytes, of the heap storage available for the matcher's backtracking stack; setting a limit is desirable if poorly written regexes are expected on input; 0 for no limit (the default)            |
+
 
 (Sec:RegexIndividualChars)=
 Matching Individual Characters
@@ -108,24 +92,22 @@ part, determining the length of all matching substrings will be quite
 straightforward.
 
 The following characters have special meaning to the regex engine:
-$$\text{
-  \texttt{.}\quad
-  \textbackslash{}\quad
-  \texttt{|}\quad
-  \texttt{(}\quad
-  \texttt{)}\quad
-  \texttt{[}\quad
-%    \texttt{]}
-  \texttt{\{}\quad
-  \texttt{\}}\quad
-  \texttt{\^{}}\quad
-  \texttt{\$}\quad
-  \texttt{*}\quad
-  \texttt{+}\quad
-  \texttt{?}\quad
-}$$
 
-Any regular expression that does not contain the above behaves like a
+> `.`
+> `\`
+> `|`
+> `(`
+> `)`
+> `[`
+> `{`
+> `}`
+> `^`
+> `$`
+> `*`
+> `+`
+> `?`
+
+Any regular expression that doesn't contain the above behaves like a
 fixed pattern:
 
 ```{r }
@@ -136,18 +118,18 @@ There are hence 3 occurrences of a pattern that is comprised of 4 code
 points, "`s`" followed by "`p`", then by "`a`", and ending with "`m`".
 
 However, this time the case insensitive mode fully supports Unicode
-matching[^7]:
+matching[^footequivalent]:
 
 ```{r }
 stri_detect_regex("groß", "GROSS", case_insensitive=TRUE)
 ```
 
-[^7]: This does not mean, though, that it considers canonically
+[^footequivalent]: This does not mean, though, that it considers canonically
     equivalent strings as equal, see {ref}`Sec:Equivalence` for
     discussion and a workaround.
 
 If we wish to include a special character as part of a regular
-expression -- so that it is treated literally -- we will need to escape
+expression -- so that it is treated literally -- we'll need to escape
 it with a backslash, "\\". Yet, the backlash itself has a special
 meaning to R, see `help("Quotes")`, therefore it needs to be preceded by
 another backslash.
@@ -200,15 +182,17 @@ strings that are matched by this pattern (unless matching is done
 case-insensitively).
 
 The following characters, if used within square brackets, may be treated
-non-literally: $$\text{
-  \textbackslash{}\quad
-  \texttt{[}\quad
-  \texttt{]}\quad
-  \texttt{\^{}}\quad
-  \texttt{{}-{}}\quad
-  \texttt{\&}\quad
-}$$ Therefore, to include them as-is in a character set, the
-backslash-escape must be used. For example, "`[\[\]\\]`" matches the
+non-literally:
+
+> `\`
+> `[`
+> `]`
+> `^`
+> `-`
+> `&`
+
+Therefore, to include them as-is in a character set, the
+backslash-escape must be used. For example, "`[\[\]\\]`" matches a
 backslash or a square bracket.
 
 ### Complementing Sets
@@ -228,7 +212,7 @@ stri_extract_all_regex(x, "[^ ][^ ][^ ]")
 Each Unicode code point can be referenced by its unique numeric
 identifier, see {ref}`Sec:codepoints` for more details. For instance, "`a`" is
 assigned code U+0061 and "`z`" is mapped to U+007A. In the pre-Unicode
-era (mostly with regards to the ASCII codes, $\le$ U+007F, representing
+era (mostly with regards to the ASCII codes, ≤ U+007F, representing
 English letters, decimal digits, some punctuation characters, and a few
 control characters), we were used to relying on specific code ranges;
 e.g., "`[a-z]`" denotes the set comprised of all characters with codes
@@ -249,7 +233,8 @@ ogonek) in the result.
 ### Using Predefined Character Sets
 
 Each code point is assigned a unique general category, which can be
-thought of as a character's class, see {cite}`usa44:ucd`. Sets of characters
+thought of as a character's class, see
+[Unicode Standard Annex \#44: {U}nicode Character Database](https://unicode.org/reports/tr44/). Sets of characters
 from each category can be referred to, amongst others, by using the
 "`\p{category}`" (or, equivalently, "`[\p{category}]`") syntax:
 
@@ -333,16 +318,18 @@ stri_extract_all_regex(x, "spam|ham")
 
 "`|`" has a very low precedence. Therefore, if we wish to introduce an
 alternative of subexpressions, we need to group them, e.g., between
-round brackets[^8]. For instance, "`(sp|h)am`" matches either "`spam`"
+round brackets. For instance, "`(sp|h)am`" matches either "`spam`"
 or "`ham`".
 
-[^8]: Which have the side-effect of creating new capturing groups, see
-    below for a discussion.
+Note that this has the side-effect of creating new capturing groups,
+see {ref}`Sec:Capturing`.
+
+
 
 ### Grouping Subexpressions
 
 Also, matching is always done left-to-right, on a first-come,
-first-served basis. Hence, if the left branch is a subset of the right
+first-served basis. So, if the left branch is a subset of the right
 one, the latter will never be matched. In particular,
 "`(al|alga|algae)`" can only match "`al`". To fix this, we can write
 "`(algae|alga|al))`".
@@ -378,9 +365,8 @@ What is more, e.g., "`(?i)`" enables the `case_insensitive` mode.
 stri_count_regex("Spam spam SPAMITY spAm", "(?i)spam")
 ```
 
-For more regex flags, we kindly refer the reader to
-Table [\[Tab:regex\_opts\]](#Tab:regex_opts){reference-type="ref"
-reference="Tab:regex_opts"} again.
+
+
 
 Quantifiers
 -----------
@@ -429,7 +415,7 @@ stri_extract_first_regex("spamamamnomnomnomammmmmmmmm",
     "sp(am|nom)+?m*",          "sp(am|nom)+?m+"))
 ```
 
-Let us stress that the quantifier is applied to the subexpression that
+Let's stress that the quantifier is applied to the subexpression that
 stands directly before it. Grouping parentheses can be used in case they
 are needed.
 
@@ -463,8 +449,14 @@ and so on), which match as many times as possible but, contrary to the
 plain-greedy ones, never backtrack when they happen to consume too much
 data.
 
-See also the *re2r* (a wrapper around the *RE2* library; {cite}`re2r`)
-package's documentation and the references therein for a discussion.
+See also the documentation of
+the [*re2r*](https://github.com/qinwf/re2r)
+and [*re2*](https://github.com/girishji/re2/)
+(wrappers around the [*RE2*](https://github.com/google/re2)
+library) packages and the references therein for a discussion.
+
+
+
 
 (Sec:Capturing)=
 Capture Groups and References Thereto
@@ -538,7 +530,7 @@ For example, "`\1`" denotes whatever has been consumed by the first
 capture group.
 
 Even though, in general, parsing HTML code with regexes is not
-recommended, let us consider the following examples:
+recommended, let's consider the following examples:
 
 ```{r }
 stri_extract_all_regex("<strong><em>spam</em></strong><code>eggs</code>",
@@ -554,7 +546,7 @@ syntax (the angle brackets are part of the token), as in, e.g.,
 Anchoring
 ---------
 
-Lastly, let us mention the ways to match a pattern at a given abstract
+Lastly, let's mention the ways to match a pattern at a given abstract
 position within a string.
 
 
@@ -581,17 +573,16 @@ punctuation marks, or at the start/end of a string (i.e., wherever there
 is a transition between a word, "`\w`", and a non-word character,
 "`\W`", or vice versa).
 
-In the following example, we match all stand-alone numbers[^9]:
+In the following example, we match all stand-alone numbers
+(this regular expression is provided for didactic purposes only):
 
 ```{r }
 stri_extract_all_regex("12, 34.5, J23, 37.629cm", "\\b\\d+(\\.\\d+)?+\\b")
 ```
 
-[^9]: This regular expression is provided for didactic purposes only.
-
 
 Note the possessive quantifier, "`?+`": try matching a dot and a
-sequence of digits, and if it is present but not followed by a word
+sequence of digits, and if it's present but not followed by a word
 boundary, do not retry by matching a word boundary only.
 
 

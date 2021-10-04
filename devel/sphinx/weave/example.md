@@ -16,7 +16,8 @@ harvest the relevant temperature and precipitation data. Without harm in
 generality, let us focus on the city of Melbourne, VIC, Australia.
 
 The parsing of the city's Wikipedia page can be done by means of the
-functions from the *xml2* {cite}`xml2` and *rvest* {cite}`rvest` packages.
+functions from the [*xml2*](https://CRAN.R-project.org/package=xml2)
+and [*rvest*](https://CRAN.R-project.org/package=rvest) packages.
 
 
 ```r
@@ -24,7 +25,7 @@ library("xml2")
 library("rvest")
 ```
 
-First, let us load and parse the HTML file downloaded on 2020--09--17
+First, let us load and parse the HTML file downloaded on 2020-09-17
 (see <https://github.com/gagolews/stringi/tree/master/docs/_static/vignette>):
 
 

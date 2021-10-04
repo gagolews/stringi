@@ -93,7 +93,14 @@
               <p class="caption"><span class="caption-text">stringi</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../weave/example.html">Example Use case: Data preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weave/design_principles.html">General Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weave/basic_operations.html">Basic String Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weave/codepoint_comparing.html">Code-Pointwise Comparing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weave/regular_expressions.html">Regular Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weave/collation.html">Collation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weave/other_operations.html">Other Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weave/input_output.html">Input and Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weave/example.html">Example Use Case: Data Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference Manual</span></p>
@@ -455,14 +462,14 @@
 <span class="c1">##         💩</span>
 <span class="c1">##       &lt;NA&gt;</span>
 <span class="nf">stri_sprintf</span><span class="p">(</span><span class="s">&quot;UNIX time %1$f is %1$s.&quot;</span><span class="p">,</span> <span class="nf">Sys.time</span><span class="p">())</span>
-<span class="c1">## [1] &quot;UNIX time 1633152016.078404 is 2021-10-02 15:20:16.&quot;</span>
+<span class="c1">## [1] &quot;UNIX time 1633308361.994752 is 2021-10-04 11:46:01.&quot;</span>
 <span class="c1"># the following do not work in sprintf()</span>
 <span class="nf">stri_sprintf</span><span class="p">(</span><span class="s">&quot;%1$#- *2$.*3$f&quot;</span><span class="p">,</span> <span class="m">1.23456</span><span class="p">,</span> <span class="m">10</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>  <span class="c1"># two asterisks</span>
 <span class="c1">## [1] &quot; 1.235    &quot;</span>
 <span class="nf">stri_sprintf</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span> <span class="s">&quot;%f&quot;</span><span class="p">),</span> <span class="kc">pi</span><span class="p">)</span>  <span class="c1"># re-coercion needed</span>
 <span class="c1">## [1] &quot;3.14159265358979&quot; &quot;3.141593&quot;</span>
 <span class="nf">stri_sprintf</span><span class="p">(</span><span class="s">&quot;%1$s is %1$f UNIX time.&quot;</span><span class="p">,</span> <span class="nf">Sys.time</span><span class="p">())</span>  <span class="c1"># re-coercion needed</span>
-<span class="c1">## [1] &quot;2021-10-02 15:20:16 is 1633152016.080586 UNIX time.&quot;</span>
+<span class="c1">## [1] &quot;2021-10-04 11:46:01 is 1633308361.996937 UNIX time.&quot;</span>
 <span class="nf">stri_sprintf</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="s">&quot;%s&quot;</span><span class="p">),</span> <span class="nf">factor</span><span class="p">(</span><span class="m">11</span><span class="o">:</span><span class="m">12</span><span class="p">))</span>  <span class="c1"># re-coercion needed</span>
 <span class="c1">## [1] &quot;1&quot;  &quot;12&quot;</span>
 <span class="nf">stri_sprintf</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span> <span class="s">&quot;%d&quot;</span><span class="p">),</span> <span class="nf">factor</span><span class="p">(</span><span class="m">11</span><span class="o">:</span><span class="m">12</span><span class="p">))</span>  <span class="c1"># re-coercion needed</span>
@@ -488,7 +495,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-10-02T15:20:23+1000.
+        Last updated on 2021-10-04T11:46:09+1100.
       </span>
 
     </p>
