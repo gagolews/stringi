@@ -2686,7 +2686,7 @@ returns the index of the first non-unique element.
 
 
 
-Operators such that \code{\%s<\%}, \code{\%<=\%}, etc.,
+Operators such as \code{\%s<\%}, \code{\%<=\%}, etc.,
 and the corresponding functions
 \code{stri_cmp_lt()} (``less than''),
 \code{stri_cmp_le()} (``less than or equal''), etc.,
@@ -3421,8 +3421,7 @@ For instance, Central European versions of Windows will assume
 the ``\code{windows-1250}'' code page.
 MacOS as well as most Linux boxes work with UTF-8 by default\footnote{
 It is expected that future \proglang{R} releases will support UTF-8 natively
-thanks to the Universal \proglang{C} Runtime (UCRT) that is available for Windows 10.
-}
+thanks to the Universal \proglang{C} Runtime (UCRT) that is available for Windows 10.}.
 
 All strings in \proglang{R} have an associated encoding mark
 which can be read by calling \code{Encoding()} or, more conveniently,

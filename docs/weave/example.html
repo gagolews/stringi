@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Example Use case: Data preparation &mdash; stringi</title>
+  <title>Example Use Case: Data Preparation &mdash; stringi</title>
   
 
   
@@ -41,7 +41,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="References" href="../z_bibliography.html" />
-    <link rel="prev" title="stringi: THE String Processing Package for R" href="../index.html" /> 
+    <link rel="prev" title="Input and Output" href="input_output.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -93,7 +93,14 @@
               <p class="caption"><span class="caption-text">stringi</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Example Use case: Data preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design_principles.html">General Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic_operations.html">Basic String Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="codepoint_comparing.html">Code-Pointwise Comparing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="regular_expressions.html">Regular Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collation.html">Collation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other_operations.html">Other Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input_output.html">Input and Output</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Example Use Case: Data Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference Manual</span></p>
@@ -157,7 +164,7 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Example Use case: Data preparation</li>
+      <li>Example Use Case: Data Preparation</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -174,7 +181,7 @@
         <a href="../z_bibliography.html" class="btn btn-neutral float-right" title="References" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
       
       
-        <a href="../index.html" class="btn btn-neutral float-left" title="stringi: THE String Processing Package for R" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="input_output.html" class="btn btn-neutral float-left" title="Input and Output" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
       
   </div>
   
@@ -184,14 +191,11 @@
            <div itemprop="articleBody">
             
   <div class="section" id="example-use-case-data-preparation">
-<h1>Example Use case: Data preparation<a class="headerlink" href="#example-use-case-data-preparation" title="Permalink to this headline">¶</a></h1>
+<h1>Example Use Case: Data Preparation<a class="headerlink" href="#example-use-case-data-preparation" title="Permalink to this headline">¶</a></h1>
 <blockquote>
 <div><p>This tutorial is based on the <a class="reference external" href="https://stringi.gagolewski.com/_static/vignette/stringi.pdf">paper on <em>stringi</em></a> that will appear in the <em>Journal of Statistical Software</em>.</p>
 </div></blockquote>
-<p>Before going into details on the broad array of facilities offered by
-the <em>stringi</em> package itself, let us first demonstrate that string
-processing is indeed a relevant part of statistical data analysis
-workflows. What follows is a short case study where we prepare a
+<p>What follows is a short case study where we prepare a
 web-scraped data set for further processing.</p>
 <p>Assume we wish to gather and analyse climate data for major cities
 around the world based on information downloaded from Wikipedia. For
@@ -201,13 +205,14 @@ of the pages linked under
 harvest the relevant temperature and precipitation data. Without harm in
 generality, let us focus on the city of Melbourne, VIC, Australia.</p>
 <p>The parsing of the city’s Wikipedia page can be done by means of the
-functions from the <em>xml2</em> [&#64;xml2] and <em>rvest</em> [&#64;rvest] packages.</p>
+functions from the <a class="reference external" href="https://CRAN.R-project.org/package=xml2"><em>xml2</em></a>
+and <a class="reference external" href="https://CRAN.R-project.org/package=rvest"><em>rvest</em></a> packages.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="s">&quot;xml2&quot;</span><span class="p">)</span>
 <span class="nf">library</span><span class="p">(</span><span class="s">&quot;rvest&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>First, let us load and parse the HTML file downloaded on 2020–09–17
-(see the accompanying supplementary files):</p>
+<p>First, let us load and parse the HTML file downloaded on 2020-09-17
+(see <a class="reference external" href="https://github.com/gagolews/stringi/tree/master/docs/_static/vignette">https://github.com/gagolews/stringi/tree/master/docs/_static/vignette</a>):</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">&lt;-</span> <span class="nf">read_html</span><span class="p">(</span><span class="s">&quot;20200917_wikipedia_melbourne.html&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -235,9 +240,8 @@ of the relevant table.</p>
 <span class="c1">## [1] 4</span>
 </pre></div>
 </div>
-<p>Of course, the detailed description of all the facilities brought by
-<em>stringi</em> is covered below. In the meantime, let us use <em>rvest</em>’s
-<code class="docutils literal notranslate"><span class="pre">html_table()</span></code> to convert the above table to a data frame object.</p>
+<p>Let’s use <em>rvest</em>’s <code class="docutils literal notranslate"><span class="pre">html_table()</span></code> to convert the above table
+to a data frame object.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">as.data.frame</span><span class="p">(</span><span class="nf">html_table</span><span class="p">(</span><span class="n">all_tables</span><span class="p">[[</span><span class="n">idx</span><span class="p">]],</span> <span class="n">fill</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)))</span>
 </pre></div>
 </div>
@@ -357,8 +361,7 @@ compute the monthly temperature ranges:</p>
 <p>and so forth.</p>
 <p>For the climate data on other cities, very similar operations will need
 to be performed – the whole process of scraping and cleansing data can
-be automated quite easily. The above functions are not only convenient
-to use, but also efficient and portable across different platforms.</p>
+be automated quite easily.</p>
 </div>
 
 
@@ -368,7 +371,7 @@ to use, but also efficient and portable across different platforms.</p>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="../z_bibliography.html" class="btn btn-neutral float-right" title="References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="../index.html" class="btn btn-neutral float-left" title="stringi: THE String Processing Package for R" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="input_output.html" class="btn btn-neutral float-left" title="Input and Output" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
@@ -377,7 +380,7 @@ to use, but also efficient and portable across different platforms.</p>
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-10-02T15:20:23+1000.
+        Last updated on 2021-10-04T11:46:09+1100.
       </span>
 
     </p>

@@ -108,8 +108,16 @@ for a set of wrappers around *stringi* with a base R-compatible API.
     :hidden:
 
     About <self>
+    weave/design_principles
+    weave/basic_operations
+    weave/codepoint_comparing
+    weave/regular_expressions
+    weave/collation
+    weave/other_operations
+    weave/input_output
     weave/example
     z_bibliography
+
 
 .. toctree::
     :maxdepth: 2

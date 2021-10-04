@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+
+
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Code-Pointwise Comparing &mdash; stringi</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+    <link rel="canonical" href="https://stringi.gagolewski.com/weave/codepoint_comparing.html" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Regular Expressions" href="regular_expressions.html" />
+    <link rel="prev" title="Basic String Operations" href="basic_operations.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> stringi
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.7.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">stringi</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design_principles.html">General Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic_operations.html">Basic String Operations</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Code-Pointwise Comparing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#testing-for-equality-of-strings">Testing for Equality of Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#searching-for-fixed-strings">Searching for Fixed Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#counting-matches">Counting Matches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#search-engine-options">Search Engine Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#detecting-and-subsetting-patterns">Detecting and Subsetting Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#locating-and-extracting-patterns">Locating and Extracting Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#replacing-pattern-occurrences">Replacing Pattern Occurrences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#splitting">Splitting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="regular_expressions.html">Regular Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collation.html">Collation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other_operations.html">Other Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input_output.html">Input and Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html">Example Use Case: Data Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../rapi.html">R Package <em>stringi</em> Reference</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">What Is New in <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing <em>stringi</em></a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">stringi</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Code-Pointwise Comparing</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="regular_expressions.html" class="btn btn-neutral float-right" title="Regular Expressions" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+      
+      
+        <a href="basic_operations.html" class="btn btn-neutral float-left" title="Basic String Operations" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="code-pointwise-comparing">
+<span id="sec-fixed"></span><h1>Code-Pointwise Comparing<a class="headerlink" href="#code-pointwise-comparing" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>This tutorial is based on the <a class="reference external" href="https://stringi.gagolewski.com/_static/vignette/stringi.pdf">paper on <em>stringi</em></a> that will appear in the <em>Journal of Statistical Software</em>.</p>
+</div></blockquote>
+<p>There are many settings where we are faced with testing whether two
+strings (or parts thereof) consist of exactly the same Unicode code
+points, in exactly the same order. These include, for instance, matching
+a nucleotide sequence in a DNA profile and querying for system resources
+based on file names or UUIDs. Such tasks, due to their simplicity, can
+be performed very efficiently.</p>
+<div class="section" id="testing-for-equality-of-strings">
+<h2>Testing for Equality of Strings<a class="headerlink" href="#testing-for-equality-of-strings" title="Permalink to this headline">¶</a></h2>
+<p>To quickly test whether the corresponding strings in two character
+vectors are identical (in a code-pointwise manner), we can use the
+<code class="docutils literal notranslate"><span class="pre">%s===%</span></code> operator or, equivalently, the <code class="docutils literal notranslate"><span class="pre">stri_cmp_eq()</span></code> function.
+Moreover, <code class="docutils literal notranslate"><span class="pre">%s!==%</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_cmp_neq()</span></code> implement the not-equal-to
+relation.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="s">&quot;actg&quot;</span> <span class="o">%s===%</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;ACTG&quot;</span><span class="p">,</span> <span class="s">&quot;actg&quot;</span><span class="p">,</span> <span class="s">&quot;act&quot;</span><span class="p">,</span> <span class="s">&quot;actga&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">)</span>
+<span class="c1">## [1] FALSE  TRUE FALSE FALSE    NA</span>
+</pre></div>
+</div>
+<p>Due to recycling, the first string was compared against the 5 strings in
+the 2nd operand. There is only 1 exact match.</p>
+</div>
+<div class="section" id="searching-for-fixed-strings">
+<span id="sec-strsearch"></span><h2>Searching for Fixed Strings<a class="headerlink" href="#searching-for-fixed-strings" title="Permalink to this headline">¶</a></h2>
+<p>For detecting if a string contains a given fixed substring
+(code-pointwisely), the fast KMP <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id23">KMP77</a>]</span> algorithm, with
+worst time complexity of <em>O(n+p)</em> (where <em>n</em> is the length of the string
+and <em>p</em> is the length of the pattern), has been implemented in <em>stringi</em>
+(with numerous tweaks for even faster matching).</p>
+<p>The table below lists the string search functions available
+in <em>stringi</em>. Below we explain their behaviour in the context of fixed
+pattern matching. Notably, their description is quite detailed, because
+– as we shall soon find out – the corresponding operations are
+available for the two other search engines: based on regular expressions
+and the <em>ICU</em> Collator, see <a class="reference internal" href="regular_expressions.html#sec-regex"><span class="std std-ref">Regular Expressions</span></a> and <a class="reference internal" href="collation.html#sec-collator"><span class="std std-ref">Collation</span></a>.</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name(s)</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stri_count()</span></code></p></td>
+<td><p>count pattern matches</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">stri_detect()</span></code></p></td>
+<td><p>detect pattern matches</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stri_endswith()</span></code></p></td>
+<td><p>[all but <code class="docutils literal notranslate"><span class="pre">regex</span></code>] detect pattern matches at end of string</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">stri_extract_all()</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_extract_first()</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_extract_last()</span></code></p></td>
+<td><p>extract pattern matches</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stri_locate_all()</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_locate_first()</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_locate_last()</span></code></p></td>
+<td><p>locate pattern matches</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">stri_match_all()</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_match_first()</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_match_last()</span></code></p></td>
+<td><p>[<code class="docutils literal notranslate"><span class="pre">regex</span></code> only] extract matches to regex capture groups</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stri_replace_all()</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_replace_first()</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_replace_last()</span></code></p></td>
+<td><p>substitute pattern matches with some replacement strings</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">stri_split()</span></code></p></td>
+<td><p>split up a string at pattern matches</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stri_startswith()</span></code></p></td>
+<td><p>[all but <code class="docutils literal notranslate"><span class="pre">regex</span></code>] detect pattern matches at start of string</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">stri_subset()</span></code>, <code class="docutils literal notranslate"><span class="pre">‘stri_subset&lt;-‘()</span></code></p></td>
+<td><p>return or replace strings that contain pattern matches</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="counting-matches">
+<h2>Counting Matches<a class="headerlink" href="#counting-matches" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">stri_count_fixed()</span></code> function counts the number of times a fixed
+pattern occurs in a given string.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_fixed</span><span class="p">(</span><span class="s">&quot;abcabcdefabcabcabdc&quot;</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">)</span>  <span class="c1"># search pattern is &quot;abc&quot;</span>
+<span class="c1">## [1] 4</span>
+</pre></div>
+</div>
+<p>Equivalently, we can call the more generic (see below) function
+<code class="docutils literal notranslate"><span class="pre">stri_count()</span></code> with the <code class="docutils literal notranslate"><span class="pre">fixed=pattern</span></code> argument:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count</span><span class="p">(</span><span class="s">&quot;abcabcdefabcabcabdc&quot;</span><span class="p">,</span> <span class="n">fixed</span><span class="o">=</span><span class="s">&quot;abc&quot;</span><span class="p">)</span>
+<span class="c1">## [1] 4</span>
+</pre></div>
+</div>
+<p>Note that, unlike in the base R <code class="docutils literal notranslate"><span class="pre">grep()</span></code> function (and the like), the
+pattern (“needle”) is given by the second argument (here: “<code class="docutils literal notranslate"><span class="pre">abc</span></code>”). This
+makes our function more pipe-operator-friendly, because “haystack” can
+be forwarded as follows:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;abcabcdefabcabcabdc&quot;</span><span class="p">,</span> <span class="s">&quot;cba&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">stri_count_fixed</span><span class="p">(</span><span class="s">&quot;abc&quot;</span><span class="p">)</span>
+<span class="c1">## [1]  4  0 NA</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="search-engine-options">
+<h2>Search Engine Options<a class="headerlink" href="#search-engine-options" title="Permalink to this headline">¶</a></h2>
+<p>The pattern matching engine may be tuned up by passing further arguments
+to the search functions (via “<code class="docutils literal notranslate"><span class="pre">...</span></code>”; they are redirected as-is to
+<code class="docutils literal notranslate"><span class="pre">stri_opts_fixed()</span></code>). The table below gives the list of available options.</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">case_insensitive</span></code></p></td>
+<td><p>logical; whether to enable the simple case-insensitive matching (defaults to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">overlap</span></code></p></td>
+<td><p>logical; whether to enable the detection of overlapping matches (defaults to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>); available in <code class="docutils literal notranslate"><span class="pre">stri_extract_all_fixed()</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_locate_all_fixed()</span></code>, and <code class="docutils literal notranslate"><span class="pre">stri_count_fixed()</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>First, we may switch on the simplistic<a class="footnote-reference brackets" href="#footfixedcase" id="id2">1</a> case-insensitive matching.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_fixed</span><span class="p">(</span><span class="s">&quot;ACTGACGacgggACg&quot;</span><span class="p">,</span> <span class="s">&quot;acg&quot;</span><span class="p">,</span> <span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="c1">## [1] 3</span>
+</pre></div>
+</div>
+<p>Second, we can indicate our interest in detecting overlapping pattern
+matches or whether searching should continue at the end of each match
+(the latter being the default behaviour):</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_fixed</span><span class="p">(</span><span class="s">&quot;acatgacaca&quot;</span><span class="p">,</span> <span class="s">&quot;aca&quot;</span><span class="p">)</span>  <span class="c1"># overlap=FALSE (default)</span>
+<span class="c1">## [1] 2</span>
+<span class="nf">stri_count_fixed</span><span class="p">(</span><span class="s">&quot;acatgacaca&quot;</span><span class="p">,</span> <span class="s">&quot;aca&quot;</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="c1">## [1] 3</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="detecting-and-subsetting-patterns">
+<h2>Detecting and Subsetting Patterns<a class="headerlink" href="#detecting-and-subsetting-patterns" title="Permalink to this headline">¶</a></h2>
+<p>A somewhat simplified version of the above search task involves asking
+whether a pattern occurs in a string at all. Such an operation can be
+performed with a call to <code class="docutils literal notranslate"><span class="pre">stri_detect_fixed()</span></code>.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;abc&quot;</span><span class="p">,</span> <span class="s">&quot;abcd&quot;</span><span class="p">,</span> <span class="s">&quot;def&quot;</span><span class="p">,</span> <span class="s">&quot;xyzabc&quot;</span><span class="p">,</span> <span class="s">&quot;uabdc&quot;</span><span class="p">,</span> <span class="s">&quot;dab&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">)</span>
+<span class="nf">stri_detect_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">)</span>
+<span class="c1">## [1]  TRUE  TRUE FALSE  TRUE FALSE FALSE    NA  TRUE</span>
+</pre></div>
+</div>
+<p>We can also indicate that a no-match is rather of our interest by
+passing <code class="docutils literal notranslate"><span class="pre">negate=TRUE</span></code>. What is more, there is an option to stop
+searching once a given number of matches has been found in the
+<code class="docutils literal notranslate"><span class="pre">haystack</span></code> vector (as a whole), which can speed up the processing of
+larger data sets:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_detect_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">,</span> <span class="n">negate</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">max_count</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
+<span class="c1">## [1] FALSE FALSE  TRUE FALSE  TRUE    NA    NA    NA</span>
+</pre></div>
+</div>
+<p>This can be useful in scenarios such as “find the first 2 matching
+resource IDs”.</p>
+<p>There are also functions that verify whether a string starts or ends<a class="footnote-reference brackets" href="#footanchor" id="id3">2</a>
+with a pattern match:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_startswith_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">)</span>  <span class="c1"># from=1 - match at start</span>
+<span class="c1">## [1]  TRUE  TRUE FALSE FALSE FALSE FALSE    NA  TRUE</span>
+<span class="nf">stri_endswith_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">)</span>    <span class="c1"># to=-1 - match at end</span>
+<span class="c1">## [1]  TRUE FALSE FALSE  TRUE FALSE FALSE    NA  TRUE</span>
+</pre></div>
+</div>
+<p>Pattern detection is often performed in conjunction with character
+vector subsetting. This is why we have a specialised (and hence slightly
+faster) function that returns only the strings that match a given
+pattern.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_subset_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">,</span> <span class="n">omit_na</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="c1">## [1] &quot;abc&quot;    &quot;abcd&quot;   &quot;xyzabc&quot; &quot;abc&quot;</span>
+</pre></div>
+</div>
+<p>The above is equivalent to <code class="docutils literal notranslate"><span class="pre">x[which(stri_detect_fixed(x,</span> <span class="pre">&quot;abc&quot;))]</span></code> (note
+the argument responsible for the removal of missing values), but avoids
+writing <code class="docutils literal notranslate"><span class="pre">x</span></code> twice. It hence is particularly convenient when <code class="docutils literal notranslate"><span class="pre">x</span></code> is
+generated programmatically on the fly, using some complicated
+expression. Also, it works well with the forward pipe operator, as we
+can write “<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">|&gt;</span> <span class="pre">stri_subset_fixed(&quot;abc&quot;,</span> <span class="pre">omit_na=TRUE)</span></code>”.</p>
+<p>There is also a replacement version of this function:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_subset_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;*****&quot;</span><span class="p">,</span> <span class="s">&quot;***&quot;</span><span class="p">)</span>  <span class="c1"># modifies x in-place</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># x has changed</span>
+<span class="c1">## [1] &quot;*****&quot; &quot;***&quot;   &quot;def&quot;   &quot;*****&quot; &quot;uabdc&quot; &quot;dab&quot;   NA      &quot;***&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="locating-and-extracting-patterns">
+<h2>Locating and Extracting Patterns<a class="headerlink" href="#locating-and-extracting-patterns" title="Permalink to this headline">¶</a></h2>
+<p>The functions from the <code class="docutils literal notranslate"><span class="pre">stri_locate()</span></code> family aim to pinpoint the
+positions of pattern matches. First, we may be interested in getting to
+know the location of the first or the last pattern occurrence:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;aga&quot;</span><span class="p">,</span> <span class="s">&quot;actg&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="s">&quot;AGagaGAgaga&quot;</span><span class="p">)</span>
+<span class="nf">stri_locate_first_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;aga&quot;</span><span class="p">)</span>
+<span class="c1">##      start end</span>
+<span class="c1">## [1,]     1   3</span>
+<span class="c1">## [2,]    NA  NA</span>
+<span class="c1">## [3,]    NA  NA</span>
+<span class="c1">## [4,]     3   5</span>
+<span class="nf">stri_locate_last_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;aga&quot;</span><span class="p">,</span> <span class="n">get_length</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="c1">##      start length</span>
+<span class="c1">## [1,]     1      3</span>
+<span class="c1">## [2,]    -1     -1</span>
+<span class="c1">## [3,]    NA     NA</span>
+<span class="c1">## [4,]     9      3</span>
+</pre></div>
+</div>
+<p>In both examples we obtain a two-column matrix with the number of rows
+determined by the recycling rule (here: the length of <code class="docutils literal notranslate"><span class="pre">x</span></code>). In the
+former case, we get a “from–to” matrix (<code class="docutils literal notranslate"><span class="pre">get_length=FALSE</span></code>; the
+default) where missing values correspond to either missing inputs or
+no-matches. The latter gives a “from–length”-type matrix, where
+negative lengths correspond to the not-founds.</p>
+<p>Second, we may be yearning for the locations of all the matching
+substrings. As the number of possible answers may vary from string to
+string, the result is a list of index matrices.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_locate_all_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;aga&quot;</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="c1">## [[1]]</span>
+<span class="c1">##      start end</span>
+<span class="c1">## [1,]     1   3</span>
+<span class="c1">## </span>
+<span class="c1">## [[2]]</span>
+<span class="c1">##      start end</span>
+<span class="c1">## [1,]    NA  NA</span>
+<span class="c1">## </span>
+<span class="c1">## [[3]]</span>
+<span class="c1">##      start end</span>
+<span class="c1">## [1,]    NA  NA</span>
+<span class="c1">## </span>
+<span class="c1">## [[4]]</span>
+<span class="c1">##      start end</span>
+<span class="c1">## [1,]     1   3</span>
+<span class="c1">## [2,]     3   5</span>
+<span class="c1">## [3,]     5   7</span>
+<span class="c1">## [4,]     7   9</span>
+<span class="c1">## [5,]     9  11</span>
+</pre></div>
+</div>
+<p>Note again that a no-match is indicated by a single-row matrix with two
+missing values (or with negative length if <code class="docutils literal notranslate"><span class="pre">get_length=TRUE</span></code>). This
+behaviour can be changed by setting the <code class="docutils literal notranslate"><span class="pre">omit_no_match</span></code> argument to
+<code class="docutils literal notranslate"><span class="pre">TRUE</span></code>.</p>
+<p>Let us recall that “from–to” and “from–length” matrices of the above
+kind constitute particularly fine inputs to <code class="docutils literal notranslate"><span class="pre">stri_sub()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">stri_sub_all()</span></code>. However, if merely the extraction of the matching
+substrings is needed, it will be more convenient to rely on the
+functions from the <code class="docutils literal notranslate"><span class="pre">stri_extract()</span></code> family:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_first_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;aga&quot;</span><span class="p">,</span> <span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="c1">## [1] &quot;aga&quot; NA    NA    &quot;AGa&quot;</span>
+<span class="nf">stri_extract_all_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;aga&quot;</span><span class="p">,</span>
+  <span class="n">overlap</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">omit_no_match</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="c1">## [[1]]</span>
+<span class="c1">## [1] &quot;aga&quot;</span>
+<span class="c1">## </span>
+<span class="c1">## [[2]]</span>
+<span class="c1">## character(0)</span>
+<span class="c1">## </span>
+<span class="c1">## [[3]]</span>
+<span class="c1">## [1] NA</span>
+<span class="c1">## </span>
+<span class="c1">## [[4]]</span>
+<span class="c1">## [1] &quot;AGa&quot; &quot;aga&quot; &quot;aGA&quot; &quot;Aga&quot; &quot;aga&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="replacing-pattern-occurrences">
+<h2>Replacing Pattern Occurrences<a class="headerlink" href="#replacing-pattern-occurrences" title="Permalink to this headline">¶</a></h2>
+<p>In order to replace each match with a corresponding replacement string,
+we can refer to <code class="docutils literal notranslate"><span class="pre">stri_replace_all()</span></code>:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;aga&quot;</span><span class="p">,</span> <span class="s">&quot;actg&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="s">&quot;ggAGAGAgaGAca&quot;</span><span class="p">,</span> <span class="s">&quot;agagagaga&quot;</span><span class="p">)</span>
+<span class="nf">stri_replace_all_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;aga&quot;</span><span class="p">,</span> <span class="s">&quot;~&quot;</span><span class="p">,</span> <span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="c1">## [1] &quot;~&quot;         &quot;actg&quot;      NA          &quot;gg~G~GAca&quot; &quot;~g~ga&quot;</span>
+</pre></div>
+</div>
+<p>Note that the inputs that are not part of any match are left unchanged.
+The input object is left unchanged, because it is not a replacement
+function per se.</p>
+<p>The operation is vectorised with respect to all the three arguments
+(haystack, needle, replacement string), with the usual recycling
+behaviour if necessary. If a different arguments’ vectorisation scheme
+is required, we can set the <code class="docutils literal notranslate"><span class="pre">vectorise_all</span></code> argument of
+<code class="docutils literal notranslate"><span class="pre">stri_replace_all()</span></code> to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>. Compare the following:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_replace_all_fixed</span><span class="p">(</span><span class="s">&quot;The quick brown fox jumped over the lazy dog.&quot;</span><span class="p">,</span>
+  <span class="nf">c</span><span class="p">(</span><span class="s">&quot;quick&quot;</span><span class="p">,</span> <span class="s">&quot;brown&quot;</span><span class="p">,</span>      <span class="s">&quot;fox&quot;</span><span class="p">,</span> <span class="s">&quot;lazy&quot;</span><span class="p">,</span>    <span class="s">&quot;dog&quot;</span><span class="p">),</span>
+  <span class="nf">c</span><span class="p">(</span><span class="s">&quot;slow&quot;</span><span class="p">,</span>  <span class="s">&quot;yellow-ish&quot;</span><span class="p">,</span> <span class="s">&quot;hen&quot;</span><span class="p">,</span> <span class="s">&quot;spamity&quot;</span><span class="p">,</span> <span class="s">&quot;llama&quot;</span><span class="p">))</span>
+<span class="c1">## [1] &quot;The slow brown fox jumped over the lazy dog.&quot;      </span>
+<span class="c1">## [2] &quot;The quick yellow-ish fox jumped over the lazy dog.&quot;</span>
+<span class="c1">## [3] &quot;The quick brown hen jumped over the lazy dog.&quot;     </span>
+<span class="c1">## [4] &quot;The quick brown fox jumped over the spamity dog.&quot;  </span>
+<span class="c1">## [5] &quot;The quick brown fox jumped over the lazy llama.&quot;</span>
+<span class="nf">stri_replace_all_fixed</span><span class="p">(</span><span class="s">&quot;The quick brown fox jumped over the lazy dog.&quot;</span><span class="p">,</span>
+  <span class="nf">c</span><span class="p">(</span><span class="s">&quot;quick&quot;</span><span class="p">,</span> <span class="s">&quot;brown&quot;</span><span class="p">,</span>      <span class="s">&quot;fox&quot;</span><span class="p">,</span> <span class="s">&quot;lazy&quot;</span><span class="p">,</span> <span class="s">&quot;dog&quot;</span><span class="p">),</span>
+  <span class="nf">c</span><span class="p">(</span><span class="s">&quot;slow&quot;</span><span class="p">,</span>  <span class="s">&quot;yellow-ish&quot;</span><span class="p">,</span> <span class="s">&quot;hen&quot;</span><span class="p">,</span> <span class="s">&quot;spamity&quot;</span><span class="p">,</span> <span class="s">&quot;llama&quot;</span><span class="p">),</span>
+  <span class="n">vectorise_all</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+<span class="c1">## [1] &quot;The slow yellow-ish hen jumped over the spamity llama.&quot;</span>
+</pre></div>
+</div>
+<p>Here, for every string in the <code class="docutils literal notranslate"><span class="pre">haystack</span></code>, we observe the vectorisation
+independently over the <code class="docutils literal notranslate"><span class="pre">needles</span></code> and replacement strings. Each
+occurrence of the 1st needle is superseded by the 1st replacement
+string, then the search is repeated for the 2nd needle so as to replace
+it with the 2nd corresponding replacement string, and so forth.</p>
+<p>Moreover, <code class="docutils literal notranslate"><span class="pre">stri_replace_first()</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_replace_last()</span></code> can identify
+and replace the first and the last match, respectively.</p>
+</div>
+<div class="section" id="splitting">
+<h2>Splitting<a class="headerlink" href="#splitting" title="Permalink to this headline">¶</a></h2>
+<p>To split each element in the <code class="docutils literal notranslate"><span class="pre">haystack</span></code> into substrings, where the
+<code class="docutils literal notranslate"><span class="pre">needles</span></code> define the delimiters that separate the inputs into tokens, we
+call <code class="docutils literal notranslate"><span class="pre">stri_split()</span></code>:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;a,b,c,d&quot;</span><span class="p">,</span> <span class="s">&quot;e&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="s">&quot;f,g,,,h,i,,j,&quot;</span><span class="p">)</span>
+<span class="nf">stri_split_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">,</span> <span class="n">omit_empty</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="c1">## [[1]]</span>
+<span class="c1">## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot;</span>
+<span class="c1">## </span>
+<span class="c1">## [[2]]</span>
+<span class="c1">## [1] &quot;e&quot;</span>
+<span class="c1">## </span>
+<span class="c1">## [[3]]</span>
+<span class="c1">## character(0)</span>
+<span class="c1">## </span>
+<span class="c1">## [[4]]</span>
+<span class="c1">## [1] NA</span>
+<span class="c1">## </span>
+<span class="c1">## [[5]]</span>
+<span class="c1">## [1] &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot;</span>
+</pre></div>
+</div>
+<p>The result is a list of character vectors, as each string in the
+<code class="docutils literal notranslate"><span class="pre">haystack</span></code> might be split into a possibly different number of tokens.</p>
+<p>There is also an option to limit the number of tokens (parameter <code class="docutils literal notranslate"><span class="pre">n</span></code>).</p>
+<hr class="footnotes docutils" />
+<dl class="footnote brackets">
+<dt class="label" id="footfixedcase"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
+<dd><p>Which is not suitable for real-world NLP tasks, as it assumes that
+changing the case of a single code point always produces one and
+only one item; This way, <code class="docutils literal notranslate"><span class="pre">&quot;groß&quot;</span></code> does not compare equal to
+<code class="docutils literal notranslate"><span class="pre">&quot;GROSS&quot;</span></code>, see <a class="reference internal" href="collation.html#sec-collator"><span class="std std-ref">Collation</span></a> (and to some extent
+<a class="reference internal" href="regular_expressions.html#sec-regex"><span class="std std-ref">Regular Expressions</span></a>) for a workaround.</p>
+</dd>
+<dt class="label" id="footanchor"><span class="brackets"><a class="fn-backref" href="#id3">2</a></span></dt>
+<dd><p>Note that testing for a pattern match at the start or end of a
+string has not been implemented separately for <code class="docutils literal notranslate"><span class="pre">regex</span></code> patterns,
+which support <code class="docutils literal notranslate"><span class="pre">&quot;^&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;$&quot;</span></code> anchors that serve exactly this very
+purpose, see <a class="reference internal" href="regular_expressions.html#sec-regex"><span class="std std-ref">Regular Expressions</span></a>.</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="regular_expressions.html" class="btn btn-neutral float-right" title="Regular Expressions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="basic_operations.html" class="btn btn-neutral float-left" title="Basic String Operations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2013-2021, Marek Gagolewski.
+      <span class="lastupdated">
+        Last updated on 2021-10-04T11:46:09+1100.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

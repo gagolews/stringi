@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+
+
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Other Operations &mdash; stringi</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+    <link rel="canonical" href="https://stringi.gagolewski.com/weave/other_operations.html" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Input and Output" href="input_output.html" />
+    <link rel="prev" title="Collation" href="collation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> stringi
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.7.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">stringi</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design_principles.html">General Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic_operations.html">Basic String Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="codepoint_comparing.html">Code-Pointwise Comparing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="regular_expressions.html">Regular Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collation.html">Collation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Other Operations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#analysing-text-boundaries">Analysing Text Boundaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trimming-padding-and-other-formatting">Trimming, Padding, and Other Formatting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#padding">Padding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#trimming">Trimming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#word-wrapping">Word Wrapping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#applying-string-templates">Applying String Templates</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#generating-random-strings">Generating Random Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#transliterating">Transliterating</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#case-mapping">Case Mapping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mapping-between-specific-characters">Mapping Between Specific Characters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#general-transforms">General Transforms</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#parsing-and-formatting-date-and-time">Parsing and Formatting Date and Time</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="input_output.html">Input and Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html">Example Use Case: Data Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../rapi.html">R Package <em>stringi</em> Reference</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">What Is New in <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing <em>stringi</em></a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">stringi</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Other Operations</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="input_output.html" class="btn btn-neutral float-right" title="Input and Output" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+      
+      
+        <a href="collation.html" class="btn btn-neutral float-left" title="Collation" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="other-operations">
+<span id="sec-other"></span><h1>Other Operations<a class="headerlink" href="#other-operations" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>This tutorial is based on the <a class="reference external" href="https://stringi.gagolewski.com/_static/vignette/stringi.pdf">paper on <em>stringi</em></a> that will appear in the <em>Journal of Statistical Software</em>.</p>
+</div></blockquote>
+<p>In the sequel, we cover the functions that deal with text boundary
+detection, random string generation, date/time formatting and parsing,
+amongst others.</p>
+<div class="section" id="analysing-text-boundaries">
+<span id="sec-boundaryanalysis"></span><h2>Analysing Text Boundaries<a class="headerlink" href="#analysing-text-boundaries" title="Permalink to this headline">¶</a></h2>
+<p>Text boundary analysis aims at locating linguistic delimiters for the
+purpose of splitting text into lines, word-wrapping, counting characters
+or words, locating particular text units (e.g., the 3rd sentence), etc.</p>
+<p>Generally, text boundary analysis is a locale-sensitive operation
+(see the <a class="reference external" href="https://unicode.org/reports/tr29/">Unicode Standard Annex #29: Unicode Text Segmentation</a>). For example, in Japanese and Chinese, spaces are
+not used for separation of words – a line break can occur even in the
+middle of a word. Nevertheless, these languages have punctuation and
+diacritical marks that cannot start or end a line, so this must also be
+taken into account.</p>
+<p>The <em>ICU</em> Break Iterator
+(see the <a class="reference external" href="https://unicode-org.github.io/icu/userguide/boundaryanalysis/"><em>ICU</em> User Guide on Boundary Analysis</a>)
+comes in four flavours (see the <code class="docutils literal notranslate"><span class="pre">type</span></code>
+option in <code class="docutils literal notranslate"><span class="pre">stri_opts_brkiter()</span></code>): <code class="docutils literal notranslate"><span class="pre">character</span></code>, <code class="docutils literal notranslate"><span class="pre">work</span></code>, <code class="docutils literal notranslate"><span class="pre">line_break</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">sentence</span></code>.</p>
+<p>We have access to functions such as <code class="docutils literal notranslate"><span class="pre">stri_count_boundaries()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">stri_split_boundaries()</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_extract__boundaries()</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">stri_locate__boundaries()</span></code>, as well as their specialised versions:
+<code class="docutils literal notranslate"><span class="pre">stri_count_words()</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_extract__words()</span></code>, and <code class="docutils literal notranslate"><span class="pre">stri_split_lines()</span></code>,
+amongst others. For example:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="s">&quot;The\u00a0above-mentioned    features are useful. &quot;</span> <span class="o">%s+%</span>
+  <span class="s">&quot;My hovercraft is full of eels, eggs, and spam.&quot;</span>
+</pre></div>
+</div>
+<p>Number of sentences:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_boundaries</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;sentence&quot;</span><span class="p">)</span>
+<span class="c1">## [1] 2</span>
+</pre></div>
+</div>
+<p>The list of all the words:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_all_words</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1">## [[1]]</span>
+<span class="c1">##  [1] &quot;The&quot;        &quot;above&quot;      &quot;mentioned&quot;  &quot;features&quot;   &quot;are&quot;       </span>
+<span class="c1">##  [6] &quot;useful&quot;     &quot;My&quot;         &quot;hovercraft&quot; &quot;is&quot;         &quot;full&quot;      </span>
+<span class="c1">## [11] &quot;of&quot;         &quot;eels&quot;       &quot;eggs&quot;       &quot;and&quot;        &quot;spam&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trimming-padding-and-other-formatting">
+<h2>Trimming, Padding, and Other Formatting<a class="headerlink" href="#trimming-padding-and-other-formatting" title="Permalink to this headline">¶</a></h2>
+<p>The following functions can be used for pretty-printing character
+strings or text on the console, dynamically generating reports (e.g.,
+with <code class="docutils literal notranslate"><span class="pre">Sweave()</span></code> or <a class="reference external" href="https://yihui.org/knitr/"><em>knitr</em></a>
+<span id="id1">[<a class="reference internal" href="../z_bibliography.html#id34">Xie15</a>]</span>), or creating text files
+(e.g., with <code class="docutils literal notranslate"><span class="pre">stri_write_lines()</span></code>; see <a class="reference internal" href="input_output.html#sec-read-lines"><span class="std std-ref">Reading and Writing Text Files</span></a>).</p>
+<div class="section" id="padding">
+<h3>Padding<a class="headerlink" href="#padding" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">stri_pad()</span></code> pads strings with some character so that they reach the
+desired widths (as in <code class="docutils literal notranslate"><span class="pre">stri_width()</span></code>). This can be used to centre,
+left-, or right-align a message when printed with, e.g., <code class="docutils literal notranslate"><span class="pre">cat()</span></code>.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">cat</span><span class="p">(</span><span class="nf">stri_pad</span><span class="p">(</span><span class="s">&quot;SPAMITY SPAM&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="m">77</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s">&quot;both&quot;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="s">&quot;.&quot;</span><span class="p">))</span>
+<span class="c1">## ................................SPAMITY SPAM.................................</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trimming">
+<h3>Trimming<a class="headerlink" href="#trimming" title="Permalink to this headline">¶</a></h3>
+<p>A dual operation is that of trimming from the left or right side of
+strings:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="s">&quot;      spam, eggs, and lovely spam.\n&quot;</span>
+<span class="nf">stri_trim</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># side=&quot;both&quot;</span>
+<span class="c1">## [1] &quot;spam, eggs, and lovely spam.&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="word-wrapping">
+<h3>Word Wrapping<a class="headerlink" href="#word-wrapping" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">stri_wrap()</span></code> function splits each (possibly long) string in a
+character vector into chunks of at most a given width. By default, the
+dynamic word wrap algorithm <span id="id2">[<a class="reference internal" href="../z_bibliography.html#id21">KP81</a>]</span> that minimises the raggedness
+of the formatted text is used. However, there’s also an option
+(<code class="docutils literal notranslate"><span class="pre">cost_exponent=0</span></code>) to use the greedy alignment, for compatibility with
+the built-in <code class="docutils literal notranslate"><span class="pre">strwrap()</span></code>.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">stri_rand_lipsum</span><span class="p">(</span><span class="m">1</span><span class="p">)</span>  <span class="c1"># random text paragraph</span>
+<span class="nf">cat</span><span class="p">(</span><span class="nf">stri_wrap</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="m">74</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="m">8</span><span class="p">,</span> <span class="n">exdent</span><span class="o">=</span><span class="m">4</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;&gt; &quot;</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
+<span class="c1">## &gt;         Lorem ipsum dolor sit amet, quis donec pretium auctor, quis id.</span>
+<span class="c1">## &gt;     Mauris rhoncus donec amet egestas sagittis ipsum per. Sed, sociis</span>
+<span class="c1">## &gt;     amet. Aliquam fusce dictumst sed vehicula ultrices arcu. Eros,</span>
+<span class="c1">## &gt;     netus et. Amet amet mi vestibulum vitae dapibus ut felis. Magnis</span>
+<span class="c1">## &gt;     in vestibulum egestas massa curabitur a ut, eget in in facilisis.</span>
+<span class="c1">## &gt;     Etiam odio fermentum sit ante ridiculus sit elit. Sapien torquent</span>
+<span class="c1">## &gt;     fermentum tortor gravida ornare sapien consequat et sem turpis. Hac</span>
+<span class="c1">## &gt;     vel lacus habitasse et id non. Metus habitasse sed lacinia nibh ex</span>
+<span class="c1">## &gt;     metus. Amet nam vestibulum ornare tincidunt massa sed ullamcorper.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="applying-string-templates">
+<h3>Applying String Templates<a class="headerlink" href="#applying-string-templates" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">stri_sprintf()</span></code> is a Unicode-aware rewrite of the built-in <code class="docutils literal notranslate"><span class="pre">sprintf()</span></code>
+function. In particular, it enables formatting and padding based on
+character width, not just the number of code points. The function is
+also available as a binary operator <code class="docutils literal notranslate"><span class="pre">%s$%</span></code>, which is similar to Python’s
+<code class="docutils literal notranslate"><span class="pre">%</span></code> overloaded for objects of type <code class="docutils literal notranslate"><span class="pre">str</span></code>.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">cat</span><span class="p">(</span><span class="nf">stri_sprintf</span><span class="p">(</span><span class="s">&quot;[%6s]&quot;</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;abcd&quot;</span><span class="p">,</span> <span class="s">&quot;\u200b\u200b\u200bąß²€&quot;</span><span class="p">)),</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
+<span class="c1">## [  abcd]</span>
+<span class="c1">## [  ​​​ąß²€]</span>
+</pre></div>
+</div>
+<p>The above guarantees that the two output strings are of at least width
+of 6 (plus the square brackets).</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="s">&quot;value=&#39;%.4f&#39;&quot;</span> <span class="o">%s$%</span> <span class="kc">pi</span>  <span class="c1"># equivalently: &quot;value=&#39;%.4f&#39;&quot; %s$% list(pi)</span>
+<span class="c1">## [1] &quot;value=&#39;3.1416&#39;&quot;</span>
+<span class="s">&quot;%s=&#39;%.*3$f&#39;&quot;</span> <span class="o">%s$%</span> <span class="nf">list</span><span class="p">(</span><span class="s">&quot;pi&quot;</span><span class="p">,</span> <span class="kc">pi</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">)</span>
+<span class="c1">## [1] &quot;pi=&#39;3.1&#39;&quot;    &quot;pi=&#39;3.14&#39;&quot;   &quot;pi=&#39;3.142&#39;&quot;  &quot;pi=&#39;3.1416&#39;&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="generating-random-strings">
+<h2>Generating Random Strings<a class="headerlink" href="#generating-random-strings" title="Permalink to this headline">¶</a></h2>
+<p>Apart from <code class="docutils literal notranslate"><span class="pre">stri_rand_lipsum()</span></code>, which produces random-ish text
+paragraphs (“placeholders” for real text), we have access to a function
+that generates sequences of characters uniformly sampled (with
+replacement) from a given set.</p>
+<p>For example, here are 5 random ACTG strings of lengths from 2 to 6:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_rand_strings</span><span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="m">2</span><span class="o">:</span><span class="m">6</span><span class="p">,</span> <span class="s">&quot;[ACTG]&quot;</span><span class="p">)</span>
+<span class="c1">## [1] &quot;CT&quot;     &quot;CTT&quot;    &quot;AGTG&quot;   &quot;CTCGG&quot;  &quot;ATAACT&quot;</span>
+</pre></div>
+</div>
+<p>Moreover:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_rand_strings</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">8</span><span class="p">,</span> <span class="s">&quot;[\\p{script=Katakana}&amp;\\p{L}]&quot;</span><span class="p">)</span>
+<span class="c1">## [1] &quot;ﾐｮㇿ𛅧ｧｱヾㇷ&quot;</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="regular_expressions.html#sec-regexindividualchars"><span class="std std-ref">Matching Individual Characters</span></a> and
+<code class="docutils literal notranslate"><span class="pre">help(&quot;stringi-search-charclass&quot;)</span></code> for different ways to specify
+character sets.</p>
+</div>
+<div class="section" id="transliterating">
+<h2>Transliterating<a class="headerlink" href="#transliterating" title="Permalink to this headline">¶</a></h2>
+<p>Transliteration, in its broad sense, deals with the substitution of
+characters or their groups for different ones, according to some
+well-defined, possibly context-aware, rules. It may be useful, amongst
+others, when “normalising” pieces of strings or identifiers so that
+they can be more easily compared with each other.</p>
+<div class="section" id="case-mapping">
+<h3>Case Mapping<a class="headerlink" href="#case-mapping" title="Permalink to this headline">¶</a></h3>
+<p>Mapping to upper, lower, or title case is a language- and
+context-sensitive operation that can change the total number of code
+points in a string.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_trans_toupper</span><span class="p">(</span><span class="s">&quot;groß&quot;</span><span class="p">)</span>
+<span class="c1">## [1] &quot;GROSS&quot;</span>
+<span class="nf">stri_trans_tolower</span><span class="p">(</span><span class="s">&quot;Iİ&quot;</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&quot;tr_TR&quot;</span><span class="p">)</span>               <span class="c1"># Turkish</span>
+<span class="c1">## [1] &quot;ıi&quot;</span>
+<span class="nf">stri_trans_totitle</span><span class="p">(</span><span class="s">&quot;ijsvrij yoghurt&quot;</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&quot;nl_NL&quot;</span><span class="p">)</span>  <span class="c1"># Dutch</span>
+<span class="c1">## [1] &quot;IJsvrij Yoghurt&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mapping-between-specific-characters">
+<h3>Mapping Between Specific Characters<a class="headerlink" href="#mapping-between-specific-characters" title="Permalink to this headline">¶</a></h3>
+<p>When a fast 1-to-1 code point translation is required, we can call:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_trans_char</span><span class="p">(</span><span class="s">&quot;GATAAATCTGGTCTTATTTCC&quot;</span><span class="p">,</span> <span class="s">&quot;ACGT&quot;</span><span class="p">,</span> <span class="s">&quot;tgca&quot;</span><span class="p">)</span>
+<span class="c1">## [1] &quot;ctatttagaccagaataaagg&quot;</span>
+</pre></div>
+</div>
+<p>Here, “<code class="docutils literal notranslate"><span class="pre">A</span></code>”, “<code class="docutils literal notranslate"><span class="pre">C</span></code>”, “<code class="docutils literal notranslate"><span class="pre">G</span></code>”, and “<code class="docutils literal notranslate"><span class="pre">T</span></code>” is replaced with “<code class="docutils literal notranslate"><span class="pre">t</span></code>”, “<code class="docutils literal notranslate"><span class="pre">g</span></code>”,
+“<code class="docutils literal notranslate"><span class="pre">c</span></code>”, and “<code class="docutils literal notranslate"><span class="pre">a</span></code>”, respectively.</p>
+</div>
+<div class="section" id="general-transforms">
+<h3>General Transforms<a class="headerlink" href="#general-transforms" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">stri_trans_general()</span></code> gives access to a wide range of text
+transforms defined by <em>ICU</em>, whose catalogue can be browsed by calling
+<code class="docutils literal notranslate"><span class="pre">stri_trans_list()</span></code>.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sample</span><span class="p">(</span><span class="nf">stri_trans_list</span><span class="p">(),</span> <span class="m">9</span><span class="p">)</span>  <span class="c1"># a few random entries</span>
+<span class="c1">## [1] &quot;Any-und_FONIPA&quot; &quot;Any-FCD&quot;        &quot;Deva-Guru&quot;      &quot;yo-yo_BJ&quot;      </span>
+<span class="c1">## [5] &quot;Taml-Orya&quot;      &quot;Tamil-Arabic&quot;   &quot;hy-ar&quot;          &quot;de-ASCII&quot;      </span>
+<span class="c1">## [9] &quot;Any-Kana&quot;</span>
+</pre></div>
+</div>
+<p>For example, below we apply a transliteration chain: first, we convert
+to upper case, and then we convert characters in the Latin script to
+ASCII.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_trans_general</span><span class="p">(</span><span class="s">&quot;groß© żółć La Niña köszönöm&quot;</span><span class="p">,</span> <span class="s">&quot;upper; latin-ascii&quot;</span><span class="p">)</span>
+<span class="c1">## [1] &quot;GROSS(C) ZOLC LA NINA KOSZONOM&quot;</span>
+</pre></div>
+</div>
+<p>Custom rule-based transliteration is also supported
+(see the <a class="reference external" href="https://unicode-org.github.io/icu/userguide/transforms/general/"><em>ICU</em> User Guide on General Transforms</a>). It can be
+used, for instance, to generate different romanisations of non-Latin
+alphabets.</p>
+</div>
+</div>
+<div class="section" id="parsing-and-formatting-date-and-time">
+<span id="sec-datetime"></span><h2>Parsing and Formatting Date and Time<a class="headerlink" href="#parsing-and-formatting-date-and-time" title="Permalink to this headline">¶</a></h2>
+<p>In base R, dealing with temporal data in regional settings other than
+the current locale is somewhat difficult. For instance, many will find
+the task of parsing the following Polish date problematic:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="s">&quot;28 września 2021 r., godz. 17:17:32&quot;</span>
+</pre></div>
+</div>
+<p><em>stringi</em> connects to the <em>ICU</em> date and time services so that this
+becomes an easy exercise:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;dd MMMM yyyy &#39;r., godz.&#39; HH:mm:ss&quot;</span><span class="p">,</span>
+  <span class="n">locale</span><span class="o">=</span><span class="s">&quot;pl_PL&quot;</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s">&quot;Europe/Warsaw&quot;</span><span class="p">)</span>
+<span class="c1">## [1] &quot;2021-09-28 17:17:32 CEST&quot;</span>
+</pre></div>
+</div>
+<p>This function returns an object of class <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code>, for compatibility
+with base R. Note, however, that <em>ICU</em> uses its own format patterns
+(see the <a class="reference external" href="https://unicode-org.github.io/icu/userguide/format_parse/datetime/"><em>ICU</em> User Guide on Formatting Dates and Times</a>).
+For convenience, <code class="docutils literal notranslate"><span class="pre">strftime()</span></code>- and <code class="docutils literal notranslate"><span class="pre">strptime()</span></code>-like
+templates can be converted with <code class="docutils literal notranslate"><span class="pre">stri_datetime_fstr()</span></code>:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="n">x</span><span class="p">,</span>
+  <span class="nf">stri_datetime_fstr</span><span class="p">(</span><span class="s">&quot;%d %B %Y r., godz. %H:%M:%S&quot;</span><span class="p">),</span>
+  <span class="n">locale</span><span class="o">=</span><span class="s">&quot;pl_PL&quot;</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s">&quot;Europe/Warsaw&quot;</span><span class="p">)</span>
+<span class="c1">## [1] &quot;2021-09-28 17:17:32 CEST&quot;</span>
+</pre></div>
+</div>
+<p>Relative dates are also supported:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_format</span><span class="p">(</span>
+  <span class="nf">stri_datetime_add</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span> <span class="m">1</span><span class="p">,</span> <span class="s">&quot;day&quot;</span><span class="p">),</span> <span class="c1"># add 1 day to &#39;now&#39;</span>
+  <span class="s">&quot;datetime_relative_long&quot;</span><span class="p">,</span>              <span class="c1"># full format, relative to &#39;now&#39;</span>
+  <span class="n">locale</span><span class="o">=</span><span class="s">&quot;en_NZ&quot;</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s">&quot;NZ&quot;</span><span class="p">)</span>
+<span class="c1">## [1] &quot;tomorrow at 5:55:52 pm NZDT&quot;</span>
+</pre></div>
+</div>
+<p>For example, here’s how we can access different calendars:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_format</span><span class="p">(</span>
+  <span class="nf">stri_datetime_create</span><span class="p">(</span><span class="m">2020</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">12</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span>
+  <span class="s">&quot;date_long&quot;</span><span class="p">,</span>
+  <span class="n">locale</span><span class="o">=</span><span class="s">&quot;@calendar=hebrew&quot;</span><span class="p">)</span>
+<span class="c1">##  [1] &quot;4 Tevet 5780&quot;    &quot;6 Shevat 5780&quot;   &quot;5 Adar 5780&quot;     &quot;7 Nisan 5780&quot;   </span>
+<span class="c1">##  [5] &quot;7 Iyar 5780&quot;     &quot;9 Sivan 5780&quot;    &quot;9 Tamuz 5780&quot;    &quot;11 Av 5780&quot;     </span>
+<span class="c1">##  [9] &quot;12 Elul 5780&quot;    &quot;13 Tishri 5781&quot;  &quot;14 Heshvan 5781&quot; &quot;15 Kislev 5781&quot;</span>
+<span class="nf">stri_datetime_format</span><span class="p">(</span>
+  <span class="nf">stri_datetime_create</span><span class="p">(</span><span class="m">2020</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="m">8</span><span class="p">),</span> <span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">7</span><span class="p">)),</span>
+  <span class="s">&quot;date_full&quot;</span><span class="p">,</span>
+  <span class="n">locale</span><span class="o">=</span><span class="s">&quot;ja_JP@calendar=japanese&quot;</span><span class="p">)</span>
+<span class="c1">## [1] &quot;令和2年2月4日火曜日&quot; &quot;令和2年8月7日金曜日&quot;</span>
+</pre></div>
+</div>
+<p>Above we have selected the Hebrew calendar within the English locale and
+the Japanese calendar in the Japanese locale.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="input_output.html" class="btn btn-neutral float-right" title="Input and Output" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="collation.html" class="btn btn-neutral float-left" title="Collation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2013-2021, Marek Gagolewski.
+      <span class="lastupdated">
+        Last updated on 2021-10-04T11:46:09+1100.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
