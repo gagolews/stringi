@@ -2,6 +2,9 @@
 
 ## 1.7.5.9001 (under development)
 
+* [BUILD TIME] #463: Added loongarch support in ICU's double conversion
+    (@liuxiang88).
+
 * ...
 
 
