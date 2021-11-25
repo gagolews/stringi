@@ -1,6 +1,6 @@
 Package: stringi
 Version: 1.7.5.9001
-Date: 2021-11-10
+Date: 2021-11-25
 Title: Character String Processing Facilities
 Description: A collection of character string/text/natural language
     processing tools for pattern searching (e.g., with 'Java'-like regular
