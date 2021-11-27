@@ -45,7 +45,10 @@
  * @version 0.2-1 (Marek Gagolewski, 2014-03-28)
  *
  * @version 1.0.6 (Marek Gagolewski, 2017-05-25)
- *    #270 latin-1 is windows-1252 on Windows
+ *    #270: latin-1 is windows-1252 on Windows
+ *
+ * @version 1.7.5.9001 (Marek Gagolewski, 2021-11-27)
+ *    #467: R-win-ucrt not marking strings as latin1 #
  */
 class StriUcnv  {
 
@@ -177,9 +180,19 @@ public:
         }
 #if defined(_WIN32) || defined(_WIN64)
         // #270: latin-1 is windows-1252 on Windows
-        else if (!strcmp(ucnv_name, "windows-1252") || !strcmp(ucnv_name, "ibm-5348_P100-1997")) {
+        // #467: R-win-ucrt not marking strings as latin1
+        else if (
+            !strcmp(ucnv_name, "windows-1252") ||
+            !strcmp(ucnv_name, "ibm-5348_P100-1997") ||
+            !strcmp(ucnv_name, "ibm-1252_P100-2000") ||
+            !strcmp(ucnv_name, "ISO-8859-1") ||
+            !strcmp(ucnv_name, "latin1")
+        ) {
 #else
-        else if (!strcmp(ucnv_name, "ISO-8859-1")) {
+        else if (
+            !strcmp(ucnv_name, "ISO-8859-1") ||
+            !strcmp(ucnv_name, "latin1")
+        ) {
 #endif
             m_is8bit = true;
             m_isutf8 = false;
