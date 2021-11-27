@@ -58,6 +58,7 @@ check: stop-on-utf8 build
 check-cran: stop-on-utf8 build
 	cd .. && STRINGI_DISABLE_PKG_CONFIG=1 \
 	    R_DEFAULT_INTERNET_TIMEOUT=240 \
+	    _R_CHECK_CRAN_INCOMING_=FALSE \
 	    _R_CHECK_CRAN_INCOMING_REMOTE_=FALSE \
 	    R CMD check `ls -t ${PKGNAME}*.tar.gz | head -1` --as-cran
 

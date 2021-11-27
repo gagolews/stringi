@@ -88,6 +88,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
     // #270: latin-1 is windows-1252 on Windows
     StriUcnv ucnvLatin1("WINDOWS-1252");
 #else
+    // TODO: WINDOWS-1252 is a superset of ISO-8859-1, use the former??
     StriUcnv ucnvLatin1("ISO-8859-1");
 #endif
     StriUcnv ucnvNative(NULL);

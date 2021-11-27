@@ -5,6 +5,8 @@
 * [BUILD TIME] #463: Added loongarch support in ICU's double conversion
     (@liuxiang88).
 
+* [BUGFIX] #467: The UCRT build on Windows was not marking strings as `latin1`.
+
 * ...
 
 
