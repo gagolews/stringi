@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
 
   
@@ -31,6 +33,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -64,7 +67,7 @@
             
             
               <div class="version">
-                1.7.5
+                1.7.6
               </div>
             
           
@@ -89,7 +92,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">stringi</span></p>
+              <p class="caption" role="heading"><span class="caption-text">stringi</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="index.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="weave/design_principles.html">General Design Principles</a></li>
@@ -102,11 +105,11 @@
 <li class="toctree-l1"><a class="reference internal" href="weave/example.html">Example Use Case: Data Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="z_bibliography.html">References</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Reference Manual</span></p>
+<p class="caption" role="heading"><span class="caption-text">Reference Manual</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="rapi.html">R Package <em>stringi</em> Reference</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
@@ -195,7 +198,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="installing-stringi">
+  <div class="tex2jax_ignore mathjax_ignore section" id="installing-stringi">
 <h1>Installing <em>stringi</em><a class="headerlink" href="#installing-stringi" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
@@ -278,12 +281,12 @@ The package can now be installed (the source bundle may be propagated via
 <a class="reference external" href="https://gcc.gnu.org/bugzilla/show_bug.cgi?id=56019">bug</a> where
 <code class="docutils literal notranslate"><span class="pre">::max_align_t</span></code> has been defined, but not <code class="docutils literal notranslate"><span class="pre">std::max_align_t</span></code>.
 If our built-in workaround does not work, you may try calling:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;stringi&quot;</span><span class="p">,</span> <span class="n">configure.args</span><span class="o">=</span><span class="s">&quot;--with-extra-cxxflags=&#39;--std=c++11&#39;&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;stringi&quot;</span><span class="p">,</span> <span class="n">configure.args</span><span class="o">=</span><span class="s">&quot;--with-extra-cxxflags=&#39;-std=c++11&#39;&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Overall, your build chain may be misconfigured, check out,
 amongst others, <code class="docutils literal notranslate"><span class="pre">&lt;R_inst_dir&gt;/etc/Makeconf</span></code>
-(e.g., are you using <code class="docutils literal notranslate"><span class="pre">--std=gnu++11</span></code> instead of <code class="docutils literal notranslate"><span class="pre">--std=c++11</span></code>?). Refer to
+(e.g., are you using <code class="docutils literal notranslate"><span class="pre">-std=gnu++11</span></code> instead of <code class="docutils literal notranslate"><span class="pre">-std=c++11</span></code>?). Refer to
 https://cran.r-project.org/doc/manuals/r-release/R-admin.html for more details.</p>
 <p>There is an option of using the fallback version of ICU4C 55.1
 which however requires the support of the <code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">long</span></code> type in a few functions,
@@ -342,6 +345,16 @@ have a working internet access.</p>
 hesitate to <a class="reference external" href="https://github.com/gagolews/stringi/issues">file a bug report</a>.
 However, please check the list of archived (closed) issues first –
 it is very likely that a solution to your problem has already been posted.</p>
+<p>To help diagnose your error further, please run (from the terminal):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /tmp
+wget https://github.com/gagolews/stringi/archive/master.zip
+unzip master.zip
+<span class="nb">cd</span> stringi-master
+./configure
+</pre></div>
+</div>
+<p>And submit the output from <code class="docutils literal notranslate"><span class="pre">./configure</span></code> as well as the contents of
+<code class="docutils literal notranslate"><span class="pre">config.log</span></code>.</p>
 </div>
 </div>
 
@@ -360,7 +373,7 @@ it is very likely that a solution to your problem has already been posted.</p>
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-10-04T11:46:09+1100.
+        Last updated on 2021-11-29T10:29:09+1100.
       </span>
 
     </p>

@@ -106,12 +106,12 @@ Note that Pre-4.9.0 GCC has a
 If our built-in workaround does not work, you may try calling:
 
 ```r
-install.packages("stringi", configure.args="--with-extra-cxxflags='--std=c++11'")
+install.packages("stringi", configure.args="--with-extra-cxxflags='-std=c++11'")
 ```
 
 Overall, your build chain may be misconfigured, check out,
 amongst others, `<R_inst_dir>/etc/Makeconf`
-(e.g., are you using `--std=gnu++11` instead of `--std=c++11`?). Refer to
+(e.g., are you using `-std=gnu++11` instead of `-std=c++11`?). Refer to
 https://cran.r-project.org/doc/manuals/r-release/R-admin.html for more details.
 
 There is an option of using the fallback version of ICU4C 55.1
@@ -197,3 +197,16 @@ If you do not manage to set up a successful stringi build, do not
 hesitate to [file a bug report](https://github.com/gagolews/stringi/issues).
 However, please check the list of archived (closed) issues first --
 it is very likely that a solution to your problem has already been posted.
+
+To help diagnose your error further, please run (from the terminal):
+
+```bash
+cd /tmp
+wget https://github.com/gagolews/stringi/archive/master.zip
+unzip master.zip
+cd stringi-master
+./configure
+```
+
+And submit the output from `./configure` as well as the contents of
+`config.log`.
