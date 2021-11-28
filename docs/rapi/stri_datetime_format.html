@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
 
   
@@ -31,6 +33,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -65,7 +68,7 @@
             
             
               <div class="version">
-                1.7.5
+                1.7.6
               </div>
             
           
@@ -90,7 +93,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">stringi</span></p>
+              <p class="caption" role="heading"><span class="caption-text">stringi</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../weave/design_principles.html">General Design Principles</a></li>
@@ -103,7 +106,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../weave/example.html">Example Use Case: Data Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Reference Manual</span></p>
+<p class="caption" role="heading"><span class="caption-text">Reference Manual</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../rapi.html">R Package <em>stringi</em> Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="about_arguments.html">about_arguments: Passing Arguments to Functions in <span class="pkg">stringi</span></a></li>
@@ -222,7 +225,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
@@ -307,7 +310,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="stri-datetime-format-date-and-time-formatting-and-parsing">
+  <div class="tex2jax_ignore mathjax_ignore section" id="stri-datetime-format-date-and-time-formatting-and-parsing">
 <h1>stri_datetime_format: Date and Time Formatting and Parsing<a class="headerlink" href="#stri-datetime-format-date-and-time-formatting-and-parsing" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
@@ -885,13 +888,13 @@
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;2015-02-28&#39;</span><span class="p">,</span> <span class="s">&#39;2015-02-29&#39;</span><span class="p">),</span> <span class="s">&#39;yyyy-MM-dd&#39;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2015-02-28 11:45:49 AEDT&quot; NA</span>
+<span class="c1">## [1] &quot;2015-02-28 10:28:48 AEDT&quot; NA</span>
 <span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;2015-02-28&#39;</span><span class="p">,</span> <span class="s">&#39;2015-02-29&#39;</span><span class="p">),</span> <span class="s">&#39;yyyy-MM-dd&#39;</span><span class="p">,</span> <span class="n">lenient</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2015-02-28 11:45:49 AEDT&quot; &quot;2015-03-01 11:45:49 AEDT&quot;</span>
+<span class="c1">## [1] &quot;2015-02-28 10:28:48 AEDT&quot; &quot;2015-03-01 10:28:48 AEDT&quot;</span>
 <span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="s">&#39;19 lipca 2015&#39;</span><span class="p">,</span> <span class="s">&#39;date_long&#39;</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;pl_PL&#39;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2015-07-19 11:45:49 AEST&quot;</span>
+<span class="c1">## [1] &quot;2015-07-19 10:28:48 AEST&quot;</span>
 <span class="nf">stri_datetime_format</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span> <span class="s">&#39;datetime_relative_medium&#39;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;today, 11:45:49 am&quot;</span>
+<span class="c1">## [1] &quot;today, 10:28:48 am&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -913,7 +916,7 @@
     <p>
         &#169; Copyright 2013-2021, Marek Gagolewski.
       <span class="lastupdated">
-        Last updated on 2021-10-04T11:46:09+1100.
+        Last updated on 2021-11-29T10:29:09+1100.
       </span>
 
     </p>

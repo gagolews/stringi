@@ -1,13 +1,11 @@
 # What Is New in *stringi*
 
-## 1.7.5.9001 (under development)
+## 1.7.6 (2021-11-29)
 
 * [BUILD TIME] #463: Added loongarch support in ICU's double conversion
     (@liuxiang88).
 
 * [BUGFIX] #467: The UCRT build on Windows was not marking strings as `latin1`.
-
-* ...
 
 
 ## 1.7.5 (2021-10-04)
