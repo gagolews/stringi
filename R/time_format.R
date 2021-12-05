@@ -45,7 +45,8 @@
 #' with the \code{\link[base]{strftime}} function)
 #' formats a date/time object using the current default time zone.
 #'
-#' Unspecified fields are filled with the current date or time ones.
+#' Unspecified fields (e.g., seconds where only hours and minutes are given)
+#' are filled with the ones based on current date and time.
 #'
 #' \code{format} may be one of \code{DT_STYLE} or \code{DT_relative_STYLE},
 #' where \code{DT} is equal to \code{date}, \code{time}, or \code{datetime},
