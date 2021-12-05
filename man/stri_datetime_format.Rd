@@ -55,6 +55,8 @@ By default, \code{stri_datetime_format} (for the sake of compatibility
 with the \code{\link[base]{strftime}} function)
 formats a date/time object using the current default time zone.
 
+Unspecified fields are filled with the current date or time ones.
+
 \code{format} may be one of \code{DT_STYLE} or \code{DT_relative_STYLE},
 where \code{DT} is equal to \code{date}, \code{time}, or \code{datetime},
 and \code{STYLE} is equal to \code{full}, \code{long}, \code{medium},
@@ -201,8 +203,10 @@ uuuu-MM-dd'T'HH:mm:ssZ \tab 2015-12-31T23:59:59+0100 (the ISO 8601 guideline) \c
 }
 }
 \examples{
-stri_datetime_parse(c('2015-02-28', '2015-02-29'), 'yyyy-MM-dd')
-stri_datetime_parse(c('2015-02-28', '2015-02-29'), 'yyyy-MM-dd', lenient=TRUE)
+x <- c('2015-02-28', '2015-02-29')
+stri_datetime_parse(x, 'yyyy-MM-dd')
+stri_datetime_parse(x, 'yyyy-MM-dd', lenient=TRUE)
+stri_datetime_parse(x \%s+\% " 00:00:00", "yyyy-MM-dd HH:mm:ss")
 stri_datetime_parse('19 lipca 2015', 'date_long', locale='pl_PL')
 stri_datetime_format(stri_datetime_now(), 'datetime_relative_medium')
 
