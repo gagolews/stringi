@@ -1,5 +1,11 @@
 # What Is New in *stringi*
 
+
+## 1.7.6.9xxx (under development)
+
+* ...
+
+
 ## 1.7.6 (2021-11-29)
 
 * [BUILD TIME] #463: Added loongarch support in ICU's double conversion
