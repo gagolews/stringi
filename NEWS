@@ -10,6 +10,10 @@
 * [BUGFIX] TODO.... #469: `stri_datetime_parse` did not reset the `Calendar` object
     when parsing multiple dates.
 
+* [DOCUMENTATION] #462...
+
+
+
 
 ## 1.7.6 (2021-11-29)
 

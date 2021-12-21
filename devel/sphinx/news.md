@@ -1,5 +1,20 @@
 # What Is New in *stringi*
 
+
+## 1.7.6.9xxx (under development)
+
+* [NEW FEATURE] TODO.... #469: `stri_datetime_parse` .. new argument -
+`default_time`
+	a Calendar set on input to the date and time to be used for missing values in the date/time string being parsed
+
+* [BUGFIX] TODO.... #469: `stri_datetime_parse` did not reset the `Calendar` object
+    when parsing multiple dates.
+
+* [DOCUMENTATION] #462...
+
+
+
+
 ## 1.7.6 (2021-11-29)
 
 * [BUILD TIME] #463: Added loongarch support in ICU's double conversion
