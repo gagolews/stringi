@@ -40,6 +40,8 @@ Vectorized over `format` and `time` or `str`.
 
 By default, `stri_datetime_format` (for the sake of compatibility with the [`strftime`](https://stat.ethz.ch/R-manual/R-devel/library/base/help/strftime.html) function) formats a date/time object using the current default time zone.
 
+Unspecified fields (e.g., seconds where only hours and minutes are given) are filled with the ones based on current date and time.
+
 `format` may be one of `DT_STYLE` or `DT_relative_STYLE`, where `DT` is equal to `date`, `time`, or `datetime`, and `STYLE` is equal to `full`, `long`, `medium`, or `short`. This gives a locale-dependent date and/or time format. Note that currently <span class="pkg">ICU</span> does not support `relative` `time` formats, thus this flag is currently ignored in such a context.
 
 Otherwise, `format` is a pattern: a string where specific sequences of characters are replaced with date/time data from a calendar when formatting or used to generate data for a calendar when parsing. For example, `y` stands for \'year\'. Characters may be used multiple times: `yy` might produce `99`, whereas `yyyy` yields `1999`. For most numerical fields, the number of characters specifies the field width. For example, if `h` is the hour, `h` might produce `5`, but `hh` yields `05`. For some characters, the count specifies whether an abbreviated or full form should be used.
@@ -180,12 +182,15 @@ Other datetime: [`stri_datetime_add()`](stri_datetime_add.md), [`stri_datetime_c
 
 
 ```r
-stri_datetime_parse(c('2015-02-28', '2015-02-29'), 'yyyy-MM-dd')
-## [1] "2015-02-28 10:28:48 AEDT" NA
-stri_datetime_parse(c('2015-02-28', '2015-02-29'), 'yyyy-MM-dd', lenient=TRUE)
-## [1] "2015-02-28 10:28:48 AEDT" "2015-03-01 10:28:48 AEDT"
+x <- c('2015-02-28', '2015-02-29')
+stri_datetime_parse(x, 'yyyy-MM-dd')
+## [1] "2015-02-28 15:25:18 AEDT" NA
+stri_datetime_parse(x, 'yyyy-MM-dd', lenient=TRUE)
+## [1] "2015-02-28 15:25:18 AEDT" "2015-03-01 15:25:18 AEDT"
+stri_datetime_parse(x %s+% " 00:00:00", "yyyy-MM-dd HH:mm:ss")
+## [1] "2015-02-28 00:00:00 AEDT" NA
 stri_datetime_parse('19 lipca 2015', 'date_long', locale='pl_PL')
-## [1] "2015-07-19 10:28:48 AEST"
+## [1] "2015-07-19 15:25:18 AEST"
 stri_datetime_format(stri_datetime_now(), 'datetime_relative_medium')
-## [1] "today, 10:28:48 am"
+## [1] "today, 3:25:18 pm"
 ```
