@@ -55,7 +55,7 @@ package (and since the 2015 v1.0.0 *stringr* is powered by *stringi*).
 
 **Citation**: M. Gagolewski,
 [*stringi*: Fast and portable character string processing in R](https://stringi.gagolewski.com/_static/vignette/stringi.pdf),
-*Journal of Statistical Software*, 2021, to appear.
+*Journal of Statistical Software*, 2022, to appear.
 
 **System Requirements**: *R >= 3.1*, *ICU4C >= 55* (refer to the
 [INSTALL](https://raw.githubusercontent.com/gagolews/stringi/master/INSTALL)
