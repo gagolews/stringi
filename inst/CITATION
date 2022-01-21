@@ -3,7 +3,7 @@ bibentry(
     title  = "stringi: Fast and portable character string processing in R",
     author = personList(as.person("Marek Gagolewski")),
     journal = "Journal of Statistical Software",
-    year = "2021",
+    year = "2022",
     note = "to appear"
 #    volume = "x",
 #    pages = "x",
