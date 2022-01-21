@@ -10,6 +10,8 @@
 * [BUGFIX] TODO.... #469: `stri_datetime_parse` did not reset the `Calendar` object
     when parsing multiple dates.
 
+* [NEW FEATURE] #471: split into overlapping or non-overlapping chunks
+
 * [DOCUMENTATION] #462...
 
 
