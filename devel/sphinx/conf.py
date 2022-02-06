@@ -17,7 +17,7 @@ def get_package_version():
 # -- Project information -----------------------------------------------------
 
 project = 'stringi'
-copyright = '2013-2021, Marek Gagolewski'
+copyright = '2013-2022, Marek Gagolewski'
 author = 'Marek Gagolewski'
 html_title = project
 html_short_title = project

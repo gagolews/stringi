@@ -1,5 +1,5 @@
 # autoconf/configure script for stringi
-# Copyright (c) 2013-2021, Marek Gagolewski <https://www.gagolewski.com>
+# Copyright (c) 2013-2022, Marek Gagolewski <https://www.gagolewski.com>
 # https://stringi.gagolewski.com/
 
 
@@ -16,6 +16,21 @@
 # TODO: In the future, support only ICU >= 61 and R 3.4 (C++11 only) --
 # TODO: this will simplify the build chain. Yet, what follows is battle-tested,
 # TODO: so why don't do it unless absolutely necessary.
+
+
+# TODO: The standard way to use external libraries on macOS and Windows
+# TODO: in R is via the corresponding toolchain. For macOS, it is built via
+# TODO: recipes maintained by Simon Urbanek:
+# TODO: https://github.com/R-macos/recipes/blob/master/recipes/icu
+
+# TODO: For Windows, in the new toolchain, it is built by MXE
+# TODO: (with changes for R maintained by Tomas Kalibera):
+# TODO: https://github.com/mxe/mxe/blob/master/src/icu4c.mk
+# TODO: https://svn.r-project.org/R-dev-web/trunk/WindowsBuilds/winutf8/ucrt3/toolchain_libs/mxe/src/icu4c.mk
+
+# TODO: Contribute updates to ICU via these channels
+
+
 
 ##### INIT ####################################################################
 
