@@ -1,4 +1,4 @@
-# Copyright (c) 2013-2021, Marek Gagolewski <https://www.gagolewski.com>
+# Copyright (c) 2013-2022, Marek Gagolewski <https://www.gagolewski.com>
 
 .PHONY:  r check build clean purge sphinx docs test
 
@@ -32,11 +32,11 @@ r-icu-bundle:
 r-icu-bundle55:
 	R CMD INSTALL . --configure-args='--disable-cxx11 --disable-pkg-config'
 
-reload: r
-	# https://github.com/gagolews/home_bin
-	if [ `whoami` = "gagolews" ]; then \
-		jupyter-qtconsole-sender --silent "reload('${PKGNAME}')"; \
-	fi
+# reload: r
+# 	# https://github.com/gagolews/home_bin
+# 	if [ `whoami` = "gagolews" ]; then \
+# 		jupyter-qtconsole-sender --silent "reload('${PKGNAME}')"; \
+# 	fi
 
 tinytest:
 	Rscript -e 'source("devel/tinytest.R")'
