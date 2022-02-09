@@ -1,6 +1,6 @@
 Package: stringi
 Version: 1.7.6.9001
-Date: 2022-02-06
+Date: 2022-02-09
 Title: Character String Processing Facilities
 Description: A collection of character string/text/natural language
     processing tools for pattern searching (e.g., with 'Java'-like regular
@@ -10,7 +10,9 @@ Description: A collection of character string/text/natural language
     and many more. They are fast, consistent, convenient, and -
     thanks to 'ICU' (International Components for Unicode) -
     portable across all locales and platforms.
-URL: https://stringi.gagolewski.com/
+URL:
+    https://stringi.gagolewski.com/,
+    https://github.com/gagolews/stringi,
     https://icu.unicode.org/
 BugReports: https://github.com/gagolews/stringi/issues
 SystemRequirements: C++11, ICU4C (>= 55, optional)
