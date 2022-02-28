@@ -2179,7 +2179,7 @@ Also, matching is always done left-to-right, on a first-come, first-served basis
 Hence, if the left branch is a subset of the right one, the latter will
 never be matched.
 In particular, ``\code{(al|alga|algae)}'' can only match ``\code{al}''.
-To fix this, we can write ``\code{(algae|alga|al))}''.
+To fix this, we can write ``\code{(algae|alga|al)}''.
 
 
 \paragraph{Non-grouping parentheses.}

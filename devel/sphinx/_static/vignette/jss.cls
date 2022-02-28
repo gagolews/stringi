@@ -247,7 +247,7 @@
     \vfill
     \hrule \nopagebreak
     \vspace{.1\baselineskip}
-    {\fontfamily{pzc} \fontsize{13}{15} \selectfont Journal of Statistical Software}
+    {\usefont{T1}{pzc}{m}{n}  \fontsize{13}{15} \selectfont Journal of Statistical Software}
     \hfill
     \url{http://www.jstatsoft.org/}\\ \nopagebreak
     published by the Foundation for Open Access Statistics
@@ -277,7 +277,7 @@
   \hspace{-2em} \includegraphics[height=23mm,keepaspectratio]{jsslogo} \hfill
   \parbox[b][23mm]{118mm}{\hrule height 3pt
    \center{
-   {\fontfamily{pzc} \fontsize{28}{32} \selectfont Journal of Statistical Software}
+   {\usefont{T1}{pzc}{m}{n} \fontsize{28}{32} \selectfont Journal of Statistical Software}
    \vfill
    {\it \small \@Month{} \@Year, Volume~\@Volume, \@Seriesname~\@Issue.%
             \hfill \href{http://dx.doi.org/\@DOI}{doi:\,\@DOI}}}\\[0.1cm]
