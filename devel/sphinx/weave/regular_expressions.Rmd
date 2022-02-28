@@ -332,7 +332,7 @@ Also, matching is always done left-to-right, on a first-come,
 first-served basis. So, if the left branch is a subset of the right
 one, the latter will never be matched. In particular,
 "`(al|alga|algae)`" can only match "`al`". To fix this, we can write
-"`(algae|alga|al))`".
+"`(algae|alga|al)`".
 
 ### Non-grouping Parentheses
 

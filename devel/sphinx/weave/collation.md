@@ -300,6 +300,21 @@ distinguished:
     determined at the quaternary level. This is also meaningful in the
     processing of Hiragana text.
 
+
+### Ignoring Case
+
+Note which strings are deemed equivalent when
+considering different collation strengths:
+
+
+```r
+x <- c("gro\u00df", "gross", "GROSS", "Gro\u00df", "Gross", "GRO\u1e9e")
+stri_unique(x, strength=1)                  # ß == ss, case insensitive
+## [1] "groß"
+stri_unique(x, strength=2)                  # ß != ss, case insensitive
+## [1] "groß"  "gross"
+```
+
 Hence, strength equal to 1 takes only primary differences into account.
 Strength of 2 will also be sensitive to secondary differences
 (distinguishes between "ß" and "ss" above), but will ignore tertiary
@@ -310,8 +325,8 @@ that ignores secondary differences:
 
 
 ```r
-stri_unique(x, strength=1, case_level=TRUE) # ß == ss, case sensitive
-## [1] "Gągolewski"
+stri_unique(x, strength=1, case_level=TRUE)  # ß == ss, case sensitive
+## [1] "groß"  "GROSS" "Groß"
 ```
 
 
@@ -326,12 +341,20 @@ allows for ignoring some punctuation marks:
 x <- c("code point", "code-point", "codepoint", "CODE POINT", "CodePoint")
 stri_unique(x, alternate_shifted=TRUE)  # strength=3
 ## [1] "code point" "CODE POINT" "CodePoint"
+```
+
+Here, when `strength = 3` is used (the default), punctuation
+differences are ignored, but case is deemed significant.
+
+
+```r
 stri_unique(x, alternate_shifted=TRUE, strength=2)
 ## [1] "code point"
 ```
 
-In the latter case, all strings are considered equivalent. Ignoring case
-but not punctuation yields:
+In this case, all strings are considered equivalent.
+
+Ignoring case but not punctuation yields:
 
 
 ```r
@@ -441,8 +464,9 @@ The *ICU* Collator can also be utilised where there is a need to locate
 the occurrences of simple textual patterns. The counterparts of the
 string search functions described in the section on
 {ref}`Sec:fixed` have
-their names ending with `*_coll()`. They are slower than them, but are
-more appropriate in NLP activities.
+their names ending with `*_coll()`. Albeit slower than the `*_fixed()`
+functions , they are more appropriate in natural language
+processing activities.
 
 For instance:
 

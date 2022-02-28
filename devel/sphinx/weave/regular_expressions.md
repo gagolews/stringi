@@ -394,7 +394,7 @@ Also, matching is always done left-to-right, on a first-come,
 first-served basis. So, if the left branch is a subset of the right
 one, the latter will never be matched. In particular,
 "`(al|alga|algae)`" can only match "`al`". To fix this, we can write
-"`(algae|alga|al))`".
+"`(algae|alga|al)`".
 
 ### Non-grouping Parentheses
 
@@ -531,7 +531,7 @@ system.time(tryCatch({
 }, error=function(e) cat("stopped.")))
 ## stopped.
 ##    user  system elapsed 
-##  15.909   0.001  15.910
+##  18.147   0.001  18.148
 ```
 
 Nevertheless, oftentimes such regexes can be naturally reformulated to
