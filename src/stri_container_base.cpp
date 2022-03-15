@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' project.
- * Copyright (c) 2013-2021, Marek Gagolewski <https://www.gagolewski.com>
+ * Copyright (c) 2013-2022, Marek Gagolewski <https://www.gagolewski.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -60,6 +60,9 @@ void StriContainerBase::init_Base(R_len_t _n, R_len_t _nrecycle, bool _shallowre
         throw StriException("StriContainerBase::init_Base(...): already initialized");
     this->isShallow = _shallowrecycle;
 #endif
+
+    STRI_ASSERT(_n >=0);
+    STRI_ASSERT(_nrecycle >=0);
 
     if (_n == 0 || _nrecycle == 0) {
         this->nrecycle = 0;

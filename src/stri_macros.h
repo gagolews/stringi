@@ -166,4 +166,6 @@
 #define UCHAR_LS  0x2028
 #define UCHAR_PS  0x2029
 
+#define POW_2_31_M_1 2147483647
+
 #endif

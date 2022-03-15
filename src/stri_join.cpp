@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' project.
- * Copyright (c) 2013-2021, Marek Gagolewski <https://www.gagolewski.com>
+ * Copyright (c) 2013-2022, Marek Gagolewski <https://www.gagolewski.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -114,23 +114,26 @@ SEXP stri__prepare_arg_list_ignore_null(SEXP x, bool ignore_null)
  *
  *  The function is vectorized over str and times
  *  if str is NA or times is NA the result will be NA
- *  if times<0 the result will be NA
- *  if times==0 the result will be an empty string
- *  if str or times is an empty vector then the result is an empty vector
+ *  if times < 0, the result will be NA
+ *  if times==0, the result will be an empty string
+ *  if str or times is an empty vector, then the result is an empty vector
  *
  * @version 0.1-?? (Marek Gagolewski)
  *
  * @version 0.1-?? (Marek Gagolewski)
- *                  use StriContainerUTF8's vectorization
+ *     use StriContainerUTF8's vectorization
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-15)
- *                  use StriContainerInteger
+ *     use StriContainerInteger
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
- *                  make StriException friendly
+ *     make StriException friendly
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
- *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *    #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.7.6.9001 (Marek Gagolewski, 2022-03-15)
+ *    #473: use size_t
 */
 SEXP stri_dup(SEXP str, SEXP times)
 {
@@ -148,15 +151,18 @@ SEXP stri_dup(SEXP str, SEXP times)
 
     // STEP 1.
     // Calculate the required buffer length
-    R_len_t bufsize = 0;
+    size_t bufsize = 0;
     for (R_len_t i=0; i<vectorize_length; ++i) {
-        if (str_cont.isNA(i) || times_cont.isNA(i))
+        if (str_cont.isNA(i) || times_cont.isNA(i) || times_cont.get(i) < 0)
             continue;
 
-        R_len_t cursize = times_cont.get(i) * str_cont.get(i).length();
+        size_t cursize = times_cont.get(i) * str_cont.get(i).length();
         if (cursize > bufsize)
             bufsize = cursize;
     }
+
+    if (bufsize > POW_2_31_M_1)
+        throw StriException(MSG__CHARSXP_2147483647);
 
     // STEP 2.
     // Alloc buffer & result vector
@@ -167,7 +173,7 @@ SEXP stri_dup(SEXP str, SEXP times)
     // STEP 3.
     // Duplicate
     const String8* str_last = NULL; // this will allow for reusing buffer...
-    R_len_t str_last_index  = 0;    // ...useful for stri_dup('a', 1:1000) or stri_dup('a', 1000:1)
+    size_t str_last_index  = 0;    // ...useful for stri_dup('a', 1:1000) or stri_dup('a', 1000:1)
 
     for (R_len_t i = str_cont.vectorize_init(); // this iterator allows for...
             i != str_cont.vectorize_end();        // ...smart buffer reusage
@@ -195,8 +201,11 @@ SEXP stri_dup(SEXP str, SEXP times)
         }
 
         // we paste only "additional" duplicates
-        R_len_t max_index = str_cur_n*times_cur;
+        size_t max_index = str_cur_n*times_cur;
         for (; str_last_index < max_index; str_last_index += str_cur_n) {
+            if (buf.size() < str_last_index+str_cur_n) {
+                throw StriException(MSG__INTERNAL_ERROR);
+            }
             memcpy(buf.data()+str_last_index, str_cur->c_str(), (size_t)str_cur_n);
         }
 
@@ -231,13 +240,13 @@ SEXP stri_dup(SEXP str, SEXP times)
  * @version 0.1-?? (Marek Gagolewski)
  *
  * @version 0.1-?? (Marek Gagolewski)
- *          use StriContainerUTF8's vectorization
+ *    use StriContainerUTF8's vectorization
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
- *          make StriException friendly
+ *    make StriException friendly
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
- *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *    #112: str_prepare_arg* retvals were not PROTECTed from gc
  *
 */
 SEXP stri_join2(SEXP e1, SEXP e2) // a.k.a. stri_join2_nocollapse
@@ -263,18 +272,21 @@ SEXP stri_join2(SEXP e1, SEXP e2) // a.k.a. stri_join2_nocollapse
     StriContainerUTF8 e2_cont(e2, vectorize_length);
 
     // 1. find maximal length of the buffer needed
-    R_len_t nchar = 0;
+    size_t nchar = 0;
     for (int i=0; i<vectorize_length; ++i) {
         if (e1_cont.isNA(i) || e2_cont.isNA(i))
             continue;
 
-        R_len_t c1 = e1_cont.get(i).length();
-        R_len_t c2 = e2_cont.get(i).length();
+        size_t c1 = e1_cont.get(i).length();
+        size_t c2 = e2_cont.get(i).length();
 
         if (c1+c2 > nchar) nchar = c1+c2;
     }
 
     // 2. Create buf & retval
+    if (nchar > POW_2_31_M_1)
+        throw StriException(MSG__CHARSXP_2147483647);
+
     String8buf buf(nchar);
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length)); // output vector
@@ -329,10 +341,10 @@ SEXP stri_join2(SEXP e1, SEXP e2) // a.k.a. stri_join2_nocollapse
  *          This is much faster than stri_flatten(stri_join2(...), ...)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
- *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *    #112: str_prepare_arg* retvals were not PROTECTed from gc
  *
  *  @version 0.4-1 (Marek Gagolewski, 2014-11-26)
- *    Issue #114: inconsistent behavior w.r.t. paste()
+ *    #114: inconsistent behaviour w.r.t. paste()
 */
 SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
 {
@@ -367,7 +379,7 @@ SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
 
 
     // find maximal length of the buffer needed:
-    R_len_t nchar = 0;
+    size_t nchar = 0;
     for (int i=0; i<vectorize_length; ++i) {
         if (e1_cont.isNA(i) || e2_cont.isNA(i)) {
             STRI__UNPROTECT_ALL
@@ -379,6 +391,8 @@ SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
     }
 
 
+    if (nchar > POW_2_31_M_1)
+        throw StriException(MSG__CHARSXP_2147483647);
     String8buf buf(nchar);
     R_len_t last_buf_idx = 0;
     for (R_len_t i = 0; i < vectorize_length; ++i) // don't change this order, see #114
@@ -496,11 +510,11 @@ SEXP stri_join_nocollapse(SEXP strlist, SEXP sep, SEXP ignore_null)
 
 
     // 4. Get buf size and determine where NAs will occur
-    R_len_t buf_maxbytes = 0;
+    size_t buf_maxbytes = 0;
     vector<bool> whichNA(vectorize_length, false); // where are NAs in out?
     for (R_len_t i=0; i<vectorize_length; ++i) {
 
-        R_len_t curchar = 0;
+        size_t curchar = 0;
         for (R_len_t j=0; j<strlist_length; ++j) {
             if (strlist_cont.get(j).isNA(i)) {
                 whichNA[i] = true;
@@ -516,6 +530,8 @@ SEXP stri_join_nocollapse(SEXP strlist, SEXP sep, SEXP ignore_null)
     }
 
     // 5. Create ret val
+    if (buf_maxbytes > POW_2_31_M_1)
+        throw StriException(MSG__CHARSXP_2147483647);
     String8buf buf(buf_maxbytes);
     STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
@@ -525,7 +541,7 @@ SEXP stri_join_nocollapse(SEXP strlist, SEXP sep, SEXP ignore_null)
             continue;
         }
 
-        R_len_t cursize = 0;
+        size_t cursize = 0;
         for (R_len_t j=0; j<strlist_length; ++j) {
 
             if (sep_len >= 0 && j > 0) {
@@ -534,7 +550,7 @@ SEXP stri_join_nocollapse(SEXP strlist, SEXP sep, SEXP ignore_null)
             }
 
             const String8* curstring = &(strlist_cont.get(j).get(i));
-            R_len_t curstring_n = curstring->length();
+            size_t curstring_n = curstring->length();
             memcpy(buf.data()+cursize, curstring->c_str(), (size_t)curstring_n);
             cursize += curstring_n;
         }
@@ -642,7 +658,7 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse, SEXP ignore_null)
     R_len_t     collapse_n = collapse_cont.get(0).length();
 
     // Get required buffer size
-    R_len_t buf_maxbytes = 0;
+    size_t buf_maxbytes = 0;
     for (R_len_t i=0; i<vectorize_length; ++i) {   // for each vectorized string (vertically)
         for (R_len_t j=0; j<strlist_length; ++j) {  // for each character vector  (horizontally)
             if (strlist_cont.get(j).isNA(i)) {
@@ -657,8 +673,10 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse, SEXP ignore_null)
     }
 
     // 5. Create ret val
+    if (buf_maxbytes > POW_2_31_M_1)
+        throw StriException(MSG__CHARSXP_2147483647);
     String8buf buf(buf_maxbytes);
-    R_len_t last_buf_idx = 0;
+    size_t last_buf_idx = 0;
 
     for (R_len_t i=0; i<vectorize_length; ++i) {
         // there is no NA anywhere
@@ -676,7 +694,7 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse, SEXP ignore_null)
             }
 
             const String8* curstring = &(strlist_cont.get(j).get(i));
-            R_len_t curstring_n = curstring->length();
+            size_t curstring_n = curstring->length();
             memcpy(buf.data()+last_buf_idx, curstring->c_str(), (size_t)curstring_n);
             last_buf_idx += curstring_n;
         }
@@ -740,7 +758,7 @@ SEXP stri_flatten_noressep(SEXP str, int na_empty)
     StriContainerUTF8 str_cont(str, str_length);
 
     // 1. Get required buffer size
-    R_len_t nchar = 0;
+    size_t nchar = 0;
     for (int i=0; i<str_length; ++i) {
         if (str_cont.isNA(i)) {
             if (na_empty == NA_LOGICAL || na_empty) {
@@ -757,11 +775,13 @@ SEXP stri_flatten_noressep(SEXP str, int na_empty)
     }
 
     // 2. Fill the buf!
+    if (nchar > POW_2_31_M_1)
+        throw StriException(MSG__CHARSXP_2147483647);
     String8buf buf(nchar);
-    R_len_t cur = 0;
+    size_t cur = 0;
     for (int i=0; i<str_length; ++i) {
         if (!str_cont.isNA(i)) {
-            R_len_t ncur = str_cont.get(i).length();
+            size_t ncur = str_cont.get(i).length();
             memcpy(buf.data()+cur, str_cont.get(i).c_str(), (size_t)ncur);
             cur += ncur;
         }
@@ -843,7 +863,7 @@ SEXP stri_flatten(SEXP str, SEXP collapse, SEXP na_empty, SEXP omit_empty) // a.
 
 
     // 1. Get required minimal buffer size
-    R_len_t nbytes = 0;
+    size_t nbytes = 0;
     for (int i=0; i<str_length; ++i) {
         if (str_cont.isNA(i)) {
             if (na_empty_1 == NA_LOGICAL) {
@@ -863,8 +883,10 @@ SEXP stri_flatten(SEXP str, SEXP collapse, SEXP na_empty, SEXP omit_empty) // a.
 
 
     // 2. Fill the buf!
+    if (nbytes > POW_2_31_M_1)
+        throw StriException(MSG__CHARSXP_2147483647);
     String8buf buf(nbytes);
-    R_len_t cur = 0;
+    size_t cur = 0;
     bool already_started = false;
     for (int i=0; i<str_length; ++i) {
         if (na_empty_1 == NA_LOGICAL && str_cont.isNA(i))
@@ -883,7 +905,7 @@ SEXP stri_flatten(SEXP str, SEXP collapse, SEXP na_empty, SEXP omit_empty) // a.
             already_started = true;
 
         if (!str_cont.isNA(i)) {
-            R_len_t ncur = str_cont.get(i).length();
+            size_t ncur = str_cont.get(i).length();
             memcpy(buf.data()+cur, str_cont.get(i).c_str(), (size_t)ncur);
             cur += ncur;
         }
