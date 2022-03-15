@@ -1,4 +1,4 @@
-# stri\_rand\_strings: Generate Random Strings
+# stri_rand_strings: Generate Random Strings
 
 ## Description
 
@@ -6,7 +6,7 @@ Generates (pseudo)random strings of desired lengths.
 
 ## Usage
 
-```r
+``` r
 stri_rand_strings(n, length, pattern = "[A-Za-z0-9]")
 ```
 

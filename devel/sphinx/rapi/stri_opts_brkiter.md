@@ -1,4 +1,4 @@
-# stri\_opts\_brkiter: Generate a List with BreakIterator Settings
+# stri_opts_brkiter: Generate a List with BreakIterator Settings
 
 ## Description
 
@@ -6,7 +6,7 @@ A convenience function to tune the <span class="pkg">ICU</span> `BreakIterator`\
 
 ## Usage
 
-```r
+``` r
 stri_opts_brkiter(
   type,
   locale,
@@ -64,4 +64,4 @@ Returns a named list object. Omitted `skip_*` values act as they have been set t
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other text\_boundaries: [`about_search_boundaries`](about_search_boundaries.md), [`about_search`](about_search.md), [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_split_lines()`](stri_split_lines.md), [`stri_trans_tolower()`](stri_trans_casemap.md), [`stri_wrap()`](stri_wrap.md)
+Other text_boundaries: [`about_search_boundaries`](about_search_boundaries.md), [`about_search`](about_search.md), [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_split_lines()`](stri_split_lines.md), [`stri_trans_tolower()`](stri_trans_casemap.md), [`stri_wrap()`](stri_wrap.md)

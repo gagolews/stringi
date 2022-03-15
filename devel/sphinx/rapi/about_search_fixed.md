@@ -1,4 +1,4 @@
-# about\_search\_fixed: Locale-Insensitive Fixed Pattern Matching in <span class="pkg">stringi</span>
+# about_search_fixed: Locale-Insensitive Fixed Pattern Matching in <span class="pkg">stringi</span>
 
 ## Description
 
@@ -18,7 +18,7 @@ Be aware that, for natural language processing, fixed pattern searching might no
 
 4.  ignorable case,
 
-see also [about\_search\_coll](about_search_coll.md).
+see also [about_search_coll](about_search_coll.md).
 
 Note that the conversion of input data to Unicode is done as usual.
 
@@ -30,6 +30,6 @@ Note that the conversion of input data to Unicode is done as usual.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_fixed: [`about_search`](about_search.md), [`stri_opts_fixed()`](stri_opts_fixed.md)
+Other search_fixed: [`about_search`](about_search.md), [`stri_opts_fixed()`](stri_opts_fixed.md)
 
-Other stringi\_general\_topics: [`about_arguments`](about_arguments.md), [`about_encoding`](about_encoding.md), [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_charclass`](about_search_charclass.md), [`about_search_coll`](about_search_coll.md), [`about_search_regex`](about_search_regex.md), [`about_search`](about_search.md), [`about_stringi`](about_stringi.md)
+Other stringi_general_topics: [`about_arguments`](about_arguments.md), [`about_encoding`](about_encoding.md), [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_charclass`](about_search_charclass.md), [`about_search_coll`](about_search_coll.md), [`about_search_regex`](about_search_regex.md), [`about_search`](about_search.md), [`about_stringi`](about_stringi.md)

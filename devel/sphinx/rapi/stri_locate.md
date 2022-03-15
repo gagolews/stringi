@@ -1,4 +1,4 @@
-# stri\_locate: Locate Pattern Occurrences
+# stri_locate: Locate Pattern Occurrences
 
 ## Description
 
@@ -6,7 +6,7 @@ These functions find the indexes (positions) where there is a match to some patt
 
 ## Usage
 
-```r
+``` r
 stri_locate_all(str, ..., regex, fixed, coll, charclass)
 
 stri_locate_first(str, ..., regex, fixed, coll, charclass)
@@ -156,7 +156,7 @@ If `capture_groups=TRUE`, then the outputs are equipped with the `capture_groups
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_locate: [`about_search`](about_search.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md)
+Other search_locate: [`about_search`](about_search.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md)
 
 Other indexing: [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_sub_all()`](stri_sub_all.md), [`stri_sub()`](stri_sub.md)
 

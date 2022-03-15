@@ -1,4 +1,4 @@
-# stri\_info: Query Default Settings for <span class="pkg">stringi</span>
+# stri_info: Query Default Settings for <span class="pkg">stringi</span>
 
 ## Description
 
@@ -6,7 +6,7 @@ Gives the current default settings used by the <span class="pkg">ICU</span> libr
 
 ## Usage
 
-```r
+``` r
 stri_info(short = FALSE)
 ```
 

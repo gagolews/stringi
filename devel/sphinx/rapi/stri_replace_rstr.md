@@ -1,4 +1,4 @@
-# stri\_replace\_rstr: Convert gsub-Style Replacement Strings
+# stri_replace_rstr: Convert gsub-Style Replacement Strings
 
 ## Description
 
@@ -6,7 +6,7 @@ Converts a [`gsub`](https://stat.ethz.ch/R-manual/R-devel/library/base/help/gsub
 
 ## Usage
 
-```r
+``` r
 stri_replace_rstr(x)
 ```
 
@@ -28,4 +28,4 @@ Returns a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_replace: [`about_search`](about_search.md), [`stri_replace_all()`](stri_replace.md), [`stri_trim_both()`](stri_trim.md)
+Other search_replace: [`about_search`](about_search.md), [`stri_replace_all()`](stri_replace.md), [`stri_trim_both()`](stri_trim.md)

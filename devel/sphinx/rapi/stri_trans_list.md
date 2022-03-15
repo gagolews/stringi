@@ -1,4 +1,4 @@
-# stri\_trans\_list: List Available Text Transforms and Transliterators
+# stri_trans_list: List Available Text Transforms and Transliterators
 
 ## Description
 
@@ -6,7 +6,7 @@ Returns a list of available text transform identifiers. Each of them may be used
 
 ## Usage
 
-```r
+``` r
 stri_trans_list()
 ```
 

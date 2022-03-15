@@ -1,4 +1,4 @@
-# stri\_locale\_list: List Available Locales
+# stri_locale_list: List Available Locales
 
 ## Description
 
@@ -6,7 +6,7 @@ Creates a character vector with all available locale identifies.
 
 ## Usage
 
-```r
+``` r
 stri_locale_list()
 ```
 
@@ -28,7 +28,7 @@ Returns a character vector with locale identifiers that are known to <span class
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other locale\_management: [`about_locale`](about_locale.md), [`stri_locale_info()`](stri_locale_info.md), [`stri_locale_set()`](stri_locale_set.md)
+Other locale_management: [`about_locale`](about_locale.md), [`stri_locale_info()`](stri_locale_info.md), [`stri_locale_set()`](stri_locale_set.md)
 
 ## Examples
 

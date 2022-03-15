@@ -1,4 +1,4 @@
-# stri\_enc\_fromutf32: Convert From UTF-32
+# stri_enc_fromutf32: Convert From UTF-32
 
 ## Description
 
@@ -6,7 +6,7 @@ This function converts integer vectors, representing sequences of UTF-32 code po
 
 ## Usage
 
-```r
+``` r
 stri_enc_fromutf32(vec)
 ```
 
@@ -38,4 +38,4 @@ Returns a character vector (in UTF-8). `NULL`s in the input list are converted t
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other encoding\_conversion: [`about_encoding`](about_encoding.md), [`stri_enc_toascii()`](stri_enc_toascii.md), [`stri_enc_tonative()`](stri_enc_tonative.md), [`stri_enc_toutf32()`](stri_enc_toutf32.md), [`stri_enc_toutf8()`](stri_enc_toutf8.md), [`stri_encode()`](stri_encode.md)
+Other encoding_conversion: [`about_encoding`](about_encoding.md), [`stri_enc_toascii()`](stri_enc_toascii.md), [`stri_enc_tonative()`](stri_enc_tonative.md), [`stri_enc_toutf32()`](stri_enc_toutf32.md), [`stri_enc_toutf8()`](stri_enc_toutf8.md), [`stri_encode()`](stri_encode.md)

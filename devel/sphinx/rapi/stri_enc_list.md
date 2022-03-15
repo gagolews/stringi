@@ -1,4 +1,4 @@
-# stri\_enc\_list: List Known Character Encodings
+# stri_enc_list: List Known Character Encodings
 
 ## Description
 
@@ -6,7 +6,7 @@ Gives the list of encodings that are supported by <span class="pkg">ICU</span>.
 
 ## Usage
 
-```r
+``` r
 stri_enc_list(simplify = TRUE)
 ```
 
@@ -34,7 +34,7 @@ If `simplify` is `TRUE` (the default), then the resulting list is coerced to a c
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other encoding\_management: [`about_encoding`](about_encoding.md), [`stri_enc_info()`](stri_enc_info.md), [`stri_enc_mark()`](stri_enc_mark.md), [`stri_enc_set()`](stri_enc_set.md)
+Other encoding_management: [`about_encoding`](about_encoding.md), [`stri_enc_info()`](stri_enc_info.md), [`stri_enc_mark()`](stri_enc_mark.md), [`stri_enc_set()`](stri_enc_set.md)
 
 ## Examples
 

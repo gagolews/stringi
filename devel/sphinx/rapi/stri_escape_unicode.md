@@ -1,4 +1,4 @@
-# stri\_escape\_unicode: Escape Unicode Code Points
+# stri_escape_unicode: Escape Unicode Code Points
 
 ## Description
 
@@ -6,7 +6,7 @@ Escapes all Unicode (not ASCII-printable) code points.
 
 ## Usage
 
-```r
+``` r
 stri_escape_unicode(str)
 ```
 

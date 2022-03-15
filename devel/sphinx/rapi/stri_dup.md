@@ -1,4 +1,4 @@
-# stri\_dup: Duplicate Strings
+# stri_dup: Duplicate Strings
 
 ## Description
 
@@ -6,7 +6,7 @@ Duplicates each `str`(`e1`) string `times`(`e2`) times and concatenates the resu
 
 ## Usage
 
-```r
+``` r
 stri_dup(str, times)
 
 e1 %s*% e2

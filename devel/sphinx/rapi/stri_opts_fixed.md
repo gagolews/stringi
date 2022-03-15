@@ -1,4 +1,4 @@
-# stri\_opts\_fixed: Generate a List with Fixed Pattern Search Engine\'s Settings
+# stri_opts_fixed: Generate a List with Fixed Pattern Search Engine\'s Settings
 
 ## Description
 
@@ -6,7 +6,7 @@ A convenience function used to tune up the behavior of `stri_*_fixed` functions,
 
 ## Usage
 
-```r
+``` r
 stri_opts_fixed(case_insensitive = FALSE, overlap = FALSE, ...)
 ```
 
@@ -40,7 +40,7 @@ Returns a named list object.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_fixed: [`about_search_fixed`](about_search_fixed.md), [`about_search`](about_search.md)
+Other search_fixed: [`about_search_fixed`](about_search_fixed.md), [`about_search`](about_search.md)
 
 ## Examples
 

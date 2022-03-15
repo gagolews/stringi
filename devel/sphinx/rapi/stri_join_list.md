@@ -1,4 +1,4 @@
-# stri\_join\_list: Concatenate Strings in a List
+# stri_join_list: Concatenate Strings in a List
 
 ## Description
 
@@ -6,7 +6,7 @@ These functions concatenate all the strings in each character vector in a given 
 
 ## Usage
 
-```r
+``` r
 stri_join_list(x, sep = "", collapse = NULL)
 
 stri_c_list(x, sep = "", collapse = NULL)

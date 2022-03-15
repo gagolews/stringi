@@ -1,4 +1,4 @@
-# stri\_enc\_mark: Get Declared Encodings of Each String
+# stri_enc_mark: Get Declared Encodings of Each String
 
 ## Description
 
@@ -6,7 +6,7 @@ Reads declared encodings for each string in a character vector as seen by <span 
 
 ## Usage
 
-```r
+``` r
 stri_enc_mark(str)
 ```
 
@@ -38,4 +38,4 @@ This gives exactly the same data that is used by all the functions in <span clas
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other encoding\_management: [`about_encoding`](about_encoding.md), [`stri_enc_info()`](stri_enc_info.md), [`stri_enc_list()`](stri_enc_list.md), [`stri_enc_set()`](stri_enc_set.md)
+Other encoding_management: [`about_encoding`](about_encoding.md), [`stri_enc_info()`](stri_enc_info.md), [`stri_enc_list()`](stri_enc_list.md), [`stri_enc_set()`](stri_enc_set.md)

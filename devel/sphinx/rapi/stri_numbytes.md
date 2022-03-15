@@ -1,4 +1,4 @@
-# stri\_numbytes: Count the Number of Bytes
+# stri_numbytes: Count the Number of Bytes
 
 ## Description
 
@@ -6,7 +6,7 @@ Counts the number of bytes needed to store each string in the computer\'s memory
 
 ## Usage
 
-```r
+``` r
 stri_numbytes(str)
 ```
 

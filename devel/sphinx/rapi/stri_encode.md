@@ -1,4 +1,4 @@
-# stri\_encode: Convert Strings Between Given Encodings
+# stri_encode: Convert Strings Between Given Encodings
 
 ## Description
 
@@ -6,7 +6,7 @@ These functions convert strings between encodings. They aim to serve as a more p
 
 ## Usage
 
-```r
+``` r
 stri_encode(str, from = NULL, to = NULL, to_raw = FALSE)
 
 stri_conv(str, from = NULL, to = NULL, to_raw = FALSE)
@@ -57,4 +57,4 @@ If `to_raw` is `FALSE`, then a character vector with encoded strings (and approp
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other encoding\_conversion: [`about_encoding`](about_encoding.md), [`stri_enc_fromutf32()`](stri_enc_fromutf32.md), [`stri_enc_toascii()`](stri_enc_toascii.md), [`stri_enc_tonative()`](stri_enc_tonative.md), [`stri_enc_toutf32()`](stri_enc_toutf32.md), [`stri_enc_toutf8()`](stri_enc_toutf8.md)
+Other encoding_conversion: [`about_encoding`](about_encoding.md), [`stri_enc_fromutf32()`](stri_enc_fromutf32.md), [`stri_enc_toascii()`](stri_enc_toascii.md), [`stri_enc_tonative()`](stri_enc_tonative.md), [`stri_enc_toutf32()`](stri_enc_toutf32.md), [`stri_enc_toutf8()`](stri_enc_toutf8.md)

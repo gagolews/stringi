@@ -1,4 +1,4 @@
-# stri\_stats\_general: General Statistics for a Character Vector
+# stri_stats_general: General Statistics for a Character Vector
 
 ## Description
 
@@ -6,7 +6,7 @@ This function gives general statistics for a character vector, e.g., obtained by
 
 ## Usage
 
-```r
+``` r
 stri_stats_general(str)
 ```
 

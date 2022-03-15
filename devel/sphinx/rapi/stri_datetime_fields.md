@@ -1,4 +1,4 @@
-# stri\_datetime\_fields: Get Values for Date and Time Fields
+# stri_datetime_fields: Get Values for Date and Time Fields
 
 ## Description
 
@@ -6,7 +6,7 @@ Computes and returns values for all date and time fields.
 
 ## Usage
 
-```r
+``` r
 stri_datetime_fields(time, tz = attr(time, "tzone"), locale = NULL)
 ```
 
@@ -72,16 +72,16 @@ Other datetime: [`stri_datetime_add()`](stri_datetime_add.md), [`stri_datetime_c
 ```r
 stri_datetime_fields(stri_datetime_now())
 ##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth
-## 1 2022     2  28   13     58      0         661         10           5
+## 1 2022     3  15   12     17     34         528         12           3
 ##   DayOfYear DayOfWeek Hour12 AmPm Era
-## 1        59         2      1    2   2
+## 1        74         3      0    2   2
 stri_datetime_fields(stri_datetime_now(), locale='@calendar=hebrew')
 ##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth
-## 1 5782     6  27   13     58      0         664         26           5
+## 1 5782     7  12   12     17     34         532         28           3
 ##   DayOfYear DayOfWeek Hour12 AmPm Era
-## 1       175         2      1    2   1
+## 1       190         3      0    2   1
 stri_datetime_symbols(locale='@calendar=hebrew')$Month[
    stri_datetime_fields(stri_datetime_now(), locale='@calendar=hebrew')$Month
 ]
-## [1] "Adar I"
+## [1] "Adar"
 ```

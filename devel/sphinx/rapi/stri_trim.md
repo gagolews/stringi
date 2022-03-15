@@ -1,4 +1,4 @@
-# stri\_trim: Trim Characters from the Left and/or Right Side of a String
+# stri_trim: Trim Characters from the Left and/or Right Side of a String
 
 ## Description
 
@@ -6,7 +6,7 @@ These functions may be used, e.g., to remove unnecessary white-spaces from strin
 
 ## Usage
 
-```r
+``` r
 stri_trim_both(str, pattern = "\\P{Wspace}", negate = FALSE)
 
 stri_trim_left(str, pattern = "\\P{Wspace}", negate = FALSE)
@@ -56,9 +56,9 @@ All functions return a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_replace: [`about_search`](about_search.md), [`stri_replace_all()`](stri_replace.md), [`stri_replace_rstr()`](stri_replace_rstr.md)
+Other search_replace: [`about_search`](about_search.md), [`stri_replace_all()`](stri_replace.md), [`stri_replace_rstr()`](stri_replace_rstr.md)
 
-Other search\_charclass: [`about_search_charclass`](about_search_charclass.md), [`about_search`](about_search.md)
+Other search_charclass: [`about_search_charclass`](about_search_charclass.md), [`about_search`](about_search.md)
 
 ## Examples
 

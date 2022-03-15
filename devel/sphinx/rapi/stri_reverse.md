@@ -1,4 +1,4 @@
-# stri\_reverse: Reverse Each String
+# stri_reverse: Reverse Each String
 
 ## Description
 
@@ -6,7 +6,7 @@ Reverses the order of the code points in every string.
 
 ## Usage
 
-```r
+``` r
 stri_reverse(str)
 ```
 

@@ -1,4 +1,4 @@
-# stri\_datetime\_create: Create a Date-Time Object
+# stri_datetime_create: Create a Date-Time Object
 
 ## Description
 
@@ -6,7 +6,7 @@ Constructs date-time objects from numeric representations.
 
 ## Usage
 
-```r
+``` r
 stri_datetime_create(
   year,
   month,

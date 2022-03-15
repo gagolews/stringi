@@ -1,4 +1,4 @@
-# stri\_enc\_toutf8: Convert Strings To UTF-8
+# stri_enc_toutf8: Convert Strings To UTF-8
 
 ## Description
 
@@ -6,7 +6,7 @@ Converts character strings with declared marked encodings to UTF-8 strings.
 
 ## Usage
 
-```r
+``` r
 stri_enc_toutf8(str, is_unknown_8bit = FALSE, validate = FALSE)
 ```
 
@@ -42,4 +42,4 @@ Returns a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other encoding\_conversion: [`about_encoding`](about_encoding.md), [`stri_enc_fromutf32()`](stri_enc_fromutf32.md), [`stri_enc_toascii()`](stri_enc_toascii.md), [`stri_enc_tonative()`](stri_enc_tonative.md), [`stri_enc_toutf32()`](stri_enc_toutf32.md), [`stri_encode()`](stri_encode.md)
+Other encoding_conversion: [`about_encoding`](about_encoding.md), [`stri_enc_fromutf32()`](stri_enc_fromutf32.md), [`stri_enc_toascii()`](stri_enc_toascii.md), [`stri_enc_tonative()`](stri_enc_tonative.md), [`stri_enc_toutf32()`](stri_enc_toutf32.md), [`stri_encode()`](stri_encode.md)

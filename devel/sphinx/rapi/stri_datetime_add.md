@@ -1,4 +1,4 @@
-# stri\_datetime\_add: Date and Time Arithmetic
+# stri_datetime_add: Date and Time Arithmetic
 
 ## Description
 
@@ -6,7 +6,7 @@ Modifies a date-time object by adding a specific amount of time units.
 
 ## Usage
 
-```r
+``` r
 stri_datetime_add(
   time,
   value = 1L,
@@ -63,9 +63,9 @@ Other datetime: [`stri_datetime_create()`](stri_datetime_create.md), [`stri_date
 x <- stri_datetime_now()
 stri_datetime_add(x, units='months') <- 2
 print(x)
-## [1] "2022-04-28 13:58:00 AEST"
+## [1] "2022-05-15 12:17:34 AEST"
 stri_datetime_add(x, -2, units='months')
-## [1] "2022-02-28 13:58:00 AEDT"
+## [1] "2022-03-15 12:17:34 AEDT"
 stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units='years')
 ## [1] "2015-04-20 12:00:00 AEST"
 stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units='years', locale='@calendar=hebrew')

@@ -1,4 +1,4 @@
-# stri\_datetime\_fstr: Convert `strptime`-Style Format Strings
+# stri_datetime_fstr: Convert `strptime`-Style Format Strings
 
 ## Description
 
@@ -6,7 +6,7 @@ This function converts [`strptime`](https://stat.ethz.ch/R-manual/R-devel/librar
 
 ## Usage
 
-```r
+``` r
 stri_datetime_fstr(x, ignore_special = TRUE)
 ```
 

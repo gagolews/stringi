@@ -1,4 +1,4 @@
-# stri\_stats\_latex: Statistics for a Character Vector Containing LaTeX Commands
+# stri_stats_latex: Statistics for a Character Vector Containing LaTeX Commands
 
 ## Description
 
@@ -6,7 +6,7 @@ This function gives LaTeX-oriented statistics for a character vector, e.g., obta
 
 ## Usage
 
-```r
+``` r
 stri_stats_latex(str)
 ```
 

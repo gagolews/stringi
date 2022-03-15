@@ -1,4 +1,4 @@
-# operator\_add: Concatenate Two Character Vectors
+# operator_add: Concatenate Two Character Vectors
 
 ## Description
 
@@ -6,7 +6,7 @@ Binary operators for joining (concatenating) two character vectors, with a typic
 
 ## Usage
 
-```r
+``` r
 e1 %s+% e2
 
 e1 %stri+% e2

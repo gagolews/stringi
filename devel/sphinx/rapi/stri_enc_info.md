@@ -1,4 +1,4 @@
-# stri\_enc\_info: Query a Character Encoding
+# stri_enc_info: Query a Character Encoding
 
 ## Description
 
@@ -6,7 +6,7 @@ Gets basic information on a character encoding.
 
 ## Usage
 
-```r
+``` r
 stri_enc_info(enc = NULL)
 ```
 
@@ -48,4 +48,4 @@ Returns a list with the following components:
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other encoding\_management: [`about_encoding`](about_encoding.md), [`stri_enc_list()`](stri_enc_list.md), [`stri_enc_mark()`](stri_enc_mark.md), [`stri_enc_set()`](stri_enc_set.md)
+Other encoding_management: [`about_encoding`](about_encoding.md), [`stri_enc_list()`](stri_enc_list.md), [`stri_enc_mark()`](stri_enc_mark.md), [`stri_enc_set()`](stri_enc_set.md)

@@ -1,4 +1,4 @@
-# stri\_datetime\_now: Get Current Date and Time
+# stri_datetime_now: Get Current Date and Time
 
 ## Description
 
@@ -6,7 +6,7 @@ Returns the current date and time.
 
 ## Usage
 
-```r
+``` r
 stri_datetime_now()
 ```
 

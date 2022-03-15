@@ -1,4 +1,4 @@
-# stri\_trans\_char: Translate Characters
+# stri_trans_char: Translate Characters
 
 ## Description
 
@@ -6,7 +6,7 @@ Translates Unicode code points in each input string.
 
 ## Usage
 
-```r
+``` r
 stri_trans_char(str, pattern, replacement)
 ```
 

@@ -3,12 +3,15 @@
 
 ## 1.7.6.9xxx (under development)
 
+* [BUGFIX] #473: Fixed buffer overflow in `stri_dup`.
+
 * [NEW FEATURE] TODO.... #469: `stri_datetime_parse` .. new argument -
 `default_time`
 	a Calendar set on input to the date and time to be used for missing values in the date/time string being parsed
 
 * [BUGFIX] TODO.... #469: `stri_datetime_parse` did not reset the `Calendar` object
     when parsing multiple dates.
+
 
 * [NEW FEATURE] #471: split into overlapping or non-overlapping chunks,
     possibly of different lengths

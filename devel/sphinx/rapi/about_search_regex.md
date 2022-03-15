@@ -1,4 +1,4 @@
-# about\_search\_regex: Regular Expressions in <span class="pkg">stringi</span>
+# about_search_regex: Regular Expressions in <span class="pkg">stringi</span>
 
 ## Description
 
@@ -8,7 +8,7 @@ A regular expression is a pattern describing, possibly in a very abstract way, a
 
 All `stri_*_regex` functions in <span class="pkg">stringi</span> use the <span class="pkg">ICU</span> regex engine. Its settings may be tuned up (for example to perform case-insensitive search) via the [`stri_opts_regex`](stri_opts_regex.md) function.
 
-Regular expression patterns in <span class="pkg">ICU</span> are quite similar in form and behavior to Perl\'s regexes. Their implementation is loosely inspired by JDK 1.4 `java.util.regex`. <span class="pkg">ICU</span> Regular Expressions conform to the Unicode Technical Standard \#18 (see References section) and its features are summarized in the ICU User Guide (see below). A good general introduction to regexes is (Friedl, 2002). Some general topics are also covered in the <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> manual, see [regex](https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html).
+Regular expression patterns in <span class="pkg">ICU</span> are quite similar in form and behavior to Perl\'s regexes. Their implementation is loosely inspired by JDK 1.4 `java.util.regex`. <span class="pkg">ICU</span> Regular Expressions conform to the Unicode Technical Standard #18 (see References section) and its features are summarized in the ICU User Guide (see below). A good general introduction to regexes is (Friedl, 2002). Some general topics are also covered in the <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> manual, see [regex](https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html).
 
 ## <span class="pkg">ICU</span> Regex Operators at a Glance
 
@@ -184,7 +184,7 @@ Here is a list of meta-characters provided by the ICU User Guide on regexes.
 
 `\h`
 
-:   Match a Horizontal White Space character. They are characters with Unicode General Category of Space\_Separator plus the ASCII tab, `\u0009`. \[Since ICU 55\]
+:   Match a Horizontal White Space character. They are characters with Unicode General Category of Space_Separator plus the ASCII tab, `\u0009`. \[Since ICU 55\]
 
 `\H`
 
@@ -300,7 +300,7 @@ Here is a list of meta-characters provided by the ICU User Guide on regexes.
 
 ## Character Classes
 
-The syntax is similar, but not 100% compatible with the one described in [about\_search\_charclass](about_search_charclass.md). In particular, whitespaces are not ignored and set-theoretic operations are denoted slightly differently. However, other than this [about\_search\_charclass](about_search_charclass.md) is a good reference on the capabilities offered.
+The syntax is similar, but not 100% compatible with the one described in [about_search_charclass](about_search_charclass.md). In particular, whitespaces are not ignored and set-theoretic operations are denoted slightly differently. However, other than this [about_search_charclass](about_search_charclass.md) is a good reference on the capabilities offered.
 
 The ICU User Guide on regexes lists what follows.
 
@@ -344,7 +344,7 @@ The ICU User Guide on regexes lists what follows.
 
 Note that if a given regex `pattern` is empty, then all the functions in <span class="pkg">stringi</span> give `NA` in result and generate a warning. On a syntax error, a quite informative failure message is shown.
 
-If you wish to search for a fixed pattern, refer to [about\_search\_coll](about_search_coll.md) or [about\_search\_fixed](about_search_fixed.md). They allow to perform a locale-aware text lookup, or a very fast exact-byte search, respectively.
+If you wish to search for a fixed pattern, refer to [about_search_coll](about_search_coll.md) or [about_search_fixed](about_search_fixed.md). They allow to perform a locale-aware text lookup, or a very fast exact-byte search, respectively.
 
 ## Author(s)
 
@@ -356,7 +356,7 @@ If you wish to search for a fixed pattern, refer to [about\_search\_coll](about_
 
 J.E.F. Friedl, *Mastering Regular Expressions*, O\'Reilly, 2002
 
-*Unicode Regular Expressions* -- Unicode Technical Standard \#18, <https://www.unicode.org/reports/tr18/>
+*Unicode Regular Expressions* -- Unicode Technical Standard #18, <https://www.unicode.org/reports/tr18/>
 
 *Unicode Regular Expressions* -- Regex tutorial, <https://www.regular-expressions.info/unicode.html>
 
@@ -364,6 +364,6 @@ J.E.F. Friedl, *Mastering Regular Expressions*, O\'Reilly, 2002
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_regex: [`about_search`](about_search.md), [`stri_opts_regex()`](stri_opts_regex.md)
+Other search_regex: [`about_search`](about_search.md), [`stri_opts_regex()`](stri_opts_regex.md)
 
-Other stringi\_general\_topics: [`about_arguments`](about_arguments.md), [`about_encoding`](about_encoding.md), [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_charclass`](about_search_charclass.md), [`about_search_coll`](about_search_coll.md), [`about_search_fixed`](about_search_fixed.md), [`about_search`](about_search.md), [`about_stringi`](about_stringi.md)
+Other stringi_general_topics: [`about_arguments`](about_arguments.md), [`about_encoding`](about_encoding.md), [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_charclass`](about_search_charclass.md), [`about_search_coll`](about_search_coll.md), [`about_search_fixed`](about_search_fixed.md), [`about_search`](about_search.md), [`about_stringi`](about_stringi.md)

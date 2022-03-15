@@ -1,4 +1,4 @@
-# stri\_timezone\_set: Set or Get Default Time Zone in <span class="pkg">stringi</span>
+# stri_timezone_set: Set or Get Default Time Zone in <span class="pkg">stringi</span>
 
 ## Description
 
@@ -10,7 +10,7 @@ For more information on time zone representation in <span class="pkg">ICU</span>
 
 ## Usage
 
-```r
+``` r
 stri_timezone_get()
 
 stri_timezone_set(tz)

@@ -1,4 +1,4 @@
-# stri\_enc\_isutf16: Check If a Data Stream Is Possibly in UTF-16 or UTF-32
+# stri_enc_isutf16: Check If a Data Stream Is Possibly in UTF-16 or UTF-32
 
 ## Description
 
@@ -6,7 +6,7 @@ These functions detect whether a given byte stream is valid UTF-16LE, UTF-16BE, 
 
 ## Usage
 
-```r
+``` r
 stri_enc_isutf16be(str)
 
 stri_enc_isutf16le(str)
@@ -42,4 +42,4 @@ Returns a logical vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other encoding\_detection: [`about_encoding`](about_encoding.md), [`stri_enc_detect2()`](stri_enc_detect2.md), [`stri_enc_detect()`](stri_enc_detect.md), [`stri_enc_isascii()`](stri_enc_isascii.md), [`stri_enc_isutf8()`](stri_enc_isutf8.md)
+Other encoding_detection: [`about_encoding`](about_encoding.md), [`stri_enc_detect2()`](stri_enc_detect2.md), [`stri_enc_detect()`](stri_enc_detect.md), [`stri_enc_isascii()`](stri_enc_isascii.md), [`stri_enc_isutf8()`](stri_enc_isutf8.md)

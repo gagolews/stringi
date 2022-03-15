@@ -1,4 +1,4 @@
-# about\_search: String Searching
+# about_search: String Searching
 
 ## Description
 
@@ -8,15 +8,15 @@ This man page explains how to perform string search-based operations in <span cl
 
 The following independent string searching engines are available in <span class="pkg">stringi</span>.
 
--   `stri_*_regex` -- <span class="pkg">ICU</span>\'s regular expressions (regexes), see [about\_search\_regex](about_search_regex.md),
+-   `stri_*_regex` -- <span class="pkg">ICU</span>\'s regular expressions (regexes), see [about_search_regex](about_search_regex.md),
 
--   `stri_*_fixed` -- locale-independent byte-wise pattern matching, see [about\_search\_fixed](about_search_fixed.md),
+-   `stri_*_fixed` -- locale-independent byte-wise pattern matching, see [about_search_fixed](about_search_fixed.md),
 
--   `stri_*_coll` -- <span class="pkg">ICU</span>\'s `StringSearch`, locale-sensitive, Collator-based pattern search, useful for natural language processing tasks, see [about\_search\_coll](about_search_coll.md),
+-   `stri_*_coll` -- <span class="pkg">ICU</span>\'s `StringSearch`, locale-sensitive, Collator-based pattern search, useful for natural language processing tasks, see [about_search_coll](about_search_coll.md),
 
--   `stri_*_charclass` -- character classes search, e.g., Unicode General Categories or Binary Properties, see [about\_search\_charclass](about_search_charclass.md),
+-   `stri_*_charclass` -- character classes search, e.g., Unicode General Categories or Binary Properties, see [about_search_charclass](about_search_charclass.md),
 
--   `stri_*_boundaries` -- text boundary analysis, see [about\_search\_boundaries](about_search_boundaries.md)
+-   `stri_*_boundaries` -- text boundary analysis, see [about_search_boundaries](about_search_boundaries.md)
 
 Each search engine is able to perform many search-based operations. These may include:
 
@@ -44,28 +44,28 @@ Each search engine is able to perform many search-based operations. These may in
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other text\_boundaries: [`about_search_boundaries`](about_search_boundaries.md), [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_opts_brkiter()`](stri_opts_brkiter.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_split_lines()`](stri_split_lines.md), [`stri_trans_tolower()`](stri_trans_casemap.md), [`stri_wrap()`](stri_wrap.md)
+Other text_boundaries: [`about_search_boundaries`](about_search_boundaries.md), [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_opts_brkiter()`](stri_opts_brkiter.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_split_lines()`](stri_split_lines.md), [`stri_trans_tolower()`](stri_trans_casemap.md), [`stri_wrap()`](stri_wrap.md)
 
-Other search\_regex: [`about_search_regex`](about_search_regex.md), [`stri_opts_regex()`](stri_opts_regex.md)
+Other search_regex: [`about_search_regex`](about_search_regex.md), [`stri_opts_regex()`](stri_opts_regex.md)
 
-Other search\_fixed: [`about_search_fixed`](about_search_fixed.md), [`stri_opts_fixed()`](stri_opts_fixed.md)
+Other search_fixed: [`about_search_fixed`](about_search_fixed.md), [`stri_opts_fixed()`](stri_opts_fixed.md)
 
-Other search\_coll: [`about_search_coll`](about_search_coll.md), [`stri_opts_collator()`](stri_opts_collator.md)
+Other search_coll: [`about_search_coll`](about_search_coll.md), [`stri_opts_collator()`](stri_opts_collator.md)
 
-Other search\_charclass: [`about_search_charclass`](about_search_charclass.md), [`stri_trim_both()`](stri_trim.md)
+Other search_charclass: [`about_search_charclass`](about_search_charclass.md), [`stri_trim_both()`](stri_trim.md)
 
-Other search\_detect: [`stri_detect()`](stri_detect.md), [`stri_startswith()`](stri_startsendswith.md)
+Other search_detect: [`stri_detect()`](stri_detect.md), [`stri_startswith()`](stri_startsendswith.md)
 
-Other search\_count: [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_count()`](stri_count.md)
+Other search_count: [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_count()`](stri_count.md)
 
-Other search\_locate: [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_locate_all()`](stri_locate.md)
+Other search_locate: [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_locate_all()`](stri_locate.md)
 
-Other search\_replace: [`stri_replace_all()`](stri_replace.md), [`stri_replace_rstr()`](stri_replace_rstr.md), [`stri_trim_both()`](stri_trim.md)
+Other search_replace: [`stri_replace_all()`](stri_replace.md), [`stri_replace_rstr()`](stri_replace_rstr.md), [`stri_trim_both()`](stri_trim.md)
 
-Other search\_split: [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_split_lines()`](stri_split_lines.md), [`stri_split()`](stri_split.md)
+Other search_split: [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_split_lines()`](stri_split_lines.md), [`stri_split()`](stri_split.md)
 
-Other search\_subset: [`stri_subset()`](stri_subset.md)
+Other search_subset: [`stri_subset()`](stri_subset.md)
 
-Other search\_extract: [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_extract_all()`](stri_extract.md), [`stri_match_all()`](stri_match.md)
+Other search_extract: [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_extract_all()`](stri_extract.md), [`stri_match_all()`](stri_match.md)
 
-Other stringi\_general\_topics: [`about_arguments`](about_arguments.md), [`about_encoding`](about_encoding.md), [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_charclass`](about_search_charclass.md), [`about_search_coll`](about_search_coll.md), [`about_search_fixed`](about_search_fixed.md), [`about_search_regex`](about_search_regex.md), [`about_stringi`](about_stringi.md)
+Other stringi_general_topics: [`about_arguments`](about_arguments.md), [`about_encoding`](about_encoding.md), [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_charclass`](about_search_charclass.md), [`about_search_coll`](about_search_coll.md), [`about_search_fixed`](about_search_fixed.md), [`about_search_regex`](about_search_regex.md), [`about_stringi`](about_stringi.md)
