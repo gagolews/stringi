@@ -1,4 +1,4 @@
-# stri\_length: Count the Number of Code Points
+# stri_length: Count the Number of Code Points
 
 ## Description
 
@@ -6,7 +6,7 @@ This function returns the number of code points in each string.
 
 ## Usage
 
-```r
+``` r
 stri_length(str)
 ```
 

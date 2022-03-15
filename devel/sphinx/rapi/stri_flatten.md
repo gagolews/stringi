@@ -1,4 +1,4 @@
-# stri\_flatten: Flatten a String
+# stri_flatten: Flatten a String
 
 ## Description
 
@@ -6,7 +6,7 @@ Joins the elements of a character vector into one string.
 
 ## Usage
 
-```r
+``` r
 stri_flatten(str, collapse = "", na_empty = FALSE, omit_empty = FALSE)
 ```
 

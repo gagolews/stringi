@@ -1,4 +1,4 @@
-# stri\_remove\_empty: Remove All Empty Strings from a Character Vector
+# stri_remove_empty: Remove All Empty Strings from a Character Vector
 
 ## Description
 
@@ -10,7 +10,7 @@
 
 ## Usage
 
-```r
+``` r
 stri_remove_empty(x, na_empty = FALSE)
 
 stri_omit_empty(x, na_empty = FALSE)

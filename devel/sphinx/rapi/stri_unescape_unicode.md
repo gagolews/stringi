@@ -1,4 +1,4 @@
-# stri\_unescape\_unicode: Un-escape All Escape Sequences
+# stri_unescape_unicode: Un-escape All Escape Sequences
 
 ## Description
 
@@ -6,7 +6,7 @@ Un-escapes all known escape sequences
 
 ## Usage
 
-```r
+``` r
 stri_unescape_unicode(str)
 ```
 

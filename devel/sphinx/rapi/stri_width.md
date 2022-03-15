@@ -1,4 +1,4 @@
-# stri\_width: Determine the Width of Code Points
+# stri_width: Determine the Width of Code Points
 
 ## Description
 
@@ -6,7 +6,7 @@ Approximates the number of text columns the \'cat()\' function might use to prin
 
 ## Usage
 
-```r
+``` r
 stri_width(str)
 ```
 
@@ -18,7 +18,7 @@ stri_width(str)
 
 ## Details
 
-The Unicode standard does not formalize the notion of a character width. Roughly based on <https://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c>, <https://github.com/nodejs/node/blob/master/src/node_i18n.cc>, and UAX \#11 we proceed as follows. The following code points are of width 0:
+The Unicode standard does not formalize the notion of a character width. Roughly based on <https://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c>, <https://github.com/nodejs/node/blob/master/src/node_i18n.cc>, and UAX #11 we proceed as follows. The following code points are of width 0:
 
 -   code points with general category (see [stringi-search-charclass](about_search_charclass.md)) `Me`, `Mn`, and `Cf`),
 
@@ -44,7 +44,7 @@ Returns an integer vector of the same length as `str`.
 
 ## References
 
-*East Asian Width* -- Unicode Standard Annex \#11, <https://www.unicode.org/reports/tr11/>
+*East Asian Width* -- Unicode Standard Annex #11, <https://www.unicode.org/reports/tr11/>
 
 ## See Also
 

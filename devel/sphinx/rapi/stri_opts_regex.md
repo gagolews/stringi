@@ -1,4 +1,4 @@
-# stri\_opts\_regex: Generate a List with Regex Matcher Settings
+# stri_opts_regex: Generate a List with Regex Matcher Settings
 
 ## Description
 
@@ -6,7 +6,7 @@ A convenience function to tune the <span class="pkg">ICU</span> regular expressi
 
 ## Usage
 
-```r
+``` r
 stri_opts_regex(
   case_insensitive,
   comments,
@@ -64,7 +64,7 @@ Returns a named list object; missing settings are left with default values.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_regex: [`about_search_regex`](about_search_regex.md), [`about_search`](about_search.md)
+Other search_regex: [`about_search_regex`](about_search_regex.md), [`about_search`](about_search.md)
 
 ## Examples
 

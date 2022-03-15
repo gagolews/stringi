@@ -1,4 +1,4 @@
-# stri\_list2matrix: Convert a List to a Character Matrix
+# stri_list2matrix: Convert a List to a Character Matrix
 
 ## Description
 
@@ -6,7 +6,7 @@ This function converts a given list of atomic vectors to a character matrix.
 
 ## Usage
 
-```r
+``` r
 stri_list2matrix(
   x,
   byrow = FALSE,

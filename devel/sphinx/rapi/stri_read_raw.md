@@ -1,4 +1,4 @@
-# stri\_read\_raw: Read Text File as Raw
+# stri_read_raw: Read Text File as Raw
 
 ## Description
 
@@ -6,7 +6,7 @@ Reads a text file as-is, with no conversion or text line splitting.
 
 ## Usage
 
-```r
+``` r
 stri_read_raw(con, fname = con)
 ```
 

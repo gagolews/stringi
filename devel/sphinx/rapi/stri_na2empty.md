@@ -1,4 +1,4 @@
-# stri\_na2empty: Replace NAs with Empty Strings
+# stri_na2empty: Replace NAs with Empty Strings
 
 ## Description
 
@@ -6,7 +6,7 @@ This function replaces all missing values with empty strings. See [`stri_replace
 
 ## Usage
 
-```r
+``` r
 stri_na2empty(x)
 ```
 

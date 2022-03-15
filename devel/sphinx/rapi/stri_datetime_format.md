@@ -1,4 +1,4 @@
-# stri\_datetime\_format: Date and Time Formatting and Parsing
+# stri_datetime_format: Date and Time Formatting and Parsing
 
 ## Description
 
@@ -6,7 +6,7 @@ These functions convert a given date/time object to a character vector, or vice 
 
 ## Usage
 
-```r
+``` r
 stri_datetime_format(
   time,
   format = "uuuu-MM-dd HH:mm:ss",
@@ -124,7 +124,7 @@ Two single quotes represent a literal single quote, either inside or outside sin
 | v          | Time Zone: generic non-location                        | v              | PT                               |
 |            | (falls back first to VVVV)                             | vvvv           | Pacific Time or Los Angeles Time |
 | V          | Time Zone: short time zone ID                          | V              | uslax                            |
-|            | Time Zone: long time zone ID                           | VV             | America/Los\_Angeles             |
+|            | Time Zone: long time zone ID                           | VV             | America/Los_Angeles              |
 |            | Time Zone: time zone exemplar city                     | VVV            | Los Angeles                      |
 |            | Time Zone: generic location (falls back to OOOO)       | VVVV           | Los Angeles Time                 |
 | X          | Time Zone: ISO8601 basic hm?, with Z for 0             | X              | -08, +0530, Z                    |
@@ -184,13 +184,13 @@ Other datetime: [`stri_datetime_add()`](stri_datetime_add.md), [`stri_datetime_c
 ```r
 x <- c('2015-02-28', '2015-02-29')
 stri_datetime_parse(x, 'yyyy-MM-dd')
-## [1] "2015-02-28 13:58:00 AEDT" NA
+## [1] "2015-02-28 12:17:34 AEDT" NA
 stri_datetime_parse(x, 'yyyy-MM-dd', lenient=TRUE)
-## [1] "2015-02-28 13:58:00 AEDT" "2015-03-01 13:58:00 AEDT"
+## [1] "2015-02-28 12:17:34 AEDT" "2015-03-01 12:17:34 AEDT"
 stri_datetime_parse(x %s+% " 00:00:00", "yyyy-MM-dd HH:mm:ss")
 ## [1] "2015-02-28 00:00:00 AEDT" NA
 stri_datetime_parse('19 lipca 2015', 'date_long', locale='pl_PL')
-## [1] "2015-07-19 13:58:00 AEST"
+## [1] "2015-07-19 12:17:34 AEST"
 stri_datetime_format(stri_datetime_now(), 'datetime_relative_medium')
-## [1] "today, 1:58:00 pm"
+## [1] "today, 12:17:34 pm"
 ```

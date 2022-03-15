@@ -1,4 +1,4 @@
-# about\_encoding: Character Encodings and <span class="pkg">stringi</span>
+# about_encoding: Character Encodings and <span class="pkg">stringi</span>
 
 ## Description
 
@@ -52,7 +52,7 @@ Moreover, there are two other cases:
 
 -   ASCII -- for strings consisting only of byte codes not greater than 127;
 
--   `native` (a.k.a. `unknown` in [`Encoding`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Encoding.html); quite a misleading name: no explicit encoding mark) -- for strings that are assumed to be in your platform\'s native (default) encoding. This can represent UTF-8 if you are an OS X user, or some 8-bit Windows code page, for example. The native encoding used by <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> may be determined by examining the LC\_CTYPE category, see [`Sys.getlocale`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/locales.html).
+-   `native` (a.k.a. `unknown` in [`Encoding`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Encoding.html); quite a misleading name: no explicit encoding mark) -- for strings that are assumed to be in your platform\'s native (default) encoding. This can represent UTF-8 if you are an OS X user, or some 8-bit Windows code page, for example. The native encoding used by <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> may be determined by examining the LC_CTYPE category, see [`Sys.getlocale`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/locales.html).
 
 Intuitively, "native" strings result from reading a string from stdin (e.g., keyboard input). This makes sense: your operating system works in some encoding and provides <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> with some data.
 
@@ -64,7 +64,7 @@ Finally, note that <span style="font-family: Courier New, Courier; color: #66666
 
 ## Encoding Conversion
 
-Apart from automatic conversion from the native encoding, you may re-encode a string manually, for example when you read it from a file created on a different platform. Call [`stri_enc_list`](stri_enc_list.md) for the list of encodings supported by <span class="pkg">ICU</span>. Note that converter names are case-insensitive and <span class="pkg">ICU</span> tries to normalize the encoding specifiers. Leading zeroes are ignored in sequences of digits (if further digits follow), and all non-alphanumeric characters are ignored. Thus the strings \'UTF-8\', \'utf\_8\', \'u\*Tf08\' and \'Utf 8\' are equivalent.
+Apart from automatic conversion from the native encoding, you may re-encode a string manually, for example when you read it from a file created on a different platform. Call [`stri_enc_list`](stri_enc_list.md) for the list of encodings supported by <span class="pkg">ICU</span>. Note that converter names are case-insensitive and <span class="pkg">ICU</span> tries to normalize the encoding specifiers. Leading zeroes are ignored in sequences of digits (if further digits follow), and all non-alphanumeric characters are ignored. Thus the strings \'UTF-8\', \'utf_8\', \'u\*Tf08\' and \'Utf 8\' are equivalent.
 
 The [`stri_encode`](stri_encode.md) function allows you to convert between any given encodings (in some cases you will obtain `bytes`-marked strings, or even lists of raw vectors (i.e., for UTF-16). There are also some useful more specialized functions, like [`stri_enc_toutf32`](stri_enc_toutf32.md) (converts a character vector to a list of integers, where one code point is exactly one numeric value) or [`stri_enc_toascii`](stri_enc_toascii.md) (substitutes all non-ASCII bytes with the SUBSTITUTE CHARACTER, which plays a similar role as <span style="font-family: Courier New, Courier; color: #666666;">**R**</span>\'s `NA` value).
 
@@ -96,10 +96,10 @@ Check out [`stri_enc_detect`](stri_enc_detect.md) (among others) for a useful fu
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other stringi\_general\_topics: [`about_arguments`](about_arguments.md), [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_charclass`](about_search_charclass.md), [`about_search_coll`](about_search_coll.md), [`about_search_fixed`](about_search_fixed.md), [`about_search_regex`](about_search_regex.md), [`about_search`](about_search.md), [`about_stringi`](about_stringi.md)
+Other stringi_general_topics: [`about_arguments`](about_arguments.md), [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_charclass`](about_search_charclass.md), [`about_search_coll`](about_search_coll.md), [`about_search_fixed`](about_search_fixed.md), [`about_search_regex`](about_search_regex.md), [`about_search`](about_search.md), [`about_stringi`](about_stringi.md)
 
-Other encoding\_management: [`stri_enc_info()`](stri_enc_info.md), [`stri_enc_list()`](stri_enc_list.md), [`stri_enc_mark()`](stri_enc_mark.md), [`stri_enc_set()`](stri_enc_set.md)
+Other encoding_management: [`stri_enc_info()`](stri_enc_info.md), [`stri_enc_list()`](stri_enc_list.md), [`stri_enc_mark()`](stri_enc_mark.md), [`stri_enc_set()`](stri_enc_set.md)
 
-Other encoding\_detection: [`stri_enc_detect2()`](stri_enc_detect2.md), [`stri_enc_detect()`](stri_enc_detect.md), [`stri_enc_isascii()`](stri_enc_isascii.md), [`stri_enc_isutf16be()`](stri_enc_isutf16.md), [`stri_enc_isutf8()`](stri_enc_isutf8.md)
+Other encoding_detection: [`stri_enc_detect2()`](stri_enc_detect2.md), [`stri_enc_detect()`](stri_enc_detect.md), [`stri_enc_isascii()`](stri_enc_isascii.md), [`stri_enc_isutf16be()`](stri_enc_isutf16.md), [`stri_enc_isutf8()`](stri_enc_isutf8.md)
 
-Other encoding\_conversion: [`stri_enc_fromutf32()`](stri_enc_fromutf32.md), [`stri_enc_toascii()`](stri_enc_toascii.md), [`stri_enc_tonative()`](stri_enc_tonative.md), [`stri_enc_toutf32()`](stri_enc_toutf32.md), [`stri_enc_toutf8()`](stri_enc_toutf8.md), [`stri_encode()`](stri_encode.md)
+Other encoding_conversion: [`stri_enc_fromutf32()`](stri_enc_fromutf32.md), [`stri_enc_toascii()`](stri_enc_toascii.md), [`stri_enc_tonative()`](stri_enc_tonative.md), [`stri_enc_toutf32()`](stri_enc_toutf32.md), [`stri_enc_toutf8()`](stri_enc_toutf8.md), [`stri_encode()`](stri_encode.md)

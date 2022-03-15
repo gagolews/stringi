@@ -1,4 +1,4 @@
-# stri\_enc\_isutf8: Check If a Data Stream Is Possibly in UTF-8
+# stri_enc_isutf8: Check If a Data Stream Is Possibly in UTF-8
 
 ## Description
 
@@ -6,7 +6,7 @@ The function checks whether given sequences of bytes forms a proper UTF-8 string
 
 ## Usage
 
-```r
+``` r
 stri_enc_isutf8(str)
 ```
 
@@ -36,7 +36,7 @@ Returns a logical vector. Its i-th element indicates whether the i-th string cor
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other encoding\_detection: [`about_encoding`](about_encoding.md), [`stri_enc_detect2()`](stri_enc_detect2.md), [`stri_enc_detect()`](stri_enc_detect.md), [`stri_enc_isascii()`](stri_enc_isascii.md), [`stri_enc_isutf16be()`](stri_enc_isutf16.md)
+Other encoding_detection: [`about_encoding`](about_encoding.md), [`stri_enc_detect2()`](stri_enc_detect2.md), [`stri_enc_detect()`](stri_enc_detect.md), [`stri_enc_isascii()`](stri_enc_isascii.md), [`stri_enc_isutf16be()`](stri_enc_isutf16.md)
 
 ## Examples
 

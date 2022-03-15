@@ -1,4 +1,4 @@
-# stri\_write\_lines: Write Text Lines to a Text File
+# stri_write_lines: Write Text Lines to a Text File
 
 ## Description
 
@@ -6,7 +6,7 @@ Writes a text file is such a way that each element of a given character vector b
 
 ## Usage
 
-```r
+``` r
 stri_write_lines(
   str,
   con,

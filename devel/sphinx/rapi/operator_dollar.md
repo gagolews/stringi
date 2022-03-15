@@ -1,4 +1,4 @@
-# operator\_dollar: C-Style Formatting with [`stri_sprintf`](stri_sprintf.md) as a Binary Operator
+# operator_dollar: C-Style Formatting with [`stri_sprintf`](stri_sprintf.md) as a Binary Operator
 
 ## Description
 
@@ -8,7 +8,7 @@ Missing values and empty vectors are propagated as usual.
 
 ## Usage
 
-```r
+``` r
 e1 %s$% e2
 
 e1 %stri$% e2

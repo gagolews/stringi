@@ -1,4 +1,4 @@
-# stri\_timezone\_list: List Available Time Zone Identifiers
+# stri_timezone_list: List Available Time Zone Identifiers
 
 ## Description
 
@@ -6,7 +6,7 @@ Returns a list of available time zone identifiers.
 
 ## Usage
 
-```r
+``` r
 stri_timezone_list(region = NA_character_, offset = NA_integer_)
 ```
 

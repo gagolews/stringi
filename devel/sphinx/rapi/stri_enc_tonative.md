@@ -1,4 +1,4 @@
-# stri\_enc\_tonative: Convert Strings To Native Encoding
+# stri_enc_tonative: Convert Strings To Native Encoding
 
 ## Description
 
@@ -6,7 +6,7 @@ Converts character strings with declared encodings to the current native encodin
 
 ## Usage
 
-```r
+``` r
 stri_enc_tonative(str)
 ```
 
@@ -34,4 +34,4 @@ Returns a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other encoding\_conversion: [`about_encoding`](about_encoding.md), [`stri_enc_fromutf32()`](stri_enc_fromutf32.md), [`stri_enc_toascii()`](stri_enc_toascii.md), [`stri_enc_toutf32()`](stri_enc_toutf32.md), [`stri_enc_toutf8()`](stri_enc_toutf8.md), [`stri_encode()`](stri_encode.md)
+Other encoding_conversion: [`about_encoding`](about_encoding.md), [`stri_enc_fromutf32()`](stri_enc_fromutf32.md), [`stri_enc_toascii()`](stri_enc_toascii.md), [`stri_enc_toutf32()`](stri_enc_toutf32.md), [`stri_enc_toutf8()`](stri_enc_toutf8.md), [`stri_encode()`](stri_encode.md)

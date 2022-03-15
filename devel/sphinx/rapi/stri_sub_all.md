@@ -1,4 +1,4 @@
-# stri\_sub\_all: Extract or Replace Multiple Substrings
+# stri_sub_all: Extract or Replace Multiple Substrings
 
 ## Description
 
@@ -8,7 +8,7 @@ For extracting/replacing single substrings from/within each string, see [`stri_s
 
 ## Usage
 
-```r
+``` r
 stri_sub_all(
   str,
   from = list(1L),

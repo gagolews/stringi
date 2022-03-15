@@ -1,4 +1,4 @@
-# stri\_read\_lines: Read Text Lines from a Text File
+# stri_read_lines: Read Text Lines from a Text File
 
 ## Description
 
@@ -6,7 +6,7 @@ Reads a text file in ins entirety, re-encodes it, and splits it into text lines.
 
 ## Usage
 
-```r
+``` r
 stri_read_lines(con, encoding = NULL, fname = con, fallback_encoding = NULL)
 ```
 

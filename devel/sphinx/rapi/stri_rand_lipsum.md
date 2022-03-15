@@ -1,4 +1,4 @@
-# stri\_rand\_lipsum: A Lorem Ipsum Generator
+# stri_rand_lipsum: A Lorem Ipsum Generator
 
 ## Description
 
@@ -6,7 +6,7 @@ Generates (pseudo)random *lorem ipsum* text consisting of a given number of text
 
 ## Usage
 
-```r
+``` r
 stri_rand_lipsum(n_paragraphs, start_lipsum = TRUE, nparagraphs = n_paragraphs)
 ```
 

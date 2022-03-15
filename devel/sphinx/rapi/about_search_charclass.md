@@ -1,4 +1,4 @@
-# about\_search\_charclass: Character Classes in <span class="pkg">stringi</span>
+# about_search_charclass: Character Classes in <span class="pkg">stringi</span>
 
 ## Description
 
@@ -6,7 +6,7 @@ Here we describe how character classes (sets) can be specified in the <span clas
 
 ## Details
 
-All `stri_*_charclass` functions in <span class="pkg">stringi</span> perform a single character (i.e., Unicode code point) search-based operations. You may obtain the same results using [about\_search\_regex](about_search_regex.md). However, these very functions aim to be faster.
+All `stri_*_charclass` functions in <span class="pkg">stringi</span> perform a single character (i.e., Unicode code point) search-based operations. You may obtain the same results using [about_search_regex](about_search_regex.md). However, these very functions aim to be faster.
 
 Character classes are defined using <span class="pkg">ICU</span>\'s `UnicodeSet` patterns. Below we briefly summarize their syntax. For more details refer to the bibliographic References below.
 
@@ -430,7 +430,7 @@ Therefore, a POSIX flavor of `[:punct:]` is more like `[\p{P}\p{S}]` in <span cl
 
 ## References
 
-*The Unicode Character Database* -- Unicode Standard Annex \#44, <https://www.unicode.org/reports/tr44/>
+*The Unicode Character Database* -- Unicode Standard Annex #44, <https://www.unicode.org/reports/tr44/>
 
 *UnicodeSet* -- ICU User Guide, <https://unicode-org.github.io/icu/userguide/strings/unicodeset.html>
 
@@ -446,6 +446,6 @@ Therefore, a POSIX flavor of `[:punct:]` is more like `[\p{P}\p{S}]` in <span cl
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_charclass: [`about_search`](about_search.md), [`stri_trim_both()`](stri_trim.md)
+Other search_charclass: [`about_search`](about_search.md), [`stri_trim_both()`](stri_trim.md)
 
-Other stringi\_general\_topics: [`about_arguments`](about_arguments.md), [`about_encoding`](about_encoding.md), [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_coll`](about_search_coll.md), [`about_search_fixed`](about_search_fixed.md), [`about_search_regex`](about_search_regex.md), [`about_search`](about_search.md), [`about_stringi`](about_stringi.md)
+Other stringi_general_topics: [`about_arguments`](about_arguments.md), [`about_encoding`](about_encoding.md), [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_coll`](about_search_coll.md), [`about_search_fixed`](about_search_fixed.md), [`about_search_regex`](about_search_regex.md), [`about_search`](about_search.md), [`about_stringi`](about_stringi.md)

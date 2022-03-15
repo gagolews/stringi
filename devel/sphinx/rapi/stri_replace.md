@@ -1,4 +1,4 @@
-# stri\_replace: Replace Pattern Occurrences
+# stri_replace: Replace Pattern Occurrences
 
 ## Description
 
@@ -6,7 +6,7 @@ These functions replace, with the given replacement string, every/first/last sub
 
 ## Usage
 
-```r
+``` r
 stri_replace_all(str, replacement, ..., regex, fixed, coll, charclass)
 
 stri_replace_first(str, replacement, ..., regex, fixed, coll, charclass)
@@ -120,7 +120,7 @@ All the functions return a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_replace: [`about_search`](about_search.md), [`stri_replace_rstr()`](stri_replace_rstr.md), [`stri_trim_both()`](stri_trim.md)
+Other search_replace: [`about_search`](about_search.md), [`stri_replace_rstr()`](stri_replace_rstr.md), [`stri_trim_both()`](stri_trim.md)
 
 ## Examples
 

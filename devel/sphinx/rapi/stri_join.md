@@ -1,4 +1,4 @@
-# stri\_join: Concatenate Character Vectors
+# stri_join: Concatenate Character Vectors
 
 ## Description
 
@@ -6,7 +6,7 @@ These are the <span class="pkg">stringi</span>\'s equivalents of the built-in [`
 
 ## Usage
 
-```r
+``` r
 stri_join(..., sep = "", collapse = NULL, ignore_null = FALSE)
 
 stri_c(..., sep = "", collapse = NULL, ignore_null = FALSE)

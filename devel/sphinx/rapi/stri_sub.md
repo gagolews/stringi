@@ -1,4 +1,4 @@
-# stri\_sub: Extract a Substring From or Replace a Substring In a Character Vector
+# stri_sub: Extract a Substring From or Replace a Substring In a Character Vector
 
 ## Description
 
@@ -8,7 +8,7 @@ For extracting/replacing multiple substrings from/within each string, see [`stri
 
 ## Usage
 
-```r
+``` r
 stri_sub(
   str,
   from = 1L,

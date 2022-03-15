@@ -1,4 +1,4 @@
-# stri\_enc\_detect: Detect Character Set and Language
+# stri_enc_detect: Detect Character Set and Language
 
 ## Description
 
@@ -6,7 +6,7 @@ This function uses the <span class="pkg">ICU</span> engine to determine the char
 
 ## Usage
 
-```r
+``` r
 stri_enc_detect(str, filter_angle_brackets = FALSE)
 ```
 
@@ -33,40 +33,40 @@ This function should most often be used for byte-marked input strings, especiall
 
 The following table shows all the encodings that can be detected:
 
-|                    |                                                                                 |
-|:-------------------|:--------------------------------------------------------------------------------|
-| **Character\_Set** | **Languages**                                                                   |
-| UTF-8              | \--                                                                             |
-| UTF-16BE           | \--                                                                             |
-| UTF-16LE           | \--                                                                             |
-| UTF-32BE           | \--                                                                             |
-| UTF-32LE           | \--                                                                             |
-| Shift\_JIS         | Japanese                                                                        |
-| ISO-2022-JP        | Japanese                                                                        |
-| ISO-2022-CN        | Simplified Chinese                                                              |
-| ISO-2022-KR        | Korean                                                                          |
-| GB18030            | Chinese                                                                         |
-| Big5               | Traditional Chinese                                                             |
-| EUC-JP             | Japanese                                                                        |
-| EUC-KR             | Korean                                                                          |
-| ISO-8859-1         | Danish, Dutch, English, French, German, Italian, Norwegian, Portuguese, Swedish |
-| ISO-8859-2         | Czech, Hungarian, Polish, Romanian                                              |
-| ISO-8859-5         | Russian                                                                         |
-| ISO-8859-6         | Arabic                                                                          |
-| ISO-8859-7         | Greek                                                                           |
-| ISO-8859-8         | Hebrew                                                                          |
-| ISO-8859-9         | Turkish                                                                         |
-| windows-1250       | Czech, Hungarian, Polish, Romanian                                              |
-| windows-1251       | Russian                                                                         |
-| windows-1252       | Danish, Dutch, English, French, German, Italian, Norwegian, Portuguese, Swedish |
-| windows-1253       | Greek                                                                           |
-| windows-1254       | Turkish                                                                         |
-| windows-1255       | Hebrew                                                                          |
-| windows-1256       | Arabic                                                                          |
-| KOI8-R             | Russian                                                                         |
-| IBM420             | Arabic                                                                          |
-| IBM424             | Hebrew                                                                          |
-|                    |                                                                                 |
+|                   |                                                                                 |
+|:------------------|:--------------------------------------------------------------------------------|
+| **Character_Set** | **Languages**                                                                   |
+| UTF-8             | \--                                                                             |
+| UTF-16BE          | \--                                                                             |
+| UTF-16LE          | \--                                                                             |
+| UTF-32BE          | \--                                                                             |
+| UTF-32LE          | \--                                                                             |
+| Shift_JIS         | Japanese                                                                        |
+| ISO-2022-JP       | Japanese                                                                        |
+| ISO-2022-CN       | Simplified Chinese                                                              |
+| ISO-2022-KR       | Korean                                                                          |
+| GB18030           | Chinese                                                                         |
+| Big5              | Traditional Chinese                                                             |
+| EUC-JP            | Japanese                                                                        |
+| EUC-KR            | Korean                                                                          |
+| ISO-8859-1        | Danish, Dutch, English, French, German, Italian, Norwegian, Portuguese, Swedish |
+| ISO-8859-2        | Czech, Hungarian, Polish, Romanian                                              |
+| ISO-8859-5        | Russian                                                                         |
+| ISO-8859-6        | Arabic                                                                          |
+| ISO-8859-7        | Greek                                                                           |
+| ISO-8859-8        | Hebrew                                                                          |
+| ISO-8859-9        | Turkish                                                                         |
+| windows-1250      | Czech, Hungarian, Polish, Romanian                                              |
+| windows-1251      | Russian                                                                         |
+| windows-1252      | Danish, Dutch, English, French, German, Italian, Norwegian, Portuguese, Swedish |
+| windows-1253      | Greek                                                                           |
+| windows-1254      | Turkish                                                                         |
+| windows-1255      | Hebrew                                                                          |
+| windows-1256      | Arabic                                                                          |
+| KOI8-R            | Russian                                                                         |
+| IBM420            | Arabic                                                                          |
+| IBM424            | Hebrew                                                                          |
+|                   |                                                                                 |
 
 ## Value
 
@@ -92,7 +92,7 @@ The guesses are ordered by decreasing confidence.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other encoding\_detection: [`about_encoding`](about_encoding.md), [`stri_enc_detect2()`](stri_enc_detect2.md), [`stri_enc_isascii()`](stri_enc_isascii.md), [`stri_enc_isutf16be()`](stri_enc_isutf16.md), [`stri_enc_isutf8()`](stri_enc_isutf8.md)
+Other encoding_detection: [`about_encoding`](about_encoding.md), [`stri_enc_detect2()`](stri_enc_detect2.md), [`stri_enc_isascii()`](stri_enc_isascii.md), [`stri_enc_isutf16be()`](stri_enc_isutf16.md), [`stri_enc_isutf8()`](stri_enc_isutf8.md)
 
 ## Examples
 

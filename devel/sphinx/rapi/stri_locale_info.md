@@ -1,4 +1,4 @@
-# stri\_locale\_info: Query Given Locale
+# stri_locale_info: Query Given Locale
 
 ## Description
 
@@ -6,7 +6,7 @@ Provides some basic information on a given locale identifier.
 
 ## Usage
 
-```r
+``` r
 stri_locale_info(locale = NULL)
 ```
 
@@ -18,7 +18,7 @@ stri_locale_info(locale = NULL)
 
 ## Details
 
-With this function you may obtain some basic information on any provided locale identifier, even if it is unsupported by <span class="pkg">ICU</span> or if you pass a malformed locale identifier (the one that is not, e.g., of the form Language\_Country). See [stringi-locale](about_locale.md) for discussion.
+With this function you may obtain some basic information on any provided locale identifier, even if it is unsupported by <span class="pkg">ICU</span> or if you pass a malformed locale identifier (the one that is not, e.g., of the form Language_Country). See [stringi-locale](about_locale.md) for discussion.
 
 This function does not do anything really complicated. In many cases it is similar to a call to [`as.list(stri_split_fixed(locale, '_', 3L)[[1]])`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/list.html), with `locale` case mapped. It may be used, however, to get insight on how ICU understands a given locale identifier.
 
@@ -34,7 +34,7 @@ Returns a list with the following named character strings: `Language`, `Country`
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other locale\_management: [`about_locale`](about_locale.md), [`stri_locale_list()`](stri_locale_list.md), [`stri_locale_set()`](stri_locale_set.md)
+Other locale_management: [`about_locale`](about_locale.md), [`stri_locale_list()`](stri_locale_list.md), [`stri_locale_set()`](stri_locale_set.md)
 
 ## Examples
 

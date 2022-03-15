@@ -1,4 +1,4 @@
-# about\_locale: Locales and <span class="pkg">stringi</span>
+# about_locale: Locales and <span class="pkg">stringi</span>
 
 ## Description
 
@@ -10,11 +10,11 @@ Because a locale is just an identifier of a region, no validity check is perform
 
 ## Locale Identifiers
 
-<span class="pkg">ICU</span> services are parametrized by locale, to deliver culturally correct results. Locales are identified by character strings of the form `Language` code, `Language_Country` code, or `Language_Country_Variant` code, e.g., \'en\_US\'.
+<span class="pkg">ICU</span> services are parametrized by locale, to deliver culturally correct results. Locales are identified by character strings of the form `Language` code, `Language_Country` code, or `Language_Country_Variant` code, e.g., \'en_US\'.
 
 The two-letter `Language` code uses the ISO-639-1 standard, e.g., \'en\' stands for English, \'pl\' -- Polish, \'fr\' -- French, and \'de\' for German.
 
-`Country` is a two-letter code following the ISO-3166 standard. This is to reflect different language conventions within the same language, for example in US-English (\'en\_US\') and Australian-English (\'en\_AU\').
+`Country` is a two-letter code following the ISO-3166 standard. This is to reflect different language conventions within the same language, for example in US-English (\'en_US\') and Australian-English (\'en_AU\').
 
 Differences may also appear in language conventions used within the same country. For example, the Euro currency may be used in several European countries while the individual country\'s currency is still in circulation. In such a case, <span class="pkg">ICU</span> `Variant` \'\_EURO\' could be used for selecting locales that support the Euro currency.
 
@@ -50,8 +50,8 @@ Other locale-sensitive functions include, e.g., [`stri_trans_tolower`](stri_tran
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other locale\_management: [`stri_locale_info()`](stri_locale_info.md), [`stri_locale_list()`](stri_locale_list.md), [`stri_locale_set()`](stri_locale_set.md)
+Other locale_management: [`stri_locale_info()`](stri_locale_info.md), [`stri_locale_list()`](stri_locale_list.md), [`stri_locale_set()`](stri_locale_set.md)
 
-Other locale\_sensitive: [`%s<%()`](+25s+3C+25.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_coll`](about_search_coll.md), [`stri_compare()`](stri_compare.md), [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_duplicated()`](stri_duplicated.md), [`stri_enc_detect2()`](stri_enc_detect2.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_opts_collator()`](stri_opts_collator.md), [`stri_order()`](stri_order.md), [`stri_rank()`](stri_rank.md), [`stri_sort_key()`](stri_sort_key.md), [`stri_sort()`](stri_sort.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_trans_tolower()`](stri_trans_casemap.md), [`stri_unique()`](stri_unique.md), [`stri_wrap()`](stri_wrap.md)
+Other locale_sensitive: [`%s<%()`](+25s+3C+25.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_coll`](about_search_coll.md), [`stri_compare()`](stri_compare.md), [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_duplicated()`](stri_duplicated.md), [`stri_enc_detect2()`](stri_enc_detect2.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_opts_collator()`](stri_opts_collator.md), [`stri_order()`](stri_order.md), [`stri_rank()`](stri_rank.md), [`stri_sort_key()`](stri_sort_key.md), [`stri_sort()`](stri_sort.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_trans_tolower()`](stri_trans_casemap.md), [`stri_unique()`](stri_unique.md), [`stri_wrap()`](stri_wrap.md)
 
-Other stringi\_general\_topics: [`about_arguments`](about_arguments.md), [`about_encoding`](about_encoding.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_charclass`](about_search_charclass.md), [`about_search_coll`](about_search_coll.md), [`about_search_fixed`](about_search_fixed.md), [`about_search_regex`](about_search_regex.md), [`about_search`](about_search.md), [`about_stringi`](about_stringi.md)
+Other stringi_general_topics: [`about_arguments`](about_arguments.md), [`about_encoding`](about_encoding.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_charclass`](about_search_charclass.md), [`about_search_coll`](about_search_coll.md), [`about_search_fixed`](about_search_fixed.md), [`about_search_regex`](about_search_regex.md), [`about_search`](about_search.md), [`about_stringi`](about_stringi.md)

@@ -1,4 +1,4 @@
-# stri\_startsendswith: Determine if the Start or End of a String Matches a Pattern
+# stri_startsendswith: Determine if the Start or End of a String Matches a Pattern
 
 ## Description
 
@@ -6,7 +6,7 @@ These functions check if a string starts or ends with a match to a given pattern
 
 ## Usage
 
-```r
+``` r
 stri_startswith(str, ..., fixed, coll, charclass)
 
 stri_endswith(str, ..., fixed, coll, charclass)
@@ -94,7 +94,7 @@ Each function returns a logical vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_detect: [`about_search`](about_search.md), [`stri_detect()`](stri_detect.md)
+Other search_detect: [`about_search`](about_search.md), [`stri_detect()`](stri_detect.md)
 
 ## Examples
 

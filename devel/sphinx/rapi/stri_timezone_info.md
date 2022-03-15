@@ -1,4 +1,4 @@
-# stri\_timezone\_info: Query a Given Time Zone
+# stri_timezone_info: Query a Given Time Zone
 
 ## Description
 
@@ -6,7 +6,7 @@ Provides some basic information on a given time zone identifier.
 
 ## Usage
 
-```r
+``` r
 stri_timezone_info(tz = NULL, locale = NULL, display_type = "long")
 ```
 

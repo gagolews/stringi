@@ -1,4 +1,4 @@
-# stri\_datetime\_symbols: List Localizable Date-Time Formatting Data
+# stri_datetime_symbols: List Localizable Date-Time Formatting Data
 
 ## Description
 
@@ -6,7 +6,7 @@ Returns a list of all localizable date-time formatting data, including month and
 
 ## Usage
 
-```r
+``` r
 stri_datetime_symbols(locale = NULL, context = "standalone", width = "wide")
 ```
 

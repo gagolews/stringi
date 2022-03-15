@@ -1,4 +1,4 @@
-# stri\_rand\_shuffle: Randomly Shuffle Code Points in Each String
+# stri_rand_shuffle: Randomly Shuffle Code Points in Each String
 
 ## Description
 
@@ -6,7 +6,7 @@ Generates a (pseudo)random permutation of the code points in each string.
 
 ## Usage
 
-```r
+``` r
 stri_rand_shuffle(str)
 ```
 

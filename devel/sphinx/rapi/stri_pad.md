@@ -1,4 +1,4 @@
-# stri\_pad: Pad (Center/Left/Right Align) a String
+# stri_pad: Pad (Center/Left/Right Align) a String
 
 ## Description
 
@@ -6,7 +6,7 @@ Add multiple `pad` characters at the given `side`(s) of each string so that each
 
 ## Usage
 
-```r
+``` r
 stri_pad_both(
   str,
   width = floor(0.9 * getOption("width")),

@@ -1,4 +1,4 @@
-# stri\_isempty: Determine if a String is of Length Zero
+# stri_isempty: Determine if a String is of Length Zero
 
 ## Description
 
@@ -6,7 +6,7 @@ This is the fastest way to find out whether the elements of a character vector a
 
 ## Usage
 
-```r
+``` r
 stri_isempty(str)
 ```
 

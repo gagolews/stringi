@@ -1,4 +1,4 @@
-# stri\_split: Split a String By Pattern Matches
+# stri_split: Split a String By Pattern Matches
 
 ## Description
 
@@ -6,7 +6,7 @@ These functions split each element in `str` into substrings. `pattern` defines t
 
 ## Usage
 
-```r
+``` r
 stri_split(str, ..., regex, fixed, coll, charclass)
 
 stri_split_fixed(
@@ -91,7 +91,7 @@ Otherwise, [`stri_list2matrix`](stri_list2matrix.md) with `byrow=TRUE` and `n_mi
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_split: [`about_search`](about_search.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_split_lines()`](stri_split_lines.md)
+Other search_split: [`about_search`](about_search.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_split_lines()`](stri_split_lines.md)
 
 ## Examples
 

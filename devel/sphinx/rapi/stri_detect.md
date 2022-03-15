@@ -1,4 +1,4 @@
-# stri\_detect: Detect Pattern Occurrences
+# stri_detect: Detect Pattern Occurrences
 
 ## Description
 
@@ -6,7 +6,7 @@ These functions determine, for each string in `str`, if there is at least one ma
 
 ## Usage
 
-```r
+``` r
 stri_detect(str, ..., regex, fixed, coll, charclass)
 
 stri_detect_fixed(
@@ -74,7 +74,7 @@ Each function returns a logical vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_detect: [`about_search`](about_search.md), [`stri_startswith()`](stri_startsendswith.md)
+Other search_detect: [`about_search`](about_search.md), [`stri_startswith()`](stri_startsendswith.md)
 
 ## Examples
 

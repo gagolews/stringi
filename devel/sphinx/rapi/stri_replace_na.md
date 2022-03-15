@@ -1,4 +1,4 @@
-# stri\_replace\_na: Replace Missing Values in a Character Vector
+# stri_replace_na: Replace Missing Values in a Character Vector
 
 ## Description
 
@@ -6,7 +6,7 @@ This function gives a convenient way to replace each missing (`NA`) value with a
 
 ## Usage
 
-```r
+``` r
 stri_replace_na(str, replacement = "NA")
 ```
 

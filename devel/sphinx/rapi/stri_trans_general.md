@@ -1,4 +1,4 @@
-# stri\_trans\_general: General Text Transforms, Including Transliteration
+# stri_trans_general: General Text Transforms, Including Transliteration
 
 ## Description
 
@@ -14,7 +14,7 @@
 
 ## Usage
 
-```r
+``` r
 stri_trans_general(str, id, rules = FALSE, forward = TRUE)
 ```
 
