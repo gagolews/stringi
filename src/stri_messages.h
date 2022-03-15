@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' project.
- * Copyright (c) 2013-2021, Marek Gagolewski <https://www.gagolewski.com>
+ * Copyright (c) 2013-2022, Marek Gagolewski <https://www.gagolewski.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -357,5 +357,7 @@
 #define MSG__U_CHARSET_IS_UTF8 \
    "system ICU assumes that the default character set is always UTF-8, and hence this function has no effect"
 
+#define MSG__CHARSXP_2147483647 \
+    "Elements of character vectors (CHARSXPs) are limited to 2^31-1 bytes"
 
 #endif

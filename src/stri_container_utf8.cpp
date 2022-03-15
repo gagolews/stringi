@@ -73,7 +73,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
     if (this->n == 0)
         return; /* nothing more to do */
 
-
+    STRI_ASSERT(this->n > 0);
     this->str = new String8[this->n];
     STRI_ASSERT(this->str);
     if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE,
