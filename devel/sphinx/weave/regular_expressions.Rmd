@@ -149,7 +149,7 @@ since R 4.0 we can also input the so-called literal strings like
 The (unescaped) dot, "`.`", matches any code point except the newline.
 
 ```{r }
-x <- "Ham, spam,\njam, SPAM, eggs, and spam"
+x <- "Spam, ham,\njam, SPAM, eggs, and spam"
 stri_extract_all_regex(x, "..am", case_insensitive=TRUE)
 ```
 
@@ -388,7 +388,8 @@ optional. This can be achieved by means of the following quantifiers:
 -   "`{n}`" matches exactly `n` times.
 
 These operators are applied to the preceding atoms. For example, "`ba+`"
-captures `"ba"`, `"baa"`, `"baaa"`, etc., but not `"b"` alone.
+captures `"ba"`, `"baa"`, `"baaa"`, etc., but neither `"b"` alone
+nor `"bababa"` altogether.
 
 By default, the quantifiers are greedy -- they match the repeated
 subexpression as many times as possible. The "`?`" suffix (hence,
