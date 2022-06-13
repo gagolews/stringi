@@ -3470,7 +3470,7 @@ constitute a separate text line), with any output encoding.
 \paragraph{Detecting encoding.}
 However, if a file's encoding is not known in advance, there are
 a certain functions that can aid in encoding detection.
-First, we can read the resource in form of a raw-type vector:
+First, we can read the resource in the form of a raw-type vector:
 
 
 <<>>=
