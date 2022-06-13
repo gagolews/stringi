@@ -63,9 +63,9 @@ Other datetime: [`stri_datetime_create()`](stri_datetime_create.md), [`stri_date
 x <- stri_datetime_now()
 stri_datetime_add(x, units='months') <- 2
 print(x)
-## [1] "2022-05-15 12:53:42 AEST"
+## [1] "2022-08-13 15:50:57 AEST"
 stri_datetime_add(x, -2, units='months')
-## [1] "2022-03-15 12:53:42 AEDT"
+## [1] "2022-06-13 15:50:57 AEST"
 stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units='years')
 ## [1] "2015-04-20 12:00:00 AEST"
 stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units='years', locale='@calendar=hebrew')

@@ -1829,7 +1829,7 @@ implemented in \pkg{ICU}, which was inspired
 by \proglang{Java}'s \pkg{util.regex}
 in \pkg{JDK 1.4}. Their syntax is mostly compatible with that of \pkg{PCRE},
 although certain more advanced facets might not be supported (e.g., recursive
-patters). On the other hand, \pkg{ICU} regexes fully conform to the
+patterns). On the other hand, \pkg{ICU} regexes fully conform to the
 Unicode Technical Standard \#18 \citep{uts18:regex} and hence provide
 comprehensive support for Unicode.
 
@@ -1837,7 +1837,7 @@ comprehensive support for Unicode.
 It is worth noting that most programming languages
 as well as advanced text editors and development environments (including
 \pkg{Kate}, \pkg{Eclipse}, \pkg{VSCode}, and \pkg{RStudio})
-support finding or replacing patters with regexes.
+support finding or replacing patterns with regexes.
 Therefore, they should be amongst the instruments
 at every data scientist's disposal.
 One general introduction to regexes is \citep{friedl}.

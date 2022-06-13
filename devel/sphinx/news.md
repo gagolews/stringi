@@ -14,6 +14,11 @@
 * [BUGFIX] TODO.... #469: `stri_datetime_parse` did not reset the `Calendar` object
     when parsing multiple dates.
 
+* [NEW FEATURE] TODO... #476 U_USING_DEFAULT_ERROR on unknown locales
+
+* [NEW FEATURE] TODO... #81 number format
+
+* [NEW FEATURE] TODO... #477 sprintf localised number format
 
 * [NEW FEATURE] #471: split into overlapping or non-overlapping chunks,
     possibly of different lengths

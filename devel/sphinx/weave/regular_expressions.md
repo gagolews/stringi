@@ -44,7 +44,7 @@ implemented in [*ICU*](https://icu.unicode.org/),
 which was inspired by Java's *util.regex* in
 *JDK 1.4*. Their syntax is mostly compatible with that of *PCRE*, although
 certain more advanced facets might not be supported (e.g., recursive
-patters). On the other hand, *ICU* regexes fully conform to the
+patterns). On the other hand, *ICU* regexes fully conform to the
 [Unicode Technical Standard \#18](https://www.unicode.org/reports/tr18/)
 and hence provide comprehensive support for Unicode.
 
@@ -53,7 +53,7 @@ text editors and development environments
 (including [*Kate*](https://kate-editor.org/),
 [*Eclipse*](https://www.eclipse.org/ide/),
 [*VSCode*](https://code.visualstudio.com/),
-and [*RStudio*](https://www.rstudio.com/products/rstudio/)) support finding or replacing patters with
+and [*RStudio*](https://www.rstudio.com/products/rstudio/)) support finding or replacing patterns with
 regexes. Therefore, they should be amongst the instruments at every data
 scientist's disposal. One general introduction to regexes is {cite}`friedl`.
 The *ICU* flavour is summarised at
@@ -154,10 +154,10 @@ The (unescaped) dot, "`.`", matches any code point except the newline.
 
 
 ```r
-x <- "Ham, spam,\njam, SPAM, eggs, and spam"
+x <- "Spam, ham,\njam, SPAM, eggs, and spam"
 stri_extract_all_regex(x, "..am", case_insensitive=TRUE)
 ## [[1]]
-## [1] "spam" "SPAM" "spam"
+## [1] "Spam" " ham" "SPAM" "spam"
 ```
 
 The above matches non-overlapping length-4 substrings that end with
@@ -172,7 +172,7 @@ can be altered by setting the `dot_all` option to `TRUE`.
 ```r
 stri_extract_all_regex(x, "..am", dot_all=TRUE, case_insensitive=TRUE)
 ## [[1]]
-## [1] "spam"  "\njam" "SPAM"  "spam"
+## [1] "Spam"  " ham"  "\njam" "SPAM"  "spam"
 ```
 
 ### Defining Character Sets
@@ -186,7 +186,7 @@ matches one (and only one) symbol from this set. Moreover, in:
 ```r
 stri_extract_all_regex(x, "[hj]am")
 ## [[1]]
-## [1] "jam"
+## [1] "ham" "jam"
 ```
 
 the "`[hj]am`" regex matches: "`h`" or "`j`", followed by "`a`",
@@ -458,7 +458,8 @@ optional. This can be achieved by means of the following quantifiers:
 -   "`{n}`" matches exactly `n` times.
 
 These operators are applied to the preceding atoms. For example, "`ba+`"
-captures `"ba"`, `"baa"`, `"baaa"`, etc., but not `"b"` alone.
+captures `"ba"`, `"baa"`, `"baaa"`, etc., but neither `"b"` alone
+nor `"bababa"` altogether.
 
 By default, the quantifiers are greedy -- they match the repeated
 subexpression as many times as possible. The "`?`" suffix (hence,
