@@ -356,9 +356,9 @@ documentation object `stri_datetime_format`: `...`
 
 * [BUGFIX] #319: Fixed overflow in `stri_rand_shuffle()`.
 
-* [BUGFIX] #337: Empty search patters in search functions (e.g.,
+* [BUGFIX] #337: Empty search patterns in search functions (e.g.,
   `stri_split_regex()` and `stri_count_fixed()`) used to raise
-  too many warnings on empty search patters.
+  too many warnings on empty search patterns.
 
 
 ## 1.2.4 (2018-07-20)
