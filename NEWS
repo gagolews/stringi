@@ -3,9 +3,23 @@
 
 ## 1.7.6.9xxx (under development)
 
+* [DOCUMENTATION] ...Paper on *stringi* has been published in
+    the *Journal of Statistical Software*....
+
 * [BUGFIX] #473, #397: Fixed buffer overflow in `stri_dup`.
     `stri_dup`, `stri_paste`, ... fail more graciously on attempts to
     generate strings of length >= 2^31 each.
+
+* [DOCUMENTATION] #462... That the `numeric=TRUE` collator
+    does not handle negative numbers correctly is not mentioned in the manual.
+
+* [BUGFIX] #480... Using `Rf_isNull` instead of isNull`.
+
+...    checkRd: (-1) stri_trans_nf.Rd:74: Escaped LaTeX specials: \#
+...    checkRd: (-1) stri_trans_nf.Rd:92: Escaped LaTeX specials: \#
+...    icu69/common/cstring.h:43:70: warning: 'char* strncpy(char*, const char*, size_t)' output may be truncated copying 156 bytes from a string of length 156 [-Wstringop-truncation]
+
+
 
 * [NEW FEATURE] TODO.... #469: `stri_datetime_parse` .. new argument -
 `default_time`
@@ -20,10 +34,9 @@
 
 * [NEW FEATURE] TODO... #477 sprintf localised number format
 
-* [NEW FEATURE] #471: split into overlapping or non-overlapping chunks,
+* [NEW FEATURE] TODO... #471: split into overlapping or non-overlapping chunks,
     possibly of different lengths
 
-* [DOCUMENTATION] #462...
 
 
 
