@@ -12,8 +12,8 @@
 
 * [BUGFIX] #480: Using `Rf_isNull` instead of isNull`.
 
-* [DOCUMENTATION] #462... That the `numeric=TRUE` collator
-    does not handle negative numbers correctly is not mentioned in the manual.
+* [DOCUMENTATION] #462: That the `numeric=TRUE` collator
+    does not handle negative numbers correctly is now mentioned in the manual.
 
 
 ...    checkRd: (-1) stri_trans_nf.Rd:74: Escaped LaTeX specials: \#

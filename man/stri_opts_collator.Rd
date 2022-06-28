@@ -65,7 +65,8 @@ normalization is performed}
 \item{numeric}{single logical value;
 when turned on, this attribute generates a collation key for
 the numeric value of substrings of digits;
-this is a way to get '100' to sort AFTER '2'}
+this is a way to get '100' to sort AFTER '2';
+note that negative numbers will not be ordered properly}
 
 \item{...}{[DEPRECATED] any other arguments passed to this function
 generate a warning; this argument will be removed in the future}
