@@ -58,7 +58,7 @@ StriContainerListRaw::StriContainerListRaw(SEXP rstr)
 {
     this->data = NULL;
 
-    if (isNull(rstr)) {
+    if (Rf_isNull(rstr)) {
         this->init_Base(1, 1, true);
         this->data = new String8[this->n]; // 1 string, NA
         if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
@@ -78,7 +78,7 @@ StriContainerListRaw::StriContainerListRaw(SEXP rstr)
         if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
         for (R_len_t i=0; i<this->n; ++i) {
             SEXP cur = VECTOR_ELT(rstr, i);
-            if (!isNull(cur)) {
+            if (!Rf_isNull(cur)) {
                 bool memalloc = ALTREP(cur);  // #354: force copying of ALTREP data
                 this->data[i].initialize((const char*)RAW(cur), LENGTH(cur),
                                          memalloc, false/*killbom*/, false/*isASCII*/); // shallow copy

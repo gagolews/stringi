@@ -57,7 +57,7 @@ void StriBrkIterOptions::setType(SEXP opts_brkiter, const char* _default) {
     const char* type_opts[] = {"character", "line_break", "sentence", "word", NULL};
     int brkiter_cur = stri__match_arg(_default, type_opts);
 
-    if (isNull(opts_brkiter)) {
+    if (Rf_isNull(opts_brkiter)) {
         // use default settings
     }
     else if (Rf_isVectorList(opts_brkiter)) {
@@ -127,7 +127,7 @@ void StriBrkIterOptions::setType(SEXP opts_brkiter, const char* _default) {
  *     moved to the StriBrkIterOptions class
  */
 void StriBrkIterOptions::setLocale(SEXP opts_brkiter) {
-    if (isNull(opts_brkiter)) {
+    if (Rf_isNull(opts_brkiter)) {
         // use default locale
     }
     else if (Rf_isVectorList(opts_brkiter)) {
@@ -168,7 +168,7 @@ void StriBrkIterOptions::setLocale(SEXP opts_brkiter) {
  *     moved to the StriBrkIterOptions class
  */
 void StriBrkIterOptions::setSkipRuleStatus(SEXP opts_brkiter) {
-    if (isNull(opts_brkiter)) {
+    if (Rf_isNull(opts_brkiter)) {
         return; // leave as-is (empty)
     }
 

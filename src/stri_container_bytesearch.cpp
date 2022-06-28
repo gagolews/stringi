@@ -399,10 +399,10 @@ StriByteSearchMatcher* StriContainerByteSearch::getMatcher(R_len_t i) {
 uint32_t StriContainerByteSearch::getByteSearchFlags(SEXP opts_fixed, bool allow_overlap)
 {
     uint32_t flags = 0;
-    if (!isNull(opts_fixed) && !Rf_isVectorList(opts_fixed))
+    if (!Rf_isNull(opts_fixed) && !Rf_isVectorList(opts_fixed))
         Rf_error(MSG__ARG_EXPECTED_LIST, "opts_fixed"); // error() call allowed here
 
-    R_len_t narg = isNull(opts_fixed)?0:LENGTH(opts_fixed);
+    R_len_t narg = Rf_isNull(opts_fixed)?0:LENGTH(opts_fixed);
 
     if (narg > 0) {
 

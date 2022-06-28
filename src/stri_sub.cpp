@@ -74,7 +74,7 @@ R_len_t stri__sub_prepare_from_to_length(SEXP& from, SEXP& to, SEXP& length,
         bool fromlength_matrix = false;
         SEXP t;
         PROTECT(t = Rf_getAttrib(from, R_DimNamesSymbol));
-        if (!isNull(t)) {
+        if (!Rf_isNull(t)) {
             SEXP t2;
             PROTECT(t2 = VECTOR_ELT(t, 1));
             if (
@@ -102,7 +102,7 @@ R_len_t stri__sub_prepare_from_to_length(SEXP& from, SEXP& to, SEXP& length,
         //PROTECT(to); /* fake - not to provoke stack imbalance */
         //PROTECT(length); /* fake - not to provoke stack imbalance */
     }
-    else if (isNull(length)) {
+    else if (Rf_isNull(length)) {
         sub_protected++;
         PROTECT(to    = stri__prepare_arg_integer(to, "to"));
         from_len      = LENGTH(from);
@@ -486,10 +486,10 @@ SEXP stri_sub_all(SEXP str, SEXP from, SEXP to, SEXP length, SEXP use_matrix, SE
 
 
     R_len_t vectorize_len;
-    if (!isNull(to))
+    if (!Rf_isNull(to))
         vectorize_len = stri__recycling_rule(true, 3,
                                              str_len, from_len, LENGTH(to));
-    else if (!isNull(length))
+    else if (!Rf_isNull(length))
         vectorize_len = stri__recycling_rule(true, 3,
                                              str_len, from_len, LENGTH(length));
     else
@@ -513,12 +513,12 @@ SEXP stri_sub_all(SEXP str, SEXP from, SEXP to, SEXP length, SEXP use_matrix, SE
         SET_STRING_ELT(str_tmp, 0, tmp);
         UNPROTECT(1); //tmp
 
-        if (!isNull(to)) {
+        if (!Rf_isNull(to)) {
             PROTECT(tmp = stri_sub(
                 str_tmp, VECTOR_ELT(from, i%from_len), VECTOR_ELT(to, i%LENGTH(to)), R_NilValue, use_matrix, ignore_negative_length
             ));
         }
-        else if (!isNull(length)) {
+        else if (!Rf_isNull(length)) {
             PROTECT(tmp = stri_sub(
                 str_tmp, VECTOR_ELT(from, i%from_len), R_NilValue, VECTOR_ELT(length, i%LENGTH(length)), use_matrix, ignore_negative_length
             ));
@@ -771,10 +771,10 @@ SEXP stri_sub_replacement_all(SEXP str, SEXP from, SEXP to, SEXP length, SEXP om
 
 
     R_len_t vectorize_len;
-    if (!isNull(to))
+    if (!Rf_isNull(to))
         vectorize_len = stri__recycling_rule(true, 4,
                                              str_len, from_len, value_len, LENGTH(to));
-    else if (!isNull(length))
+    else if (!Rf_isNull(length))
         vectorize_len = stri__recycling_rule(true, 4,
                                              str_len, from_len, value_len, LENGTH(length));
     else
@@ -797,13 +797,13 @@ SEXP stri_sub_replacement_all(SEXP str, SEXP from, SEXP to, SEXP length, SEXP om
             continue;
         }
 
-        if (!isNull(to)) {
+        if (!Rf_isNull(to)) {
             PROTECT(tmp = stri__sub_replacement_all_single(curs,
                           VECTOR_ELT(from, i%from_len),
                           VECTOR_ELT(to, i%LENGTH(to)), R_NilValue,
                           omit_na_1, use_matrix_1, VECTOR_ELT(value, i%value_len)));
         }
-        else if (!isNull(length)) {
+        else if (!Rf_isNull(length)) {
             PROTECT(tmp = stri__sub_replacement_all_single(curs,
                           VECTOR_ELT(from, i%from_len),
                           R_NilValue, VECTOR_ELT(length, i%LENGTH(length)),

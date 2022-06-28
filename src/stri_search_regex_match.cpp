@@ -185,7 +185,7 @@ SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP o
     if (pattern_cont.get_n() == 1) {  // only if there's 1 pattern, otherwise how to agree names?
         SEXP dimnames;
         STRI__PROTECT(dimnames = pattern_cont.getCaptureGroupRDimnames(0));  // reuses last matcher btw
-        if (!isNull(dimnames)) Rf_setAttrib(ret, R_DimNamesSymbol, dimnames);
+        if (!Rf_isNull(dimnames)) Rf_setAttrib(ret, R_DimNamesSymbol, dimnames);
         STRI__UNPROTECT(1);
     }
 
@@ -304,7 +304,7 @@ SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP cg_mi
 
         if ((str_cont).isNA(i)) {
             STRI__PROTECT(cur_res = stri__matrix_NA_STRING(1, pattern_cur_groups+1));
-            if (!isNull(dimnames)) Rf_setAttrib(cur_res, R_DimNamesSymbol, dimnames);
+            if (!Rf_isNull(dimnames)) Rf_setAttrib(cur_res, R_DimNamesSymbol, dimnames);
             SET_VECTOR_ELT(ret, i, cur_res);
             STRI__UNPROTECT(2);  // cur_res, dimnames
             continue;
@@ -331,14 +331,14 @@ SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP cg_mi
         R_len_t noccurrences = (R_len_t)occurrences.size()/(pattern_cur_groups+1);
         if (noccurrences <= 0) {
             STRI__PROTECT(cur_res = stri__matrix_NA_STRING(omit_no_match1?0:1, pattern_cur_groups+1));
-            if (!isNull(dimnames)) Rf_setAttrib(cur_res, R_DimNamesSymbol, dimnames);
+            if (!Rf_isNull(dimnames)) Rf_setAttrib(cur_res, R_DimNamesSymbol, dimnames);
             SET_VECTOR_ELT(ret, i, cur_res);
             STRI__UNPROTECT(2);  // cur_res, dimnames
             continue;
         }
 
         STRI__PROTECT(cur_res = Rf_allocMatrix(STRSXP, noccurrences, pattern_cur_groups+1));
-        if (!isNull(dimnames)) Rf_setAttrib(cur_res, R_DimNamesSymbol, dimnames);
+        if (!Rf_isNull(dimnames)) Rf_setAttrib(cur_res, R_DimNamesSymbol, dimnames);
 
         const char* str_cur_s = str_cont.get(i).c_str();
         deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();

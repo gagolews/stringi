@@ -309,7 +309,7 @@ public:
             R_PreserveObject(y);
             protected_objects.push_back(y);
             UNPROTECT(1);
-            if (isNull(y)) throw StriException(MSG__ARG_EXPECTED_INTEGER, "...");
+            if (Rf_isNull(y)) throw StriException(MSG__ARG_EXPECTED_INTEGER, "...");
             x_integer[i] = new StriContainerInteger(y, vectorize_length);
         }
 
@@ -339,7 +339,7 @@ public:
             R_PreserveObject(y);
             protected_objects.push_back(y);
             UNPROTECT(1);
-            if (isNull(y)) throw StriException(MSG__ARG_EXPECTED_NUMERIC, "...");
+            if (Rf_isNull(y)) throw StriException(MSG__ARG_EXPECTED_NUMERIC, "...");
             x_double[i] = new StriContainerDouble(y, vectorize_length);
         }
 
@@ -368,7 +368,7 @@ public:
             R_PreserveObject(y);
             protected_objects.push_back(y);
             UNPROTECT(1);
-            if (isNull(y)) throw StriException(MSG__ARG_EXPECTED_STRING, "...");
+            if (Rf_isNull(y)) throw StriException(MSG__ARG_EXPECTED_STRING, "...");
             x_string[i] = new StriContainerUTF8(y, vectorize_length);
         }
 
@@ -898,7 +898,7 @@ SEXP stri_sprintf(SEXP format, SEXP x, SEXP na_string,
     // TODO: ICU number format  1,234.567 / 1 234,567 / etc.
 
     for (R_len_t j=0; j<narg; j++) {
-        if (isNull(VECTOR_ELT(x, j))) {
+        if (Rf_isNull(VECTOR_ELT(x, j))) {
             vectorize_length = 0;
             continue;
         }
