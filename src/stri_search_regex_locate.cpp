@@ -254,7 +254,7 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
             }
 
             stri__locate_set_dimnames_list(cgs, get_length1);  // all matrices get from&to colnames
-            if (!isNull(names)) Rf_setAttrib(cgs, R_NamesSymbol, names);
+            if (!Rf_isNull(names)) Rf_setAttrib(cgs, R_NamesSymbol, names);
             Rf_setAttrib(ans, Rf_ScalarString(Rf_mkChar("capture_groups")), cgs);
             STRI__UNPROTECT(2);
         }
@@ -439,7 +439,7 @@ SEXP stri__locate_firstlast_regex(
             SEXP names;
             // only if there's 1 pattern, otherwise how to agree names?
             STRI__PROTECT(names = pattern_cont.getCaptureGroupRNames(0));  // TODO: reuse
-            if (!isNull(names)) Rf_setAttrib(cgs, R_NamesSymbol, names);
+            if (!Rf_isNull(names)) Rf_setAttrib(cgs, R_NamesSymbol, names);
             STRI__UNPROTECT(1);
         }
         Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("capture_groups")), cgs);

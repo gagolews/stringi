@@ -55,7 +55,7 @@ StriContainerListInt::StriContainerListInt(SEXP rstr)
 {
     this->data = NULL;
 
-    if (isNull(rstr)) {
+    if (Rf_isNull(rstr)) {
         this->init_Base(1, 1, true);
         this->data = new IntVec[this->n]; // 1 vector, NA/NULL
         if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
@@ -74,7 +74,7 @@ StriContainerListInt::StriContainerListInt(SEXP rstr)
         if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
         for (R_len_t i=0; i<this->n; ++i) {
             SEXP cur = VECTOR_ELT(rstr, i);
-            if (!isNull(cur))
+            if (!Rf_isNull(cur))
                 this->data[i].initialize((const int*)INTEGER(cur), LENGTH(cur)); // shallow copy // TODO: ALTREP will be problematic?
             // else leave as-is, i.e., NULL/NA
         }

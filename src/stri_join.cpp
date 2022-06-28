@@ -348,7 +348,7 @@ SEXP stri_join2(SEXP e1, SEXP e2) // a.k.a. stri_join2_nocollapse
 */
 SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
 {
-    if (isNull(collapse)) {
+    if (Rf_isNull(collapse)) {
         // no collapse - used, e.g., by the %s+% operator
         return stri_join2(e1, e2); // a.k.a. stri_join2_nocollapse
     }
@@ -594,7 +594,7 @@ SEXP stri_join_nocollapse(SEXP strlist, SEXP sep, SEXP ignore_null)
 SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse, SEXP ignore_null)
 {
     // no collapse-case is handled separately:
-    if (isNull(collapse))
+    if (Rf_isNull(collapse))
         return stri_join_nocollapse(strlist, sep, ignore_null);
 
     // *result will surely be a single string*
@@ -946,7 +946,7 @@ SEXP stri_join_list(SEXP x, SEXP sep, SEXP collapse)
     }
 
     PROTECT(sep = stri__prepare_arg_string_1(sep, "sep"));
-    if (isNull(collapse))
+    if (Rf_isNull(collapse))
         PROTECT(collapse);
     else
         PROTECT(collapse = stri__prepare_arg_string_1(collapse, "collapse"));
@@ -961,7 +961,7 @@ SEXP stri_join_list(SEXP x, SEXP sep, SEXP collapse)
         SET_STRING_ELT(ret, j, STRING_ELT(ret2, 0));
         STRI__UNPROTECT(1);
     }
-    if (!isNull(collapse))
+    if (!Rf_isNull(collapse))
         STRI__PROTECT(ret = stri_flatten(ret, collapse));
     STRI__UNPROTECT_ALL
     return ret;

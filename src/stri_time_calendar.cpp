@@ -88,7 +88,7 @@ SEXP stri_datetime_now()
 SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP tz, SEXP locale) {
     PROTECT(time = stri__prepare_arg_POSIXct(time, "time"));
     PROTECT(value = stri__prepare_arg_integer(value, "value"));
-    if (!isNull(tz)) PROTECT(tz = stri__prepare_arg_string_1(tz, "tz"));
+    if (!Rf_isNull(tz)) PROTECT(tz = stri__prepare_arg_string_1(tz, "tz"));
     else             PROTECT(tz); /* needed to set tzone attrib */
 
     R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(time), LENGTH(value));
@@ -164,7 +164,7 @@ SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP tz, SEXP locale) 
         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
     }
 
-    if (!isNull(tz)) Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("tzone")), tz);
+    if (!Rf_isNull(tz)) Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("tzone")), tz);
     stri__set_class_POSIXct(ret);
     if (tz_val) {
         delete tz_val;
@@ -204,7 +204,7 @@ SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP tz, SEXP locale) 
 SEXP stri_datetime_fields(SEXP time, SEXP tz, SEXP locale) {
     PROTECT(time = stri__prepare_arg_POSIXct(time, "time"));
     const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
-    if (!isNull(tz)) PROTECT(tz = stri__prepare_arg_string_1(tz, "tz"));
+    if (!Rf_isNull(tz)) PROTECT(tz = stri__prepare_arg_string_1(tz, "tz"));
     else             PROTECT(tz); /* needed to set tzone attrib */
 
     TimeZone* tz_val = stri__prepare_arg_timezone(tz, "tz", true/*allowdefault*/);
@@ -361,7 +361,7 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour,
     PROTECT(second = stri__prepare_arg_double(second, "second"));
     const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
     bool lenient_val = stri__prepare_arg_logical_1_notNA(lenient, "lenient");
-    if (!isNull(tz)) PROTECT(tz = stri__prepare_arg_string_1(tz, "tz"));
+    if (!Rf_isNull(tz)) PROTECT(tz = stri__prepare_arg_string_1(tz, "tz"));
     else             PROTECT(tz); /* needed to set tzone attrib */
 
     R_len_t vectorize_length = stri__recycling_rule(true, 6,
@@ -410,7 +410,7 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour,
         if (U_FAILURE(status)) REAL(ret)[i] = NA_REAL;
     }
 
-    if (!isNull(tz)) Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("tzone")), tz);
+    if (!Rf_isNull(tz)) Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("tzone")), tz);
     stri__set_class_POSIXct(ret);
     if (tz_val) {
         delete tz_val;

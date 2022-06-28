@@ -110,9 +110,10 @@ install.packages("stringi", configure.args="--with-extra-cxxflags='-std=c++11'")
 ```
 
 Overall, your build chain may be misconfigured, check out,
-amongst others, `<R_inst_dir>/etc/Makeconf`
-(e.g., are you using `-std=gnu++11` instead of `-std=c++11`?). Refer to
-https://cran.r-project.org/doc/manuals/r-release/R-admin.html for more details.
+amongst others, `<R_inst_dir>/etc/Makeconf` (e.g., are you using
+`-std=gnu++11` instead of `-std=c++11`?). Refer to
+<https://cran.r-project.org/doc/manuals/r-release/R-admin.html>
+for more details.
 
 There is an option of using the fallback version of ICU4C 55.1
 which however requires the support of the `long long` type in a few functions,

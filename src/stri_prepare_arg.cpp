@@ -145,7 +145,7 @@ SEXP stri__prepare_arg_list(SEXP x, const char* argname)
     if ((SEXP*)argname == (SEXP*)R_NilValue)
         argname = "<noname>";
 
-    if (!isNull(x) && !Rf_isVectorList(x))
+    if (!Rf_isNull(x) && !Rf_isVectorList(x))
         Rf_error(MSG__ARG_EXPECTED_LIST, argname); // error() allowed here
 
     return x;
@@ -176,14 +176,14 @@ SEXP stri__prepare_arg_list_raw(SEXP x, const char* argname)
     if ((SEXP*)argname == (SEXP*)R_NilValue)
         argname = "<noname>";
 
-    if (isNull(x) || isRaw(x)) {
+    if (Rf_isNull(x) || isRaw(x)) {
         return x; // single character string (byte data)
     }
     else if (Rf_isVectorList(x)) {
         R_len_t nv = LENGTH(x);
         for (R_len_t i=0; i<nv; ++i) {
             SEXP cur = VECTOR_ELT(x, i);
-            if ((bool)isNull(cur))
+            if ((bool)Rf_isNull(cur))
                 continue; // NA
             if (!isRaw(cur))
                 Rf_error(MSG__ARG_EXPECTED_RAW_IN_LIST_NO_COERCION, argname);  // error() allowed here
@@ -216,7 +216,7 @@ SEXP stri__prepare_arg_list_integer(SEXP x, const char* argname)
     if ((SEXP*)argname == (SEXP*)R_NilValue)
         argname = "<noname>";
 
-    if ((bool)isNull(x)) {
+    if ((bool)Rf_isNull(x)) {
         return x;
     }
     else if (Rf_isVectorList(x)) {
@@ -228,7 +228,7 @@ SEXP stri__prepare_arg_list_integer(SEXP x, const char* argname)
             SEXP xold = x;
             PROTECT(x = Rf_allocVector(VECSXP, narg));
             for (R_len_t i=0; i<narg; ++i) {
-                if ((bool)isNull(VECTOR_ELT(xold, i)))
+                if ((bool)Rf_isNull(VECTOR_ELT(xold, i)))
                     SET_VECTOR_ELT(x, i, R_NilValue);
                 // @TODO: stri__prepare_arg_integer may call Rf_error, no UNPROTECT
                 else
@@ -240,7 +240,7 @@ SEXP stri__prepare_arg_list_integer(SEXP x, const char* argname)
         else {
             // the object may be modified in place
             for (R_len_t i=0; i<narg; ++i)
-                if (!isNull(VECTOR_ELT(x, i)))
+                if (!Rf_isNull(VECTOR_ELT(x, i)))
                     SET_VECTOR_ELT(x, i, stri__prepare_arg_integer(VECTOR_ELT(x, i), argname));
             return x;
         }
@@ -353,7 +353,7 @@ SEXP stri__prepare_arg_string(SEXP x, const char* argname, bool allow_error)
     }
     else if ((bool)isString(x))
         return x; // return as-is
-    else if (Rf_isVectorAtomic(x) || isNull(x))
+    else if (Rf_isVectorAtomic(x) || Rf_isNull(x))
         return Rf_coerceVector(x, STRSXP);
     else if ((bool)isSymbol(x))
         return Rf_ScalarString(PRINTNAME(x));
@@ -418,7 +418,7 @@ SEXP stri__prepare_arg_double(SEXP x, const char* argname, bool factors_as_strin
             PROTECT(x = stri__call_as_character((void*)x));
         else {
             PROTECT(x = R_tryCatchError(stri__call_as_character, (void*)x, stri__handler_null, NULL));
-            if (isNull(x)) {
+            if (Rf_isNull(x)) {
                 UNPROTECT(1);
                 return x;
             }
@@ -446,7 +446,7 @@ SEXP stri__prepare_arg_double(SEXP x, const char* argname, bool factors_as_strin
     }
     else if ((bool)isReal(x))
         return x; //return as-is
-    else if (Rf_isVectorAtomic(x) || isNull(x))
+    else if (Rf_isVectorAtomic(x) || Rf_isNull(x))
         return Rf_coerceVector(x, REALSXP);
 
     Rf_error(MSG__ARG_EXPECTED_NUMERIC, argname); // allowed here
@@ -510,7 +510,7 @@ SEXP stri__prepare_arg_integer(SEXP x, const char* argname, bool factors_as_stri
             PROTECT(x = stri__call_as_character((void*)x));
         else {
             PROTECT(x = R_tryCatchError(stri__call_as_character, (void*)x, stri__handler_null, NULL));
-            if (isNull(x)) {
+            if (Rf_isNull(x)) {
                 UNPROTECT(1);
                 return x;
             }
@@ -538,7 +538,7 @@ SEXP stri__prepare_arg_integer(SEXP x, const char* argname, bool factors_as_stri
     }
     else if (Rf_isInteger(x))
         return x; // return as-is
-    else if (Rf_isVectorAtomic(x) || isNull(x))
+    else if (Rf_isVectorAtomic(x) || Rf_isNull(x))
         return Rf_coerceVector(x, INTSXP);
 
     Rf_error(MSG__ARG_EXPECTED_INTEGER, argname); //allowed here
@@ -622,7 +622,7 @@ SEXP stri__prepare_arg_logical(SEXP x, const char* argname, bool allow_error)
     }
     else if ((bool)isLogical(x))
         return x; // return as-is
-    else if (Rf_isVectorAtomic(x) || isNull(x))
+    else if (Rf_isVectorAtomic(x) || Rf_isNull(x))
         return Rf_coerceVector(x, LGLSXP);
 
     Rf_error(MSG__ARG_EXPECTED_LOGICAL, argname); // allowed here
@@ -679,7 +679,7 @@ SEXP stri__prepare_arg_raw(SEXP x, const char* argname, bool factors_as_strings,
             PROTECT(x = stri__call_as_character((void*)x));
         else {
             PROTECT(x = R_tryCatchError(stri__call_as_character, (void*)x, stri__handler_null, NULL));
-            if (isNull(x)) {
+            if (Rf_isNull(x)) {
                 UNPROTECT(1);
                 return x;
             }
@@ -707,7 +707,7 @@ SEXP stri__prepare_arg_raw(SEXP x, const char* argname, bool factors_as_strings,
     }
     else if (TYPEOF(x) == RAWSXP)
         return x; // return as-is
-    else if (Rf_isVectorAtomic(x) || isNull(x))
+    else if (Rf_isVectorAtomic(x) || Rf_isNull(x))
         return Rf_coerceVector(x, RAWSXP);
 
     Rf_error(MSG__ARG_EXPECTED_RAW, argname); // allowed here
@@ -827,7 +827,7 @@ SEXP stri__prepare_arg_string_1(SEXP x, const char* argname)
 //     }
 //     else if ((bool)isString(x))
 //         nprotect = 0;
-//     else if (Rf_isVectorAtomic(x) || isNull(x)) {
+//     else if (Rf_isVectorAtomic(x) || Rf_isNull(x)) {
 //         PROTECT(x = Rf_coerceVector(x, STRSXP));
 //         nprotect = 1;
 //     }
@@ -929,7 +929,7 @@ SEXP stri__prepare_arg_double_1(SEXP x, const char* argname, bool factors_as_str
 //     }
 //     else if ((bool)isReal(x))
 //         nprotect = 0;
-//     else if (Rf_isVectorAtomic(x) || isNull(x)) {
+//     else if (Rf_isVectorAtomic(x) || Rf_isNull(x)) {
 //         PROTECT(x = Rf_coerceVector(x, REALSXP));
 //         nprotect = 1;
 //     }
@@ -1026,7 +1026,7 @@ SEXP stri__prepare_arg_integer_1(SEXP x, const char* argname, bool factors_as_st
 //     }
 //     else if (Rf_isInteger(x))
 //         nprotect = 0;
-//     else if (Rf_isVectorAtomic(x) || isNull(x)) {
+//     else if (Rf_isVectorAtomic(x) || Rf_isNull(x)) {
 //         PROTECT(x = Rf_coerceVector(x, INTSXP));
 //         nprotect = 1;
 //     }
@@ -1131,7 +1131,7 @@ SEXP stri__prepare_arg_logical_1(SEXP x, const char* argname)
 //         nprotect = 0;
 //         // do nothing
 //     }
-//     else if (Rf_isVectorAtomic(x) || isNull(x)) {
+//     else if (Rf_isVectorAtomic(x) || Rf_isNull(x)) {
 //         PROTECT(x = Rf_coerceVector(x, LGLSXP));
 //         nprotect = 1;
 //     }
@@ -1460,7 +1460,7 @@ const char* stri__prepare_arg_locale(
     bool allowdefault,
     bool allowna
 ) {
-    if (allowdefault && isNull(loc))
+    if (allowdefault && Rf_isNull(loc))
         return uloc_getDefault();
     else {
         PROTECT(loc = stri__prepare_arg_string_1(loc, argname));
@@ -1544,7 +1544,7 @@ TimeZone* stri__prepare_arg_timezone(SEXP tz, const char* argname, bool allowdef
 {
     UnicodeString tz_val("");
 
-    if (!isNull(tz)) {
+    if (!Rf_isNull(tz)) {
         PROTECT(tz = stri__prepare_arg_string_1(tz, argname));
         if (STRING_ELT(tz, 0) == NA_STRING) {
             UNPROTECT(1);
@@ -1554,7 +1554,7 @@ TimeZone* stri__prepare_arg_timezone(SEXP tz, const char* argname, bool allowdef
         UNPROTECT(1);
     }
 
-//   if (tz_val.length() == 0 && !isNull(defaulttz)) {
+//   if (tz_val.length() == 0 && !Rf_isNull(defaulttz)) {
 //      PROTECT(defaulttz = stri__prepare_arg_string_1(defaulttz, argname));
 //      if (STRING_ELT(defaulttz, 0) == NA_STRING) {
 //         UNPROTECT(1);
@@ -1614,7 +1614,7 @@ TimeZone* stri__prepare_arg_timezone(SEXP tz, const char* argname, bool allowdef
  */
 const char* stri__prepare_arg_enc(SEXP enc, const char* argname, bool allowdefault)
 {
-    if (allowdefault && isNull(enc))
+    if (allowdefault && Rf_isNull(enc))
         return (const char*)NULL;
     else {
         PROTECT(enc = stri__prepare_arg_string_1(enc, argname));

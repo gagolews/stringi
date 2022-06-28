@@ -270,15 +270,16 @@ SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP lenient, SEXP tz, SEXP loca
     PROTECT(str = stri__prepare_arg_string(str, "str"));
     PROTECT(format = stri__prepare_arg_string(format, "format"));
     bool lenient_val = stri__prepare_arg_logical_1_notNA(lenient, "lenient");
-    if (!isNull(tz)) PROTECT(tz = stri__prepare_arg_string_1(tz, "tz"));
-    else             PROTECT(tz); /* needed to set tzone attrib */
+    if (!Rf_isNull(tz)) PROTECT(tz = stri__prepare_arg_string_1(tz, "tz"));
+    else                PROTECT(tz); /* needed to set tzone attrib */
 
     R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(format));
     if (vectorize_length <= 0) {
         UNPROTECT(3);
         SEXP ret;
         PROTECT(ret = Rf_allocVector(REALSXP, 0));
-        if (!isNull(tz)) Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("tzone")), tz);
+        if (!Rf_isNull(tz))
+            Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("tzone")), tz);
         stri__set_class_POSIXct(ret);
         UNPROTECT(1);
         return ret;
@@ -342,7 +343,8 @@ SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP lenient, SEXP tz, SEXP loca
     }
 
 
-    if (!isNull(tz)) Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("tzone")), tz);
+    if (!Rf_isNull(tz))
+        Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("tzone")), tz);
     stri__set_class_POSIXct(ret);
     if (tz_val) {
         delete tz_val;

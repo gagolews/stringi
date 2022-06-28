@@ -179,7 +179,7 @@ SEXP StriContainerRegexPattern::getCaptureGroupRDimnames(
     // and should be used sparingly."
     // If a user calls PROTECT and then UNPROTECT on retval, how does this
     // interfere with R_PreserveObject?
-    if (last_i >= 0 && !isNull(ret) && (last_i % this->get_n()) == (i % this->get_n())) {
+    if (last_i >= 0 && !Rf_isNull(ret) && (last_i % this->get_n()) == (i % this->get_n())) {
         // reuse last dimnames
         SEXP tmp, dimnames;
         PROTECT(tmp = VECTOR_ELT(ret, last_i));
@@ -412,10 +412,10 @@ StriRegexMatcherOptions StriContainerRegexPattern::getRegexOptions(SEXP opts_reg
     int32_t stack_limit = 0;
     int32_t time_limit = 0;
     uint32_t flags = 0;
-    if (!isNull(opts_regex) && !Rf_isVectorList(opts_regex))
+    if (!Rf_isNull(opts_regex) && !Rf_isVectorList(opts_regex))
         Rf_error(MSG__ARG_EXPECTED_LIST, "opts_regex"); // error() call allowed here
 
-    R_len_t narg = isNull(opts_regex)?0:LENGTH(opts_regex);
+    R_len_t narg = Rf_isNull(opts_regex)?0:LENGTH(opts_regex);
 
     if (narg > 0) {
 
