@@ -16,7 +16,8 @@ preferred-citation:
     journal: "Journal of Statistical Software"
     volume: 103
     issue: 2
-    pages: "1–59"
+    start: 1
+    end: 59
     authors:
     -   family-names: Gagolewski
         given-names: Marek
