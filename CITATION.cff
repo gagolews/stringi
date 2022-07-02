@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "Please cite this package in publications as below."
+authors:
+  - family-names: Gagolewski
+    given-names: Marek
+    orcid: "https://orcid.org/0000-0003-0637-6028"
+repository-code: "https://github.com/gagolews/stringi"
+title: "stringi: Fast and portable character string processing in R"
+doi: 10.18637/jss.v103.i02
+preferred-citation:
+    type: article
+    year: 2022
+    url: "https://stringi.gagolewski.com/"
+    doi: 10.18637/jss.v103.i02
+    title: "stringi: Fast and portable character string processing in R"
+    journal: "Journal of Statistical Software"
+    volume: 103
+    issue: 2
+    pages: "1–59"
+    authors:
+    -   family-names: Gagolewski
+        given-names: Marek
+        orcid: "https://orcid.org/0000-0003-0637-6028"
