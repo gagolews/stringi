@@ -232,7 +232,7 @@ J.E.F. Friedl, \emph{Mastering Regular Expressions}, O'Reilly, 2002
 \seealso{
 The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
 
-Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R, \emph{Journal of Statistical Software} 103(2), 2022, 1-59, doi:\url{https://dx.doi.org/10.18637/jss.v103.i02}
+Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R, \emph{Journal of Statistical Software} 103(2), 2022, 1-59, \doi{10.18637/jss.v103.i02}
 
 Other search_regex: 
 \code{\link{about_search}},

@@ -343,7 +343,7 @@
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline"></a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
-<p>Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, <em>Journal of Statistical Software</em> 103(2), 2022, 1-59, doi:<a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">https://dx.doi.org/10.18637/jss.v103.i02</a></p>
+<p>Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, <em>Journal of Statistical Software</em> 103(2), 2022, 1-59, doi: <a class="reference external" href="https://doi.org/10.18637/jss.v103.i02">10.18637/jss.v103.i02</a></p>
 <p>Other datetime: <a class="reference internal" href="stri_datetime_create.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_create()</span></code></span></a>, <a class="reference internal" href="stri_datetime_fields.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_fields()</span></code></span></a>, <a class="reference internal" href="stri_datetime_format.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_format()</span></code></span></a>, <a class="reference internal" href="stri_datetime_fstr.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_fstr()</span></code></span></a>, <a class="reference internal" href="stri_datetime_now.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_now()</span></code></span></a>, <a class="reference internal" href="stri_datetime_symbols.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_symbols()</span></code></span></a>, <a class="reference internal" href="stri_timezone_set.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_get()</span></code></span></a>, <a class="reference internal" href="stri_timezone_info.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_info()</span></code></span></a>, <a class="reference internal" href="stri_timezone_list.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_list()</span></code></span></a></p>
 </div>
 <div class="section" id="examples">
@@ -351,9 +351,9 @@
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">stri_datetime_now</span><span class="p">()</span>
 <span class="nf">stri_datetime_add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s">&#39;months&#39;</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="m">2</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2022-09-02 17:40:19 AEST&quot;</span>
+<span class="c1">## [1] &quot;2022-09-02 18:56:33 AEST&quot;</span>
 <span class="nf">stri_datetime_add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">-2</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s">&#39;months&#39;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2022-07-02 17:40:19 AEST&quot;</span>
+<span class="c1">## [1] &quot;2022-07-02 18:56:33 AEST&quot;</span>
 <span class="nf">stri_datetime_add</span><span class="p">(</span><span class="nf">stri_datetime_create</span><span class="p">(</span><span class="m">2014</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">20</span><span class="p">),</span> <span class="m">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s">&#39;years&#39;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;2015-04-20 12:00:00 AEST&quot;</span>
 <span class="nf">stri_datetime_add</span><span class="p">(</span><span class="nf">stri_datetime_create</span><span class="p">(</span><span class="m">2014</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">20</span><span class="p">),</span> <span class="m">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s">&#39;years&#39;</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span>
@@ -378,7 +378,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2022, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2022-07-02T17:40:40+1000.
+      <span class="lastupdated">Last updated on 2022-07-02T18:56:54+1000.
       </span></p>
   </div>
 
