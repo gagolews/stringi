@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>stringi: THE String Processing Package for R &mdash; stringi</title>
+  <title>stringi: Fast and Portable Character String Processing in R &mdash; stringi</title>
   
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                1.7.6
+                1.7.7
               </div>
             
           
@@ -114,6 +114,7 @@
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="news.html">What Is New in <em>stringi</em></a></li>
@@ -142,65 +143,30 @@
         
         <div class="rst-content style-external-links">
         
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="#" class="icon icon-home"></a> &raquo;</li>
-        
-      <li>stringi: THE String Processing Package for R</li>
-    
-    
+      <li>stringi: Fast and Portable Character String Processing in R</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
-        
       </li>
-    
-  </ul>
-
-  
-  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
-      
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
         <a href="weave/design_principles.html" class="btn btn-neutral float-right" title="General Design Principles" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-      
-      
   </div>
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="stringi-the-string-processing-package-for-r">
-<h1>stringi: THE String Processing Package for R<a class="headerlink" href="#stringi-the-string-processing-package-for-r" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="stringi-fast-and-portable-character-string-processing-in-r">
+<h1>stringi: Fast and Portable Character String Processing in R<a class="headerlink" href="#stringi-fast-and-portable-character-string-processing-in-r" title="Permalink to this headline"></a></h1>
 <blockquote>
 <div><p><strong>stringi (pronounced “stringy”, IPA [strinɡi]) is THE R package
 for very fast, portable, correct, consistent, and convenient string/text
 processing in any locale or character encoding.</strong></p>
 <p class="attribution">—by <a class="reference external" href="https://www.gagolewski.com/">Marek Gagolewski</a></p>
 </div></blockquote>
-<p>Thanks to <a class="reference external" href="https://icu.unicode.org/">ICU</a>,
-<em>stringi</em> fully supports a wide range
-of <a class="reference external" href="https://www.unicode.org/">Unicode</a> standards
+<p>Thanks to <a class="reference external" href="https://icu.unicode.org/">ICU</a>, <em>stringi</em> fully supports a wide
+range of <a class="reference external" href="https://www.unicode.org/">Unicode</a> standards
 (see also <a class="reference external" href="https://www.youtube.com/watch?v=-n2nlPHEMG8">this video</a>).</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_all</span><span class="p">(</span><span class="n">regex</span><span class="o">=</span><span class="s">&quot;\\p{Emoji}&quot;</span><span class="p">,</span>
     <span class="nf">c</span><span class="p">(</span><span class="s">&quot;歡迎 欢迎! Χαίρετε! Bienvenidos! 😃❤🌍&quot;</span><span class="p">,</span> <span class="s">&quot;spam, spam, 🥓, 🍳, and spam&quot;</span><span class="p">))</span>
@@ -248,8 +214,12 @@ Moreover, Hadley suggested quite a few new package features.
 The contributions from Bartłomiej Tartanus and
 <a class="reference external" href="https://github.com/gagolews/stringi/graphs/contributors">many others</a>
 is greatly appreciated. Thanks!</p>
-<p>Also check out <a class="reference external" href="https://stringx.gagolewski.com/">stringx</a>
-for a set of wrappers around <em>stringi</em> with a base R-compatible API.</p>
+<p><strong>See also</strong>: <a class="reference external" href="https://stringx.gagolewski.com/">stringx</a> –
+a set of wrappers around <em>stringi</em> with a base R-compatible API.</p>
+<p><strong>Citation</strong>: Gagolewski M.,
+<em>stringi</em>: Fast and portable character string processing in R,
+<em>Journal of Statistical Software</em>  103(2), 2022, 1–59,
+<a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">doi:10.18637/jss.v103.i02</a>.</p>
 <div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
@@ -265,7 +235,7 @@ for a set of wrappers around <em>stringi</em> with a base R-compatible API.</p>
 <li class="toctree-l2"><a class="reference internal" href="rapi/about_search_fixed.html">about_search_fixed: Locale-Insensitive Fixed Pattern Matching in <span class="pkg">stringi</span></a></li>
 <li class="toctree-l2"><a class="reference internal" href="rapi/about_search_regex.html">about_search_regex: Regular Expressions in <span class="pkg">stringi</span></a></li>
 <li class="toctree-l2"><a class="reference internal" href="rapi/about_search.html">about_search: String Searching</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rapi/about_stringi.html">about_stringi: THE String Processing Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rapi/about_stringi.html">about_stringi: Fast and Portable Character String Processing in R</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rapi/operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rapi/operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rapi/operator_dollar.html">operator_dollar: C-Style Formatting with <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code></span> as a Binary Operator</a></li>
@@ -368,6 +338,7 @@ for a set of wrappers around <em>stringi</em> with a base R-compatible API.</p>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="news.html">What Is New in <em>stringi</em></a></li>
@@ -380,30 +351,22 @@ for a set of wrappers around <em>stringi</em> with a base R-compatible API.</p>
            </div>
            
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="weave/design_principles.html" class="btn btn-neutral float-right" title="General Design Principles" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2013-2021, Marek Gagolewski.
-      <span class="lastupdated">
-        Last updated on 2021-11-29T10:29:09+1100.
-      </span>
-
-    </p>
+    <p>&#169; Copyright 2013-2022, Marek Gagolewski.
+      <span class="lastupdated">Last updated on 2022-07-02T17:40:40+1000.
+      </span></p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>

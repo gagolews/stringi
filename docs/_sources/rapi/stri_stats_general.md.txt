@@ -1,4 +1,4 @@
-# stri\_stats\_general: General Statistics for a Character Vector
+# stri_stats_general: General Statistics for a Character Vector
 
 ## Description
 
@@ -6,7 +6,7 @@ This function gives general statistics for a character vector, e.g., obtained by
 
 ## Usage
 
-```r
+``` r
 stri_stats_general(str)
 ```
 
@@ -43,6 +43,8 @@ Returns an integer vector with the following named elements:
 ## See Also
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
+
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi:<https://dx.doi.org/10.18637/jss.v103.i02>
 
 Other stats: [`stri_stats_latex()`](stri_stats_latex.md)
 

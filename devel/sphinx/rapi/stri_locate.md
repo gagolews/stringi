@@ -156,6 +156,8 @@ If `capture_groups=TRUE`, then the outputs are equipped with the `capture_groups
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi:<https://dx.doi.org/10.18637/jss.v103.i02>
+
 Other search_locate: [`about_search`](about_search.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md)
 
 Other indexing: [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_sub_all()`](stri_sub_all.md), [`stri_sub()`](stri_sub.md)

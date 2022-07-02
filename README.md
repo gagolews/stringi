@@ -1,6 +1,6 @@
 # [**stringi**](https://stringi.gagolewski.com/)
 
-### THE String Processing Package for *R*
+### Fast and Portable Character String Processing in R (with the Unicode ICU)
 
 ![Build Status](https://github.com/gagolews/stringi/workflows/stringi%20for%20R/badge.svg)
 ![RStudio CRAN mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/stringi)

@@ -4,13 +4,13 @@ Input and Output
 
 
 
-> This tutorial is based on the [paper on *stringi*](https://stringi.gagolewski.com/_static/vignette/stringi.pdf) that will appear in the *Journal of Statistical Software*.
+> This tutorial is based on the [paper on *stringi*](https://dx.doi.org/10.18637/jss.v103.i02) that has recently been published the *Journal of Statistical Software*, see {cite}`stringi`.
 
 
 This section deals with some more advanced topics related to the
 operability of text processing applications between different platforms.
-In particular, we discuss how to assure that data read from various
-input connections are interpreted in the correct manner.
+In particular, we discuss how to ensure that data read from various
+input connections are interpreted correctly.
 
 (Sec:codepoints)=
 Dealing with Unicode Code Points
@@ -91,7 +91,8 @@ native encoding, is defined via the `LC_CTYPE` locale category in
 `Sys.getlocale()`. This is the representation assumed, e.g., when
 reading data from the standard input or from files (e.g., when `scan()`
 is called). For instance, Central European versions of Windows will
-assume the "`windows-1250`" code page. MacOS as well as most Linux boxes
+assume the "`windows-1250`" code page. On the other hand,
+MacOS as well as most Linux boxes
 work with UTF-8 by default[^footucrt].
 
 All strings in R have an associated encoding mark which can be read by
@@ -106,7 +107,7 @@ thought of as a superset of every other encoding. Moreover, in order to
 guarantee the correctness and high performance of the string processing
 pipelines, *stringi* always[^footuftout] outputs UTF-8 data.
 
-[^footucrt]: It is expected that future R releases will support UTF-8 natively
+[^footucrt]: It is expected that future R releases will support UTF-8 natively,
     thanks to the Universal C Runtime (UCRT) that is available for
     Windows 10.
 
@@ -155,7 +156,7 @@ Detecting Encodings
 
 If a file's encoding is not known in advance, there are a
 certain functions that can aid in encoding detection. First, we can read
-the resource in form of a raw-type vector:
+the resource in the form of a raw-type vector:
 
 
 ```r
@@ -189,7 +190,7 @@ stri_enc_detect(x)  # based on heuristics
 ```
 
 Nevertheless, encoding detection is an operation that relies on
-heuristics, therefore there is a chance that the output might be
+heuristics. Therefore, there is a chance that the output might be
 imprecise or even misleading.
 
 
@@ -251,7 +252,7 @@ stri_enc_toutf32(  # code points as decimals
 Above we see some example code points before, after NFC, and after NFD
 normalisation, respectively.
 
-It might be a good idea to always normalise all the strings read from
+It might be a good idea always to normalise all the strings read from
 external sources (files, URLs) with NFC.
 
 Compatibility composition and decomposition normalisation forms (NFKC

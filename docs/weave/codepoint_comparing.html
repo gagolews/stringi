@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                1.7.6
+                1.7.7
               </div>
             
           
@@ -125,6 +125,7 @@
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../news.html">What Is New in <em>stringi</em></a></li>
@@ -153,60 +154,25 @@
         
         <div class="rst-content style-external-links">
         
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Code-Pointwise Comparing</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
-        
       </li>
-    
-  </ul>
-
-  
-  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
-      
-        <a href="regular_expressions.html" class="btn btn-neutral float-right" title="Regular Expressions" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-      
-      
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
         <a href="basic_operations.html" class="btn btn-neutral float-left" title="Basic String Operations" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-      
+        <a href="regular_expressions.html" class="btn btn-neutral float-right" title="Regular Expressions" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
   <div class="tex2jax_ignore mathjax_ignore section" id="code-pointwise-comparing">
-<span id="sec-fixed"></span><h1>Code-Pointwise Comparing<a class="headerlink" href="#code-pointwise-comparing" title="Permalink to this headline">¶</a></h1>
+<span id="sec-fixed"></span><h1>Code-Pointwise Comparing<a class="headerlink" href="#code-pointwise-comparing" title="Permalink to this headline"></a></h1>
 <blockquote>
-<div><p>This tutorial is based on the <a class="reference external" href="https://stringi.gagolewski.com/_static/vignette/stringi.pdf">paper on <em>stringi</em></a> that will appear in the <em>Journal of Statistical Software</em>.</p>
+<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that has recently been published the <em>Journal of Statistical Software</em>, see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3">Gag22</a>]</span>.</p>
 </div></blockquote>
 <p>There are many settings where we are faced with testing whether two
 strings (or parts thereof) consist of exactly the same Unicode code
@@ -215,7 +181,7 @@ a nucleotide sequence in a DNA profile and querying for system resources
 based on file names or UUIDs. Such tasks, due to their simplicity, can
 be performed very efficiently.</p>
 <div class="section" id="testing-for-equality-of-strings">
-<h2>Testing for Equality of Strings<a class="headerlink" href="#testing-for-equality-of-strings" title="Permalink to this headline">¶</a></h2>
+<h2>Testing for Equality of Strings<a class="headerlink" href="#testing-for-equality-of-strings" title="Permalink to this headline"></a></h2>
 <p>To quickly test whether the corresponding strings in two character
 vectors are identical (in a code-pointwise manner), we can use the
 <code class="docutils literal notranslate"><span class="pre">%s===%</span></code> operator or, equivalently, the <code class="docutils literal notranslate"><span class="pre">stri_cmp_eq()</span></code> function.
@@ -225,19 +191,19 @@ relation.</p>
 <span class="c1">## [1] FALSE  TRUE FALSE FALSE    NA</span>
 </pre></div>
 </div>
-<p>Due to recycling, the first string was compared against the 5 strings in
-the 2nd operand. There is only 1 exact match.</p>
+<p>Due to recycling, the first string was compared against the five strings in
+the 2nd operand. There is only one exact match.</p>
 </div>
 <div class="section" id="searching-for-fixed-strings">
-<span id="sec-strsearch"></span><h2>Searching for Fixed Strings<a class="headerlink" href="#searching-for-fixed-strings" title="Permalink to this headline">¶</a></h2>
+<span id="sec-strsearch"></span><h2>Searching for Fixed Strings<a class="headerlink" href="#searching-for-fixed-strings" title="Permalink to this headline"></a></h2>
 <p>For detecting if a string contains a given fixed substring
-(code-pointwisely), the fast KMP <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id23">KMP77</a>]</span> algorithm, with
+(code-pointwisely), the fast KMP <span id="id2">[<a class="reference internal" href="../z_bibliography.html#id23">KMP77</a>]</span> algorithm, with
 worst time complexity of <em>O(n+p)</em> (where <em>n</em> is the length of the string
 and <em>p</em> is the length of the pattern), has been implemented in <em>stringi</em>
 (with numerous tweaks for even faster matching).</p>
 <p>The table below lists the string search functions available
 in <em>stringi</em>. Below we explain their behaviour in the context of fixed
-pattern matching. Notably, their description is quite detailed, because
+pattern matching. Notably, their description is quite detailed because
 – as we shall soon find out – the corresponding operations are
 available for the two other search engines: based on regular expressions
 and the <em>ICU</em> Collator, see <a class="reference internal" href="regular_expressions.html#sec-regex"><span class="std std-ref">Regular Expressions</span></a> and <a class="reference internal" href="collation.html#sec-collator"><span class="std std-ref">Collation</span></a>.</p>
@@ -282,7 +248,7 @@ and the <em>ICU</em> Collator, see <a class="reference internal" href="regular_e
 </table>
 </div>
 <div class="section" id="counting-matches">
-<h2>Counting Matches<a class="headerlink" href="#counting-matches" title="Permalink to this headline">¶</a></h2>
+<h2>Counting Matches<a class="headerlink" href="#counting-matches" title="Permalink to this headline"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">stri_count_fixed()</span></code> function counts the number of times a fixed
 pattern occurs in a given string.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_fixed</span><span class="p">(</span><span class="s">&quot;abcabcdefabcabcabdc&quot;</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">)</span>  <span class="c1"># search pattern is &quot;abc&quot;</span>
@@ -305,7 +271,7 @@ be forwarded as follows:</p>
 </div>
 </div>
 <div class="section" id="search-engine-options">
-<h2>Search Engine Options<a class="headerlink" href="#search-engine-options" title="Permalink to this headline">¶</a></h2>
+<h2>Search Engine Options<a class="headerlink" href="#search-engine-options" title="Permalink to this headline"></a></h2>
 <p>The pattern matching engine may be tuned up by passing further arguments
 to the search functions (via “<code class="docutils literal notranslate"><span class="pre">...</span></code>”; they are redirected as-is to
 <code class="docutils literal notranslate"><span class="pre">stri_opts_fixed()</span></code>). The table below gives the list of available options.</p>
@@ -324,7 +290,7 @@ to the search functions (via “<code class="docutils literal notranslate"><span
 </tr>
 </tbody>
 </table>
-<p>First, we may switch on the simplistic<a class="footnote-reference brackets" href="#footfixedcase" id="id2">1</a> case-insensitive matching.</p>
+<p>First, we may switch on the simplistic<a class="footnote-reference brackets" href="#footfixedcase" id="id3">1</a> case-insensitive matching.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_fixed</span><span class="p">(</span><span class="s">&quot;ACTGACGacgggACg&quot;</span><span class="p">,</span> <span class="s">&quot;acg&quot;</span><span class="p">,</span> <span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 <span class="c1">## [1] 3</span>
 </pre></div>
@@ -340,8 +306,8 @@ matches or whether searching should continue at the end of each match
 </div>
 </div>
 <div class="section" id="detecting-and-subsetting-patterns">
-<h2>Detecting and Subsetting Patterns<a class="headerlink" href="#detecting-and-subsetting-patterns" title="Permalink to this headline">¶</a></h2>
-<p>A somewhat simplified version of the above search task involves asking
+<h2>Detecting and Subsetting Patterns<a class="headerlink" href="#detecting-and-subsetting-patterns" title="Permalink to this headline"></a></h2>
+<p>A somewhat simplified version of the above search task asks
 whether a pattern occurs in a string at all. Such an operation can be
 performed with a call to <code class="docutils literal notranslate"><span class="pre">stri_detect_fixed()</span></code>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;abc&quot;</span><span class="p">,</span> <span class="s">&quot;abcd&quot;</span><span class="p">,</span> <span class="s">&quot;def&quot;</span><span class="p">,</span> <span class="s">&quot;xyzabc&quot;</span><span class="p">,</span> <span class="s">&quot;uabdc&quot;</span><span class="p">,</span> <span class="s">&quot;dab&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">)</span>
@@ -360,7 +326,7 @@ larger data sets:</p>
 </div>
 <p>This can be useful in scenarios such as “find the first 2 matching
 resource IDs”.</p>
-<p>There are also functions that verify whether a string starts or ends<a class="footnote-reference brackets" href="#footanchor" id="id3">2</a>
+<p>There are also functions that verify whether a string starts or ends<a class="footnote-reference brackets" href="#footanchor" id="id4">2</a>
 with a pattern match:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_startswith_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">)</span>  <span class="c1"># from=1 - match at start</span>
 <span class="c1">## [1]  TRUE  TRUE FALSE FALSE FALSE FALSE    NA  TRUE</span>
@@ -378,7 +344,7 @@ pattern.</p>
 </div>
 <p>The above is equivalent to <code class="docutils literal notranslate"><span class="pre">x[which(stri_detect_fixed(x,</span> <span class="pre">&quot;abc&quot;))]</span></code> (note
 the argument responsible for the removal of missing values), but avoids
-writing <code class="docutils literal notranslate"><span class="pre">x</span></code> twice. It hence is particularly convenient when <code class="docutils literal notranslate"><span class="pre">x</span></code> is
+writing <code class="docutils literal notranslate"><span class="pre">x</span></code> twice. It is particularly convenient when <code class="docutils literal notranslate"><span class="pre">x</span></code> is
 generated programmatically on the fly, using some complicated
 expression. Also, it works well with the forward pipe operator, as we
 can write “<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">|&gt;</span> <span class="pre">stri_subset_fixed(&quot;abc&quot;,</span> <span class="pre">omit_na=TRUE)</span></code>”.</p>
@@ -390,7 +356,7 @@ can write “<code class="docutils literal notranslate"><span class="pre">x</spa
 </div>
 </div>
 <div class="section" id="locating-and-extracting-patterns">
-<h2>Locating and Extracting Patterns<a class="headerlink" href="#locating-and-extracting-patterns" title="Permalink to this headline">¶</a></h2>
+<h2>Locating and Extracting Patterns<a class="headerlink" href="#locating-and-extracting-patterns" title="Permalink to this headline"></a></h2>
 <p>The functions from the <code class="docutils literal notranslate"><span class="pre">stri_locate()</span></code> family aim to pinpoint the
 positions of pattern matches. First, we may be interested in getting to
 know the location of the first or the last pattern occurrence:</p>
@@ -409,7 +375,7 @@ know the location of the first or the last pattern occurrence:</p>
 <span class="c1">## [4,]     9      3</span>
 </pre></div>
 </div>
-<p>In both examples we obtain a two-column matrix with the number of rows
+<p>In both examples, we obtain a two-column matrix with the number of rows
 determined by the recycling rule (here: the length of <code class="docutils literal notranslate"><span class="pre">x</span></code>). In the
 former case, we get a “from–to” matrix (<code class="docutils literal notranslate"><span class="pre">get_length=FALSE</span></code>; the
 default) where missing values correspond to either missing inputs or
@@ -468,7 +434,7 @@ functions from the <code class="docutils literal notranslate"><span class="pre">
 </div>
 </div>
 <div class="section" id="replacing-pattern-occurrences">
-<h2>Replacing Pattern Occurrences<a class="headerlink" href="#replacing-pattern-occurrences" title="Permalink to this headline">¶</a></h2>
+<h2>Replacing Pattern Occurrences<a class="headerlink" href="#replacing-pattern-occurrences" title="Permalink to this headline"></a></h2>
 <p>In order to replace each match with a corresponding replacement string,
 we can refer to <code class="docutils literal notranslate"><span class="pre">stri_replace_all()</span></code>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;aga&quot;</span><span class="p">,</span> <span class="s">&quot;actg&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="s">&quot;ggAGAGAgaGAca&quot;</span><span class="p">,</span> <span class="s">&quot;agagagaga&quot;</span><span class="p">)</span>
@@ -477,7 +443,7 @@ we can refer to <code class="docutils literal notranslate"><span class="pre">str
 </pre></div>
 </div>
 <p>Note that the inputs that are not part of any match are left unchanged.
-The input object is left unchanged, because it is not a replacement
+The input object is left unchanged because it is not a replacement
 function per se.</p>
 <p>The operation is vectorised with respect to all the three arguments
 (haystack, needle, replacement string), with the usual recycling
@@ -508,7 +474,7 @@ it with the 2nd corresponding replacement string, and so forth.</p>
 and replace the first and the last match, respectively.</p>
 </div>
 <div class="section" id="splitting">
-<h2>Splitting<a class="headerlink" href="#splitting" title="Permalink to this headline">¶</a></h2>
+<h2>Splitting<a class="headerlink" href="#splitting" title="Permalink to this headline"></a></h2>
 <p>To split each element in the <code class="docutils literal notranslate"><span class="pre">haystack</span></code> into substrings, where the
 <code class="docutils literal notranslate"><span class="pre">needles</span></code> define the delimiters that separate the inputs into tokens, we
 call <code class="docutils literal notranslate"><span class="pre">stri_split()</span></code>:</p>
@@ -535,18 +501,19 @@ call <code class="docutils literal notranslate"><span class="pre">stri_split()</
 <p>There is also an option to limit the number of tokens (parameter <code class="docutils literal notranslate"><span class="pre">n</span></code>).</p>
 <hr class="footnotes docutils" />
 <dl class="footnote brackets">
-<dt class="label" id="footfixedcase"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
-<dd><p>Which is not suitable for real-world NLP tasks, as it assumes that
+<dt class="label" id="footfixedcase"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
+<dd><p>Which is not suitable for real-world NLP tasks,
+as it assumes that
 changing the case of a single code point always produces one and
-only one item; This way, <code class="docutils literal notranslate"><span class="pre">&quot;groß&quot;</span></code> does not compare equal to
+only one item. This way, <code class="docutils literal notranslate"><span class="pre">&quot;groß&quot;</span></code> does not compare equal to
 <code class="docutils literal notranslate"><span class="pre">&quot;GROSS&quot;</span></code>, see <a class="reference internal" href="collation.html#sec-collator"><span class="std std-ref">Collation</span></a> (and to some extent
 <a class="reference internal" href="regular_expressions.html#sec-regex"><span class="std std-ref">Regular Expressions</span></a>) for a workaround.</p>
 </dd>
-<dt class="label" id="footanchor"><span class="brackets"><a class="fn-backref" href="#id3">2</a></span></dt>
+<dt class="label" id="footanchor"><span class="brackets"><a class="fn-backref" href="#id4">2</a></span></dt>
 <dd><p>Note that testing for a pattern match at the start or end of a
 string has not been implemented separately for <code class="docutils literal notranslate"><span class="pre">regex</span></code> patterns,
-which support <code class="docutils literal notranslate"><span class="pre">&quot;^&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;$&quot;</span></code> anchors that serve exactly this very
-purpose, see <a class="reference internal" href="regular_expressions.html#sec-regex"><span class="std std-ref">Regular Expressions</span></a>.</p>
+which support <code class="docutils literal notranslate"><span class="pre">&quot;^&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;$&quot;</span></code> anchors that serve precisely this
+purpose; see <a class="reference internal" href="regular_expressions.html#sec-regex"><span class="std std-ref">Regular Expressions</span></a>.</p>
 </dd>
 </dl>
 </div>
@@ -556,31 +523,23 @@ purpose, see <a class="reference internal" href="regular_expressions.html#sec-re
            </div>
            
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="regular_expressions.html" class="btn btn-neutral float-right" title="Regular Expressions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="basic_operations.html" class="btn btn-neutral float-left" title="Basic String Operations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="regular_expressions.html" class="btn btn-neutral float-right" title="Regular Expressions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2013-2021, Marek Gagolewski.
-      <span class="lastupdated">
-        Last updated on 2021-11-29T10:29:09+1100.
-      </span>
-
-    </p>
+    <p>&#169; Copyright 2013-2022, Marek Gagolewski.
+      <span class="lastupdated">Last updated on 2022-07-02T17:40:40+1000.
+      </span></p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>

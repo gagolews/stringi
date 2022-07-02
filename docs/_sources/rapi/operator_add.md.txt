@@ -1,4 +1,4 @@
-# operator\_add: Concatenate Two Character Vectors
+# operator_add: Concatenate Two Character Vectors
 
 ## Description
 
@@ -6,7 +6,7 @@ Binary operators for joining (concatenating) two character vectors, with a typic
 
 ## Usage
 
-```r
+``` r
 e1 %s+% e2
 
 e1 %stri+% e2
@@ -36,6 +36,8 @@ Returns a character vector.
 ## See Also
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
+
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi:<https://dx.doi.org/10.18637/jss.v103.i02>
 
 Other join: [`stri_dup()`](stri_dup.md), [`stri_flatten()`](stri_flatten.md), [`stri_join_list()`](stri_join_list.md), [`stri_join()`](stri_join.md)
 

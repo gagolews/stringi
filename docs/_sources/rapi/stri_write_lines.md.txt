@@ -1,4 +1,4 @@
-# stri\_write\_lines: Write Text Lines to a Text File
+# stri_write_lines: Write Text Lines to a Text File
 
 ## Description
 
@@ -6,7 +6,7 @@ Writes a text file is such a way that each element of a given character vector b
 
 ## Usage
 
-```r
+``` r
 stri_write_lines(
   str,
   con,
@@ -43,5 +43,7 @@ This function returns nothing noteworthy.
 ## See Also
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
+
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi:<https://dx.doi.org/10.18637/jss.v103.i02>
 
 Other files: [`stri_read_lines()`](stri_read_lines.md), [`stri_read_raw()`](stri_read_raw.md)

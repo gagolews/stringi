@@ -36,6 +36,8 @@ Returns a character vector of length `n_paragraphs`.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi:<https://dx.doi.org/10.18637/jss.v103.i02>
+
 Other random: [`stri_rand_shuffle()`](stri_rand_shuffle.md), [`stri_rand_strings()`](stri_rand_strings.md)
 
 ## Examples

@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                1.7.6
+                1.7.7
               </div>
             
           
@@ -123,6 +123,7 @@
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../news.html">What Is New in <em>stringi</em></a></li>
@@ -151,67 +152,32 @@
         
         <div class="rst-content style-external-links">
         
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Input and Output</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
-        
       </li>
-    
-  </ul>
-
-  
-  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
-      
-        <a href="example.html" class="btn btn-neutral float-right" title="Example Use Case: Data Preparation" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-      
-      
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
         <a href="other_operations.html" class="btn btn-neutral float-left" title="Other Operations" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-      
+        <a href="example.html" class="btn btn-neutral float-right" title="Example Use Case: Data Preparation" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
   <div class="tex2jax_ignore mathjax_ignore section" id="input-and-output">
-<span id="sec-io"></span><h1>Input and Output<a class="headerlink" href="#input-and-output" title="Permalink to this headline">¶</a></h1>
+<span id="sec-io"></span><h1>Input and Output<a class="headerlink" href="#input-and-output" title="Permalink to this headline"></a></h1>
 <blockquote>
-<div><p>This tutorial is based on the <a class="reference external" href="https://stringi.gagolewski.com/_static/vignette/stringi.pdf">paper on <em>stringi</em></a> that will appear in the <em>Journal of Statistical Software</em>.</p>
+<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that has recently been published the <em>Journal of Statistical Software</em>, see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3">Gag22</a>]</span>.</p>
 </div></blockquote>
 <p>This section deals with some more advanced topics related to the
 operability of text processing applications between different platforms.
-In particular, we discuss how to assure that data read from various
-input connections are interpreted in the correct manner.</p>
+In particular, we discuss how to ensure that data read from various
+input connections are interpreted correctly.</p>
 <div class="section" id="dealing-with-unicode-code-points">
-<span id="sec-codepoints"></span><h2>Dealing with Unicode Code Points<a class="headerlink" href="#dealing-with-unicode-code-points" title="Permalink to this headline">¶</a></h2>
+<span id="sec-codepoints"></span><h2>Dealing with Unicode Code Points<a class="headerlink" href="#dealing-with-unicode-code-points" title="Permalink to this headline"></a></h2>
 <p>The Unicode Standard (as well as the Universal Coded Character Set,
 i.e., ISO/IEC 10646) currently defines over 140,000 abstract characters
 together with their corresponding code points – integers between 0 and
@@ -256,7 +222,7 @@ missing fonts), the correctness of their processing with <em>stringi</em> is
 still guaranteed by <em>ICU</em>.</p>
 </div>
 <div class="section" id="character-encodings">
-<span id="sec-encoding"></span><h2>Character Encodings<a class="headerlink" href="#character-encodings" title="Permalink to this headline">¶</a></h2>
+<span id="sec-encoding"></span><h2>Character Encodings<a class="headerlink" href="#character-encodings" title="Permalink to this headline"></a></h2>
 <p>When storing strings in RAM or on the disk, we need to decide upon the
 actual way of representing the code points as sequences of bytes. The
 two most popular encodings in the Unicode family are UTF-8 and UTF-16:</p>
@@ -272,8 +238,9 @@ native encoding, is defined via the <code class="docutils literal notranslate"><
 <code class="docutils literal notranslate"><span class="pre">Sys.getlocale()</span></code>. This is the representation assumed, e.g., when
 reading data from the standard input or from files (e.g., when <code class="docutils literal notranslate"><span class="pre">scan()</span></code>
 is called). For instance, Central European versions of Windows will
-assume the “<code class="docutils literal notranslate"><span class="pre">windows-1250</span></code>” code page. MacOS as well as most Linux boxes
-work with UTF-8 by default<a class="footnote-reference brackets" href="#footucrt" id="id1">1</a>.</p>
+assume the “<code class="docutils literal notranslate"><span class="pre">windows-1250</span></code>” code page. On the other hand,
+MacOS as well as most Linux boxes
+work with UTF-8 by default<a class="footnote-reference brackets" href="#footucrt" id="id2">1</a>.</p>
 <p>All strings in R have an associated encoding mark which can be read by
 calling <code class="docutils literal notranslate"><span class="pre">Encoding()</span></code> or, more conveniently, <code class="docutils literal notranslate"><span class="pre">stri_enc_mark()</span></code>. Most
 importantly, strings in ASCII, ISO-8859-1 (“<code class="docutils literal notranslate"><span class="pre">latin1</span></code>”), UTF-8, and the
@@ -284,10 +251,10 @@ available for UTF-16 data). Over the years, this has proven a robust,
 efficient, and maximally portable design choice – Unicode can be
 thought of as a superset of every other encoding. Moreover, in order to
 guarantee the correctness and high performance of the string processing
-pipelines, <em>stringi</em> always<a class="footnote-reference brackets" href="#footuftout" id="id2">2</a> outputs UTF-8 data.</p>
+pipelines, <em>stringi</em> always<a class="footnote-reference brackets" href="#footuftout" id="id3">2</a> outputs UTF-8 data.</p>
 </div>
 <div class="section" id="reading-and-writing-text-files">
-<span id="sec-read-lines"></span><h2>Reading and Writing Text Files<a class="headerlink" href="#reading-and-writing-text-files" title="Permalink to this headline">¶</a></h2>
+<span id="sec-read-lines"></span><h2>Reading and Writing Text Files<a class="headerlink" href="#reading-and-writing-text-files" title="Permalink to this headline"></a></h2>
 <p>According to a report by
 <a class="reference external" href="https://w3techs.com/technologies/cross/character_encoding/ranking">W3Techs</a>,
 as of 2021-09-28, 97.3% of
@@ -313,10 +280,10 @@ vector to a file (each string will constitute a separate text line),
 with any output encoding.</p>
 </div>
 <div class="section" id="detecting-encodings">
-<h2>Detecting Encodings<a class="headerlink" href="#detecting-encodings" title="Permalink to this headline">¶</a></h2>
+<h2>Detecting Encodings<a class="headerlink" href="#detecting-encodings" title="Permalink to this headline"></a></h2>
 <p>If a file’s encoding is not known in advance, there are a
 certain functions that can aid in encoding detection. First, we can read
-the resource in form of a raw-type vector:</p>
+the resource in the form of a raw-type vector:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">stri_read_raw</span><span class="p">(</span><span class="s">&quot;ES_latin1.txt&quot;</span><span class="p">)</span>
 <span class="nf">head</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">24</span><span class="p">)</span>  <span class="c1"># vector of type raw</span>
 <span class="c1">##  [1] 43 41 4e 54 4f 20 44 45 20 43 41 4c cd 4f 50 45 20 2d 20 4d 69 67 75 65</span>
@@ -341,11 +308,11 @@ the resource in form of a raw-type vector:</p>
 </pre></div>
 </div>
 <p>Nevertheless, encoding detection is an operation that relies on
-heuristics, therefore there is a chance that the output might be
+heuristics. Therefore, there is a chance that the output might be
 imprecise or even misleading.</p>
 </div>
 <div class="section" id="converting-between-encodings">
-<h2>Converting Between Encodings<a class="headerlink" href="#converting-between-encodings" title="Permalink to this headline">¶</a></h2>
+<h2>Converting Between Encodings<a class="headerlink" href="#converting-between-encodings" title="Permalink to this headline"></a></h2>
 <p>Knowing the desired source and destination encoding precisely,
 <code class="docutils literal notranslate"><span class="pre">stri_encode()</span></code> can be called to perform the conversion. Contrary to the
 built-in <code class="docutils literal notranslate"><span class="pre">iconv()</span></code>, which relies on different underlying libraries, the
@@ -366,7 +333,7 @@ automatically, e.g., <code class="docutils literal notranslate"><span class="pre
 </div>
 </div>
 <div class="section" id="normalising-strings">
-<span id="sec-normalisation"></span><h2>Normalising Strings<a class="headerlink" href="#normalising-strings" title="Permalink to this headline">¶</a></h2>
+<span id="sec-normalisation"></span><h2>Normalising Strings<a class="headerlink" href="#normalising-strings" title="Permalink to this headline"></a></h2>
 <p>In the section on <a class="reference internal" href="collation.html#sec-equivalence"><span class="std std-ref">Testing String Equivalence</span></a> we’ve provided some examples of
 canonically equivalent strings whose code point representation was
 different. Unicode <a class="reference external" href="https://www.unicode.org/reports/tr15/">normalisation</a>
@@ -388,7 +355,7 @@ compare equal using bytewise matching.</p>
 </div>
 <p>Above we see some example code points before, after NFC, and after NFD
 normalisation, respectively.</p>
-<p>It might be a good idea to always normalise all the strings read from
+<p>It might be a good idea always to normalise all the strings read from
 external sources (files, URLs) with NFC.</p>
 <p>Compatibility composition and decomposition normalisation forms (NFKC
 and NFKD, respectively) are also available if the removal of the
@@ -401,12 +368,12 @@ is desired. For example:</p>
 <p>Such text might be much easier to process or analyse statistically.</p>
 <hr class="footnotes docutils" />
 <dl class="footnote brackets">
-<dt class="label" id="footucrt"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p>It is expected that future R releases will support UTF-8 natively
+<dt class="label" id="footucrt"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
+<dd><p>It is expected that future R releases will support UTF-8 natively,
 thanks to the Universal C Runtime (UCRT) that is available for
 Windows 10.</p>
 </dd>
-<dt class="label" id="footuftout"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dt class="label" id="footuftout"><span class="brackets"><a class="fn-backref" href="#id3">2</a></span></dt>
 <dd><p>Okay, with a few obvious exceptions, such as <code class="docutils literal notranslate"><span class="pre">stri_encode()</span></code>.</p>
 </dd>
 </dl>
@@ -417,31 +384,23 @@ Windows 10.</p>
            </div>
            
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="example.html" class="btn btn-neutral float-right" title="Example Use Case: Data Preparation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="other_operations.html" class="btn btn-neutral float-left" title="Other Operations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="example.html" class="btn btn-neutral float-right" title="Example Use Case: Data Preparation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2013-2021, Marek Gagolewski.
-      <span class="lastupdated">
-        Last updated on 2021-11-29T10:29:09+1100.
-      </span>
-
-    </p>
+    <p>&#169; Copyright 2013-2022, Marek Gagolewski.
+      <span class="lastupdated">Last updated on 2022-07-02T17:40:40+1000.
+      </span></p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>

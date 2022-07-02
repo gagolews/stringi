@@ -50,7 +50,7 @@ The following Normalization Forms (NFs) are supported:
 
 -   NFKC_Casefold (combination of NFKC, case folding, and removing ignorable characters which was introduced with Unicode 5.2).
 
-Note that many W3C Specifications recommend using NFC for all content, because this form avoids potential interoperability problems arising from the use of canonically equivalent, yet different, character sequences in document formats on the Web. Thus, you will rather not use these functions in typical string processing activities. Most often you may assume that a string is in NFC, see RFC\\#5198.
+Note that many W3C Specifications recommend using NFC for all content, because this form avoids potential interoperability problems arising from the use of canonically equivalent, yet different, character sequences in document formats on the Web. Thus, you will rather not use these functions in typical string processing activities. Most often you may assume that a string is in NFC, see RFC5198.
 
 As usual in <span class="pkg">stringi</span>, if the input character vector is in the native encoding, it will be automatically converted to UTF-8.
 
@@ -70,7 +70,7 @@ The `stri_trans_nf*` functions return a character vector of the same length as i
 
 *Unicode Normalization Forms* -- Unicode Standard Annex #15, <https://unicode.org/reports/tr15/>
 
-*Unicode Format for Network Interchange* -- RFC\\#5198, <https://tools.ietf.org/rfc/rfc5198.txt>
+*Unicode Format for Network Interchange* -- RFC5198, <https://tools.ietf.org/rfc/rfc5198.txt>
 
 *Character Model for the World Wide Web 1.0: Normalization* -- W3C Working Draft, <https://www.w3.org/TR/charmod-norm/>
 
@@ -81,6 +81,8 @@ The `stri_trans_nf*` functions return a character vector of the same length as i
 ## See Also
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
+
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi:<https://dx.doi.org/10.18637/jss.v103.i02>
 
 Other transform: [`stri_trans_char()`](stri_trans_char.md), [`stri_trans_general()`](stri_trans_general.md), [`stri_trans_list()`](stri_trans_list.md), [`stri_trans_tolower()`](stri_trans_casemap.md)
 

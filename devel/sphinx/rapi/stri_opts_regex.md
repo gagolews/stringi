@@ -64,6 +64,8 @@ Returns a named list object; missing settings are left with default values.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi:<https://dx.doi.org/10.18637/jss.v103.i02>
+
 Other search_regex: [`about_search_regex`](about_search_regex.md), [`about_search`](about_search.md)
 
 ## Examples

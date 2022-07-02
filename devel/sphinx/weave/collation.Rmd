@@ -9,10 +9,10 @@ opts_chunk$set(cache.path="cache/collation_")
 ```
 
 
-Historically, code-pointwise comparison had been used in most string
+Historically, the code-pointwise comparison had been used in most string
 comparison activities, especially when strings in ASCII (i.e., English)
-were involved. However, nowadays this does not necessarily constitute
-the most suitable approach to the processing of natural-language texts.
+were involved. However, nowadays, this does not necessarily constitute
+the most suitable approach to processing natural-language texts.
 In particular, a code-pointwise matching neither takes accented and
 conjoined letters nor ignorable punctuation and case into account.
 
@@ -28,8 +28,9 @@ Locales
 -------
 
 String collation is amongst many locale-sensitive operations available
-in *stringi*. Before proceeding any further, we should first discuss how
-we can parameterise the *ICU* services so as to deliver the results that
+in *stringi*. However, before proceeding any further, we should first
+discuss how
+we can parameterise the *ICU* services to deliver the results that
 reflect the expectations of a specific user community, such as the
 speakers of different languages and their various regional variants.
 
@@ -93,7 +94,7 @@ during the request for a particular resource
 (for more details, see the [*ICU* User Guide on Locales](https://unicode-org.github.io/icu/userguide/locale/)), which may depend on
 the *ICU* library version actually in use as well as the way the *ICU*
 Data Library (*icudt*) has been packaged. Therefore, for maximum
-portability, it is best to rely on the *ICU* library bundle that is
+portability, it is best to rely on the *ICU* library bundle
 shipped with *stringi*. This is the case on Windows and macOS, whose
 users typically download the pre-compiled versions of the package from
 CRAN. However, on various flavours of GNU/Linux and other Unix-based
@@ -120,7 +121,7 @@ locale if no locale has been explicitly requested, i.e., when a
 function's `locale` argument is left alone in its "`NULL`" state. The
 default locale is initially set to match the system locale on the
 current platform, and may be changed with `stri_locale_set()`, e.g., in
-the very rare case of improper automatic locale detection.
+the sporadic case of improper automatic locale detection.
 
 As we have stated in the introduction, in this paper we use:
 
@@ -147,7 +148,7 @@ Testing for the Unicode equivalence between strings can be performed by
 calling `%s==%` and, more generally, `stri_cmp_equiv()`, or their
 negated versions, `%s!=%` and `stri_cmp_nequiv()`.
 
-In the example below we have: a followed by ogonek (two code points) vs
+In the example below, we have: a followed by ogonek (two code points) vs
 a with ogonek (single code point).
 
 ```{r }
@@ -225,8 +226,8 @@ Collator Options
 
 The table below lists the options that can be passed to
 `stri_opts_collator()` via the dot-dot-dot parameter, "`...`", in all
-the functions that rely on the *ICU* Collator. Below we
-we play with some of them.
+the functions that rely on the *ICU* Collator.
+Below we play with some of them.
 
 
 | Option                | Purpose
@@ -314,7 +315,7 @@ stri_unique(x, alternate_shifted=TRUE)  # strength=3
 ```
 
 Here, when `strength = 3` is used (the default), punctuation
-differences are ignored, but case is deemed significant.
+differences are ignored, but the letter case is deemed significant.
 
 ```{r }
 stri_unique(x, alternate_shifted=TRUE, strength=2)
@@ -330,10 +331,10 @@ stri_unique(x, strength=2)
 
 ### Backward Secondary Sorting
 
-The French Canadian Sorting Standard CAN/CSA Z243.4.1 (historically this
+The French Canadian Sorting Standard CAN/CSA Z243.4.1 (historically, this
 had been the default for all French locales) requires the word ordering
 with respect to the last accent difference. Such a behaviour can be
-applied either by setting the French-Canadian locale or by passing the
+applied either by setting the French-Canadian locale, or by passing the
 `french=TRUE` option to the Collator.
 
 ```{r }
@@ -401,7 +402,7 @@ for.
 
 Also, for "fuzzy" matching of strings,
 the [*stringdist*](https://CRAN.R-project.org/package=stringdist) package
-might be useful.
+might be utile.
 
 
 
@@ -413,7 +414,7 @@ the occurrences of simple textual patterns. The counterparts of the
 string search functions described in the section on
 {ref}`Sec:fixed` have
 their names ending with `*_coll()`. Albeit slower than the `*_fixed()`
-functions , they are more appropriate in natural language
+functions, they are more appropriate in natural language
 processing activities.
 
 For instance:

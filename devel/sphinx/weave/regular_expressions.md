@@ -4,11 +4,11 @@ Regular Expressions
 
 
 
-> This tutorial is based on the [paper on *stringi*](https://stringi.gagolewski.com/_static/vignette/stringi.pdf) that will appear in the *Journal of Statistical Software*.
+> This tutorial is based on the [paper on *stringi*](https://dx.doi.org/10.18637/jss.v103.i02) that has recently been published the *Journal of Statistical Software*, see {cite}`stringi`.
 
 
-Regular expressions (regexes) provide us with a concise grammar for
-defining systematic patterns which can be sought in character strings.
+Regular expressions (regexes) provide concise grammar for
+defining systematic patterns that can be sought in character strings.
 Examples of such patterns include: specific fixed substrings, emojis of
 any kind, stand-alone sequences of lower-case Latin letters ("words"),
 substrings that can be interpreted as real numbers (with or without
@@ -17,7 +17,8 @@ addresses, or URLs.
 
 Theoretically, the concept of regular pattern matching dates back to the
 so-called regular languages and finite state automata {cite}`kleene`, see
-also {cite}`hopcroftullman` and {cite}`automata`. Regexes in the form as we know today
+also {cite}`hopcroftullman` and {cite}`automata`. Regexes in the form
+as we know it today
 have already been present in one of the pre-Unix implementations of the
 command-line text editor *qed* ({cite}`qed`; the predecessor of the
 well-known *sed*).
@@ -48,7 +49,7 @@ patterns). On the other hand, *ICU* regexes fully conform to the
 [Unicode Technical Standard \#18](https://www.unicode.org/reports/tr18/)
 and hence provide comprehensive support for Unicode.
 
-It is worth noting that most programming languages as well as advanced
+It is worth noting that most programming languages and advanced
 text editors and development environments
 (including [*Kate*](https://kate-editor.org/),
 [*Eclipse*](https://www.eclipse.org/ide/),
@@ -133,7 +134,7 @@ stri_detect_regex("groß", "GROSS", case_insensitive=TRUE)
 If we wish to include a special character as part of a regular
 expression -- so that it is treated literally -- we'll need to escape
 it with a backslash, "\\". Yet, the backlash itself has a special
-meaning to R, see `help("Quotes")`, therefore it needs to be preceded by
+meaning to R, see `help("Quotes")`. Therefore it needs to be preceded by
 another backslash.
 
 
@@ -164,7 +165,7 @@ The above matches non-overlapping length-4 substrings that end with
 "`am`".
 
 The dot's insensitivity to the newline character is motivated by the
-need to maintain the compatibility with tools such as *grep* (when
+need to maintain compatibility with tools such as *grep* (when
 searching within text files in a line-by-line manner). This behaviour
 can be altered by setting the `dot_all` option to `TRUE`.
 
@@ -226,8 +227,8 @@ stri_extract_all_regex(x, "[^ ][^ ][^ ]")
 ### Defining Code Point Ranges
 
 Each Unicode code point can be referenced by its unique numeric
-identifier, see {ref}`Sec:codepoints` for more details. For instance, "`a`" is
-assigned code U+0061 and "`z`" is mapped to U+007A. In the pre-Unicode
+identifier; see {ref}`Sec:codepoints` for more details. For instance, "`a`" is
+assigned code U+0061, and "`z`" is mapped to U+007A. In the pre-Unicode
 era (mostly with regards to the ASCII codes, ≤ U+007F, representing
 English letters, decimal digits, some punctuation characters, and a few
 control characters), we were used to relying on specific code ranges;
@@ -246,8 +247,8 @@ stri_extract_all_regex("In 2020, Gągolewski had fun once.", "[0-9A-Za-z]")
 The above pattern denotes a union of 3 code ranges: digits and ASCII
 upper- and lowercase letters.
 
-Nowadays, in the processing of text in natural languages, this notation
-should rather be avoided. Note the missing "`ą`" (Polish "`a`" with
+Nowadays, when processing text in natural languages, this notation
+should be avoided. Note the missing "`ą`" (Polish "`a`" with
 ogonek) in the result.
 
 ### Using Predefined Character Sets
@@ -313,7 +314,7 @@ denote their complements.
 
 ### Avoiding POSIX Classes
 
-The use of the POSIX-like character classes should be avoided, because
+The use of the POSIX-like character classes should be avoided because
 they are generally not well-defined.
 
 In particular, in POSIX-like regex engines, "`[:punct:]`" stands for the
@@ -378,12 +379,12 @@ stri_extract_all_regex(x, "spam|ham")
 ## [1] "spam" "ham"  "spam"
 ```
 
-"`|`" has a very low precedence. Therefore, if we wish to introduce an
+"`|`" has very low precedence. Therefore, if we wish to introduce an
 alternative of subexpressions, we need to group them, e.g., between
 round brackets. For instance, "`(sp|h)am`" matches either "`spam`"
 or "`ham`".
 
-Note that this has the side-effect of creating new capturing groups,
+Note that this has the side-effect of creating new capturing groups;
 see {ref}`Sec:Capturing`.
 
 
@@ -442,7 +443,7 @@ Quantifiers
 -----------
 
 More often than not, a variable number of instances of the same
-subexpression needs to be captured or its presence should be made
+subexpression needs to be captured, or its presence should be
 optional. This can be achieved by means of the following quantifiers:
 
 -   "`?`" matches 0 or 1 times;
@@ -514,7 +515,7 @@ stri_extract_all_regex("12, 34.5, 678.901234, 37...629, ...",
 ```
 
 Here, the first regex matches digits, a dot, and another series of
-digits. The second one finds digits which are possibly (but not
+digits. The second one finds digits that are possibly (but not
 necessarily) followed by a dot and a digit sequence.
 
 ### Performance Notes
@@ -679,13 +680,13 @@ syntax (the angle brackets are part of the token), as in, e.g.,
 Anchoring
 ---------
 
-Lastly, let's mention the ways to match a pattern at a given abstract
+Lastly, let's mention how to match a pattern at a given abstract
 position within a string.
 
 
 ### Matching at the Beginning or End of a String
 
-"`^`" and "`$`" match, respectively, start and end of the string (or
+"`^`" and "`$`" match, respectively, the start and the end of the string (or
 each line within a string, if the `multi_line` option is set to `TRUE`).
 
 

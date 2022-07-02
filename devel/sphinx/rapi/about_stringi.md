@@ -1,4 +1,4 @@
-# about_stringi: THE String Processing Package
+# about_stringi: Fast and Portable Character String Processing in R
 
 ## Description
 
@@ -48,7 +48,7 @@ Refer to the following:
 
 -   [`stri_trim`](stri_trim.md) (among others) for trimming characters from the beginning or/and end of a string, see also [about_search_charclass](about_search_charclass.md), and [`stri_pad`](stri_pad.md) for padding strings so that they are of the same width. Additionally, [`stri_wrap`](stri_wrap.md) wraps text into lines.
 
--   [`stri_trans_tolower`](stri_trans_casemap.md) (among others) for case mapping, i.e., conversion to lower, UPPER, or Title Case, [`stri_trans_nfc`](stri_trans_nf.md) (among others) for Unicode normalization, [`stri_trans_char`](stri_trans_char.md) for translating individual code points, and [`stri_trans_general`](stri_trans_general.md) for other universal yet powerful text transforms, including transliteration.
+-   [`stri_trans_tolower`](stri_trans_casemap.md) (among others) for case mapping, i.e., conversion to lower, UPPER, or Title Case, [`stri_trans_nfc`](stri_trans_nf.md) (among others) for Unicode normalization, [`stri_trans_char`](stri_trans_char.md) for translating individual code points, and [`stri_trans_general`](stri_trans_general.md) for other universal text transforms, including transliteration.
 
 -   [`stri_cmp`](stri_compare.md), [`%s<%`](+25s+3C+25.md), [`stri_order`](stri_order.md), [`stri_sort`](stri_sort.md), [`stri_rank`](stri_rank.md), [`stri_unique`](stri_unique.md), and [`stri_duplicated`](stri_duplicated.md) for collation-based, locale-aware operations, see also [about_locale](about_locale.md).
 
@@ -68,7 +68,9 @@ Marek Gagolewski, with contributions from Bartek Tartanus and many others. ICU4C
 
 ## References
 
-*<span class="pkg">stringi</span> Package homepage*, <https://stringi.gagolewski.com/>
+*<span class="pkg">stringi</span> Package Homepage*, <https://stringi.gagolewski.com/>
+
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi:<https://dx.doi.org/10.18637/jss.v103.i02>
 
 *ICU -- International Components for Unicode*, <https://icu.unicode.org/>
 
@@ -76,10 +78,12 @@ Marek Gagolewski, with contributions from Bartek Tartanus and many others. ICU4C
 
 *The Unicode Consortium*, <https://home.unicode.org/>
 
-*UTF-8, a transformation format of ISO 10646* -- RFC 3629, <https://tools.ietf.org/html/rfc3629>
+*UTF-8, A Transformation Format of ISO 10646* -- RFC 3629, <https://tools.ietf.org/html/rfc3629>
 
 ## See Also
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
+
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi:<https://dx.doi.org/10.18637/jss.v103.i02>
 
 Other stringi_general_topics: [`about_arguments`](about_arguments.md), [`about_encoding`](about_encoding.md), [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_charclass`](about_search_charclass.md), [`about_search_coll`](about_search_coll.md), [`about_search_fixed`](about_search_fixed.md), [`about_search_regex`](about_search_regex.md), [`about_search`](about_search.md)

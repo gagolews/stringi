@@ -38,3 +38,5 @@ kate-swp$
 ^Makefile
 ^stringi_.*\.tar\.gz$
 ^CODE_OF_CONDUCT
+TODO
+^CITATION\.cff$

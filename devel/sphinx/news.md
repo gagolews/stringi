@@ -1,31 +1,19 @@
 # What Is New in *stringi*
 
 
-## 1.7.6.9xxx (under development)
+## 1.7.7 (2022-07-02)
+
+* [DOCUMENTATION] Paper on *stringi* has been published in
+    the *Journal of Statistical Software*, see <doi:10.18637/jss.v103.i02>.
 
 * [BUGFIX] #473, #397: Fixed buffer overflow in `stri_dup`.
     `stri_dup`, `stri_paste`, ... fail more graciously on attempts to
     generate strings of length >= 2^31 each.
 
-* [NEW FEATURE] TODO.... #469: `stri_datetime_parse` .. new argument -
-`default_time`
-    a Calendar set on input to the date and time to be used for missing values in the date/time string being parsed
+* [BUILD TIME] #480: Using `Rf_isNull` instead of `isNull`.
 
-* [BUGFIX] TODO.... #469: `stri_datetime_parse` did not reset the `Calendar` object
-    when parsing multiple dates.
-
-* [NEW FEATURE] TODO... #476 U_USING_DEFAULT_ERROR on unknown locales
-
-* [NEW FEATURE] TODO... #81 number format
-
-* [NEW FEATURE] TODO... #477 sprintf localised number format
-
-* [NEW FEATURE] #471: split into overlapping or non-overlapping chunks,
-    possibly of different lengths
-
-* [DOCUMENTATION] #462...
-
-
+* [DOCUMENTATION] #462: That the `numeric=TRUE` collator
+    does not handle negative numbers correctly is now mentioned in the manual.
 
 
 ## 1.7.6 (2021-11-29)
@@ -356,9 +344,9 @@ documentation object `stri_datetime_format`: `...`
 
 * [BUGFIX] #319: Fixed overflow in `stri_rand_shuffle()`.
 
-* [BUGFIX] #337: Empty search patters in search functions (e.g.,
+* [BUGFIX] #337: Empty search patterns in search functions (e.g.,
   `stri_split_regex()` and `stri_count_fixed()`) used to raise
-  too many warnings on empty search patters.
+  too many warnings on empty search patterns.
 
 
 ## 1.2.4 (2018-07-20)

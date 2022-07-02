@@ -1,4 +1,4 @@
-# stri\_match: Extract Regex Pattern Matches, Together with Capture Groups
+# stri_match: Extract Regex Pattern Matches, Together with Capture Groups
 
 ## Description
 
@@ -6,7 +6,7 @@ These functions extract substrings in `str` that match a given regex `pattern`. 
 
 ## Usage
 
-```r
+``` r
 stri_match_all(str, ..., regex)
 
 stri_match_first(str, ..., regex)
@@ -79,7 +79,9 @@ If regular expressions feature a named capture group, the matrix columns will be
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_extract: [`about_search`](about_search.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_extract_all()`](stri_extract.md)
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi:<https://dx.doi.org/10.18637/jss.v103.i02>
+
+Other search_extract: [`about_search`](about_search.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_extract_all()`](stri_extract.md)
 
 ## Examples
 

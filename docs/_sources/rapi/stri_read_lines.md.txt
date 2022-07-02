@@ -1,4 +1,4 @@
-# stri\_read\_lines: Read Text Lines from a Text File
+# stri_read_lines: Read Text Lines from a Text File
 
 ## Description
 
@@ -6,7 +6,7 @@ Reads a text file in ins entirety, re-encodes it, and splits it into text lines.
 
 ## Usage
 
-```r
+``` r
 stri_read_lines(con, encoding = NULL, fname = con, fallback_encoding = NULL)
 ```
 
@@ -38,5 +38,7 @@ Returns a character vector, each text line is a separate string. The output is a
 ## See Also
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
+
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi:<https://dx.doi.org/10.18637/jss.v103.i02>
 
 Other files: [`stri_read_raw()`](stri_read_raw.md), [`stri_write_lines()`](stri_write_lines.md)

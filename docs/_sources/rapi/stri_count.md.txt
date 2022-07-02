@@ -1,4 +1,4 @@
-# stri\_count: Count the Number of Pattern Occurrences
+# stri_count: Count the Number of Pattern Occurrences
 
 ## Description
 
@@ -6,7 +6,7 @@ These functions count the number of occurrences of a pattern in a string.
 
 ## Usage
 
-```r
+``` r
 stri_count(str, ..., regex, fixed, coll, charclass)
 
 stri_count_charclass(str, pattern)
@@ -47,7 +47,9 @@ All the functions return an integer vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_count: [`about_search`](about_search.md), [`stri_count_boundaries()`](stri_count_boundaries.md)
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi:<https://dx.doi.org/10.18637/jss.v103.i02>
+
+Other search_count: [`about_search`](about_search.md), [`stri_count_boundaries()`](stri_count_boundaries.md)
 
 ## Examples
 

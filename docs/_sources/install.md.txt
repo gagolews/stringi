@@ -14,10 +14,10 @@ install.packages("stringi")
 
 However, due to the overwhelming complexity of the ICU4C library,
 upon which *stringi* is based, and the colourful diversity of operating systems,
-their flavors, and particular setups, some users may still experience
+their flavours, and particular setups, some users may still experience
 a few issues that hopefully can be resolved with the help of this short manual.
 
-Also, some additional build tweaks are possible in case we require a more
+Also, some additional build tweaks are possible if we require a more
 customised installation.
 
 
@@ -32,25 +32,25 @@ If we install the package from sources and either:
    the `libicu-devel` rpm on Fedora/CentOS/OpenSUSE,
    `libicu-dev` on Ubuntu/Debian, etc.),
 
-* `pkg-config` is fails to find appropriate build settings
+* `pkg-config` fails to find appropriate build settings
    for ICU-based projects, or
 
 * `R CMD INSTALL` is called with the `--configure-args='--disable-pkg-config'`
-    argument or environment variable `STRINGI_DISABLE_PKG_CONFIG` is
+    argument, or environment variable `STRINGI_DISABLE_PKG_CONFIG` is
     set to non-zero or
     `install.packages("stringi", configure.args="--disable-pkg-config")`
     is executed,
 
 then ICU will be built together with stringi.
 A custom subset of ICU4C 69.1 is shipped with the package.
-We also include ICU4C 55.1 that can be used as a fallback version
+We also include ICU4C 55.1 which can be used as a fallback version
 (e.g., on older Solaris boxes).
 
 
 > To get the most out of stringi, you are strongly encouraged to rely on our
 > ICU4C package bundle. This ensures maximum portability across all platforms
 > (Windows and macOS users by default fetch the pre-compiled binaries
-> from CRAN built exactly this way).
+> from CRAN built precisely this way).
 
 
 
@@ -59,7 +59,7 @@ We also include ICU4C 55.1 that can be used as a fallback version
 Note that if you choose to use our ICU4C bundle, then -- by default -- the
 ICU data library will be downloaded from one of our mirror servers.
 However, if you have already downloaded a version of `icudt*.zip` suitable
-for your platform (big/little endian), you may wish to install the
+for your platform (big/little-endian), you may wish to install the
 package by calling:
 
 ```r
@@ -110,12 +110,13 @@ install.packages("stringi", configure.args="--with-extra-cxxflags='-std=c++11'")
 ```
 
 Overall, your build chain may be misconfigured, check out,
-amongst others, `<R_inst_dir>/etc/Makeconf`
-(e.g., are you using `-std=gnu++11` instead of `-std=c++11`?). Refer to
-https://cran.r-project.org/doc/manuals/r-release/R-admin.html for more details.
+amongst others, `<R_inst_dir>/etc/Makeconf` (e.g., are you using
+`-std=gnu++11` instead of `-std=c++11`?). Refer to
+<https://cran.r-project.org/doc/manuals/r-release/R-admin.html>
+for more details.
 
-There is an option of using the fallback version of ICU4C 55.1
-which however requires the support of the `long long` type in a few functions,
+There is an option of using the fallback version of ICU4C 55.1.
+However, it requires the support of the `long long` type in a few functions,
 (this is not part of the C++98 standard; works on Solaris, though). Try:
 
 ```r
@@ -154,7 +155,7 @@ Some influential environment variables:
     path relative to `<package source dir>/src`; defaults to `icuXX/data`.
 
 * `PKG_CONFIG_PATH`: An optional list of directories to search for
-    `pkg-config`s `.pc` files.
+    `pkg-config`'s `.pc` files.
 
 * `R_HOME`: Override the R directory, e.g.,
     `/usr/lib64/R`. Note that `$R_HOME/bin/R` point to the R executable.
@@ -162,15 +163,15 @@ Some influential environment variables:
 * `CAT`: The `cat` command used to generate the list of source files to compile.
 
 * `PKG_CONFIG`:The `pkg-config` command used to fetch the necessary compiler
-    flags to link to and existing `libicu` installation.
+    flags to link to the existing `libicu` installation.
 
-* `STRINGI_DISABLE_CXX11`: Disable C++11,
+* `STRINGI_DISABLE_CXX11`: Disable C++11;
     see also `--disable-cxx11`.
 
-* `STRINGI_DISABLE_PKG_CONFIG`: Compile ICU from sources,
+* `STRINGI_DISABLE_PKG_CONFIG`: Compile ICU from sources;
     see also `--disable-pkg-config`.
 
-* `STRINGI_DISABLE_ICU_BUNDLE`: Enforce system ICU,
+* `STRINGI_DISABLE_ICU_BUNDLE`: Enforce system ICU;
     see also `--disable-icu-bundle`.
 
 * `STRINGI_CFLAGS`: see `--with-extra-cflags`.
@@ -190,7 +191,7 @@ Some influential environment variables:
 
 We expect that with a correctly configured C++11 compiler and properly
 installed system ICU4C distribution, you should face no problems
-with installing the package, especially if you use our ICU4C bundle and you
+installing the package, especially if you use our ICU4C bundle and
 have a working internet access.
 
 If you do not manage to set up a successful stringi build, do not

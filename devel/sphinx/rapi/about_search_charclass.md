@@ -446,6 +446,8 @@ Therefore, a POSIX flavor of `[:punct:]` is more like `[\p{P}\p{S}]` in <span cl
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi:<https://dx.doi.org/10.18637/jss.v103.i02>
+
 Other search_charclass: [`about_search`](about_search.md), [`stri_trim_both()`](stri_trim.md)
 
 Other stringi_general_topics: [`about_arguments`](about_arguments.md), [`about_encoding`](about_encoding.md), [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_coll`](about_search_coll.md), [`about_search_fixed`](about_search_fixed.md), [`about_search_regex`](about_search_regex.md), [`about_search`](about_search.md), [`about_stringi`](about_stringi.md)

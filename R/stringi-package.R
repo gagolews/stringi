@@ -1,7 +1,7 @@
 # kate: default-dictionary en_US
 
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2021, Marek Gagolewski <https://www.gagolewski.com>
+## Copyright (c) 2013-2022, Marek Gagolewski <https://www.gagolewski.com>
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,7 @@
 ## EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-#' @title THE String Processing Package
+#' @title Fast and Portable Character String Processing in R
 #'
 #' @description
 #' \pkg{stringi} is THE R package for fast, correct, consistent,
@@ -115,7 +115,7 @@
 #' i.e., conversion to lower, UPPER, or Title Case,
 #' \code{\link{stri_trans_nfc}} (among others) for Unicode normalization,
 #' \code{\link{stri_trans_char}} for translating individual code points,
-#' and \code{\link{stri_trans_general}} for other universal yet powerful
+#' and \code{\link{stri_trans_general}} for other universal
 #' text transforms, including transliteration.
 #'
 #' \item \code{\link{stri_cmp}}, \code{\link{\%s<\%}}, \code{\link{stri_order}},
@@ -150,8 +150,12 @@
 #' ICU4C was developed by IBM, Unicode, Inc., and others.
 #'
 #' @references
-#' \emph{\pkg{stringi} Package homepage},
+#' \emph{\pkg{stringi} Package Homepage},
 #' \url{https://stringi.gagolewski.com/}
+#'
+#' Gagolewski M., \pkg{stringi}: Fast and portable character string
+#' processing in R, \emph{Journal of Statistical Software} 103(2), 2022, 1-59,
+#' doi:\url{https://dx.doi.org/10.18637/jss.v103.i02}
 #'
 #' \emph{ICU -- International Components for Unicode},
 #' \url{https://icu.unicode.org/}
@@ -162,7 +166,7 @@
 #' \emph{The Unicode Consortium},
 #' \url{https://home.unicode.org/}
 #'
-#' \emph{UTF-8, a transformation format of ISO 10646} -- RFC 3629,
+#' \emph{UTF-8, A Transformation Format of ISO 10646} -- RFC 3629,
 #' \url{https://tools.ietf.org/html/rfc3629}
 #'
 #' @family stringi_general_topics
