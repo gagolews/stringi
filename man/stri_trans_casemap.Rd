@@ -81,7 +81,7 @@ stri_trans_totitle('stringi is a FREE R pAcKaGe. WItH NO StrinGS attached.', typ
 \seealso{
 The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
 
-Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R, \emph{Journal of Statistical Software} 103(2), 2022, 1-59, doi:\url{https://dx.doi.org/10.18637/jss.v103.i02}
+Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R, \emph{Journal of Statistical Software} 103(2), 2022, 1-59, \doi{10.18637/jss.v103.i02}
 
 Other locale_sensitive: 
 \code{\link{\%s<\%}()},

@@ -4,7 +4,8 @@
 ## 1.7.7 (2022-07-02)
 
 * [DOCUMENTATION] Paper on *stringi* has been published in
-    the *Journal of Statistical Software*, see <doi:10.18637/jss.v103.i02>.
+    the *Journal of Statistical Software*;
+    see <https://doi.org/10.18637/jss.v103.i02>.
 
 * [BUGFIX] #473, #397: Fixed buffer overflow in `stri_dup`.
     `stri_dup`, `stri_paste`, ... fail more graciously on attempts to
