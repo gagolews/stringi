@@ -142,4 +142,3 @@ and so forth.
 For the climate data on other cities, very similar operations will need
 to be performed -- the whole process of scraping and cleansing data can
 be automated quite easily.
-

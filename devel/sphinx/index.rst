@@ -1,5 +1,5 @@
-stringi: THE String Processing Package for R
-============================================
+stringi: Fast and Portable Character String Processing in R
+===========================================================
 
     **stringi (pronounced “stringy”, IPA [strinɡi]) is THE R package
     for very fast, portable, correct, consistent, and convenient string/text
@@ -9,9 +9,8 @@ stringi: THE String Processing Package for R
 
 
 
-Thanks to `ICU <https://icu.unicode.org/>`_,
-*stringi* fully supports a wide range
-of `Unicode <https://www.unicode.org/>`_ standards
+Thanks to `ICU <https://icu.unicode.org/>`_, *stringi* fully supports a wide
+range of `Unicode <https://www.unicode.org/>`_ standards
 (see also `this video <https://www.youtube.com/watch?v=-n2nlPHEMG8>`_).
 
 .. code-block:: r
@@ -73,8 +72,14 @@ The contributions from Bartłomiej Tartanus and
 `many others <https://github.com/gagolews/stringi/graphs/contributors>`_
 is greatly appreciated. Thanks!
 
-Also check out `stringx <https://stringx.gagolewski.com/>`_
-for a set of wrappers around *stringi* with a base R-compatible API.
+**See also**: `stringx <https://stringx.gagolewski.com/>`_ –
+a set of wrappers around *stringi* with a base R-compatible API.
+
+**Citation**: Gagolewski M.,
+*stringi*: Fast and portable character string processing in R,
+*Journal of Statistical Software*  103(2), 2022, 1–59,
+`doi:10.18637/jss.v103.i02 <https://dx.doi.org/10.18637/jss.v103.i02>`_.
+
 
 
 ..  COMMENT
@@ -134,6 +139,7 @@ for a set of wrappers around *stringi* with a base R-compatible API.
     Source Code (GitHub) <https://github.com/gagolews/stringi>
     Bug Tracker and Feature Suggestions <https://github.com/gagolews/stringi/issues>
     CRAN Entry <https://cran.r-project.org/package=stringi>
+    JStatSoft Paper <https://dx.doi.org/10.18637/jss.v103.i02>
     Author's Homepage <https://www.gagolewski.com/>
     C++ API — Rcpp Example <https://github.com/gagolews/ExampleRcppStringi>
     news.md

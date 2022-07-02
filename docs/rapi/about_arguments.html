@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                1.7.6
+                1.7.7
               </div>
             
           
@@ -127,7 +127,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_search_fixed.html">about_search_fixed: Locale-Insensitive Fixed Pattern Matching in <span class="pkg">stringi</span></a></li>
 <li class="toctree-l2"><a class="reference internal" href="about_search_regex.html">about_search_regex: Regular Expressions in <span class="pkg">stringi</span></a></li>
 <li class="toctree-l2"><a class="reference internal" href="about_search.html">about_search: String Searching</a></li>
-<li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: Fast and Portable Character String Processing in R</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code></span> as a Binary Operator</a></li>
@@ -228,6 +228,7 @@
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../news.html">What Is New in <em>stringi</em></a></li>
@@ -256,72 +257,36 @@
         
         <div class="rst-content style-external-links">
         
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="../rapi.html">R Package <em>stringi</em> Reference</a> &raquo;</li>
-        
       <li>about_arguments: Passing Arguments to Functions in <span class="pkg">stringi</span></li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
-        
       </li>
-    
-  </ul>
-
-  
-  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
-      
-        <a href="about_encoding.html" class="btn btn-neutral float-right" title="about_encoding: Character Encodings and stringi" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-      
-      
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
         <a href="../rapi.html" class="btn btn-neutral float-left" title="R Package stringi Reference" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-      
+        <a href="about_encoding.html" class="btn btn-neutral float-right" title="about_encoding: Character Encodings and stringi" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
   <div class="tex2jax_ignore mathjax_ignore section" id="about-arguments-passing-arguments-to-functions-in-span-class-pkg-stringi-span">
-<h1>about_arguments: Passing Arguments to Functions in <span class="pkg">stringi</span><a class="headerlink" href="#about-arguments-passing-arguments-to-functions-in-span-class-pkg-stringi-span" title="Permalink to this headline">¶</a></h1>
+<h1>about_arguments: Passing Arguments to Functions in <span class="pkg">stringi</span><a class="headerlink" href="#about-arguments-passing-arguments-to-functions-in-span-class-pkg-stringi-span" title="Permalink to this headline"></a></h1>
 <div class="section" id="description">
-<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline"></a></h2>
 <p>Below we explain how <span class="pkg">stringi</span> deals with its functions’ arguments.</p>
 <p>If some function violates one of the following rules (for a very important reason), this is clearly indicated in its documentation (with discussion).</p>
 </div>
 <div class="section" id="coercion-of-arguments">
-<h2>Coercion of Arguments<a class="headerlink" href="#coercion-of-arguments" title="Permalink to this headline">¶</a></h2>
+<h2>Coercion of Arguments<a class="headerlink" href="#coercion-of-arguments" title="Permalink to this headline"></a></h2>
 <p>When a character vector argument is expected, factors and other vectors coercible to characters vectors are silently converted with <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/character.html"><code class="docutils literal notranslate"><span class="pre">as.character</span></code></a>, otherwise an error is generated. Coercion from a list which does not consist of length-1 atomic vectors issues a warning.</p>
 <p>When a logical, numeric, or integer vector argument is expected, factors are converted with <code class="docutils literal notranslate"><span class="pre">as.*(as.character(...))</span></code>, and other coercible vectors are converted with <code class="docutils literal notranslate"><span class="pre">as.*</span></code>, otherwise an error is generated.</p>
 </div>
 <div class="section" id="vectorization">
-<h2>Vectorization<a class="headerlink" href="#vectorization" title="Permalink to this headline">¶</a></h2>
+<h2>Vectorization<a class="headerlink" href="#vectorization" title="Permalink to this headline"></a></h2>
 <p>Almost all functions are vectorized with respect to all their arguments and the recycling rule is applied whenever necessary. Due to this property you may, for instance, search for one pattern in each given string, search for each pattern in one given string, and search for the i-th pattern within the i-th string.</p>
 <p>We of course took great care of performance issues: e.g., in regular expression searching, regex matchers are reused from iteration to iteration, as long as it is possible.</p>
 <p>Functions with some non-vectorized arguments are rare: e.g., regular expression matcher’s settings are established once per each call.</p>
@@ -329,20 +294,21 @@
 <p>You may find details on vectorization behavior in the man pages on each particular function of your interest.</p>
 </div>
 <div class="section" id="handling-missing-values-nas">
-<h2>Handling Missing Values (<code class="docutils literal notranslate"><span class="pre">NA</span></code>s)<a class="headerlink" href="#handling-missing-values-nas" title="Permalink to this headline">¶</a></h2>
+<h2>Handling Missing Values (<code class="docutils literal notranslate"><span class="pre">NA</span></code>s)<a class="headerlink" href="#handling-missing-values-nas" title="Permalink to this headline"></a></h2>
 <p><span class="pkg">stringi</span> handles missing values consistently. For any vectorized operation, if at least one vector element is missing, then the corresponding resulting value is also set to <code class="docutils literal notranslate"><span class="pre">NA</span></code>.</p>
 </div>
 <div class="section" id="preserving-object-attributes">
-<h2>Preserving Object Attributes<a class="headerlink" href="#preserving-object-attributes" title="Permalink to this headline">¶</a></h2>
+<h2>Preserving Object Attributes<a class="headerlink" href="#preserving-object-attributes" title="Permalink to this headline"></a></h2>
 <p>Generally, all our functions drop input objects’ attributes (e.g., <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/names.html"><code class="docutils literal notranslate"><span class="pre">names</span></code></a>, <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/dim.html"><code class="docutils literal notranslate"><span class="pre">dim</span></code></a>, etc.). This is due to deep vectorization as well as for efficiency reasons. If the preservation of attributes is needed, important attributes can be manually copied. Alternatively, the notation <code class="docutils literal notranslate"><span class="pre">x[]</span> <span class="pre">&lt;-</span> <span class="pre">stri_...(x,</span> <span class="pre">...)</span></code> can sometimes be used too.</p>
 </div>
 <div class="section" id="author-s">
-<h2>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this headline">¶</a></h2>
+<h2>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this headline"></a></h2>
 <p><a class="reference external" href="https://www.gagolewski.com/">Marek Gagolewski</a> and other contributors</p>
 </div>
 <div class="section" id="see-also">
-<h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline"></a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
+<p>Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, <em>Journal of Statistical Software</em> 103(2), 2022, 1-59, doi:<a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">https://dx.doi.org/10.18637/jss.v103.i02</a></p>
 <p>Other stringi_general_topics: <a class="reference internal" href="about_encoding.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_encoding</span></code></span></a>, <a class="reference internal" href="about_locale.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_locale</span></code></span></a>, <a class="reference internal" href="about_search_boundaries.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_boundaries</span></code></span></a>, <a class="reference internal" href="about_search_charclass.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_charclass</span></code></span></a>, <a class="reference internal" href="about_search_coll.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_coll</span></code></span></a>, <a class="reference internal" href="about_search_fixed.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_fixed</span></code></span></a>, <a class="reference internal" href="about_search_regex.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_regex</span></code></span></a>, <a class="reference internal" href="about_search.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></span></a>, <a class="reference internal" href="about_stringi.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_stringi</span></code></span></a></p>
 </div>
 </div>
@@ -351,31 +317,23 @@
            </div>
            
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="about_encoding.html" class="btn btn-neutral float-right" title="about_encoding: Character Encodings and stringi" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../rapi.html" class="btn btn-neutral float-left" title="R Package stringi Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="about_encoding.html" class="btn btn-neutral float-right" title="about_encoding: Character Encodings and stringi" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2013-2021, Marek Gagolewski.
-      <span class="lastupdated">
-        Last updated on 2021-11-29T10:29:09+1100.
-      </span>
-
-    </p>
+    <p>&#169; Copyright 2013-2022, Marek Gagolewski.
+      <span class="lastupdated">Last updated on 2022-07-02T17:40:40+1000.
+      </span></p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>

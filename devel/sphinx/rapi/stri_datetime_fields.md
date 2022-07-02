@@ -62,6 +62,8 @@ Returns a data frame with the following columns:
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi:<https://dx.doi.org/10.18637/jss.v103.i02>
+
 Other datetime: [`stri_datetime_add()`](stri_datetime_add.md), [`stri_datetime_create()`](stri_datetime_create.md), [`stri_datetime_format()`](stri_datetime_format.md), [`stri_datetime_fstr()`](stri_datetime_fstr.md), [`stri_datetime_now()`](stri_datetime_now.md), [`stri_datetime_symbols()`](stri_datetime_symbols.md), [`stri_timezone_get()`](stri_timezone_set.md), [`stri_timezone_info()`](stri_timezone_info.md), [`stri_timezone_list()`](stri_timezone_list.md)
 
 ## Examples
@@ -72,16 +74,16 @@ Other datetime: [`stri_datetime_add()`](stri_datetime_add.md), [`stri_datetime_c
 ```r
 stri_datetime_fields(stri_datetime_now())
 ##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth
-## 1 2022     6  13   15     50     57         879         25           3
+## 1 2022     7   2   17     40     19         644         27           1
 ##   DayOfYear DayOfWeek Hour12 AmPm Era
-## 1       164         2      3    2   2
+## 1       183         7      5    2   2
 stri_datetime_fields(stri_datetime_now(), locale='@calendar=hebrew')
 ##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth
-## 1 5782    10  14   15     50     57         882         41           3
+## 1 5782    11   3   17     40     19         647         43           1
 ##   DayOfYear DayOfWeek Hour12 AmPm Era
-## 1       280         2      3    2   1
+## 1       299         7      5    2   1
 stri_datetime_symbols(locale='@calendar=hebrew')$Month[
    stri_datetime_fields(stri_datetime_now(), locale='@calendar=hebrew')$Month
 ]
-## [1] "Sivan"
+## [1] "Tamuz"
 ```

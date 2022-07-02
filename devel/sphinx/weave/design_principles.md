@@ -3,10 +3,10 @@ General Design Principles
 
 
 
-> This tutorial is based on the [paper on *stringi*](https://stringi.gagolewski.com/_static/vignette/stringi.pdf) that will appear in the *Journal of Statistical Software*.
+> This tutorial is based on the [paper on *stringi*](https://dx.doi.org/10.18637/jss.v103.i02) that has recently been published the *Journal of Statistical Software*, see {cite}`stringi`.
 
 
-The API of the early releases of *stringi* has been designed so as to be
+The API of the early releases of *stringi* has been designed to be
 fairly compatible with that of the 0.6.2 version of the [*stringr*](https://stringr.tidyverse.org/)
 package {cite}`Wickham2010:stringr` (dated 2012[^footstringr]),
 with some fixes in the consistency of the
@@ -17,16 +17,16 @@ and not really suitable for natural language processing tasks, all the
 functionality has been implemented from the ground up, with the use of
 [*ICU*](https://icu.unicode.org/) services wherever applicable.
 Since the initial release, an
-abundance of new features has been added and the package can now be
-considered a comprehensive workhorse for text data processing.
+abundance of new features has been added, and the package can now be
+considered a complete workhorse for text data processing.
 
 Note that
-the *stringi* API is stable. Future releases are aiming for as much
+the *stringi* API is stable. Future releases will aim for as much
 backward compatibility as possible so that other software projects can
 safely rely on it.
 
 [^footstringr]: Interestingly, in 2015 the aforementioned
-    *stringr* package has been rewritten as a set of wrappers around some of
+    *stringr* package was rewritten as a set of wrappers around some of
     the *stringi* functions instead of the base R ones. In Section 14.7 of
     *R for Data Science* {cite}`GrolemundWickham2017:rdatascience` we read:
     "*stringr* is useful when you're learning because it exposes a minimal
@@ -78,7 +78,7 @@ Naming
 
 Function and argument names use a combination of lowercase letters and
 underscores (and no dots). To avoid namespace clashes, all function
-names feature the "`stri_`" prefix. Names are fairly self-explanatory,
+names feature the "`stri_`" prefix. Names are quite self-explanatory,
 e.g., `stri_locate_first_regex` and `stri_locate_all_fixed` find,
 respectively, the first match to a regular expression and all
 occurrences of a substring as-is.
@@ -138,8 +138,9 @@ function call:
 ```
 
 Due to vectorisation, we can generally avoid using the `for`- and
-`while`-loops ("for each string in a vector..."), which makes the code
+`while`-loops ("for each string in a vector..."). This can make the code
 much more readable, maintainable, and faster to execute.
+
 
 Acting Elementwise with Recycling
 ---------------------------------
@@ -253,11 +254,11 @@ haystack) as an illustration:
     `haystack`, `"b"` in the 2nd row, and `"c"` in the 3rd;
     in particular, there are 3 `"a"`s in `"aaa"`, 2 in `"aba"`,
     and 1 `"b"` in `"baa"`;
-    this is possible due to the fact that matrices are
+    this is possible because matrices are
     represented as "flat" vectors of length `nrow*ncol`,
     whose elements are read in a column-major (Fortran) order;
     therefore, here,
-    pattern "a" is being sought in the 1st, 4th, 7th, ...
+    the pattern `"a"` is being sought in the 1st, 4th, 7th, ...
     string in `haystack`, i.e., `"aaa"`, `"aba"`, `"aca"`, ...;
     pattern `"b"` in the 2nd, 5th, 8th, ... string;
     and `"c"` in the 3rd, 6th, 9th, ... one);
@@ -341,18 +342,18 @@ Data Flow
 ---------
 
 All vector-like arguments (including factors and objects) in *stringi*
-are treated in the same manner: for example, if a function expects a
-character vector on input and an object of other type is provided,
+are treated in the same manner. For example, if a function expects a
+character vector on input and an object of another type is provided,
 `as.character()` is called first (we see that in the example above,
 "`1:2`" is treated as `c("1", "2")`).
 
 Following {cite}`Wickham2010:stringr`, *stringi* makes sure the output data
 types are consistent and that different functions are interoperable.
-This makes operation chaining easier and less error prone.
+This makes operation chaining easier and less error-prone.
 
 For example, `stri_extract_first_regex()` finds the first occurrence of
-a pattern in each string, therefore the output is a character of the
-same length as the input (with recycling rule in place if necessary).
+a pattern in each string. Therefore, the output is a character of the
+same length as the input (with the recycling rule in place if necessary).
 
 
 ```r
@@ -382,7 +383,7 @@ stri_extract_all_regex(haystack, "\\b\\w{1,4}\\b", omit_no_match=TRUE)
 ## [1] "jam"  "spam" "and"  "spam"
 ```
 
-If the 3rd argument was not specified, a no-match would be represented
+If the 3rd argument were not specified, a no-match would be represented
 by a missing value (for consistency with the previous function).
 
 Also, care is taken so that the "data" or "`x`" argument is most often
@@ -409,7 +410,7 @@ yields the same result as in the previous example, but refers to
 Further Deviations from Base R
 ------------------------------
 
-*stringi* can be used as a replacement of the existing string processing
+*stringi* can be used as a replacement for the existing string processing
 functions. Also, it offers many facilities not available in base R.
 Except for being fully vectorised with respect to all crucial arguments,
 propagating missing values and empty vectors consistently, and following
@@ -420,14 +421,14 @@ counterparts even further.
 **Following Unicode Standards.**
 Thanks to the comprehensive coverage of the most important services
 provided by *ICU*, its users gain access to collation, pattern
-searching, normalisation, transliteration, etc., that follow the recent
+searching, normalisation, transliteration, etc., that follow the current
 Unicode standards for text processing in any locale. Due to this, as we
-state in {ref}`Sec:encoding`, all inputs are converted to Unicode and
-outputs are always in UTF-8.
+state in {ref}`Sec:encoding`, all inputs are converted to Unicode.
+Furthermore, all outputs are always in UTF-8.
 
 
 **Portability Issues in Base R.**
-As we have mentioned in the introduction, base R string operations have
+As mentioned in the introduction, base R string operations have
 traditionally been limited in scope. There also might be some issues
 with regards to their portability, reasons for which may be plentiful.
 For instance, varied versions of the [*PCRE*](https://www.pcre.org/)
@@ -438,7 +439,7 @@ character encoding IDs not fully compatible with that on GNU/Linux: to
 select the Polish locale, we are required to pass `"Polish_Poland"` to
 `Sys.setlocale()` on Windows whereas `"pl_PL"` on Linux. Interestingly,
 R can be built against the system *ICU* so that it uses its Collator for
-comparing strings (e.g., using the "`<=`" operator), however this is
+comparing strings (e.g., using the "`<=`" operator). However, this is
 only optional and does not provide access to any other Unicode services.
 
 For example, let us consider the matching of "all letters" by means of
@@ -504,10 +505,10 @@ microbenchmark::microbenchmark(
 )
 ## Unit: milliseconds
 ##      expr     min      lq    mean  median      uq     max neval
-##     join2  35.055  35.843  47.088  37.069  53.653  85.487   100
-##     join3  79.598  80.815  85.678  81.562  91.717 128.963   100
-##  r_paste2  90.511  91.802 108.026  97.838 112.744 162.961   100
-##  r_paste3 190.622 193.449 229.653 244.515 251.249 280.253   100
+##     join2  36.622  37.777  49.123  38.678  49.026  99.879   100
+##     join3  83.978  85.402  90.266  86.841  94.784 135.811   100
+##  r_paste2  94.275  97.662 112.777 100.228 122.510 173.908   100
+##  r_paste3 199.192 208.616 243.586 258.622 266.051 293.781   100
 ```
 
 Another example -- timings of fixed pattern searching:
@@ -526,12 +527,12 @@ microbenchmark::microbenchmark(
 )
 ## Unit: milliseconds
 ##     expr      min       lq     mean   median       uq      max neval
-##    fixed   4.8786   4.9576   5.0491   5.0353   5.0934   5.7554   100
-##    regex 113.6029 114.8261 115.5398 115.2599 115.5966 121.5098   100
-##     coll 388.7710 392.9170 396.2839 394.3113 396.7988 427.4617   100
-##    r_tre 126.5528 127.3853 128.9907 127.8981 128.9863 141.2107   100
-##   r_pcre  73.8114  74.4104  75.1880  74.7540  75.1607  80.1232   100
-##  r_fixed  52.4524  53.0642  53.6158  53.3177  53.6758  57.4354   100
+##    fixed   5.1298   5.2853   5.4114   5.3587   5.4548   6.8839   100
+##    regex 121.2871 123.7408 125.0747 124.6750 126.3970 130.3374   100
+##     coll 388.8468 392.2507 397.7151 396.5786 402.3163 424.3306   100
+##    r_tre 137.4533 139.8173 141.7976 141.6391 143.0787 151.5654   100
+##   r_pcre  72.7527  74.3581  75.7499  75.2514  76.4620  87.1007   100
+##  r_fixed  41.7046  42.8004  43.5566  43.3757  43.9061  50.8317   100
 ```
 
 
@@ -545,6 +546,6 @@ arguments have been introduced for more detailed tuning.
 
 **Preserving Attributes.**
 Generally, *stringi* preserves no object attributes whatsoever, but a
-user can make sure themself that this is becomes the case, e.g., by
+user can make sure themself that this is the case, e.g., by
 calling "`x[] <- stri_...(x, ...)`" or
 "\``attributes<-`\``(stri_...(x, ...), attributes(x))`".

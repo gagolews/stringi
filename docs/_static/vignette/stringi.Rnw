@@ -92,13 +92,16 @@ expressions, data cleansing, natural language processing, R}
 \begin{document}
 
 {\color{blue}
-This is a pre-print version of the paper on \pkg{stringi} (last updated on \today).
+This is an older pre-print version of the paper on \pkg{stringi}.
 
-Please cite as:
-Gagolewski M (2021).
+Please cite it as:
+Gagolewski M (2022).
 \pkg{stringi}: Fast and Portable Character String Processing in \proglang{R}.
-\textit{Journal of Statistical Software}, to appear.
-URL \url{https://stringi.gagolewski.com}.
+\textit{Journal of Statistical Software} 103(2):1--59, 2022.
+DOI \url{https://dx.doi.org/10.18637/jss.v103.i02}.
+
+The most recent, Web browser-friendly version thereof
+is available at \url{https://stringi.gagolewski.com}.
 }
 
 
@@ -1829,7 +1832,7 @@ implemented in \pkg{ICU}, which was inspired
 by \proglang{Java}'s \pkg{util.regex}
 in \pkg{JDK 1.4}. Their syntax is mostly compatible with that of \pkg{PCRE},
 although certain more advanced facets might not be supported (e.g., recursive
-patters). On the other hand, \pkg{ICU} regexes fully conform to the
+patterns). On the other hand, \pkg{ICU} regexes fully conform to the
 Unicode Technical Standard \#18 \citep{uts18:regex} and hence provide
 comprehensive support for Unicode.
 
@@ -1837,7 +1840,7 @@ comprehensive support for Unicode.
 It is worth noting that most programming languages
 as well as advanced text editors and development environments (including
 \pkg{Kate}, \pkg{Eclipse}, \pkg{VSCode}, and \pkg{RStudio})
-support finding or replacing patters with regexes.
+support finding or replacing patterns with regexes.
 Therefore, they should be amongst the instruments
 at every data scientist's disposal.
 One general introduction to regexes is \citep{friedl}.
@@ -2179,7 +2182,7 @@ Also, matching is always done left-to-right, on a first-come, first-served basis
 Hence, if the left branch is a subset of the right one, the latter will
 never be matched.
 In particular, ``\code{(al|alga|algae)}'' can only match ``\code{al}''.
-To fix this, we can write ``\code{(algae|alga|al))}''.
+To fix this, we can write ``\code{(algae|alga|al)}''.
 
 
 \paragraph{Non-grouping parentheses.}
@@ -3470,7 +3473,7 @@ constitute a separate text line), with any output encoding.
 \paragraph{Detecting encoding.}
 However, if a file's encoding is not known in advance, there are
 a certain functions that can aid in encoding detection.
-First, we can read the resource in form of a raw-type vector:
+First, we can read the resource in the form of a raw-type vector:
 
 
 <<>>=

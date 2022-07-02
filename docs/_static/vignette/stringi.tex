@@ -7,7 +7,7 @@
 
 
 %  \documentclass[nojss]{jss}
-\documentclass[nojss]{jss}\usepackage[]{graphicx}\usepackage[]{color}
+\documentclass[nojss]{jss}\usepackage[]{graphicx}\usepackage[]{xcolor}
 % maxwidth is the original width if it is less than linewidth
 % otherwise use linewidth (to make sure the graphics do not exceed the margin)
 \makeatletter
@@ -142,13 +142,16 @@ expressions, data cleansing, natural language processing, R}
 \begin{document}
 
 {\color{blue}
-This is a pre-print version of the paper on \pkg{stringi} (last updated on \today).
+This is an older pre-print version of the paper on \pkg{stringi}.
 
-Please cite as:
-Gagolewski M (2021).
+Please cite it as:
+Gagolewski M (2022).
 \pkg{stringi}: Fast and Portable Character String Processing in \proglang{R}.
-\textit{Journal of Statistical Software}, to appear.
-URL \url{https://stringi.gagolewski.com}.
+\textit{Journal of Statistical Software} 103(2):1--59, 2022.
+DOI \url{https://dx.doi.org/10.18637/jss.v103.i02}.
+
+The most recent, Web browser-friendly version thereof
+is available at \url{https://stringi.gagolewski.com}.
 }
 
 
@@ -343,7 +346,7 @@ out below using a monospaced font) is worth hundreds of words.
 
 \medskip
 All code chunk outputs presented in this paper were obtained in
-\proglang{R}~4.1.1.
+\proglang{R}~4.1.2.
 The \proglang{R} environment itself and all the packages used herein
 are available from CRAN (the Comprehensive \proglang{R} Archive Network)
 at \url{https://CRAN.R-project.org/}.
@@ -364,7 +367,7 @@ By calling:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
-## stringi_1.7.4 (en_AU.UTF-8; ICU4C 69.1 [bundle]; Unicode 13.0)
+## stringi_1.7.7 (en_AU.UTF-8; ICU4C 69.1 [bundle]; Unicode 13.0)
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -374,7 +377,7 @@ By calling:
 we can load and attach the package's namespace
 and display some basic information thereon.
 Hence, below we shall be working with
-\pkg{stringi} 1.7.4, however, as the package's
+\pkg{stringi} 1.7.7, however, as the package's
 API is considered stable, the presented material should be relevant to
 any later versions.
 
@@ -1276,11 +1279,11 @@ For example, here are some timings of string concatenation:
 \end{alltt}
 \begin{verbatim}
 ## Unit: milliseconds
-##      expr     min      lq    mean  median      uq     max neval
-##     join2  35.520  36.950  49.907  37.359  48.415  92.546   100
-##     join3  79.256  83.561  88.068  84.182  91.533 152.904   100
-##  r_paste2  91.120  95.665 112.532  99.024 114.853 171.701   100
-##  r_paste3 190.893 201.956 243.964 264.924 272.475 310.661   100
+##      expr     min      lq    mean  median      uq    max neval
+##     join2  38.709  41.789  56.454  44.435  54.954 112.79   100
+##     join3  88.587  91.429  97.006  93.379 102.399 169.62   100
+##  r_paste2  99.571 105.767 125.653 110.924 132.105 207.18   100
+##  r_paste3 209.337 219.332 265.422 283.929 298.692 329.03   100
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -1303,19 +1306,19 @@ Another example -- timings of fixed pattern searching:
 \end{alltt}
 \begin{verbatim}
 ## Unit: milliseconds
-##     expr      min      lq     mean   median       uq      max neval
-##    fixed   5.0097   5.173   5.2386   5.1945   5.2562   5.9541   100
-##    regex 115.2815 116.205 117.2227 116.8521 118.1444 122.2590   100
-##     coll 420.0686 424.757 426.5984 426.1803 427.9800 437.8152   100
-##    r_tre 130.6598 132.098 133.2256 132.7224 133.6728 140.1607   100
-##   r_pcre  76.3878  77.536  78.1141  77.9131  78.3949  81.2092   100
-##  r_fixed  45.1295  45.738  46.0227  45.8944  46.1677  49.2137   100
+##     expr      min       lq     mean   median       uq      max neval
+##    fixed   5.4153   5.5769   5.7989   5.7007   5.9165   6.6195   100
+##    regex 126.9775 129.5199 134.3005 131.5441 135.9457 158.8042   100
+##     coll 404.0636 412.0106 428.2215 417.0754 435.0853 542.9017   100
+##    r_tre 144.1503 147.8288 154.2366 150.4777 158.2060 220.8468   100
+##   r_pcre  77.2884  79.2489  82.5763  80.6958  85.8608  97.1374   100
+##  r_fixed  43.9071  44.8707  47.2532  45.8249  49.4261  56.0313   100
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
 
 
-\paragraph{Different default argument and greater configurability.}
+\paragraph{Different default arguments and greater configurability.}
 Some functions in \pkg{stringi} have different,
 more natural default arguments,
 e.g., \code{paste()} has \code{sep=" "} but
@@ -2497,7 +2500,7 @@ implemented in \pkg{ICU}, which was inspired
 by \proglang{Java}'s \pkg{util.regex}
 in \pkg{JDK 1.4}. Their syntax is mostly compatible with that of \pkg{PCRE},
 although certain more advanced facets might not be supported (e.g., recursive
-patters). On the other hand, \pkg{ICU} regexes fully conform to the
+patterns). On the other hand, \pkg{ICU} regexes fully conform to the
 Unicode Technical Standard \#18 \citep{uts18:regex} and hence provide
 comprehensive support for Unicode.
 
@@ -2505,7 +2508,7 @@ comprehensive support for Unicode.
 It is worth noting that most programming languages
 as well as advanced text editors and development environments (including
 \pkg{Kate}, \pkg{Eclipse}, \pkg{VSCode}, and \pkg{RStudio})
-support finding or replacing patters with regexes.
+support finding or replacing patterns with regexes.
 Therefore, they should be amongst the instruments
 at every data scientist's disposal.
 One general introduction to regexes is \citep{friedl}.
@@ -2981,7 +2984,7 @@ Also, matching is always done left-to-right, on a first-come, first-served basis
 Hence, if the left branch is a subset of the right one, the latter will
 never be matched.
 In particular, ``\code{(al|alga|algae)}'' can only match ``\code{al}''.
-To fix this, we can write ``\code{(algae|alga|al))}''.
+To fix this, we can write ``\code{(algae|alga|al)}''.
 
 
 \paragraph{Non-grouping parentheses.}
@@ -3145,7 +3148,7 @@ option is recommended.
 \begin{verbatim}
 ## stopped.
 ##    user  system elapsed 
-##  16.818   0.000  16.823
+##  22.746   0.004  22.770
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -3689,7 +3692,7 @@ returns the index of the first non-unique element.
 
 
 
-Operators such that \code{\%s<\%}, \code{\%<=\%}, etc.,
+Operators such as \code{\%s<\%}, \code{\%<=\%}, etc.,
 and the corresponding functions
 \code{stri_cmp_lt()} (``less than''),
 \code{stri_cmp_le()} (``less than or equal''), etc.,
@@ -4736,8 +4739,7 @@ For instance, Central European versions of Windows will assume
 the ``\code{windows-1250}'' code page.
 MacOS as well as most Linux boxes work with UTF-8 by default\footnote{
 It is expected that future \proglang{R} releases will support UTF-8 natively
-thanks to the Universal \proglang{C} Runtime (UCRT) that is available for Windows 10.
-}
+thanks to the Universal \proglang{C} Runtime (UCRT) that is available for Windows 10.}.
 
 All strings in \proglang{R} have an associated encoding mark
 which can be read by calling \code{Encoding()} or, more conveniently,
@@ -4796,7 +4798,7 @@ constitute a separate text line), with any output encoding.
 \paragraph{Detecting encoding.}
 However, if a file's encoding is not known in advance, there are
 a certain functions that can aid in encoding detection.
-First, we can read the resource in form of a raw-type vector:
+First, we can read the resource in the form of a raw-type vector:
 
 
 \begin{knitrout}

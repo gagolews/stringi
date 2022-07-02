@@ -2,7 +2,7 @@ Example Use Case: Data Preparation
 ==================================
 
 
-> This tutorial is based on the [paper on *stringi*](https://stringi.gagolewski.com/_static/vignette/stringi.pdf) that will appear in the *Journal of Statistical Software*.
+> This tutorial is based on the [paper on *stringi*](https://dx.doi.org/10.18637/jss.v103.i02) that has recently been published the *Journal of Statistical Software*, see {cite}`stringi`.
 
 What follows is a short case study where we prepare a
 web-scraped data set for further processing.
@@ -215,4 +215,3 @@ and so forth.
 For the climate data on other cities, very similar operations will need
 to be performed -- the whole process of scraping and cleansing data can
 be automated quite easily.
-

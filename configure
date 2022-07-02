@@ -1376,18 +1376,18 @@ Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
   --with-extra-cflags=FLAGS
-                          Additional C compiler flags, see also the
+                          Additional C compiler flags; see also the
                           STRINGI_CFLAGS environment variable
   --with-extra-cppflags=FLAGS
-                          Additional C/C++ preprocessor flags, see also the
+                          Additional C/C++ preprocessor flags; see also the
                           STRINGI_CPPFLAGS environment variable
   --with-extra-cxxflags=FLAGS
-                          Additional C++ compiler flags, see also the
+                          Additional C++ compiler flags; see also the
                           STRINGI_CXXFLAGS environment variable
   --with-extra-ldflags=FLAGS
-                          Additional linker flags, see also the
+                          Additional linker flags; see also the
                           STRINGI_LDFLAGS environment variable
-  --with-extra-libs=FLAGS Additional libraries to link against, see also the
+  --with-extra-libs=FLAGS Additional libraries to link against; see also the
                           STRINGI_LIBS environment variable
 
 Some influential environment variables:
@@ -1413,22 +1413,22 @@ Some influential environment variables:
   LDFLAGS     Purposely ignored.
   LIBS        Purposely ignored.
   STRINGI_DISABLE_CXX11
-              Disable C++11, see also --disable-cxx11.
+              Disable C++11; see also --disable-cxx11.
   STRINGI_DISABLE_ICU_BUNDLE
-              Enforce system ICU, see also --disable-icu-bundle.
+              Enforce system ICU; see also --disable-icu-bundle.
   STRINGI_DISABLE_PKG_CONFIG
-              Enforce our ICU source bundle, see also --disable-pkg-config.
+              Enforce our ICU source bundle; see also --disable-pkg-config.
   STRINGI_CFLAGS
-              Additional C compiler flags, see also --with-extra-cflags.
+              Additional C compiler flags; see also --with-extra-cflags.
   STRINGI_CPPFLAGS
-              Additional C/C++ preprocessor flags, see also
+              Additional C/C++ preprocessor flags; see also
               --with-extra-cppflags.
   STRINGI_CXXFLAGS
-              Additional C++ compiler flags, see also --with-extra-cxxflags.
+              Additional C++ compiler flags; see also --with-extra-cxxflags.
   STRINGI_LDFLAGS
-              Additional linker flags, see also --with-extra-ldflags.
+              Additional linker flags; see also --with-extra-ldflags.
   STRINGI_LIBS
-              Additional libraries to link against, see also
+              Additional libraries to link against; see also
               --with-extra-libs.
 
 Use these variables to override the choices made by `configure' or to help

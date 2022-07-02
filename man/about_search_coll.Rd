@@ -43,6 +43,8 @@ L. Werner, \emph{Efficient Text Searching in Java}, 1999,
 \seealso{
 The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
 
+Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R, \emph{Journal of Statistical Software} 103(2), 2022, 1-59, doi:\url{https://dx.doi.org/10.18637/jss.v103.i02}
+
 Other search_coll: 
 \code{\link{about_search}},
 \code{\link{stri_opts_collator}()}

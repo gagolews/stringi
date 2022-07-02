@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                1.7.6
+                1.7.7
               </div>
             
           
@@ -118,7 +118,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_search_fixed.html">about_search_fixed: Locale-Insensitive Fixed Pattern Matching in <span class="pkg">stringi</span></a></li>
 <li class="toctree-l2"><a class="reference internal" href="about_search_regex.html">about_search_regex: Regular Expressions in <span class="pkg">stringi</span></a></li>
 <li class="toctree-l2"><a class="reference internal" href="about_search.html">about_search: String Searching</a></li>
-<li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: Fast and Portable Character String Processing in R</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code></span> as a Binary Operator</a></li>
@@ -230,6 +230,7 @@
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../news.html">What Is New in <em>stringi</em></a></li>
@@ -258,72 +259,36 @@
         
         <div class="rst-content style-external-links">
         
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="../rapi.html">R Package <em>stringi</em> Reference</a> &raquo;</li>
-        
       <li>stri_timezone_list: List Available Time Zone Identifiers</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
-        
       </li>
-    
-  </ul>
-
-  
-  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
-      
-        <a href="stri_timezone_set.html" class="btn btn-neutral float-right" title="stri_timezone_set: Set or Get Default Time Zone in stringi" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-      
-      
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
         <a href="stri_timezone_info.html" class="btn btn-neutral float-left" title="stri_timezone_info: Query a Given Time Zone" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-      
+        <a href="stri_timezone_set.html" class="btn btn-neutral float-right" title="stri_timezone_set: Set or Get Default Time Zone in stringi" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
   <div class="tex2jax_ignore mathjax_ignore section" id="stri-timezone-list-list-available-time-zone-identifiers">
-<h1>stri_timezone_list: List Available Time Zone Identifiers<a class="headerlink" href="#stri-timezone-list-list-available-time-zone-identifiers" title="Permalink to this headline">¶</a></h1>
+<h1>stri_timezone_list: List Available Time Zone Identifiers<a class="headerlink" href="#stri-timezone-list-list-available-time-zone-identifiers" title="Permalink to this headline"></a></h1>
 <div class="section" id="description">
-<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline"></a></h2>
 <p>Returns a list of available time zone identifiers.</p>
 </div>
 <div class="section" id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_timezone_list</span><span class="p">(</span><span class="n">region</span> <span class="o">=</span> <span class="kc">NA_character_</span><span class="p">,</span> <span class="n">offset</span> <span class="o">=</span> <span class="kc">NA_integer_</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="arguments">
-<h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline">¶</a></h2>
+<h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline"></a></h2>
 <table class="colwidths-auto docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
@@ -341,7 +306,7 @@
 </table>
 </div>
 <div class="section" id="details">
-<h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
+<h2>Details<a class="headerlink" href="#details" title="Permalink to this headline"></a></h2>
 <p>If <code class="docutils literal notranslate"><span class="pre">offset</span></code> and <code class="docutils literal notranslate"><span class="pre">region</span></code> are <code class="docutils literal notranslate"><span class="pre">NA</span></code> (the default), then all time zones are returned. Otherwise, only time zone identifiers with a given raw offset from GMT and/or time zones corresponding to a given region are provided. Note that the effect of daylight savings time is ignored.</p>
 <p>A time zone represents an offset applied to the Greenwich Mean Time (GMT) to obtain local time (Universal Coordinated Time, or UTC, is similar, but not precisely identical, to GMT; in <span class="pkg">ICU</span> the two terms are used interchangeably since <span class="pkg">ICU</span> does not concern itself with either leap seconds or historical behavior). The offset might vary throughout the year, if daylight savings time (DST) is used, or might be the same all year long. Typically, regions closer to the equator do not use DST. If DST is in use, then specific rules define the point where the offset changes and the amount by which it changes.</p>
 <p>If DST is observed, then three additional bits of information are needed:</p>
@@ -352,27 +317,28 @@
 </ol>
 </div>
 <div class="section" id="value">
-<h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
+<h2>Value<a class="headerlink" href="#value" title="Permalink to this headline"></a></h2>
 <p>Returns a character vector.</p>
 </div>
 <div class="section" id="author-s">
-<h2>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this headline">¶</a></h2>
+<h2>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this headline"></a></h2>
 <p><a class="reference external" href="https://www.gagolewski.com/">Marek Gagolewski</a> and other contributors</p>
 </div>
 <div class="section" id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline"></a></h2>
 <p><em>TimeZone</em> class – ICU API Documentation, <a class="reference external" href="https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/classicu_1_1TimeZone.html">https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/classicu_1_1TimeZone.html</a></p>
 <p><em>ICU TimeZone classes</em> – ICU User Guide, <a class="reference external" href="https://unicode-org.github.io/icu/userguide/datetime/timezone/">https://unicode-org.github.io/icu/userguide/datetime/timezone/</a></p>
 <p><em>Date/Time Services</em> – ICU User Guide, <a class="reference external" href="https://unicode-org.github.io/icu/userguide/datetime/">https://unicode-org.github.io/icu/userguide/datetime/</a></p>
 </div>
 <div class="section" id="see-also">
-<h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline"></a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
+<p>Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, <em>Journal of Statistical Software</em> 103(2), 2022, 1-59, doi:<a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">https://dx.doi.org/10.18637/jss.v103.i02</a></p>
 <p>Other datetime: <a class="reference internal" href="stri_datetime_add.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_add()</span></code></span></a>, <a class="reference internal" href="stri_datetime_create.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_create()</span></code></span></a>, <a class="reference internal" href="stri_datetime_fields.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_fields()</span></code></span></a>, <a class="reference internal" href="stri_datetime_format.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_format()</span></code></span></a>, <a class="reference internal" href="stri_datetime_fstr.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_fstr()</span></code></span></a>, <a class="reference internal" href="stri_datetime_now.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_now()</span></code></span></a>, <a class="reference internal" href="stri_datetime_symbols.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_symbols()</span></code></span></a>, <a class="reference internal" href="stri_timezone_set.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_get()</span></code></span></a>, <a class="reference internal" href="stri_timezone_info.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_info()</span></code></span></a></p>
 <p>Other timezone: <a class="reference internal" href="stri_timezone_set.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_get()</span></code></span></a>, <a class="reference internal" href="stri_timezone_info.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_info()</span></code></span></a></p>
 </div>
 <div class="section" id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline"></a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_timezone_list</span><span class="p">()</span>
 <span class="c1">##   [1] &quot;ACT&quot;                              &quot;AET&quot;                             </span>
 <span class="c1">##   [3] &quot;Africa/Abidjan&quot;                   &quot;Africa/Accra&quot;                    </span>
@@ -2636,31 +2602,23 @@
            </div>
            
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="stri_timezone_set.html" class="btn btn-neutral float-right" title="stri_timezone_set: Set or Get Default Time Zone in stringi" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="stri_timezone_info.html" class="btn btn-neutral float-left" title="stri_timezone_info: Query a Given Time Zone" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="stri_timezone_set.html" class="btn btn-neutral float-right" title="stri_timezone_set: Set or Get Default Time Zone in stringi" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2013-2021, Marek Gagolewski.
-      <span class="lastupdated">
-        Last updated on 2021-11-29T10:29:09+1100.
-      </span>
-
-    </p>
+    <p>&#169; Copyright 2013-2022, Marek Gagolewski.
+      <span class="lastupdated">Last updated on 2022-07-02T17:40:40+1000.
+      </span></p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>

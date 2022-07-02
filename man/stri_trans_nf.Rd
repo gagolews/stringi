@@ -71,7 +71,7 @@ from the use of canonically equivalent, yet different,
 character sequences in document formats on the Web.
 Thus, you will rather not use these functions in typical
 string processing activities. Most often you may assume
-that a string is in NFC, see RFC\#5198.
+that a string is in NFC, see RFC5198.
 
 As usual in \pkg{stringi},
 if the input character vector is in the native encoding,
@@ -89,7 +89,7 @@ stri_trans_nfkc('\ufdfa') # 1 codepoint -> 18 codepoints
    \url{https://unicode.org/reports/tr15/}
 
 \emph{Unicode Format for Network Interchange}
--- RFC\#5198, \url{https://tools.ietf.org/rfc/rfc5198.txt}
+-- RFC5198, \url{https://tools.ietf.org/rfc/rfc5198.txt}
 
 \emph{Character Model for the World Wide Web 1.0: Normalization}
 -- W3C Working Draft, \url{https://www.w3.org/TR/charmod-norm/}
@@ -103,6 +103,8 @@ stri_trans_nfkc('\ufdfa') # 1 codepoint -> 18 codepoints
 }
 \seealso{
 The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
+Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R, \emph{Journal of Statistical Software} 103(2), 2022, 1-59, doi:\url{https://dx.doi.org/10.18637/jss.v103.i02}
 
 Other transform: 
 \code{\link{stri_trans_char}()},

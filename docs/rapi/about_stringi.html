@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>about_stringi: THE String Processing Package &mdash; stringi</title>
+  <title>about_stringi: Fast and Portable Character String Processing in R &mdash; stringi</title>
   
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                1.7.6
+                1.7.7
               </div>
             
           
@@ -118,7 +118,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_search_fixed.html">about_search_fixed: Locale-Insensitive Fixed Pattern Matching in <span class="pkg">stringi</span></a></li>
 <li class="toctree-l2"><a class="reference internal" href="about_search_regex.html">about_search_regex: Regular Expressions in <span class="pkg">stringi</span></a></li>
 <li class="toctree-l2"><a class="reference internal" href="about_search.html">about_search: String Searching</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">about_stringi: THE String Processing Package</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">about_stringi: Fast and Portable Character String Processing in R</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#description">Description</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#details">Details</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#facilities-available">Facilities available</a></li>
@@ -227,6 +227,7 @@
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../news.html">What Is New in <em>stringi</em></a></li>
@@ -255,69 +256,33 @@
         
         <div class="rst-content style-external-links">
         
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="../rapi.html">R Package <em>stringi</em> Reference</a> &raquo;</li>
-        
-      <li>about_stringi: THE String Processing Package</li>
-    
-    
+      <li>about_stringi: Fast and Portable Character String Processing in R</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
-        
       </li>
-    
-  </ul>
-
-  
-  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
-      
-        <a href="operator_add.html" class="btn btn-neutral float-right" title="operator_add: Concatenate Two Character Vectors" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-      
-      
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
         <a href="about_search.html" class="btn btn-neutral float-left" title="about_search: String Searching" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-      
+        <a href="operator_add.html" class="btn btn-neutral float-right" title="operator_add: Concatenate Two Character Vectors" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="tex2jax_ignore mathjax_ignore section" id="about-stringi-the-string-processing-package">
-<h1>about_stringi: THE String Processing Package<a class="headerlink" href="#about-stringi-the-string-processing-package" title="Permalink to this headline">¶</a></h1>
+  <div class="tex2jax_ignore mathjax_ignore section" id="about-stringi-fast-and-portable-character-string-processing-in-r">
+<h1>about_stringi: Fast and Portable Character String Processing in R<a class="headerlink" href="#about-stringi-fast-and-portable-character-string-processing-in-r" title="Permalink to this headline"></a></h1>
 <div class="section" id="description">
-<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline"></a></h2>
 <p><span class="pkg">stringi</span> is THE R package for fast, correct, consistent, and convenient string/text manipulation. It gives predictable results on every platform, in each locale, and under any native character encoding.</p>
 <p><strong>Keywords</strong>: R, text processing, character strings, internationalization, localization, ICU, ICU4C, i18n, l10n, Unicode.</p>
 <p><strong>Homepage</strong>: <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
 <p><strong>License</strong>: The BSD-3-clause license for the package code, the ICU license for the accompanying ICU4C distribution, and the UCD license for the Unicode Character Database. See the COPYRIGHTS and LICENSE file for more details.</p>
 </div>
 <div class="section" id="details">
-<h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
+<h2>Details<a class="headerlink" href="#details" title="Permalink to this headline"></a></h2>
 <p>Manual pages on general topics:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="about_encoding.html"><span class="doc std std-doc">about_encoding</span></a> – character encoding issues, including information on encoding management in <span class="pkg">stringi</span>, as well as on encoding detection and conversion.</p></li>
@@ -326,7 +291,7 @@
 </ul>
 </div>
 <div class="section" id="facilities-available">
-<h2>Facilities available<a class="headerlink" href="#facilities-available" title="Permalink to this headline">¶</a></h2>
+<h2>Facilities available<a class="headerlink" href="#facilities-available" title="Permalink to this headline"></a></h2>
 <p>Refer to the following:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="about_search.html"><span class="doc std std-doc">about_search</span></a> for string searching facilities; these include pattern searching, matching, string splitting, and so on. The following independent search engines are provided:</p>
@@ -344,7 +309,7 @@
 <li><p><a class="reference internal" href="stri_sub.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_sub</span></code></span></a> for extracting and replacing substrings, and <a class="reference internal" href="stri_reverse.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_reverse</span></code></span></a> for a joyful function to reverse all code points in a string.</p></li>
 <li><p><a class="reference internal" href="stri_length.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_length</span></code></span></a> (among others) for determining the number of code points in a string. See also <a class="reference internal" href="stri_count_boundaries.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_count_boundaries</span></code></span></a> for counting the number of Unicode characters and <a class="reference internal" href="stri_width.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_width</span></code></span></a> for approximating the width of a string.</p></li>
 <li><p><a class="reference internal" href="stri_trim.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trim</span></code></span></a> (among others) for trimming characters from the beginning or/and end of a string, see also <a class="reference internal" href="about_search_charclass.html"><span class="doc std std-doc">about_search_charclass</span></a>, and <a class="reference internal" href="stri_pad.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_pad</span></code></span></a> for padding strings so that they are of the same width. Additionally, <a class="reference internal" href="stri_wrap.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_wrap</span></code></span></a> wraps text into lines.</p></li>
-<li><p><a class="reference internal" href="stri_trans_casemap.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_tolower</span></code></span></a> (among others) for case mapping, i.e., conversion to lower, UPPER, or Title Case, <a class="reference internal" href="stri_trans_nf.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_nfc</span></code></span></a> (among others) for Unicode normalization, <a class="reference internal" href="stri_trans_char.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_char</span></code></span></a> for translating individual code points, and <a class="reference internal" href="stri_trans_general.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_general</span></code></span></a> for other universal yet powerful text transforms, including transliteration.</p></li>
+<li><p><a class="reference internal" href="stri_trans_casemap.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_tolower</span></code></span></a> (among others) for case mapping, i.e., conversion to lower, UPPER, or Title Case, <a class="reference internal" href="stri_trans_nf.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_nfc</span></code></span></a> (among others) for Unicode normalization, <a class="reference internal" href="stri_trans_char.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_char</span></code></span></a> for translating individual code points, and <a class="reference internal" href="stri_trans_general.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_general</span></code></span></a> for other universal text transforms, including transliteration.</p></li>
 <li><p><a class="reference internal" href="stri_compare.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_cmp</span></code></span></a>, <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">%s&lt;%</span></code></span>, <a class="reference internal" href="stri_order.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_order</span></code></span></a>, <a class="reference internal" href="stri_sort.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_sort</span></code></span></a>, <a class="reference internal" href="stri_rank.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_rank</span></code></span></a>, <a class="reference internal" href="stri_unique.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_unique</span></code></span></a>, and <a class="reference internal" href="stri_duplicated.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_duplicated</span></code></span></a> for collation-based, locale-aware operations, see also <a class="reference internal" href="about_locale.html"><span class="doc std std-doc">about_locale</span></a>.</p></li>
 <li><p><a class="reference internal" href="stri_split_lines.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_split_lines</span></code></span></a> (among others) to split a string into text lines.</p></li>
 <li><p><a class="reference internal" href="stri_escape_unicode.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_escape_unicode</span></code></span></a> (among others) for escaping some code points.</p></li>
@@ -354,20 +319,22 @@
 <p>Note that each man page provides many further links to other interesting facilities and topics.</p>
 </div>
 <div class="section" id="author-s">
-<h2>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this headline">¶</a></h2>
+<h2>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this headline"></a></h2>
 <p>Marek Gagolewski, with contributions from Bartek Tartanus and many others. ICU4C was developed by IBM, Unicode, Inc., and others.</p>
 </div>
 <div class="section" id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
-<p><em><span class="pkg">stringi</span> Package homepage</em>, <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline"></a></h2>
+<p><em><span class="pkg">stringi</span> Package Homepage</em>, <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
+<p>Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, <em>Journal of Statistical Software</em> 103(2), 2022, 1-59, doi:<a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">https://dx.doi.org/10.18637/jss.v103.i02</a></p>
 <p><em>ICU – International Components for Unicode</em>, <a class="reference external" href="https://icu.unicode.org/">https://icu.unicode.org/</a></p>
 <p><em>ICU4C API Documentation</em>, <a class="reference external" href="https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/">https://unicode-org.github.io/icu-docs/apidoc/dev/icu4c/</a></p>
 <p><em>The Unicode Consortium</em>, <a class="reference external" href="https://home.unicode.org/">https://home.unicode.org/</a></p>
-<p><em>UTF-8, a transformation format of ISO 10646</em> – RFC 3629, <a class="reference external" href="https://tools.ietf.org/html/rfc3629">https://tools.ietf.org/html/rfc3629</a></p>
+<p><em>UTF-8, A Transformation Format of ISO 10646</em> – RFC 3629, <a class="reference external" href="https://tools.ietf.org/html/rfc3629">https://tools.ietf.org/html/rfc3629</a></p>
 </div>
 <div class="section" id="see-also">
-<h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline"></a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
+<p>Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, <em>Journal of Statistical Software</em> 103(2), 2022, 1-59, doi:<a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">https://dx.doi.org/10.18637/jss.v103.i02</a></p>
 <p>Other stringi_general_topics: <a class="reference internal" href="about_arguments.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_arguments</span></code></span></a>, <a class="reference internal" href="about_encoding.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_encoding</span></code></span></a>, <a class="reference internal" href="about_locale.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_locale</span></code></span></a>, <a class="reference internal" href="about_search_boundaries.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_boundaries</span></code></span></a>, <a class="reference internal" href="about_search_charclass.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_charclass</span></code></span></a>, <a class="reference internal" href="about_search_coll.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_coll</span></code></span></a>, <a class="reference internal" href="about_search_fixed.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_fixed</span></code></span></a>, <a class="reference internal" href="about_search_regex.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_regex</span></code></span></a>, <a class="reference internal" href="about_search.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></span></a></p>
 </div>
 </div>
@@ -376,31 +343,23 @@
            </div>
            
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="operator_add.html" class="btn btn-neutral float-right" title="operator_add: Concatenate Two Character Vectors" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="about_search.html" class="btn btn-neutral float-left" title="about_search: String Searching" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="operator_add.html" class="btn btn-neutral float-right" title="operator_add: Concatenate Two Character Vectors" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2013-2021, Marek Gagolewski.
-      <span class="lastupdated">
-        Last updated on 2021-11-29T10:29:09+1100.
-      </span>
-
-    </p>
+    <p>&#169; Copyright 2013-2022, Marek Gagolewski.
+      <span class="lastupdated">Last updated on 2022-07-02T17:40:40+1000.
+      </span></p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>

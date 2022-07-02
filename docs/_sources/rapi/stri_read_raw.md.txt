@@ -1,4 +1,4 @@
-# stri\_read\_raw: Read Text File as Raw
+# stri_read_raw: Read Text File as Raw
 
 ## Description
 
@@ -6,7 +6,7 @@ Reads a text file as-is, with no conversion or text line splitting.
 
 ## Usage
 
-```r
+``` r
 stri_read_raw(con, fname = con)
 ```
 
@@ -32,5 +32,7 @@ Returns a vector of type `raw`.
 ## See Also
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
+
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi:<https://dx.doi.org/10.18637/jss.v103.i02>
 
 Other files: [`stri_read_lines()`](stri_read_lines.md), [`stri_write_lines()`](stri_write_lines.md)

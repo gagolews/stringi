@@ -92,13 +92,16 @@ expressions, data cleansing, natural language processing, R}
 \begin{document}
 
 {\color{blue}
-This is a pre-print version of the paper on \pkg{stringi} (last updated on \today).
+This is an older pre-print version of the paper on \pkg{stringi}.
 
-Please cite as:
-Gagolewski M (2021).
+Please cite it as:
+Gagolewski M (2022).
 \pkg{stringi}: Fast and Portable Character String Processing in \proglang{R}.
-\textit{Journal of Statistical Software}, to appear.
-URL \url{https://stringi.gagolewski.com}.
+\textit{Journal of Statistical Software} 103(2):1--59, 2022.
+DOI \url{https://dx.doi.org/10.18637/jss.v103.i02}.
+
+The most recent, Web browser-friendly version thereof
+is available at \url{https://stringi.gagolewski.com}.
 }
 
 

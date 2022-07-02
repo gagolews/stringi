@@ -1,4 +1,4 @@
-# stri\_flatten: Flatten a String
+# stri_flatten: Flatten a String
 
 ## Description
 
@@ -6,7 +6,7 @@ Joins the elements of a character vector into one string.
 
 ## Usage
 
-```r
+``` r
 stri_flatten(str, collapse = "", na_empty = FALSE, omit_empty = FALSE)
 ```
 
@@ -38,6 +38,8 @@ Returns a single string, i.e., a character vector of length 1.
 ## See Also
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
+
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi:<https://dx.doi.org/10.18637/jss.v103.i02>
 
 Other join: [`%s+%()`](+25s+2B+25.md), [`stri_dup()`](stri_dup.md), [`stri_join_list()`](stri_join_list.md), [`stri_join()`](stri_join.md)
 

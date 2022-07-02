@@ -4,7 +4,7 @@ Code-Pointwise Comparing
 
 
 
-> This tutorial is based on the [paper on *stringi*](https://stringi.gagolewski.com/_static/vignette/stringi.pdf) that will appear in the *Journal of Statistical Software*.
+> This tutorial is based on the [paper on *stringi*](https://dx.doi.org/10.18637/jss.v103.i02) that has recently been published the *Journal of Statistical Software*, see {cite}`stringi`.
 
 
 There are many settings where we are faced with testing whether two
@@ -29,8 +29,8 @@ relation.
 ## [1] FALSE  TRUE FALSE FALSE    NA
 ```
 
-Due to recycling, the first string was compared against the 5 strings in
-the 2nd operand. There is only 1 exact match.
+Due to recycling, the first string was compared against the five strings in
+the 2nd operand. There is only one exact match.
 
 
 (Sec:strsearch)=
@@ -45,7 +45,7 @@ and *p* is the length of the pattern), has been implemented in *stringi*
 
 The table below lists the string search functions available
 in *stringi*. Below we explain their behaviour in the context of fixed
-pattern matching. Notably, their description is quite detailed, because
+pattern matching. Notably, their description is quite detailed because
 -- as we shall soon find out -- the corresponding operations are
 available for the two other search engines: based on regular expressions
 and the *ICU* Collator, see {ref}`Sec:regex` and {ref}`Sec:collator`.
@@ -114,9 +114,10 @@ to the search functions (via "`...`"; they are redirected as-is to
 
 First, we may switch on the simplistic[^footfixedcase] case-insensitive matching.
 
-[^footfixedcase]: Which is not suitable for real-world NLP tasks, as it assumes that
+[^footfixedcase]: Which is not suitable for real-world NLP tasks,
+    as it assumes that
     changing the case of a single code point always produces one and
-    only one item; This way, `"groß"` does not compare equal to
+    only one item. This way, `"groß"` does not compare equal to
     `"GROSS"`, see {ref}`Sec:collator` (and to some extent
     {ref}`Sec:regex`) for a workaround.
 
@@ -142,7 +143,7 @@ stri_count_fixed("acatgacaca", "aca", overlap=TRUE)
 Detecting and Subsetting Patterns
 ---------------------------------
 
-A somewhat simplified version of the above search task involves asking
+A somewhat simplified version of the above search task asks
 whether a pattern occurs in a string at all. Such an operation can be
 performed with a call to `stri_detect_fixed()`.
 
@@ -181,8 +182,8 @@ stri_endswith_fixed(x, "abc")    # to=-1 - match at end
 
 [^footanchor]: Note that testing for a pattern match at the start or end of a
     string has not been implemented separately for `regex` patterns,
-    which support `"^"` and `"$"` anchors that serve exactly this very
-    purpose, see {ref}`Sec:regex`.
+    which support `"^"` and `"$"` anchors that serve precisely this
+    purpose; see {ref}`Sec:regex`.
 
 Pattern detection is often performed in conjunction with character
 vector subsetting. This is why we have a specialised (and hence slightly
@@ -197,7 +198,7 @@ stri_subset_fixed(x, "abc", omit_na=TRUE)
 
 The above is equivalent to `x[which(stri_detect_fixed(x, "abc"))]` (note
 the argument responsible for the removal of missing values), but avoids
-writing `x` twice. It hence is particularly convenient when `x` is
+writing `x` twice. It is particularly convenient when `x` is
 generated programmatically on the fly, using some complicated
 expression. Also, it works well with the forward pipe operator, as we
 can write "`x |> stri_subset_fixed("abc", omit_na=TRUE)`".
@@ -235,7 +236,7 @@ stri_locate_last_fixed(x, "aga", get_length=TRUE)
 ## [4,]     9      3
 ```
 
-In both examples we obtain a two-column matrix with the number of rows
+In both examples, we obtain a two-column matrix with the number of rows
 determined by the recycling rule (here: the length of `x`). In the
 former case, we get a "from--to" matrix (`get_length=FALSE`; the
 default) where missing values correspond to either missing inputs or
@@ -314,7 +315,7 @@ stri_replace_all_fixed(x, "aga", "~", case_insensitive=TRUE)
 ```
 
 Note that the inputs that are not part of any match are left unchanged.
-The input object is left unchanged, because it is not a replacement
+The input object is left unchanged because it is not a replacement
 function per se.
 
 The operation is vectorised with respect to all the three arguments

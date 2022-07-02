@@ -1,4 +1,4 @@
-# operator\_dollar: C-Style Formatting with [`stri_sprintf`](stri_sprintf.md) as a Binary Operator
+# operator_dollar: C-Style Formatting with [`stri_sprintf`](stri_sprintf.md) as a Binary Operator
 
 ## Description
 
@@ -8,7 +8,7 @@ Missing values and empty vectors are propagated as usual.
 
 ## Usage
 
-```r
+``` r
 e1 %s$% e2
 
 e1 %stri$% e2
@@ -38,6 +38,8 @@ Returns a character vector.
 ## See Also
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
+
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi:<https://dx.doi.org/10.18637/jss.v103.i02>
 
 Other length: [`stri_isempty()`](stri_isempty.md), [`stri_length()`](stri_length.md), [`stri_numbytes()`](stri_numbytes.md), [`stri_pad_both()`](stri_pad.md), [`stri_sprintf()`](stri_sprintf.md), [`stri_width()`](stri_width.md)
 

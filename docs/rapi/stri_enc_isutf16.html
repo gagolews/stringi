@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                1.7.6
+                1.7.7
               </div>
             
           
@@ -118,7 +118,7 @@
 <li class="toctree-l2"><a class="reference internal" href="about_search_fixed.html">about_search_fixed: Locale-Insensitive Fixed Pattern Matching in <span class="pkg">stringi</span></a></li>
 <li class="toctree-l2"><a class="reference internal" href="about_search_regex.html">about_search_regex: Regular Expressions in <span class="pkg">stringi</span></a></li>
 <li class="toctree-l2"><a class="reference internal" href="about_search.html">about_search: String Searching</a></li>
-<li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: Fast and Portable Character String Processing in R</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code></span> as a Binary Operator</a></li>
@@ -228,6 +228,7 @@
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../news.html">What Is New in <em>stringi</em></a></li>
@@ -256,66 +257,30 @@
         
         <div class="rst-content style-external-links">
         
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="../rapi.html">R Package <em>stringi</em> Reference</a> &raquo;</li>
-        
       <li>stri_enc_isutf16: Check If a Data Stream Is Possibly in UTF-16 or UTF-32</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
-        
       </li>
-    
-  </ul>
-
-  
-  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
-      
-        <a href="stri_enc_isutf8.html" class="btn btn-neutral float-right" title="stri_enc_isutf8: Check If a Data Stream Is Possibly in UTF-8" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-      
-      
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
         <a href="stri_enc_isascii.html" class="btn btn-neutral float-left" title="stri_enc_isascii: Check If a Data Stream Is Possibly in ASCII" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-      
+        <a href="stri_enc_isutf8.html" class="btn btn-neutral float-right" title="stri_enc_isutf8: Check If a Data Stream Is Possibly in UTF-8" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
   <div class="tex2jax_ignore mathjax_ignore section" id="stri-enc-isutf16-check-if-a-data-stream-is-possibly-in-utf-16-or-utf-32">
-<h1>stri_enc_isutf16: Check If a Data Stream Is Possibly in UTF-16 or UTF-32<a class="headerlink" href="#stri-enc-isutf16-check-if-a-data-stream-is-possibly-in-utf-16-or-utf-32" title="Permalink to this headline">¶</a></h1>
+<h1>stri_enc_isutf16: Check If a Data Stream Is Possibly in UTF-16 or UTF-32<a class="headerlink" href="#stri-enc-isutf16-check-if-a-data-stream-is-possibly-in-utf-16-or-utf-32" title="Permalink to this headline"></a></h1>
 <div class="section" id="description">
-<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline"></a></h2>
 <p>These functions detect whether a given byte stream is valid UTF-16LE, UTF-16BE, UTF-32LE, or UTF-32BE.</p>
 </div>
 <div class="section" id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_enc_isutf16be</span><span class="p">(</span><span class="n">str</span><span class="p">)</span>
 
 <span class="nf">stri_enc_isutf16le</span><span class="p">(</span><span class="n">str</span><span class="p">)</span>
@@ -327,7 +292,7 @@
 </div>
 </div>
 <div class="section" id="arguments">
-<h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline">¶</a></h2>
+<h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline"></a></h2>
 <table class="colwidths-auto docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
@@ -342,22 +307,23 @@
 </table>
 </div>
 <div class="section" id="details">
-<h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
+<h2>Details<a class="headerlink" href="#details" title="Permalink to this headline"></a></h2>
 <p>These functions are independent of the way <span style="font-family: Courier New, Courier; color: #666666;"><strong>R</strong></span> marks encodings in character strings (see <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Encoding.html">Encoding</a> and <a class="reference internal" href="about_encoding.html"><span class="doc std std-doc">stringi-encoding</span></a>). Most often, these functions act on raw vectors.</p>
 <p>A result of <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> means that a string is surely not valid UTF-16 or UTF-32. However, false positives are possible.</p>
 <p>Also note that a data stream may be sometimes classified as both valid UTF-16LE and UTF-16BE.</p>
 </div>
 <div class="section" id="value">
-<h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
+<h2>Value<a class="headerlink" href="#value" title="Permalink to this headline"></a></h2>
 <p>Returns a logical vector.</p>
 </div>
 <div class="section" id="author-s">
-<h2>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this headline">¶</a></h2>
+<h2>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this headline"></a></h2>
 <p><a class="reference external" href="https://www.gagolewski.com/">Marek Gagolewski</a> and other contributors</p>
 </div>
 <div class="section" id="see-also">
-<h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline"></a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
+<p>Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, <em>Journal of Statistical Software</em> 103(2), 2022, 1-59, doi:<a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">https://dx.doi.org/10.18637/jss.v103.i02</a></p>
 <p>Other encoding_detection: <a class="reference internal" href="about_encoding.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">about_encoding</span></code></span></a>, <a class="reference internal" href="stri_enc_detect2.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_detect2()</span></code></span></a>, <a class="reference internal" href="stri_enc_detect.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_detect()</span></code></span></a>, <a class="reference internal" href="stri_enc_isascii.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_isascii()</span></code></span></a>, <a class="reference internal" href="stri_enc_isutf8.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_isutf8()</span></code></span></a></p>
 </div>
 </div>
@@ -366,31 +332,23 @@
            </div>
            
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="stri_enc_isutf8.html" class="btn btn-neutral float-right" title="stri_enc_isutf8: Check If a Data Stream Is Possibly in UTF-8" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="stri_enc_isascii.html" class="btn btn-neutral float-left" title="stri_enc_isascii: Check If a Data Stream Is Possibly in ASCII" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="stri_enc_isutf8.html" class="btn btn-neutral float-right" title="stri_enc_isutf8: Check If a Data Stream Is Possibly in UTF-8" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2013-2021, Marek Gagolewski.
-      <span class="lastupdated">
-        Last updated on 2021-11-29T10:29:09+1100.
-      </span>
-
-    </p>
+    <p>&#169; Copyright 2013-2022, Marek Gagolewski.
+      <span class="lastupdated">Last updated on 2022-07-02T17:40:40+1000.
+      </span></p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>

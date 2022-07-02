@@ -1,4 +1,4 @@
-# stri\_split\_lines: Split a String Into Text Lines
+# stri_split_lines: Split a String Into Text Lines
 
 ## Description
 
@@ -6,7 +6,7 @@ These functions split each character string in a given vector into text lines.
 
 ## Usage
 
-```r
+``` r
 stri_split_lines(str, omit_empty = FALSE)
 
 stri_split_lines1(str)
@@ -27,7 +27,7 @@ Vectorized over `str` and `omit_empty`.
 
 Newlines are represented with the Carriage Return (CR, 0x0D), Line Feed (LF, 0x0A), CRLF, or Next Line (NEL, 0x85) characters, depending on the platform. Moreover, the Unicode Standard defines two unambiguous separator characters, the Paragraph Separator (PS, 0x2029) and the Line Separator (LS, 0x2028). Sometimes also the Vertical Tab (VT, 0x0B) and the Form Feed (FF, 0x0C) are used for this purpose.
 
-These <span class="pkg">stringi</span> functions follow UTR\#18 rules, where a newline sequence corresponds to the following regular expression: `(?:\u{D A}|(?!\u{D A})[\u{A}-\u{D}\u{85}\u{2028}\u{2029}]`. Each match serves as a text line separator.
+These <span class="pkg">stringi</span> functions follow UTR#18 rules, where a newline sequence corresponds to the following regular expression: `(?:\u{D A}|(?!\u{D A})[\u{A}-\u{D}\u{85}\u{2028}\u{2029}]`. Each match serves as a text line separator.
 
 ## Value
 
@@ -41,14 +41,16 @@ These <span class="pkg">stringi</span> functions follow UTR\#18 rules, where a n
 
 ## References
 
-*Unicode Newline Guidelines* -- Unicode Technical Report \#13, <https://www.unicode.org/standard/reports/tr13/tr13-5.html>
+*Unicode Newline Guidelines* -- Unicode Technical Report #13, <https://www.unicode.org/standard/reports/tr13/tr13-5.html>
 
-*Unicode Regular Expressions* -- Unicode Technical Standard \#18, <https://www.unicode.org/reports/tr18/>
+*Unicode Regular Expressions* -- Unicode Technical Standard #18, <https://www.unicode.org/reports/tr18/>
 
 ## See Also
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Other search\_split: [`about_search`](about_search.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_split()`](stri_split.md)
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi:<https://dx.doi.org/10.18637/jss.v103.i02>
 
-Other text\_boundaries: [`about_search_boundaries`](about_search_boundaries.md), [`about_search`](about_search.md), [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_opts_brkiter()`](stri_opts_brkiter.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_trans_tolower()`](stri_trans_casemap.md), [`stri_wrap()`](stri_wrap.md)
+Other search_split: [`about_search`](about_search.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_split()`](stri_split.md)
+
+Other text_boundaries: [`about_search_boundaries`](about_search_boundaries.md), [`about_search`](about_search.md), [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_opts_brkiter()`](stri_opts_brkiter.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_trans_tolower()`](stri_trans_casemap.md), [`stri_wrap()`](stri_wrap.md)

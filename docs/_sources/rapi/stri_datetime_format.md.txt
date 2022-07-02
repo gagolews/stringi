@@ -1,4 +1,4 @@
-# stri\_datetime\_format: Date and Time Formatting and Parsing
+# stri_datetime_format: Date and Time Formatting and Parsing
 
 ## Description
 
@@ -6,7 +6,7 @@ These functions convert a given date/time object to a character vector, or vice 
 
 ## Usage
 
-```r
+``` r
 stri_datetime_format(
   time,
   format = "uuuu-MM-dd HH:mm:ss",
@@ -39,6 +39,8 @@ stri_datetime_parse(
 Vectorized over `format` and `time` or `str`.
 
 By default, `stri_datetime_format` (for the sake of compatibility with the [`strftime`](https://stat.ethz.ch/R-manual/R-devel/library/base/help/strftime.html) function) formats a date/time object using the current default time zone.
+
+Unspecified fields (e.g., seconds where only hours and minutes are given) are filled with the ones based on current date and time.
 
 `format` may be one of `DT_STYLE` or `DT_relative_STYLE`, where `DT` is equal to `date`, `time`, or `datetime`, and `STYLE` is equal to `full`, `long`, `medium`, or `short`. This gives a locale-dependent date and/or time format. Note that currently <span class="pkg">ICU</span> does not support `relative` `time` formats, thus this flag is currently ignored in such a context.
 
@@ -122,7 +124,7 @@ Two single quotes represent a literal single quote, either inside or outside sin
 | v          | Time Zone: generic non-location                        | v              | PT                               |
 |            | (falls back first to VVVV)                             | vvvv           | Pacific Time or Los Angeles Time |
 | V          | Time Zone: short time zone ID                          | V              | uslax                            |
-|            | Time Zone: long time zone ID                           | VV             | America/Los\_Angeles             |
+|            | Time Zone: long time zone ID                           | VV             | America/Los_Angeles              |
 |            | Time Zone: time zone exemplar city                     | VVV            | Los Angeles                      |
 |            | Time Zone: generic location (falls back to OOOO)       | VVVV           | Los Angeles Time                 |
 | X          | Time Zone: ISO8601 basic hm?, with Z for 0             | X              | -08, +0530, Z                    |
@@ -172,6 +174,8 @@ A few examples:
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi:<https://dx.doi.org/10.18637/jss.v103.i02>
+
 Other datetime: [`stri_datetime_add()`](stri_datetime_add.md), [`stri_datetime_create()`](stri_datetime_create.md), [`stri_datetime_fields()`](stri_datetime_fields.md), [`stri_datetime_fstr()`](stri_datetime_fstr.md), [`stri_datetime_now()`](stri_datetime_now.md), [`stri_datetime_symbols()`](stri_datetime_symbols.md), [`stri_timezone_get()`](stri_timezone_set.md), [`stri_timezone_info()`](stri_timezone_info.md), [`stri_timezone_list()`](stri_timezone_list.md)
 
 ## Examples
@@ -180,12 +184,15 @@ Other datetime: [`stri_datetime_add()`](stri_datetime_add.md), [`stri_datetime_c
 
 
 ```r
-stri_datetime_parse(c('2015-02-28', '2015-02-29'), 'yyyy-MM-dd')
-## [1] "2015-02-28 10:28:48 AEDT" NA
-stri_datetime_parse(c('2015-02-28', '2015-02-29'), 'yyyy-MM-dd', lenient=TRUE)
-## [1] "2015-02-28 10:28:48 AEDT" "2015-03-01 10:28:48 AEDT"
+x <- c('2015-02-28', '2015-02-29')
+stri_datetime_parse(x, 'yyyy-MM-dd')
+## [1] "2015-02-28 17:40:19 AEDT" NA
+stri_datetime_parse(x, 'yyyy-MM-dd', lenient=TRUE)
+## [1] "2015-02-28 17:40:19 AEDT" "2015-03-01 17:40:19 AEDT"
+stri_datetime_parse(x %s+% " 00:00:00", "yyyy-MM-dd HH:mm:ss")
+## [1] "2015-02-28 00:00:00 AEDT" NA
 stri_datetime_parse('19 lipca 2015', 'date_long', locale='pl_PL')
-## [1] "2015-07-19 10:28:48 AEST"
+## [1] "2015-07-19 17:40:19 AEST"
 stri_datetime_format(stri_datetime_now(), 'datetime_relative_medium')
-## [1] "today, 10:28:48 am"
+## [1] "today, 5:40:19 pm"
 ```

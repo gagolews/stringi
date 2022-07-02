@@ -1,4 +1,4 @@
-# stri\_join: Concatenate Character Vectors
+# stri_join: Concatenate Character Vectors
 
 ## Description
 
@@ -6,7 +6,7 @@ These are the <span class="pkg">stringi</span>\'s equivalents of the built-in [`
 
 ## Usage
 
-```r
+``` r
 stri_join(..., sep = "", collapse = NULL, ignore_null = FALSE)
 
 stri_c(..., sep = "", collapse = NULL, ignore_null = FALSE)
@@ -46,6 +46,8 @@ Returns a character vector.
 ## See Also
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
+
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi:<https://dx.doi.org/10.18637/jss.v103.i02>
 
 Other join: [`%s+%()`](+25s+2B+25.md), [`stri_dup()`](stri_dup.md), [`stri_flatten()`](stri_flatten.md), [`stri_join_list()`](stri_join_list.md)
 

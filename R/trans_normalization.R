@@ -1,7 +1,7 @@
 # kate: default-dictionary en_US
 
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2021, Marek Gagolewski <https://www.gagolewski.com>
+## Copyright (c) 2013-2022, Marek Gagolewski <https://www.gagolewski.com>
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -63,7 +63,7 @@
 #' character sequences in document formats on the Web.
 #' Thus, you will rather not use these functions in typical
 #' string processing activities. Most often you may assume
-#' that a string is in NFC, see RFC\#5198.
+#' that a string is in NFC, see RFC5198.
 #'
 #' As usual in \pkg{stringi},
 #' if the input character vector is in the native encoding,
@@ -84,7 +84,7 @@
 #'    \url{https://unicode.org/reports/tr15/}
 #'
 #' \emph{Unicode Format for Network Interchange}
-#' -- RFC\#5198, \url{https://tools.ietf.org/rfc/rfc5198.txt}
+#' -- RFC5198, \url{https://tools.ietf.org/rfc/rfc5198.txt}
 #'
 #' \emph{Character Model for the World Wide Web 1.0: Normalization}
 #' -- W3C Working Draft, \url{https://www.w3.org/TR/charmod-norm/}

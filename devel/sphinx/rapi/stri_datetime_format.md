@@ -174,6 +174,8 @@ A few examples:
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi:<https://dx.doi.org/10.18637/jss.v103.i02>
+
 Other datetime: [`stri_datetime_add()`](stri_datetime_add.md), [`stri_datetime_create()`](stri_datetime_create.md), [`stri_datetime_fields()`](stri_datetime_fields.md), [`stri_datetime_fstr()`](stri_datetime_fstr.md), [`stri_datetime_now()`](stri_datetime_now.md), [`stri_datetime_symbols()`](stri_datetime_symbols.md), [`stri_timezone_get()`](stri_timezone_set.md), [`stri_timezone_info()`](stri_timezone_info.md), [`stri_timezone_list()`](stri_timezone_list.md)
 
 ## Examples
@@ -184,13 +186,13 @@ Other datetime: [`stri_datetime_add()`](stri_datetime_add.md), [`stri_datetime_c
 ```r
 x <- c('2015-02-28', '2015-02-29')
 stri_datetime_parse(x, 'yyyy-MM-dd')
-## [1] "2015-02-28 15:50:58 AEDT" NA
+## [1] "2015-02-28 17:40:19 AEDT" NA
 stri_datetime_parse(x, 'yyyy-MM-dd', lenient=TRUE)
-## [1] "2015-02-28 15:50:58 AEDT" "2015-03-01 15:50:58 AEDT"
+## [1] "2015-02-28 17:40:19 AEDT" "2015-03-01 17:40:19 AEDT"
 stri_datetime_parse(x %s+% " 00:00:00", "yyyy-MM-dd HH:mm:ss")
 ## [1] "2015-02-28 00:00:00 AEDT" NA
 stri_datetime_parse('19 lipca 2015', 'date_long', locale='pl_PL')
-## [1] "2015-07-19 15:50:58 AEST"
+## [1] "2015-07-19 17:40:19 AEST"
 stri_datetime_format(stri_datetime_now(), 'datetime_relative_medium')
-## [1] "today, 3:50:58 pm"
+## [1] "today, 5:40:19 pm"
 ```

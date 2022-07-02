@@ -3,7 +3,7 @@ Other Operations
 ================
 
 
-> This tutorial is based on the [paper on *stringi*](https://stringi.gagolewski.com/_static/vignette/stringi.pdf) that will appear in the *Journal of Statistical Software*.
+> This tutorial is based on the [paper on *stringi*](https://dx.doi.org/10.18637/jss.v103.i02) that has recently been published the *Journal of Statistical Software*, see {cite}`stringi`.
 
 
 In the sequel, we cover the functions that deal with text boundary
@@ -22,10 +22,10 @@ or words, locating particular text units (e.g., the 3rd sentence), etc.
 
 Generally, text boundary analysis is a locale-sensitive operation
 (see the [Unicode Standard Annex \#29: Unicode Text Segmentation](https://unicode.org/reports/tr29/)). For example, in Japanese and Chinese, spaces are
-not used for separation of words -- a line break can occur even in the
+not used for the separation of words -- a line break can occur even in the
 middle of a word. Nevertheless, these languages have punctuation and
 diacritical marks that cannot start or end a line, so this must also be
-taken into account.
+considered.
 
 The *ICU* Break Iterator
 (see the [*ICU* User Guide on Boundary Analysis](https://unicode-org.github.io/icu/userguide/boundaryanalysis/))
@@ -180,9 +180,9 @@ Transliterating
 
 Transliteration, in its broad sense, deals with the substitution of
 characters or their groups for different ones, according to some
-well-defined, possibly context-aware, rules. It may be useful, amongst
+well-defined, possibly context-aware, rules. It may be utile, amongst
 others, when "normalising" pieces of strings or identifiers so that
-they can be more easily compared with each other.
+they can be more easily compared.
 
 ### Case Mapping
 
@@ -227,8 +227,8 @@ sample(stri_trans_list(), 9)  # a few random entries
 ## [9] "Any-Kana"
 ```
 
-For example, below we apply a transliteration chain: first, we convert
-to upper case, and then we convert characters in the Latin script to
+In the example below, we apply a transliteration chain: we first convert
+to upper case, and then convert characters in the Latin script to
 ASCII.
 
 
@@ -291,7 +291,7 @@ stri_datetime_format(
   stri_datetime_add(stri_datetime_now(), 1, "day"), # add 1 day to 'now'
   "datetime_relative_long",              # full format, relative to 'now'
   locale="en_NZ", tz="NZ")
-## [1] "tomorrow at 5:55:52 pm NZDT"
+## [1] "tomorrow at 7:16:04 pm NZST"
 ```
 
 For example, here's how we can access different calendars:
@@ -312,5 +312,5 @@ stri_datetime_format(
 ## [1] "令和2年2月4日火曜日" "令和2年8月7日金曜日"
 ```
 
-Above we have selected the Hebrew calendar within the English locale and
+We have selected the Hebrew calendar within the English locale and
 the Japanese calendar in the Japanese locale.

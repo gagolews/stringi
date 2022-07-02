@@ -88,6 +88,8 @@ The other functions return a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi:<https://dx.doi.org/10.18637/jss.v103.i02>
+
 Other length: [`%s$%()`](+25s+24+25.md), [`stri_isempty()`](stri_isempty.md), [`stri_length()`](stri_length.md), [`stri_numbytes()`](stri_numbytes.md), [`stri_pad_both()`](stri_pad.md), [`stri_width()`](stri_width.md)
 
 ## Examples
@@ -141,14 +143,14 @@ stri_printf("%+10.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_),
 ##         💩
 ##       <NA>
 stri_sprintf("UNIX time %1$f is %1$s.", Sys.time())
-## [1] "UNIX time 1655099471.739465 is 2022-06-13 15:51:11."
+## [1] "UNIX time 1656747632.723760 is 2022-07-02 17:40:32."
 # the following do not work in sprintf()
 stri_sprintf("%1$#- *2$.*3$f", 1.23456, 10, 3)  # two asterisks
 ## [1] " 1.235    "
 stri_sprintf(c("%s", "%f"), pi)  # re-coercion needed
 ## [1] "3.14159265358979" "3.141593"
 stri_sprintf("%1$s is %1$f UNIX time.", Sys.time())  # re-coercion needed
-## [1] "2022-06-13 15:51:11 is 1655099471.742067 UNIX time."
+## [1] "2022-07-02 17:40:32 is 1656747632.726045 UNIX time."
 stri_sprintf(c("%d", "%s"), factor(11:12))  # re-coercion needed
 ## [1] "1"  "12"
 stri_sprintf(c("%s", "%d"), factor(11:12))  # re-coercion needed

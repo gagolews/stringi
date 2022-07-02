@@ -5,7 +5,7 @@
 \alias{about_stringi}
 \alias{stringi}
 \alias{stringi-package}
-\title{THE String Processing Package}
+\title{Fast and Portable Character String Processing in R}
 \description{
 \pkg{stringi} is THE R package for fast, correct, consistent,
 and convenient string/text manipulation.
@@ -88,7 +88,7 @@ Additionally, \code{\link{stri_wrap}} wraps text into lines.
 i.e., conversion to lower, UPPER, or Title Case,
 \code{\link{stri_trans_nfc}} (among others) for Unicode normalization,
 \code{\link{stri_trans_char}} for translating individual code points,
-and \code{\link{stri_trans_general}} for other universal yet powerful
+and \code{\link{stri_trans_general}} for other universal
 text transforms, including transliteration.
 
 \item \code{\link{stri_cmp}}, \code{\link{\%s<\%}}, \code{\link{stri_order}},
@@ -115,8 +115,12 @@ interesting facilities and topics.
 }
 
 \references{
-\emph{\pkg{stringi} Package homepage},
+\emph{\pkg{stringi} Package Homepage},
 \url{https://stringi.gagolewski.com/}
+
+Gagolewski M., \pkg{stringi}: Fast and portable character string
+processing in R, \emph{Journal of Statistical Software} 103(2), 2022, 1-59,
+doi:\url{https://dx.doi.org/10.18637/jss.v103.i02}
 
 \emph{ICU -- International Components for Unicode},
 \url{https://icu.unicode.org/}
@@ -127,11 +131,13 @@ interesting facilities and topics.
 \emph{The Unicode Consortium},
 \url{https://home.unicode.org/}
 
-\emph{UTF-8, a transformation format of ISO 10646} -- RFC 3629,
+\emph{UTF-8, A Transformation Format of ISO 10646} -- RFC 3629,
 \url{https://tools.ietf.org/html/rfc3629}
 }
 \seealso{
 The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}
+
+Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R, \emph{Journal of Statistical Software} 103(2), 2022, 1-59, doi:\url{https://dx.doi.org/10.18637/jss.v103.i02}
 
 Other stringi_general_topics: 
 \code{\link{about_arguments}},
