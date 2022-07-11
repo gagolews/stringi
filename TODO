@@ -1,3 +1,5 @@
+* [BUILD TIME] TODO... src/icu55 and src/icu69 should be downloaded only on demand...
+
 * [NEW FEATURE] TODO.... #469: `stri_datetime_parse` .. new argument -
 `default_time`
     a Calendar set on input to the date and time to be used for missing values in the date/time string being parsed
