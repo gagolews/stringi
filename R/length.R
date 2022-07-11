@@ -154,7 +154,7 @@ stri_isempty <- function(str)
 #'
 #' @details
 #' The Unicode standard does not formalize the notion of a character
-#' width. Roughly based on \url{https://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c},
+#' width. Roughly based on \url{http://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c},
 #' \url{https://github.com/nodejs/node/blob/master/src/node_i18n.cc},
 #' and UAX #11 we proceed as follows.
 #' The following code points are of width 0:
