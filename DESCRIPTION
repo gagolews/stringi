@@ -1,6 +1,6 @@
 Package: stringi
 Version: 1.7.8.9001
-Date: 2022-07-11
+Date: 2022-07-27
 Title: Fast and Portable Character String Processing Facilities
 Description: A collection of character string/text/natural language
     processing tools for pattern searching (e.g., with 'Java'-like regular
@@ -32,5 +32,5 @@ Author: Marek Gagolewski [aut, cre, cph] (<https://orcid.org/0000-0003-0637-6028
     Bartek Tartanus [ctb], and others (stringi source code);
     Unicode, Inc. and others (ICU4C source code, Unicode Character Database)
 Maintainer: Marek Gagolewski <marek@gagolewski.com>
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 Encoding: UTF-8

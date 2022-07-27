@@ -31,8 +31,7 @@
 ## EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-#' @title
-#' Sorting
+#' @title String Sorting
 #'
 #'
 #' @description
@@ -91,8 +90,7 @@ stri_sort <- function(str, decreasing = FALSE, na_last = NA, ..., opts_collator 
 }
 
 
-#' @title
-#' Ordering Permutation
+#' @title Ordering Permutation
 #'
 #'
 #' @description

@@ -2,7 +2,7 @@
 % Please edit documentation in R/sort.R
 \name{stri_sort}
 \alias{stri_sort}
-\title{Sorting}
+\title{String Sorting}
 \usage{
 stri_sort(str, decreasing = FALSE, na_last = NA, ..., opts_collator = NULL)
 }
