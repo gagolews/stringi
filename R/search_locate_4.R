@@ -31,8 +31,7 @@
 ## EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-#' @title
-#' Locate Pattern Occurrences
+#' @title Locate Pattern Occurrences
 #'
 #'
 #' @description
