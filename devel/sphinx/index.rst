@@ -113,6 +113,13 @@ a set of wrappers around *stringi* with a base R-compatible API.
     :hidden:
 
     About <self>
+    Author <https://www.gagolewski.com/>
+
+
+.. toctree::
+    :maxdepth: 2
+    :caption: Tutorial
+
     weave/design_principles
     weave/basic_operations
     weave/codepoint_comparing
@@ -140,7 +147,6 @@ a set of wrappers around *stringi* with a base R-compatible API.
     Bug Tracker and Feature Suggestions <https://github.com/gagolews/stringi/issues>
     CRAN Entry <https://cran.r-project.org/package=stringi>
     JStatSoft Paper <https://dx.doi.org/10.18637/jss.v103.i02>
-    Author's Homepage <https://www.gagolewski.com/>
     C++ API — Rcpp Example <https://github.com/gagolews/ExampleRcppStringi>
     news.md
     install.md
