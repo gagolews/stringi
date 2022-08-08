@@ -68,7 +68,7 @@ write_if_different <- function (path, contents, href = NULL, check = TRUE)
         line_ending)
     contents <- enc2utf8(gsub("\r?\n", line_ending, contents))
 
-     contents <- postprocess_contents(contents)  ######################## PATCH
+    contents <- postprocess_contents(contents)  ######################## PATCH
 
     if (same_contents(path, contents))
         return(FALSE)
