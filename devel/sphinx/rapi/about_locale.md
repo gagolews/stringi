@@ -50,7 +50,7 @@ Other locale-sensitive functions include, e.g., [`stri_trans_tolower`](stri_tran
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi: [10.18637/jss.v103.i02](https://doi.org/10.18637/jss.v103.i02)
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, [doi:10.18637/jss.v103.i02](https://doi.org/10.18637/jss.v103.i02)
 
 Other locale_management: [`stri_locale_info()`](stri_locale_info.md), [`stri_locale_list()`](stri_locale_list.md), [`stri_locale_set()`](stri_locale_set.md)
 

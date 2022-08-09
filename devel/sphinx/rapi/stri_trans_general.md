@@ -53,7 +53,7 @@ Returns a character vector.
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi: [10.18637/jss.v103.i02](https://doi.org/10.18637/jss.v103.i02)
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, [doi:10.18637/jss.v103.i02](https://doi.org/10.18637/jss.v103.i02)
 
 Other transform: [`stri_trans_char()`](stri_trans_char.md), [`stri_trans_list()`](stri_trans_list.md), [`stri_trans_nfc()`](stri_trans_nf.md), [`stri_trans_tolower()`](stri_trans_casemap.md)
 
@@ -81,6 +81,9 @@ stri_trans_general('\\N{latin small letter a}', 'name-any') # decode name
 ## [1] "a"
 stri_trans_general('\u2620', 'hex/c') # to hex
 ## [1] "\\u2620"
+stri_trans_general("\u201C\u2026\u201D \u0105\u015B\u0107\u017C",
+    "NFKD; NFC; [^\\p{L}] latin-ascii")
+## [1] "\"...\" ąśćż"
 x <- "\uC885\uB85C\uAD6C \uC0AC\uC9C1\uB3D9"
 stringi::stri_trans_general(x, "Hangul-Latin")
 ## [1] "jonglogu sajigdong"

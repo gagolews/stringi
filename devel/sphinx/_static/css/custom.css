@@ -97,15 +97,29 @@ ol.arabic li {
 }
 
 
+img.img-left-align-always {
+    float: left;
+    margin-right: 16px;
+    margin-bottom: 16px;
+    border-radius: 0;
+}
+
+img.img-right-align-always {
+    float: right;
+    margin-left: 16px;
+    margin-bottom: 16px;
+    border-radius: 0;
+}
+
 @media (max-width: 480px) {
-    .rst-content section > img.img-left-align {
+    img.img-left-align {
         display: block;
         margin-left: auto;
         margin-right: auto;
         border-radius: 0;
     }
 
-    .rst-content section > img.img-right-align {
+    img.img-right-align {
         display: block;
         margin-left: auto;
         margin-right: auto;
@@ -114,14 +128,14 @@ ol.arabic li {
 }
 
 @media not (max-width: 480px) {
-    .rst-content section > img.img-left-align {
+    img.img-left-align {
         float: left;
         margin-right: 16px;
         margin-bottom: 16px;
         border-radius: 0;
     }
 
-    .rst-content section > img.img-right-align {
+    img.img-right-align {
         float: right;
         margin-left: 16px;
         margin-bottom: 16px;
