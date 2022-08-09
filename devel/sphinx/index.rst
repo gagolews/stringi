@@ -1,11 +1,10 @@
 stringi: Fast and Portable Character String Processing in R
 ===========================================================
 
+.. epigraph::
     **stringi (pronounced “stringy”, IPA [strinɡi]) is THE R package
     for very fast, portable, correct, consistent, and convenient string/text
     processing in any locale or character encoding.**
-
-    -- by `Marek Gagolewski <https://www.gagolewski.com/>`_
 
 
 
