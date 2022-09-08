@@ -8,10 +8,10 @@ opts_chunk$set(
 #  dev.args=list(pointsize=11),
 #  fig.show="hold",
 #  fig.lp='fig:',
-  tidy=FALSE,
-  error=FALSE,
-  autodep=TRUE,
-  cache=TRUE
+    tidy=FALSE,
+    error=FALSE,
+    autodep=TRUE,
+    cache=TRUE
 )
 
 library("stringi")
