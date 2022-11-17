@@ -5,6 +5,10 @@
 
 * no major changes yet... see TODO for a list of higher-priority issues
 
+* [BACKWARD INCOMPATIBLE IF ICU >= 72] ICU 72: backward incompatible change:
+@ no longer a word break https://github.com/unicode-org/cldr/pull/2256
+
+
 
 ## 1.7.8 (2022-07-11)
 
