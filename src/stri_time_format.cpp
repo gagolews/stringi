@@ -275,13 +275,12 @@ SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP lenient, SEXP tz, SEXP loca
 
     R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(format));
     if (vectorize_length <= 0) {
-        UNPROTECT(3);
         SEXP ret;
         PROTECT(ret = Rf_allocVector(REALSXP, 0));
         if (!Rf_isNull(tz))
             Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("tzone")), tz);
         stri__set_class_POSIXct(ret);
-        UNPROTECT(1);
+        UNPROTECT(4);
         return ret;
     }
 

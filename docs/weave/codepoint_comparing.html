@@ -4,7 +4,8 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Code-Pointwise Comparing &mdash; stringi</title>
@@ -36,6 +37,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
@@ -68,7 +70,7 @@
             
             
               <div class="version">
-                1.7.7
+                1.7.9
               </div>
             
           
@@ -94,8 +96,16 @@
             
             
               <p class="caption" role="heading"><span class="caption-text">stringi</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="design_principles.html">General Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic_operations.html">Basic String Operations</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Code-Pointwise Comparing</a><ul>
@@ -114,7 +124,6 @@
 <li class="toctree-l1"><a class="reference internal" href="other_operations.html">Other Operations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="input_output.html">Input and Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="example.html">Example Use Case: Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference Manual</span></p>
 <ul>
@@ -122,14 +131,11 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://stringx.gagolewski.com/">stringx</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../news.html">What Is New in <em>stringi</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
 </ul>
 
             
@@ -169,10 +175,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="tex2jax_ignore mathjax_ignore section" id="code-pointwise-comparing">
-<span id="sec-fixed"></span><h1>Code-Pointwise Comparing<a class="headerlink" href="#code-pointwise-comparing" title="Permalink to this headline"></a></h1>
+  <section id="code-pointwise-comparing">
+<span id="sec-fixed"></span><h1>Code-Pointwise Comparing<a class="headerlink" href="#code-pointwise-comparing" title="Permalink to this heading"></a></h1>
 <blockquote>
-<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that has recently been published the <em>Journal of Statistical Software</em>, see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3">Gag22</a>]</span>.</p>
+<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that has recently been published the <em>Journal of Statistical Software</em>, see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="M. Gagolewski. stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59, 2022. doi:10.18637/jss.v103.i02.">Gag22</a>]</span>.</p>
 </div></blockquote>
 <p>There are many settings where we are faced with testing whether two
 strings (or parts thereof) consist of exactly the same Unicode code
@@ -180,8 +186,8 @@ points, in exactly the same order. These include, for instance, matching
 a nucleotide sequence in a DNA profile and querying for system resources
 based on file names or UUIDs. Such tasks, due to their simplicity, can
 be performed very efficiently.</p>
-<div class="section" id="testing-for-equality-of-strings">
-<h2>Testing for Equality of Strings<a class="headerlink" href="#testing-for-equality-of-strings" title="Permalink to this headline"></a></h2>
+<section id="testing-for-equality-of-strings">
+<h2>Testing for Equality of Strings<a class="headerlink" href="#testing-for-equality-of-strings" title="Permalink to this heading"></a></h2>
 <p>To quickly test whether the corresponding strings in two character
 vectors are identical (in a code-pointwise manner), we can use the
 <code class="docutils literal notranslate"><span class="pre">%s===%</span></code> operator or, equivalently, the <code class="docutils literal notranslate"><span class="pre">stri_cmp_eq()</span></code> function.
@@ -193,11 +199,11 @@ relation.</p>
 </div>
 <p>Due to recycling, the first string was compared against the five strings in
 the 2nd operand. There is only one exact match.</p>
-</div>
-<div class="section" id="searching-for-fixed-strings">
-<span id="sec-strsearch"></span><h2>Searching for Fixed Strings<a class="headerlink" href="#searching-for-fixed-strings" title="Permalink to this headline"></a></h2>
+</section>
+<section id="searching-for-fixed-strings">
+<span id="sec-strsearch"></span><h2>Searching for Fixed Strings<a class="headerlink" href="#searching-for-fixed-strings" title="Permalink to this heading"></a></h2>
 <p>For detecting if a string contains a given fixed substring
-(code-pointwisely), the fast KMP <span id="id2">[<a class="reference internal" href="../z_bibliography.html#id23">KMP77</a>]</span> algorithm, with
+(code-pointwisely), the fast KMP <span id="id2">[<a class="reference internal" href="../z_bibliography.html#id23" title="D. Knuth, J.H. Morris, and V. Pratt. Fast pattern matching in strings. SIAM Journal on Computing, 6(2):323–350, 1977.">KMP77</a>]</span> algorithm, with
 worst time complexity of <em>O(n+p)</em> (where <em>n</em> is the length of the string
 and <em>p</em> is the length of the pattern), has been implemented in <em>stringi</em>
 (with numerous tweaks for even faster matching).</p>
@@ -246,9 +252,9 @@ and the <em>ICU</em> Collator, see <a class="reference internal" href="regular_e
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="counting-matches">
-<h2>Counting Matches<a class="headerlink" href="#counting-matches" title="Permalink to this headline"></a></h2>
+</section>
+<section id="counting-matches">
+<h2>Counting Matches<a class="headerlink" href="#counting-matches" title="Permalink to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">stri_count_fixed()</span></code> function counts the number of times a fixed
 pattern occurs in a given string.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_fixed</span><span class="p">(</span><span class="s">&quot;abcabcdefabcabcabdc&quot;</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">)</span>  <span class="c1"># search pattern is &quot;abc&quot;</span>
@@ -269,9 +275,9 @@ be forwarded as follows:</p>
 <span class="c1">## [1]  4  0 NA</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="search-engine-options">
-<h2>Search Engine Options<a class="headerlink" href="#search-engine-options" title="Permalink to this headline"></a></h2>
+</section>
+<section id="search-engine-options">
+<h2>Search Engine Options<a class="headerlink" href="#search-engine-options" title="Permalink to this heading"></a></h2>
 <p>The pattern matching engine may be tuned up by passing further arguments
 to the search functions (via “<code class="docutils literal notranslate"><span class="pre">...</span></code>”; they are redirected as-is to
 <code class="docutils literal notranslate"><span class="pre">stri_opts_fixed()</span></code>). The table below gives the list of available options.</p>
@@ -304,9 +310,9 @@ matches or whether searching should continue at the end of each match
 <span class="c1">## [1] 3</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="detecting-and-subsetting-patterns">
-<h2>Detecting and Subsetting Patterns<a class="headerlink" href="#detecting-and-subsetting-patterns" title="Permalink to this headline"></a></h2>
+</section>
+<section id="detecting-and-subsetting-patterns">
+<h2>Detecting and Subsetting Patterns<a class="headerlink" href="#detecting-and-subsetting-patterns" title="Permalink to this heading"></a></h2>
 <p>A somewhat simplified version of the above search task asks
 whether a pattern occurs in a string at all. Such an operation can be
 performed with a call to <code class="docutils literal notranslate"><span class="pre">stri_detect_fixed()</span></code>.</p>
@@ -354,9 +360,9 @@ can write “<code class="docutils literal notranslate"><span class="pre">x</spa
 <span class="c1">## [1] &quot;*****&quot; &quot;***&quot;   &quot;def&quot;   &quot;*****&quot; &quot;uabdc&quot; &quot;dab&quot;   NA      &quot;***&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="locating-and-extracting-patterns">
-<h2>Locating and Extracting Patterns<a class="headerlink" href="#locating-and-extracting-patterns" title="Permalink to this headline"></a></h2>
+</section>
+<section id="locating-and-extracting-patterns">
+<h2>Locating and Extracting Patterns<a class="headerlink" href="#locating-and-extracting-patterns" title="Permalink to this heading"></a></h2>
 <p>The functions from the <code class="docutils literal notranslate"><span class="pre">stri_locate()</span></code> family aim to pinpoint the
 positions of pattern matches. First, we may be interested in getting to
 know the location of the first or the last pattern occurrence:</p>
@@ -432,9 +438,9 @@ functions from the <code class="docutils literal notranslate"><span class="pre">
 <span class="c1">## [1] &quot;AGa&quot; &quot;aga&quot; &quot;aGA&quot; &quot;Aga&quot; &quot;aga&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="replacing-pattern-occurrences">
-<h2>Replacing Pattern Occurrences<a class="headerlink" href="#replacing-pattern-occurrences" title="Permalink to this headline"></a></h2>
+</section>
+<section id="replacing-pattern-occurrences">
+<h2>Replacing Pattern Occurrences<a class="headerlink" href="#replacing-pattern-occurrences" title="Permalink to this heading"></a></h2>
 <p>In order to replace each match with a corresponding replacement string,
 we can refer to <code class="docutils literal notranslate"><span class="pre">stri_replace_all()</span></code>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;aga&quot;</span><span class="p">,</span> <span class="s">&quot;actg&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="s">&quot;ggAGAGAgaGAca&quot;</span><span class="p">,</span> <span class="s">&quot;agagagaga&quot;</span><span class="p">)</span>
@@ -472,9 +478,9 @@ string, then the search is repeated for the 2nd needle so as to replace
 it with the 2nd corresponding replacement string, and so forth.</p>
 <p>Moreover, <code class="docutils literal notranslate"><span class="pre">stri_replace_first()</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_replace_last()</span></code> can identify
 and replace the first and the last match, respectively.</p>
-</div>
-<div class="section" id="splitting">
-<h2>Splitting<a class="headerlink" href="#splitting" title="Permalink to this headline"></a></h2>
+</section>
+<section id="splitting">
+<h2>Splitting<a class="headerlink" href="#splitting" title="Permalink to this heading"></a></h2>
 <p>To split each element in the <code class="docutils literal notranslate"><span class="pre">haystack</span></code> into substrings, where the
 <code class="docutils literal notranslate"><span class="pre">needles</span></code> define the delimiters that separate the inputs into tokens, we
 call <code class="docutils literal notranslate"><span class="pre">stri_split()</span></code>:</p>
@@ -516,8 +522,8 @@ which support <code class="docutils literal notranslate"><span class="pre">&quot
 purpose; see <a class="reference internal" href="regular_expressions.html#sec-regex"><span class="std std-ref">Regular Expressions</span></a>.</p>
 </dd>
 </dl>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -532,7 +538,7 @@ purpose; see <a class="reference internal" href="regular_expressions.html#sec-re
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2022, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2022-07-02T18:56:54+1000.
+      <span class="lastupdated">Last updated on 2022-12-15T14:28:06+1100.
       </span></p>
   </div>
 

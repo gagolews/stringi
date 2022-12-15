@@ -100,7 +100,7 @@ Here is a list of operators provided by the ICU User Guide on regexes.
 
 `(?>...)`
 
-:   Atomic-match parentheses. First match of the parenthesized sub-expression is the only one tried; if it does not lead to an overall pattern match, back up the search for a match to a position before the `(?>`.
+:   Atomic-match parentheses. The first match of the parenthesized sub-expression is the only one tried; if it does not lead to an overall pattern match, back up the search for a match to a position before the `(?>`.
 
 `(?#...)`
 
@@ -364,7 +364,7 @@ J.E.F. Friedl, *Mastering Regular Expressions*, O\'Reilly, 2002
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi: [10.18637/jss.v103.i02](https://doi.org/10.18637/jss.v103.i02)
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, [doi:10.18637/jss.v103.i02](https://doi.org/10.18637/jss.v103.i02)
 
 Other search_regex: [`about_search`](about_search.md), [`stri_opts_regex()`](stri_opts_regex.md)
 

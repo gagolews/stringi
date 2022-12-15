@@ -1,6 +1,6 @@
 Package: stringi
-Version: 1.7.8.9001
-Date: 2022-09-08
+Version: 1.7.9
+Date: 2022-12-15
 Title: Fast and Portable Character String Processing Facilities
 Description: A collection of character string/text/natural language
     processing tools for pattern searching (e.g., with 'Java'-like regular
@@ -9,9 +9,8 @@ Description: A collection of character string/text/natural language
     wrapping, Unicode normalisation, date-time formatting and parsing,
     and many more. They are fast, consistent, convenient, and -
     thanks to 'ICU' (International Components for Unicode) -
-    portable across all locales and platforms.
-    Documentation about 'stringi' is provided
-    via its website at <https://stringi.gagolewski.com/> and
+    portable across all locales and platforms. Documentation about 'stringi' is
+    provided via its website at <https://stringi.gagolewski.com/> and
     the paper by Gagolewski (2022, <doi:10.18637/jss.v103.i02>).
 URL:
     https://stringi.gagolewski.com/,

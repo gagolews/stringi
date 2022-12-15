@@ -1,51 +1,6 @@
 /* --------------------------------------------------------------------------
-   Copyleft (C) 2021, Marek Gagolewski <https://www.gagolewski.com>
+   Copyleft (C) 2021-2022, Marek Gagolewski <https://www.gagolewski.com>
    -------------------------------------------------------------------------- */
-
-.proof-type-exercise {
-    clear: both;
-    background: #EFE1CE;
-    padding: 12px;
-    line-height: 24px;
-    margin-bottom: 24px;
-    box-sizing: border-box;
-}
-
-.proof-type-exercise .proof-title {
-    background: #615550;
-    font-weight: 700;
-    display: block;
-    color: #fff;
-    padding: 6px 12px;
-    margin: -12px -12px 12px;
-}
-
-.proof-content {
-    font-style: italic;
-    padding: 0;
-}
-
-.proof-content p {
-    margin: 0;
-}
-
-.proof-type-example {
-    clear: both;
-    background: #EFE1CE;
-    padding: 12px;
-    line-height: 24px;
-    margin-bottom: 24px;
-    box-sizing: border-box;
-}
-
-.proof-type-example .proof-title {
-    background: #615550;
-    font-weight: 700;
-    display: block;
-    color: #fff;
-    padding: 6px 12px;
-    margin: -12px -12px 12px;
-}
 
 /* -------------------------------------------------------------------------- */
 
@@ -135,3 +90,55 @@ strong.command, .rst-content code, .rst-content div[class^="highlight"] pre, .rs
 }
 
 /* -------------------------------------------------------------------------- */
+
+
+ol.arabic li {
+    padding-bottom: 8pt;
+}
+
+
+img.img-left-align-always {
+    float: left;
+    margin-right: 16px;
+    margin-bottom: 16px;
+    border-radius: 0;
+}
+
+img.img-right-align-always {
+    float: right;
+    margin-left: 16px;
+    margin-bottom: 16px;
+    border-radius: 0;
+}
+
+@media (max-width: 480px) {
+    img.img-left-align {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 0;
+    }
+
+    img.img-right-align {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 0;
+    }
+}
+
+@media not (max-width: 480px) {
+    img.img-left-align {
+        float: left;
+        margin-right: 16px;
+        margin-bottom: 16px;
+        border-radius: 0;
+    }
+
+    img.img-right-align {
+        float: right;
+        margin-left: 16px;
+        margin-bottom: 16px;
+        border-radius: 0;
+    }
+}

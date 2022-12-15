@@ -840,11 +840,11 @@ Calendar::operator=(const Calendar &right)
         fWeekendCease            = right.fWeekendCease;
         fWeekendCeaseMillis      = right.fWeekendCeaseMillis;
         fNextStamp               = right.fNextStamp;
-        uprv_strncpy(validLocale, right.validLocale, sizeof(validLocale));
-        uprv_strncpy(actualLocale, right.actualLocale, sizeof(actualLocale));
+        uprv_strncpy((char*)validLocale, (char*)right.validLocale, ULOC_FULLNAME_CAPACITY-1);  // Marek
+        uprv_strncpy((char*)actualLocale, (char*)right.actualLocale, ULOC_FULLNAME_CAPACITY-1);  // Marek
 #ifdef U_STRINGI_PATCHES
-        validLocale[sizeof(validLocale)-1] = 0;
-        actualLocale[sizeof(actualLocale)-1] = 0;
+        validLocale[ULOC_FULLNAME_CAPACITY-1] = 0;  // Marek
+        actualLocale[ULOC_FULLNAME_CAPACITY-1] = 0;  // Marek
 #else //!U_STRINGI_PATCHES
         validLocale[sizeof(validLocale)-1] = 0;
         actualLocale[sizeof(validLocale)-1] = 0;

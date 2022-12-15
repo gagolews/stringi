@@ -4,7 +4,8 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Example Use Case: Data Preparation &mdash; stringi</title>
@@ -36,6 +37,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
@@ -43,7 +45,7 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="References" href="../z_bibliography.html" />
+    <link rel="next" title="R Package stringi Reference" href="../rapi.html" />
     <link rel="prev" title="Input and Output" href="input_output.html" /> 
 </head>
 
@@ -68,7 +70,7 @@
             
             
               <div class="version">
-                1.7.7
+                1.7.9
               </div>
             
           
@@ -94,8 +96,16 @@
             
             
               <p class="caption" role="heading"><span class="caption-text">stringi</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="design_principles.html">General Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic_operations.html">Basic String Operations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codepoint_comparing.html">Code-Pointwise Comparing</a></li>
@@ -104,7 +114,6 @@
 <li class="toctree-l1"><a class="reference internal" href="other_operations.html">Other Operations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="input_output.html">Input and Output</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Example Use Case: Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference Manual</span></p>
 <ul>
@@ -112,14 +121,11 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://stringx.gagolewski.com/">stringx</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../news.html">What Is New in <em>stringi</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
 </ul>
 
             
@@ -152,17 +158,17 @@
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
         <a href="input_output.html" class="btn btn-neutral float-left" title="Input and Output" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../z_bibliography.html" class="btn btn-neutral float-right" title="References" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../rapi.html" class="btn btn-neutral float-right" title="R Package stringi Reference" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="tex2jax_ignore mathjax_ignore section" id="example-use-case-data-preparation">
-<h1>Example Use Case: Data Preparation<a class="headerlink" href="#example-use-case-data-preparation" title="Permalink to this headline"></a></h1>
+  <section id="example-use-case-data-preparation">
+<h1>Example Use Case: Data Preparation<a class="headerlink" href="#example-use-case-data-preparation" title="Permalink to this heading"></a></h1>
 <blockquote>
-<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that has recently been published the <em>Journal of Statistical Software</em>, see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3">Gag22</a>]</span>.</p>
+<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that has recently been published the <em>Journal of Statistical Software</em>, see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="M. Gagolewski. stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59, 2022. doi:10.18637/jss.v103.i02.">Gag22</a>]</span>.</p>
 </div></blockquote>
 <p>What follows is a short case study where we prepare a
 web-scraped data set for further processing.</p>
@@ -331,7 +337,7 @@ compute the monthly temperature ranges:</p>
 <p>For the climate data on other cities, very similar operations will need
 to be performed – the whole process of scraping and cleansing data can
 be automated quite easily.</p>
-</div>
+</section>
 
 
            </div>
@@ -339,14 +345,14 @@ be automated quite easily.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="input_output.html" class="btn btn-neutral float-left" title="Input and Output" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../z_bibliography.html" class="btn btn-neutral float-right" title="References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../rapi.html" class="btn btn-neutral float-right" title="R Package stringi Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2022, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2022-07-02T18:56:54+1000.
+      <span class="lastupdated">Last updated on 2022-12-15T14:28:06+1100.
       </span></p>
   </div>
 

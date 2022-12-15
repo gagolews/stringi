@@ -1,11 +1,10 @@
 stringi: Fast and Portable Character String Processing in R
 ===========================================================
 
+.. epigraph::
     **stringi (pronounced “stringy”, IPA [strinɡi]) is THE R package
     for very fast, portable, correct, consistent, and convenient string/text
     processing in any locale or character encoding.**
-
-    -- by `Marek Gagolewski <https://www.gagolewski.com/>`_
 
 
 
@@ -113,6 +112,16 @@ a set of wrappers around *stringi* with a base R-compatible API.
     :hidden:
 
     About <self>
+    Author <https://www.gagolewski.com/>
+    install.md
+    Source Code (GitHub) <https://github.com/gagolews/stringi>
+    Bug Tracker and Feature Suggestions <https://github.com/gagolews/stringi/issues>
+    CRAN Entry <https://cran.r-project.org/package=stringi>
+
+.. toctree::
+    :maxdepth: 2
+    :caption: Tutorial
+
     weave/design_principles
     weave/basic_operations
     weave/codepoint_comparing
@@ -121,7 +130,6 @@ a set of wrappers around *stringi* with a base R-compatible API.
     weave/other_operations
     weave/input_output
     weave/example
-    z_bibliography
 
 
 .. toctree::
@@ -136,14 +144,11 @@ a set of wrappers around *stringi* with a base R-compatible API.
     :maxdepth: 1
     :caption: Other
 
-    Source Code (GitHub) <https://github.com/gagolews/stringi>
-    Bug Tracker and Feature Suggestions <https://github.com/gagolews/stringi/issues>
-    CRAN Entry <https://cran.r-project.org/package=stringi>
+    stringx <https://stringx.gagolewski.com/>
     JStatSoft Paper <https://dx.doi.org/10.18637/jss.v103.i02>
-    Author's Homepage <https://www.gagolewski.com/>
     C++ API — Rcpp Example <https://github.com/gagolews/ExampleRcppStringi>
     news.md
-    install.md
+    z_bibliography
 
 
 

@@ -141,7 +141,7 @@ Each code point falls into one and only one Category.
  \item{\code{Ll}}{a lowercase letter.}
  \item{\code{Lm}}{a modifier letter.}
  \item{\code{Lo}}{other letters, including syllables and ideographs.}
- \item{\code{Lt}}{a digraphic character, with first part uppercase.}
+ \item{\code{Lt}}{a digraphic character, with the first part uppercase.}
  \item{\code{Lu}}{an uppercase letter.}
  \item{\code{Mc}}{a spacing combining mark (positive advance width).}
  \item{\code{Me}}{an enclosing combining mark.}
