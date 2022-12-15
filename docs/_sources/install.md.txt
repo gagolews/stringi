@@ -1,10 +1,6 @@
 # Installing *stringi*
 
-
-
-## Introduction
-
-In 99.9% of cases, *stringi* can be successfully installed by simply calling:
+In most cases, installing *stringi* is as simple as calling:
 
 
 ```r
@@ -17,8 +13,7 @@ upon which *stringi* is based, and the colourful diversity of operating systems,
 their flavours, and particular setups, some users may still experience
 a few issues that hopefully can be resolved with the help of this short manual.
 
-Also, some additional build tweaks are possible if we require a more
-customised installation.
+Also, some build tweaks are possible.
 
 
 ## ICU4C

@@ -4,7 +4,8 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Collation &mdash; stringi</title>
@@ -36,6 +37,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
@@ -68,7 +70,7 @@
             
             
               <div class="version">
-                1.7.7
+                1.7.9
               </div>
             
           
@@ -94,8 +96,16 @@
             
             
               <p class="caption" role="heading"><span class="caption-text">stringi</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="design_principles.html">General Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic_operations.html">Basic String Operations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codepoint_comparing.html">Code-Pointwise Comparing</a></li>
@@ -125,7 +135,6 @@
 <li class="toctree-l1"><a class="reference internal" href="other_operations.html">Other Operations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="input_output.html">Input and Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="example.html">Example Use Case: Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference Manual</span></p>
 <ul>
@@ -133,14 +142,11 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://stringx.gagolewski.com/">stringx</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../news.html">What Is New in <em>stringi</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
 </ul>
 
             
@@ -180,10 +186,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="tex2jax_ignore mathjax_ignore section" id="collation">
-<span id="sec-collator"></span><h1>Collation<a class="headerlink" href="#collation" title="Permalink to this headline"></a></h1>
+  <section id="collation">
+<span id="sec-collator"></span><h1>Collation<a class="headerlink" href="#collation" title="Permalink to this heading"></a></h1>
 <blockquote>
-<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that has recently been published the <em>Journal of Statistical Software</em>, see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3">Gag22</a>]</span>.</p>
+<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that has recently been published the <em>Journal of Statistical Software</em>, see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="M. Gagolewski. stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59, 2022. doi:10.18637/jss.v103.i02.">Gag22</a>]</span>.</p>
 </div></blockquote>
 <p>Historically, the code-pointwise comparison had been used in most string
 comparison activities, especially when strings in ASCII (i.e., English)
@@ -197,16 +203,16 @@ determining if two strings are equivalent. This time, though, due to its
 conformance to the <a class="reference external" href="https://www.unicode.org/reports/tr10/">Unicode Collation Algorithm</a>, we
 may expect that the generated results will meet the requirements of the
 culturally correct natural language processing in any locale.</p>
-<div class="section" id="locales">
-<h2>Locales<a class="headerlink" href="#locales" title="Permalink to this headline"></a></h2>
+<section id="locales">
+<h2>Locales<a class="headerlink" href="#locales" title="Permalink to this heading"></a></h2>
 <p>String collation is amongst many locale-sensitive operations available
 in <em>stringi</em>. However, before proceeding any further, we should first
 discuss how
 we can parameterise the <em>ICU</em> services to deliver the results that
 reflect the expectations of a specific user community, such as the
 speakers of different languages and their various regional variants.</p>
-<div class="section" id="specifying-locales">
-<h3>Specifying Locales<a class="headerlink" href="#specifying-locales" title="Permalink to this headline"></a></h3>
+<section id="specifying-locales">
+<h3>Specifying Locales<a class="headerlink" href="#specifying-locales" title="Permalink to this heading"></a></h3>
 <p>A locale specifier<a class="footnote-reference brackets" href="#footlocale" id="id2">1</a> is of the form <code class="docutils literal notranslate"><span class="pre">&quot;Language&quot;</span></code>,
 <code class="docutils literal notranslate"><span class="pre">&quot;Language_Country&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">&quot;Language_Country_Variant&quot;</span></code>, where:</p>
 <ul class="simple">
@@ -233,9 +239,9 @@ pairs can be appended to the locale specifier, in order to customise
 some locale-sensitive services even further (see below for an example
 using “<code class="docutils literal notranslate"><span class="pre">&#64;collation=phonebook</span></code>” and
 <a class="reference internal" href="other_operations.html#sec-datetime"><span class="std std-ref">Parsing and Formatting Date and Time</span></a> for “<code class="docutils literal notranslate"><span class="pre">&#64;calendar=hebrew</span></code>”, amongst others).</p>
-</div>
-<div class="section" id="listing-locales">
-<h3>Listing Locales<a class="headerlink" href="#listing-locales" title="Permalink to this headline"></a></h3>
+</section>
+<section id="listing-locales">
+<h3>Listing Locales<a class="headerlink" href="#listing-locales" title="Permalink to this heading"></a></h3>
 <p>To list the available locale identifiers, we call <code class="docutils literal notranslate"><span class="pre">stri_locale_list()</span></code>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">length</span><span class="p">(</span><span class="nf">stri_locale_list</span><span class="p">())</span>
 <span class="c1">## [1] 784</span>
@@ -247,9 +253,9 @@ only 5 randomly chosen ones:</p>
 <span class="c1">## [1] &quot;nl_CW&quot;      &quot;pt_CH&quot;      &quot;ff_Latn_SL&quot; &quot;en_PH&quot;      &quot;en_HK&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="querying-for-locale-specific-services">
-<h3>Querying for Locale-Specific Services<a class="headerlink" href="#querying-for-locale-specific-services" title="Permalink to this headline"></a></h3>
+</section>
+<section id="querying-for-locale-specific-services">
+<h3>Querying for Locale-Specific Services<a class="headerlink" href="#querying-for-locale-specific-services" title="Permalink to this heading"></a></h3>
 <p>The availability of locale-specific services can only be determined
 during the request for a particular resource
 (for more details, see the <a class="reference external" href="https://unicode-org.github.io/icu/userguide/locale/"><em>ICU</em> User Guide on Locales</a>), which may depend on
@@ -266,9 +272,9 @@ systems, the system <em>ICU</em> is used more eagerly<a class="footnote-referenc
 </div>
 <p>Overall, if a requested service is unavailable in a given locale, the
 best possible match is returned.</p>
-</div>
-<div class="section" id="default-locale">
-<h3>Default Locale<a class="headerlink" href="#default-locale" title="Permalink to this headline"></a></h3>
+</section>
+<section id="default-locale">
+<h3>Default Locale<a class="headerlink" href="#default-locale" title="Permalink to this heading"></a></h3>
 <p>Each locale-sensitive operation in <em>stringi</em> selects the current default
 locale if no locale has been explicitly requested, i.e., when a
 function’s <code class="docutils literal notranslate"><span class="pre">locale</span></code> argument is left alone in its “<code class="docutils literal notranslate"><span class="pre">NULL</span></code>” state. The
@@ -282,10 +288,10 @@ the sporadic case of improper automatic locale detection.</p>
 </div>
 <p>i.e., the Australian-English locale (which formats dates like “29
 September 2021” and uses metric units of measurement).</p>
-</div>
-</div>
-<div class="section" id="testing-string-equivalence">
-<span id="sec-equivalence"></span><h2>Testing String Equivalence<a class="headerlink" href="#testing-string-equivalence" title="Permalink to this headline"></a></h2>
+</section>
+</section>
+<section id="testing-string-equivalence">
+<span id="sec-equivalence"></span><h2>Testing String Equivalence<a class="headerlink" href="#testing-string-equivalence" title="Permalink to this heading"></a></h2>
 <p>In Unicode, some characters may have multiple representations. For
 instance, “LATIN SMALL LETTER A WITH OGONEK” (“ą”) can be stored as a
 single code point U+0105 or as a sequence that is comprised of the
@@ -313,9 +319,9 @@ in a character vector:</p>
 </div>
 <p>Moreover, <code class="docutils literal notranslate"><span class="pre">stri_duplicated_any()</span></code> returns the index of the first
 non-unique element.</p>
-</div>
-<div class="section" id="linear-ordering-of-strings">
-<h2>Linear Ordering of Strings<a class="headerlink" href="#linear-ordering-of-strings" title="Permalink to this headline"></a></h2>
+</section>
+<section id="linear-ordering-of-strings">
+<h2>Linear Ordering of Strings<a class="headerlink" href="#linear-ordering-of-strings" title="Permalink to this heading"></a></h2>
 <p>Operators such as <code class="docutils literal notranslate"><span class="pre">%s&lt;%</span></code>, <code class="docutils literal notranslate"><span class="pre">%&lt;=%</span></code>, etc., and the corresponding
 functions <code class="docutils literal notranslate"><span class="pre">stri_cmp_lt()</span></code> (“less than”), <code class="docutils literal notranslate"><span class="pre">stri_cmp_le()</span></code> (“less than or
 equal”), etc., implement locale-sensitive linear orderings of strings.
@@ -360,9 +366,9 @@ code points “<code class="docutils literal notranslate"><span class="pre">ch</
 </div>
 <p>In the latter example, where we used the German phone-book order, <code class="docutils literal notranslate"><span class="pre">&quot;ö&quot;</span></code>
 is treated as <code class="docutils literal notranslate"><span class="pre">&quot;oe&quot;</span></code>.</p>
-</div>
-<div class="section" id="collator-options">
-<span id="sec-collator-opts"></span><h2>Collator Options<a class="headerlink" href="#collator-options" title="Permalink to this headline"></a></h2>
+</section>
+<section id="collator-options">
+<span id="sec-collator-opts"></span><h2>Collator Options<a class="headerlink" href="#collator-options" title="Permalink to this heading"></a></h2>
 <p>The table below lists the options that can be passed to
 <code class="docutils literal notranslate"><span class="pre">stri_opts_collator()</span></code> via the dot-dot-dot parameter, “<code class="docutils literal notranslate"><span class="pre">...</span></code>”, in all
 the functions that rely on the <em>ICU</em> Collator.
@@ -400,8 +406,8 @@ Below we play with some of them.</p>
 </tr>
 </tbody>
 </table>
-<div class="section" id="collation-strength">
-<h3>Collation Strength<a class="headerlink" href="#collation-strength" title="Permalink to this headline"></a></h3>
+<section id="collation-strength">
+<h3>Collation Strength<a class="headerlink" href="#collation-strength" title="Permalink to this heading"></a></h3>
 <p>The <a class="reference external" href="https://www.unicode.org/reports/tr10/">Unicode Collation Algorithm</a>
 can go beyond simple
 canonical equivalence: it can treat some other (depending on the
@@ -416,7 +422,7 @@ equal to the two-letter sequence “ff”:</p>
 <p>which is not the case at the default strength level (3).</p>
 <p>Generally, four (nested) levels of inter-string differences can be
 distinguished:</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>A primary difference – the strongest one – occurs where there is a
 mismatch between base characters (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;a&quot;</span></code> vs <code class="docutils literal notranslate"><span class="pre">&quot;b&quot;</span></code>).</p></li>
 <li><p>Some character accents can be considered a secondary difference in
@@ -428,9 +434,9 @@ the tertiary level (see, however, the <code class="docutils literal notranslate"
 determined at the quaternary level. This is also meaningful in the
 processing of Hiragana text.</p></li>
 </ol>
-</div>
-<div class="section" id="ignoring-case">
-<h3>Ignoring Case<a class="headerlink" href="#ignoring-case" title="Permalink to this headline"></a></h3>
+</section>
+<section id="ignoring-case">
+<h3>Ignoring Case<a class="headerlink" href="#ignoring-case" title="Permalink to this heading"></a></h3>
 <p>Note which strings are deemed equivalent when
 considering different collation strengths:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;gro\u00df&quot;</span><span class="p">,</span> <span class="s">&quot;gross&quot;</span><span class="p">,</span> <span class="s">&quot;GROSS&quot;</span><span class="p">,</span> <span class="s">&quot;Gro\u00df&quot;</span><span class="p">,</span> <span class="s">&quot;Gross&quot;</span><span class="p">,</span> <span class="s">&quot;GRO\u1e9e&quot;</span><span class="p">)</span>
@@ -450,9 +456,9 @@ that ignores secondary differences:</p>
 <span class="c1">## [1] &quot;groß&quot;  &quot;GROSS&quot; &quot;Groß&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="ignoring-some-punctuation">
-<h3>Ignoring Some Punctuation<a class="headerlink" href="#ignoring-some-punctuation" title="Permalink to this headline"></a></h3>
+</section>
+<section id="ignoring-some-punctuation">
+<h3>Ignoring Some Punctuation<a class="headerlink" href="#ignoring-some-punctuation" title="Permalink to this heading"></a></h3>
 <p>Here are some effects of changing the <code class="docutils literal notranslate"><span class="pre">alternate_shifted</span></code> option, which
 allows for ignoring some punctuation marks:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;code point&quot;</span><span class="p">,</span> <span class="s">&quot;code-point&quot;</span><span class="p">,</span> <span class="s">&quot;codepoint&quot;</span><span class="p">,</span> <span class="s">&quot;CODE POINT&quot;</span><span class="p">,</span> <span class="s">&quot;CodePoint&quot;</span><span class="p">)</span>
@@ -472,9 +478,9 @@ differences are ignored, but the letter case is deemed significant.</p>
 <span class="c1">## [1] &quot;code point&quot; &quot;code-point&quot; &quot;codepoint&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="backward-secondary-sorting">
-<h3>Backward Secondary Sorting<a class="headerlink" href="#backward-secondary-sorting" title="Permalink to this headline"></a></h3>
+</section>
+<section id="backward-secondary-sorting">
+<h3>Backward Secondary Sorting<a class="headerlink" href="#backward-secondary-sorting" title="Permalink to this heading"></a></h3>
 <p>The French Canadian Sorting Standard CAN/CSA Z243.4.1 (historically, this
 had been the default for all French locales) requires the word ordering
 with respect to the last accent difference. Such a behaviour can be
@@ -486,9 +492,9 @@ applied either by setting the French-Canadian locale, or by passing the
 <span class="c1">## [1] &quot;cote&quot; &quot;côte&quot; &quot;coté&quot; &quot;côté&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="sorting-numerals">
-<h3>Sorting Numerals<a class="headerlink" href="#sorting-numerals" title="Permalink to this headline"></a></h3>
+</section>
+<section id="sorting-numerals">
+<h3>Sorting Numerals<a class="headerlink" href="#sorting-numerals" title="Permalink to this heading"></a></h3>
 <p>By default, just like in base R and most other programming languages, a
 lexicographic ordering is used: the corresponding code points are being
 compared one by one, from left to right, and once a difference is
@@ -526,9 +532,9 @@ sorting of strings that involves numbers:</p>
 <p>The object is now ordered by the first column decreasingly (using a
 “numeric” order) and ties are resolved based on increasing values in the
 second column.</p>
-</div>
-<div class="section" id="a-note-on-compatibility-equivalence">
-<h3>A Note on Compatibility Equivalence<a class="headerlink" href="#a-note-on-compatibility-equivalence" title="Permalink to this headline"></a></h3>
+</section>
+<section id="a-note-on-compatibility-equivalence">
+<h3>A Note on Compatibility Equivalence<a class="headerlink" href="#a-note-on-compatibility-equivalence" title="Permalink to this heading"></a></h3>
 <p>In <a class="reference internal" href="input_output.html#sec-normalisation"><span class="std std-ref">Normalising Strings</span></a> we describe different ways to normalise
 canonically equivalent code point sequences so that they are represented
 by the same code points, which can account for some negligible
@@ -538,7 +544,7 @@ differences (as in the “a with ogonek” example above).</p>
 also discusses the so-called compatibility
 equivalence of strings. This is a looser form of similarity; it is
 observed where there is the same abstract content, yet displayed by
-means of different glyphs, for instance “¼” (U+00BC) vs ”<code class="docutils literal notranslate"><span class="pre">1/4</span></code>” or
+means of different glyphs, for instance “¼” (U+00BC) vs “<code class="docutils literal notranslate"><span class="pre">1/4</span></code>” or
 “ℝ” vs “R”. In the latter case, whether these should be
 treated as equal, depends on the context (e.g., this can be the set of
 real numbers vs one’s favourite programming language). Compatibility
@@ -549,10 +555,10 @@ for.</p>
 <p>Also, for “fuzzy” matching of strings,
 the <a class="reference external" href="https://CRAN.R-project.org/package=stringdist"><em>stringdist</em></a> package
 might be utile.</p>
-</div>
-</div>
-<div class="section" id="searching-for-fixed-strings-revisited">
-<h2>Searching for Fixed Strings Revisited<a class="headerlink" href="#searching-for-fixed-strings-revisited" title="Permalink to this headline"></a></h2>
+</section>
+</section>
+<section id="searching-for-fixed-strings-revisited">
+<h2>Searching for Fixed Strings Revisited<a class="headerlink" href="#searching-for-fixed-strings-revisited" title="Permalink to this heading"></a></h2>
 <p>The <em>ICU</em> Collator can also be utilised where there is a need to locate
 the occurrences of simple textual patterns. The counterparts of the
 string search functions described in the section on
@@ -581,8 +587,8 @@ the configure/build process of <em>stringi</em>, refer to the <code class="docut
 file.</p>
 </dd>
 </dl>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -597,7 +603,7 @@ file.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2022, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2022-07-02T18:56:54+1000.
+      <span class="lastupdated">Last updated on 2022-12-15T14:28:06+1100.
       </span></p>
   </div>
 

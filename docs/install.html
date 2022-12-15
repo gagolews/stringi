@@ -4,7 +4,8 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Installing stringi &mdash; stringi</title>
@@ -36,6 +37,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
@@ -43,7 +45,8 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="What Is New in stringi" href="news.html" /> 
+    <link rel="next" title="General Design Principles" href="weave/design_principles.html" />
+    <link rel="prev" title="stringi: Fast and Portable Character String Processing in R" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -67,7 +70,7 @@
             
             
               <div class="version">
-                1.7.7
+                1.7.9
               </div>
             
           
@@ -93,8 +96,23 @@
             
             
               <p class="caption" role="heading"><span class="caption-text">stringi</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="index.html">About</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installing <em>stringi</em></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#icu4c">ICU4C</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#icu-data-library-and-no-internet-access">ICU Data Library and No Internet Access</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#c-11-issues">C++11 Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#customising-the-build-process">Customising the Build Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="weave/design_principles.html">General Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="weave/basic_operations.html">Basic String Operations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="weave/codepoint_comparing.html">Code-Pointwise Comparing</a></li>
@@ -103,30 +121,18 @@
 <li class="toctree-l1"><a class="reference internal" href="weave/other_operations.html">Other Operations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="weave/input_output.html">Input and Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="weave/example.html">Example Use Case: Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="z_bibliography.html">References</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference Manual</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="rapi.html">R Package <em>stringi</em> Reference</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://stringx.gagolewski.com/">stringx</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="news.html">What Is New in <em>stringi</em></a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Installing <em>stringi</em></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#icu4c">ICU4C</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#icu-data-library-and-no-internet-access">ICU Data Library and No Internet Access</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#c-11-issues">C++11 Issues</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#customising-the-build-process">Customising the Build Process</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="z_bibliography.html">References</a></li>
 </ul>
 
             
@@ -158,18 +164,17 @@
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
-        <a href="news.html" class="btn btn-neutral float-left" title="What Is New in stringi" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="stringi: Fast and Portable Character String Processing in R" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="weave/design_principles.html" class="btn btn-neutral float-right" title="General Design Principles" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="tex2jax_ignore mathjax_ignore section" id="installing-stringi">
-<h1>Installing <em>stringi</em><a class="headerlink" href="#installing-stringi" title="Permalink to this headline"></a></h1>
-<div class="section" id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h2>
-<p>In 99.9% of cases, <em>stringi</em> can be successfully installed by simply calling:</p>
+  <section id="installing-stringi">
+<h1>Installing <em>stringi</em><a class="headerlink" href="#installing-stringi" title="Permalink to this heading"></a></h1>
+<p>In most cases, installing <em>stringi</em> is as simple as calling:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;stringi&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -177,11 +182,9 @@
 upon which <em>stringi</em> is based, and the colourful diversity of operating systems,
 their flavours, and particular setups, some users may still experience
 a few issues that hopefully can be resolved with the help of this short manual.</p>
-<p>Also, some additional build tweaks are possible if we require a more
-customised installation.</p>
-</div>
-<div class="section" id="icu4c">
-<h2>ICU4C<a class="headerlink" href="#icu4c" title="Permalink to this headline"></a></h2>
+<p>Also, some build tweaks are possible.</p>
+<section id="icu4c">
+<h2>ICU4C<a class="headerlink" href="#icu4c" title="Permalink to this heading"></a></h2>
 <p>The stringi package depends on the ICU4C &gt;= 55 library.</p>
 <p>If we install the package from sources and either:</p>
 <ul class="simple">
@@ -206,9 +209,9 @@ ICU4C package bundle. This ensures maximum portability across all platforms
 (Windows and macOS users by default fetch the pre-compiled binaries
 from CRAN built precisely this way).</p>
 </div></blockquote>
-</div>
-<div class="section" id="icu-data-library-and-no-internet-access">
-<h2>ICU Data Library and No Internet Access<a class="headerlink" href="#icu-data-library-and-no-internet-access" title="Permalink to this headline"></a></h2>
+</section>
+<section id="icu-data-library-and-no-internet-access">
+<h2>ICU Data Library and No Internet Access<a class="headerlink" href="#icu-data-library-and-no-internet-access" title="Permalink to this heading"></a></h2>
 <p>Note that if you choose to use our ICU4C bundle, then – by default – the
 ICU data library will be downloaded from one of our mirror servers.
 However, if you have already downloaded a version of <code class="docutils literal notranslate"><span class="pre">icudt*.zip</span></code> suitable
@@ -240,9 +243,9 @@ The package can now be installed (the source bundle may be propagated via
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;stringi_x.y.z.tar.gz&quot;</span><span class="p">,</span> <span class="n">repos</span><span class="o">=</span><span class="kc">NULL</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="c-11-issues">
-<h2>C++11 Issues<a class="headerlink" href="#c-11-issues" title="Permalink to this headline"></a></h2>
+</section>
+<section id="c-11-issues">
+<h2>C++11 Issues<a class="headerlink" href="#c-11-issues" title="Permalink to this heading"></a></h2>
 <p>A decent C++11 compiler is required to build ICU4C 69.1 from sources.</p>
 <p>Note that Pre-4.9.0 GCC has a
 <a class="reference external" href="https://gcc.gnu.org/bugzilla/show_bug.cgi?id=56019">bug</a> where
@@ -262,9 +265,9 @@ However, it requires the support of the <code class="docutils literal notranslat
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;stringi&quot;</span><span class="p">,</span> <span class="n">configure.args</span><span class="o">=</span><span class="s">&quot;--disable-cxx11&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="customising-the-build-process">
-<h2>Customising the Build Process<a class="headerlink" href="#customising-the-build-process" title="Permalink to this headline"></a></h2>
+</section>
+<section id="customising-the-build-process">
+<h2>Customising the Build Process<a class="headerlink" href="#customising-the-build-process" title="Permalink to this heading"></a></h2>
 <p>Additional features and options of the <code class="docutils literal notranslate"><span class="pre">./configure</span></code> script:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">--disable-cxx11</span></code>: Disable C++11; if you build ICU4C from
@@ -302,9 +305,9 @@ see also <code class="docutils literal notranslate"><span class="pre">--disable-
 <li><p><code class="docutils literal notranslate"><span class="pre">STRINGI_LDFLAGS</span></code>: see <code class="docutils literal notranslate"><span class="pre">--with-extra-ldflags</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">STRINGI_LIBS</span></code>: see <code class="docutils literal notranslate"><span class="pre">--with-extra-libs</span></code>.</p></li>
 </ul>
-</div>
-<div class="section" id="conclusion">
-<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline"></a></h2>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading"></a></h2>
 <p>We expect that with a correctly configured C++11 compiler and properly
 installed system ICU4C distribution, you should face no problems
 installing the package, especially if you use our ICU4C bundle and
@@ -323,22 +326,23 @@ unzip master.zip
 </div>
 <p>And submit the output from <code class="docutils literal notranslate"><span class="pre">./configure</span></code> as well as the contents of
 <code class="docutils literal notranslate"><span class="pre">config.log</span></code>.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
            
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="news.html" class="btn btn-neutral float-left" title="What Is New in stringi" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="stringi: Fast and Portable Character String Processing in R" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="weave/design_principles.html" class="btn btn-neutral float-right" title="General Design Principles" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2022, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2022-07-02T18:56:54+1000.
+      <span class="lastupdated">Last updated on 2022-12-15T14:28:06+1100.
       </span></p>
   </div>
 

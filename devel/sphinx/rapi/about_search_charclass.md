@@ -136,7 +136,7 @@ The Unicode General Category property of a code point provides the most general 
 
 `Lt`
 
-:   a digraphic character, with first part uppercase.
+:   a digraphic character, with the first part uppercase.
 
 `Lu`
 

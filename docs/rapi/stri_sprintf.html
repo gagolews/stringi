@@ -4,7 +4,8 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>stri_sprintf: Format Strings &mdash; stringi</title>
@@ -36,6 +37,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
@@ -68,7 +70,7 @@
             
             
               <div class="version">
-                1.7.7
+                1.7.9
               </div>
             
           
@@ -96,6 +98,14 @@
               <p class="caption" role="heading"><span class="caption-text">stringi</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../weave/design_principles.html">General Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../weave/basic_operations.html">Basic String Operations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../weave/codepoint_comparing.html">Code-Pointwise Comparing</a></li>
@@ -104,7 +114,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../weave/other_operations.html">Other Operations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../weave/input_output.html">Input and Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../weave/example.html">Example Use Case: Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference Manual</span></p>
 <ul class="current">
@@ -186,7 +195,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_replace.html">stri_replace: Replace Pattern Occurrences</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_reverse.html">stri_reverse: Reverse Each String</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_sort_key.html">stri_sort_key: Sort Keys</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_sort.html">stri_sort: Sorting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_sort.html">stri_sort: String Sorting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split_boundaries.html">stri_split_boundaries: Split a String at Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split_lines.html">stri_split_lines: Split a String Into Text Lines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split.html">stri_split: Split a String By Pattern Matches</a></li>
@@ -227,14 +236,11 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://stringx.gagolewski.com/">stringx</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../news.html">What Is New in <em>stringi</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
 </ul>
 
             
@@ -275,14 +281,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="tex2jax_ignore mathjax_ignore section" id="stri-sprintf-format-strings">
-<h1>stri_sprintf: Format Strings<a class="headerlink" href="#stri-sprintf-format-strings" title="Permalink to this headline"></a></h1>
-<div class="section" id="description">
-<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline"></a></h2>
+  <section id="stri-sprintf-format-strings">
+<h1>stri_sprintf: Format Strings<a class="headerlink" href="#stri-sprintf-format-strings" title="Permalink to this heading"></a></h1>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code> (synonym: <code class="docutils literal notranslate"><span class="pre">stri_string_format</span></code>) is a Unicode-aware replacement for and enhancement of the built-in <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/help/sprintf.html"><code class="docutils literal notranslate"><span class="pre">sprintf</span></code></a> function. Moreover, <code class="docutils literal notranslate"><span class="pre">stri_printf</span></code> prints formatted strings.</p>
-</div>
-<div class="section" id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h2>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_sprintf</span><span class="p">(</span>
   <span class="n">format</span><span class="p">,</span>
   <span class="kc">...</span><span class="p">,</span>
@@ -314,9 +320,9 @@
 <span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="arguments">
-<h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline"></a></h2>
+</section>
+<section id="arguments">
+<h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this heading"></a></h2>
 <table class="colwidths-auto docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
@@ -353,9 +359,9 @@
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="details">
-<h2>Details<a class="headerlink" href="#details" title="Permalink to this headline"></a></h2>
+</section>
+<section id="details">
+<h2>Details<a class="headerlink" href="#details" title="Permalink to this heading"></a></h2>
 <p>Vectorized over <code class="docutils literal notranslate"><span class="pre">format</span></code> and all vectors passed via <code class="docutils literal notranslate"><span class="pre">...</span></code>.</p>
 <p>Unicode code points may have various widths when printed on the console (compare <a class="reference internal" href="stri_width.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_width</span></code></span></a>). These functions, by default (see the <code class="docutils literal notranslate"><span class="pre">use_length</span></code> argument), take this into account.</p>
 <p>These functions are not locale sensitive. For instance, numbers are always formatted in the “POSIX” style, e.g., <code class="docutils literal notranslate"><span class="pre">-123456.789</span></code> (no thousands separator, dot as a fractional separator). Such a feature might be added at a later date, though.</p>
@@ -363,29 +369,29 @@
 <p>Note that <code class="docutils literal notranslate"><span class="pre">stri_printf</span></code> treats missing values in <code class="docutils literal notranslate"><span class="pre">...</span></code> as <code class="docutils literal notranslate"><span class="pre">&quot;NA&quot;</span></code> strings by default.</p>
 <p>All format specifiers supported <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/help/sprintf.html"><code class="docutils literal notranslate"><span class="pre">sprintf</span></code></a> are also available here. For the formatting of integers and floating-point values, currently the system <code class="docutils literal notranslate"><span class="pre">std::snprintf()</span></code> is called, but this may change in the future. Format specifiers are normalized and necessary sanity checks are performed.</p>
 <p>Supported conversion specifiers: <code class="docutils literal notranslate"><span class="pre">dioxX</span></code> (integers) <code class="docutils literal notranslate"><span class="pre">feEgGaA</span></code> (floats) and <code class="docutils literal notranslate"><span class="pre">s</span></code> (character strings). Supported flags: <code class="docutils literal notranslate"><span class="pre">-</span></code> (left-align), <code class="docutils literal notranslate"><span class="pre">+</span></code> (force output sign or blank when <code class="docutils literal notranslate"><span class="pre">NaN</span></code> or <code class="docutils literal notranslate"><span class="pre">NA</span></code>; numeric only), <code class="docutils literal notranslate"><span class="pre">&lt;space&gt;</span></code> (output minus or space for a sign; numeric only) <code class="docutils literal notranslate"><span class="pre">0</span></code> (pad with 0s; numeric only), <code class="docutils literal notranslate"><span class="pre">#</span></code> (alternative output of some numerics).</p>
-</div>
-<div class="section" id="value">
-<h2>Value<a class="headerlink" href="#value" title="Permalink to this headline"></a></h2>
+</section>
+<section id="value">
+<h2>Value<a class="headerlink" href="#value" title="Permalink to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">stri_printf</span></code> is used for its side effect, which is printing text on the standard output or other connection/file. Hence, it returns <code class="docutils literal notranslate"><span class="pre">invisible(NULL)</span></code>.</p>
 <p>The other functions return a character vector.</p>
-</div>
-<div class="section" id="author-s">
-<h2>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this headline"></a></h2>
+</section>
+<section id="author-s">
+<h2>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this heading"></a></h2>
 <p><a class="reference external" href="https://www.gagolewski.com/">Marek Gagolewski</a> and other contributors</p>
-</div>
-<div class="section" id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline"></a></h2>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">printf</span></code> in <code class="docutils literal notranslate"><span class="pre">glibc</span></code>, <a class="reference external" href="https://man.archlinux.org/man/printf.3">https://man.archlinux.org/man/printf.3</a></p>
 <p><code class="docutils literal notranslate"><span class="pre">printf</span></code> format strings – Wikipedia, <a class="reference external" href="https://en.wikipedia.org/wiki/Printf_format_string">https://en.wikipedia.org/wiki/Printf_format_string</a></p>
-</div>
-<div class="section" id="see-also">
-<h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline"></a></h2>
+</section>
+<section id="see-also">
+<h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this heading"></a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
-<p>Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, <em>Journal of Statistical Software</em> 103(2), 2022, 1-59, doi: <a class="reference external" href="https://doi.org/10.18637/jss.v103.i02">10.18637/jss.v103.i02</a></p>
+<p>Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, <em>Journal of Statistical Software</em> 103(2), 2022, 1-59, <a class="reference external" href="https://doi.org/10.18637/jss.v103.i02">doi:10.18637/jss.v103.i02</a></p>
 <p>Other length: <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">%s$%()</span></code></span>, <a class="reference internal" href="stri_isempty.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_isempty()</span></code></span></a>, <a class="reference internal" href="stri_length.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_length()</span></code></span></a>, <a class="reference internal" href="stri_numbytes.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_numbytes()</span></code></span></a>, <a class="reference internal" href="stri_pad.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_pad_both()</span></code></span></a>, <a class="reference internal" href="stri_width.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_width()</span></code></span></a></p>
-</div>
-<div class="section" id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline"></a></h2>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_printf</span><span class="p">(</span><span class="s">&quot;%4s=%.3f&quot;</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;e&quot;</span><span class="p">,</span> <span class="s">&quot;e\u00b2&quot;</span><span class="p">,</span> <span class="s">&quot;\u03c0&quot;</span><span class="p">,</span> <span class="s">&quot;\u03c0\u00b2&quot;</span><span class="p">),</span>
     <span class="nf">c</span><span class="p">(</span><span class="nf">exp</span><span class="p">(</span><span class="m">1</span><span class="p">),</span> <span class="nf">exp</span><span class="p">(</span><span class="m">2</span><span class="p">),</span> <span class="kc">pi</span><span class="p">,</span> <span class="kc">pi</span><span class="o">^</span><span class="m">2</span><span class="p">))</span>
 <span class="c1">##    e=2.718</span>
@@ -431,22 +437,22 @@
 <span class="c1">##         💩</span>
 <span class="c1">##       &lt;NA&gt;</span>
 <span class="nf">stri_sprintf</span><span class="p">(</span><span class="s">&quot;UNIX time %1$f is %1$s.&quot;</span><span class="p">,</span> <span class="nf">Sys.time</span><span class="p">())</span>
-<span class="c1">## [1] &quot;UNIX time 1656752206.628872 is 2022-07-02 18:56:46.&quot;</span>
+<span class="c1">## [1] &quot;UNIX time 1671074878.605658 is 2022-12-15 14:27:58.&quot;</span>
 <span class="c1"># the following do not work in sprintf()</span>
 <span class="nf">stri_sprintf</span><span class="p">(</span><span class="s">&quot;%1$#- *2$.*3$f&quot;</span><span class="p">,</span> <span class="m">1.23456</span><span class="p">,</span> <span class="m">10</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>  <span class="c1"># two asterisks</span>
 <span class="c1">## [1] &quot; 1.235    &quot;</span>
 <span class="nf">stri_sprintf</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span> <span class="s">&quot;%f&quot;</span><span class="p">),</span> <span class="kc">pi</span><span class="p">)</span>  <span class="c1"># re-coercion needed</span>
 <span class="c1">## [1] &quot;3.14159265358979&quot; &quot;3.141593&quot;</span>
 <span class="nf">stri_sprintf</span><span class="p">(</span><span class="s">&quot;%1$s is %1$f UNIX time.&quot;</span><span class="p">,</span> <span class="nf">Sys.time</span><span class="p">())</span>  <span class="c1"># re-coercion needed</span>
-<span class="c1">## [1] &quot;2022-07-02 18:56:46 is 1656752206.632109 UNIX time.&quot;</span>
+<span class="c1">## [1] &quot;2022-12-15 14:27:58 is 1671074878.607962 UNIX time.&quot;</span>
 <span class="nf">stri_sprintf</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="s">&quot;%s&quot;</span><span class="p">),</span> <span class="nf">factor</span><span class="p">(</span><span class="m">11</span><span class="o">:</span><span class="m">12</span><span class="p">))</span>  <span class="c1"># re-coercion needed</span>
 <span class="c1">## [1] &quot;1&quot;  &quot;12&quot;</span>
 <span class="nf">stri_sprintf</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span> <span class="s">&quot;%d&quot;</span><span class="p">),</span> <span class="nf">factor</span><span class="p">(</span><span class="m">11</span><span class="o">:</span><span class="m">12</span><span class="p">))</span>  <span class="c1"># re-coercion needed</span>
 <span class="c1">## [1] &quot;11&quot; &quot;2&quot;</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -461,7 +467,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2022, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2022-07-02T18:56:54+1000.
+      <span class="lastupdated">Last updated on 2022-12-15T14:28:06+1100.
       </span></p>
   </div>
 

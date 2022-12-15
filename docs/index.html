@@ -4,7 +4,8 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>stringi: Fast and Portable Character String Processing in R &mdash; stringi</title>
@@ -36,6 +37,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
@@ -43,7 +45,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="General Design Principles" href="weave/design_principles.html" /> 
+    <link rel="next" title="Installing stringi" href="install.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -67,7 +69,7 @@
             
             
               <div class="version">
-                1.7.7
+                1.7.9
               </div>
             
           
@@ -95,6 +97,14 @@
               <p class="caption" role="heading"><span class="caption-text">stringi</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">About</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="weave/design_principles.html">General Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="weave/basic_operations.html">Basic String Operations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="weave/codepoint_comparing.html">Code-Pointwise Comparing</a></li>
@@ -103,7 +113,6 @@
 <li class="toctree-l1"><a class="reference internal" href="weave/other_operations.html">Other Operations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="weave/input_output.html">Input and Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="weave/example.html">Example Use Case: Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="z_bibliography.html">References</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference Manual</span></p>
 <ul>
@@ -111,14 +120,11 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://stringx.gagolewski.com/">stringx</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="news.html">What Is New in <em>stringi</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="install.html">Installing <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="z_bibliography.html">References</a></li>
 </ul>
 
             
@@ -150,20 +156,19 @@
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
-        <a href="weave/design_principles.html" class="btn btn-neutral float-right" title="General Design Principles" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="install.html" class="btn btn-neutral float-right" title="Installing stringi" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="stringi-fast-and-portable-character-string-processing-in-r">
-<h1>stringi: Fast and Portable Character String Processing in R<a class="headerlink" href="#stringi-fast-and-portable-character-string-processing-in-r" title="Permalink to this headline"></a></h1>
-<blockquote>
+  <section id="stringi-fast-and-portable-character-string-processing-in-r">
+<h1>stringi: Fast and Portable Character String Processing in R<a class="headerlink" href="#stringi-fast-and-portable-character-string-processing-in-r" title="Permalink to this heading"></a></h1>
+<blockquote class="epigraph">
 <div><p><strong>stringi (pronounced “stringy”, IPA [strinɡi]) is THE R package
 for very fast, portable, correct, consistent, and convenient string/text
 processing in any locale or character encoding.</strong></p>
-<p class="attribution">—by <a class="reference external" href="https://www.gagolewski.com/">Marek Gagolewski</a></p>
 </div></blockquote>
 <p>Thanks to <a class="reference external" href="https://icu.unicode.org/">ICU</a>, <em>stringi</em> fully supports a wide
 range of <a class="reference external" href="https://www.unicode.org/">Unicode</a> standards
@@ -221,6 +226,71 @@ a set of wrappers around <em>stringi</em> with a base R-compatible API.</p>
 <em>Journal of Statistical Software</em>  103(2), 2022, 1–59,
 <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">doi:10.18637/jss.v103.i02</a>.</p>
 <div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="weave/design_principles.html">General Design Principles</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="weave/design_principles.html#naming">Naming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/design_principles.html#vectorisation">Vectorisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/design_principles.html#acting-elementwise-with-recycling">Acting Elementwise with Recycling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/design_principles.html#missing-values">Missing Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/design_principles.html#data-flow">Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/design_principles.html#further-deviations-from-base-r">Further Deviations from Base R</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="weave/basic_operations.html">Basic String Operations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="weave/basic_operations.html#computing-length-and-width">Computing Length and Width</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/basic_operations.html#joining">Joining</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/basic_operations.html#extracting-and-replacing-substrings">Extracting and Replacing Substrings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="weave/codepoint_comparing.html">Code-Pointwise Comparing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="weave/codepoint_comparing.html#testing-for-equality-of-strings">Testing for Equality of Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/codepoint_comparing.html#searching-for-fixed-strings">Searching for Fixed Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/codepoint_comparing.html#counting-matches">Counting Matches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/codepoint_comparing.html#search-engine-options">Search Engine Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/codepoint_comparing.html#detecting-and-subsetting-patterns">Detecting and Subsetting Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/codepoint_comparing.html#locating-and-extracting-patterns">Locating and Extracting Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/codepoint_comparing.html#replacing-pattern-occurrences">Replacing Pattern Occurrences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/codepoint_comparing.html#splitting">Splitting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="weave/regular_expressions.html">Regular Expressions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="weave/regular_expressions.html#matching-individual-characters">Matching Individual Characters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/regular_expressions.html#alternating-and-grouping-subexpressions">Alternating and Grouping Subexpressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/regular_expressions.html#quantifiers">Quantifiers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/regular_expressions.html#capture-groups-and-references-thereto">Capture Groups and References Thereto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/regular_expressions.html#anchoring">Anchoring</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="weave/collation.html">Collation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="weave/collation.html#locales">Locales</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/collation.html#testing-string-equivalence">Testing String Equivalence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/collation.html#linear-ordering-of-strings">Linear Ordering of Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/collation.html#collator-options">Collator Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/collation.html#searching-for-fixed-strings-revisited">Searching for Fixed Strings Revisited</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="weave/other_operations.html">Other Operations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="weave/other_operations.html#analysing-text-boundaries">Analysing Text Boundaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/other_operations.html#trimming-padding-and-other-formatting">Trimming, Padding, and Other Formatting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/other_operations.html#generating-random-strings">Generating Random Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/other_operations.html#transliterating">Transliterating</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/other_operations.html#parsing-and-formatting-date-and-time">Parsing and Formatting Date and Time</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="weave/input_output.html">Input and Output</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="weave/input_output.html#dealing-with-unicode-code-points">Dealing with Unicode Code Points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/input_output.html#character-encodings">Character Encodings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/input_output.html#reading-and-writing-text-files">Reading and Writing Text Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/input_output.html#detecting-encodings">Detecting Encodings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/input_output.html#converting-between-encodings">Converting Between Encodings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weave/input_output.html#normalising-strings">Normalising Strings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="weave/example.html">Example Use Case: Data Preparation</a></li>
+</ul>
 </div>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Reference Manual</span></p>
@@ -303,7 +373,7 @@ a set of wrappers around <em>stringi</em> with a base R-compatible API.</p>
 <li class="toctree-l2"><a class="reference internal" href="rapi/stri_replace.html">stri_replace: Replace Pattern Occurrences</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rapi/stri_reverse.html">stri_reverse: Reverse Each String</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rapi/stri_sort_key.html">stri_sort_key: Sort Keys</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rapi/stri_sort.html">stri_sort: Sorting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rapi/stri_sort.html">stri_sort: String Sorting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rapi/stri_split_boundaries.html">stri_split_boundaries: Split a String at Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rapi/stri_split_lines.html">stri_split_lines: Split a String Into Text Lines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rapi/stri_split.html">stri_split: Split a String By Pattern Matches</a></li>
@@ -335,31 +405,28 @@ a set of wrappers around <em>stringi</em> with a base R-compatible API.</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://stringx.gagolewski.com/">stringx</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="news.html">What Is New in <em>stringi</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="install.html">Installing <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="z_bibliography.html">References</a></li>
 </ul>
 </div>
-</div>
+</section>
 
 
            </div>
            
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="weave/design_principles.html" class="btn btn-neutral float-right" title="General Design Principles" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="install.html" class="btn btn-neutral float-right" title="Installing stringi" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2022, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2022-07-02T18:56:54+1000.
+      <span class="lastupdated">Last updated on 2022-12-15T14:28:06+1100.
       </span></p>
   </div>
 

@@ -66,7 +66,7 @@ see \code{\link{stri_match}}.}
 \item{\code{(?:...)}}{Non-capturing parentheses. Groups the included pattern,
 but does not provide capturing of matching text. Somewhat more efficient
 than capturing parentheses.}
-\item{\code{(?>...)}}{Atomic-match parentheses. First match of the
+\item{\code{(?>...)}}{Atomic-match parentheses. The first match of the
 parenthesized sub-expression is the only one tried; if it does not lead to
 an overall pattern match, back up the search for a match to a position
 before the \code{(?>}.}

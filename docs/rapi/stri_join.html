@@ -4,7 +4,8 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>stri_join: Concatenate Character Vectors &mdash; stringi</title>
@@ -36,6 +37,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
@@ -68,7 +70,7 @@
             
             
               <div class="version">
-                1.7.7
+                1.7.9
               </div>
             
           
@@ -96,6 +98,14 @@
               <p class="caption" role="heading"><span class="caption-text">stringi</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../weave/design_principles.html">General Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../weave/basic_operations.html">Basic String Operations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../weave/codepoint_comparing.html">Code-Pointwise Comparing</a></li>
@@ -104,7 +114,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../weave/other_operations.html">Other Operations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../weave/input_output.html">Input and Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../weave/example.html">Example Use Case: Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference Manual</span></p>
 <ul class="current">
@@ -196,7 +205,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_replace.html">stri_replace: Replace Pattern Occurrences</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_reverse.html">stri_reverse: Reverse Each String</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_sort_key.html">stri_sort_key: Sort Keys</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_sort.html">stri_sort: Sorting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_sort.html">stri_sort: String Sorting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split_boundaries.html">stri_split_boundaries: Split a String at Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split_lines.html">stri_split_lines: Split a String Into Text Lines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split.html">stri_split: Split a String By Pattern Matches</a></li>
@@ -226,14 +235,11 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://stringx.gagolewski.com/">stringx</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../news.html">What Is New in <em>stringi</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
 </ul>
 
             
@@ -274,14 +280,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="tex2jax_ignore mathjax_ignore section" id="stri-join-concatenate-character-vectors">
-<h1>stri_join: Concatenate Character Vectors<a class="headerlink" href="#stri-join-concatenate-character-vectors" title="Permalink to this headline"></a></h1>
-<div class="section" id="description">
-<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline"></a></h2>
+  <section id="stri-join-concatenate-character-vectors">
+<h1>stri_join: Concatenate Character Vectors<a class="headerlink" href="#stri-join-concatenate-character-vectors" title="Permalink to this heading"></a></h1>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h2>
 <p>These are the <span class="pkg">stringi</span>’s equivalents of the built-in <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/paste.html"><code class="docutils literal notranslate"><span class="pre">paste</span></code></a> function. <code class="docutils literal notranslate"><span class="pre">stri_c</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_paste</span></code> are aliases for <code class="docutils literal notranslate"><span class="pre">stri_join</span></code>.</p>
-</div>
-<div class="section" id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h2>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_join</span><span class="p">(</span><span class="kc">...</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">collapse</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span> <span class="n">ignore_null</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
 
 <span class="nf">stri_c</span><span class="p">(</span><span class="kc">...</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">collapse</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span> <span class="n">ignore_null</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
@@ -289,9 +295,9 @@
 <span class="nf">stri_paste</span><span class="p">(</span><span class="kc">...</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">collapse</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span> <span class="n">ignore_null</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="arguments">
-<h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline"></a></h2>
+</section>
+<section id="arguments">
+<h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this heading"></a></h2>
 <table class="colwidths-auto docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
@@ -313,31 +319,31 @@
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="details">
-<h2>Details<a class="headerlink" href="#details" title="Permalink to this headline"></a></h2>
+</section>
+<section id="details">
+<h2>Details<a class="headerlink" href="#details" title="Permalink to this heading"></a></h2>
 <p>Vectorized over each atomic vector in ‘<code class="docutils literal notranslate"><span class="pre">...</span></code>’.</p>
 <p>Unless <code class="docutils literal notranslate"><span class="pre">collapse</span></code> is <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, the result will be a single string. Otherwise, you get a character vector of length equal to the length of the longest argument.</p>
 <p>If any of the arguments in ‘<code class="docutils literal notranslate"><span class="pre">...</span></code>’ is a vector of length 0 (not to be confused with vectors of empty strings) and <code class="docutils literal notranslate"><span class="pre">ignore_null</span></code> is <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>, then you will get a 0-length character vector in result.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">collapse</span></code> or <code class="docutils literal notranslate"><span class="pre">sep</span></code> has length greater than 1, then only the first string will be used.</p>
 <p>In case where there are missing values in any of the input vectors, <code class="docutils literal notranslate"><span class="pre">NA</span></code> is set to the corresponding element. Note that this behavior is different from <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/paste.html"><code class="docutils literal notranslate"><span class="pre">paste</span></code></a>, which treats missing values as ordinary strings like <code class="docutils literal notranslate"><span class="pre">'NA'</span></code>. Moreover, as usual in <span class="pkg">stringi</span>, the resulting strings are always in UTF-8.</p>
-</div>
-<div class="section" id="value">
-<h2>Value<a class="headerlink" href="#value" title="Permalink to this headline"></a></h2>
+</section>
+<section id="value">
+<h2>Value<a class="headerlink" href="#value" title="Permalink to this heading"></a></h2>
 <p>Returns a character vector.</p>
-</div>
-<div class="section" id="author-s">
-<h2>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this headline"></a></h2>
+</section>
+<section id="author-s">
+<h2>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this heading"></a></h2>
 <p><a class="reference external" href="https://www.gagolewski.com/">Marek Gagolewski</a> and other contributors</p>
-</div>
-<div class="section" id="see-also">
-<h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline"></a></h2>
+</section>
+<section id="see-also">
+<h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this heading"></a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
-<p>Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, <em>Journal of Statistical Software</em> 103(2), 2022, 1-59, doi: <a class="reference external" href="https://doi.org/10.18637/jss.v103.i02">10.18637/jss.v103.i02</a></p>
+<p>Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, <em>Journal of Statistical Software</em> 103(2), 2022, 1-59, <a class="reference external" href="https://doi.org/10.18637/jss.v103.i02">doi:10.18637/jss.v103.i02</a></p>
 <p>Other join: <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">%s+%()</span></code></span>, <a class="reference internal" href="stri_dup.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_dup()</span></code></span></a>, <a class="reference internal" href="stri_flatten.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_flatten()</span></code></span></a>, <a class="reference internal" href="stri_join_list.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_join_list()</span></code></span></a></p>
-</div>
-<div class="section" id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline"></a></h2>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_join</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">13</span><span class="p">,</span> <span class="kc">letters</span><span class="p">)</span>
 <span class="c1">##  [1] &quot;1a&quot;  &quot;2b&quot;  &quot;3c&quot;  &quot;4d&quot;  &quot;5e&quot;  &quot;6f&quot;  &quot;7g&quot;  &quot;8h&quot;  &quot;9i&quot;  &quot;10j&quot; &quot;11k&quot; &quot;12l&quot;</span>
 <span class="c1">## [13] &quot;13m&quot; &quot;1n&quot;  &quot;2o&quot;  &quot;3p&quot;  &quot;4q&quot;  &quot;5r&quot;  &quot;6s&quot;  &quot;7t&quot;  &quot;8u&quot;  &quot;9v&quot;  &quot;10w&quot; &quot;11x&quot;</span>
@@ -356,8 +362,8 @@
 <span class="c1">## [1] &quot;abc,###,1; 123,###,2; xyz,###,3; abc,###,4; 123,###,5; xyz,###,6&quot;</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -372,7 +378,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2022, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2022-07-02T18:56:54+1000.
+      <span class="lastupdated">Last updated on 2022-12-15T14:28:06+1100.
       </span></p>
   </div>
 

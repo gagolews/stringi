@@ -100,7 +100,7 @@ Here is a list of operators provided by the ICU User Guide on regexes.
 
 `(?>...)`
 
-:   Atomic-match parentheses. First match of the parenthesized sub-expression is the only one tried; if it does not lead to an overall pattern match, back up the search for a match to a position before the `(?>`.
+:   Atomic-match parentheses. The first match of the parenthesized sub-expression is the only one tried; if it does not lead to an overall pattern match, back up the search for a match to a position before the `(?>`.
 
 `(?#...)`
 

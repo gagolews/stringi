@@ -4,7 +4,8 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Basic String Operations &mdash; stringi</title>
@@ -36,6 +37,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
@@ -68,7 +70,7 @@
             
             
               <div class="version">
-                1.7.7
+                1.7.9
               </div>
             
           
@@ -94,8 +96,16 @@
             
             
               <p class="caption" role="heading"><span class="caption-text">stringi</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="design_principles.html">General Design Principles</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Basic String Operations</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#computing-length-and-width">Computing Length and Width</a></li>
@@ -125,7 +135,6 @@
 <li class="toctree-l1"><a class="reference internal" href="other_operations.html">Other Operations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="input_output.html">Input and Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="example.html">Example Use Case: Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference Manual</span></p>
 <ul>
@@ -133,14 +142,11 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://stringx.gagolewski.com/">stringx</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../news.html">What Is New in <em>stringi</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
 </ul>
 
             
@@ -180,13 +186,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="tex2jax_ignore mathjax_ignore section" id="basic-string-operations">
-<span id="sec-basic"></span><h1>Basic String Operations<a class="headerlink" href="#basic-string-operations" title="Permalink to this headline"></a></h1>
+  <section id="basic-string-operations">
+<span id="sec-basic"></span><h1>Basic String Operations<a class="headerlink" href="#basic-string-operations" title="Permalink to this heading"></a></h1>
 <blockquote>
-<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that has recently been published the <em>Journal of Statistical Software</em>, see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3">Gag22</a>]</span>.</p>
+<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that has recently been published the <em>Journal of Statistical Software</em>, see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="M. Gagolewski. stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59, 2022. doi:10.18637/jss.v103.i02.">Gag22</a>]</span>.</p>
 </div></blockquote>
-<div class="section" id="computing-length-and-width">
-<h2>Computing Length and Width<a class="headerlink" href="#computing-length-and-width" title="Permalink to this headline"></a></h2>
+<section id="computing-length-and-width">
+<h2>Computing Length and Width<a class="headerlink" href="#computing-length-and-width" title="Permalink to this heading"></a></h2>
 <p>First, we shall review the functions related to determining the number of
 entities in each string.</p>
 <p>Let’s consider the following character vector:</p>
@@ -213,7 +219,7 @@ is a missing (<code class="docutils literal notranslate"><span class="pre">NA</s
 is undefined as well.</p>
 <p>When formatting strings for display (e.g., in a report dynamically
 generated with <code class="docutils literal notranslate"><span class="pre">Sweave()</span></code> or
-<a class="reference external" href="https://yihui.org/knitr/"><em>knitr</em></a> <span id="id2">[<a class="reference internal" href="../z_bibliography.html#id34">Xie15</a>]</span>), a string’s width
+<a class="reference external" href="https://yihui.org/knitr/"><em>knitr</em></a> <span id="id2">[<a class="reference internal" href="../z_bibliography.html#id34" title="Y. Xie. Dynamic Documents with R and knitr. Chapman and Hall/CRC, 2015.">Xie15</a>]</span>), a string’s width
 estimate may be more informative – an approximate number of text
 columns it will occupy when printed using a monospaced font. In
 particular, many Chinese, Japanese, Korean, and most emoji characters
@@ -223,13 +229,13 @@ some code points might be of width 0 (e.g., the said ZERO WIDTH SPACE, U+200B).<
 <span class="c1">## [1]  4  4  0 NA  0</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="joining">
-<h2>Joining<a class="headerlink" href="#joining" title="Permalink to this headline"></a></h2>
+</section>
+<section id="joining">
+<h2>Joining<a class="headerlink" href="#joining" title="Permalink to this heading"></a></h2>
 <p>Below we describe the functions that are related to string
 concatenation.</p>
-<div class="section" id="operator-s">
-<h3>Operator <code class="docutils literal notranslate"><span class="pre">%s+%</span></code><a class="headerlink" href="#operator-s" title="Permalink to this headline"></a></h3>
+<section id="operator-s">
+<h3>Operator <code class="docutils literal notranslate"><span class="pre">%s+%</span></code><a class="headerlink" href="#operator-s" title="Permalink to this heading"></a></h3>
 <p>To join the corresponding strings in two character vectors, we may use
 the binary <code class="docutils literal notranslate"><span class="pre">%s+%</span></code> operator:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;tasty&quot;</span><span class="p">,</span> <span class="s">&quot;delicious&quot;</span><span class="p">,</span> <span class="s">&quot;yummy&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">)</span>
@@ -237,9 +243,9 @@ the binary <code class="docutils literal notranslate"><span class="pre">%s+%</sp
 <span class="c1">## [1] &quot;tasty spam&quot;      &quot;delicious bacon&quot; &quot;yummy spam&quot;      NA</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="flattening">
-<h3>Flattening<a class="headerlink" href="#flattening" title="Permalink to this headline"></a></h3>
+</section>
+<section id="flattening">
+<h3>Flattening<a class="headerlink" href="#flattening" title="Permalink to this heading"></a></h3>
 <p>The elements in a character vector can be joined (“aggregated”) to form
 a single string via a call to <code class="docutils literal notranslate"><span class="pre">stri_flatten()</span></code>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_flatten</span><span class="p">(</span><span class="nf">stri_omit_na</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&quot;, &quot;</span><span class="p">)</span>
@@ -248,9 +254,9 @@ a single string via a call to <code class="docutils literal notranslate"><span c
 </div>
 <p>Note that the token separator, given by the <code class="docutils literal notranslate"><span class="pre">collapse</span></code> argument,
 defaults to the empty string.</p>
-</div>
-<div class="section" id="generalisation">
-<h3>Generalisation<a class="headerlink" href="#generalisation" title="Permalink to this headline"></a></h3>
+</section>
+<section id="generalisation">
+<h3>Generalisation<a class="headerlink" href="#generalisation" title="Permalink to this heading"></a></h3>
 <p>Both the <code class="docutils literal notranslate"><span class="pre">%s+%</span></code> operator and the <code class="docutils literal notranslate"><span class="pre">stri_flatten()</span></code> function are
 generalised by <code class="docutils literal notranslate"><span class="pre">stri_join()</span></code> (alias: <code class="docutils literal notranslate"><span class="pre">stri_paste()</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_c()</span></code>):</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_join</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">,</span> <span class="s">&quot;Y&quot;</span><span class="p">,</span> <span class="s">&quot;Z&quot;</span><span class="p">),</span> <span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span>  <span class="c1"># sep=&quot;&quot;, collapse=NULL</span>
@@ -290,18 +296,18 @@ was implicitly coerced via a call to <code class="docutils literal notranslate">
 <span class="c1">## [3,] &quot;C.1&quot; &quot;C.2&quot; &quot;C.3&quot; &quot;C.4&quot; &quot;C.5&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="duplicating">
-<h3>Duplicating<a class="headerlink" href="#duplicating" title="Permalink to this headline"></a></h3>
+</section>
+<section id="duplicating">
+<h3>Duplicating<a class="headerlink" href="#duplicating" title="Permalink to this heading"></a></h3>
 <p>To duplicate given strings, we call <code class="docutils literal notranslate"><span class="pre">stri_dup()</span></code> or the <code class="docutils literal notranslate"><span class="pre">%s*%</span></code> operator:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_dup</span><span class="p">(</span><span class="kc">letters</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">],</span> <span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">)</span>
 <span class="c1">## [1] &quot;a&quot;     &quot;bb&quot;    &quot;ccc&quot;   &quot;dddd&quot;  &quot;eeeee&quot;</span>
 </pre></div>
 </div>
 <p>The above is synonymous with <code class="docutils literal notranslate"><span class="pre">letters[1:5]</span> <span class="pre">%s*%</span> <span class="pre">1:5</span></code>.</p>
-</div>
-<div class="section" id="within-list-joining">
-<h3>Within-List Joining<a class="headerlink" href="#within-list-joining" title="Permalink to this headline"></a></h3>
+</section>
+<section id="within-list-joining">
+<h3>Within-List Joining<a class="headerlink" href="#within-list-joining" title="Permalink to this heading"></a></h3>
 <p>There is also a convenience function that applies <code class="docutils literal notranslate"><span class="pre">stri_flatten()</span></code> on
 each character vector in a given list:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">words</span> <span class="o">&lt;-</span> <span class="nf">list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="s">&quot;bacon&quot;</span><span class="p">,</span> <span class="s">&quot;sausage&quot;</span><span class="p">,</span> <span class="s">&quot;spam&quot;</span><span class="p">),</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;eggs&quot;</span><span class="p">,</span> <span class="s">&quot;spam&quot;</span><span class="p">))</span>
@@ -316,14 +322,14 @@ each character vector in a given list:</p>
 <p>This way, a list of character vectors can be converted to a character
 vector. Such sequences of variable length sequences of strings are
 generated by, amongst others, <code class="docutils literal notranslate"><span class="pre">stri_sub_all()</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_extract_all()</span></code>.</p>
-</div>
-</div>
-<div class="section" id="extracting-and-replacing-substrings">
-<h2>Extracting and Replacing Substrings<a class="headerlink" href="#extracting-and-replacing-substrings" title="Permalink to this headline"></a></h2>
+</section>
+</section>
+<section id="extracting-and-replacing-substrings">
+<h2>Extracting and Replacing Substrings<a class="headerlink" href="#extracting-and-replacing-substrings" title="Permalink to this heading"></a></h2>
 <p>The next group of functions deals with the extraction and replacement of
 particular sequences of code points in given strings.</p>
-<div class="section" id="indexing-vectors">
-<h3>Indexing Vectors<a class="headerlink" href="#indexing-vectors" title="Permalink to this headline"></a></h3>
+<section id="indexing-vectors">
+<h3>Indexing Vectors<a class="headerlink" href="#indexing-vectors" title="Permalink to this heading"></a></h3>
 <p>To select a subsequence from any R vector, we use
 the square-bracket operator<a class="footnote-reference brackets" href="#footsubset" id="id3">1</a> with an index vector consisting of
 either non-negative integers, negative integers, or logical values<a class="footnote-reference brackets" href="#footnames" id="id4">2</a>.</p>
@@ -346,9 +352,9 @@ fulfilling desired criteria:</p>
 <span class="c1">## [1] &quot;spam&quot;      &quot;buckwheat&quot; &quot;bacon&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="extracting-substrings">
-<h3>Extracting Substrings<a class="headerlink" href="#extracting-substrings" title="Permalink to this headline"></a></h3>
+</section>
+<section id="extracting-substrings">
+<h3>Extracting Substrings<a class="headerlink" href="#extracting-substrings" title="Permalink to this heading"></a></h3>
 <p>A character vector is, in its very essence, a sequence of sequences
 of code points. To extract specific substrings from each string in a
 collection, we can use the <code class="docutils literal notranslate"><span class="pre">stri_sub()</span></code> function.</p>
@@ -364,9 +370,9 @@ collection, we can use the <code class="docutils literal notranslate"><span clas
 <span class="c1">## [1] &quot;bacon&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="stri-sub-all-function">
-<h3><code class="docutils literal notranslate"><span class="pre">stri_sub_all()</span></code> Function<a class="headerlink" href="#stri-sub-all-function" title="Permalink to this headline"></a></h3>
+</section>
+<section id="stri-sub-all-function">
+<h3><code class="docutils literal notranslate"><span class="pre">stri_sub_all()</span></code> Function<a class="headerlink" href="#stri-sub-all-function" title="Permalink to this heading"></a></h3>
 <p>If some deeper vectorisation level is necessary, <code class="docutils literal notranslate"><span class="pre">stri_sub_all()</span></code> comes
 in handy. It extracts multiple (possibly different) substrings from all
 the strings provided:</p>
@@ -405,9 +411,9 @@ function whose aim is to convert such lists to matrices.</p>
 <span class="c1">## [3,] &quot;orgh&quot; &quot;ghu&quot; &quot;&quot;   &quot;&quot;   &quot;&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="from-to-and-from-length-matrices">
-<h3>“From–To” and “From–Length” Matrices<a class="headerlink" href="#from-to-and-from-length-matrices" title="Permalink to this headline"></a></h3>
+</section>
+<section id="from-to-and-from-length-matrices">
+<h3>“From–To” and “From–Length” Matrices<a class="headerlink" href="#from-to-and-from-length-matrices" title="Permalink to this heading"></a></h3>
 <p>The second parameter of both <code class="docutils literal notranslate"><span class="pre">stri_sub()</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_sub_list()</span></code> can also
 be fed with a two-column matrix of the form <code class="docutils literal notranslate"><span class="pre">cbind(from,</span> <span class="pre">to)</span></code>. Here, the
 first column gives the start indices, and the second column defines the
@@ -451,9 +457,9 @@ inputs.</p>
 (and only if this is the case), i.e., the indexer is of the form
 <code class="docutils literal notranslate"><span class="pre">cbind(from,</span> <span class="pre">length=length)</span></code>, extraction will be based on the extracted
 chunk size.</p>
-</div>
-<div class="section" id="permuting-code-points">
-<h3>Permuting Code Points<a class="headerlink" href="#permuting-code-points" title="Permalink to this headline"></a></h3>
+</section>
+<section id="permuting-code-points">
+<h3>Permuting Code Points<a class="headerlink" href="#permuting-code-points" title="Permalink to this heading"></a></h3>
 <p>Somewhat related to the above are different ways to construct various
 permutations (possibly with replacement) of code points in a string:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_join_list</span><span class="p">(</span><span class="nf">stri_sub_all</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span> <span class="n">length</span><span class="o">=</span><span class="m">1</span><span class="p">))</span>
@@ -464,9 +470,9 @@ permutations (possibly with replacement) of code points in a string:</p>
 <span class="c1">## [1] &quot;maps&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="replacing-substrings">
-<h3>Replacing Substrings<a class="headerlink" href="#replacing-substrings" title="Permalink to this headline"></a></h3>
+</section>
+<section id="replacing-substrings">
+<h3>Replacing Substrings<a class="headerlink" href="#replacing-substrings" title="Permalink to this heading"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">stri_sub_replace()</span></code> returns a version of a character vector with some
 chunks replaced by other strings:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_sub_replace</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;abcde&quot;</span><span class="p">,</span> <span class="s">&quot;ABCDE&quot;</span><span class="p">),</span>
@@ -489,9 +495,9 @@ each string in a character vector:</p>
 </div>
 <p>Note how we have obtained the insertion of new content at the start and
 the end of the 2nd input.</p>
-</div>
-<div class="section" id="replacing-substrings-in-place">
-<h3>Replacing Substrings In-Place<a class="headerlink" href="#replacing-substrings-in-place" title="Permalink to this headline"></a></h3>
+</section>
+<section id="replacing-substrings-in-place">
+<h3>Replacing Substrings In-Place<a class="headerlink" href="#replacing-substrings-in-place" title="Permalink to this heading"></a></h3>
 <p>The corresponding replacement functions modify a character vector
 in-place:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">&lt;-</span> <span class="s">&quot;spam, egg, spam, spam, bacon, and spam&quot;</span>
@@ -526,9 +532,9 @@ calling <code class="docutils literal notranslate"><span class="pre">sapply(x,</
 vector is also possible.</p>
 </dd>
 </dl>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
@@ -543,7 +549,7 @@ vector is also possible.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2022, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2022-07-02T18:56:54+1000.
+      <span class="lastupdated">Last updated on 2022-12-15T14:28:06+1100.
       </span></p>
   </div>
 

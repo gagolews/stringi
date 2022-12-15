@@ -1375,8 +1375,10 @@ const char* stri__copy_string_Ralloc(SEXP x, const char* argname)
 const char* stri__prepare_arg_string_1_NA(SEXP x, const char* argname)
 {
     PROTECT(x = stri__prepare_arg_string_1(x, argname));
-    if (STRING_ELT(x, 0) == NA_STRING)
+    if (STRING_ELT(x, 0) == NA_STRING) {
+        UNPROTECT(1);
         return nullptr;
+    }
     const char* ret_tmp = (const char*)CHAR(STRING_ELT(x, 0)); // ret may be gc'ed
     size_t ret_n = strlen(ret_tmp);
     /* R_alloc ==  Here R will reclaim the memory at the end of the call to .Call */

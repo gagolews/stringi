@@ -4,7 +4,8 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Input and Output &mdash; stringi</title>
@@ -36,6 +37,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
@@ -68,7 +70,7 @@
             
             
               <div class="version">
-                1.7.7
+                1.7.9
               </div>
             
           
@@ -94,8 +96,16 @@
             
             
               <p class="caption" role="heading"><span class="caption-text">stringi</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="design_principles.html">General Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic_operations.html">Basic String Operations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codepoint_comparing.html">Code-Pointwise Comparing</a></li>
@@ -112,7 +122,6 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="example.html">Example Use Case: Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference Manual</span></p>
 <ul>
@@ -120,14 +129,11 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://stringx.gagolewski.com/">stringx</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../news.html">What Is New in <em>stringi</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
 </ul>
 
             
@@ -167,17 +173,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="tex2jax_ignore mathjax_ignore section" id="input-and-output">
-<span id="sec-io"></span><h1>Input and Output<a class="headerlink" href="#input-and-output" title="Permalink to this headline"></a></h1>
+  <section id="input-and-output">
+<span id="sec-io"></span><h1>Input and Output<a class="headerlink" href="#input-and-output" title="Permalink to this heading"></a></h1>
 <blockquote>
-<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that has recently been published the <em>Journal of Statistical Software</em>, see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3">Gag22</a>]</span>.</p>
+<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that has recently been published the <em>Journal of Statistical Software</em>, see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="M. Gagolewski. stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59, 2022. doi:10.18637/jss.v103.i02.">Gag22</a>]</span>.</p>
 </div></blockquote>
 <p>This section deals with some more advanced topics related to the
 operability of text processing applications between different platforms.
 In particular, we discuss how to ensure that data read from various
 input connections are interpreted correctly.</p>
-<div class="section" id="dealing-with-unicode-code-points">
-<span id="sec-codepoints"></span><h2>Dealing with Unicode Code Points<a class="headerlink" href="#dealing-with-unicode-code-points" title="Permalink to this headline"></a></h2>
+<section id="dealing-with-unicode-code-points">
+<span id="sec-codepoints"></span><h2>Dealing with Unicode Code Points<a class="headerlink" href="#dealing-with-unicode-code-points" title="Permalink to this heading"></a></h2>
 <p>The Unicode Standard (as well as the Universal Coded Character Set,
 i.e., ISO/IEC 10646) currently defines over 140,000 abstract characters
 together with their corresponding code points – integers between 0 and
@@ -220,9 +226,9 @@ backslash in R, we must escape it with another backslash).</p>
 be unable to display certain code points correctly (due to, e.g.,
 missing fonts), the correctness of their processing with <em>stringi</em> is
 still guaranteed by <em>ICU</em>.</p>
-</div>
-<div class="section" id="character-encodings">
-<span id="sec-encoding"></span><h2>Character Encodings<a class="headerlink" href="#character-encodings" title="Permalink to this headline"></a></h2>
+</section>
+<section id="character-encodings">
+<span id="sec-encoding"></span><h2>Character Encodings<a class="headerlink" href="#character-encodings" title="Permalink to this heading"></a></h2>
 <p>When storing strings in RAM or on the disk, we need to decide upon the
 actual way of representing the code points as sequences of bytes. The
 two most popular encodings in the Unicode family are UTF-8 and UTF-16:</p>
@@ -243,7 +249,7 @@ MacOS as well as most Linux boxes
 work with UTF-8 by default<a class="footnote-reference brackets" href="#footucrt" id="id2">1</a>.</p>
 <p>All strings in R have an associated encoding mark which can be read by
 calling <code class="docutils literal notranslate"><span class="pre">Encoding()</span></code> or, more conveniently, <code class="docutils literal notranslate"><span class="pre">stri_enc_mark()</span></code>. Most
-importantly, strings in ASCII, ISO-8859-1 (“<code class="docutils literal notranslate"><span class="pre">latin1</span></code>”), UTF-8, and the
+importantly, strings in ASCII, ISO-8859-1 (”<code class="docutils literal notranslate"><span class="pre">latin1</span></code>”), UTF-8, and the
 native encoding can coexist. Whenever a non-Unicode string is passed to
 a function in <em>stringi</em>, it is silently converted to UTF-8 or UTF-16,
 depending on the requested operation (some <em>ICU</em> services are only
@@ -252,9 +258,9 @@ efficient, and maximally portable design choice – Unicode can be
 thought of as a superset of every other encoding. Moreover, in order to
 guarantee the correctness and high performance of the string processing
 pipelines, <em>stringi</em> always<a class="footnote-reference brackets" href="#footuftout" id="id3">2</a> outputs UTF-8 data.</p>
-</div>
-<div class="section" id="reading-and-writing-text-files">
-<span id="sec-read-lines"></span><h2>Reading and Writing Text Files<a class="headerlink" href="#reading-and-writing-text-files" title="Permalink to this headline"></a></h2>
+</section>
+<section id="reading-and-writing-text-files">
+<span id="sec-read-lines"></span><h2>Reading and Writing Text Files<a class="headerlink" href="#reading-and-writing-text-files" title="Permalink to this heading"></a></h2>
 <p>According to a report by
 <a class="reference external" href="https://w3techs.com/technologies/cross/character_encoding/ranking">W3Techs</a>,
 as of 2021-09-28, 97.3% of
@@ -278,9 +284,9 @@ encoded in ISO-8859-1:</p>
 <p>We can call <code class="docutils literal notranslate"><span class="pre">stri_write_lines()</span></code> to write the contents of a character
 vector to a file (each string will constitute a separate text line),
 with any output encoding.</p>
-</div>
-<div class="section" id="detecting-encodings">
-<h2>Detecting Encodings<a class="headerlink" href="#detecting-encodings" title="Permalink to this headline"></a></h2>
+</section>
+<section id="detecting-encodings">
+<h2>Detecting Encodings<a class="headerlink" href="#detecting-encodings" title="Permalink to this heading"></a></h2>
 <p>If a file’s encoding is not known in advance, there are a
 certain functions that can aid in encoding detection. First, we can read
 the resource in the form of a raw-type vector:</p>
@@ -310,9 +316,9 @@ the resource in the form of a raw-type vector:</p>
 <p>Nevertheless, encoding detection is an operation that relies on
 heuristics. Therefore, there is a chance that the output might be
 imprecise or even misleading.</p>
-</div>
-<div class="section" id="converting-between-encodings">
-<h2>Converting Between Encodings<a class="headerlink" href="#converting-between-encodings" title="Permalink to this headline"></a></h2>
+</section>
+<section id="converting-between-encodings">
+<h2>Converting Between Encodings<a class="headerlink" href="#converting-between-encodings" title="Permalink to this heading"></a></h2>
 <p>Knowing the desired source and destination encoding precisely,
 <code class="docutils literal notranslate"><span class="pre">stri_encode()</span></code> can be called to perform the conversion. Contrary to the
 built-in <code class="docutils literal notranslate"><span class="pre">iconv()</span></code>, which relies on different underlying libraries, the
@@ -331,9 +337,9 @@ automatically, e.g., <code class="docutils literal notranslate"><span class="pre
 <span class="c1">## [4] &quot;el alto ingenio de don DIEGO OSORIO.&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="normalising-strings">
-<span id="sec-normalisation"></span><h2>Normalising Strings<a class="headerlink" href="#normalising-strings" title="Permalink to this headline"></a></h2>
+</section>
+<section id="normalising-strings">
+<span id="sec-normalisation"></span><h2>Normalising Strings<a class="headerlink" href="#normalising-strings" title="Permalink to this heading"></a></h2>
 <p>In the section on <a class="reference internal" href="collation.html#sec-equivalence"><span class="std std-ref">Testing String Equivalence</span></a> we’ve provided some examples of
 canonically equivalent strings whose code point representation was
 different. Unicode <a class="reference external" href="https://www.unicode.org/reports/tr15/">normalisation</a>
@@ -377,8 +383,8 @@ Windows 10.</p>
 <dd><p>Okay, with a few obvious exceptions, such as <code class="docutils literal notranslate"><span class="pre">stri_encode()</span></code>.</p>
 </dd>
 </dl>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -393,7 +399,7 @@ Windows 10.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2022, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2022-07-02T18:56:54+1000.
+      <span class="lastupdated">Last updated on 2022-12-15T14:28:06+1100.
       </span></p>
   </div>
 

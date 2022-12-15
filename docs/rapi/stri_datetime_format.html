@@ -4,7 +4,8 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>stri_datetime_format: Date and Time Formatting and Parsing &mdash; stringi</title>
@@ -36,6 +37,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
@@ -68,7 +70,7 @@
             
             
               <div class="version">
-                1.7.7
+                1.7.9
               </div>
             
           
@@ -96,6 +98,14 @@
               <p class="caption" role="heading"><span class="caption-text">stringi</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../weave/design_principles.html">General Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../weave/basic_operations.html">Basic String Operations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../weave/codepoint_comparing.html">Code-Pointwise Comparing</a></li>
@@ -104,7 +114,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../weave/other_operations.html">Other Operations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../weave/input_output.html">Input and Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../weave/example.html">Example Use Case: Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference Manual</span></p>
 <ul class="current">
@@ -197,7 +206,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_replace.html">stri_replace: Replace Pattern Occurrences</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_reverse.html">stri_reverse: Reverse Each String</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_sort_key.html">stri_sort_key: Sort Keys</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_sort.html">stri_sort: Sorting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_sort.html">stri_sort: String Sorting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split_boundaries.html">stri_split_boundaries: Split a String at Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split_lines.html">stri_split_lines: Split a String Into Text Lines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_split.html">stri_split: Split a String By Pattern Matches</a></li>
@@ -227,14 +236,11 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://stringx.gagolewski.com/">stringx</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../news.html">What Is New in <em>stringi</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
 </ul>
 
             
@@ -275,14 +281,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="tex2jax_ignore mathjax_ignore section" id="stri-datetime-format-date-and-time-formatting-and-parsing">
-<h1>stri_datetime_format: Date and Time Formatting and Parsing<a class="headerlink" href="#stri-datetime-format-date-and-time-formatting-and-parsing" title="Permalink to this headline"></a></h1>
-<div class="section" id="description">
-<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline"></a></h2>
+  <section id="stri-datetime-format-date-and-time-formatting-and-parsing">
+<h1>stri_datetime_format: Date and Time Formatting and Parsing<a class="headerlink" href="#stri-datetime-format-date-and-time-formatting-and-parsing" title="Permalink to this heading"></a></h1>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h2>
 <p>These functions convert a given date/time object to a character vector, or vice versa.</p>
-</div>
-<div class="section" id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h2>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_format</span><span class="p">(</span>
   <span class="n">time</span><span class="p">,</span>
   <span class="n">format</span> <span class="o">=</span> <span class="s">&quot;uuuu-MM-dd HH:mm:ss&quot;</span><span class="p">,</span>
@@ -299,9 +305,9 @@
 <span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="arguments">
-<h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline"></a></h2>
+</section>
+<section id="arguments">
+<h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this heading"></a></h2>
 <table class="colwidths-auto docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
@@ -329,9 +335,9 @@
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="details">
-<h2>Details<a class="headerlink" href="#details" title="Permalink to this headline"></a></h2>
+</section>
+<section id="details">
+<h2>Details<a class="headerlink" href="#details" title="Permalink to this heading"></a></h2>
 <p>Vectorized over <code class="docutils literal notranslate"><span class="pre">format</span></code> and <code class="docutils literal notranslate"><span class="pre">time</span></code> or <code class="docutils literal notranslate"><span class="pre">str</span></code>.</p>
 <p>By default, <code class="docutils literal notranslate"><span class="pre">stri_datetime_format</span></code> (for the sake of compatibility with the <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/help/strftime.html"><code class="docutils literal notranslate"><span class="pre">strftime</span></code></a> function) formats a date/time object using the current default time zone.</p>
 <p>Unspecified fields (e.g., seconds where only hours and minutes are given) are filled with the ones based on current date and time.</p>
@@ -340,457 +346,457 @@
 <p>Two single quotes represent a literal single quote, either inside or outside single quotes. Text within single quotes is not interpreted in any way (except for two adjacent single quotes). Otherwise, all ASCII letters from <code class="docutils literal notranslate"><span class="pre">a</span></code> to <code class="docutils literal notranslate"><span class="pre">z</span></code> and <code class="docutils literal notranslate"><span class="pre">A</span></code> to <code class="docutils literal notranslate"><span class="pre">Z</span></code> are reserved as syntax characters, and require quoting if they are to represent literal characters. In addition, certain ASCII punctuation characters may become available in the future (e.g., <code class="docutils literal notranslate"><span class="pre">:</span></code> being interpreted as the time separator and <code class="docutils literal notranslate"><span class="pre">/</span></code> as a date separator, and replaced by respective locale-sensitive characters in display).</p>
 <table class="colwidths-auto docutils align-default">
 <thead>
-<tr class="row-odd"><th class="text-align:left head"><p></p></th>
-<th class="text-align:left head"><p></p></th>
-<th class="text-align:left head"><p></p></th>
-<th class="text-align:left head"><p></p></th>
+<tr class="row-odd"><th class="text-left head"><p></p></th>
+<th class="text-left head"><p></p></th>
+<th class="text-left head"><p></p></th>
+<th class="text-left head"><p></p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-align:left"><p><strong>Symbol</strong></p></td>
-<td class="text-align:left"><p><strong>Meaning</strong></p></td>
-<td class="text-align:left"><p><strong>Example(s)</strong></p></td>
-<td class="text-align:left"><p><strong>Output</strong></p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p>G</p></td>
-<td class="text-align:left"><p>era designator</p></td>
-<td class="text-align:left"><p>G, GG, or GGG</p></td>
-<td class="text-align:left"><p>AD</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>GGGG</p></td>
-<td class="text-align:left"><p>Anno Domini</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>GGGGG</p></td>
-<td class="text-align:left"><p>A</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p>y</p></td>
-<td class="text-align:left"><p>year</p></td>
-<td class="text-align:left"><p>yy</p></td>
-<td class="text-align:left"><p>96</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>y or yyyy</p></td>
-<td class="text-align:left"><p>1996</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p>u</p></td>
-<td class="text-align:left"><p>extended year</p></td>
-<td class="text-align:left"><p>u</p></td>
-<td class="text-align:left"><p>4601</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p>U</p></td>
-<td class="text-align:left"><p>cyclic year name, as in Chinese lunar calendar</p></td>
-<td class="text-align:left"><p>U</p></td>
-<td class="text-align:left"><p></p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p>r</p></td>
-<td class="text-align:left"><p>related Gregorian year</p></td>
-<td class="text-align:left"><p>r</p></td>
-<td class="text-align:left"><p>1996</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p>Q</p></td>
-<td class="text-align:left"><p>quarter</p></td>
-<td class="text-align:left"><p>Q or QQ</p></td>
-<td class="text-align:left"><p>02</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>QQQ</p></td>
-<td class="text-align:left"><p>Q2</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>QQQQ</p></td>
-<td class="text-align:left"><p>2nd quarter</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>QQQQQ</p></td>
-<td class="text-align:left"><p>2</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p>q</p></td>
-<td class="text-align:left"><p>Stand Alone quarter</p></td>
-<td class="text-align:left"><p>q or qq</p></td>
-<td class="text-align:left"><p>02</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>qqq</p></td>
-<td class="text-align:left"><p>Q2</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>qqqq</p></td>
-<td class="text-align:left"><p>2nd quarter</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>qqqqq</p></td>
-<td class="text-align:left"><p>2</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p>M</p></td>
-<td class="text-align:left"><p>month in year</p></td>
-<td class="text-align:left"><p>M or MM</p></td>
-<td class="text-align:left"><p>09</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>MMM</p></td>
-<td class="text-align:left"><p>Sep</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>MMMM</p></td>
-<td class="text-align:left"><p>September</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>MMMMM</p></td>
-<td class="text-align:left"><p>S</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p>L</p></td>
-<td class="text-align:left"><p>Stand Alone month in year</p></td>
-<td class="text-align:left"><p>L or LL</p></td>
-<td class="text-align:left"><p>09</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>LLL</p></td>
-<td class="text-align:left"><p>Sep</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>LLLL</p></td>
-<td class="text-align:left"><p>September</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>LLLLL</p></td>
-<td class="text-align:left"><p>S</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p>w</p></td>
-<td class="text-align:left"><p>week of year</p></td>
-<td class="text-align:left"><p>w or ww</p></td>
-<td class="text-align:left"><p>27</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p>W</p></td>
-<td class="text-align:left"><p>week of month</p></td>
-<td class="text-align:left"><p>W</p></td>
-<td class="text-align:left"><p>2</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p>d</p></td>
-<td class="text-align:left"><p>day in month</p></td>
-<td class="text-align:left"><p>d</p></td>
-<td class="text-align:left"><p>2</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>dd</p></td>
-<td class="text-align:left"><p>02</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p>D</p></td>
-<td class="text-align:left"><p>day of year</p></td>
-<td class="text-align:left"><p>D</p></td>
-<td class="text-align:left"><p>189</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p>F</p></td>
-<td class="text-align:left"><p>day of week in month</p></td>
-<td class="text-align:left"><p>F</p></td>
-<td class="text-align:left"><p>2 (2nd Wed in July)</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p>g</p></td>
-<td class="text-align:left"><p>modified Julian day</p></td>
-<td class="text-align:left"><p>g</p></td>
-<td class="text-align:left"><p>2451334</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p>E</p></td>
-<td class="text-align:left"><p>day of week</p></td>
-<td class="text-align:left"><p>E, EE, or EEE</p></td>
-<td class="text-align:left"><p>Tue</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>EEEE</p></td>
-<td class="text-align:left"><p>Tuesday</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>EEEEE</p></td>
-<td class="text-align:left"><p>T</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>EEEEEE</p></td>
-<td class="text-align:left"><p>Tu</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p>e</p></td>
-<td class="text-align:left"><p>local day of week</p></td>
-<td class="text-align:left"><p>e or ee</p></td>
-<td class="text-align:left"><p>2</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>example: if Monday is 1st day, Tuesday is 2nd )</p></td>
-<td class="text-align:left"><p>eee</p></td>
-<td class="text-align:left"><p>Tue</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>eeee</p></td>
-<td class="text-align:left"><p>Tuesday</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>eeeee</p></td>
-<td class="text-align:left"><p>T</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>eeeeee</p></td>
-<td class="text-align:left"><p>Tu</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p>c</p></td>
-<td class="text-align:left"><p>Stand Alone local day of week</p></td>
-<td class="text-align:left"><p>c or cc</p></td>
-<td class="text-align:left"><p>2</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>ccc</p></td>
-<td class="text-align:left"><p>Tue</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>cccc</p></td>
-<td class="text-align:left"><p>Tuesday</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>ccccc</p></td>
-<td class="text-align:left"><p>T</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>cccccc</p></td>
-<td class="text-align:left"><p>Tu</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p>a</p></td>
-<td class="text-align:left"><p>am/pm marker</p></td>
-<td class="text-align:left"><p>a</p></td>
-<td class="text-align:left"><p>pm</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p>h</p></td>
-<td class="text-align:left"><p>hour in am/pm (1~12)</p></td>
-<td class="text-align:left"><p>h</p></td>
-<td class="text-align:left"><p>7</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>hh</p></td>
-<td class="text-align:left"><p>07</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p>H</p></td>
-<td class="text-align:left"><p>hour in day (0~23)</p></td>
-<td class="text-align:left"><p>H</p></td>
-<td class="text-align:left"><p>0</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>HH</p></td>
-<td class="text-align:left"><p>00</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p>k</p></td>
-<td class="text-align:left"><p>hour in day (1~24)</p></td>
-<td class="text-align:left"><p>k</p></td>
-<td class="text-align:left"><p>24</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>kk</p></td>
-<td class="text-align:left"><p>24</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p>K</p></td>
-<td class="text-align:left"><p>hour in am/pm (0~11)</p></td>
-<td class="text-align:left"><p>K</p></td>
-<td class="text-align:left"><p>0</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>KK</p></td>
-<td class="text-align:left"><p>00</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p>m</p></td>
-<td class="text-align:left"><p>minute in hour</p></td>
-<td class="text-align:left"><p>m</p></td>
-<td class="text-align:left"><p>4</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>mm</p></td>
-<td class="text-align:left"><p>04</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p>s</p></td>
-<td class="text-align:left"><p>second in minute</p></td>
-<td class="text-align:left"><p>s</p></td>
-<td class="text-align:left"><p>5</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>ss</p></td>
-<td class="text-align:left"><p>05</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p>S</p></td>
-<td class="text-align:left"><p>fractional second - truncates (like other time fields)</p></td>
-<td class="text-align:left"><p>S</p></td>
-<td class="text-align:left"><p>2</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>to the count of letters when formatting. Appends</p></td>
-<td class="text-align:left"><p>SS</p></td>
-<td class="text-align:left"><p>23</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>zeros if more than 3 letters specified. Truncates at</p></td>
-<td class="text-align:left"><p>SSS</p></td>
-<td class="text-align:left"><p>235</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>three significant digits when parsing.</p></td>
-<td class="text-align:left"><p>SSSS</p></td>
-<td class="text-align:left"><p>2350</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p>A</p></td>
-<td class="text-align:left"><p>milliseconds in day</p></td>
-<td class="text-align:left"><p>A</p></td>
-<td class="text-align:left"><p>61201235</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p>z</p></td>
-<td class="text-align:left"><p>Time Zone: specific non-location</p></td>
-<td class="text-align:left"><p>z, zz, or zzz</p></td>
-<td class="text-align:left"><p>PDT</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>zzzz</p></td>
-<td class="text-align:left"><p>Pacific Daylight Time</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p>Z</p></td>
-<td class="text-align:left"><p>Time Zone: ISO8601 basic hms? / RFC 822</p></td>
-<td class="text-align:left"><p>Z, ZZ, or ZZZ</p></td>
-<td class="text-align:left"><p>-0800</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>Time Zone: long localized GMT (=OOOO)</p></td>
-<td class="text-align:left"><p>ZZZZ</p></td>
-<td class="text-align:left"><p>GMT-08:00</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>Time Zone: ISO8601 extended hms? (=XXXXX)</p></td>
-<td class="text-align:left"><p>ZZZZZ</p></td>
-<td class="text-align:left"><p>-08:00, -07:52:58, Z</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p>O</p></td>
-<td class="text-align:left"><p>Time Zone: short localized GMT</p></td>
-<td class="text-align:left"><p>O</p></td>
-<td class="text-align:left"><p>GMT-8</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>Time Zone: long localized GMT (=ZZZZ)</p></td>
-<td class="text-align:left"><p>OOOO</p></td>
-<td class="text-align:left"><p>GMT-08:00</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p>v</p></td>
-<td class="text-align:left"><p>Time Zone: generic non-location</p></td>
-<td class="text-align:left"><p>v</p></td>
-<td class="text-align:left"><p>PT</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>(falls back first to VVVV)</p></td>
-<td class="text-align:left"><p>vvvv</p></td>
-<td class="text-align:left"><p>Pacific Time or Los Angeles Time</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p>V</p></td>
-<td class="text-align:left"><p>Time Zone: short time zone ID</p></td>
-<td class="text-align:left"><p>V</p></td>
-<td class="text-align:left"><p>uslax</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>Time Zone: long time zone ID</p></td>
-<td class="text-align:left"><p>VV</p></td>
-<td class="text-align:left"><p>America/Los_Angeles</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>Time Zone: time zone exemplar city</p></td>
-<td class="text-align:left"><p>VVV</p></td>
-<td class="text-align:left"><p>Los Angeles</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>Time Zone: generic location (falls back to OOOO)</p></td>
-<td class="text-align:left"><p>VVVV</p></td>
-<td class="text-align:left"><p>Los Angeles Time</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p>X</p></td>
-<td class="text-align:left"><p>Time Zone: ISO8601 basic hm?, with Z for 0</p></td>
-<td class="text-align:left"><p>X</p></td>
-<td class="text-align:left"><p>-08, +0530, Z</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>Time Zone: ISO8601 basic hm, with Z</p></td>
-<td class="text-align:left"><p>XX</p></td>
-<td class="text-align:left"><p>-0800, Z</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>Time Zone: ISO8601 extended hm, with Z</p></td>
-<td class="text-align:left"><p>XXX</p></td>
-<td class="text-align:left"><p>-08:00, Z</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>Time Zone: ISO8601 basic hms?, with Z</p></td>
-<td class="text-align:left"><p>XXXX</p></td>
-<td class="text-align:left"><p>-0800, -075258, Z</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>Time Zone: ISO8601 extended hms?, with Z</p></td>
-<td class="text-align:left"><p>XXXXX</p></td>
-<td class="text-align:left"><p>-08:00, -07:52:58, Z</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p>x</p></td>
-<td class="text-align:left"><p>Time Zone: ISO8601 basic hm?, without Z for 0</p></td>
-<td class="text-align:left"><p>x</p></td>
-<td class="text-align:left"><p>-08, +0530</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>Time Zone: ISO8601 basic hm, without Z</p></td>
-<td class="text-align:left"><p>xx</p></td>
-<td class="text-align:left"><p>-0800</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>Time Zone: ISO8601 extended hm, without Z</p></td>
-<td class="text-align:left"><p>xxx</p></td>
-<td class="text-align:left"><p>-08:00</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>Time Zone: ISO8601 basic hms?, without Z</p></td>
-<td class="text-align:left"><p>xxxx</p></td>
-<td class="text-align:left"><p>-0800, -075258</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p>Time Zone: ISO8601 extended hms?, without Z</p></td>
-<td class="text-align:left"><p>xxxxx</p></td>
-<td class="text-align:left"><p>-08:00, -07:52:58</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:left"><p>‘</p></td>
-<td class="text-align:left"><p>escape for text</p></td>
-<td class="text-align:left"><p>‘</p></td>
-<td class="text-align:left"><p>(nothing)</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:left"><p>‘ ‘</p></td>
-<td class="text-align:left"><p>two single quotes produce one</p></td>
-<td class="text-align:left"><p>‘ ‘</p></td>
-<td class="text-align:left"><p>‘</p></td>
+<tr class="row-even"><td class="text-left"><p><strong>Symbol</strong></p></td>
+<td class="text-left"><p><strong>Meaning</strong></p></td>
+<td class="text-left"><p><strong>Example(s)</strong></p></td>
+<td class="text-left"><p><strong>Output</strong></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>G</p></td>
+<td class="text-left"><p>era designator</p></td>
+<td class="text-left"><p>G, GG, or GGG</p></td>
+<td class="text-left"><p>AD</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>GGGG</p></td>
+<td class="text-left"><p>Anno Domini</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>GGGGG</p></td>
+<td class="text-left"><p>A</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>y</p></td>
+<td class="text-left"><p>year</p></td>
+<td class="text-left"><p>yy</p></td>
+<td class="text-left"><p>96</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>y or yyyy</p></td>
+<td class="text-left"><p>1996</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>u</p></td>
+<td class="text-left"><p>extended year</p></td>
+<td class="text-left"><p>u</p></td>
+<td class="text-left"><p>4601</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>U</p></td>
+<td class="text-left"><p>cyclic year name, as in Chinese lunar calendar</p></td>
+<td class="text-left"><p>U</p></td>
+<td class="text-left"><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>r</p></td>
+<td class="text-left"><p>related Gregorian year</p></td>
+<td class="text-left"><p>r</p></td>
+<td class="text-left"><p>1996</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Q</p></td>
+<td class="text-left"><p>quarter</p></td>
+<td class="text-left"><p>Q or QQ</p></td>
+<td class="text-left"><p>02</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>QQQ</p></td>
+<td class="text-left"><p>Q2</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>QQQQ</p></td>
+<td class="text-left"><p>2nd quarter</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>QQQQQ</p></td>
+<td class="text-left"><p>2</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>q</p></td>
+<td class="text-left"><p>Stand Alone quarter</p></td>
+<td class="text-left"><p>q or qq</p></td>
+<td class="text-left"><p>02</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>qqq</p></td>
+<td class="text-left"><p>Q2</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>qqqq</p></td>
+<td class="text-left"><p>2nd quarter</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>qqqqq</p></td>
+<td class="text-left"><p>2</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>M</p></td>
+<td class="text-left"><p>month in year</p></td>
+<td class="text-left"><p>M or MM</p></td>
+<td class="text-left"><p>09</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>MMM</p></td>
+<td class="text-left"><p>Sep</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>MMMM</p></td>
+<td class="text-left"><p>September</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>MMMMM</p></td>
+<td class="text-left"><p>S</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>L</p></td>
+<td class="text-left"><p>Stand Alone month in year</p></td>
+<td class="text-left"><p>L or LL</p></td>
+<td class="text-left"><p>09</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>LLL</p></td>
+<td class="text-left"><p>Sep</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>LLLL</p></td>
+<td class="text-left"><p>September</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>LLLLL</p></td>
+<td class="text-left"><p>S</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>w</p></td>
+<td class="text-left"><p>week of year</p></td>
+<td class="text-left"><p>w or ww</p></td>
+<td class="text-left"><p>27</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>W</p></td>
+<td class="text-left"><p>week of month</p></td>
+<td class="text-left"><p>W</p></td>
+<td class="text-left"><p>2</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>d</p></td>
+<td class="text-left"><p>day in month</p></td>
+<td class="text-left"><p>d</p></td>
+<td class="text-left"><p>2</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>dd</p></td>
+<td class="text-left"><p>02</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>D</p></td>
+<td class="text-left"><p>day of year</p></td>
+<td class="text-left"><p>D</p></td>
+<td class="text-left"><p>189</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>F</p></td>
+<td class="text-left"><p>day of week in month</p></td>
+<td class="text-left"><p>F</p></td>
+<td class="text-left"><p>2 (2nd Wed in July)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>g</p></td>
+<td class="text-left"><p>modified Julian day</p></td>
+<td class="text-left"><p>g</p></td>
+<td class="text-left"><p>2451334</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>E</p></td>
+<td class="text-left"><p>day of week</p></td>
+<td class="text-left"><p>E, EE, or EEE</p></td>
+<td class="text-left"><p>Tue</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>EEEE</p></td>
+<td class="text-left"><p>Tuesday</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>EEEEE</p></td>
+<td class="text-left"><p>T</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>EEEEEE</p></td>
+<td class="text-left"><p>Tu</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>e</p></td>
+<td class="text-left"><p>local day of week</p></td>
+<td class="text-left"><p>e or ee</p></td>
+<td class="text-left"><p>2</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p>example: if Monday is 1st day, Tuesday is 2nd )</p></td>
+<td class="text-left"><p>eee</p></td>
+<td class="text-left"><p>Tue</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>eeee</p></td>
+<td class="text-left"><p>Tuesday</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>eeeee</p></td>
+<td class="text-left"><p>T</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>eeeeee</p></td>
+<td class="text-left"><p>Tu</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>c</p></td>
+<td class="text-left"><p>Stand Alone local day of week</p></td>
+<td class="text-left"><p>c or cc</p></td>
+<td class="text-left"><p>2</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>ccc</p></td>
+<td class="text-left"><p>Tue</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>cccc</p></td>
+<td class="text-left"><p>Tuesday</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>ccccc</p></td>
+<td class="text-left"><p>T</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>cccccc</p></td>
+<td class="text-left"><p>Tu</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>a</p></td>
+<td class="text-left"><p>am/pm marker</p></td>
+<td class="text-left"><p>a</p></td>
+<td class="text-left"><p>pm</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>h</p></td>
+<td class="text-left"><p>hour in am/pm (1~12)</p></td>
+<td class="text-left"><p>h</p></td>
+<td class="text-left"><p>7</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>hh</p></td>
+<td class="text-left"><p>07</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>H</p></td>
+<td class="text-left"><p>hour in day (0~23)</p></td>
+<td class="text-left"><p>H</p></td>
+<td class="text-left"><p>0</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>HH</p></td>
+<td class="text-left"><p>00</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>k</p></td>
+<td class="text-left"><p>hour in day (1~24)</p></td>
+<td class="text-left"><p>k</p></td>
+<td class="text-left"><p>24</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>kk</p></td>
+<td class="text-left"><p>24</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>K</p></td>
+<td class="text-left"><p>hour in am/pm (0~11)</p></td>
+<td class="text-left"><p>K</p></td>
+<td class="text-left"><p>0</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>KK</p></td>
+<td class="text-left"><p>00</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>m</p></td>
+<td class="text-left"><p>minute in hour</p></td>
+<td class="text-left"><p>m</p></td>
+<td class="text-left"><p>4</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>mm</p></td>
+<td class="text-left"><p>04</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>s</p></td>
+<td class="text-left"><p>second in minute</p></td>
+<td class="text-left"><p>s</p></td>
+<td class="text-left"><p>5</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>ss</p></td>
+<td class="text-left"><p>05</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>S</p></td>
+<td class="text-left"><p>fractional second - truncates (like other time fields)</p></td>
+<td class="text-left"><p>S</p></td>
+<td class="text-left"><p>2</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p>to the count of letters when formatting. Appends</p></td>
+<td class="text-left"><p>SS</p></td>
+<td class="text-left"><p>23</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p>zeros if more than 3 letters specified. Truncates at</p></td>
+<td class="text-left"><p>SSS</p></td>
+<td class="text-left"><p>235</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p>three significant digits when parsing.</p></td>
+<td class="text-left"><p>SSSS</p></td>
+<td class="text-left"><p>2350</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>A</p></td>
+<td class="text-left"><p>milliseconds in day</p></td>
+<td class="text-left"><p>A</p></td>
+<td class="text-left"><p>61201235</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>z</p></td>
+<td class="text-left"><p>Time Zone: specific non-location</p></td>
+<td class="text-left"><p>z, zz, or zzz</p></td>
+<td class="text-left"><p>PDT</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p>zzzz</p></td>
+<td class="text-left"><p>Pacific Daylight Time</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Z</p></td>
+<td class="text-left"><p>Time Zone: ISO8601 basic hms? / RFC 822</p></td>
+<td class="text-left"><p>Z, ZZ, or ZZZ</p></td>
+<td class="text-left"><p>-0800</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p>Time Zone: long localized GMT (=OOOO)</p></td>
+<td class="text-left"><p>ZZZZ</p></td>
+<td class="text-left"><p>GMT-08:00</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p>Time Zone: ISO8601 extended hms? (=XXXXX)</p></td>
+<td class="text-left"><p>ZZZZZ</p></td>
+<td class="text-left"><p>-08:00, -07:52:58, Z</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>O</p></td>
+<td class="text-left"><p>Time Zone: short localized GMT</p></td>
+<td class="text-left"><p>O</p></td>
+<td class="text-left"><p>GMT-8</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p>Time Zone: long localized GMT (=ZZZZ)</p></td>
+<td class="text-left"><p>OOOO</p></td>
+<td class="text-left"><p>GMT-08:00</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>v</p></td>
+<td class="text-left"><p>Time Zone: generic non-location</p></td>
+<td class="text-left"><p>v</p></td>
+<td class="text-left"><p>PT</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p>(falls back first to VVVV)</p></td>
+<td class="text-left"><p>vvvv</p></td>
+<td class="text-left"><p>Pacific Time or Los Angeles Time</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>V</p></td>
+<td class="text-left"><p>Time Zone: short time zone ID</p></td>
+<td class="text-left"><p>V</p></td>
+<td class="text-left"><p>uslax</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p>Time Zone: long time zone ID</p></td>
+<td class="text-left"><p>VV</p></td>
+<td class="text-left"><p>America/Los_Angeles</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p>Time Zone: time zone exemplar city</p></td>
+<td class="text-left"><p>VVV</p></td>
+<td class="text-left"><p>Los Angeles</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p>Time Zone: generic location (falls back to OOOO)</p></td>
+<td class="text-left"><p>VVVV</p></td>
+<td class="text-left"><p>Los Angeles Time</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>X</p></td>
+<td class="text-left"><p>Time Zone: ISO8601 basic hm?, with Z for 0</p></td>
+<td class="text-left"><p>X</p></td>
+<td class="text-left"><p>-08, +0530, Z</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p>Time Zone: ISO8601 basic hm, with Z</p></td>
+<td class="text-left"><p>XX</p></td>
+<td class="text-left"><p>-0800, Z</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p>Time Zone: ISO8601 extended hm, with Z</p></td>
+<td class="text-left"><p>XXX</p></td>
+<td class="text-left"><p>-08:00, Z</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p>Time Zone: ISO8601 basic hms?, with Z</p></td>
+<td class="text-left"><p>XXXX</p></td>
+<td class="text-left"><p>-0800, -075258, Z</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p>Time Zone: ISO8601 extended hms?, with Z</p></td>
+<td class="text-left"><p>XXXXX</p></td>
+<td class="text-left"><p>-08:00, -07:52:58, Z</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>x</p></td>
+<td class="text-left"><p>Time Zone: ISO8601 basic hm?, without Z for 0</p></td>
+<td class="text-left"><p>x</p></td>
+<td class="text-left"><p>-08, +0530</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p>Time Zone: ISO8601 basic hm, without Z</p></td>
+<td class="text-left"><p>xx</p></td>
+<td class="text-left"><p>-0800</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p>Time Zone: ISO8601 extended hm, without Z</p></td>
+<td class="text-left"><p>xxx</p></td>
+<td class="text-left"><p>-08:00</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p>Time Zone: ISO8601 basic hms?, without Z</p></td>
+<td class="text-left"><p>xxxx</p></td>
+<td class="text-left"><p>-0800, -075258</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p>Time Zone: ISO8601 extended hms?, without Z</p></td>
+<td class="text-left"><p>xxxxx</p></td>
+<td class="text-left"><p>-08:00, -07:52:58</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>‘</p></td>
+<td class="text-left"><p>escape for text</p></td>
+<td class="text-left"><p>‘</p></td>
+<td class="text-left"><p>(nothing)</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>‘ ‘</p></td>
+<td class="text-left"><p>two single quotes produce one</p></td>
+<td class="text-left"><p>‘ ‘</p></td>
+<td class="text-left"><p>‘</p></td>
 </tr>
 </tbody>
 </table>
@@ -798,77 +804,77 @@
 <p>A few examples:</p>
 <table class="colwidths-auto docutils align-default">
 <thead>
-<tr class="row-odd"><th class="text-align:left head"><p></p></th>
-<th class="text-align:left head"><p></p></th>
+<tr class="row-odd"><th class="text-left head"><p></p></th>
+<th class="text-left head"><p></p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-align:left"><p><strong>Example Pattern</strong></p></td>
-<td class="text-align:left"><p><strong>Result</strong></p></td>
+<tr class="row-even"><td class="text-left"><p><strong>Example Pattern</strong></p></td>
+<td class="text-left"><p><strong>Result</strong></p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p>yyyy.MM.dd ‘at’ HH:mm:ss zzz</p></td>
-<td class="text-align:left"><p>2015.12.31 at 23:59:59 GMT+1</p></td>
+<tr class="row-odd"><td class="text-left"><p>yyyy.MM.dd ‘at’ HH:mm:ss zzz</p></td>
+<td class="text-left"><p>2015.12.31 at 23:59:59 GMT+1</p></td>
 </tr>
-<tr class="row-even"><td class="text-align:left"><p>EEE, MMM d, ‘’yy</p></td>
-<td class="text-align:left"><p>czw., gru 31, ‘15</p></td>
+<tr class="row-even"><td class="text-left"><p>EEE, MMM d, ‘’yy</p></td>
+<td class="text-left"><p>czw., gru 31, ‘15</p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p>h:mm a</p></td>
-<td class="text-align:left"><p>11:59 PM</p></td>
+<tr class="row-odd"><td class="text-left"><p>h:mm a</p></td>
+<td class="text-left"><p>11:59 PM</p></td>
 </tr>
-<tr class="row-even"><td class="text-align:left"><p>hh ‘o’’clock’ a, zzzz</p></td>
-<td class="text-align:left"><p>11 o’clock PM, GMT+01:00</p></td>
+<tr class="row-even"><td class="text-left"><p>hh ‘o’’clock’ a, zzzz</p></td>
+<td class="text-left"><p>11 o’clock PM, GMT+01:00</p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p>K:mm a, z</p></td>
-<td class="text-align:left"><p>11:59 PM, GMT+1</p></td>
+<tr class="row-odd"><td class="text-left"><p>K:mm a, z</p></td>
+<td class="text-left"><p>11:59 PM, GMT+1</p></td>
 </tr>
-<tr class="row-even"><td class="text-align:left"><p>yyyyy.MMMM.dd GGG hh:mm aaa</p></td>
-<td class="text-align:left"><p>2015.grudnia.31 n.e. 11:59 PM</p></td>
+<tr class="row-even"><td class="text-left"><p>yyyyy.MMMM.dd GGG hh:mm aaa</p></td>
+<td class="text-left"><p>2015.grudnia.31 n.e. 11:59 PM</p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p>uuuu-MM-dd’T’HH:mm:ssZ</p></td>
-<td class="text-align:left"><p>2015-12-31T23:59:59+0100 (the ISO 8601 guideline)</p></td>
+<tr class="row-odd"><td class="text-left"><p>uuuu-MM-dd’T’HH:mm:ssZ</p></td>
+<td class="text-left"><p>2015-12-31T23:59:59+0100 (the ISO 8601 guideline)</p></td>
 </tr>
-<tr class="row-even"><td class="text-align:left"><p></p></td>
-<td class="text-align:left"><p></p></td>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="value">
-<h2>Value<a class="headerlink" href="#value" title="Permalink to this headline"></a></h2>
+</section>
+<section id="value">
+<h2>Value<a class="headerlink" href="#value" title="Permalink to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">stri_datetime_format</span></code> returns a character vector.</p>
 <p><code class="docutils literal notranslate"><span class="pre">stri_datetime_parse</span></code> returns an object of class <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/DateTimeClasses.html"><code class="docutils literal notranslate"><span class="pre">POSIXct</span></code></a>.</p>
-</div>
-<div class="section" id="author-s">
-<h2>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this headline"></a></h2>
+</section>
+<section id="author-s">
+<h2>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this heading"></a></h2>
 <p><a class="reference external" href="https://www.gagolewski.com/">Marek Gagolewski</a> and other contributors</p>
-</div>
-<div class="section" id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline"></a></h2>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
 <p><em>Formatting Dates and Times</em> – ICU User Guide, <a class="reference external" href="https://unicode-org.github.io/icu/userguide/format_parse/datetime/">https://unicode-org.github.io/icu/userguide/format_parse/datetime/</a></p>
-</div>
-<div class="section" id="see-also">
-<h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline"></a></h2>
+</section>
+<section id="see-also">
+<h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this heading"></a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
-<p>Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, <em>Journal of Statistical Software</em> 103(2), 2022, 1-59, doi: <a class="reference external" href="https://doi.org/10.18637/jss.v103.i02">10.18637/jss.v103.i02</a></p>
+<p>Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, <em>Journal of Statistical Software</em> 103(2), 2022, 1-59, <a class="reference external" href="https://doi.org/10.18637/jss.v103.i02">doi:10.18637/jss.v103.i02</a></p>
 <p>Other datetime: <a class="reference internal" href="stri_datetime_add.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_add()</span></code></span></a>, <a class="reference internal" href="stri_datetime_create.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_create()</span></code></span></a>, <a class="reference internal" href="stri_datetime_fields.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_fields()</span></code></span></a>, <a class="reference internal" href="stri_datetime_fstr.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_fstr()</span></code></span></a>, <a class="reference internal" href="stri_datetime_now.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_now()</span></code></span></a>, <a class="reference internal" href="stri_datetime_symbols.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_symbols()</span></code></span></a>, <a class="reference internal" href="stri_timezone_set.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_get()</span></code></span></a>, <a class="reference internal" href="stri_timezone_info.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_info()</span></code></span></a>, <a class="reference internal" href="stri_timezone_list.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_timezone_list()</span></code></span></a></p>
-</div>
-<div class="section" id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline"></a></h2>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#39;2015-02-28&#39;</span><span class="p">,</span> <span class="s">&#39;2015-02-29&#39;</span><span class="p">)</span>
 <span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&#39;yyyy-MM-dd&#39;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2015-02-28 18:56:33 AEDT&quot; NA</span>
+<span class="c1">## [1] &quot;2015-02-28 14:27:44 AEDT&quot; NA</span>
 <span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&#39;yyyy-MM-dd&#39;</span><span class="p">,</span> <span class="n">lenient</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2015-02-28 18:56:33 AEDT&quot; &quot;2015-03-01 18:56:33 AEDT&quot;</span>
+<span class="c1">## [1] &quot;2015-02-28 14:27:44 AEDT&quot; &quot;2015-03-01 14:27:44 AEDT&quot;</span>
 <span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="n">x</span> <span class="o">%s+%</span> <span class="s">&quot; 00:00:00&quot;</span><span class="p">,</span> <span class="s">&quot;yyyy-MM-dd HH:mm:ss&quot;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;2015-02-28 00:00:00 AEDT&quot; NA</span>
 <span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="s">&#39;19 lipca 2015&#39;</span><span class="p">,</span> <span class="s">&#39;date_long&#39;</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;pl_PL&#39;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2015-07-19 18:56:33 AEST&quot;</span>
+<span class="c1">## [1] &quot;2015-07-19 14:27:44 AEST&quot;</span>
 <span class="nf">stri_datetime_format</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span> <span class="s">&#39;datetime_relative_medium&#39;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;today, 6:56:33 pm&quot;</span>
+<span class="c1">## [1] &quot;today, 2:27:44 pm&quot;</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -883,7 +889,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2022, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2022-07-02T18:56:54+1000.
+      <span class="lastupdated">Last updated on 2022-12-15T14:28:06+1100.
       </span></p>
   </div>
 

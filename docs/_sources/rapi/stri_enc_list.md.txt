@@ -34,7 +34,7 @@ If `simplify` is `TRUE` (the default), then the resulting list is coerced to a c
 
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
-Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, doi: [10.18637/jss.v103.i02](https://doi.org/10.18637/jss.v103.i02)
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, [doi:10.18637/jss.v103.i02](https://doi.org/10.18637/jss.v103.i02)
 
 Other encoding_management: [`about_encoding`](about_encoding.md), [`stri_enc_info()`](stri_enc_info.md), [`stri_enc_mark()`](stri_enc_mark.md), [`stri_enc_set()`](stri_enc_set.md)
 

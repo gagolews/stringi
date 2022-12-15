@@ -4,7 +4,8 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Other Operations &mdash; stringi</title>
@@ -36,6 +37,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
@@ -68,7 +70,7 @@
             
             
               <div class="version">
-                1.7.7
+                1.7.9
               </div>
             
           
@@ -94,8 +96,16 @@
             
             
               <p class="caption" role="heading"><span class="caption-text">stringi</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="design_principles.html">General Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic_operations.html">Basic String Operations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codepoint_comparing.html">Code-Pointwise Comparing</a></li>
@@ -122,7 +132,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="input_output.html">Input and Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="example.html">Example Use Case: Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference Manual</span></p>
 <ul>
@@ -130,14 +139,11 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi">Source Code (GitHub)</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/stringi/issues">Bug Tracker and Feature Suggestions</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN Entry</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://stringx.gagolewski.com/">stringx</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author's Homepage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../news.html">What Is New in <em>stringi</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
 </ul>
 
             
@@ -177,16 +183,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="tex2jax_ignore mathjax_ignore section" id="other-operations">
-<span id="sec-other"></span><h1>Other Operations<a class="headerlink" href="#other-operations" title="Permalink to this headline"></a></h1>
+  <section id="other-operations">
+<span id="sec-other"></span><h1>Other Operations<a class="headerlink" href="#other-operations" title="Permalink to this heading"></a></h1>
 <blockquote>
-<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that has recently been published the <em>Journal of Statistical Software</em>, see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3">Gag22</a>]</span>.</p>
+<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that has recently been published the <em>Journal of Statistical Software</em>, see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="M. Gagolewski. stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59, 2022. doi:10.18637/jss.v103.i02.">Gag22</a>]</span>.</p>
 </div></blockquote>
 <p>In the sequel, we cover the functions that deal with text boundary
 detection, random string generation, date/time formatting and parsing,
 amongst others.</p>
-<div class="section" id="analysing-text-boundaries">
-<span id="sec-boundaryanalysis"></span><h2>Analysing Text Boundaries<a class="headerlink" href="#analysing-text-boundaries" title="Permalink to this headline"></a></h2>
+<section id="analysing-text-boundaries">
+<span id="sec-boundaryanalysis"></span><h2>Analysing Text Boundaries<a class="headerlink" href="#analysing-text-boundaries" title="Permalink to this heading"></a></h2>
 <p>Text boundary analysis aims at locating linguistic delimiters for the
 purpose of splitting text into lines, word-wrapping, counting characters
 or words, locating particular text units (e.g., the 3rd sentence), etc.</p>
@@ -223,16 +229,16 @@ amongst others. For example:</p>
 <span class="c1">## [11] &quot;of&quot;         &quot;eels&quot;       &quot;eggs&quot;       &quot;and&quot;        &quot;spam&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="trimming-padding-and-other-formatting">
-<h2>Trimming, Padding, and Other Formatting<a class="headerlink" href="#trimming-padding-and-other-formatting" title="Permalink to this headline"></a></h2>
+</section>
+<section id="trimming-padding-and-other-formatting">
+<h2>Trimming, Padding, and Other Formatting<a class="headerlink" href="#trimming-padding-and-other-formatting" title="Permalink to this heading"></a></h2>
 <p>The following functions can be used for pretty-printing character
 strings or text on the console, dynamically generating reports (e.g.,
 with <code class="docutils literal notranslate"><span class="pre">Sweave()</span></code> or <a class="reference external" href="https://yihui.org/knitr/"><em>knitr</em></a>
-<span id="id2">[<a class="reference internal" href="../z_bibliography.html#id34">Xie15</a>]</span>), or creating text files
+<span id="id2">[<a class="reference internal" href="../z_bibliography.html#id34" title="Y. Xie. Dynamic Documents with R and knitr. Chapman and Hall/CRC, 2015.">Xie15</a>]</span>), or creating text files
 (e.g., with <code class="docutils literal notranslate"><span class="pre">stri_write_lines()</span></code>; see <a class="reference internal" href="input_output.html#sec-read-lines"><span class="std std-ref">Reading and Writing Text Files</span></a>).</p>
-<div class="section" id="padding">
-<h3>Padding<a class="headerlink" href="#padding" title="Permalink to this headline"></a></h3>
+<section id="padding">
+<h3>Padding<a class="headerlink" href="#padding" title="Permalink to this heading"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">stri_pad()</span></code> pads strings with some character so that they reach the
 desired widths (as in <code class="docutils literal notranslate"><span class="pre">stri_width()</span></code>). This can be used to centre,
 left-, or right-align a message when printed with, e.g., <code class="docutils literal notranslate"><span class="pre">cat()</span></code>.</p>
@@ -240,9 +246,9 @@ left-, or right-align a message when printed with, e.g., <code class="docutils l
 <span class="c1">## ................................SPAMITY SPAM.................................</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="trimming">
-<h3>Trimming<a class="headerlink" href="#trimming" title="Permalink to this headline"></a></h3>
+</section>
+<section id="trimming">
+<h3>Trimming<a class="headerlink" href="#trimming" title="Permalink to this heading"></a></h3>
 <p>A dual operation is that of trimming from the left or right side of
 strings:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="s">&quot;      spam, eggs, and lovely spam.\n&quot;</span>
@@ -250,12 +256,12 @@ strings:</p>
 <span class="c1">## [1] &quot;spam, eggs, and lovely spam.&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="word-wrapping">
-<h3>Word Wrapping<a class="headerlink" href="#word-wrapping" title="Permalink to this headline"></a></h3>
+</section>
+<section id="word-wrapping">
+<h3>Word Wrapping<a class="headerlink" href="#word-wrapping" title="Permalink to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">stri_wrap()</span></code> function splits each (possibly long) string in a
 character vector into chunks of at most a given width. By default, the
-dynamic word wrap algorithm <span id="id3">[<a class="reference internal" href="../z_bibliography.html#id21">KP81</a>]</span> that minimises the raggedness
+dynamic word wrap algorithm <span id="id3">[<a class="reference internal" href="../z_bibliography.html#id21" title="D.E. Knuth and M.F. Plass. Breaking paragraphs into lines. Software: Practice and Experience, 11:1119–1184, 1981.">KP81</a>]</span> that minimises the raggedness
 of the formatted text is used. However, there’s also an option
 (<code class="docutils literal notranslate"><span class="pre">cost_exponent=0</span></code>) to use the greedy alignment, for compatibility with
 the built-in <code class="docutils literal notranslate"><span class="pre">strwrap()</span></code>.</p>
@@ -272,9 +278,9 @@ the built-in <code class="docutils literal notranslate"><span class="pre">strwra
 <span class="c1">## &gt;     metus. Amet nam vestibulum ornare tincidunt massa sed ullamcorper.</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="applying-string-templates">
-<h3>Applying String Templates<a class="headerlink" href="#applying-string-templates" title="Permalink to this headline"></a></h3>
+</section>
+<section id="applying-string-templates">
+<h3>Applying String Templates<a class="headerlink" href="#applying-string-templates" title="Permalink to this heading"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">stri_sprintf()</span></code> is a Unicode-aware rewrite of the built-in <code class="docutils literal notranslate"><span class="pre">sprintf()</span></code>
 function. In particular, it enables formatting and padding based on
 character width, not just the number of code points. The function is
@@ -293,10 +299,10 @@ of 6 (plus the square brackets).</p>
 <span class="c1">## [1] &quot;pi=&#39;3.1&#39;&quot;    &quot;pi=&#39;3.14&#39;&quot;   &quot;pi=&#39;3.142&#39;&quot;  &quot;pi=&#39;3.1416&#39;&quot;</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="generating-random-strings">
-<h2>Generating Random Strings<a class="headerlink" href="#generating-random-strings" title="Permalink to this headline"></a></h2>
+</section>
+</section>
+<section id="generating-random-strings">
+<h2>Generating Random Strings<a class="headerlink" href="#generating-random-strings" title="Permalink to this heading"></a></h2>
 <p>Apart from <code class="docutils literal notranslate"><span class="pre">stri_rand_lipsum()</span></code>, which produces random-ish text
 paragraphs (“placeholders” for real text), we have access to a function
 that generates sequences of characters uniformly sampled (with
@@ -314,16 +320,16 @@ replacement) from a given set.</p>
 <p>See <a class="reference internal" href="regular_expressions.html#sec-regexindividualchars"><span class="std std-ref">Matching Individual Characters</span></a> and
 <code class="docutils literal notranslate"><span class="pre">help(&quot;stringi-search-charclass&quot;)</span></code> for different ways to specify
 character sets.</p>
-</div>
-<div class="section" id="transliterating">
-<h2>Transliterating<a class="headerlink" href="#transliterating" title="Permalink to this headline"></a></h2>
+</section>
+<section id="transliterating">
+<h2>Transliterating<a class="headerlink" href="#transliterating" title="Permalink to this heading"></a></h2>
 <p>Transliteration, in its broad sense, deals with the substitution of
 characters or their groups for different ones, according to some
 well-defined, possibly context-aware, rules. It may be utile, amongst
 others, when “normalising” pieces of strings or identifiers so that
 they can be more easily compared.</p>
-<div class="section" id="case-mapping">
-<h3>Case Mapping<a class="headerlink" href="#case-mapping" title="Permalink to this headline"></a></h3>
+<section id="case-mapping">
+<h3>Case Mapping<a class="headerlink" href="#case-mapping" title="Permalink to this heading"></a></h3>
 <p>Mapping to upper, lower, or title case is a language- and
 context-sensitive operation that can change the total number of code
 points in a string.</p>
@@ -335,9 +341,9 @@ points in a string.</p>
 <span class="c1">## [1] &quot;IJsvrij Yoghurt&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="mapping-between-specific-characters">
-<h3>Mapping Between Specific Characters<a class="headerlink" href="#mapping-between-specific-characters" title="Permalink to this headline"></a></h3>
+</section>
+<section id="mapping-between-specific-characters">
+<h3>Mapping Between Specific Characters<a class="headerlink" href="#mapping-between-specific-characters" title="Permalink to this heading"></a></h3>
 <p>When a fast 1-to-1 code point translation is required, we can call:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_trans_char</span><span class="p">(</span><span class="s">&quot;GATAAATCTGGTCTTATTTCC&quot;</span><span class="p">,</span> <span class="s">&quot;ACGT&quot;</span><span class="p">,</span> <span class="s">&quot;tgca&quot;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;ctatttagaccagaataaagg&quot;</span>
@@ -345,9 +351,9 @@ points in a string.</p>
 </div>
 <p>Here, “<code class="docutils literal notranslate"><span class="pre">A</span></code>”, “<code class="docutils literal notranslate"><span class="pre">C</span></code>”, “<code class="docutils literal notranslate"><span class="pre">G</span></code>”, and “<code class="docutils literal notranslate"><span class="pre">T</span></code>” is replaced with “<code class="docutils literal notranslate"><span class="pre">t</span></code>”, “<code class="docutils literal notranslate"><span class="pre">g</span></code>”,
 “<code class="docutils literal notranslate"><span class="pre">c</span></code>”, and “<code class="docutils literal notranslate"><span class="pre">a</span></code>”, respectively.</p>
-</div>
-<div class="section" id="general-transforms">
-<h3>General Transforms<a class="headerlink" href="#general-transforms" title="Permalink to this headline"></a></h3>
+</section>
+<section id="general-transforms">
+<h3>General Transforms<a class="headerlink" href="#general-transforms" title="Permalink to this heading"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">stri_trans_general()</span></code> gives access to a wide range of text
 transforms defined by <em>ICU</em>, whose catalogue can be browsed by calling
 <code class="docutils literal notranslate"><span class="pre">stri_trans_list()</span></code>.</p>
@@ -368,10 +374,10 @@ ASCII.</p>
 (see the <a class="reference external" href="https://unicode-org.github.io/icu/userguide/transforms/general/"><em>ICU</em> User Guide on General Transforms</a>). It can be
 used, for instance, to generate different romanisations of non-Latin
 alphabets.</p>
-</div>
-</div>
-<div class="section" id="parsing-and-formatting-date-and-time">
-<span id="sec-datetime"></span><h2>Parsing and Formatting Date and Time<a class="headerlink" href="#parsing-and-formatting-date-and-time" title="Permalink to this headline"></a></h2>
+</section>
+</section>
+<section id="parsing-and-formatting-date-and-time">
+<span id="sec-datetime"></span><h2>Parsing and Formatting Date and Time<a class="headerlink" href="#parsing-and-formatting-date-and-time" title="Permalink to this heading"></a></h2>
 <p>In base R, dealing with temporal data in regional settings other than
 the current locale is somewhat difficult. For instance, many will find
 the task of parsing the following Polish date problematic:</p>
@@ -421,8 +427,8 @@ templates can be converted with <code class="docutils literal notranslate"><span
 </div>
 <p>We have selected the Hebrew calendar within the English locale and
 the Japanese calendar in the Japanese locale.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -437,7 +443,7 @@ the Japanese calendar in the Japanese locale.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2022, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2022-07-02T18:56:54+1000.
+      <span class="lastupdated">Last updated on 2022-12-15T14:28:06+1100.
       </span></p>
   </div>
 
