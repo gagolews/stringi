@@ -132,7 +132,7 @@ processing in R, \emph{Journal of Statistical Software} 103(2), 2022, 1-59,
 \url{https://home.unicode.org/}
 
 \emph{UTF-8, A Transformation Format of ISO 10646} -- RFC 3629,
-\url{https://tools.ietf.org/html/rfc3629}
+\url{https://www.rfc-editor.org/rfc/rfc3629}
 }
 \seealso{
 The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.com/}

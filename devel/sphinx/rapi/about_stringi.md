@@ -78,7 +78,7 @@ Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character str
 
 *The Unicode Consortium*, <https://home.unicode.org/>
 
-*UTF-8, A Transformation Format of ISO 10646* -- RFC 3629, <https://tools.ietf.org/html/rfc3629>
+*UTF-8, A Transformation Format of ISO 10646* -- RFC 3629, <https://www.rfc-editor.org/rfc/rfc3629>
 
 ## See Also
 

@@ -89,7 +89,7 @@ stri_trans_nfkc('\ufdfa') # 1 codepoint -> 18 codepoints
    \url{https://unicode.org/reports/tr15/}
 
 \emph{Unicode Format for Network Interchange}
--- RFC5198, \url{https://tools.ietf.org/rfc/rfc5198.txt}
+-- RFC5198, \url{https://www.rfc-editor.org/rfc/rfc5198}
 
 \emph{Character Model for the World Wide Web 1.0: Normalization}
 -- W3C Working Draft, \url{https://www.w3.org/TR/charmod-norm/}
