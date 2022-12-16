@@ -1,7 +1,7 @@
 # What Is New in *stringi*
 
 
-## 1.7.9 (2022-12-15)
+## 1.7.10 (2022-12-16)
 
 * [BUGFIX] Fixed some problems reported by `rchk`.
 

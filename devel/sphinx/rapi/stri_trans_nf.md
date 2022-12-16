@@ -70,7 +70,7 @@ The `stri_trans_nf*` functions return a character vector of the same length as i
 
 *Unicode Normalization Forms* -- Unicode Standard Annex #15, <https://unicode.org/reports/tr15/>
 
-*Unicode Format for Network Interchange* -- RFC5198, <https://tools.ietf.org/rfc/rfc5198.txt>
+*Unicode Format for Network Interchange* -- RFC5198, <https://www.rfc-editor.org/rfc/rfc5198>
 
 *Character Model for the World Wide Web 1.0: Normalization* -- W3C Working Draft, <https://www.w3.org/TR/charmod-norm/>
 

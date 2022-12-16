@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                1.7.9
+                1.7.10
               </div>
             
           
@@ -351,14 +351,14 @@
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_fields</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">())</span>
 <span class="c1">##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth</span>
-<span class="c1">## 1 2022    12  15   14     27     44         677         51           3</span>
+<span class="c1">## 1 2022    12  16   11     26     41         190         51           3</span>
 <span class="c1">##   DayOfYear DayOfWeek Hour12 AmPm Era</span>
-<span class="c1">## 1       349         5      2    2   2</span>
+<span class="c1">## 1       350         6     11    1   2</span>
 <span class="nf">stri_datetime_fields</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span>
 <span class="c1">##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth</span>
-<span class="c1">## 1 5783     3  21   14     27     44         680         12           4</span>
+<span class="c1">## 1 5783     3  22   11     26     41         193         12           4</span>
 <span class="c1">##   DayOfYear DayOfWeek Hour12 AmPm Era</span>
-<span class="c1">## 1        81         5      2    2   1</span>
+<span class="c1">## 1        82         6     11    1   1</span>
 <span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span><span class="o">$</span><span class="n">Month</span><span class="p">[</span>
    <span class="nf">stri_datetime_fields</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span><span class="o">$</span><span class="n">Month</span>
 <span class="p">]</span>
@@ -381,7 +381,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2022, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2022-12-15T14:28:06+1100.
+      <span class="lastupdated">Last updated on 2022-12-16T11:27:02+1100.
       </span></p>
   </div>
 
