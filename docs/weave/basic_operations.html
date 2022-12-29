@@ -142,6 +142,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://deepr.gagolewski.com">Deep R Programming</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://stringx.gagolewski.com/">stringx</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
@@ -189,7 +190,7 @@
   <section id="basic-string-operations">
 <span id="sec-basic"></span><h1>Basic String Operations<a class="headerlink" href="#basic-string-operations" title="Permalink to this heading"></a></h1>
 <blockquote>
-<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that has recently been published the <em>Journal of Statistical Software</em>, see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="M. Gagolewski. stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59, 2022. doi:10.18637/jss.v103.i02.">Gag22</a>]</span>.</p>
+<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that was published the <em>Journal of Statistical Software</em>; see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="M. Gagolewski. stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59, 2022. doi:10.18637/jss.v103.i02.">Gag22</a>]</span>. To learn more about R, check out Marek’s recent open-access (free!) textbook <a class="reference external" href="https://deepr.gagolewski.com/"><em>Deep R Programming</em></a> <span id="id2">[<a class="reference internal" href="../z_bibliography.html#id4" title="M. Gagolewski. Deep R Programming. Zenodo, Melbourne, 2023. ISBN 978-0-6455719-2-9 (reserved). early draft. URL: https://deepr.gagolewski.com/, doi:10.5281/zenodo.7490464.">Gag23</a>]</span>.</p>
 </div></blockquote>
 <section id="computing-length-and-width">
 <h2>Computing Length and Width<a class="headerlink" href="#computing-length-and-width" title="Permalink to this heading"></a></h2>
@@ -219,7 +220,7 @@ is a missing (<code class="docutils literal notranslate"><span class="pre">NA</s
 is undefined as well.</p>
 <p>When formatting strings for display (e.g., in a report dynamically
 generated with <code class="docutils literal notranslate"><span class="pre">Sweave()</span></code> or
-<a class="reference external" href="https://yihui.org/knitr/"><em>knitr</em></a> <span id="id2">[<a class="reference internal" href="../z_bibliography.html#id34" title="Y. Xie. Dynamic Documents with R and knitr. Chapman and Hall/CRC, 2015.">Xie15</a>]</span>), a string’s width
+<a class="reference external" href="https://yihui.org/knitr/"><em>knitr</em></a> <span id="id3">[<a class="reference internal" href="../z_bibliography.html#id35" title="Y. Xie. Dynamic Documents with R and knitr. Chapman and Hall/CRC, 2015.">Xie15</a>]</span>), a string’s width
 estimate may be more informative – an approximate number of text
 columns it will occupy when printed using a monospaced font. In
 particular, many Chinese, Japanese, Korean, and most emoji characters
@@ -331,8 +332,8 @@ particular sequences of code points in given strings.</p>
 <section id="indexing-vectors">
 <h3>Indexing Vectors<a class="headerlink" href="#indexing-vectors" title="Permalink to this heading"></a></h3>
 <p>To select a subsequence from any R vector, we use
-the square-bracket operator<a class="footnote-reference brackets" href="#footsubset" id="id3">1</a> with an index vector consisting of
-either non-negative integers, negative integers, or logical values<a class="footnote-reference brackets" href="#footnames" id="id4">2</a>.</p>
+the square-bracket operator<a class="footnote-reference brackets" href="#footsubset" id="id4">1</a> with an index vector consisting of
+either non-negative integers, negative integers, or logical values<a class="footnote-reference brackets" href="#footnames" id="id5">2</a>.</p>
 <p>For example, here is how to select specific elements in a vector:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="s">&quot;buckwheat&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="s">&quot;bacon&quot;</span><span class="p">)</span>
 <span class="n">x</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">]</span>                           <span class="c1"># from 1st to 3rd string</span>
@@ -519,7 +520,7 @@ content.</p>
 <p>This has replaced 3 length-2 chunks within <code class="docutils literal notranslate"><span class="pre">y</span></code> with new content.</p>
 <hr class="footnotes docutils" />
 <dl class="footnote brackets">
-<dt class="label" id="footsubset"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
+<dt class="label" id="footsubset"><span class="brackets"><a class="fn-backref" href="#id4">1</a></span></dt>
 <dd><p>More precisely, <code class="docutils literal notranslate"><span class="pre">x[i]</span></code> is a syntactic sugar for a call to
 <code class="docutils literal notranslate"><span class="pre">‘[‘(x,</span> <span class="pre">i)</span></code>. Moreover, if <code class="docutils literal notranslate"><span class="pre">x</span></code> is a list, <code class="docutils literal notranslate"><span class="pre">x[[i]]</span></code> can be used to
 extract its <code class="docutils literal notranslate"><span class="pre">i</span></code>-th element (alias <code class="docutils literal notranslate"><span class="pre">‘[[‘(x,</span> <span class="pre">i)</span></code>). Knowing the
@@ -527,7 +528,7 @@ extract its <code class="docutils literal notranslate"><span class="pre">i</span
 extract all first elements from each vector in a list by simply
 calling <code class="docutils literal notranslate"><span class="pre">sapply(x,</span> <span class="pre">&quot;[[&quot;,</span> <span class="pre">1)</span></code>.</p>
 </dd>
-<dt class="label" id="footnames"><span class="brackets"><a class="fn-backref" href="#id4">2</a></span></dt>
+<dt class="label" id="footnames"><span class="brackets"><a class="fn-backref" href="#id5">2</a></span></dt>
 <dd><p>If an object’s <code class="docutils literal notranslate"><span class="pre">names</span></code> attribute is set, indexing with a character
 vector is also possible.</p>
 </dd>
@@ -549,7 +550,7 @@ vector is also possible.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2022, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2022-12-16T11:27:02+1100.
+      <span class="lastupdated">Last updated on 2022-12-29T11:51:21+1100.
       </span></p>
   </div>
 

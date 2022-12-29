@@ -74,6 +74,11 @@ is greatly appreciated. Thanks!
 **See also**: `stringx <https://stringx.gagolewski.com/>`_ –
 a set of wrappers around *stringi* with a base R-compatible API.
 
+.. note::
+    To learn more about R, check out Marek's open-access (free!) textbook
+    `Deep R Programming <https://deepr.gagolewski.com/>`_
+    :cite:`deepr`\ .
+
 **Citation**: Gagolewski M.,
 *stringi*: Fast and portable character string processing in R,
 *Journal of Statistical Software*  103(2), 2022, 1–59,
@@ -144,6 +149,7 @@ a set of wrappers around *stringi* with a base R-compatible API.
     :maxdepth: 1
     :caption: Other
 
+    Deep R Programming <https://deepr.gagolewski.com>
     stringx <https://stringx.gagolewski.com/>
     JStatSoft Paper <https://dx.doi.org/10.18637/jss.v103.i02>
     C++ API — Rcpp Example <https://github.com/gagolews/ExampleRcppStringi>

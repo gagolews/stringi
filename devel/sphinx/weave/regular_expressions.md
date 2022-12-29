@@ -4,7 +4,7 @@ Regular Expressions
 
 
 
-> This tutorial is based on the [paper on *stringi*](https://dx.doi.org/10.18637/jss.v103.i02) that has recently been published the *Journal of Statistical Software*, see {cite}`stringi`.
+> This tutorial is based on the [paper on *stringi*](https://dx.doi.org/10.18637/jss.v103.i02) that was published the *Journal of Statistical Software*; see {cite}`stringi`. To learn more about R, check out Marek's recent open-access (free!) textbook [*Deep R Programming*](https://deepr.gagolewski.com/) {cite}`deepr`.
 
 
 Regular expressions (regexes) provide concise grammar for

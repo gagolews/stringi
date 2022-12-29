@@ -142,6 +142,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://deepr.gagolewski.com">Deep R Programming</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://stringx.gagolewski.com/">stringx</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
@@ -189,7 +190,7 @@
   <section id="collation">
 <span id="sec-collator"></span><h1>Collation<a class="headerlink" href="#collation" title="Permalink to this heading"></a></h1>
 <blockquote>
-<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that has recently been published the <em>Journal of Statistical Software</em>, see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="M. Gagolewski. stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59, 2022. doi:10.18637/jss.v103.i02.">Gag22</a>]</span>.</p>
+<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that was published the <em>Journal of Statistical Software</em>; see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="M. Gagolewski. stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59, 2022. doi:10.18637/jss.v103.i02.">Gag22</a>]</span>. To learn more about R, check out Marek’s recent open-access (free!) textbook <a class="reference external" href="https://deepr.gagolewski.com/"><em>Deep R Programming</em></a> <span id="id2">[<a class="reference internal" href="../z_bibliography.html#id4" title="M. Gagolewski. Deep R Programming. Zenodo, Melbourne, 2023. ISBN 978-0-6455719-2-9 (reserved). early draft. URL: https://deepr.gagolewski.com/, doi:10.5281/zenodo.7490464.">Gag23</a>]</span>.</p>
 </div></blockquote>
 <p>Historically, the code-pointwise comparison had been used in most string
 comparison activities, especially when strings in ASCII (i.e., English)
@@ -213,7 +214,7 @@ reflect the expectations of a specific user community, such as the
 speakers of different languages and their various regional variants.</p>
 <section id="specifying-locales">
 <h3>Specifying Locales<a class="headerlink" href="#specifying-locales" title="Permalink to this heading"></a></h3>
-<p>A locale specifier<a class="footnote-reference brackets" href="#footlocale" id="id2">1</a> is of the form <code class="docutils literal notranslate"><span class="pre">&quot;Language&quot;</span></code>,
+<p>A locale specifier<a class="footnote-reference brackets" href="#footlocale" id="id3">1</a> is of the form <code class="docutils literal notranslate"><span class="pre">&quot;Language&quot;</span></code>,
 <code class="docutils literal notranslate"><span class="pre">&quot;Language_Country&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">&quot;Language_Country_Variant&quot;</span></code>, where:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Language</span></code> is, most frequently, a two- or three-letter code that conforms to
@@ -265,7 +266,7 @@ portability, it is best to rely on the <em>ICU</em> library bundle
 shipped with <em>stringi</em>. This is the case on Windows and macOS, whose
 users typically download the pre-compiled versions of the package from
 CRAN. However, on various flavours of GNU/Linux and other Unix-based
-systems, the system <em>ICU</em> is used more eagerly<a class="footnote-reference brackets" href="#footsystemicu" id="id3">2</a>. To force building
+systems, the system <em>ICU</em> is used more eagerly<a class="footnote-reference brackets" href="#footsystemicu" id="id4">2</a>. To force building
 <em>ICU</em> from sources, we may call:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;stringi&quot;</span><span class="p">,</span> <span class="n">configure.args</span><span class="o">=</span><span class="s">&quot;--disable-pkg-config&quot;</span><span class="p">)</span>
 </pre></div>
@@ -575,12 +576,12 @@ processing activities.</p>
 </div>
 <hr class="footnotes docutils" />
 <dl class="footnote brackets">
-<dt class="label" id="footlocale"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
+<dt class="label" id="footlocale"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
 <dd><p>Locale specifiers in <em>ICU</em> are platform-independent. This is not
 the case for their base-R counterparts, see <code class="docutils literal notranslate"><span class="pre">help(&quot;locales&quot;)</span></code>, e.g.,
 we have <code class="docutils literal notranslate"><span class="pre">&quot;Polish_Poland&quot;</span></code> on Windows vs <code class="docutils literal notranslate"><span class="pre">&quot;pl_PL&quot;</span></code> on Linux.</p>
 </dd>
-<dt class="label" id="footsystemicu"><span class="brackets"><a class="fn-backref" href="#id3">2</a></span></dt>
+<dt class="label" id="footsystemicu"><span class="brackets"><a class="fn-backref" href="#id4">2</a></span></dt>
 <dd><p>See, e.g., software packages <code class="docutils literal notranslate"><span class="pre">libicu-dev</span></code> on Debian/Ubuntu or
 <code class="docutils literal notranslate"><span class="pre">libicu-devel</span></code> on RHL/Fedora/OpenSUSE. For more details regarding
 the configure/build process of <em>stringi</em>, refer to the <code class="docutils literal notranslate"><span class="pre">INSTALL</span></code>
@@ -603,7 +604,7 @@ file.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2022, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2022-12-16T11:27:02+1100.
+      <span class="lastupdated">Last updated on 2022-12-29T11:51:21+1100.
       </span></p>
   </div>
 

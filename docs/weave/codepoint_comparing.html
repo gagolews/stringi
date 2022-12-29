@@ -131,6 +131,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://deepr.gagolewski.com">Deep R Programming</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://stringx.gagolewski.com/">stringx</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
@@ -178,7 +179,7 @@
   <section id="code-pointwise-comparing">
 <span id="sec-fixed"></span><h1>Code-Pointwise Comparing<a class="headerlink" href="#code-pointwise-comparing" title="Permalink to this heading"></a></h1>
 <blockquote>
-<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that has recently been published the <em>Journal of Statistical Software</em>, see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="M. Gagolewski. stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59, 2022. doi:10.18637/jss.v103.i02.">Gag22</a>]</span>.</p>
+<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that was published the <em>Journal of Statistical Software</em>; see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="M. Gagolewski. stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59, 2022. doi:10.18637/jss.v103.i02.">Gag22</a>]</span>. To learn more about R, check out Marek’s recent open-access (free!) textbook <a class="reference external" href="https://deepr.gagolewski.com/"><em>Deep R Programming</em></a> <span id="id2">[<a class="reference internal" href="../z_bibliography.html#id4" title="M. Gagolewski. Deep R Programming. Zenodo, Melbourne, 2023. ISBN 978-0-6455719-2-9 (reserved). early draft. URL: https://deepr.gagolewski.com/, doi:10.5281/zenodo.7490464.">Gag23</a>]</span>.</p>
 </div></blockquote>
 <p>There are many settings where we are faced with testing whether two
 strings (or parts thereof) consist of exactly the same Unicode code
@@ -203,7 +204,7 @@ the 2nd operand. There is only one exact match.</p>
 <section id="searching-for-fixed-strings">
 <span id="sec-strsearch"></span><h2>Searching for Fixed Strings<a class="headerlink" href="#searching-for-fixed-strings" title="Permalink to this heading"></a></h2>
 <p>For detecting if a string contains a given fixed substring
-(code-pointwisely), the fast KMP <span id="id2">[<a class="reference internal" href="../z_bibliography.html#id23" title="D. Knuth, J.H. Morris, and V. Pratt. Fast pattern matching in strings. SIAM Journal on Computing, 6(2):323–350, 1977.">KMP77</a>]</span> algorithm, with
+(code-pointwisely), the fast KMP <span id="id3">[<a class="reference internal" href="../z_bibliography.html#id24" title="D. Knuth, J.H. Morris, and V. Pratt. Fast pattern matching in strings. SIAM Journal on Computing, 6(2):323–350, 1977.">KMP77</a>]</span> algorithm, with
 worst time complexity of <em>O(n+p)</em> (where <em>n</em> is the length of the string
 and <em>p</em> is the length of the pattern), has been implemented in <em>stringi</em>
 (with numerous tweaks for even faster matching).</p>
@@ -296,7 +297,7 @@ to the search functions (via “<code class="docutils literal notranslate"><span
 </tr>
 </tbody>
 </table>
-<p>First, we may switch on the simplistic<a class="footnote-reference brackets" href="#footfixedcase" id="id3">1</a> case-insensitive matching.</p>
+<p>First, we may switch on the simplistic<a class="footnote-reference brackets" href="#footfixedcase" id="id4">1</a> case-insensitive matching.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_fixed</span><span class="p">(</span><span class="s">&quot;ACTGACGacgggACg&quot;</span><span class="p">,</span> <span class="s">&quot;acg&quot;</span><span class="p">,</span> <span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 <span class="c1">## [1] 3</span>
 </pre></div>
@@ -332,7 +333,7 @@ larger data sets:</p>
 </div>
 <p>This can be useful in scenarios such as “find the first 2 matching
 resource IDs”.</p>
-<p>There are also functions that verify whether a string starts or ends<a class="footnote-reference brackets" href="#footanchor" id="id4">2</a>
+<p>There are also functions that verify whether a string starts or ends<a class="footnote-reference brackets" href="#footanchor" id="id5">2</a>
 with a pattern match:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_startswith_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">)</span>  <span class="c1"># from=1 - match at start</span>
 <span class="c1">## [1]  TRUE  TRUE FALSE FALSE FALSE FALSE    NA  TRUE</span>
@@ -507,7 +508,7 @@ call <code class="docutils literal notranslate"><span class="pre">stri_split()</
 <p>There is also an option to limit the number of tokens (parameter <code class="docutils literal notranslate"><span class="pre">n</span></code>).</p>
 <hr class="footnotes docutils" />
 <dl class="footnote brackets">
-<dt class="label" id="footfixedcase"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
+<dt class="label" id="footfixedcase"><span class="brackets"><a class="fn-backref" href="#id4">1</a></span></dt>
 <dd><p>Which is not suitable for real-world NLP tasks,
 as it assumes that
 changing the case of a single code point always produces one and
@@ -515,7 +516,7 @@ only one item. This way, <code class="docutils literal notranslate"><span class=
 <code class="docutils literal notranslate"><span class="pre">&quot;GROSS&quot;</span></code>, see <a class="reference internal" href="collation.html#sec-collator"><span class="std std-ref">Collation</span></a> (and to some extent
 <a class="reference internal" href="regular_expressions.html#sec-regex"><span class="std std-ref">Regular Expressions</span></a>) for a workaround.</p>
 </dd>
-<dt class="label" id="footanchor"><span class="brackets"><a class="fn-backref" href="#id4">2</a></span></dt>
+<dt class="label" id="footanchor"><span class="brackets"><a class="fn-backref" href="#id5">2</a></span></dt>
 <dd><p>Note that testing for a pattern match at the start or end of a
 string has not been implemented separately for <code class="docutils literal notranslate"><span class="pre">regex</span></code> patterns,
 which support <code class="docutils literal notranslate"><span class="pre">&quot;^&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;$&quot;</span></code> anchors that serve precisely this
@@ -538,7 +539,7 @@ purpose; see <a class="reference internal" href="regular_expressions.html#sec-re
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2022, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2022-12-16T11:27:02+1100.
+      <span class="lastupdated">Last updated on 2022-12-29T11:51:21+1100.
       </span></p>
   </div>
 
