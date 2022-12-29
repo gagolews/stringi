@@ -129,6 +129,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://deepr.gagolewski.com">Deep R Programming</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://stringx.gagolewski.com/">stringx</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
@@ -176,7 +177,7 @@
   <section id="input-and-output">
 <span id="sec-io"></span><h1>Input and Output<a class="headerlink" href="#input-and-output" title="Permalink to this heading"></a></h1>
 <blockquote>
-<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that has recently been published the <em>Journal of Statistical Software</em>, see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="M. Gagolewski. stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59, 2022. doi:10.18637/jss.v103.i02.">Gag22</a>]</span>.</p>
+<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that was published the <em>Journal of Statistical Software</em>; see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="M. Gagolewski. stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59, 2022. doi:10.18637/jss.v103.i02.">Gag22</a>]</span>. To learn more about R, check out Marek’s recent open-access (free!) textbook <a class="reference external" href="https://deepr.gagolewski.com/"><em>Deep R Programming</em></a> <span id="id2">[<a class="reference internal" href="../z_bibliography.html#id4" title="M. Gagolewski. Deep R Programming. Zenodo, Melbourne, 2023. ISBN 978-0-6455719-2-9 (reserved). early draft. URL: https://deepr.gagolewski.com/, doi:10.5281/zenodo.7490464.">Gag23</a>]</span>.</p>
 </div></blockquote>
 <p>This section deals with some more advanced topics related to the
 operability of text processing applications between different platforms.
@@ -246,7 +247,7 @@ reading data from the standard input or from files (e.g., when <code class="docu
 is called). For instance, Central European versions of Windows will
 assume the “<code class="docutils literal notranslate"><span class="pre">windows-1250</span></code>” code page. On the other hand,
 MacOS as well as most Linux boxes
-work with UTF-8 by default<a class="footnote-reference brackets" href="#footucrt" id="id2">1</a>.</p>
+work with UTF-8 by default<a class="footnote-reference brackets" href="#footucrt" id="id3">1</a>.</p>
 <p>All strings in R have an associated encoding mark which can be read by
 calling <code class="docutils literal notranslate"><span class="pre">Encoding()</span></code> or, more conveniently, <code class="docutils literal notranslate"><span class="pre">stri_enc_mark()</span></code>. Most
 importantly, strings in ASCII, ISO-8859-1 (”<code class="docutils literal notranslate"><span class="pre">latin1</span></code>”), UTF-8, and the
@@ -257,7 +258,7 @@ available for UTF-16 data). Over the years, this has proven a robust,
 efficient, and maximally portable design choice – Unicode can be
 thought of as a superset of every other encoding. Moreover, in order to
 guarantee the correctness and high performance of the string processing
-pipelines, <em>stringi</em> always<a class="footnote-reference brackets" href="#footuftout" id="id3">2</a> outputs UTF-8 data.</p>
+pipelines, <em>stringi</em> always<a class="footnote-reference brackets" href="#footuftout" id="id4">2</a> outputs UTF-8 data.</p>
 </section>
 <section id="reading-and-writing-text-files">
 <span id="sec-read-lines"></span><h2>Reading and Writing Text Files<a class="headerlink" href="#reading-and-writing-text-files" title="Permalink to this heading"></a></h2>
@@ -374,12 +375,12 @@ is desired. For example:</p>
 <p>Such text might be much easier to process or analyse statistically.</p>
 <hr class="footnotes docutils" />
 <dl class="footnote brackets">
-<dt class="label" id="footucrt"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
+<dt class="label" id="footucrt"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
 <dd><p>It is expected that future R releases will support UTF-8 natively,
 thanks to the Universal C Runtime (UCRT) that is available for
 Windows 10.</p>
 </dd>
-<dt class="label" id="footuftout"><span class="brackets"><a class="fn-backref" href="#id3">2</a></span></dt>
+<dt class="label" id="footuftout"><span class="brackets"><a class="fn-backref" href="#id4">2</a></span></dt>
 <dd><p>Okay, with a few obvious exceptions, such as <code class="docutils literal notranslate"><span class="pre">stri_encode()</span></code>.</p>
 </dd>
 </dl>
@@ -399,7 +400,7 @@ Windows 10.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2022, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2022-12-16T11:27:02+1100.
+      <span class="lastupdated">Last updated on 2022-12-29T11:51:21+1100.
       </span></p>
   </div>
 

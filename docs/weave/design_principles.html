@@ -129,6 +129,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://deepr.gagolewski.com">Deep R Programming</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://stringx.gagolewski.com/">stringx</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
@@ -176,14 +177,14 @@
   <section id="general-design-principles">
 <h1>General Design Principles<a class="headerlink" href="#general-design-principles" title="Permalink to this heading"></a></h1>
 <blockquote>
-<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that has recently been published the <em>Journal of Statistical Software</em>, see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="M. Gagolewski. stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59, 2022. doi:10.18637/jss.v103.i02.">Gag22</a>]</span>.</p>
+<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that was published the <em>Journal of Statistical Software</em>; see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="M. Gagolewski. stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59, 2022. doi:10.18637/jss.v103.i02.">Gag22</a>]</span>. To learn more about R, check out Marek’s recent open-access (free!) textbook <a class="reference external" href="https://deepr.gagolewski.com/"><em>Deep R Programming</em></a> <span id="id2">[<a class="reference internal" href="../z_bibliography.html#id4" title="M. Gagolewski. Deep R Programming. Zenodo, Melbourne, 2023. ISBN 978-0-6455719-2-9 (reserved). early draft. URL: https://deepr.gagolewski.com/, doi:10.5281/zenodo.7490464.">Gag23</a>]</span>.</p>
 </div></blockquote>
 <p>The API of the early releases of <em>stringi</em> has been designed to be
 fairly compatible with that of the 0.6.2 version of the <a class="reference external" href="https://stringr.tidyverse.org/"><em>stringr</em></a>
-package <span id="id2">[<a class="reference internal" href="../z_bibliography.html#id11" title="H. Wickham. stringr: Modern, consistent string processing. The R Journal, 2(2):38–40, 2010.">Wic10</a>]</span> (dated 2012<a class="footnote-reference brackets" href="#footstringr" id="id3">1</a>),
+package <span id="id3">[<a class="reference internal" href="../z_bibliography.html#id12" title="H. Wickham. stringr: Modern, consistent string processing. The R Journal, 2(2):38–40, 2010.">Wic10</a>]</span> (dated 2012<a class="footnote-reference brackets" href="#footstringr" id="id4">1</a>),
 with some fixes in the consistency of the
 handling of missing values and zero-length vectors, amongst others.
-However, instead of being merely thin wrappers around base R<a class="footnote-reference brackets" href="#footstringx" id="id4">2</a> functions,
+However, instead of being merely thin wrappers around base R<a class="footnote-reference brackets" href="#footstringx" id="id5">2</a> functions,
 which we have identified as not necessarily portable across platforms
 and not really suitable for natural language processing tasks, all the
 functionality has been implemented from the ground up, with the use of
@@ -439,7 +440,7 @@ are treated in the same manner. For example, if a function expects a
 character vector on input and an object of another type is provided,
 <code class="docutils literal notranslate"><span class="pre">as.character()</span></code> is called first (we see that in the example above,
 “<code class="docutils literal notranslate"><span class="pre">1:2</span></code>” is treated as <code class="docutils literal notranslate"><span class="pre">c(&quot;1&quot;,</span> <span class="pre">&quot;2&quot;)</span></code>).</p>
-<p>Following <span id="id5">[<a class="reference internal" href="../z_bibliography.html#id11" title="H. Wickham. stringr: Modern, consistent string processing. The R Journal, 2(2):38–40, 2010.">Wic10</a>]</span>, <em>stringi</em> makes sure the output data
+<p>Following <span id="id6">[<a class="reference internal" href="../z_bibliography.html#id12" title="H. Wickham. stringr: Modern, consistent string processing. The R Journal, 2(2):38–40, 2010.">Wic10</a>]</span>, <em>stringi</em> makes sure the output data
 types are consistent and that different functions are interoperable.
 This makes operation chaining easier and less error-prone.</p>
 <p>For example, <code class="docutils literal notranslate"><span class="pre">stri_extract_first_regex()</span></code> finds the first occurrence of
@@ -603,18 +604,18 @@ calling “<code class="docutils literal notranslate"><span class="pre">x[]</spa
 “`<code class="docutils literal notranslate"><span class="pre">attributes&lt;-</span></code>`<code class="docutils literal notranslate"><span class="pre">(stri_...(x,</span> <span class="pre">...),</span> <span class="pre">attributes(x))</span></code>”.</p>
 <hr class="footnotes docutils" />
 <dl class="footnote brackets">
-<dt class="label" id="footstringr"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
+<dt class="label" id="footstringr"><span class="brackets"><a class="fn-backref" href="#id4">1</a></span></dt>
 <dd><p>Interestingly, in 2015 the aforementioned
 <em>stringr</em> package was rewritten as a set of wrappers around some of
 the <em>stringi</em> functions instead of the base R ones. In Section 14.7 of
-<em>R for Data Science</em> <span id="id6">[<a class="reference internal" href="../z_bibliography.html#id10" title="H. Wickham and G. Grolemund. R for Data Science. O'Reilly, 2017.">WG17</a>]</span> we read:
+<em>R for Data Science</em> <span id="id7">[<a class="reference internal" href="../z_bibliography.html#id11" title="H. Wickham and G. Grolemund. R for Data Science. O'Reilly, 2017.">WG17</a>]</span> we read:
 “<em>stringr</em> is useful when you’re learning because it exposes a minimal
 set of functions, which have been carefully picked to handle the most
 common string manipulation functions. <em>stringi</em>, on the other hand, is
 designed to be comprehensive. It contains almost every function you
 might ever need: <em>stringi</em> has 250 functions to <em>stringr</em>’s 49”.</p>
 </dd>
-<dt class="label" id="footstringx"><span class="brackets"><a class="fn-backref" href="#id4">2</a></span></dt>
+<dt class="label" id="footstringx"><span class="brackets"><a class="fn-backref" href="#id5">2</a></span></dt>
 <dd><p>See also the new
 <a class="reference external" href="https://stringx.gagolewski.com"><em>stringx</em></a> package
 which supplies a set of portable and efficient
@@ -638,7 +639,7 @@ replacements for and enhancements of the base R functions
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2022, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2022-12-16T11:27:02+1100.
+      <span class="lastupdated">Last updated on 2022-12-29T11:51:21+1100.
       </span></p>
   </div>
 
