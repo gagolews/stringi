@@ -2163,7 +2163,7 @@ int_getDefaultCodepage()
     // are between 3 and 19999
     if (codepageNumber > 0 && codepageNumber < 20000)
     {
-        sprintf(codepage, "windows-%ld", codepageNumber);
+        snprintf(codepage, 64, "windows-%ld", codepageNumber);  // marek sprintf->snprintf
         return codepage;
     }
     // If the codepage number call failed then return UTF-8

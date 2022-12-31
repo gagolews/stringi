@@ -1,6 +1,6 @@
 Package: stringi
-Version: 1.7.10
-Date: 2022-12-16
+Version: 1.7.11
+Date: 2022-12-31
 Title: Fast and Portable Character String Processing Facilities
 Description: A collection of character string/text/natural language
     processing tools for pattern searching (e.g., with 'Java'-like regular

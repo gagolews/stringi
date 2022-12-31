@@ -46,9 +46,18 @@
     // Use the predefined value.
 #else
 #ifdef U_STRINGI_PATCHES
-// #include <R.h>
-extern "C" void Rf_error(const char *str, ...);
+// Marek
+
+#if defined(__GNUC__) && __GNUC__ >= 3
+#define NORET __attribute__((noreturn))
+#else
+#define NORET
+#endif
+
+extern "C" void NORET Rf_error(const char *, ...);
+
 #   define UPRV_UNREACHABLE (Rf_error("Internal error in ICU: UPRV_UNREACHABLE"))
+
 #else /* !U_STRINGI_PATCHES */
 #   define UPRV_UNREACHABLE abort()
 #endif
