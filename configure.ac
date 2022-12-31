@@ -1,5 +1,5 @@
 # autoconf/configure script for stringi
-# Copyright (c) 2013-2022, Marek Gagolewski <https://www.gagolewski.com>
+# Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com>
 # https://stringi.gagolewski.com/
 
 
@@ -15,7 +15,7 @@
 
 # TODO: In the future, support only ICU >= 61 and R 3.4 (C++11 only) --
 # TODO: this will simplify the build chain. Yet, what follows is battle-tested,
-# TODO: so why don't do it unless absolutely necessary.
+# TODO: so we won't do it unless absolutely necessary.
 
 
 # TODO: The standard way to use external libraries on macOS and Windows

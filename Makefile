@@ -1,4 +1,4 @@
-# Copyright (c) 2013-2022, Marek Gagolewski <https://www.gagolewski.com>
+# Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com>
 
 .PHONY:  r check build clean purge sphinx docs test
 
@@ -49,7 +49,7 @@ stop-on-utf8:
 	        NAMESPACE cleanup R/* src/* man/* inst/* tools/* | \
 	    grep 'text/' | grep -v 'us-ascii' | tee /dev/stderr`" ]
 
-build:
+build: r
 	cd .. && R CMD build ${PKGNAME}
 
 check: stop-on-utf8 build

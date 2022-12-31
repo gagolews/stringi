@@ -1,3 +1,6 @@
+Contributions are welcome!
+
+
 * [BUILD TIME] TODO... src/icu55 and src/icu69 should be downloaded only on demand...
 
 * [NEW FEATURE] TODO.... #469: `stri_datetime_parse` .. new argument -
@@ -15,3 +18,8 @@
 
 * [NEW FEATURE] TODO... #471: split into overlapping or non-overlapping chunks,
     possibly of different lengths
+
+* [BUILD TIME] TODO..
+Tomas Kalibera suggests to use the Rtools version of ICU for Windows:
+"Rtools43 has icu 72.1, Rtools42 has 71.1."
+see also some notes in configure.ac

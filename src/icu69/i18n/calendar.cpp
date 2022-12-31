@@ -840,12 +840,14 @@ Calendar::operator=(const Calendar &right)
         fWeekendCease            = right.fWeekendCease;
         fWeekendCeaseMillis      = right.fWeekendCeaseMillis;
         fNextStamp               = right.fNextStamp;
-        uprv_strncpy((char*)validLocale, (char*)right.validLocale, ULOC_FULLNAME_CAPACITY-1);  // Marek
-        uprv_strncpy((char*)actualLocale, (char*)right.actualLocale, ULOC_FULLNAME_CAPACITY-1);  // Marek
 #ifdef U_STRINGI_PATCHES
-        validLocale[ULOC_FULLNAME_CAPACITY-1] = 0;  // Marek
-        actualLocale[ULOC_FULLNAME_CAPACITY-1] = 0;  // Marek
+        // fix for an annoying compiler warning (false positive)...
+        // snprintf writes at most *size* bytes (including the terminating null byte *str* (1st arg)
+        snprintf((char*)validLocale, ULOC_FULLNAME_CAPACITY, "%s", (char*)right.validLocale);
+        snprintf((char*)actualLocale, ULOC_FULLNAME_CAPACITY, "%s", (char*)right.actualLocale);
 #else //!U_STRINGI_PATCHES
+        uprv_strncpy(validLocale, right.validLocale, sizeof(validLocale));
+        uprv_strncpy(actualLocale, right.actualLocale, sizeof(actualLocale));
         validLocale[sizeof(validLocale)-1] = 0;
         actualLocale[sizeof(validLocale)-1] = 0;
 #endif // U_STRINGI_PATCHES
