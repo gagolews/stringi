@@ -1,11 +1,12 @@
 # What Is New in *stringi*
 
 
-## 1.7.10 (2022-12-16)
+## 1.7.11 (2022-12-31)
 
 * [BUGFIX] Fixed some problems reported by `rchk`.
 
-* [BACKWARD INCOMPATIBLE CHANGE IF ICU >= 72] If building against ICU >= 72,
+* [NOTE] [BACKWARD INCOMPATIBLE CHANGE IF ICU >= 72]
+  If building against ICU >= 72,
   note a backward incompatible change: `@` is no longer a word break;
   see <https://github.com/unicode-org/cldr/pull/2256> for more details.
 
