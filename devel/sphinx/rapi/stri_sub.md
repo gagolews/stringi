@@ -1,0 +1,100 @@
+# stri_sub: Extract a Substring From or Replace a Substring In a Character Vector
+
+## Description
+
+`stri_sub` extracts particular substrings at code point-based index ranges provided. Its replacement version allows to substitute (in-place) parts of a string with given replacement strings. `stri_sub_replace` is its forward pipe operator-friendly variant that returns a copy of the input vector.
+
+For extracting/replacing multiple substrings from/within each string, see [`stri_sub_all`](stri_sub_all.md).
+
+## Usage
+
+``` r
+stri_sub(
+  str,
+  from = 1L,
+  to = -1L,
+  length,
+  use_matrix = TRUE,
+  ignore_negative_length = FALSE
+)
+
+stri_sub(str, from = 1L, to = -1L, length, omit_na = FALSE, use_matrix = TRUE) <- value
+
+stri_sub_replace(..., replacement, value = replacement)
+```
+
+## Arguments
+
+|                          |                                                                                                                                                                                                                                                       |
+|--------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `str`                    | character vector                                                                                                                                                                                                                                      |
+| `from`                   | integer vector giving the start indexes; alternatively, if `use_matrix=TRUE`, a two-column matrix of type `cbind(from, to)` (unnamed columns or the 2nd column named other than `length`) or `cbind(from, length=length)` (2nd column named `length`) |
+| `to`                     | integer vector giving the end indexes; mutually exclusive with `length` and `from` being a matrix                                                                                                                                                     |
+| `length`                 | integer vector giving the substring lengths; mutually exclusive with `to` and `from` being a matrix                                                                                                                                                   |
+| `use_matrix`             | single logical value; see `from`                                                                                                                                                                                                                      |
+| `ignore_negative_length` | single logical value; whether negative lengths should be ignored or result in missing values                                                                                                                                                          |
+| `omit_na`                | single logical value; indicates whether missing values in any of the indexes or in `value` leave the corresponding input string unchanged \[replacement function only\]                                                                               |
+| `value`                  | a character vector defining the replacement strings \[replacement function only\]                                                                                                                                                                     |
+| `...`                    | arguments to be passed to `stri_sub<-`                                                                                                                                                                                                                |
+| `replacement`            | alias of `value` \[wherever applicable\]                                                                                                                                                                                                              |
+
+## Details
+
+Vectorized over `str`, \[`value`\], `from` and (`to` or `length`). Parameters `to` and `length` are mutually exclusive.
+
+Indexes are 1-based, i.e., the start of a string is at index 1. For negative indexes in `from` or `to`, counting starts at the end of the string. For instance, index -1 denotes the last code point in the string. Non-positive `length` gives an empty string.
+
+Argument `from` gives the start of a substring to extract. Argument `to` defines the last index of a substring, inclusive. Alternatively, its `length` may be provided.
+
+If `from` is a two-column matrix, then these two columns are used as `from` and `to`, respectively, unless the second column is named `length`. In such a case anything passed explicitly as `to` or `length` is ignored. Such types of index matrices are generated by [`stri_locate_first`](stri_locate.md) and [`stri_locate_last`](stri_locate.md). If extraction based on [`stri_locate_all`](stri_locate.md) is needed, see [`stri_sub_all`](stri_sub_all.md).
+
+In `stri_sub`, out-of-bound indexes are silently corrected. If `from` \> `to`, then an empty string is returned. By default, negative `length` results in the corresponding output being `NA`, see `ignore_negative_length`, though.
+
+In `stri_sub<-`, some configurations of indexes may work as substring \'injection\' at the front, back, or in middle. Negative `length` does not alter the corresponding input string.
+
+If both `to` and `length` are provided, `length` has priority over `to`.
+
+Note that for some Unicode strings, the extracted substrings might not be well-formed, especially if input strings are not normalized (see [`stri_trans_nfc`](stri_trans_nf.md)), include byte order marks, Bidirectional text marks, and so on. Handle with care.
+
+## Value
+
+`stri_sub` and `stri_sub_replace` return a character vector. `stri_sub<-` changes the `str` object \'in-place\'.
+
+## Author(s)
+
+[Marek Gagolewski](https://www.gagolewski.com/) and other contributors
+
+## See Also
+
+The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
+
+Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, [doi:10.18637/jss.v103.i02](https://doi.org/10.18637/jss.v103.i02)
+
+Other indexing: [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_locate_all()`](stri_locate.md), [`stri_sub_all()`](stri_sub_all.md)
+
+## Examples
+
+
+
+
+```r
+s <- c("spam, spam, bacon, and spam", "eggs and spam")
+stri_sub(s, from=-4)
+## [1] "spam" "spam"
+stri_sub(s, from=1, length=c(10, 4))
+## [1] "spam, spam" "eggs"
+(stri_sub(s, 1, 4) <- 'stringi')
+## [1] "stringi"
+x <- c('12 3456 789', 'abc', '', NA, '667')
+stri_sub(x, stri_locate_first_regex(x, '[0-9]+')) # see stri_extract_first
+## [1] "12"  NA    NA    NA    "667"
+stri_sub(x, stri_locate_last_regex(x, '[0-9]+'))  # see stri_extract_last
+## [1] "789" NA    NA    NA    "667"
+stri_sub_replace(x, stri_locate_first_regex(x, '[0-9]+'),
+    omit_na=TRUE, replacement='***') # see stri_replace_first
+## [1] "*** 3456 789" "abc"          ""             NA             "***"
+stri_sub_replace(x, stri_locate_last_regex(x, '[0-9]+'),
+    omit_na=TRUE, replacement='***') # see stri_replace_last
+## [1] "12 3456 ***" "abc"         ""            NA            "***"
+## Not run: x |> stri_sub_replace(1, 5, replacement='new_substring')
+```
