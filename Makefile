@@ -49,7 +49,7 @@ stop-on-utf8:
 	        NAMESPACE cleanup R/* src/* man/* inst/* tools/* | \
 	    grep 'text/' | grep -v 'us-ascii' | tee /dev/stderr`" ]
 
-build: r
+build: autoconf
 	cd .. && R CMD build ${PKGNAME}
 
 check: stop-on-utf8 build
