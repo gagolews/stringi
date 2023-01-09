@@ -1031,7 +1031,8 @@ void blueprint_helpers::parseCurrencyOption(const StringSegment& segment, MacroP
         status = U_NUMBER_SKELETON_SYNTAX_ERROR;
         return;
     }
-    const UChar* currencyCode = segment.toTempUnicodeString().getBuffer();
+    UnicodeString tmp = segment.toTempUnicodeString();
+    const UChar* currencyCode = tmp.getBuffer();  // Marek's patch
     UErrorCode localStatus = U_ZERO_ERROR;
     CurrencyUnit currency(currencyCode, localStatus);
     if (U_FAILURE(localStatus)) {

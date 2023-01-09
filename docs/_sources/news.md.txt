@@ -1,9 +1,9 @@
 # What Is New in *stringi*
 
 
-## 1.7.11 (2022-12-31)
+## 1.7.12 (2023-01-09)
 
-* [BUGFIX] Fixed some problems reported by `rchk`.
+* [BUGFIX] Fixed some potential problems reported by `rchk`.
 
 * [NOTE] [BACKWARD INCOMPATIBLE CHANGE IF ICU >= 72]
   If building against ICU >= 72,
