@@ -1,7 +1,7 @@
 # kate: default-dictionary en_US
 
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2021, Marek Gagolewski <https://www.gagolewski.com>
+## Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com>
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -33,11 +33,9 @@
 
 #' @title String Sorting
 #'
-#'
 #' @description
 #' This function sorts a character vector according to a locale-dependent
 #' lexicographic order.
-#'
 #'
 #' @details
 #' For more information on \pkg{ICU}'s Collator and how to tune it up
@@ -92,12 +90,10 @@ stri_sort <- function(str, decreasing = FALSE, na_last = NA, ..., opts_collator 
 
 #' @title Ordering Permutation
 #'
-#'
 #' @description
 #' This function finds a permutation which rearranges the
 #' strings in a given character vector into the ascending or descending
 #' locale-dependent lexicographic order.
-#'
 #'
 #' @details
 #' For more information on \pkg{ICU}'s Collator and how to tune it up

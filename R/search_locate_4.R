@@ -1,7 +1,7 @@
 # kate: default-dictionary en_US
 
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2021, Marek Gagolewski <https://www.gagolewski.com>
+## Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com>
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -33,14 +33,12 @@
 
 #' @title Locate Pattern Occurrences
 #'
-#'
 #' @description
 #' These functions find the indexes (positions) where
 #' there is a match to some pattern.
 #' The functions \code{stri_locate_all_*} locate all the matches.
 #' \code{stri_locate_first_*} and \code{stri_locate_last_*}
 #' give the first and the last matches, respectively.
-#'
 #'
 #' @details
 #' Vectorized over \code{str} and \code{pattern} (with recycling
