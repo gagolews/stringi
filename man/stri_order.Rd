@@ -51,8 +51,9 @@ data frames by more than 1 column), see \code{\link{stri_rank}}.
 stri_order(c('hladny', 'chladny'), locale='pl_PL')
 stri_order(c('hladny', 'chladny'), locale='sk_SK')
 
-stri_order(c(1, 100, 2, 101, 11, 10))
-stri_order(c(1, 100, 2, 101, 11, 10), numeric=TRUE)
+stri_order(c(1, 100, 2, 101, 11, 10))  # lexicographic order
+stri_order(c(1, 100, 2, 101, 11, 10), numeric=TRUE)  # OK for integers
+stri_order(c(0.25, 0.5, 1, -1, -2, -3), numeric=TRUE)  # incorrect
 }
 \references{
 \emph{Collation} - ICU User Guide,

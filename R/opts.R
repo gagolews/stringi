@@ -1,7 +1,7 @@
 # kate: default-dictionary en_US
 
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2022, Marek Gagolewski <https://www.gagolewski.com>
+## Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com>
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -78,7 +78,7 @@
 #' when turned on, this attribute generates a collation key for
 #' the numeric value of substrings of digits;
 #' this is a way to get '100' to sort AFTER '2';
-#' note that negative numbers will not be ordered properly
+#' note that negative or non-integer numbers will not be ordered properly
 #' @param ... [DEPRECATED] any other arguments passed to this function
 #'     generate a warning; this argument will be removed in the future
 #'

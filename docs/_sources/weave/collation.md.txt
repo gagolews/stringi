@@ -256,7 +256,7 @@ Below we play with some of them.
 | `locale`              | a string specifying the locale to use; `NULL` (default) or `""` for the current default locale as indicated by `stri_locale_get()`                                                                                                                                                                                                                                       |
 | `strength`            | an integer in *{1,2,3,4}* defining collation strength; 1 for the most permissive collation rules, 4 for the strictest ones; defaults to 3                                                                                                                                                                                                                              |
 | `uppercase_first`     | logical; `NA` (default) orders upper and lower case letters in accordance to their tertiary weights, `TRUE` forces upper case letters to sort before lower case letters, `FALSE` does the opposite                                                                                                                                                                       |
-| `numeric`             | logical; if `TRUE`, a collation key for the numeric value of substrings of digits is generated; this is a way to make `"100"` ordered after `"2"`; however, negative numbers are not ordered correctly; defaults to `FALSE`                                                                                                                                                                                                   |
+| `numeric`             | logical; if `TRUE`, a collation key for the numeric value of substrings of digits is generated; this is a way to make `"100"` ordered after `"2"`; however, negative and non-integer numbers will not be ordered correctly; defaults to `FALSE`                                                                                                                                                                                                   |
 | `case_level`          | logical; if `TRUE`, an extra case level (positioned before the third level) is generated; defaults to `FALSE`                                                                                                                                                                                                                                                            |
 | `normalisation`       | logical; if `TRUE`, then an incremental check is performed to see whether input data are in the FCD ("fast C or D") form; if data are not in the FCD form, the incremental NFD normalisation is performed, see {ref}`Sec:normalisation`; defaults to `FALSE`                                                                                                             |
 | `alternate_shifted`   | logical; if `FALSE` (default), all code points with non-ignorable primary weights are handled in the same way; `TRUE` causes the code points with primary weights that are less than or equal to the variable top value to be ignored on the primary level and moved to the quaternary level; this can be used to, e.g., ignore punctuation, see the examples provided   |
@@ -405,6 +405,9 @@ sorting of strings that involves numbers:
 stri_sort(x, numeric=TRUE)
 ##  [1] "a1"   "a1"   "a2"   "a2"   "a2"   "a9"   "a10"  "a11"  "a99"  "a100"
 ```
+
+However, the limitation is that only natural (nonnegative, integer)
+numbers will be dealt with correctly.
 
 Here is an example of sorting a data frame with respect to two criteria:
 

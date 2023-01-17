@@ -48,8 +48,9 @@ where \eqn{N} is the length of \code{str}.
 stri_sort(c('hladny', 'chladny'), locale='pl_PL')
 stri_sort(c('hladny', 'chladny'), locale='sk_SK')
 stri_sort(sample(LETTERS))
-stri_sort(c(1, 100, 2, 101, 11, 10))
-stri_sort(c(1, 100, 2, 101, 11, 10), numeric=TRUE)
+stri_sort(c(1, 100, 2, 101, 11, 10))  # lexicographic order
+stri_sort(c(1, 100, 2, 101, 11, 10), numeric=TRUE)  # OK for integers
+stri_sort(c(0.25, 0.5, 1, -1, -2, -3), numeric=TRUE)  # incorrect
 }
 \references{
 \emph{Collation} - ICU User Guide,

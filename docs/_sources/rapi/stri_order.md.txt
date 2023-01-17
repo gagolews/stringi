@@ -60,8 +60,10 @@ stri_order(c('hladny', 'chladny'), locale='pl_PL')
 ## [1] 2 1
 stri_order(c('hladny', 'chladny'), locale='sk_SK')
 ## [1] 1 2
-stri_order(c(1, 100, 2, 101, 11, 10))
+stri_order(c(1, 100, 2, 101, 11, 10))  # lexicographic order
 ## [1] 1 6 2 4 5 3
-stri_order(c(1, 100, 2, 101, 11, 10), numeric=TRUE)
+stri_order(c(1, 100, 2, 101, 11, 10), numeric=TRUE)  # OK for integers
 ## [1] 1 3 6 5 2 4
+stri_order(c(0.25, 0.5, 1, -1, -2, -3), numeric=TRUE)  # incorrect
+## [1] 4 5 6 2 1 3
 ```

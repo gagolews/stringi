@@ -61,8 +61,10 @@ stri_sort(c('hladny', 'chladny'), locale='sk_SK')
 stri_sort(sample(LETTERS))
 ##  [1] "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M" "N" "O" "P" "Q" "R" "S"
 ## [20] "T" "U" "V" "W" "X" "Y" "Z"
-stri_sort(c(1, 100, 2, 101, 11, 10))
+stri_sort(c(1, 100, 2, 101, 11, 10))  # lexicographic order
 ## [1] "1"   "10"  "100" "101" "11"  "2"
-stri_sort(c(1, 100, 2, 101, 11, 10), numeric=TRUE)
+stri_sort(c(1, 100, 2, 101, 11, 10), numeric=TRUE)  # OK for integers
 ## [1] "1"   "2"   "10"  "11"  "100" "101"
+stri_sort(c(0.25, 0.5, 1, -1, -2, -3), numeric=TRUE)  # incorrect
+## [1] "-1"   "-2"   "-3"   "0.5"  "0.25" "1"
 ```

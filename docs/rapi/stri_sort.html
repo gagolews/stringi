@@ -354,10 +354,12 @@
 <span class="nf">stri_sort</span><span class="p">(</span><span class="nf">sample</span><span class="p">(</span><span class="kc">LETTERS</span><span class="p">))</span>
 <span class="c1">##  [1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;F&quot; &quot;G&quot; &quot;H&quot; &quot;I&quot; &quot;J&quot; &quot;K&quot; &quot;L&quot; &quot;M&quot; &quot;N&quot; &quot;O&quot; &quot;P&quot; &quot;Q&quot; &quot;R&quot; &quot;S&quot;</span>
 <span class="c1">## [20] &quot;T&quot; &quot;U&quot; &quot;V&quot; &quot;W&quot; &quot;X&quot; &quot;Y&quot; &quot;Z&quot;</span>
-<span class="nf">stri_sort</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">100</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">101</span><span class="p">,</span> <span class="m">11</span><span class="p">,</span> <span class="m">10</span><span class="p">))</span>
+<span class="nf">stri_sort</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">100</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">101</span><span class="p">,</span> <span class="m">11</span><span class="p">,</span> <span class="m">10</span><span class="p">))</span>  <span class="c1"># lexicographic order</span>
 <span class="c1">## [1] &quot;1&quot;   &quot;10&quot;  &quot;100&quot; &quot;101&quot; &quot;11&quot;  &quot;2&quot;</span>
-<span class="nf">stri_sort</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">100</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">101</span><span class="p">,</span> <span class="m">11</span><span class="p">,</span> <span class="m">10</span><span class="p">),</span> <span class="n">numeric</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="nf">stri_sort</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">100</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">101</span><span class="p">,</span> <span class="m">11</span><span class="p">,</span> <span class="m">10</span><span class="p">),</span> <span class="n">numeric</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>  <span class="c1"># OK for integers</span>
 <span class="c1">## [1] &quot;1&quot;   &quot;2&quot;   &quot;10&quot;  &quot;11&quot;  &quot;100&quot; &quot;101&quot;</span>
+<span class="nf">stri_sort</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">-1</span><span class="p">,</span> <span class="m">-2</span><span class="p">,</span> <span class="m">-3</span><span class="p">),</span> <span class="n">numeric</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>  <span class="c1"># incorrect</span>
+<span class="c1">## [1] &quot;-1&quot;   &quot;-2&quot;   &quot;-3&quot;   &quot;0.5&quot;  &quot;0.25&quot; &quot;1&quot;</span>
 </pre></div>
 </div>
 </section>
@@ -376,7 +378,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2023, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2023-01-11T12:05:03+1100.
+      <span class="lastupdated">Last updated on 2023-01-18T09:23:44+1100.
       </span></p>
   </div>
 

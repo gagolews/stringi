@@ -78,8 +78,9 @@
 #' stri_sort(c('hladny', 'chladny'), locale='pl_PL')
 #' stri_sort(c('hladny', 'chladny'), locale='sk_SK')
 #' stri_sort(sample(LETTERS))
-#' stri_sort(c(1, 100, 2, 101, 11, 10))
-#' stri_sort(c(1, 100, 2, 101, 11, 10), numeric=TRUE)
+#' stri_sort(c(1, 100, 2, 101, 11, 10))  # lexicographic order
+#' stri_sort(c(1, 100, 2, 101, 11, 10), numeric=TRUE)  # OK for integers
+#' stri_sort(c(0.25, 0.5, 1, -1, -2, -3), numeric=TRUE)  # incorrect
 stri_sort <- function(str, decreasing = FALSE, na_last = NA, ..., opts_collator = NULL)
 {
     if (!missing(...))
@@ -137,8 +138,9 @@ stri_sort <- function(str, decreasing = FALSE, na_last = NA, ..., opts_collator 
 #' stri_order(c('hladny', 'chladny'), locale='pl_PL')
 #' stri_order(c('hladny', 'chladny'), locale='sk_SK')
 #'
-#' stri_order(c(1, 100, 2, 101, 11, 10))
-#' stri_order(c(1, 100, 2, 101, 11, 10), numeric=TRUE)
+#' stri_order(c(1, 100, 2, 101, 11, 10))  # lexicographic order
+#' stri_order(c(1, 100, 2, 101, 11, 10), numeric=TRUE)  # OK for integers
+#' stri_order(c(0.25, 0.5, 1, -1, -2, -3), numeric=TRUE)  # incorrect
 stri_order <- function(str, decreasing = FALSE, na_last = TRUE, ..., opts_collator = NULL)
 {
     if (!missing(...))
@@ -360,7 +362,8 @@ stri_sort_key <- function(str, ..., opts_collator = NULL)
 #' stri_rank(c('hladny', 'chladny'), locale='sk_SK')
 #'
 #' stri_rank("a" %s+% c(1, 100, 2, 101, 11, 10))  # lexicographic order
-#' stri_rank("a" %s+% c(1, 100, 2, 101, 11, 10), numeric=TRUE)
+#' stri_rank("a" %s+% c(1, 100, 2, 101, 11, 10), numeric=TRUE)  # OK
+#' stri_rank("a" %s+% c(0.25, 0.5, 1, -1, -2, -3), numeric=TRUE)  # incorrect
 #'
 #' # Ordering a data frame with respect to two criteria:
 #' X <- data.frame(a=c("b", NA, "b", "b", NA, "a", "a", "c"), b=runif(8))
