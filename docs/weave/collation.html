@@ -391,7 +391,7 @@ Below we play with some of them.</p>
 <td><p>logical; <code class="docutils literal notranslate"><span class="pre">NA</span></code> (default) orders upper and lower case letters in accordance to their tertiary weights, <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> forces upper case letters to sort before lower case letters, <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> does the opposite</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">numeric</span></code></p></td>
-<td><p>logical; if <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, a collation key for the numeric value of substrings of digits is generated; this is a way to make <code class="docutils literal notranslate"><span class="pre">&quot;100&quot;</span></code> ordered after <code class="docutils literal notranslate"><span class="pre">&quot;2&quot;</span></code>; however, negative numbers are not ordered correctly; defaults to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code></p></td>
+<td><p>logical; if <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, a collation key for the numeric value of substrings of digits is generated; this is a way to make <code class="docutils literal notranslate"><span class="pre">&quot;100&quot;</span></code> ordered after <code class="docutils literal notranslate"><span class="pre">&quot;2&quot;</span></code>; however, negative and non-integer numbers will not be ordered correctly; defaults to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">case_level</span></code></p></td>
 <td><p>logical; if <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, an extra case level (positioned before the third level) is generated; defaults to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code></p></td>
@@ -514,6 +514,8 @@ sorting of strings that involves numbers:</p>
 <span class="c1">##  [1] &quot;a1&quot;   &quot;a1&quot;   &quot;a2&quot;   &quot;a2&quot;   &quot;a2&quot;   &quot;a9&quot;   &quot;a10&quot;  &quot;a11&quot;  &quot;a99&quot;  &quot;a100&quot;</span>
 </pre></div>
 </div>
+<p>However, the limitation is that only natural (nonnegative, integer)
+numbers will be dealt with correctly.</p>
 <p>Here is an example of sorting a data frame with respect to two criteria:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="nf">runif</span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
 <span class="n">X</span><span class="p">[</span><span class="nf">order</span><span class="p">(</span><span class="o">-</span><span class="nf">stri_rank</span><span class="p">(</span><span class="n">X</span><span class="o">$</span><span class="n">a</span><span class="p">,</span> <span class="n">numeric</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">),</span> <span class="n">X</span><span class="o">$</span><span class="n">b</span><span class="p">),</span> <span class="p">]</span>
@@ -604,7 +606,7 @@ file.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2023, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2023-01-11T12:05:03+1100.
+      <span class="lastupdated">Last updated on 2023-01-18T09:23:44+1100.
       </span></p>
   </div>
 

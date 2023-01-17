@@ -56,8 +56,10 @@ stri_rank(c('hladny', 'chladny'), locale='sk_SK')
 ## [1] 1 2
 stri_rank("a" %s+% c(1, 100, 2, 101, 11, 10))  # lexicographic order
 ## [1] 1 3 6 4 5 2
-stri_rank("a" %s+% c(1, 100, 2, 101, 11, 10), numeric=TRUE)
+stri_rank("a" %s+% c(1, 100, 2, 101, 11, 10), numeric=TRUE)  # OK
 ## [1] 1 5 2 6 4 3
+stri_rank("a" %s+% c(0.25, 0.5, 1, -1, -2, -3), numeric=TRUE)  # incorrect
+## [1] 5 4 6 1 2 3
 # Ordering a data frame with respect to two criteria:
 X <- data.frame(a=c("b", NA, "b", "b", NA, "a", "a", "c"), b=runif(8))
 X[order(stri_rank(X$a), X$b), ]
