@@ -32,7 +32,7 @@ stri_cmp_ge(e1, e2, ..., opts_collator = NULL)
 
 |                 |                                                                                                                                                                  |
 |-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `e1, e2`        | character vectors or objects coercible to character vectors                                                                                                      |
+| `e1`, `e2`      | character vectors or objects coercible to character vectors                                                                                                      |
 | `...`           | additional settings for `opts_collator`                                                                                                                          |
 | `opts_collator` | a named list with <span class="pkg">ICU</span> Collator\'s options, see [`stri_opts_collator`](stri_opts_collator.md), `NULL` for the default collation options. |
 

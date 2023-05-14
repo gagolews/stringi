@@ -16,10 +16,10 @@ e1 %stri*% e2
 
 ## Arguments
 
-|             |                                                                      |
-|-------------|----------------------------------------------------------------------|
-| `str, e1`   | a character vector of strings to be duplicated                       |
-| `times, e2` | an integer vector with the numbers of times to duplicate each string |
+|               |                                                                      |
+|---------------|----------------------------------------------------------------------|
+| `str`, `e1`   | a character vector of strings to be duplicated                       |
+| `times`, `e2` | an integer vector with the numbers of times to duplicate each string |
 
 ## Details
 

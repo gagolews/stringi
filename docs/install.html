@@ -4,7 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
@@ -34,11 +34,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -78,7 +77,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -160,8 +159,8 @@
         
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Installing <em>stringi</em></li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Installing <em>stringi</em></li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
@@ -218,7 +217,7 @@ ICU data library will be downloaded from one of our mirror servers.
 However, if you have already downloaded a version of <code class="docutils literal notranslate"><span class="pre">icudt*.zip</span></code> suitable
 for your platform (big/little-endian), you may wish to install the
 package by calling:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;stringi&quot;</span><span class="p">,</span> <span class="n">configure.vars</span><span class="o">=</span><span class="s">&quot;ICUDT_DIR=&lt;icudt_dir&gt;&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;stringi&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">configure.vars</span><span class="o">=</span><span class="s">&quot;ICUDT_DIR=&lt;icudt_dir&gt;&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Moreover, if you have <strong>no internet access</strong> on the machines
@@ -227,21 +226,21 @@ of the package, as it is shipped with the <code class="docutils literal notransl
 You can build a distributable source package that includes all the required
 ICU data files (for off-line use) by omitting some relevant lines in
 the <code class="docutils literal notranslate"><span class="pre">.Rbuildignore</span></code> file. The following command sequence should do the trick:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>wget https://github.com/gagolews/stringi/archive/master.zip -O stringi.zip
-unzip stringi.zip
-sed -i <span class="s1">&#39;/\/icu..\/data/d&#39;</span> stringi-master/.Rbuildignore
-R CMD build stringi-master
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>https://github.com/gagolews/stringi/archive/master.zip<span class="w"> </span>-O<span class="w"> </span>stringi.zip
+unzip<span class="w"> </span>stringi.zip
+sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;/\/icu..\/data/d&#39;</span><span class="w"> </span>stringi-master/.Rbuildignore
+R<span class="w"> </span>CMD<span class="w"> </span>build<span class="w"> </span>stringi-master
 </pre></div>
 </div>
 <p>Assuming the most recent development version of the package is numbered x.y.z,
 a file named <code class="docutils literal notranslate"><span class="pre">stringi_x.y.z.tar.gz</span></code> is created in the current working directory.
 The package can now be installed (the source bundle may be propagated via
 <code class="docutils literal notranslate"><span class="pre">scp</span></code> etc.) by executing:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>R CMD INSTALL stringi_x.y.z.tar.gz
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>R<span class="w"> </span>CMD<span class="w"> </span>INSTALL<span class="w"> </span>stringi_x.y.z.tar.gz
 </pre></div>
 </div>
 <p>Alternatively, call from within an R session:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;stringi_x.y.z.tar.gz&quot;</span><span class="p">,</span> <span class="n">repos</span><span class="o">=</span><span class="kc">NULL</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;stringi_x.y.z.tar.gz&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">repos</span><span class="o">=</span><span class="kc">NULL</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -252,7 +251,7 @@ The package can now be installed (the source bundle may be propagated via
 <a class="reference external" href="https://gcc.gnu.org/bugzilla/show_bug.cgi?id=56019">bug</a> where
 <code class="docutils literal notranslate"><span class="pre">::max_align_t</span></code> has been defined, but not <code class="docutils literal notranslate"><span class="pre">std::max_align_t</span></code>.
 If our built-in workaround does not work, you may try calling:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;stringi&quot;</span><span class="p">,</span> <span class="n">configure.args</span><span class="o">=</span><span class="s">&quot;--with-extra-cxxflags=&#39;-std=c++11&#39;&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;stringi&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">configure.args</span><span class="o">=</span><span class="s">&quot;--with-extra-cxxflags=&#39;-std=c++11&#39;&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Overall, your build chain may be misconfigured, check out,
@@ -263,7 +262,7 @@ for more details.</p>
 <p>There is an option of using the fallback version of ICU4C 55.1.
 However, it requires the support of the <code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">long</span></code> type in a few functions,
 (this is not part of the C++98 standard; works on Solaris, though). Try:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;stringi&quot;</span><span class="p">,</span> <span class="n">configure.args</span><span class="o">=</span><span class="s">&quot;--disable-cxx11&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;stringi&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">configure.args</span><span class="o">=</span><span class="s">&quot;--disable-cxx11&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -318,10 +317,10 @@ hesitate to <a class="reference external" href="https://github.com/gagolews/stri
 However, please check the list of archived (closed) issues first –
 it is very likely that a solution to your problem has already been posted.</p>
 <p>To help diagnose your error further, please run (from the terminal):</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /tmp
-wget https://github.com/gagolews/stringi/archive/master.zip
-unzip master.zip
-<span class="nb">cd</span> stringi-master
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/tmp
+wget<span class="w"> </span>https://github.com/gagolews/stringi/archive/master.zip
+unzip<span class="w"> </span>master.zip
+<span class="nb">cd</span><span class="w"> </span>stringi-master
 ./configure
 </pre></div>
 </div>
@@ -343,7 +342,7 @@ unzip master.zip
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2023, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2023-01-18T09:23:44+1100.
+      <span class="lastupdated">Last updated on 2023-05-15T09:42:35+1000.
       </span></p>
   </div>
 

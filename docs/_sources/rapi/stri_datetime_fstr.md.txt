@@ -1,4 +1,4 @@
-# stri_datetime_fstr: Convert `strptime`-Style Format Strings
+# stri_datetime_fstr: -Style Format Strings
 
 ## Description
 

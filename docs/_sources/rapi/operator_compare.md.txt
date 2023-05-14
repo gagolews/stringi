@@ -42,9 +42,9 @@ e1 %stri!==% e2
 
 ## Arguments
 
-|          |                                                             |
-|----------|-------------------------------------------------------------|
-| `e1, e2` | character vectors or objects coercible to character vectors |
+|            |                                                             |
+|------------|-------------------------------------------------------------|
+| `e1`, `e2` | character vectors or objects coercible to character vectors |
 
 ## Details
 

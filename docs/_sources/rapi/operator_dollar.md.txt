@@ -1,4 +1,4 @@
-# operator_dollar: C-Style Formatting with [`stri_sprintf`](stri_sprintf.md) as a Binary Operator
+# operator_dollar: as a Binary Operator
 
 ## Description
 

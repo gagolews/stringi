@@ -1,4 +1,4 @@
-# about_search_boundaries: Text Boundary Analysis in <span class="pkg">stringi</span>
+# about_search_boundaries:
 
 ## Description
 

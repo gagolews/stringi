@@ -4,7 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
@@ -34,11 +34,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -78,7 +77,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -171,8 +170,8 @@
         
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Other Operations</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Other Operations</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
@@ -213,12 +212,12 @@ option in <code class="docutils literal notranslate"><span class="pre">stri_opts
 <code class="docutils literal notranslate"><span class="pre">stri_locate__boundaries()</span></code>, as well as their specialised versions:
 <code class="docutils literal notranslate"><span class="pre">stri_count_words()</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_extract__words()</span></code>, and <code class="docutils literal notranslate"><span class="pre">stri_split_lines()</span></code>,
 amongst others. For example:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="s">&quot;The\u00a0above-mentioned    features are useful. &quot;</span> <span class="o">%s+%</span>
-  <span class="s">&quot;My hovercraft is full of eels, eggs, and spam.&quot;</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;The\u00a0above-mentioned    features are useful. &quot;</span><span class="w"> </span><span class="o">%s+%</span>
+<span class="w">  </span><span class="s">&quot;My hovercraft is full of eels, eggs, and spam.&quot;</span>
 </pre></div>
 </div>
 <p>Number of sentences:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_boundaries</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;sentence&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_boundaries</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="o">=</span><span class="s">&quot;sentence&quot;</span><span class="p">)</span>
 <span class="c1">## [1] 2</span>
 </pre></div>
 </div>
@@ -243,7 +242,7 @@ with <code class="docutils literal notranslate"><span class="pre">Sweave()</span
 <p><code class="docutils literal notranslate"><span class="pre">stri_pad()</span></code> pads strings with some character so that they reach the
 desired widths (as in <code class="docutils literal notranslate"><span class="pre">stri_width()</span></code>). This can be used to centre,
 left-, or right-align a message when printed with, e.g., <code class="docutils literal notranslate"><span class="pre">cat()</span></code>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">cat</span><span class="p">(</span><span class="nf">stri_pad</span><span class="p">(</span><span class="s">&quot;SPAMITY SPAM&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="m">77</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s">&quot;both&quot;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="s">&quot;.&quot;</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">cat</span><span class="p">(</span><span class="nf">stri_pad</span><span class="p">(</span><span class="s">&quot;SPAMITY SPAM&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="o">=</span><span class="m">77</span><span class="p">,</span><span class="w"> </span><span class="n">side</span><span class="o">=</span><span class="s">&quot;both&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">pad</span><span class="o">=</span><span class="s">&quot;.&quot;</span><span class="p">))</span>
 <span class="c1">## ................................SPAMITY SPAM.................................</span>
 </pre></div>
 </div>
@@ -252,8 +251,8 @@ left-, or right-align a message when printed with, e.g., <code class="docutils l
 <h3>Trimming<a class="headerlink" href="#trimming" title="Permalink to this heading"></a></h3>
 <p>A dual operation is that of trimming from the left or right side of
 strings:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="s">&quot;      spam, eggs, and lovely spam.\n&quot;</span>
-<span class="nf">stri_trim</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># side=&quot;both&quot;</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;      spam, eggs, and lovely spam.\n&quot;</span>
+<span class="nf">stri_trim</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># side=&quot;both&quot;</span>
 <span class="c1">## [1] &quot;spam, eggs, and lovely spam.&quot;</span>
 </pre></div>
 </div>
@@ -266,8 +265,8 @@ dynamic word wrap algorithm <span id="id4">[<a class="reference internal" href="
 of the formatted text is used. However, there’s also an option
 (<code class="docutils literal notranslate"><span class="pre">cost_exponent=0</span></code>) to use the greedy alignment, for compatibility with
 the built-in <code class="docutils literal notranslate"><span class="pre">strwrap()</span></code>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">stri_rand_lipsum</span><span class="p">(</span><span class="m">1</span><span class="p">)</span>  <span class="c1"># random text paragraph</span>
-<span class="nf">cat</span><span class="p">(</span><span class="nf">stri_wrap</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="m">74</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="m">8</span><span class="p">,</span> <span class="n">exdent</span><span class="o">=</span><span class="m">4</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;&gt; &quot;</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">stri_rand_lipsum</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="w">  </span><span class="c1"># random text paragraph</span>
+<span class="nf">cat</span><span class="p">(</span><span class="nf">stri_wrap</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="o">=</span><span class="m">74</span><span class="p">,</span><span class="w"> </span><span class="n">indent</span><span class="o">=</span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="n">exdent</span><span class="o">=</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="n">prefix</span><span class="o">=</span><span class="s">&quot;&gt; &quot;</span><span class="p">),</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
 <span class="c1">## &gt;         Lorem ipsum dolor sit amet, quis donec pretium auctor, quis id.</span>
 <span class="c1">## &gt;     Mauris rhoncus donec amet egestas sagittis ipsum per. Sed, sociis</span>
 <span class="c1">## &gt;     amet. Aliquam fusce dictumst sed vehicula ultrices arcu. Eros,</span>
@@ -287,16 +286,16 @@ function. In particular, it enables formatting and padding based on
 character width, not just the number of code points. The function is
 also available as a binary operator <code class="docutils literal notranslate"><span class="pre">%s$%</span></code>, which is similar to Python’s
 <code class="docutils literal notranslate"><span class="pre">%</span></code> overloaded for objects of type <code class="docutils literal notranslate"><span class="pre">str</span></code>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">cat</span><span class="p">(</span><span class="nf">stri_sprintf</span><span class="p">(</span><span class="s">&quot;[%6s]&quot;</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;abcd&quot;</span><span class="p">,</span> <span class="s">&quot;\u200b\u200b\u200bąß²€&quot;</span><span class="p">)),</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">cat</span><span class="p">(</span><span class="nf">stri_sprintf</span><span class="p">(</span><span class="s">&quot;[%6s]&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;abcd&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\u200b\u200b\u200bąß²€&quot;</span><span class="p">)),</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
 <span class="c1">## [  abcd]</span>
 <span class="c1">## [  ​​​ąß²€]</span>
 </pre></div>
 </div>
 <p>The above guarantees that the two output strings are of at least width
 of 6 (plus the square brackets).</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="s">&quot;value=&#39;%.4f&#39;&quot;</span> <span class="o">%s$%</span> <span class="kc">pi</span>  <span class="c1"># equivalently: &quot;value=&#39;%.4f&#39;&quot; %s$% list(pi)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="s">&quot;value=&#39;%.4f&#39;&quot;</span><span class="w"> </span><span class="o">%s$%</span><span class="w"> </span><span class="kc">pi</span><span class="w">  </span><span class="c1"># equivalently: &quot;value=&#39;%.4f&#39;&quot; %s$% list(pi)</span>
 <span class="c1">## [1] &quot;value=&#39;3.1416&#39;&quot;</span>
-<span class="s">&quot;%s=&#39;%.*3$f&#39;&quot;</span> <span class="o">%s$%</span> <span class="nf">list</span><span class="p">(</span><span class="s">&quot;pi&quot;</span><span class="p">,</span> <span class="kc">pi</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">)</span>
+<span class="s">&quot;%s=&#39;%.*3$f&#39;&quot;</span><span class="w"> </span><span class="o">%s$%</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="s">&quot;pi&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">pi</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">)</span>
 <span class="c1">## [1] &quot;pi=&#39;3.1&#39;&quot;    &quot;pi=&#39;3.14&#39;&quot;   &quot;pi=&#39;3.142&#39;&quot;  &quot;pi=&#39;3.1416&#39;&quot;</span>
 </pre></div>
 </div>
@@ -309,12 +308,12 @@ paragraphs (“placeholders” for real text), we have access to a function
 that generates sequences of characters uniformly sampled (with
 replacement) from a given set.</p>
 <p>For example, here are 5 random ACTG strings of lengths from 2 to 6:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_rand_strings</span><span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="m">2</span><span class="o">:</span><span class="m">6</span><span class="p">,</span> <span class="s">&quot;[ACTG]&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_rand_strings</span><span class="p">(</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="o">:</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;[ACTG]&quot;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;CT&quot;     &quot;CTT&quot;    &quot;AGTG&quot;   &quot;CTCGG&quot;  &quot;ATAACT&quot;</span>
 </pre></div>
 </div>
 <p>Moreover:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_rand_strings</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">8</span><span class="p">,</span> <span class="s">&quot;[\\p{script=Katakana}&amp;\\p{L}]&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_rand_strings</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;[\\p{script=Katakana}&amp;\\p{L}]&quot;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;ﾐｮㇿ𛅧ｧｱヾㇷ&quot;</span>
 </pre></div>
 </div>
@@ -336,9 +335,9 @@ context-sensitive operation that can change the total number of code
 points in a string.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_trans_toupper</span><span class="p">(</span><span class="s">&quot;groß&quot;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;GROSS&quot;</span>
-<span class="nf">stri_trans_tolower</span><span class="p">(</span><span class="s">&quot;Iİ&quot;</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&quot;tr_TR&quot;</span><span class="p">)</span>               <span class="c1"># Turkish</span>
+<span class="nf">stri_trans_tolower</span><span class="p">(</span><span class="s">&quot;Iİ&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">locale</span><span class="o">=</span><span class="s">&quot;tr_TR&quot;</span><span class="p">)</span><span class="w">               </span><span class="c1"># Turkish</span>
 <span class="c1">## [1] &quot;ıi&quot;</span>
-<span class="nf">stri_trans_totitle</span><span class="p">(</span><span class="s">&quot;ijsvrij yoghurt&quot;</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&quot;nl_NL&quot;</span><span class="p">)</span>  <span class="c1"># Dutch</span>
+<span class="nf">stri_trans_totitle</span><span class="p">(</span><span class="s">&quot;ijsvrij yoghurt&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">locale</span><span class="o">=</span><span class="s">&quot;nl_NL&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># Dutch</span>
 <span class="c1">## [1] &quot;IJsvrij Yoghurt&quot;</span>
 </pre></div>
 </div>
@@ -346,7 +345,7 @@ points in a string.</p>
 <section id="mapping-between-specific-characters">
 <h3>Mapping Between Specific Characters<a class="headerlink" href="#mapping-between-specific-characters" title="Permalink to this heading"></a></h3>
 <p>When a fast 1-to-1 code point translation is required, we can call:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_trans_char</span><span class="p">(</span><span class="s">&quot;GATAAATCTGGTCTTATTTCC&quot;</span><span class="p">,</span> <span class="s">&quot;ACGT&quot;</span><span class="p">,</span> <span class="s">&quot;tgca&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_trans_char</span><span class="p">(</span><span class="s">&quot;GATAAATCTGGTCTTATTTCC&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ACGT&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;tgca&quot;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;ctatttagaccagaataaagg&quot;</span>
 </pre></div>
 </div>
@@ -358,7 +357,7 @@ points in a string.</p>
 <p><code class="docutils literal notranslate"><span class="pre">stri_trans_general()</span></code> gives access to a wide range of text
 transforms defined by <em>ICU</em>, whose catalogue can be browsed by calling
 <code class="docutils literal notranslate"><span class="pre">stri_trans_list()</span></code>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sample</span><span class="p">(</span><span class="nf">stri_trans_list</span><span class="p">(),</span> <span class="m">9</span><span class="p">)</span>  <span class="c1"># a few random entries</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sample</span><span class="p">(</span><span class="nf">stri_trans_list</span><span class="p">(),</span><span class="w"> </span><span class="m">9</span><span class="p">)</span><span class="w">  </span><span class="c1"># a few random entries</span>
 <span class="c1">## [1] &quot;Any-und_FONIPA&quot; &quot;Any-FCD&quot;        &quot;Deva-Guru&quot;      &quot;yo-yo_BJ&quot;      </span>
 <span class="c1">## [5] &quot;Taml-Orya&quot;      &quot;Tamil-Arabic&quot;   &quot;hy-ar&quot;          &quot;de-ASCII&quot;      </span>
 <span class="c1">## [9] &quot;Any-Kana&quot;</span>
@@ -367,7 +366,7 @@ transforms defined by <em>ICU</em>, whose catalogue can be browsed by calling
 <p>In the example below, we apply a transliteration chain: we first convert
 to upper case, and then convert characters in the Latin script to
 ASCII.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_trans_general</span><span class="p">(</span><span class="s">&quot;groß© żółć La Niña köszönöm&quot;</span><span class="p">,</span> <span class="s">&quot;upper; latin-ascii&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_trans_general</span><span class="p">(</span><span class="s">&quot;groß© żółć La Niña köszönöm&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;upper; latin-ascii&quot;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;GROSS(C) ZOLC LA NINA KOSZONOM&quot;</span>
 </pre></div>
 </div>
@@ -382,13 +381,13 @@ alphabets.</p>
 <p>In base R, dealing with temporal data in regional settings other than
 the current locale is somewhat difficult. For instance, many will find
 the task of parsing the following Polish date problematic:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="s">&quot;28 września 2021 r., godz. 17:17:32&quot;</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;28 września 2021 r., godz. 17:17:32&quot;</span>
 </pre></div>
 </div>
 <p><em>stringi</em> connects to the <em>ICU</em> date and time services so that this
 becomes an easy exercise:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;dd MMMM yyyy &#39;r., godz.&#39; HH:mm:ss&quot;</span><span class="p">,</span>
-  <span class="n">locale</span><span class="o">=</span><span class="s">&quot;pl_PL&quot;</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s">&quot;Europe/Warsaw&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;dd MMMM yyyy &#39;r., godz.&#39; HH:mm:ss&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="n">locale</span><span class="o">=</span><span class="s">&quot;pl_PL&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">tz</span><span class="o">=</span><span class="s">&quot;Europe/Warsaw&quot;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;2021-09-28 17:17:32 CEST&quot;</span>
 </pre></div>
 </div>
@@ -398,31 +397,31 @@ with base R. Note, however, that <em>ICU</em> uses its own format patterns
 For convenience, <code class="docutils literal notranslate"><span class="pre">strftime()</span></code>- and <code class="docutils literal notranslate"><span class="pre">strptime()</span></code>-like
 templates can be converted with <code class="docutils literal notranslate"><span class="pre">stri_datetime_fstr()</span></code>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="n">x</span><span class="p">,</span>
-  <span class="nf">stri_datetime_fstr</span><span class="p">(</span><span class="s">&quot;%d %B %Y r., godz. %H:%M:%S&quot;</span><span class="p">),</span>
-  <span class="n">locale</span><span class="o">=</span><span class="s">&quot;pl_PL&quot;</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s">&quot;Europe/Warsaw&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="nf">stri_datetime_fstr</span><span class="p">(</span><span class="s">&quot;%d %B %Y r., godz. %H:%M:%S&quot;</span><span class="p">),</span>
+<span class="w">  </span><span class="n">locale</span><span class="o">=</span><span class="s">&quot;pl_PL&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">tz</span><span class="o">=</span><span class="s">&quot;Europe/Warsaw&quot;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;2021-09-28 17:17:32 CEST&quot;</span>
 </pre></div>
 </div>
 <p>Relative dates are also supported:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_format</span><span class="p">(</span>
-  <span class="nf">stri_datetime_add</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span> <span class="m">1</span><span class="p">,</span> <span class="s">&quot;day&quot;</span><span class="p">),</span> <span class="c1"># add 1 day to &#39;now&#39;</span>
-  <span class="s">&quot;datetime_relative_long&quot;</span><span class="p">,</span>              <span class="c1"># full format, relative to &#39;now&#39;</span>
-  <span class="n">locale</span><span class="o">=</span><span class="s">&quot;en_NZ&quot;</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s">&quot;NZ&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="nf">stri_datetime_add</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;day&quot;</span><span class="p">),</span><span class="w"> </span><span class="c1"># add 1 day to &#39;now&#39;</span>
+<span class="w">  </span><span class="s">&quot;datetime_relative_long&quot;</span><span class="p">,</span><span class="w">              </span><span class="c1"># full format, relative to &#39;now&#39;</span>
+<span class="w">  </span><span class="n">locale</span><span class="o">=</span><span class="s">&quot;en_NZ&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">tz</span><span class="o">=</span><span class="s">&quot;NZ&quot;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;tomorrow at 7:16:04 pm NZST&quot;</span>
 </pre></div>
 </div>
 <p>For example, here’s how we can access different calendars:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_format</span><span class="p">(</span>
-  <span class="nf">stri_datetime_create</span><span class="p">(</span><span class="m">2020</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">12</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span>
-  <span class="s">&quot;date_long&quot;</span><span class="p">,</span>
-  <span class="n">locale</span><span class="o">=</span><span class="s">&quot;@calendar=hebrew&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="nf">stri_datetime_create</span><span class="p">(</span><span class="m">2020</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span>
+<span class="w">  </span><span class="s">&quot;date_long&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="n">locale</span><span class="o">=</span><span class="s">&quot;@calendar=hebrew&quot;</span><span class="p">)</span>
 <span class="c1">##  [1] &quot;4 Tevet 5780&quot;    &quot;6 Shevat 5780&quot;   &quot;5 Adar 5780&quot;     &quot;7 Nisan 5780&quot;   </span>
 <span class="c1">##  [5] &quot;7 Iyar 5780&quot;     &quot;9 Sivan 5780&quot;    &quot;9 Tamuz 5780&quot;    &quot;11 Av 5780&quot;     </span>
 <span class="c1">##  [9] &quot;12 Elul 5780&quot;    &quot;13 Tishri 5781&quot;  &quot;14 Heshvan 5781&quot; &quot;15 Kislev 5781&quot;</span>
 <span class="nf">stri_datetime_format</span><span class="p">(</span>
-  <span class="nf">stri_datetime_create</span><span class="p">(</span><span class="m">2020</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="m">8</span><span class="p">),</span> <span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">7</span><span class="p">)),</span>
-  <span class="s">&quot;date_full&quot;</span><span class="p">,</span>
-  <span class="n">locale</span><span class="o">=</span><span class="s">&quot;ja_JP@calendar=japanese&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="nf">stri_datetime_create</span><span class="p">(</span><span class="m">2020</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">8</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">7</span><span class="p">)),</span>
+<span class="w">  </span><span class="s">&quot;date_full&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="n">locale</span><span class="o">=</span><span class="s">&quot;ja_JP@calendar=japanese&quot;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;令和2年2月4日火曜日&quot; &quot;令和2年8月7日金曜日&quot;</span>
 </pre></div>
 </div>
@@ -444,7 +443,7 @@ the Japanese calendar in the Japanese locale.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2023, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2023-01-18T09:23:44+1100.
+      <span class="lastupdated">Last updated on 2023-05-15T09:42:35+1000.
       </span></p>
   </div>
 

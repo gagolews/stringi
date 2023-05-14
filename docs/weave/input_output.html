@@ -4,7 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
@@ -34,11 +34,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -78,7 +77,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -161,8 +160,8 @@
         
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Input and Output</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Input and Output</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
@@ -193,10 +192,10 @@ see <a class="reference external" href="https://www.unicode.org/charts/">https:/
 number of the code points in some popular categories (compare
 <a class="reference internal" href="regular_expressions.html#sec-regexindividualchars"><span class="std std-ref">Matching Individual Characters</span></a>), such as letters, numbers, and
 the like.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">z</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;\\p{L}&quot;</span><span class="p">,</span> <span class="s">&quot;\\p{Ll}&quot;</span><span class="p">,</span> <span class="s">&quot;\\p{Lu}&quot;</span><span class="p">,</span> <span class="s">&quot;\\p{N}&quot;</span><span class="p">,</span> <span class="s">&quot;\\p{P}&quot;</span><span class="p">,</span> <span class="s">&quot;\\p{S}&quot;</span><span class="p">,</span>
-  <span class="s">&quot;\\w&quot;</span><span class="p">,</span> <span class="s">&quot;\\d&quot;</span><span class="p">,</span> <span class="s">&quot;\\s&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;\\p{L}&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\\p{Ll}&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\\p{Lu}&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\\p{N}&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\\p{P}&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\\p{S}&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s">&quot;\\w&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\\d&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\\s&quot;</span><span class="p">)</span>
 <span class="nf">structure</span><span class="p">(</span><span class="nf">stri_count_regex</span><span class="p">(</span><span class="nf">stri_enc_fromutf32</span><span class="p">(</span>
-  <span class="nf">setdiff</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="mh">0x10ffff</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="mh">0xd800</span><span class="o">:</span><span class="mh">0xf8ff</span><span class="p">))),</span> <span class="n">z</span><span class="p">),</span> <span class="n">names</span><span class="o">=</span><span class="n">z</span><span class="p">)</span>
+<span class="w">  </span><span class="nf">setdiff</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="mh">0x10ffff</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="mh">0xd800</span><span class="o">:</span><span class="mh">0xf8ff</span><span class="p">))),</span><span class="w"> </span><span class="n">z</span><span class="p">),</span><span class="w"> </span><span class="n">names</span><span class="o">=</span><span class="n">z</span><span class="p">)</span>
 <span class="c1">##  \\p{L} \\p{Ll} \\p{Lu}  \\p{N}  \\p{P}  \\p{S}     \\w     \\d     \\s </span>
 <span class="c1">##  131241    2155    1791    1781     798    7564  134564     650      25</span>
 </pre></div>
@@ -211,14 +210,14 @@ are used to denoting as U+007A (the “U+” prefix is followed by a
 sequence of hexadecimal digits; U+007A corresponds to decimal 122)
 encodes the lower case letter “z”. To input such a code point in R, we
 write:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="s">&quot;\u007A&quot;</span>  <span class="c1"># or &quot;\U0000007A&quot;</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="s">&quot;\u007A&quot;</span><span class="w">  </span><span class="c1"># or &quot;\U0000007A&quot;</span>
 <span class="c1">## [1] &quot;z&quot;</span>
 </pre></div>
 </div>
 <p>For communicating with <em>ICU</em> and other libraries, we may need to escape
 a given string, for example, as follows (recall that to input a
 backslash in R, we must escape it with another backslash).</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="s">&quot;zß你好&quot;</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;zß你好&quot;</span>
 <span class="nf">stri_escape_unicode</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;z\\u00df\\u4f60\\u597d&quot;</span>
 </pre></div>
@@ -233,10 +232,10 @@ still guaranteed by <em>ICU</em>.</p>
 <p>When storing strings in RAM or on the disk, we need to decide upon the
 actual way of representing the code points as sequences of bytes. The
 two most popular encodings in the Unicode family are UTF-8 and UTF-16:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="s">&quot;abz0ąß你好!&quot;</span>
-<span class="nf">stri_encode</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">,</span> <span class="n">to_raw</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)[[</span><span class="m">1</span><span class="p">]]</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;abz0ąß你好!&quot;</span>
+<span class="nf">stri_encode</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">to_raw</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)[[</span><span class="m">1</span><span class="p">]]</span>
 <span class="c1">##  [1] 61 62 7a 30 c4 85 c3 9f e4 bd a0 e5 a5 bd 21</span>
-<span class="nf">stri_encode</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="s">&quot;UTF-16LE&quot;</span><span class="p">,</span> <span class="n">to_raw</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)[[</span><span class="m">1</span><span class="p">]]</span>  <span class="c1"># little-endian</span>
+<span class="nf">stri_encode</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="o">=</span><span class="s">&quot;UTF-16LE&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">to_raw</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)[[</span><span class="m">1</span><span class="p">]]</span><span class="w">  </span><span class="c1"># little-endian</span>
 <span class="c1">##  [1] 61 00 62 00 7a 00 30 00 05 01 df 00 60 4f 7d 59 21 00</span>
 </pre></div>
 </div>
@@ -247,7 +246,7 @@ reading data from the standard input or from files (e.g., when <code class="docu
 is called). For instance, Central European versions of Windows will
 assume the “<code class="docutils literal notranslate"><span class="pre">windows-1250</span></code>” code page. On the other hand,
 MacOS as well as most Linux boxes
-work with UTF-8 by default<a class="footnote-reference brackets" href="#footucrt" id="id3">1</a>.</p>
+work with UTF-8 by default<a class="footnote-reference brackets" href="#footucrt" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
 <p>All strings in R have an associated encoding mark which can be read by
 calling <code class="docutils literal notranslate"><span class="pre">Encoding()</span></code> or, more conveniently, <code class="docutils literal notranslate"><span class="pre">stri_enc_mark()</span></code>. Most
 importantly, strings in ASCII, ISO-8859-1 (”<code class="docutils literal notranslate"><span class="pre">latin1</span></code>”), UTF-8, and the
@@ -258,7 +257,7 @@ available for UTF-16 data). Over the years, this has proven a robust,
 efficient, and maximally portable design choice – Unicode can be
 thought of as a superset of every other encoding. Moreover, in order to
 guarantee the correctness and high performance of the string processing
-pipelines, <em>stringi</em> always<a class="footnote-reference brackets" href="#footuftout" id="id4">2</a> outputs UTF-8 data.</p>
+pipelines, <em>stringi</em> always<a class="footnote-reference brackets" href="#footuftout" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> outputs UTF-8 data.</p>
 </section>
 <section id="reading-and-writing-text-files">
 <span id="sec-read-lines"></span><h2>Reading and Writing Text Files<a class="headerlink" href="#reading-and-writing-text-files" title="Permalink to this heading"></a></h2>
@@ -274,8 +273,8 @@ conversion):</p>
 <p>For instance, below we read a text file
 (see <a class="reference external" href="https://github.com/gagolews/stringi/tree/master/docs/_static/vignette">https://github.com/gagolews/stringi/tree/master/docs/_static/vignette</a>)
 encoded in ISO-8859-1:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">stri_read_lines</span><span class="p">(</span><span class="s">&quot;ES_latin1.txt&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">&quot;ISO-8859-1&quot;</span><span class="p">)</span>
-<span class="nf">head</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span>  <span class="c1"># x is in UTF-8 now</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">stri_read_lines</span><span class="p">(</span><span class="s">&quot;ES_latin1.txt&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">encoding</span><span class="o">=</span><span class="s">&quot;ISO-8859-1&quot;</span><span class="p">)</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">)</span><span class="w">  </span><span class="c1"># x is in UTF-8 now</span>
 <span class="c1">## [1] &quot;CANTO DE CALÍOPE - Miguel de Cervantes&quot;</span>
 <span class="c1">## [2] &quot;&quot;                                      </span>
 <span class="c1">## [3] &quot;Al dulce son de mi templada lira,&quot;     </span>
@@ -291,20 +290,20 @@ with any output encoding.</p>
 <p>If a file’s encoding is not known in advance, there are a
 certain functions that can aid in encoding detection. First, we can read
 the resource in the form of a raw-type vector:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">stri_read_raw</span><span class="p">(</span><span class="s">&quot;ES_latin1.txt&quot;</span><span class="p">)</span>
-<span class="nf">head</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">24</span><span class="p">)</span>  <span class="c1"># vector of type raw</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">stri_read_raw</span><span class="p">(</span><span class="s">&quot;ES_latin1.txt&quot;</span><span class="p">)</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="m">24</span><span class="p">)</span><span class="w">  </span><span class="c1"># vector of type raw</span>
 <span class="c1">##  [1] 43 41 4e 54 4f 20 44 45 20 43 41 4c cd 4f 50 45 20 2d 20 4d 69 67 75 65</span>
 </pre></div>
 </div>
 <p>Then, to guess the encoding, we can call, e.g.:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_enc_isascii</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] FALSE</span>
-<span class="nf">stri_enc_isutf8</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>   <span class="c1"># false positives are possible</span>
+<span class="nf">stri_enc_isutf8</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">   </span><span class="c1"># false positives are possible</span>
 <span class="c1">## [1] FALSE</span>
 </pre></div>
 </div>
 <p>Alternatively, we can use:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_enc_detect</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># based on heuristics</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_enc_detect</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># based on heuristics</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">##     Encoding Language Confidence</span>
 <span class="c1">## 1 ISO-8859-1       es       0.81</span>
@@ -324,14 +323,14 @@ imprecise or even misleading.</p>
 <code class="docutils literal notranslate"><span class="pre">stri_encode()</span></code> can be called to perform the conversion. Contrary to the
 built-in <code class="docutils literal notranslate"><span class="pre">iconv()</span></code>, which relies on different underlying libraries, the
 current function is portable across operating systems.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">&lt;-</span> <span class="nf">stri_encode</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">from</span><span class="o">=</span><span class="s">&quot;ISO-8859-1&quot;</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">stri_encode</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">from</span><span class="o">=</span><span class="s">&quot;ISO-8859-1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">stri_enc_list()</span></code> provides a list of supported encodings and their
 aliases in many different forms. Encoding specifiers are normalised
 automatically, e.g., <code class="docutils literal notranslate"><span class="pre">&quot;utf8&quot;</span></code> is a synonym for <code class="docutils literal notranslate"><span class="pre">&quot;UTF-8&quot;</span></code>.</p>
 <p>Splitting the output into text lines gives:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">tail</span><span class="p">(</span><span class="nf">stri_split_lines1</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="m">4</span><span class="p">)</span>  <span class="c1"># spoiler alert!</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">tail</span><span class="p">(</span><span class="nf">stri_split_lines1</span><span class="p">(</span><span class="n">y</span><span class="p">),</span><span class="w"> </span><span class="m">4</span><span class="p">)</span><span class="w">  </span><span class="c1"># spoiler alert!</span>
 <span class="c1">## [1] &quot;A Homero iguala si a escrebir intenta,&quot; </span>
 <span class="c1">## [2] &quot;y a tanto llega de su pluma el vuelo,&quot;  </span>
 <span class="c1">## [3] &quot;cuanto es verdad que a todos es notorio&quot;</span>
@@ -347,9 +346,9 @@ different. Unicode <a class="reference external" href="https://www.unicode.org/r
 forms C (Canonical composition, NFC)
 and D (Canonical decomposition, NFD) can be applied so that they’ll
 compare equal using bytewise matching.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="s">&quot;a\u0328 ą&quot;</span>   <span class="c1"># a, combining ogonek, space, a with ogonek</span>
-<span class="nf">stri_enc_toutf32</span><span class="p">(</span>  <span class="c1"># code points as decimals</span>
-  <span class="nf">c</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nf">stri_trans_nfc</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nf">stri_trans_nfd</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;a\u0328 ą&quot;</span><span class="w">   </span><span class="c1"># a, combining ogonek, space, a with ogonek</span>
+<span class="nf">stri_enc_toutf32</span><span class="p">(</span><span class="w">  </span><span class="c1"># code points as decimals</span>
+<span class="w">  </span><span class="nf">c</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">stri_trans_nfc</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="nf">stri_trans_nfd</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1]  97 808  32 261</span>
 <span class="c1">## </span>
@@ -374,16 +373,18 @@ is desired. For example:</p>
 </div>
 <p>Such text might be much easier to process or analyse statistically.</p>
 <hr class="footnotes docutils" />
-<dl class="footnote brackets">
-<dt class="label" id="footucrt"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
-<dd><p>It is expected that future R releases will support UTF-8 natively,
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footucrt" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">1</a><span class="fn-bracket">]</span></span>
+<p>It is expected that future R releases will support UTF-8 natively,
 thanks to the Universal C Runtime (UCRT) that is available for
 Windows 10.</p>
-</dd>
-<dt class="label" id="footuftout"><span class="brackets"><a class="fn-backref" href="#id4">2</a></span></dt>
-<dd><p>Okay, with a few obvious exceptions, such as <code class="docutils literal notranslate"><span class="pre">stri_encode()</span></code>.</p>
-</dd>
-</dl>
+</aside>
+<aside class="footnote brackets" id="footuftout" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">2</a><span class="fn-bracket">]</span></span>
+<p>Okay, with a few obvious exceptions, such as <code class="docutils literal notranslate"><span class="pre">stri_encode()</span></code>.</p>
+</aside>
+</aside>
 </section>
 </section>
 
@@ -400,7 +401,7 @@ Windows 10.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2023, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2023-01-18T09:23:44+1100.
+      <span class="lastupdated">Last updated on 2023-05-15T09:42:35+1000.
       </span></p>
   </div>
 

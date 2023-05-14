@@ -1,4 +1,4 @@
-# about_search_fixed: Locale-Insensitive Fixed Pattern Matching in <span class="pkg">stringi</span>
+# about_search_fixed:
 
 ## Description
 

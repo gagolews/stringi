@@ -1,8 +1,8 @@
-# stri_enc_set: Set or Get Default Character Encoding in <span class="pkg">stringi</span>
+# stri_enc_set:
 
 ## Description
 
-`stri_enc_set` sets the encoding used to re-encode strings internally (i.e., by <span style="font-family: Courier New, Courier; color: #666666;">**R**</span>) declared to be in native encoding, see [stringi-encoding](about_encoding.md) and [`stri_enc_mark`](stri_enc_mark.md). `stri_enc_get` returns the currently used default encoding.
+`stri_enc_set` sets the encoding used to re-encode strings internally (i.e., by <span class="rlang">**R**</span>) declared to be in native encoding, see [stringi-encoding](about_encoding.md) and [`stri_enc_mark`](stri_enc_mark.md). `stri_enc_get` returns the currently used default encoding.
 
 ## Usage
 

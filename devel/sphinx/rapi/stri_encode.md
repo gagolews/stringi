@@ -2,7 +2,7 @@
 
 ## Description
 
-These functions convert strings between encodings. They aim to serve as a more portable and faster replacement for <span style="font-family: Courier New, Courier; color: #666666;">**R**</span>\'s own [`iconv`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/iconv.html).
+These functions convert strings between encodings. They aim to serve as a more portable and faster replacement for <span class="rlang">**R**</span>\'s own [`iconv`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/iconv.html).
 
 ## Usage
 

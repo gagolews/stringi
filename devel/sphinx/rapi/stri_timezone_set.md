@@ -1,4 +1,4 @@
-# stri_timezone_set: Set or Get Default Time Zone in <span class="pkg">stringi</span>
+# stri_timezone_set:
 
 ## Description
 
