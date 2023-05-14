@@ -1,4 +1,4 @@
-# about_search_charclass: Character Classes in <span class="pkg">stringi</span>
+# about_search_charclass:
 
 ## Description
 

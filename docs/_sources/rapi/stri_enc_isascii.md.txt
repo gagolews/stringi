@@ -18,7 +18,7 @@ stri_enc_isascii(str)
 
 ## Details
 
-This function is independent of the way <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> marks encodings in character strings (see [Encoding](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Encoding.html) and [stringi-encoding](about_encoding.md)).
+This function is independent of the way <span class="rlang">**R**</span> marks encodings in character strings (see [Encoding](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Encoding.html) and [stringi-encoding](about_encoding.md)).
 
 ## Value
 

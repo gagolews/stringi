@@ -4,7 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
@@ -34,11 +34,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -78,7 +77,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -163,8 +162,8 @@
         
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Code-Pointwise Comparing</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Code-Pointwise Comparing</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
@@ -194,7 +193,7 @@ vectors are identical (in a code-pointwise manner), we can use the
 <code class="docutils literal notranslate"><span class="pre">%s===%</span></code> operator or, equivalently, the <code class="docutils literal notranslate"><span class="pre">stri_cmp_eq()</span></code> function.
 Moreover, <code class="docutils literal notranslate"><span class="pre">%s!==%</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_cmp_neq()</span></code> implement the not-equal-to
 relation.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="s">&quot;actg&quot;</span> <span class="o">%s===%</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;ACTG&quot;</span><span class="p">,</span> <span class="s">&quot;actg&quot;</span><span class="p">,</span> <span class="s">&quot;act&quot;</span><span class="p">,</span> <span class="s">&quot;actga&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="s">&quot;actg&quot;</span><span class="w"> </span><span class="o">%s===%</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;ACTG&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;actg&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;act&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;actga&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">)</span>
 <span class="c1">## [1] FALSE  TRUE FALSE FALSE    NA</span>
 </pre></div>
 </div>
@@ -214,7 +213,7 @@ pattern matching. Notably, their description is quite detailed because
 – as we shall soon find out – the corresponding operations are
 available for the two other search engines: based on regular expressions
 and the <em>ICU</em> Collator, see <a class="reference internal" href="regular_expressions.html#sec-regex"><span class="std std-ref">Regular Expressions</span></a> and <a class="reference internal" href="collation.html#sec-collator"><span class="std std-ref">Collation</span></a>.</p>
-<table class="colwidths-auto docutils align-default">
+<table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Name(s)</p></th>
 <th class="head"><p>Meaning</p></th>
@@ -258,13 +257,13 @@ and the <em>ICU</em> Collator, see <a class="reference internal" href="regular_e
 <h2>Counting Matches<a class="headerlink" href="#counting-matches" title="Permalink to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">stri_count_fixed()</span></code> function counts the number of times a fixed
 pattern occurs in a given string.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_fixed</span><span class="p">(</span><span class="s">&quot;abcabcdefabcabcabdc&quot;</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">)</span>  <span class="c1"># search pattern is &quot;abc&quot;</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_fixed</span><span class="p">(</span><span class="s">&quot;abcabcdefabcabcabdc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;abc&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># search pattern is &quot;abc&quot;</span>
 <span class="c1">## [1] 4</span>
 </pre></div>
 </div>
 <p>Equivalently, we can call the more generic (see below) function
 <code class="docutils literal notranslate"><span class="pre">stri_count()</span></code> with the <code class="docutils literal notranslate"><span class="pre">fixed=pattern</span></code> argument:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count</span><span class="p">(</span><span class="s">&quot;abcabcdefabcabcabdc&quot;</span><span class="p">,</span> <span class="n">fixed</span><span class="o">=</span><span class="s">&quot;abc&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count</span><span class="p">(</span><span class="s">&quot;abcabcdefabcabcabdc&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">fixed</span><span class="o">=</span><span class="s">&quot;abc&quot;</span><span class="p">)</span>
 <span class="c1">## [1] 4</span>
 </pre></div>
 </div>
@@ -272,7 +271,7 @@ pattern occurs in a given string.</p>
 pattern (“needle”) is given by the second argument (here: “<code class="docutils literal notranslate"><span class="pre">abc</span></code>”). This
 makes our function more pipe-operator-friendly, because “haystack” can
 be forwarded as follows:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;abcabcdefabcabcabdc&quot;</span><span class="p">,</span> <span class="s">&quot;cba&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">stri_count_fixed</span><span class="p">(</span><span class="s">&quot;abc&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;abcabcdefabcabcabdc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cba&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nf">stri_count_fixed</span><span class="p">(</span><span class="s">&quot;abc&quot;</span><span class="p">)</span>
 <span class="c1">## [1]  4  0 NA</span>
 </pre></div>
 </div>
@@ -282,7 +281,7 @@ be forwarded as follows:</p>
 <p>The pattern matching engine may be tuned up by passing further arguments
 to the search functions (via “<code class="docutils literal notranslate"><span class="pre">...</span></code>”; they are redirected as-is to
 <code class="docutils literal notranslate"><span class="pre">stri_opts_fixed()</span></code>). The table below gives the list of available options.</p>
-<table class="colwidths-auto docutils align-default">
+<table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Option</p></th>
 <th class="head"><p>Purpose</p></th>
@@ -297,17 +296,17 @@ to the search functions (via “<code class="docutils literal notranslate"><span
 </tr>
 </tbody>
 </table>
-<p>First, we may switch on the simplistic<a class="footnote-reference brackets" href="#footfixedcase" id="id4">1</a> case-insensitive matching.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_fixed</span><span class="p">(</span><span class="s">&quot;ACTGACGacgggACg&quot;</span><span class="p">,</span> <span class="s">&quot;acg&quot;</span><span class="p">,</span> <span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<p>First, we may switch on the simplistic<a class="footnote-reference brackets" href="#footfixedcase" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> case-insensitive matching.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_fixed</span><span class="p">(</span><span class="s">&quot;ACTGACGacgggACg&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;acg&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 <span class="c1">## [1] 3</span>
 </pre></div>
 </div>
 <p>Second, we can indicate our interest in detecting overlapping pattern
 matches or whether searching should continue at the end of each match
 (the latter being the default behaviour):</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_fixed</span><span class="p">(</span><span class="s">&quot;acatgacaca&quot;</span><span class="p">,</span> <span class="s">&quot;aca&quot;</span><span class="p">)</span>  <span class="c1"># overlap=FALSE (default)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_fixed</span><span class="p">(</span><span class="s">&quot;acatgacaca&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;aca&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># overlap=FALSE (default)</span>
 <span class="c1">## [1] 2</span>
-<span class="nf">stri_count_fixed</span><span class="p">(</span><span class="s">&quot;acatgacaca&quot;</span><span class="p">,</span> <span class="s">&quot;aca&quot;</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="nf">stri_count_fixed</span><span class="p">(</span><span class="s">&quot;acatgacaca&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;aca&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">overlap</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 <span class="c1">## [1] 3</span>
 </pre></div>
 </div>
@@ -317,8 +316,8 @@ matches or whether searching should continue at the end of each match
 <p>A somewhat simplified version of the above search task asks
 whether a pattern occurs in a string at all. Such an operation can be
 performed with a call to <code class="docutils literal notranslate"><span class="pre">stri_detect_fixed()</span></code>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;abc&quot;</span><span class="p">,</span> <span class="s">&quot;abcd&quot;</span><span class="p">,</span> <span class="s">&quot;def&quot;</span><span class="p">,</span> <span class="s">&quot;xyzabc&quot;</span><span class="p">,</span> <span class="s">&quot;uabdc&quot;</span><span class="p">,</span> <span class="s">&quot;dab&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">)</span>
-<span class="nf">stri_detect_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;abc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;abcd&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;def&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;xyzabc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;uabdc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;dab&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;abc&quot;</span><span class="p">)</span>
+<span class="nf">stri_detect_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;abc&quot;</span><span class="p">)</span>
 <span class="c1">## [1]  TRUE  TRUE FALSE  TRUE FALSE FALSE    NA  TRUE</span>
 </pre></div>
 </div>
@@ -327,17 +326,17 @@ passing <code class="docutils literal notranslate"><span class="pre">negate=TRUE
 searching once a given number of matches has been found in the
 <code class="docutils literal notranslate"><span class="pre">haystack</span></code> vector (as a whole), which can speed up the processing of
 larger data sets:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_detect_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">,</span> <span class="n">negate</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">max_count</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_detect_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;abc&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">negate</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">max_count</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
 <span class="c1">## [1] FALSE FALSE  TRUE FALSE  TRUE    NA    NA    NA</span>
 </pre></div>
 </div>
 <p>This can be useful in scenarios such as “find the first 2 matching
 resource IDs”.</p>
-<p>There are also functions that verify whether a string starts or ends<a class="footnote-reference brackets" href="#footanchor" id="id5">2</a>
+<p>There are also functions that verify whether a string starts or ends<a class="footnote-reference brackets" href="#footanchor" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>
 with a pattern match:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_startswith_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">)</span>  <span class="c1"># from=1 - match at start</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_startswith_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;abc&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># from=1 - match at start</span>
 <span class="c1">## [1]  TRUE  TRUE FALSE FALSE FALSE FALSE    NA  TRUE</span>
-<span class="nf">stri_endswith_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">)</span>    <span class="c1"># to=-1 - match at end</span>
+<span class="nf">stri_endswith_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;abc&quot;</span><span class="p">)</span><span class="w">    </span><span class="c1"># to=-1 - match at end</span>
 <span class="c1">## [1]  TRUE FALSE FALSE  TRUE FALSE FALSE    NA  TRUE</span>
 </pre></div>
 </div>
@@ -345,7 +344,7 @@ with a pattern match:</p>
 vector subsetting. This is why we have a specialised (and hence slightly
 faster) function that returns only the strings that match a given
 pattern.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_subset_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">,</span> <span class="n">omit_na</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_subset_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;abc&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">omit_na</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 <span class="c1">## [1] &quot;abc&quot;    &quot;abcd&quot;   &quot;xyzabc&quot; &quot;abc&quot;</span>
 </pre></div>
 </div>
@@ -356,8 +355,8 @@ generated programmatically on the fly, using some complicated
 expression. Also, it works well with the forward pipe operator, as we
 can write “<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">|&gt;</span> <span class="pre">stri_subset_fixed(&quot;abc&quot;,</span> <span class="pre">omit_na=TRUE)</span></code>”.</p>
 <p>There is also a replacement version of this function:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_subset_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;*****&quot;</span><span class="p">,</span> <span class="s">&quot;***&quot;</span><span class="p">)</span>  <span class="c1"># modifies x in-place</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># x has changed</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_subset_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;abc&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;*****&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;***&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># modifies x in-place</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># x has changed</span>
 <span class="c1">## [1] &quot;*****&quot; &quot;***&quot;   &quot;def&quot;   &quot;*****&quot; &quot;uabdc&quot; &quot;dab&quot;   NA      &quot;***&quot;</span>
 </pre></div>
 </div>
@@ -367,14 +366,14 @@ can write “<code class="docutils literal notranslate"><span class="pre">x</spa
 <p>The functions from the <code class="docutils literal notranslate"><span class="pre">stri_locate()</span></code> family aim to pinpoint the
 positions of pattern matches. First, we may be interested in getting to
 know the location of the first or the last pattern occurrence:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;aga&quot;</span><span class="p">,</span> <span class="s">&quot;actg&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="s">&quot;AGagaGAgaga&quot;</span><span class="p">)</span>
-<span class="nf">stri_locate_first_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;aga&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;aga&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;actg&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;AGagaGAgaga&quot;</span><span class="p">)</span>
+<span class="nf">stri_locate_first_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;aga&quot;</span><span class="p">)</span>
 <span class="c1">##      start end</span>
 <span class="c1">## [1,]     1   3</span>
 <span class="c1">## [2,]    NA  NA</span>
 <span class="c1">## [3,]    NA  NA</span>
 <span class="c1">## [4,]     3   5</span>
-<span class="nf">stri_locate_last_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;aga&quot;</span><span class="p">,</span> <span class="n">get_length</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="nf">stri_locate_last_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;aga&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">get_length</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 <span class="c1">##      start length</span>
 <span class="c1">## [1,]     1      3</span>
 <span class="c1">## [2,]    -1     -1</span>
@@ -391,7 +390,7 @@ negative lengths correspond to the not-founds.</p>
 <p>Second, we may be yearning for the locations of all the matching
 substrings. As the number of possible answers may vary from string to
 string, the result is a list of index matrices.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_locate_all_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;aga&quot;</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_locate_all_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;aga&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">overlap</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">##      start end</span>
 <span class="c1">## [1,]     1   3</span>
@@ -422,10 +421,10 @@ kind constitute particularly fine inputs to <code class="docutils literal notran
 <code class="docutils literal notranslate"><span class="pre">stri_sub_all()</span></code>. However, if merely the extraction of the matching
 substrings is needed, it will be more convenient to rely on the
 functions from the <code class="docutils literal notranslate"><span class="pre">stri_extract()</span></code> family:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_first_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;aga&quot;</span><span class="p">,</span> <span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_first_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;aga&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 <span class="c1">## [1] &quot;aga&quot; NA    NA    &quot;AGa&quot;</span>
-<span class="nf">stri_extract_all_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;aga&quot;</span><span class="p">,</span>
-  <span class="n">overlap</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">omit_no_match</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="nf">stri_extract_all_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;aga&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="n">overlap</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">omit_no_match</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] &quot;aga&quot;</span>
 <span class="c1">## </span>
@@ -444,8 +443,8 @@ functions from the <code class="docutils literal notranslate"><span class="pre">
 <h2>Replacing Pattern Occurrences<a class="headerlink" href="#replacing-pattern-occurrences" title="Permalink to this heading"></a></h2>
 <p>In order to replace each match with a corresponding replacement string,
 we can refer to <code class="docutils literal notranslate"><span class="pre">stri_replace_all()</span></code>:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;aga&quot;</span><span class="p">,</span> <span class="s">&quot;actg&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="s">&quot;ggAGAGAgaGAca&quot;</span><span class="p">,</span> <span class="s">&quot;agagagaga&quot;</span><span class="p">)</span>
-<span class="nf">stri_replace_all_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;aga&quot;</span><span class="p">,</span> <span class="s">&quot;~&quot;</span><span class="p">,</span> <span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;aga&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;actg&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ggAGAGAgaGAca&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;agagagaga&quot;</span><span class="p">)</span>
+<span class="nf">stri_replace_all_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;aga&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 <span class="c1">## [1] &quot;~&quot;         &quot;actg&quot;      NA          &quot;gg~G~GAca&quot; &quot;~g~ga&quot;</span>
 </pre></div>
 </div>
@@ -458,17 +457,17 @@ behaviour if necessary. If a different arguments’ vectorisation scheme
 is required, we can set the <code class="docutils literal notranslate"><span class="pre">vectorise_all</span></code> argument of
 <code class="docutils literal notranslate"><span class="pre">stri_replace_all()</span></code> to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>. Compare the following:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_replace_all_fixed</span><span class="p">(</span><span class="s">&quot;The quick brown fox jumped over the lazy dog.&quot;</span><span class="p">,</span>
-  <span class="nf">c</span><span class="p">(</span><span class="s">&quot;quick&quot;</span><span class="p">,</span> <span class="s">&quot;brown&quot;</span><span class="p">,</span>      <span class="s">&quot;fox&quot;</span><span class="p">,</span> <span class="s">&quot;lazy&quot;</span><span class="p">,</span>    <span class="s">&quot;dog&quot;</span><span class="p">),</span>
-  <span class="nf">c</span><span class="p">(</span><span class="s">&quot;slow&quot;</span><span class="p">,</span>  <span class="s">&quot;yellow-ish&quot;</span><span class="p">,</span> <span class="s">&quot;hen&quot;</span><span class="p">,</span> <span class="s">&quot;spamity&quot;</span><span class="p">,</span> <span class="s">&quot;llama&quot;</span><span class="p">))</span>
+<span class="w">  </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;quick&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;brown&quot;</span><span class="p">,</span><span class="w">      </span><span class="s">&quot;fox&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;lazy&quot;</span><span class="p">,</span><span class="w">    </span><span class="s">&quot;dog&quot;</span><span class="p">),</span>
+<span class="w">  </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;slow&quot;</span><span class="p">,</span><span class="w">  </span><span class="s">&quot;yellow-ish&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hen&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spamity&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;llama&quot;</span><span class="p">))</span>
 <span class="c1">## [1] &quot;The slow brown fox jumped over the lazy dog.&quot;      </span>
 <span class="c1">## [2] &quot;The quick yellow-ish fox jumped over the lazy dog.&quot;</span>
 <span class="c1">## [3] &quot;The quick brown hen jumped over the lazy dog.&quot;     </span>
 <span class="c1">## [4] &quot;The quick brown fox jumped over the spamity dog.&quot;  </span>
 <span class="c1">## [5] &quot;The quick brown fox jumped over the lazy llama.&quot;</span>
 <span class="nf">stri_replace_all_fixed</span><span class="p">(</span><span class="s">&quot;The quick brown fox jumped over the lazy dog.&quot;</span><span class="p">,</span>
-  <span class="nf">c</span><span class="p">(</span><span class="s">&quot;quick&quot;</span><span class="p">,</span> <span class="s">&quot;brown&quot;</span><span class="p">,</span>      <span class="s">&quot;fox&quot;</span><span class="p">,</span> <span class="s">&quot;lazy&quot;</span><span class="p">,</span> <span class="s">&quot;dog&quot;</span><span class="p">),</span>
-  <span class="nf">c</span><span class="p">(</span><span class="s">&quot;slow&quot;</span><span class="p">,</span>  <span class="s">&quot;yellow-ish&quot;</span><span class="p">,</span> <span class="s">&quot;hen&quot;</span><span class="p">,</span> <span class="s">&quot;spamity&quot;</span><span class="p">,</span> <span class="s">&quot;llama&quot;</span><span class="p">),</span>
-  <span class="n">vectorise_all</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+<span class="w">  </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;quick&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;brown&quot;</span><span class="p">,</span><span class="w">      </span><span class="s">&quot;fox&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;lazy&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;dog&quot;</span><span class="p">),</span>
+<span class="w">  </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;slow&quot;</span><span class="p">,</span><span class="w">  </span><span class="s">&quot;yellow-ish&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hen&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spamity&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;llama&quot;</span><span class="p">),</span>
+<span class="w">  </span><span class="n">vectorise_all</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
 <span class="c1">## [1] &quot;The slow yellow-ish hen jumped over the spamity llama.&quot;</span>
 </pre></div>
 </div>
@@ -485,8 +484,8 @@ and replace the first and the last match, respectively.</p>
 <p>To split each element in the <code class="docutils literal notranslate"><span class="pre">haystack</span></code> into substrings, where the
 <code class="docutils literal notranslate"><span class="pre">needles</span></code> define the delimiters that separate the inputs into tokens, we
 call <code class="docutils literal notranslate"><span class="pre">stri_split()</span></code>:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;a,b,c,d&quot;</span><span class="p">,</span> <span class="s">&quot;e&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="s">&quot;f,g,,,h,i,,j,&quot;</span><span class="p">)</span>
-<span class="nf">stri_split_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">,</span> <span class="n">omit_empty</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a,b,c,d&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;e&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;f,g,,,h,i,,j,&quot;</span><span class="p">)</span>
+<span class="nf">stri_split_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;,&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">omit_empty</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot;</span>
 <span class="c1">## </span>
@@ -507,22 +506,24 @@ call <code class="docutils literal notranslate"><span class="pre">stri_split()</
 <code class="docutils literal notranslate"><span class="pre">haystack</span></code> might be split into a possibly different number of tokens.</p>
 <p>There is also an option to limit the number of tokens (parameter <code class="docutils literal notranslate"><span class="pre">n</span></code>).</p>
 <hr class="footnotes docutils" />
-<dl class="footnote brackets">
-<dt class="label" id="footfixedcase"><span class="brackets"><a class="fn-backref" href="#id4">1</a></span></dt>
-<dd><p>Which is not suitable for real-world NLP tasks,
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footfixedcase" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">1</a><span class="fn-bracket">]</span></span>
+<p>Which is not suitable for real-world NLP tasks,
 as it assumes that
 changing the case of a single code point always produces one and
 only one item. This way, <code class="docutils literal notranslate"><span class="pre">&quot;groß&quot;</span></code> does not compare equal to
 <code class="docutils literal notranslate"><span class="pre">&quot;GROSS&quot;</span></code>, see <a class="reference internal" href="collation.html#sec-collator"><span class="std std-ref">Collation</span></a> (and to some extent
 <a class="reference internal" href="regular_expressions.html#sec-regex"><span class="std std-ref">Regular Expressions</span></a>) for a workaround.</p>
-</dd>
-<dt class="label" id="footanchor"><span class="brackets"><a class="fn-backref" href="#id5">2</a></span></dt>
-<dd><p>Note that testing for a pattern match at the start or end of a
+</aside>
+<aside class="footnote brackets" id="footanchor" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">2</a><span class="fn-bracket">]</span></span>
+<p>Note that testing for a pattern match at the start or end of a
 string has not been implemented separately for <code class="docutils literal notranslate"><span class="pre">regex</span></code> patterns,
 which support <code class="docutils literal notranslate"><span class="pre">&quot;^&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;$&quot;</span></code> anchors that serve precisely this
 purpose; see <a class="reference internal" href="regular_expressions.html#sec-regex"><span class="std std-ref">Regular Expressions</span></a>.</p>
-</dd>
-</dl>
+</aside>
+</aside>
 </section>
 </section>
 
@@ -539,7 +540,7 @@ purpose; see <a class="reference internal" href="regular_expressions.html#sec-re
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2023, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2023-01-18T09:23:44+1100.
+      <span class="lastupdated">Last updated on 2023-05-15T09:42:35+1000.
       </span></p>
   </div>
 

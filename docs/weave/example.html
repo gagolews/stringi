@@ -4,7 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
@@ -34,11 +34,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -78,7 +77,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -153,8 +152,8 @@
         
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Example Use Case: Data Preparation</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Example Use Case: Data Preparation</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
@@ -189,15 +188,15 @@ and <a class="reference external" href="https://CRAN.R-project.org/package=rvest
 </div>
 <p>First, let us load and parse the HTML file downloaded on 2020-09-17
 (see <a class="reference external" href="https://github.com/gagolews/stringi/tree/master/docs/_static/vignette">https://github.com/gagolews/stringi/tree/master/docs/_static/vignette</a>):</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">&lt;-</span> <span class="nf">read_html</span><span class="p">(</span><span class="s">&quot;20200917_wikipedia_melbourne.html&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">read_html</span><span class="p">(</span><span class="s">&quot;20200917_wikipedia_melbourne.html&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Second, we extract all <code class="docutils literal notranslate"><span class="pre">table</span></code> elements and gather them in a list of
 HTML nodes, <code class="docutils literal notranslate"><span class="pre">all_tables</span></code>. We then extract the underlying raw text data
 and store them in a character vector named <code class="docutils literal notranslate"><span class="pre">text_tables</span></code>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">all_tables</span> <span class="o">&lt;-</span> <span class="nf">html_nodes</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">&quot;table&quot;</span><span class="p">)</span>
-<span class="n">text_tables</span> <span class="o">&lt;-</span> <span class="nf">sapply</span><span class="p">(</span><span class="n">all_tables</span><span class="p">,</span> <span class="n">html_text</span><span class="p">)</span>
-<span class="nf">str</span><span class="p">(</span><span class="n">text_tables</span><span class="p">,</span> <span class="n">nchar.max</span><span class="o">=</span><span class="m">65</span><span class="p">,</span> <span class="n">vec.len</span><span class="o">=</span><span class="m">5</span><span class="p">,</span> <span class="n">strict.width</span><span class="o">=</span><span class="s">&quot;wrap&quot;</span><span class="p">)</span> <span class="c1"># preview</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">all_tables</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">html_nodes</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;table&quot;</span><span class="p">)</span>
+<span class="n">text_tables</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sapply</span><span class="p">(</span><span class="n">all_tables</span><span class="p">,</span><span class="w"> </span><span class="n">html_text</span><span class="p">)</span>
+<span class="nf">str</span><span class="p">(</span><span class="n">text_tables</span><span class="p">,</span><span class="w"> </span><span class="n">nchar.max</span><span class="o">=</span><span class="m">65</span><span class="p">,</span><span class="w"> </span><span class="n">vec.len</span><span class="o">=</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">strict.width</span><span class="o">=</span><span class="s">&quot;wrap&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1"># preview</span>
 <span class="c1">## chr [1:45] &quot;MelbourneVictoriaFrom top, left to right: Flinde&quot;| __truncated__</span>
 <span class="c1">##    &quot;Mean max temp\n Mean min temp\n Annual rainfal&quot;| __truncated__ &quot;This</span>
 <span class="c1">##    section needs additional citations for veri&quot;| __truncated__ &quot;Climate data</span>
@@ -211,14 +210,14 @@ tables. For this, we will rely on <em>stringi</em>’s <code class="docutils lit
 function that, in the configuration below, is used to extract the index
 of the relevant table.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="s">&quot;stringi&quot;</span><span class="p">)</span>
-<span class="p">(</span><span class="n">idx</span> <span class="o">&lt;-</span> <span class="nf">which</span><span class="p">(</span><span class="nf">stri_detect_fixed</span><span class="p">(</span><span class="n">text_tables</span><span class="p">,</span> <span class="s">&quot;climate data&quot;</span><span class="p">,</span>
-  <span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">max_count</span><span class="o">=</span><span class="m">1</span><span class="p">)))</span>
+<span class="p">(</span><span class="n">idx</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">which</span><span class="p">(</span><span class="nf">stri_detect_fixed</span><span class="p">(</span><span class="n">text_tables</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;climate data&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">max_count</span><span class="o">=</span><span class="m">1</span><span class="p">)))</span>
 <span class="c1">## [1] 4</span>
 </pre></div>
 </div>
 <p>Let’s use <em>rvest</em>’s <code class="docutils literal notranslate"><span class="pre">html_table()</span></code> to convert the above table
 to a data frame object.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">as.data.frame</span><span class="p">(</span><span class="nf">html_table</span><span class="p">(</span><span class="n">all_tables</span><span class="p">[[</span><span class="n">idx</span><span class="p">]],</span> <span class="n">fill</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.data.frame</span><span class="p">(</span><span class="nf">html_table</span><span class="p">(</span><span class="n">all_tables</span><span class="p">[[</span><span class="n">idx</span><span class="p">]],</span><span class="w"> </span><span class="n">fill</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)))</span>
 </pre></div>
 </div>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">##    Climate data for Melbourne Regional Office (1991–2015)</span>
@@ -265,22 +264,22 @@ First, for the sake of convenience, let us convert it to a character
 matrix so that the processing of all the cells can be vectorised (a
 matrix in R is just a single “long” vector, whereas a data frame is a
 list of many atomic vectors).</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.matrix</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">as.numeric()</span></code> function will find the parsing of the Unicode MINUS
 SIGN (U+2212, “−”) difficult, therefore let us call the transliterator
 first in order to replace it (and other potentially problematic
 characters) with its simpler equivalent:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">[,</span> <span class="p">]</span> <span class="o">&lt;-</span> <span class="nf">stri_trans_general</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;Publishing-Any; Any-ASCII&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">[,</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">stri_trans_general</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Publishing-Any; Any-ASCII&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Note that it is the first row of the matrix that defines the column
 names. Moreover, the last row just gives the data source and hence may
 be removed.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">dimnames</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="nf">list</span><span class="p">(</span><span class="n">x</span><span class="p">[,</span> <span class="m">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="m">1</span><span class="p">,</span> <span class="p">])</span>  <span class="c1"># row, column names</span>
-<span class="n">x</span> <span class="o">&lt;-</span> <span class="n">x</span><span class="p">[</span><span class="m">2</span><span class="o">:</span><span class="p">(</span><span class="nf">nrow</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="m">1</span><span class="p">),</span> <span class="m">2</span><span class="o">:</span><span class="nf">ncol</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span>   <span class="c1"># skip 1st/last row and 1st column</span>
-<span class="n">x</span><span class="p">[,</span> <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="nf">ncol</span><span class="p">(</span><span class="n">x</span><span class="p">))]</span>                   <span class="c1"># example columns</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">dimnames</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">x</span><span class="p">[,</span><span class="w"> </span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="p">])</span><span class="w">  </span><span class="c1"># row, column names</span>
+<span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="m">2</span><span class="o">:</span><span class="p">(</span><span class="nf">nrow</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="m">2</span><span class="o">:</span><span class="nf">ncol</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span><span class="w">   </span><span class="c1"># skip 1st/last row and 1st column</span>
+<span class="n">x</span><span class="p">[,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="nf">ncol</span><span class="p">(</span><span class="n">x</span><span class="p">))]</span><span class="w">                   </span><span class="c1"># example columns</span>
 <span class="c1">##                                         Jan           Year          </span>
 <span class="c1">## Record high °C (°F)                     &quot;45.6(114.1)&quot; &quot;46.4(115.5)&quot; </span>
 <span class="c1">## Average high °C (°F)                    &quot;27.0(80.6)&quot;  &quot;20.8(69.4)&quot;  </span>
@@ -295,21 +294,21 @@ be removed.</p>
 </div>
 <p>Commas that are used as thousands separators (commas surrounded by
 digits) should be dropped:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">[,</span> <span class="p">]</span> <span class="o">&lt;-</span> <span class="nf">stri_replace_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;(?&lt;=\\d),(?=\\d)&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">[,</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">stri_replace_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;(?&lt;=\\d),(?=\\d)&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The numbers and alternative units in parentheses are redundant,
 therefore these should be taken care of as well:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">[,</span> <span class="p">]</span> <span class="o">&lt;-</span> <span class="nf">stri_replace_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span>
-  <span class="s">&quot;(\\d+(?:\\.\\d+)?)\\(\\d+(?:\\.\\d+)?\\)&quot;</span><span class="p">,</span> <span class="s">&quot;$1&quot;</span><span class="p">)</span>
-<span class="nf">dimnames</span><span class="p">(</span><span class="n">x</span><span class="p">)[[</span><span class="m">1</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="nf">stri_replace_all_fixed</span><span class="p">(</span><span class="nf">dimnames</span><span class="p">(</span><span class="n">x</span><span class="p">)[[</span><span class="m">1</span><span class="p">]],</span>
-  <span class="nf">c</span><span class="p">(</span><span class="s">&quot; (°F)&quot;</span><span class="p">,</span> <span class="s">&quot; (inches)&quot;</span><span class="p">),</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">),</span> <span class="n">vectorise_all</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">[,</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">stri_replace_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span>
+<span class="w">  </span><span class="s">&quot;(\\d+(?:\\.\\d+)?)\\(\\d+(?:\\.\\d+)?\\)&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;$1&quot;</span><span class="p">)</span>
+<span class="nf">dimnames</span><span class="p">(</span><span class="n">x</span><span class="p">)[[</span><span class="m">1</span><span class="p">]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">stri_replace_all_fixed</span><span class="p">(</span><span class="nf">dimnames</span><span class="p">(</span><span class="n">x</span><span class="p">)[[</span><span class="m">1</span><span class="p">]],</span>
+<span class="w">  </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot; (°F)&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot; (inches)&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">vectorise_all</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>At last, <code class="docutils literal notranslate"><span class="pre">as.numeric()</span></code> can be used to re-interpret all the strings as
 numbers:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">structure</span><span class="p">(</span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="nf">dim</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">dimnames</span><span class="o">=</span><span class="nf">dimnames</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="n">x</span><span class="p">[,</span> <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="nf">ncol</span><span class="p">(</span><span class="n">x</span><span class="p">))]</span>  <span class="c1"># example columns</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">structure</span><span class="p">(</span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">dim</span><span class="o">=</span><span class="nf">dim</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">dimnames</span><span class="o">=</span><span class="nf">dimnames</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">x</span><span class="p">[,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="nf">ncol</span><span class="p">(</span><span class="n">x</span><span class="p">))]</span><span class="w">  </span><span class="c1"># example columns</span>
 <span class="c1">##                                           Jan   Jun   Year</span>
 <span class="c1">## Record high °C                           45.6  22.4   46.4</span>
 <span class="c1">## Average high °C                          27.0  15.1   20.8</span>
@@ -324,13 +323,13 @@ numbers:</p>
 </div>
 <p>We now have a cleansed matrix at our disposal. We can, for instance,
 compute the monthly temperature ranges:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">[</span><span class="s">&quot;Record high °C&quot;</span><span class="p">,</span> <span class="o">-</span><span class="nf">ncol</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="s">&quot;Record low °C&quot;</span><span class="p">,</span> <span class="o">-</span><span class="nf">ncol</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">[</span><span class="s">&quot;Record high °C&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="nf">ncol</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="s">&quot;Record low °C&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="nf">ncol</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span>
 <span class="c1">##  Jan  Feb  Mar  Apr  May  Jun  Jul  Aug  Sep  Oct  Nov  Dec </span>
 <span class="c1">## 40.1 41.9 38.9 33.4 29.8 24.6 26.1 28.6 31.9 36.8 38.4 39.3</span>
 </pre></div>
 </div>
 <p>or the average daily precipitation:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">&quot;Average rainfall mm&quot;</span><span class="p">,</span> <span class="o">-</span><span class="nf">ncol</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span> <span class="o">/</span> <span class="m">365.25</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">&quot;Average rainfall mm&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="nf">ncol</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="m">365.25</span>
 <span class="c1">## [1] 1.6463</span>
 </pre></div>
 </div>
@@ -353,7 +352,7 @@ be automated quite easily.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2023, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2023-01-18T09:23:44+1100.
+      <span class="lastupdated">Last updated on 2023-05-15T09:42:35+1000.
       </span></p>
   </div>
 

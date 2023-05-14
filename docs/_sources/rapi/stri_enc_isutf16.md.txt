@@ -24,7 +24,7 @@ stri_enc_isutf32le(str)
 
 ## Details
 
-These functions are independent of the way <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> marks encodings in character strings (see [Encoding](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Encoding.html) and [stringi-encoding](about_encoding.md)). Most often, these functions act on raw vectors.
+These functions are independent of the way <span class="rlang">**R**</span> marks encodings in character strings (see [Encoding](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Encoding.html) and [stringi-encoding](about_encoding.md)). Most often, these functions act on raw vectors.
 
 A result of `FALSE` means that a string is surely not valid UTF-16 or UTF-32. However, false positives are possible.
 

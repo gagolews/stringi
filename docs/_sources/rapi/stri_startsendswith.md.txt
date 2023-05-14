@@ -54,15 +54,15 @@ stri_endswith_coll(
 
 ## Arguments
 
-|                                   |                                                                                                                                                                                                  |
-|-----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`                             | character vector                                                                                                                                                                                 |
-| `...`                             | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_fixed`, and so on.                                                          |
-| `pattern, fixed, coll, charclass` | character vector defining search patterns; for more details refer to [stringi-search](about_search.md)                                                                                           |
-| `from`                            | integer vector                                                                                                                                                                                   |
-| `negate`                          | single logical value; whether a no-match to a pattern is rather of interest                                                                                                                      |
-| `to`                              | integer vector                                                                                                                                                                                   |
-| `opts_collator, opts_fixed`       | a named list used to tune up the search engine\'s settings; see [`stri_opts_collator`](stri_opts_collator.md) and [`stri_opts_fixed`](stri_opts_fixed.md), respectively; `NULL` for the defaults |
+|                                         |                                                                                                                                                                                                  |
+|-----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `str`                                   | character vector                                                                                                                                                                                 |
+| `...`                                   | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_fixed`, and so on.                                                          |
+| `pattern`, `fixed`, `coll`, `charclass` | character vector defining search patterns; for more details refer to [stringi-search](about_search.md)                                                                                           |
+| `from`                                  | integer vector                                                                                                                                                                                   |
+| `negate`                                | single logical value; whether a no-match to a pattern is rather of interest                                                                                                                      |
+| `to`                                    | integer vector                                                                                                                                                                                   |
+| `opts_collator`, `opts_fixed`           | a named list used to tune up the search engine\'s settings; see [`stri_opts_collator`](stri_opts_collator.md) and [`stri_opts_fixed`](stri_opts_fixed.md), respectively; `NULL` for the defaults |
 
 ## Details
 

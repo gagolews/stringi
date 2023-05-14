@@ -1,4 +1,4 @@
-# about_locale: Locales and <span class="pkg">stringi</span>
+# about_locale:
 
 ## Description
 

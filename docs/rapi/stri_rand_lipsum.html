@@ -4,7 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
@@ -34,11 +34,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -78,7 +77,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -118,19 +117,19 @@
 <p class="caption" role="heading"><span class="caption-text">Reference Manual</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../rapi.html">R Package <em>stringi</em> Reference</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="about_arguments.html">about_arguments: Passing Arguments to Functions in <span class="pkg">stringi</span></a></li>
-<li class="toctree-l2"><a class="reference internal" href="about_encoding.html">about_encoding: Character Encodings and <span class="pkg">stringi</span></a></li>
-<li class="toctree-l2"><a class="reference internal" href="about_locale.html">about_locale: Locales and <span class="pkg">stringi</span></a></li>
-<li class="toctree-l2"><a class="reference internal" href="about_search_boundaries.html">about_search_boundaries: Text Boundary Analysis in <span class="pkg">stringi</span></a></li>
-<li class="toctree-l2"><a class="reference internal" href="about_search_charclass.html">about_search_charclass: Character Classes in <span class="pkg">stringi</span></a></li>
-<li class="toctree-l2"><a class="reference internal" href="about_search_coll.html">about_search_coll: Locale-Sensitive Text Searching in <span class="pkg">stringi</span></a></li>
-<li class="toctree-l2"><a class="reference internal" href="about_search_fixed.html">about_search_fixed: Locale-Insensitive Fixed Pattern Matching in <span class="pkg">stringi</span></a></li>
-<li class="toctree-l2"><a class="reference internal" href="about_search_regex.html">about_search_regex: Regular Expressions in <span class="pkg">stringi</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_arguments.html">about_arguments:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_encoding.html">about_encoding:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_locale.html">about_locale:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_search_boundaries.html">about_search_boundaries:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_search_charclass.html">about_search_charclass:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_search_coll.html">about_search_coll:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_search_fixed.html">about_search_fixed:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_search_regex.html">about_search_regex:</a></li>
 <li class="toctree-l2"><a class="reference internal" href="about_search.html">about_search: String Searching</a></li>
 <li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: Fast and Portable Character String Processing in R</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code></span> as a Binary Operator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: as a Binary Operator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count.html">stri_count: Count the Number of Pattern Occurrences</a></li>
@@ -138,7 +137,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_create.html">stri_datetime_create: Create a Date-Time Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_fields.html">stri_datetime_fields: Get Values for Date and Time Fields</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_format.html">stri_datetime_format: Date and Time Formatting and Parsing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert <code class="docutils literal notranslate"><span class="pre">strptime</span></code>-Style Format Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: -Style Format Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_now.html">stri_datetime_now: Get Current Date and Time</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_symbols.html">stri_datetime_symbols: List Localizable Date-Time Formatting Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_detect.html">stri_detect: Detect Pattern Occurrences</a></li>
@@ -153,7 +152,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_isutf8.html">stri_enc_isutf8: Check If a Data Stream Is Possibly in UTF-8</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_list.html">stri_enc_list: List Known Character Encodings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_mark.html">stri_enc_mark: Get Declared Encodings of Each String</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_enc_set.html">stri_enc_set: Set or Get Default Character Encoding in <span class="pkg">stringi</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_enc_set.html">stri_enc_set:</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_toascii.html">stri_enc_toascii: Convert To ASCII</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_tonative.html">stri_enc_tonative: Convert Strings To Native Encoding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_toutf32.html">stri_enc_toutf32: Convert Strings To UTF-32</a></li>
@@ -163,7 +162,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_extract_boundaries.html">stri_extract_boundaries: Extract Data Between Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_extract.html">stri_extract: Extract Pattern Occurrences</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_flatten.html">stri_flatten: Flatten a String</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_info.html">stri_info: Query Default Settings for <span class="pkg">stringi</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_info.html">stri_info:</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_isempty.html">stri_isempty: Determine if a String is of Length Zero</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_join_list.html">stri_join_list: Concatenate Strings in a List</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_join.html">stri_join: Concatenate Character Vectors</a></li>
@@ -171,7 +170,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_list2matrix.html">stri_list2matrix: Convert a List to a Character Matrix</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_locale_info.html">stri_locale_info: Query Given Locale</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_locale_list.html">stri_locale_list: List Available Locales</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_locale_set.html">stri_locale_set: Set or Get Default Locale in <span class="pkg">stringi</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_locale_set.html">stri_locale_set:</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_locate_boundaries.html">stri_locate_boundaries: Locate Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_locate.html">stri_locate: Locate Pattern Occurrences</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_match.html">stri_match: Extract Regex Pattern Matches, Together with Capture Groups</a></li>
@@ -218,7 +217,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_subset.html">stri_subset: Select Elements that Match a Given Pattern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_timezone_info.html">stri_timezone_info: Query a Given Time Zone</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_timezone_list.html">stri_timezone_list: List Available Time Zone Identifiers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_timezone_set.html">stri_timezone_set: Set or Get Default Time Zone in <span class="pkg">stringi</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_timezone_set.html">stri_timezone_set:</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_trans_casemap.html">stri_trans_casemap: Transform Strings with Case Mapping or Folding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_trans_char.html">stri_trans_char: Translate Characters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_trans_general.html">stri_trans_general: General Text Transforms, Including Transliteration</a></li>
@@ -267,9 +266,9 @@
         
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../rapi.html">R Package <em>stringi</em> Reference</a> &raquo;</li>
-      <li>stri_rand_lipsum: A Lorem Ipsum Generator</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../rapi.html">R Package <em>stringi</em> Reference</a></li>
+      <li class="breadcrumb-item active">stri_rand_lipsum: A Lorem Ipsum Generator</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
@@ -289,13 +288,13 @@
 </section>
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h2>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_rand_lipsum</span><span class="p">(</span><span class="n">n_paragraphs</span><span class="p">,</span> <span class="n">start_lipsum</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="n">nparagraphs</span> <span class="o">=</span> <span class="n">n_paragraphs</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_rand_lipsum</span><span class="p">(</span><span class="n">n_paragraphs</span><span class="p">,</span><span class="w"> </span><span class="n">start_lipsum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">nparagraphs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n_paragraphs</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="arguments">
 <h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this heading"></a></h2>
-<table class="colwidths-auto docutils align-default">
+<table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
 <th class="head"><p></p></th>
@@ -331,13 +330,13 @@
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this heading"></a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
 <p>Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, <em>Journal of Statistical Software</em> 103(2), 2022, 1-59, <a class="reference external" href="https://doi.org/10.18637/jss.v103.i02">doi:10.18637/jss.v103.i02</a></p>
-<p>Other random: <a class="reference internal" href="stri_rand_shuffle.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_rand_shuffle()</span></code></span></a>, <a class="reference internal" href="stri_rand_strings.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_rand_strings()</span></code></span></a></p>
+<p>Other random: <a class="reference internal" href="stri_rand_shuffle.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_rand_shuffle()</span></code></span></a>, <a class="reference internal" href="stri_rand_strings.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_rand_strings()</span></code></span></a></p>
 </section>
 <section id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">cat</span><span class="p">(</span><span class="nf">sapply</span><span class="p">(</span>
-   <span class="nf">stri_wrap</span><span class="p">(</span><span class="nf">stri_rand_lipsum</span><span class="p">(</span><span class="m">10</span><span class="p">),</span> <span class="m">80</span><span class="p">,</span> <span class="n">simplify</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">),</span>
-   <span class="n">stri_flatten</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&#39;\n&#39;</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s">&#39;\n\n&#39;</span><span class="p">)</span>
+<span class="w">   </span><span class="nf">stri_wrap</span><span class="p">(</span><span class="nf">stri_rand_lipsum</span><span class="p">(</span><span class="m">10</span><span class="p">),</span><span class="w"> </span><span class="m">80</span><span class="p">,</span><span class="w"> </span><span class="n">simplify</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">),</span>
+<span class="w">   </span><span class="n">stri_flatten</span><span class="p">,</span><span class="w"> </span><span class="n">collapse</span><span class="o">=</span><span class="s">&#39;\n&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&#39;\n\n&#39;</span><span class="p">)</span>
 <span class="c1">## Lorem ipsum dolor sit amet, tincidunt fermentum erat, penatibus parturient</span>
 <span class="c1">## porta quis mauris volutpat nunc, urna aliquet! Nec, eros diam molestie sociosqu</span>
 <span class="c1">## etiam phasellus dis arcu. Varius donec ligula sed tempor semper sed ut, nec.</span>
@@ -428,7 +427,7 @@
 <span class="c1">## ut venenatis. Risus velit vestibulum vitae justo netus. Quis odio vel sit nam.</span>
 <span class="c1">## Tincidunt, eu in, torquent odio. Ac felis pharetra euismod elit odio consectetur</span>
 <span class="c1">## dictum. Ante id urna quis convallis.</span>
-<span class="nf">cat</span><span class="p">(</span><span class="nf">stri_rand_lipsum</span><span class="p">(</span><span class="m">10</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s">&#39;\n\n&#39;</span><span class="p">)</span>
+<span class="nf">cat</span><span class="p">(</span><span class="nf">stri_rand_lipsum</span><span class="p">(</span><span class="m">10</span><span class="p">),</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&#39;\n\n&#39;</span><span class="p">)</span>
 <span class="c1">## Lorem ipsum dolor sit amet, laoreet ut urna ac, accumsan in suscipit nullam. Vitae nec in sed proin quis, in ligula. Varius curabitur turpis eu rhoncus fusce curae. Ullamcorper eget maecenas. Est vel, lobortis sociis vel mi donec sed et magna in. Sed amet ante tellus donec augue dictum amet sagittis, aliquam. A tincidunt congue eget nostra non mauris auctor quis. Imperdiet laoreet quis, orci inceptos aenean, sagittis, litora. Vestibulum tristique. Non morbi, consequat scelerisque tincidunt lacinia quam tristique aliquet ad. Urna nec nunc eu vitae fermentum auctor, lacus ex, urna. Ipsum rhoncus ex condimentum amet. Erat nascetur ante ut urna dis vivamus faucibus consequat neque nostra, et.</span>
 <span class="c1">## </span>
 <span class="c1">## Neque pretium semper ad mattis non porta facilisis nullam class. Velit montes, lacus vel volutpat nec metus leo venenatis. Felis lacus sit diam, a. Tincidunt molestie purus mi diam proin sed tincidunt ut rutrum. Diam libero. Velit lacus ac sed, sed ut egestas finibus laoreet. Et nascetur non dolor felis torquent euismod libero nisl tempus. Suscipit auctor, et sit placerat, risus. Condimentum cursus vestibulum a luctus sapien hendrerit eu, nec. Maecenas sit consequat arcu. Laoreet donec ac eros. Tempus feugiat amet tellus neque habitant conubia non pellentesque. Efficitur, finibus, dui a, nec tincidunt. In lacinia vulputate, eget quam in et potenti nisi. Maecenas lorem nulla. Primis sed.</span>
@@ -466,7 +465,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2023, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2023-01-18T09:23:44+1100.
+      <span class="lastupdated">Last updated on 2023-05-15T09:42:35+1000.
       </span></p>
   </div>
 

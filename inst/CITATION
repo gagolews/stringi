@@ -1,7 +1,7 @@
 bibentry(
     bibtype  = "article",
     title    = "{stringi}: {F}ast and portable character string processing in {R}",
-    author   = personList(as.person("Marek Gagolewski")),
+    author   = c(person("Marek", "Gagolewski")),
     journal  = "Journal of Statistical Software",
     year     = "2022",
     volume   = "103",

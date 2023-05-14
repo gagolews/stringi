@@ -4,7 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
@@ -34,11 +34,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -78,7 +77,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -161,8 +160,8 @@
         
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>General Design Principles</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">General Design Principles</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
@@ -181,10 +180,10 @@
 </div></blockquote>
 <p>The API of the early releases of <em>stringi</em> has been designed to be
 fairly compatible with that of the 0.6.2 version of the <a class="reference external" href="https://stringr.tidyverse.org/"><em>stringr</em></a>
-package <span id="id3">[<a class="reference internal" href="../z_bibliography.html#id12" title="H. Wickham. stringr: Modern, consistent string processing. The R Journal, 2(2):38–40, 2010.">Wic10</a>]</span> (dated 2012<a class="footnote-reference brackets" href="#footstringr" id="id4">1</a>),
+package <span id="id3">[<a class="reference internal" href="../z_bibliography.html#id12" title="H. Wickham. stringr: Modern, consistent string processing. The R Journal, 2(2):38–40, 2010.">Wic10</a>]</span> (dated 2012<a class="footnote-reference brackets" href="#footstringr" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>),
 with some fixes in the consistency of the
 handling of missing values and zero-length vectors, amongst others.
-However, instead of being merely thin wrappers around base R<a class="footnote-reference brackets" href="#footstringx" id="id5">2</a> functions,
+However, instead of being merely thin wrappers around base R<a class="footnote-reference brackets" href="#footstringx" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> functions,
 which we have identified as not necessarily portable across platforms
 and not really suitable for natural language processing tasks, all the
 functionality has been implemented from the ground up, with the use of
@@ -237,15 +236,15 @@ occurrences of a substring as-is.</p>
 <h2>Vectorisation<a class="headerlink" href="#vectorisation" title="Permalink to this heading"></a></h2>
 <p>Individual character (or code point) strings can be entered using double
 quotes or apostrophes:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="s">&quot;spam&quot;</span>  <span class="c1"># or &#39;spam&#39;</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="s">&quot;spam&quot;</span><span class="w">  </span><span class="c1"># or &#39;spam&#39;</span>
 <span class="c1">## [1] &quot;spam&quot;</span>
 </pre></div>
 </div>
 <p>However, as the R language does not feature any classical scalar types,
 strings are wrapped around atomic vectors of type “<code class="docutils literal notranslate"><span class="pre">character</span></code>”:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">typeof</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">)</span>  <span class="c1"># object type; see also is.character() and is.vector()</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">typeof</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># object type; see also is.character() and is.vector()</span>
 <span class="c1">## [1] &quot;character&quot;</span>
-<span class="nf">length</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">)</span>  <span class="c1"># how many strings are in this vector?</span>
+<span class="nf">length</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># how many strings are in this vector?</span>
 <span class="c1">## [1] 1</span>
 </pre></div>
 </div>
@@ -255,14 +254,14 @@ length 1” interchangeably.</p>
 <em>vectorisation</em> strategy encourages writing code that processes whole
 collections of objects, all at once, regardless of their size.</p>
 <p>For instance, given the following character vector:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">pythons</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;Graham Chapman&quot;</span><span class="p">,</span> <span class="s">&quot;John Cleese&quot;</span><span class="p">,</span> <span class="s">&quot;Terry Gilliam&quot;</span><span class="p">,</span>
-  <span class="s">&quot;Eric Idle&quot;</span><span class="p">,</span> <span class="s">&quot;Terry Jones&quot;</span><span class="p">,</span> <span class="s">&quot;Michael Palin&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">pythons</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Graham Chapman&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;John Cleese&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Terry Gilliam&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s">&quot;Eric Idle&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Terry Jones&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Michael Palin&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>we can separate the first and the last names from each other (assuming
 for simplicity that no middle names are given), using just a single
 function call:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">pythons</span> <span class="o">&lt;-</span> <span class="nf">stri_split_fixed</span><span class="p">(</span><span class="n">pythons</span><span class="p">,</span> <span class="s">&quot; &quot;</span><span class="p">,</span> <span class="n">simplify</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">pythons</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">stri_split_fixed</span><span class="p">(</span><span class="n">pythons</span><span class="p">,</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">simplify</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
 <span class="c1">##      [,1]      [,2]     </span>
 <span class="c1">## [1,] &quot;Graham&quot;  &quot;Chapman&quot;</span>
 <span class="c1">## [2,] &quot;John&quot;    &quot;Cleese&quot; </span>
@@ -283,7 +282,7 @@ respect to all arguments (or at least to the crucial, non-optional
 ones). As a prototype, let’s consider the binary arithmetic, logical,
 or comparison operators (and, to some extent, <code class="docutils literal notranslate"><span class="pre">paste()</span></code>, <code class="docutils literal notranslate"><span class="pre">strrep()</span></code>, and
 more generally <code class="docutils literal notranslate"><span class="pre">mapply()</span></code>), for example the multiplication:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">-1</span><span class="p">)</span> <span class="o">*</span> <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span>  <span class="c1"># == c(10, -1, 10, -1) * c(1, 2, 3, 4)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">-1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">)</span><span class="w">  </span><span class="c1"># == c(10, -1, 10, -1) * c(1, 2, 3, 4)</span>
 <span class="c1">## [1] 10 -2 30 -4</span>
 </pre></div>
 </div>
@@ -306,7 +305,7 @@ the arguments’ recycling, using the call to
 haystack) as an illustration:</p>
 <ul>
 <li><p>many strings – one pattern:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_fixed</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;abcd&quot;</span><span class="p">,</span> <span class="s">&quot;abcabc&quot;</span><span class="p">,</span> <span class="s">&quot;abdc&quot;</span><span class="p">,</span> <span class="s">&quot;dab&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">),</span> <span class="s">&quot;abc&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_fixed</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;abcd&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;abcabc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;abdc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;dab&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;abc&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">## [1]  1  2  0  0 NA</span>
@@ -316,7 +315,7 @@ haystack) as an illustration:</p>
 2 in <code class="docutils literal notranslate"><span class="pre">&quot;abcabc&quot;</span></code>, and so forth);</p>
 </li>
 <li><p>one string – many patterns:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_fixed</span><span class="p">(</span><span class="s">&quot;abcdeabc&quot;</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;def&quot;</span><span class="p">,</span> <span class="s">&quot;bc&quot;</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_fixed</span><span class="p">(</span><span class="s">&quot;abcdeabc&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;def&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;abc&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">))</span>
 </pre></div>
 </div>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">## [1]  0  2  2 NA</span>
@@ -326,7 +325,7 @@ haystack) as an illustration:</p>
 <code class="docutils literal notranslate"><span class="pre">&quot;bc&quot;</span></code> can be found therein twice, etc.);</p>
 </li>
 <li><p>each string – its own corresponding pattern:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_fixed</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;abca&quot;</span><span class="p">,</span> <span class="s">&quot;def&quot;</span><span class="p">,</span> <span class="s">&quot;ghi&quot;</span><span class="p">),</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;z&quot;</span><span class="p">,</span> <span class="s">&quot;h&quot;</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_fixed</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;abca&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;def&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ghi&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;z&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;h&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">## [1] 2 0 1</span>
@@ -336,11 +335,11 @@ haystack) as an illustration:</p>
 no <code class="docutils literal notranslate"><span class="pre">&quot;z&quot;</span></code> in <code class="docutils literal notranslate"><span class="pre">&quot;def&quot;</span></code>, and one <code class="docutils literal notranslate"><span class="pre">&quot;h&quot;</span></code> in <code class="docutils literal notranslate"><span class="pre">&quot;ghi&quot;</span></code>);</p>
 </li>
 <li><p>each row in a matrix – its own corresponding pattern:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">haystack</span> <span class="o">&lt;-</span> <span class="nf">matrix</span><span class="p">(</span>  <span class="c1"># example input</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">haystack</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">matrix</span><span class="p">(</span><span class="w">  </span><span class="c1"># example input</span>
 <span class="nf">do.call</span><span class="p">(</span><span class="n">stri_join</span><span class="p">,</span>
-    <span class="nf">expand.grid</span><span class="p">(</span>
-    <span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">),</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">),</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">)</span>
-    <span class="p">)),</span> <span class="n">nrow</span><span class="o">=</span><span class="m">3</span><span class="p">))</span>
+<span class="w">    </span><span class="nf">expand.grid</span><span class="p">(</span>
+<span class="w">    </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">)),</span><span class="w"> </span><span class="n">nrow</span><span class="o">=</span><span class="m">3</span><span class="p">))</span>
 </pre></div>
 </div>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">##      [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] </span>
@@ -349,9 +348,9 @@ no <code class="docutils literal notranslate"><span class="pre">&quot;z&quot;</s
 <span class="c1">## [3,] &quot;caa&quot; &quot;cba&quot; &quot;cca&quot; &quot;cab&quot; &quot;cbb&quot; &quot;ccb&quot; &quot;cac&quot; &quot;cbc&quot; &quot;ccc&quot;</span>
 </pre></div>
 </div>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">needle</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">)</span>
-<span class="nf">matrix</span><span class="p">(</span><span class="nf">stri_count_fixed</span><span class="p">(</span><span class="n">haystack</span><span class="p">,</span> <span class="n">needle</span><span class="p">),</span>  <span class="c1"># call to stringi</span>
-<span class="n">nrow</span><span class="o">=</span><span class="m">3</span><span class="p">,</span> <span class="n">dimnames</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="n">needle</span><span class="p">,</span> <span class="kc">NULL</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">needle</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">)</span>
+<span class="nf">matrix</span><span class="p">(</span><span class="nf">stri_count_fixed</span><span class="p">(</span><span class="n">haystack</span><span class="p">,</span><span class="w"> </span><span class="n">needle</span><span class="p">),</span><span class="w">  </span><span class="c1"># call to stringi</span>
+<span class="n">nrow</span><span class="o">=</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">dimnames</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="n">needle</span><span class="p">,</span><span class="w"> </span><span class="kc">NULL</span><span class="p">))</span>
 </pre></div>
 </div>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">##   [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9]</span>
@@ -377,11 +376,11 @@ with respect to each column, we can (amongst others)
 apply matrix transpose twice (<code class="docutils literal notranslate"><span class="pre">t(stri_count_fixed(t(haystack),</span> <span class="pre">needle))</span></code>).</p>
 </li>
 <li><p>all strings – all patterns:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">haystack</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;aaa&quot;</span><span class="p">,</span> <span class="s">&quot;bbb&quot;</span><span class="p">,</span> <span class="s">&quot;ccc&quot;</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">,</span> <span class="s">&quot;cba&quot;</span><span class="p">,</span> <span class="s">&quot;aab&quot;</span><span class="p">,</span> <span class="s">&quot;bab&quot;</span><span class="p">,</span> <span class="s">&quot;acc&quot;</span><span class="p">)</span>
-<span class="n">needle</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">haystack</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;aaa&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bbb&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ccc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;abc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cba&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;aab&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bab&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;acc&quot;</span><span class="p">)</span>
+<span class="n">needle</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">)</span>
 <span class="nf">structure</span><span class="p">(</span>
-<span class="nf">outer</span><span class="p">(</span><span class="n">haystack</span><span class="p">,</span> <span class="n">needle</span><span class="p">,</span> <span class="n">stri_count_fixed</span><span class="p">),</span>
-<span class="n">dimnames</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="n">haystack</span><span class="p">,</span> <span class="n">needle</span><span class="p">))</span>  <span class="c1"># add row and column names</span>
+<span class="nf">outer</span><span class="p">(</span><span class="n">haystack</span><span class="p">,</span><span class="w"> </span><span class="n">needle</span><span class="p">,</span><span class="w"> </span><span class="n">stri_count_fixed</span><span class="p">),</span>
+<span class="n">dimnames</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="n">haystack</span><span class="p">,</span><span class="w"> </span><span class="n">needle</span><span class="p">))</span><span class="w">  </span><span class="c1"># add row and column names</span>
 </pre></div>
 </div>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">##     a b c</span>
@@ -399,8 +398,8 @@ apply matrix transpose twice (<code class="docutils literal notranslate"><span c
 of the two arguments)</p>
 <p>This is equivalent to:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">matrix</span><span class="p">(</span>
-<span class="nf">stri_count_fixed</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="n">haystack</span><span class="p">,</span> <span class="n">each</span><span class="o">=</span><span class="nf">length</span><span class="p">(</span><span class="n">needle</span><span class="p">)),</span> <span class="n">needle</span><span class="p">),</span>
-<span class="n">byrow</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="nf">length</span><span class="p">(</span><span class="n">needle</span><span class="p">),</span> <span class="n">dimnames</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="n">haystack</span><span class="p">,</span> <span class="n">needle</span><span class="p">))</span>
+<span class="nf">stri_count_fixed</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="n">haystack</span><span class="p">,</span><span class="w"> </span><span class="n">each</span><span class="o">=</span><span class="nf">length</span><span class="p">(</span><span class="n">needle</span><span class="p">)),</span><span class="w"> </span><span class="n">needle</span><span class="p">),</span>
+<span class="n">byrow</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">ncol</span><span class="o">=</span><span class="nf">length</span><span class="p">(</span><span class="n">needle</span><span class="p">),</span><span class="w"> </span><span class="n">dimnames</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="n">haystack</span><span class="p">,</span><span class="w"> </span><span class="n">needle</span><span class="p">))</span>
 </pre></div>
 </div>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">##     a b c</span>
@@ -422,9 +421,9 @@ of the two arguments)</p>
 <p>Some base R string processing functions, e.g., <code class="docutils literal notranslate"><span class="pre">paste()</span></code>, treat missing
 values as literal <code class="docutils literal notranslate"><span class="pre">&quot;NA&quot;</span></code> strings. <em>stringi</em>, however, <em>does</em> enforce the
 consistent propagation of missing values (like arithmetic operations):</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">paste</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">NA_character_</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">),</span> <span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">)</span>  <span class="c1"># base R</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">paste</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">NA_character_</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">)</span><span class="w">  </span><span class="c1"># base R</span>
 <span class="c1">## [1] &quot;NA x 1&quot; &quot;b x 2&quot;  &quot;c x 1&quot;</span>
-<span class="nf">stri_join</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">NA_character_</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">),</span> <span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">)</span>  <span class="c1"># stringi</span>
+<span class="nf">stri_join</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">NA_character_</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">)</span><span class="w">  </span><span class="c1"># stringi</span>
 <span class="c1">## Warning in stri_join(c(NA_character_, &quot;b&quot;, &quot;c&quot;), &quot;x&quot;, 1:2): longer object</span>
 <span class="c1">## length is not a multiple of shorter object length</span>
 <span class="c1">## [1] NA    &quot;bx2&quot; &quot;cx1&quot;</span>
@@ -446,8 +445,8 @@ This makes operation chaining easier and less error-prone.</p>
 <p>For example, <code class="docutils literal notranslate"><span class="pre">stri_extract_first_regex()</span></code> finds the first occurrence of
 a pattern in each string. Therefore, the output is a character of the
 same length as the input (with the recycling rule in place if necessary).</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">haystack</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;bacon&quot;</span><span class="p">,</span> <span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="s">&quot;jam, spam, bacon, and spam&quot;</span><span class="p">)</span>
-<span class="nf">stri_extract_first_regex</span><span class="p">(</span><span class="n">haystack</span><span class="p">,</span> <span class="s">&quot;\\b\\w{1,4}\\b&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">haystack</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;bacon&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;jam, spam, bacon, and spam&quot;</span><span class="p">)</span>
+<span class="nf">stri_extract_first_regex</span><span class="p">(</span><span class="n">haystack</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\\b\\w{1,4}\\b&quot;</span><span class="p">)</span>
 <span class="c1">## [1] NA     &quot;spam&quot; &quot;jam&quot;</span>
 </pre></div>
 </div>
@@ -457,7 +456,7 @@ vector size consistent with the length of the inputs.</p>
 <p>On the other hand, <code class="docutils literal notranslate"><span class="pre">stri_extract_all_regex()</span></code> identifies all occurrences
 of a pattern, whose counts may differ from input to input, therefore it
 yields a list of character vectors.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="n">haystack</span><span class="p">,</span> <span class="s">&quot;\\b\\w{1,4}\\b&quot;</span><span class="p">,</span> <span class="n">omit_no_match</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="n">haystack</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\\b\\w{1,4}\\b&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">omit_no_match</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## character(0)</span>
 <span class="c1">## </span>
@@ -480,7 +479,7 @@ operator-friendly (either when using “<code class="docutils literal notranslat
 despite the fact that they can  trivially be reduced to a series of other
 calls. In particular, writing:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_sub_all</span><span class="p">(</span><span class="n">haystack</span><span class="p">,</span>
-  <span class="nf">stri_locate_all_regex</span><span class="p">(</span><span class="n">haystack</span><span class="p">,</span> <span class="s">&quot;\\b\\w{1,4}\\b&quot;</span><span class="p">,</span> <span class="n">omit_no_match</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+<span class="w">  </span><span class="nf">stri_locate_all_regex</span><span class="p">(</span><span class="n">haystack</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\\b\\w{1,4}\\b&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">omit_no_match</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>yields the same result as in the previous example, but refers to
@@ -520,10 +519,10 @@ the built-in <code class="docutils literal notranslate"><span class="pre">gregex
 (<code class="docutils literal notranslate"><span class="pre">perl=FALSE</span></code>) and
 <em>PCRE</em> (<code class="docutils literal notranslate"><span class="pre">perl=TRUE</span></code>) libraries using a POSIX-like and Unicode-style
 character set (see <a class="reference internal" href="regular_expressions.html#sec-regex"><span class="std std-ref">Regular Expressions</span></a> for more details):</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="s">&quot;AEZaezĄĘŻąęż&quot;</span>  <span class="c1"># &quot;AEZaez\u0104\u0118\u017b\u0105\u0119\u017c&quot;</span>
-<span class="nf">stri_sub</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nf">gregexpr</span><span class="p">(</span><span class="s">&quot;[[:alpha:]]&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">perl</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)[[</span><span class="m">1</span><span class="p">]],</span> <span class="n">length</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
-<span class="nf">stri_sub</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nf">gregexpr</span><span class="p">(</span><span class="s">&quot;[[:alpha:]]&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">perl</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)[[</span><span class="m">1</span><span class="p">]],</span>  <span class="n">length</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
-<span class="nf">stri_sub</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nf">gregexpr</span><span class="p">(</span><span class="s">&quot;\\p{L}&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">perl</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)[[</span><span class="m">1</span><span class="p">]],</span>       <span class="n">length</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;AEZaezĄĘŻąęż&quot;</span><span class="w">  </span><span class="c1"># &quot;AEZaez\u0104\u0118\u017b\u0105\u0119\u017c&quot;</span>
+<span class="nf">stri_sub</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">gregexpr</span><span class="p">(</span><span class="s">&quot;[[:alpha:]]&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">perl</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)[[</span><span class="m">1</span><span class="p">]],</span><span class="w"> </span><span class="n">length</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+<span class="nf">stri_sub</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">gregexpr</span><span class="p">(</span><span class="s">&quot;[[:alpha:]]&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">perl</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)[[</span><span class="m">1</span><span class="p">]],</span><span class="w">  </span><span class="n">length</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+<span class="nf">stri_sub</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">gregexpr</span><span class="p">(</span><span class="s">&quot;\\p{L}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">perl</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)[[</span><span class="m">1</span><span class="p">]],</span><span class="w">       </span><span class="n">length</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>On Ubuntu Linux 20.04 (UTF-8 locale), the respective outputs are:</p>
@@ -556,12 +555,12 @@ refer to their base R counterparts. The operations that do not rely on
 <em>ICU</em> services have been rewritten from scratch with speed and
 portability in mind. For example, here are some timings of string
 concatenation:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">stri_rand_strings</span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="kc">LETTERS</span><span class="p">)</span> <span class="o">*</span> <span class="m">1000</span><span class="p">,</span> <span class="m">1000</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">stri_rand_strings</span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="kc">LETTERS</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">1000</span><span class="p">,</span><span class="w"> </span><span class="m">1000</span><span class="p">)</span>
 <span class="n">microbenchmark</span><span class="o">::</span><span class="nf">microbenchmark</span><span class="p">(</span>
-  <span class="n">join2</span><span class="o">=</span><span class="nf">stri_join</span><span class="p">(</span><span class="kc">LETTERS</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&quot;, &quot;</span><span class="p">),</span>
-  <span class="n">join3</span><span class="o">=</span><span class="nf">stri_join</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="kc">LETTERS</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&quot;, &quot;</span><span class="p">),</span>
-  <span class="n">r_paste2</span><span class="o">=</span><span class="nf">paste</span><span class="p">(</span><span class="kc">LETTERS</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&quot;, &quot;</span><span class="p">),</span>
-  <span class="n">r_paste3</span><span class="o">=</span><span class="nf">paste</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="kc">LETTERS</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&quot;, &quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="n">join2</span><span class="o">=</span><span class="nf">stri_join</span><span class="p">(</span><span class="kc">LETTERS</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">collapse</span><span class="o">=</span><span class="s">&quot;, &quot;</span><span class="p">),</span>
+<span class="w">  </span><span class="n">join3</span><span class="o">=</span><span class="nf">stri_join</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kc">LETTERS</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">collapse</span><span class="o">=</span><span class="s">&quot;, &quot;</span><span class="p">),</span>
+<span class="w">  </span><span class="n">r_paste2</span><span class="o">=</span><span class="nf">paste</span><span class="p">(</span><span class="kc">LETTERS</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">collapse</span><span class="o">=</span><span class="s">&quot;, &quot;</span><span class="p">),</span>
+<span class="w">  </span><span class="n">r_paste3</span><span class="o">=</span><span class="nf">paste</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kc">LETTERS</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">collapse</span><span class="o">=</span><span class="s">&quot;, &quot;</span><span class="p">)</span>
 <span class="p">)</span>
 <span class="c1">## Unit: milliseconds</span>
 <span class="c1">##      expr     min      lq    mean  median      uq     max neval</span>
@@ -572,15 +571,15 @@ concatenation:</p>
 </pre></div>
 </div>
 <p>Another example – timings of fixed pattern searching:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">stri_rand_strings</span><span class="p">(</span><span class="m">100</span><span class="p">,</span> <span class="m">100000</span><span class="p">,</span> <span class="s">&quot;[actg]&quot;</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">&lt;-</span> <span class="s">&quot;acca&quot;</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">stri_rand_strings</span><span class="p">(</span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="m">100000</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;[actg]&quot;</span><span class="p">)</span>
+<span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;acca&quot;</span>
 <span class="n">microbenchmark</span><span class="o">::</span><span class="nf">microbenchmark</span><span class="p">(</span>
-  <span class="n">fixed</span><span class="o">=</span><span class="nf">stri_locate_all_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span>
-  <span class="n">regex</span><span class="o">=</span><span class="nf">stri_locate_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span>
-  <span class="n">coll</span><span class="o">=</span><span class="nf">stri_locate_all_coll</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span>
-  <span class="n">r_tre</span><span class="o">=</span><span class="nf">gregexpr</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span>
-  <span class="n">r_pcre</span><span class="o">=</span><span class="nf">gregexpr</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">perl</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">),</span>
-  <span class="n">r_fixed</span><span class="o">=</span><span class="nf">gregexpr</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">fixed</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="w">  </span><span class="n">fixed</span><span class="o">=</span><span class="nf">stri_locate_all_fixed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">),</span>
+<span class="w">  </span><span class="n">regex</span><span class="o">=</span><span class="nf">stri_locate_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">),</span>
+<span class="w">  </span><span class="n">coll</span><span class="o">=</span><span class="nf">stri_locate_all_coll</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">),</span>
+<span class="w">  </span><span class="n">r_tre</span><span class="o">=</span><span class="nf">gregexpr</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">),</span>
+<span class="w">  </span><span class="n">r_pcre</span><span class="o">=</span><span class="nf">gregexpr</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">perl</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">),</span>
+<span class="w">  </span><span class="n">r_fixed</span><span class="o">=</span><span class="nf">gregexpr</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">fixed</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 <span class="p">)</span>
 <span class="c1">## Unit: milliseconds</span>
 <span class="c1">##     expr      min       lq     mean   median       uq      max neval</span>
@@ -603,9 +602,10 @@ user can make sure themself that this is the case, e.g., by
 calling “<code class="docutils literal notranslate"><span class="pre">x[]</span> <span class="pre">&lt;-</span> <span class="pre">stri_...(x,</span> <span class="pre">...)</span></code>” or
 “`<code class="docutils literal notranslate"><span class="pre">attributes&lt;-</span></code>`<code class="docutils literal notranslate"><span class="pre">(stri_...(x,</span> <span class="pre">...),</span> <span class="pre">attributes(x))</span></code>”.</p>
 <hr class="footnotes docutils" />
-<dl class="footnote brackets">
-<dt class="label" id="footstringr"><span class="brackets"><a class="fn-backref" href="#id4">1</a></span></dt>
-<dd><p>Interestingly, in 2015 the aforementioned
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footstringr" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">1</a><span class="fn-bracket">]</span></span>
+<p>Interestingly, in 2015 the aforementioned
 <em>stringr</em> package was rewritten as a set of wrappers around some of
 the <em>stringi</em> functions instead of the base R ones. In Section 14.7 of
 <em>R for Data Science</em> <span id="id7">[<a class="reference internal" href="../z_bibliography.html#id11" title="H. Wickham and G. Grolemund. R for Data Science. O'Reilly, 2017.">WG17</a>]</span> we read:
@@ -614,15 +614,16 @@ set of functions, which have been carefully picked to handle the most
 common string manipulation functions. <em>stringi</em>, on the other hand, is
 designed to be comprehensive. It contains almost every function you
 might ever need: <em>stringi</em> has 250 functions to <em>stringr</em>’s 49”.</p>
-</dd>
-<dt class="label" id="footstringx"><span class="brackets"><a class="fn-backref" href="#id5">2</a></span></dt>
-<dd><p>See also the new
+</aside>
+<aside class="footnote brackets" id="footstringx" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">2</a><span class="fn-bracket">]</span></span>
+<p>See also the new
 <a class="reference external" href="https://stringx.gagolewski.com"><em>stringx</em></a> package
 which supplies a set of portable and efficient
 replacements for and enhancements of the base R functions
 (based on <em>stringi</em>).</p>
-</dd>
-</dl>
+</aside>
+</aside>
 </section>
 </section>
 
@@ -639,7 +640,7 @@ replacements for and enhancements of the base R functions
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2023, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2023-01-18T09:23:44+1100.
+      <span class="lastupdated">Last updated on 2023-05-15T09:42:35+1000.
       </span></p>
   </div>
 

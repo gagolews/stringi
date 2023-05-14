@@ -1,4 +1,4 @@
-# about_search_coll: Locale-Sensitive Text Searching in <span class="pkg">stringi</span>
+# about_search_coll:
 
 ## Description
 

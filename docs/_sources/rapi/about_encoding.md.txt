@@ -1,4 +1,4 @@
-# about_encoding: Character Encodings and <span class="pkg">stringi</span>
+# about_encoding:
 
 ## Description
 
@@ -6,7 +6,7 @@ This manual page explains how <span class="pkg">stringi</span> deals with charac
 
 In particular we should note that:
 
--   <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> lets strings in ASCII, UTF-8, and your platform\'s native encoding coexist. A character vector printed on the console by calling [`print`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/print.html) or [`cat`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/cat.html) is silently re-encoded to the native encoding.
+-   <span class="rlang">**R**</span> lets strings in ASCII, UTF-8, and your platform\'s native encoding coexist. A character vector printed on the console by calling [`print`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/print.html) or [`cat`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/cat.html) is silently re-encoded to the native encoding.
 
 -   Functions in <span class="pkg">stringi</span> process each string internally in Unicode, the most universal character encoding ever. Even if a string is given in the native encoding, i.e., your platform\'s default one, it will be converted to Unicode (precisely: UTF-8 or UTF-16).
 
@@ -24,23 +24,23 @@ Unicode can be thought of as a superset of the spectrum of characters supported 
 
 ## UTF-8 and UTF-16
 
-For portability reasons, the UTF-8 encoding is the most natural choice for representing Unicode character strings in <span style="font-family: Courier New, Courier; color: #666666;">**R**</span>. UTF-8 has ASCII as its subset (code points 1--127 represent the same characters in both of them). Code points larger than 127 are represented by multi-byte sequences (from 2 to 4 bytes: Please note that not all sequences of bytes are valid UTF-8, compare [`stri_enc_isutf8`](stri_enc_isutf8.md)).
+For portability reasons, the UTF-8 encoding is the most natural choice for representing Unicode character strings in <span class="rlang">**R**</span>. UTF-8 has ASCII as its subset (code points 1--127 represent the same characters in both of them). Code points larger than 127 are represented by multi-byte sequences (from 2 to 4 bytes: Please note that not all sequences of bytes are valid UTF-8, compare [`stri_enc_isutf8`](stri_enc_isutf8.md)).
 
-Most of the computations in <span class="pkg">stringi</span> are performed internally using either UTF-8 or UTF-16 encodings (this depends on type of service you request: some <span class="pkg">ICU</span> services are designed only to work with UTF-16). Due to such a choice, with <span class="pkg">stringi</span> you get the same result on each platform, which is -- unfortunately -- not the case of base <span style="font-family: Courier New, Courier; color: #666666;">**R**</span>\'s functions (for instance, it is known that performing a regular expression search under Linux on some texts may give you a different result to those obtained under Windows). We really had portability in our minds while developing our package!
+Most of the computations in <span class="pkg">stringi</span> are performed internally using either UTF-8 or UTF-16 encodings (this depends on type of service you request: some <span class="pkg">ICU</span> services are designed only to work with UTF-16). Due to such a choice, with <span class="pkg">stringi</span> you get the same result on each platform, which is -- unfortunately -- not the case of base <span class="rlang">**R**</span>\'s functions (for instance, it is known that performing a regular expression search under Linux on some texts may give you a different result to those obtained under Windows). We really had portability in our minds while developing our package!
 
-We have observed that <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> correctly handles UTF-8 strings regardless of your platform\'s native encoding (see below). Therefore, we decided that most functions in <span class="pkg">stringi</span> will output its results in UTF-8 -- this speeds ups computations on cascading calls to our functions: the strings does not have to be re-encoded each time.
+We have observed that <span class="rlang">**R**</span> correctly handles UTF-8 strings regardless of your platform\'s native encoding (see below). Therefore, we decided that most functions in <span class="pkg">stringi</span> will output its results in UTF-8 -- this speeds ups computations on cascading calls to our functions: the strings does not have to be re-encoded each time.
 
 Note that some Unicode characters may have an ambiguous representation. For example, "a with ogonek" (one character) and "a"+"ogonek" (two graphemes) are semantically the same. <span class="pkg">stringi</span> provides functions to normalize character sequences, see [`stri_trans_nfc`](stri_trans_nf.md) for discussion. However, it is observed that denormalized strings do appear very rarely in typical string processing activities.
 
 Additionally, do note that <span class="pkg">stringi</span> silently removes byte order marks (BOMs - they may incidentally appear in a string read from a text file) from UTF8-encoded strings, see [`stri_enc_toutf8`](stri_enc_toutf8.md).
 
-## Character Encodings in <span style="font-family: Courier New, Courier; color: #666666;">**R**</span>
+## Character Encodings in <span class="rlang">**R**</span>
 
-Data in memory are just bytes (small integer values) -- an en*coding* is a way to represent characters with such numbers, it is a semantic \'key\' to understand a given byte sequence. For example, in ISO-8859-2 (Central European), the value 177 represents Polish "a with ogonek", and in ISO-8859-1 (Western European), the same value denotes the "plus-minus" sign. Thus, a character encoding is a translation scheme: we need to communicate with <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> somehow, relying on how it represents strings.
+Data in memory are just bytes (small integer values) -- an en*coding* is a way to represent characters with such numbers, it is a semantic \'key\' to understand a given byte sequence. For example, in ISO-8859-2 (Central European), the value 177 represents Polish "a with ogonek", and in ISO-8859-1 (Western European), the same value denotes the "plus-minus" sign. Thus, a character encoding is a translation scheme: we need to communicate with <span class="rlang">**R**</span> somehow, relying on how it represents strings.
 
-Overall, <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> has a very simple encoding marking mechanism, see [`stri_enc_mark`](stri_enc_mark.md). There is an implicit assumption that your platform\'s default (native) encoding always extends ASCII -- <span class="pkg">stringi</span> checks that whenever your native encoding is being detected automatically on <span class="pkg">ICU</span>\'s initialization and each time when you change it manually by calling [`stri_enc_set`](stri_enc_set.md).
+Overall, <span class="rlang">**R**</span> has a very simple encoding marking mechanism, see [`stri_enc_mark`](stri_enc_mark.md). There is an implicit assumption that your platform\'s default (native) encoding always extends ASCII -- <span class="pkg">stringi</span> checks that whenever your native encoding is being detected automatically on <span class="pkg">ICU</span>\'s initialization and each time when you change it manually by calling [`stri_enc_set`](stri_enc_set.md).
 
-Character strings in <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> (internally) can be declared to be in:
+Character strings in <span class="rlang">**R**</span> (internally) can be declared to be in:
 
 -   `UTF-8`;
 
@@ -52,21 +52,21 @@ Moreover, there are two other cases:
 
 -   ASCII -- for strings consisting only of byte codes not greater than 127;
 
--   `native` (a.k.a. `unknown` in [`Encoding`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Encoding.html); quite a misleading name: no explicit encoding mark) -- for strings that are assumed to be in your platform\'s native (default) encoding. This can represent UTF-8 if you are an OS X user, or some 8-bit Windows code page, for example. The native encoding used by <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> may be determined by examining the LC_CTYPE category, see [`Sys.getlocale`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/locales.html).
+-   `native` (a.k.a. `unknown` in [`Encoding`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Encoding.html); quite a misleading name: no explicit encoding mark) -- for strings that are assumed to be in your platform\'s native (default) encoding. This can represent UTF-8 if you are an OS X user, or some 8-bit Windows code page, for example. The native encoding used by <span class="rlang">**R**</span> may be determined by examining the LC_CTYPE category, see [`Sys.getlocale`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/locales.html).
 
-Intuitively, "native" strings result from reading a string from stdin (e.g., keyboard input). This makes sense: your operating system works in some encoding and provides <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> with some data.
+Intuitively, "native" strings result from reading a string from stdin (e.g., keyboard input). This makes sense: your operating system works in some encoding and provides <span class="rlang">**R**</span> with some data.
 
 Each time when a <span class="pkg">stringi</span> function encounters a string declared in native encoding, it assumes that the input data should be translated from the default encoding, i.e., the one returned by [`stri_enc_get`](stri_enc_set.md) (unless you know what you are doing, the default encoding should only be changed if the automatic encoding detection process fails on <span class="pkg">stringi</span> load).
 
 Functions which allow `'bytes'` encoding markings are very rare in <span class="pkg">stringi</span>, and were carefully selected. These are: [`stri_enc_toutf8`](stri_enc_toutf8.md) (with argument `is_unknown_8bit=TRUE`), [`stri_enc_toascii`](stri_enc_toascii.md), and [`stri_encode`](stri_encode.md).
 
-Finally, note that <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> lets strings in ASCII, UTF-8, and your platform\'s native encoding coexist. A character vector printed with [`print`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/print.html), [`cat`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/cat.html), etc., is silently re-encoded so that it can be properly shown, e.g., on the console.
+Finally, note that <span class="rlang">**R**</span> lets strings in ASCII, UTF-8, and your platform\'s native encoding coexist. A character vector printed with [`print`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/print.html), [`cat`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/cat.html), etc., is silently re-encoded so that it can be properly shown, e.g., on the console.
 
 ## Encoding Conversion
 
 Apart from automatic conversion from the native encoding, you may re-encode a string manually, for example when you read it from a file created on a different platform. Call [`stri_enc_list`](stri_enc_list.md) for the list of encodings supported by <span class="pkg">ICU</span>. Note that converter names are case-insensitive and <span class="pkg">ICU</span> tries to normalize the encoding specifiers. Leading zeroes are ignored in sequences of digits (if further digits follow), and all non-alphanumeric characters are ignored. Thus the strings \'UTF-8\', \'utf_8\', \'u\*Tf08\' and \'Utf 8\' are equivalent.
 
-The [`stri_encode`](stri_encode.md) function allows you to convert between any given encodings (in some cases you will obtain `bytes`-marked strings, or even lists of raw vectors (i.e., for UTF-16). There are also some useful more specialized functions, like [`stri_enc_toutf32`](stri_enc_toutf32.md) (converts a character vector to a list of integers, where one code point is exactly one numeric value) or [`stri_enc_toascii`](stri_enc_toascii.md) (substitutes all non-ASCII bytes with the SUBSTITUTE CHARACTER, which plays a similar role as <span style="font-family: Courier New, Courier; color: #666666;">**R**</span>\'s `NA` value).
+The [`stri_encode`](stri_encode.md) function allows you to convert between any given encodings (in some cases you will obtain `bytes`-marked strings, or even lists of raw vectors (i.e., for UTF-16). There are also some useful more specialized functions, like [`stri_enc_toutf32`](stri_enc_toutf32.md) (converts a character vector to a list of integers, where one code point is exactly one numeric value) or [`stri_enc_toascii`](stri_enc_toascii.md) (substitutes all non-ASCII bytes with the SUBSTITUTE CHARACTER, which plays a similar role as <span class="rlang">**R**</span>\'s `NA` value).
 
 There are also some routines for automated encoding detection, see, e.g., [`stri_enc_detect`](stri_enc_detect.md).
 

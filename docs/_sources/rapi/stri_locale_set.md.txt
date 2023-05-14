@@ -1,4 +1,4 @@
-# stri_locale_set: Set or Get Default Locale in <span class="pkg">stringi</span>
+# stri_locale_set:
 
 ## Description
 

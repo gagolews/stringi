@@ -1,4 +1,4 @@
-# stri_info: Query Default Settings for <span class="pkg">stringi</span>
+# stri_info:
 
 ## Description
 

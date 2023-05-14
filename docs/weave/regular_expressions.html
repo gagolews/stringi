@@ -4,7 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
@@ -34,11 +34,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -78,7 +77,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -187,8 +186,8 @@
         
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Regular Expressions</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Regular Expressions</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
@@ -213,7 +212,7 @@ substrings that can be interpreted as real numbers (with or without
 fractional parts, also in scientific notation), telephone numbers, email
 addresses, or URLs.</p>
 <p>Theoretically, the concept of regular pattern matching dates back to the
-so-called regular languages and finite state automata <span id="id3">[<a class="reference internal" href="../z_bibliography.html#id26" title="S.C. Kleene. Representation of events in nerve nets and finite automata. Technical Report RM-704, The RAND Corporation, Santa Monica, CA, 1951. URL \url https://www.rand.org/content/dam/rand/pubs/research_memoranda/2008/RM704.pdf.">Kle51</a>]</span>, see
+so-called regular languages and finite state automata <span id="id3">[<a class="reference internal" href="../z_bibliography.html#id26" title="S.C. Kleene. Representation of events in nerve nets and finite automata. Technical Report RM-704, The RAND Corporation, Santa Monica, CA, 1951. URL https://www.rand.org/content/dam/rand/pubs/research_memoranda/2008/RM704.pdf.">Kle51</a>]</span>, see
 also <span id="id4">[<a class="reference internal" href="../z_bibliography.html#id29" title="J.E. Hopcroft and J.D. Ullman. Introduction to Automata Theory, Languages, and Computation. Addison-Wesley, 1979.">HU79</a>]</span> and <span id="id5">[<a class="reference internal" href="../z_bibliography.html#id27" title="M. Rabin and D. Scott. Finite automata and their decision problems. IBM Journal of Research and Development, 3:114–125, 1959.">RS59</a>]</span>. Regexes in the form
 as we know it today
 have already been present in one of the pre-Unix implementations of the
@@ -257,7 +256,7 @@ suffix. Apart from <code class="docutils literal notranslate"><span class="pre">
 so forth, in <a class="reference internal" href="#sec-capturing"><span class="std std-ref">Capture Groups and References Thereto</span></a> we introduce <code class="docutils literal notranslate"><span class="pre">stri_match_all_regex()</span></code>.
 Moreover, the table below lists the available options for the regex
 engine.</p>
-<table class="colwidths-auto docutils align-default">
+<table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Option</p></th>
 <th class="head"><p>Purpose</p></th>
@@ -319,15 +318,15 @@ straightforward.</p>
 </div></blockquote>
 <p>Any regular expression that doesn’t contain the above behaves like a
 fixed pattern:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_regex</span><span class="p">(</span><span class="s">&quot;spam, eggs, spam, bacon, sausage, and spam&quot;</span><span class="p">,</span> <span class="s">&quot;spam&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_regex</span><span class="p">(</span><span class="s">&quot;spam, eggs, spam, bacon, sausage, and spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">)</span>
 <span class="c1">## [1] 3</span>
 </pre></div>
 </div>
 <p>There are hence 3 occurrences of a pattern that is comprised of 4 code
 points, “<code class="docutils literal notranslate"><span class="pre">s</span></code>” followed by “<code class="docutils literal notranslate"><span class="pre">p</span></code>”, then by “<code class="docutils literal notranslate"><span class="pre">a</span></code>”, and ending with “<code class="docutils literal notranslate"><span class="pre">m</span></code>”.</p>
 <p>However, this time the case insensitive mode fully supports Unicode
-matching<a class="footnote-reference brackets" href="#footequivalent" id="id8">1</a>:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_detect_regex</span><span class="p">(</span><span class="s">&quot;groß&quot;</span><span class="p">,</span> <span class="s">&quot;GROSS&quot;</span><span class="p">,</span> <span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+matching<a class="footnote-reference brackets" href="#footequivalent" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_detect_regex</span><span class="p">(</span><span class="s">&quot;groß&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GROSS&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 <span class="c1">## [1] TRUE</span>
 </pre></div>
 </div>
@@ -336,7 +335,7 @@ expression – so that it is treated literally – we’ll need to escape
 it with a backslash, “&quot;. Yet, the backlash itself has a special
 meaning to R, see <code class="docutils literal notranslate"><span class="pre">help(&quot;Quotes&quot;)</span></code>. Therefore it needs to be preceded by
 another backslash.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_regex</span><span class="p">(</span><span class="s">&quot;spam...&quot;</span><span class="p">,</span> <span class="s">&quot;\\.&quot;</span><span class="p">)</span>   <span class="c1"># &quot;\\&quot; is a way to input a single \</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_regex</span><span class="p">(</span><span class="s">&quot;spam...&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\\.&quot;</span><span class="p">)</span><span class="w">   </span><span class="c1"># &quot;\\&quot; is a way to input a single \</span>
 <span class="c1">## [1] 3</span>
 </pre></div>
 </div>
@@ -347,8 +346,8 @@ since R 4.0 we can also input the so-called literal strings like
 <section id="matching-any-character">
 <h3>Matching Any Character<a class="headerlink" href="#matching-any-character" title="Permalink to this heading"></a></h3>
 <p>The (unescaped) dot, “<code class="docutils literal notranslate"><span class="pre">.</span></code>”, matches any code point except the newline.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="s">&quot;Spam, ham,\njam, SPAM, eggs, and spam&quot;</span>
-<span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;..am&quot;</span><span class="p">,</span> <span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;Spam, ham,\njam, SPAM, eggs, and spam&quot;</span>
+<span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;..am&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] &quot;Spam&quot; &quot; ham&quot; &quot;SPAM&quot; &quot;spam&quot;</span>
 </pre></div>
@@ -359,7 +358,7 @@ since R 4.0 we can also input the so-called literal strings like
 need to maintain compatibility with tools such as <em>grep</em> (when
 searching within text files in a line-by-line manner). This behaviour
 can be altered by setting the <code class="docutils literal notranslate"><span class="pre">dot_all</span></code> option to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;..am&quot;</span><span class="p">,</span> <span class="n">dot_all</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;..am&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">dot_all</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] &quot;Spam&quot;  &quot; ham&quot;  &quot;\njam&quot; &quot;SPAM&quot;  &quot;spam&quot;</span>
 </pre></div>
@@ -371,7 +370,7 @@ can be altered by setting the <code class="docutils literal notranslate"><span c
 a pair of square brackets. For instance, “<code class="docutils literal notranslate"><span class="pre">[abc]</span></code>” denotes the set
 ${\mathtt{a},\mathtt{b},\mathtt{c}}$ – such a regular expression
 matches one (and only one) symbol from this set. Moreover, in:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;[hj]am&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;[hj]am&quot;</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] &quot;ham&quot; &quot;jam&quot;</span>
 </pre></div>
@@ -400,8 +399,8 @@ backslash or a square bracket.</p>
 complement. Hence, “<code class="docutils literal notranslate"><span class="pre">[^abc]</span></code>” matches any code point except “<code class="docutils literal notranslate"><span class="pre">a</span></code>”,
 “<code class="docutils literal notranslate"><span class="pre">b</span></code>”, and “<code class="docutils literal notranslate"><span class="pre">c</span></code>”. Here is an example where we seek any substring that
 consists of 3 non-spaces.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="s">&quot;Nobody expects the Spanish Inquisition!&quot;</span>
-<span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;[^ ][^ ][^ ]&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;Nobody expects the Spanish Inquisition!&quot;</span>
+<span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;[^ ][^ ][^ ]&quot;</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">##  [1] &quot;Nob&quot; &quot;ody&quot; &quot;exp&quot; &quot;ect&quot; &quot;the&quot; &quot;Spa&quot; &quot;nis&quot; &quot;Inq&quot; &quot;uis&quot; &quot;iti&quot; &quot;on!&quot;</span>
 </pre></div>
@@ -418,7 +417,7 @@ control characters), we were used to relying on specific code ranges;
 e.g., “<code class="docutils literal notranslate"><span class="pre">[a-z]</span></code>” denotes the set comprised of all characters with codes
 between U+0061 and U+007A, i.e., lowercase letters of the English
 (Latin) alphabet.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="s">&quot;In 2020, Gągolewski had fun once.&quot;</span><span class="p">,</span> <span class="s">&quot;[0-9A-Za-z]&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="s">&quot;In 2020, Gągolewski had fun once.&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;[0-9A-Za-z]&quot;</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">##  [1] &quot;I&quot; &quot;n&quot; &quot;2&quot; &quot;0&quot; &quot;2&quot; &quot;0&quot; &quot;G&quot; &quot;g&quot; &quot;o&quot; &quot;l&quot; &quot;e&quot; &quot;w&quot; &quot;s&quot; &quot;k&quot; &quot;i&quot; &quot;h&quot; &quot;a&quot; &quot;d&quot;</span>
 <span class="c1">## [19] &quot;f&quot; &quot;u&quot; &quot;n&quot; &quot;o&quot; &quot;n&quot; &quot;c&quot; &quot;e&quot;</span>
@@ -437,9 +436,9 @@ thought of as a character’s class, see
 <a class="reference external" href="https://unicode.org/reports/tr44/">Unicode Standard Annex #44: {U}nicode Character Database</a>. Sets of characters
 from each category can be referred to, amongst others, by using the
 “<code class="docutils literal notranslate"><span class="pre">\p{category}</span></code>” (or, equivalently, “<code class="docutils literal notranslate"><span class="pre">[\p{category}]</span></code>”) syntax:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="s">&quot;aąbßÆAĄB你123,.;&#39;! \t-+=[]©←→”„²³¾&quot;</span>
-<span class="n">p</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;\\p{L}&quot;</span><span class="p">,</span> <span class="s">&quot;\\p{Ll}&quot;</span><span class="p">,</span> <span class="s">&quot;\\p{Lu}&quot;</span><span class="p">,</span> <span class="s">&quot;\\p{N}&quot;</span><span class="p">,</span> <span class="s">&quot;\\p{P}&quot;</span><span class="p">,</span> <span class="s">&quot;\\p{S}&quot;</span><span class="p">)</span>
-<span class="nf">structure</span><span class="p">(</span><span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">),</span> <span class="n">names</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;aąbßÆAĄB你123,.;&#39;! \t-+=[]©←→”„²³¾&quot;</span>
+<span class="n">p</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;\\p{L}&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\\p{Ll}&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\\p{Lu}&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\\p{N}&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\\p{P}&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\\p{S}&quot;</span><span class="p">)</span>
+<span class="nf">structure</span><span class="p">(</span><span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">),</span><span class="w"> </span><span class="n">names</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
 <span class="c1">## $`\\p{L}`</span>
 <span class="c1">## [1] &quot;a&quot;  &quot;ą&quot;  &quot;b&quot;  &quot;ß&quot;  &quot;Æ&quot;  &quot;A&quot;  &quot;Ą&quot;  &quot;B&quot;  &quot;你&quot;</span>
 <span class="c1">## </span>
@@ -464,8 +463,8 @@ uppercase letters, numbers, punctuation marks, and symbols,
 respectively.</p>
 <p>Characters’ binary properties and scripts can also be referenced in a
 similar manner. Some other noteworthy classes include:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;\\w&quot;</span><span class="p">,</span> <span class="s">&quot;\\d&quot;</span><span class="p">,</span> <span class="s">&quot;\\s&quot;</span><span class="p">)</span>
-<span class="nf">structure</span><span class="p">(</span><span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">),</span> <span class="n">names</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;\\w&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\\d&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\\s&quot;</span><span class="p">)</span>
+<span class="nf">structure</span><span class="p">(</span><span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">),</span><span class="w"> </span><span class="n">names</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
 <span class="c1">## $`\\w`</span>
 <span class="c1">##  [1] &quot;a&quot;  &quot;ą&quot;  &quot;b&quot;  &quot;ß&quot;  &quot;Æ&quot;  &quot;A&quot;  &quot;Ą&quot;  &quot;B&quot;  &quot;你&quot; &quot;1&quot;  &quot;2&quot;  &quot;3&quot; </span>
 <span class="c1">## </span>
@@ -492,8 +491,8 @@ character class corresponding to the <code class="docutils literal notranslate">
 (ISO C90), <code class="docutils literal notranslate"><span class="pre">ispunct()</span></code> tests for any printing character except for the
 space or a character for which <code class="docutils literal notranslate"><span class="pre">isalnum()</span></code> is true.</p>
 <p>Base R with <em>PCRE</em> yields on the current author’s machine:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="s">&quot;,./|\\&lt;&gt;?;:&#39;\&quot;[]{}-=_+()*&amp;^%$€#@!`~×‒„”&quot;</span>
-<span class="nf">regmatches</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nf">gregexpr</span><span class="p">(</span><span class="s">&quot;[[:punct:]]&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">perl</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>  <span class="c1"># base R</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;,./|\\&lt;&gt;?;:&#39;\&quot;[]{}-=_+()*&amp;^%$€#@!`~×‒„”&quot;</span>
+<span class="nf">regmatches</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">gregexpr</span><span class="p">(</span><span class="s">&quot;[[:punct:]]&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">perl</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span><span class="w">  </span><span class="c1"># base R</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">##  [1] &quot;,&quot;  &quot;.&quot;  &quot;/&quot;  &quot;|&quot;  &quot;\\&quot; &quot;&lt;&quot;  &quot;&gt;&quot;  &quot;?&quot;  &quot;;&quot;  &quot;:&quot;  &quot;&#39;&quot;  &quot;\&quot;&quot; &quot;[&quot;  &quot;]&quot; </span>
 <span class="c1">## [15] &quot;{&quot;  &quot;}&quot;  &quot;-&quot;  &quot;=&quot;  &quot;_&quot;  &quot;+&quot;  &quot;(&quot;  &quot;)&quot;  &quot;*&quot;  &quot;&amp;&quot;  &quot;^&quot;  &quot;%&quot;  &quot;$&quot;  &quot;#&quot; </span>
@@ -504,7 +503,7 @@ space or a character for which <code class="docutils literal notranslate"><span 
 depend on the current locale. Therefore, the reader might obtain
 different results when calling the above.</p>
 <p><em>ICU</em>, on the other hand, always gives:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;[[:punct:]]&quot;</span><span class="p">)</span>    <span class="c1"># equivalently: \p{P}</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;[[:punct:]]&quot;</span><span class="p">)</span><span class="w">    </span><span class="c1"># equivalently: \p{P}</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">##  [1] &quot;,&quot;  &quot;.&quot;  &quot;/&quot;  &quot;\\&quot; &quot;?&quot;  &quot;;&quot;  &quot;:&quot;  &quot;&#39;&quot;  &quot;\&quot;&quot; &quot;[&quot;  &quot;]&quot;  &quot;{&quot;  &quot;}&quot;  &quot;-&quot; </span>
 <span class="c1">## [15] &quot;_&quot;  &quot;(&quot;  &quot;)&quot;  &quot;*&quot;  &quot;&amp;&quot;  &quot;%&quot;  &quot;#&quot;  &quot;@&quot;  &quot;!&quot;  &quot;‒&quot;  &quot;„&quot;  &quot;”&quot;</span>
@@ -512,7 +511,7 @@ different results when calling the above.</p>
 </div>
 <p>Here, <code class="docutils literal notranslate"><span class="pre">[:punct:]</span></code> is merely a synonym for <code class="docutils literal notranslate"><span class="pre">\p{P}</span></code>. Further, <code class="docutils literal notranslate"><span class="pre">\p{S}</span></code>
 captures symbols:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;\\p{S}&quot;</span><span class="p">)</span>         <span class="c1"># symbols</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\\p{S}&quot;</span><span class="p">)</span><span class="w">         </span><span class="c1"># symbols</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">##  [1] &quot;|&quot; &quot;&lt;&quot; &quot;&gt;&quot; &quot;=&quot; &quot;+&quot; &quot;^&quot; &quot;$&quot; &quot;€&quot; &quot;`&quot; &quot;~&quot; &quot;×&quot;</span>
 </pre></div>
@@ -527,8 +526,8 @@ captures symbols:</p>
 <h3>Alternation Operator<a class="headerlink" href="#alternation-operator" title="Permalink to this heading"></a></h3>
 <p>The alternation operator, “<code class="docutils literal notranslate"><span class="pre">|</span></code>”, matches either its left or its right
 branch, for instance:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="s">&quot;spam, egg, ham, jam, algae, and an amalgam of spam, all al dente&quot;</span>
-<span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;spam|ham&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;spam, egg, ham, jam, algae, and an amalgam of spam, all al dente&quot;</span>
+<span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam|ham&quot;</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] &quot;spam&quot; &quot;ham&quot;  &quot;spam&quot;</span>
 </pre></div>
@@ -555,7 +554,7 @@ is followed by the question mark – have a distinct meaning. In
 particular, “<code class="docutils literal notranslate"><span class="pre">(?#...)</span></code>” denotes a free-format comment that is ignored by
 the regex parser:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span>
-  <span class="s">&quot;(?# match &#39;sp&#39; or &#39;h&#39;)(sp|h)(?# and &#39;am&#39;)am|(?# or match &#39;egg&#39;)egg&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;(?# match &#39;sp&#39; or &#39;h&#39;)(sp|h)(?# and &#39;am&#39;)am|(?# or match &#39;egg&#39;)egg&quot;</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] &quot;spam&quot; &quot;egg&quot;  &quot;ham&quot;  &quot;spam&quot;</span>
 </pre></div>
@@ -563,18 +562,18 @@ the regex parser:</p>
 <p>Nevertheless, constructing more sophisticated regexes by concatenating
 subfragments thereof may sometimes be more readable:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span>
-  <span class="nf">stri_join</span><span class="p">(</span>
-      <span class="s">&quot;(sp|h)&quot;</span><span class="p">,</span>   <span class="c1"># match either &#39;sp&#39; or &#39;h&#39;</span>
-      <span class="s">&quot;am&quot;</span><span class="p">,</span>       <span class="c1"># followed by &#39;am&#39;</span>
-    <span class="s">&quot;|&quot;</span><span class="p">,</span>            <span class="c1"># ... or ...</span>
-      <span class="s">&quot;egg&quot;</span>       <span class="c1"># just match &#39;egg&#39;</span>
+<span class="w">  </span><span class="nf">stri_join</span><span class="p">(</span>
+<span class="w">      </span><span class="s">&quot;(sp|h)&quot;</span><span class="p">,</span><span class="w">   </span><span class="c1"># match either &#39;sp&#39; or &#39;h&#39;</span>
+<span class="w">      </span><span class="s">&quot;am&quot;</span><span class="p">,</span><span class="w">       </span><span class="c1"># followed by &#39;am&#39;</span>
+<span class="w">    </span><span class="s">&quot;|&quot;</span><span class="p">,</span><span class="w">            </span><span class="c1"># ... or ...</span>
+<span class="w">      </span><span class="s">&quot;egg&quot;</span><span class="w">       </span><span class="c1"># just match &#39;egg&#39;</span>
 <span class="p">))</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] &quot;spam&quot; &quot;egg&quot;  &quot;ham&quot;  &quot;spam&quot;</span>
 </pre></div>
 </div>
 <p>What is more, e.g., “<code class="docutils literal notranslate"><span class="pre">(?i)</span></code>” enables the <code class="docutils literal notranslate"><span class="pre">case_insensitive</span></code> mode.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_regex</span><span class="p">(</span><span class="s">&quot;Spam spam SPAMITY spAm&quot;</span><span class="p">,</span> <span class="s">&quot;(?i)spam&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_regex</span><span class="p">(</span><span class="s">&quot;Spam spam SPAMITY spAm&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;(?i)spam&quot;</span><span class="p">)</span>
 <span class="c1">## [1] 4</span>
 </pre></div>
 </div>
@@ -600,11 +599,11 @@ nor <code class="docutils literal notranslate"><span class="pre">&quot;bababa&qu
 subexpression as many times as possible. The “<code class="docutils literal notranslate"><span class="pre">?</span></code>” suffix (hence,
 quantifiers such as “<code class="docutils literal notranslate"><span class="pre">??</span></code>”, “<code class="docutils literal notranslate"><span class="pre">*?</span></code>”, “<code class="docutils literal notranslate"><span class="pre">+?</span></code>”, and so forth) tries with as
 few occurrences as possible (to obtain a match still).</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="s">&quot;sp(AM)(maps)(SP)am&quot;</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;sp(AM)(maps)(SP)am&quot;</span>
 <span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span>
-  <span class="nf">c</span><span class="p">(</span><span class="s">&quot;\\(.+\\)&quot;</span><span class="p">,</span>    <span class="c1"># [[1]] greedy</span>
-    <span class="s">&quot;\\(.+?\\)&quot;</span><span class="p">,</span>   <span class="c1"># [[2]] lazy</span>
-    <span class="s">&quot;\\([^)]+\\)&quot;</span>  <span class="c1"># [[3]] greedy (but clever)</span>
+<span class="w">  </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;\\(.+\\)&quot;</span><span class="p">,</span><span class="w">    </span><span class="c1"># [[1]] greedy</span>
+<span class="w">    </span><span class="s">&quot;\\(.+?\\)&quot;</span><span class="p">,</span><span class="w">   </span><span class="c1"># [[2]] lazy</span>
+<span class="w">    </span><span class="s">&quot;\\([^)]+\\)&quot;</span><span class="w">  </span><span class="c1"># [[3]] greedy (but clever)</span>
 <span class="p">))</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] &quot;(AM)(maps)(SP)&quot;</span>
@@ -621,8 +620,8 @@ characters as possible (including “<code class="docutils literal notranslate">
 bracket. The two other patterns terminate as soon as the first closing
 bracket is found.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_first_regex</span><span class="p">(</span><span class="s">&quot;spamamamnomnomnomammmmmmmmm&quot;</span><span class="p">,</span>
-  <span class="nf">c</span><span class="p">(</span><span class="s">&quot;sp(am|nom)+&quot;</span><span class="p">,</span>             <span class="s">&quot;sp(am|nom)+?&quot;</span><span class="p">,</span>
-    <span class="s">&quot;sp(am|nom)+?m*&quot;</span><span class="p">,</span>          <span class="s">&quot;sp(am|nom)+?m+&quot;</span><span class="p">))</span>
+<span class="w">  </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;sp(am|nom)+&quot;</span><span class="p">,</span><span class="w">             </span><span class="s">&quot;sp(am|nom)+?&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;sp(am|nom)+?m*&quot;</span><span class="p">,</span><span class="w">          </span><span class="s">&quot;sp(am|nom)+?m+&quot;</span><span class="p">))</span>
 <span class="c1">## [1] &quot;spamamamnomnomnomam&quot;         &quot;spam&quot;                       </span>
 <span class="c1">## [3] &quot;spam&quot;                        &quot;spamamamnomnomnomammmmmmmmm&quot;</span>
 </pre></div>
@@ -631,7 +630,7 @@ bracket is found.</p>
 stands directly before it. Grouping parentheses can be used in case they
 are needed.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="s">&quot;12, 34.5, 678.901234, 37...629, ...&quot;</span><span class="p">,</span>
-  <span class="nf">c</span><span class="p">(</span><span class="s">&quot;\\d+\\.\\d+&quot;</span><span class="p">,</span> <span class="s">&quot;\\d+(\\.\\d+)?&quot;</span><span class="p">))</span>
+<span class="w">  </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;\\d+\\.\\d+&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\\d+(\\.\\d+)?&quot;</span><span class="p">))</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] &quot;34.5&quot;       &quot;678.901234&quot;</span>
 <span class="c1">## </span>
@@ -650,8 +649,8 @@ to exponential matching times (e.g., “<code class="docutils literal notranslat
 <code class="docutils literal notranslate"><span class="pre">&quot;aaaa...aaaaac&quot;</span></code>). If such patterns are expected, setting the
 <code class="docutils literal notranslate"><span class="pre">time_limit</span></code> or <code class="docutils literal notranslate"><span class="pre">stack_limit</span></code> option is recommended.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">system.time</span><span class="p">(</span><span class="nf">tryCatch</span><span class="p">({</span>
-  <span class="nf">stri_detect_regex</span><span class="p">(</span><span class="s">&quot;a&quot;</span> <span class="o">%s*%</span> <span class="m">1000</span> <span class="o">%s+%</span> <span class="s">&quot;c&quot;</span><span class="p">,</span> <span class="s">&quot;(a+)+b&quot;</span><span class="p">,</span> <span class="n">time_limit</span><span class="o">=</span><span class="m">1e5</span><span class="p">)</span>
-<span class="p">},</span> <span class="n">error</span><span class="o">=</span><span class="nf">function</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;stopped.&quot;</span><span class="p">)))</span>
+<span class="w">  </span><span class="nf">stri_detect_regex</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="w"> </span><span class="o">%s*%</span><span class="w"> </span><span class="m">1000</span><span class="w"> </span><span class="o">%s+%</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;(a+)+b&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">time_limit</span><span class="o">=</span><span class="m">1e5</span><span class="p">)</span>
+<span class="p">},</span><span class="w"> </span><span class="n">error</span><span class="o">=</span><span class="nf">function</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;stopped.&quot;</span><span class="p">)))</span>
 <span class="c1">## stopped.</span>
 <span class="c1">##    user  system elapsed </span>
 <span class="c1">##  18.147   0.001  18.148</span>
@@ -679,8 +678,8 @@ referred to in other parts of the same regex.</p>
 <h3>Extracting Capture Group Matches<a class="headerlink" href="#extracting-capture-group-matches" title="Permalink to this heading"></a></h3>
 <p>The above is evident when we use the versions of <code class="docutils literal notranslate"><span class="pre">stri_extract()</span></code> that
 are sensitive to the presence of capture groups:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="s">&quot;name=&#39;Sir Launcelot&#39;, quest=&#39;Seek the Grail&#39;, favecolour=&#39;blue&#39;&quot;</span>
-<span class="nf">stri_match_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;(\\w+)=&#39;(.+?)&#39;&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;name=&#39;Sir Launcelot&#39;, quest=&#39;Seek the Grail&#39;, favecolour=&#39;blue&#39;&quot;</span>
+<span class="nf">stri_match_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;(\\w+)=&#39;(.+?)&#39;&quot;</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">##      [,1]                     [,2]         [,3]            </span>
 <span class="c1">## [1,] &quot;name=&#39;Sir Launcelot&#39;&quot;   &quot;name&quot;       &quot;Sir Launcelot&quot; </span>
@@ -695,7 +694,7 @@ capture group, and so forth.</p>
 capturing feature, “<code class="docutils literal notranslate"><span class="pre">(?:...)</span></code>” can be applied. Also, named capture
 groups defined like “<code class="docutils literal notranslate"><span class="pre">(?&lt;name&gt;...)</span></code>” are fully supported since version
 1.7.1 of our package (for historical notes see <span id="id9">[<a class="reference internal" href="../z_bibliography.html#id31" title="T.D. Hocking. Comparing namedCapture with other R packages for regular expressions. The R Journal, 11/2:328–346, 2019.">Hoc19</a>]</span>).</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_match_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;(?:\\w+)=&#39;(?&lt;value&gt;.+?)&#39;&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_match_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;(?:\\w+)=&#39;(?&lt;value&gt;.+?)&#39;&quot;</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">##                               value           </span>
 <span class="c1">## [1,] &quot;name=&#39;Sir Launcelot&#39;&quot;   &quot;Sir Launcelot&quot; </span>
@@ -708,8 +707,8 @@ groups defined like “<code class="docutils literal notranslate"><span class="p
 <h3>Locating Capture Group Matches<a class="headerlink" href="#locating-capture-group-matches" title="Permalink to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">capture_groups</span></code> attribute in <code class="docutils literal notranslate"><span class="pre">stri_locate__regex</span></code> enables us to
 pinpoint the matches to the parenthesised subexpressions as well:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_locate_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;(?&lt;key&gt;\\w+)=&#39;(?&lt;value&gt;.+?)&#39;&quot;</span><span class="p">,</span>
-  <span class="n">capture_groups</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">get_length</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_locate_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;(?&lt;key&gt;\\w+)=&#39;(?&lt;value&gt;.+?)&#39;&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="n">capture_groups</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">get_length</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">##      start length</span>
 <span class="c1">## [1,]     1     20</span>
@@ -741,13 +740,13 @@ strings when using <code class="docutils literal notranslate"><span class="pre">
 denoted with “<code class="docutils literal notranslate"><span class="pre">$0</span></code>”, then “<code class="docutils literal notranslate"><span class="pre">$1</span></code>” stores whatever was caught by the first
 capture group, “<code class="docutils literal notranslate"><span class="pre">$2</span></code>” is the match to the second capture group, etc.
 Moreover, “<code class="docutils literal notranslate"><span class="pre">\$</span></code>” gives the dollar-sign.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_replace_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;(\\w+)=&#39;(.+?)&#39;&quot;</span><span class="p">,</span> <span class="s">&quot;$2 is a $1&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_replace_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;(\\w+)=&#39;(.+?)&#39;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;$2 is a $1&quot;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;Sir Launcelot is a name, Seek the Grail is a quest, blue is a favecolour&quot;</span>
 </pre></div>
 </div>
 <p>Named capture groups can be referred to too:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_replace_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;(?&lt;key&gt;\\w+)=&#39;(?&lt;value&gt;.+?)&#39;&quot;</span><span class="p">,</span>
-  <span class="s">&quot;${value} is a ${key}&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_replace_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;(?&lt;key&gt;\\w+)=&#39;(?&lt;value&gt;.+?)&#39;&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s">&quot;${value} is a ${key}&quot;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;Sir Launcelot is a name, Seek the Grail is a quest, blue is a favecolour&quot;</span>
 </pre></div>
 </div>
@@ -760,7 +759,7 @@ capture group.</p>
 <p>Even though, in general, parsing HTML code with regexes is not
 recommended, let’s consider the following examples:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="s">&quot;&lt;strong&gt;&lt;em&gt;spam&lt;/em&gt;&lt;/strong&gt;&lt;code&gt;eggs&lt;/code&gt;&quot;</span><span class="p">,</span>
-  <span class="nf">c</span><span class="p">(</span><span class="s">&quot;&lt;[a-z]+&gt;.*?&lt;/[a-z]+&gt;&quot;</span><span class="p">,</span> <span class="s">&quot;&lt;([a-z]+)&gt;.*?&lt;/\\1&gt;&quot;</span><span class="p">))</span>
+<span class="w">  </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;&lt;[a-z]+&gt;.*?&lt;/[a-z]+&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&lt;([a-z]+)&gt;.*?&lt;/\\1&gt;&quot;</span><span class="p">))</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] &quot;&lt;strong&gt;&lt;em&gt;spam&lt;/em&gt;&quot; &quot;&lt;code&gt;eggs&lt;/code&gt;&quot;    </span>
 <span class="c1">## </span>
@@ -783,9 +782,9 @@ position within a string.</p>
 <h3>Matching at the Beginning or End of a String<a class="headerlink" href="#matching-at-the-beginning-or-end-of-a-string" title="Permalink to this heading"></a></h3>
 <p>“<code class="docutils literal notranslate"><span class="pre">^</span></code>” and “<code class="docutils literal notranslate"><span class="pre">$</span></code>” match, respectively, the start and the end of the string (or
 each line within a string, if the <code class="docutils literal notranslate"><span class="pre">multi_line</span></code> option is set to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>).</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam egg&quot;</span><span class="p">,</span> <span class="s">&quot;bacon spam&quot;</span><span class="p">,</span> <span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="s">&quot;egg spam bacon&quot;</span><span class="p">,</span> <span class="s">&quot;sausage&quot;</span><span class="p">)</span>
-<span class="n">p</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="s">&quot;^spam&quot;</span><span class="p">,</span> <span class="s">&quot;spam$&quot;</span><span class="p">,</span> <span class="s">&quot;spam$|^spam&quot;</span><span class="p">,</span> <span class="s">&quot;^spam$&quot;</span><span class="p">)</span>
-<span class="nf">structure</span><span class="p">(</span><span class="nf">outer</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">stri_detect_regex</span><span class="p">),</span> <span class="n">dimnames</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam egg&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bacon spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;egg spam bacon&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sausage&quot;</span><span class="p">)</span>
+<span class="n">p</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;^spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam$&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam$|^spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;^spam$&quot;</span><span class="p">)</span>
+<span class="nf">structure</span><span class="p">(</span><span class="nf">outer</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">stri_detect_regex</span><span class="p">),</span><span class="w"> </span><span class="n">dimnames</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">))</span>
 <span class="c1">##                 spam ^spam spam$ spam$|^spam ^spam$</span>
 <span class="c1">## spam egg        TRUE  TRUE FALSE        TRUE  FALSE</span>
 <span class="c1">## bacon spam      TRUE FALSE  TRUE        TRUE  FALSE</span>
@@ -806,7 +805,7 @@ is a transition between a word, “<code class="docutils literal notranslate"><s
 “<code class="docutils literal notranslate"><span class="pre">\W</span></code>”, or vice versa).</p>
 <p>In the following example, we match all stand-alone numbers
 (this regular expression is provided for didactic purposes only):</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="s">&quot;12, 34.5, J23, 37.629cm&quot;</span><span class="p">,</span> <span class="s">&quot;\\b\\d+(\\.\\d+)?+\\b&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="s">&quot;12, 34.5, J23, 37.629cm&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\\b\\d+(\\.\\d+)?+\\b&quot;</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] &quot;12&quot;   &quot;34.5&quot;</span>
 </pre></div>
@@ -823,7 +822,7 @@ so-called look-behind, whereas “<code class="docutils literal notranslate"><sp
 Moreover, “<code class="docutils literal notranslate"><span class="pre">(?&lt;!...)...</span></code>” and “<code class="docutils literal notranslate"><span class="pre">...(?!...)</span></code>” are their negated
 (“negative look-behind/ahead”) versions.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="s">&quot;I like spam, spam, eggs, and spam.&quot;</span><span class="p">,</span>
-  <span class="nf">c</span><span class="p">(</span><span class="s">&quot;\\w+(?=[,.])&quot;</span><span class="p">,</span> <span class="s">&quot;\\w++(?![,.])&quot;</span><span class="p">))</span>
+<span class="w">  </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;\\w+(?=[,.])&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\\w++(?![,.])&quot;</span><span class="p">))</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] &quot;spam&quot; &quot;spam&quot; &quot;eggs&quot; &quot;spam&quot;</span>
 <span class="c1">## </span>
@@ -834,13 +833,14 @@ Moreover, “<code class="docutils literal notranslate"><span class="pre">(?&lt;
 <p>The first regex captures words that end with “<code class="docutils literal notranslate"><span class="pre">,</span></code>” or “<code class="docutils literal notranslate"><span class="pre">.</span></code>”. The second
 one matches words that end neither with “<code class="docutils literal notranslate"><span class="pre">,</span></code>” nor “<code class="docutils literal notranslate"><span class="pre">.</span></code>”.</p>
 <hr class="footnotes docutils" />
-<dl class="footnote brackets">
-<dt class="label" id="footequivalent"><span class="brackets"><a class="fn-backref" href="#id8">1</a></span></dt>
-<dd><p>This does not mean, though, that it considers canonically
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footequivalent" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">1</a><span class="fn-bracket">]</span></span>
+<p>This does not mean, though, that it considers canonically
 equivalent strings as equal, see <a class="reference internal" href="collation.html#sec-equivalence"><span class="std std-ref">Testing String Equivalence</span></a> for
 discussion and a workaround.</p>
-</dd>
-</dl>
+</aside>
+</aside>
 </section>
 </section>
 </section>
@@ -858,7 +858,7 @@ discussion and a workaround.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2023, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2023-01-18T09:23:44+1100.
+      <span class="lastupdated">Last updated on 2023-05-15T09:42:35+1000.
       </span></p>
   </div>
 

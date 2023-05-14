@@ -1,4 +1,4 @@
-# about_search_regex: Regular Expressions in <span class="pkg">stringi</span>
+# about_search_regex:
 
 ## Description
 
@@ -8,7 +8,7 @@ A regular expression is a pattern describing, possibly in a very abstract way, a
 
 All `stri_*_regex` functions in <span class="pkg">stringi</span> use the <span class="pkg">ICU</span> regex engine. Its settings may be tuned up (for example to perform case-insensitive search) via the [`stri_opts_regex`](stri_opts_regex.md) function.
 
-Regular expression patterns in <span class="pkg">ICU</span> are quite similar in form and behavior to Perl\'s regexes. Their implementation is loosely inspired by JDK 1.4 `java.util.regex`. <span class="pkg">ICU</span> Regular Expressions conform to the Unicode Technical Standard #18 (see References section) and its features are summarized in the ICU User Guide (see below). A good general introduction to regexes is (Friedl, 2002). Some general topics are also covered in the <span style="font-family: Courier New, Courier; color: #666666;">**R**</span> manual, see [regex](https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html).
+Regular expression patterns in <span class="pkg">ICU</span> are quite similar in form and behavior to Perl\'s regexes. Their implementation is loosely inspired by JDK 1.4 `java.util.regex`. <span class="pkg">ICU</span> Regular Expressions conform to the Unicode Technical Standard #18 (see References section) and its features are summarized in the ICU User Guide (see below). A good general introduction to regexes is (Friedl, 2002). Some general topics are also covered in the <span class="rlang">**R**</span> manual, see [regex](https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html).
 
 ## <span class="pkg">ICU</span> Regex Operators at a Glance
 

@@ -4,7 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
@@ -34,11 +34,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -77,7 +76,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -157,8 +156,8 @@
         
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>References</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">References</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
@@ -179,59 +178,71 @@ cite <span id="id1">[<a class="reference internal" href="#id3" title="M. Gagolew
 <section id="bibliography">
 <h2>Bibliography<a class="headerlink" href="#bibliography" title="Permalink to this heading"></a></h2>
 <div class="docutils container" id="id2">
-<dl class="citation">
-<dt class="label" id="id25"><span class="brackets">Fri06</span></dt>
-<dd><p>J.E.F. Friedl. <em>Mastering Regular Expressions</em>. O'Reilly, 2006.</p>
-</dd>
-<dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id1">Gag22</a></span></dt>
-<dd><p>M. Gagolewski. stringi: Fast and portable character string processing in R. <em>Journal of Statistical Software</em>, 103(2):1–59, 2022. <a class="reference external" href="https://doi.org/10.18637/jss.v103.i02">doi:10.18637/jss.v103.i02</a>.</p>
-</dd>
-<dt class="label" id="id4"><span class="brackets">Gag23</span></dt>
-<dd><p>M. Gagolewski. <em>Deep R Programming</em>. Zenodo, Melbourne, 2023. ISBN 978-0-6455719-2-9 (reserved). early draft. URL: <a class="reference external" href="https://deepr.gagolewski.com/">https://deepr.gagolewski.com/</a>, <a class="reference external" href="https://doi.org/10.5281/zenodo.7490464">doi:10.5281/zenodo.7490464</a>.</p>
-</dd>
-<dt class="label" id="id31"><span class="brackets">Hoc19</span></dt>
-<dd><p>T.D. Hocking. Comparing namedCapture with other R packages for regular expressions. <em>The R Journal</em>, 11/2:328–346, 2019.</p>
-</dd>
-<dt class="label" id="id29"><span class="brackets">HU79</span></dt>
-<dd><p>J.E. Hopcroft and J.D. Ullman. <em>Introduction to Automata Theory, Languages, and Computation</em>. Addison-Wesley, 1979.</p>
-</dd>
-<dt class="label" id="id26"><span class="brackets">Kle51</span></dt>
-<dd><p>S.C. Kleene. Representation of events in nerve nets and finite automata. Technical Report RM-704, The RAND Corporation, Santa Monica, CA, 1951. URL <a class="reference external" href="https://www.rand.org/content/dam/rand/pubs/research_memoranda/2008/RM704.pdf">https://www.rand.org/content/dam/rand/pubs/research_memoranda/2008/RM704.pdf</a>.</p>
-</dd>
-<dt class="label" id="id24"><span class="brackets">KMP77</span></dt>
-<dd><p>D. Knuth, J.H. Morris, and V. Pratt. Fast pattern matching in strings. <em>SIAM Journal on Computing</em>, 6(2):323–350, 1977.</p>
-</dd>
-<dt class="label" id="id22"><span class="brackets">KP81</span></dt>
-<dd><p>D.E. Knuth and M.F. Plass. Breaking paragraphs into lines. <em>Software: Practice and Experience</em>, 11:1119–1184, 1981.</p>
-</dd>
-<dt class="label" id="id27"><span class="brackets">RS59</span></dt>
-<dd><p>M. Rabin and D. Scott. Finite automata and their decision problems. <em>IBM Journal of Research and Development</em>, 3:114–125, 1959.</p>
-</dd>
-<dt class="label" id="id28"><span class="brackets">RT70</span></dt>
-<dd><p>D.M. Ritchie and K.L. Thompson. QED text editor. Technical Report 70107-002, Bell Telephone Laboratories, Inc., 1970. URL: <a class="reference external" href="https://wayback.archive-it.org/all/20150203071645/http://cm.bell-labs.com/cm/cs/who/dmr/qedman.pdf">https://wayback.archive-it.org/all/20150203071645/http://cm.bell-labs.com/cm/cs/who/dmr/qedman.pdf</a>.</p>
-</dd>
-<dt class="label" id="id12"><span class="brackets">Wic10</span></dt>
-<dd><p>H. Wickham. stringr: Modern, consistent string processing. <em>The R Journal</em>, 2(2):38–40, 2010.</p>
-</dd>
-<dt class="label" id="id11"><span class="brackets">WG17</span></dt>
-<dd><p>H. Wickham and G. Grolemund. <em>R for Data Science</em>. O'Reilly, 2017.</p>
-</dd>
-<dt class="label" id="id35"><span class="brackets">Xie15</span></dt>
-<dd><p>Y. Xie. <em>Dynamic Documents with R and knitr</em>. Chapman and Hall/CRC, 2015.</p>
-</dd>
-</dl>
+<div class="citation" id="id25" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Fri06<span class="fn-bracket">]</span></span>
+<p>J.E.F. Friedl. <em>Mastering Regular Expressions</em>. O'Reilly, 2006.</p>
+</div>
+<div class="citation" id="id3" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">Gag22</a><span class="fn-bracket">]</span></span>
+<p>M. Gagolewski. stringi: Fast and portable character string processing in R. <em>Journal of Statistical Software</em>, 103(2):1–59, 2022. <a class="reference external" href="https://doi.org/10.18637/jss.v103.i02">doi:10.18637/jss.v103.i02</a>.</p>
+</div>
+<div class="citation" id="id4" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Gag23<span class="fn-bracket">]</span></span>
+<p>M. Gagolewski. <em>Deep R Programming</em>. Zenodo, Melbourne, 2023. ISBN 978-0-6455719-2-9 (reserved). early draft. URL: <a class="reference external" href="https://deepr.gagolewski.com/">https://deepr.gagolewski.com/</a>, <a class="reference external" href="https://doi.org/10.5281/zenodo.7490464">doi:10.5281/zenodo.7490464</a>.</p>
+</div>
+<div class="citation" id="id31" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Hoc19<span class="fn-bracket">]</span></span>
+<p>T.D. Hocking. Comparing namedCapture with other R packages for regular expressions. <em>The R Journal</em>, 11/2:328–346, 2019.</p>
+</div>
+<div class="citation" id="id29" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>HU79<span class="fn-bracket">]</span></span>
+<p>J.E. Hopcroft and J.D. Ullman. <em>Introduction to Automata Theory, Languages, and Computation</em>. Addison-Wesley, 1979.</p>
+</div>
+<div class="citation" id="id26" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Kle51<span class="fn-bracket">]</span></span>
+<p>S.C. Kleene. Representation of events in nerve nets and finite automata. Technical Report RM-704, The RAND Corporation, Santa Monica, CA, 1951. URL <a class="reference external" href="https://www.rand.org/content/dam/rand/pubs/research_memoranda/2008/RM704.pdf">https://www.rand.org/content/dam/rand/pubs/research_memoranda/2008/RM704.pdf</a>.</p>
+</div>
+<div class="citation" id="id24" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>KMP77<span class="fn-bracket">]</span></span>
+<p>D. Knuth, J.H. Morris, and V. Pratt. Fast pattern matching in strings. <em>SIAM Journal on Computing</em>, 6(2):323–350, 1977.</p>
+</div>
+<div class="citation" id="id22" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>KP81<span class="fn-bracket">]</span></span>
+<p>D.E. Knuth and M.F. Plass. Breaking paragraphs into lines. <em>Software: Practice and Experience</em>, 11:1119–1184, 1981.</p>
+</div>
+<div class="citation" id="id27" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>RS59<span class="fn-bracket">]</span></span>
+<p>M. Rabin and D. Scott. Finite automata and their decision problems. <em>IBM Journal of Research and Development</em>, 3:114–125, 1959.</p>
+</div>
+<div class="citation" id="id28" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>RT70<span class="fn-bracket">]</span></span>
+<p>D.M. Ritchie and K.L. Thompson. QED text editor. Technical Report 70107-002, Bell Telephone Laboratories, Inc., 1970. URL: <a class="reference external" href="https://wayback.archive-it.org/all/20150203071645/http://cm.bell-labs.com/cm/cs/who/dmr/qedman.pdf">https://wayback.archive-it.org/all/20150203071645/http://cm.bell-labs.com/cm/cs/who/dmr/qedman.pdf</a>.</p>
+</div>
+<div class="citation" id="id12" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Wic10<span class="fn-bracket">]</span></span>
+<p>H. Wickham. stringr: Modern, consistent string processing. <em>The R Journal</em>, 2(2):38–40, 2010.</p>
+</div>
+<div class="citation" id="id11" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>WG17<span class="fn-bracket">]</span></span>
+<p>H. Wickham and G. Grolemund. <em>R for Data Science</em>. O'Reilly, 2017.</p>
+</div>
+<div class="citation" id="id35" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Xie15<span class="fn-bracket">]</span></span>
+<p>Y. Xie. <em>Dynamic Documents with R and knitr</em>. Chapman and Hall/CRC, 2015.</p>
+</div>
+</div>
 </div>
 </section>
 <section id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this heading"></a></h2>
 <dl class="field-list simple">
-<dt class="field-odd">stringx</dt>
+<dt class="field-odd">stringx<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://stringx.gagolewski.com">https://stringx.gagolewski.com</a></p>
 </dd>
-<dt class="field-even">ICU</dt>
+<dt class="field-even">ICU<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://icu.unicode.org">https://icu.unicode.org</a></p>
 </dd>
-<dt class="field-odd">Unicode</dt>
+<dt class="field-odd">Unicode<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://www.unicode.org/">https://www.unicode.org/</a></p>
 </dd>
 </dl>
@@ -250,7 +261,7 @@ cite <span id="id1">[<a class="reference internal" href="#id3" title="M. Gagolew
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2023, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2023-01-18T09:23:44+1100.
+      <span class="lastupdated">Last updated on 2023-05-15T09:42:35+1000.
       </span></p>
   </div>
 

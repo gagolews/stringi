@@ -1,4 +1,4 @@
-# about_arguments: Passing Arguments to Functions in <span class="pkg">stringi</span>
+# about_arguments:
 
 ## Description
 

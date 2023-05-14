@@ -51,7 +51,7 @@ stri_coll(
 
 ## Details
 
-<span class="pkg">ICU</span>\'s *collator* performs a locale-aware, natural-language alike string comparison. This is a more reliable way of establishing relationships between strings than the one provided by base <span style="font-family: Courier New, Courier; color: #666666;">**R**</span>, and definitely one that is more complex and appropriate than ordinary bytewise comparison.
+<span class="pkg">ICU</span>\'s *collator* performs a locale-aware, natural-language alike string comparison. This is a more reliable way of establishing relationships between strings than the one provided by base <span class="rlang">**R**</span>, and definitely one that is more complex and appropriate than ordinary bytewise comparison.
 
 ## Value
 
