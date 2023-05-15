@@ -238,7 +238,7 @@
 <li class="toctree-l1"><a class="reference external" href="https://stringx.gagolewski.com/">stringx</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">JStatSoft Paper</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">C++ API — Rcpp Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../news.html">What Is New in <em>stringi</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../z_bibliography.html">References</a></li>
 </ul>
 
@@ -351,14 +351,14 @@
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_fields</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">())</span>
 <span class="c1">##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth</span>
-<span class="c1">## 1 2023     5  15    9     42     13          73         20           3</span>
+<span class="c1">## 1 2023     5  15   10     41     57         396         20           3</span>
 <span class="c1">##   DayOfYear DayOfWeek Hour12 AmPm Era</span>
-<span class="c1">## 1       135         2      9    1   2</span>
+<span class="c1">## 1       135         2     10    1   2</span>
 <span class="nf">stri_datetime_fields</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span><span class="w"> </span><span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span>
 <span class="c1">##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth</span>
-<span class="c1">## 1 5783     9  24    9     42     13          77         34           5</span>
+<span class="c1">## 1 5783     9  24   10     41     57         401         34           5</span>
 <span class="c1">##   DayOfYear DayOfWeek Hour12 AmPm Era</span>
-<span class="c1">## 1       232         2      9    1   1</span>
+<span class="c1">## 1       232         2     10    1   1</span>
 <span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span><span class="o">$</span><span class="n">Month</span><span class="p">[</span>
 <span class="w">   </span><span class="nf">stri_datetime_fields</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span><span class="w"> </span><span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span><span class="o">$</span><span class="n">Month</span>
 <span class="p">]</span>
@@ -381,7 +381,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2013-2023, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2023-05-15T09:42:35+1000.
+      <span class="lastupdated">Last updated on 2023-05-15T10:42:19+1000.
       </span></p>
   </div>
 

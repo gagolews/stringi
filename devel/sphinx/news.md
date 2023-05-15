@@ -1,4 +1,4 @@
-# What Is New in *stringi*
+# Changelog
 
 
 ## 1.7.12 (2023-01-09)
