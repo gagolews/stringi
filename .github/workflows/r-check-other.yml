@@ -47,6 +47,7 @@ jobs:
 
       - name: Install
         run: |
+          install.packages("tinytest")
           install.packages(".", repos=NULL, type="source")
         shell: Rscript {0}
 
