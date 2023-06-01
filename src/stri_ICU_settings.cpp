@@ -37,7 +37,7 @@
 #include "uconfig_local.h"
 #endif
 
-/** Get curent-default ICU locale and charset information
+/** Get current-default ICU locale and charset information
  *
  *  @return an R named list with 7 components:
  *  \code{Unicode.version} == ICU Unicode version,

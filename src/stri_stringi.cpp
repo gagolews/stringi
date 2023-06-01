@@ -319,14 +319,6 @@ extern "C" void R_init_stringi(DllInfo* dll)
         /* Rconfig.h states that all R platforms support that */
         Rf_error("R does not support UTF-8 encoding.");
     }
-
-
-#ifndef NDEBUG
-//    fprintf(stdout, "!NDEBUG: ************************************************\n");
-//    fprintf(stdout, "!NDEBUG: Dynamic library `stringi` loaded\n");
-//    fprintf(stdout, "!NDEBUG: Check out http://stringi.gagolewski.com\n");
-//    fprintf(stdout, "!NDEBUG: ************************************************\n");
-#endif
 }
 
 
@@ -341,9 +333,6 @@ extern "C" void  R_unload_stringi(DllInfo*)
 {
     // see http://bugs.icu-project.org/trac/ticket/10897
     // and https://github.com/Rexamine/stringi/issues/78
-//   fprintf(stdout, "!NDEBUG: ************************************************\n");
-//   fprintf(stdout, "!NDEBUG: Dynamic library 'stringi' unloaded.\n");
-//   fprintf(stdout, "!NDEBUG: ************************************************\n");
     u_cleanup();
 }
 

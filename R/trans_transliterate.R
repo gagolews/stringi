@@ -39,10 +39,11 @@
 #' for processing Unicode text. They are useful in handling a variety
 #' of different tasks, including:
 #' \itemize{
-#' \item    Upper Case, Lower Case, Title Case, Full/Halfwidth conversions,
-#' \item    Normalization,
-#' \item    Hex and Character Name conversions,
-#' \item    Script to Script conversion/transliteration.
+#' \item    locale-independent upper case, lower case, title case,
+#'     full/halfwidth conversions,
+#' \item    normalization,
+#' \item    hex and character name conversions,
+#' \item    script to script conversion/transliteration.
 #' }
 #'
 #'
@@ -52,7 +53,7 @@
 #' or Japanese Katakana to Latin).
 #' However, these services are also capable of handling a much
 #' broader range of tasks.
-#' In particular, the Transforms include pre-built transformations
+#' In particular, the Transforms include prebuilt transformations
 #' for case conversions, for normalization conversions, for the removal
 #' of given characters, and also for a variety of language and script
 #' transliterations. Transforms can be chained together to perform
@@ -74,6 +75,8 @@
 #'
 #' Custom rule-based transliteration is also supported, see the \pkg{ICU}
 #' manual and below for some examples.
+#'
+#' Transliteration is not dependent on the current locale.
 #'
 #' @param str character vector
 #' @param id a single string with transform identifier,
