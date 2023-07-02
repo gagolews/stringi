@@ -38,6 +38,8 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/sphinx_highlight.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -199,10 +201,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="regular-expressions">
+  <section class="tex2jax_ignore mathjax_ignore" id="regular-expressions">
 <span id="sec-regex"></span><h1>Regular Expressions<a class="headerlink" href="#regular-expressions" title="Permalink to this heading"></a></h1>
 <blockquote>
-<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that was published the <em>Journal of Statistical Software</em>; see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="M. Gagolewski. stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59, 2022. doi:10.18637/jss.v103.i02.">Gag22</a>]</span>. To learn more about R, check out Marek’s recent open-access (free!) textbook <a class="reference external" href="https://deepr.gagolewski.com/"><em>Deep R Programming</em></a> <span id="id2">[<a class="reference internal" href="../z_bibliography.html#id4" title="M. Gagolewski. Deep R Programming. Zenodo, Melbourne, 2023. ISBN 978-0-6455719-2-9 (reserved). early draft. URL: https://deepr.gagolewski.com/, doi:10.5281/zenodo.7490464.">Gag23</a>]</span>.</p>
+<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that was published the <em>Journal of Statistical Software</em>; see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="Gagolewski, M. (2022).  stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59. DOI: 10.18637/jss.v103.i02.">2</a>]</span>. To learn more about R, check out Marek’s recent open-access (free!) textbook <a class="reference external" href="https://deepr.gagolewski.com/"><em>Deep R Programming</em></a> <span id="id2">[<a class="reference internal" href="../z_bibliography.html#id4" title="Gagolewski, M. (2023).  Deep R Programming. Zenodo, Melbourne. ISBN 978-0-6455719-2-9. URL: https://deepr.gagolewski.com/, DOI: 10.5281/zenodo.7490464.">3</a>]</span>.</p>
 </div></blockquote>
 <p>Regular expressions (regexes) provide concise grammar for
 defining systematic patterns that can be sought in character strings.
@@ -212,11 +214,11 @@ substrings that can be interpreted as real numbers (with or without
 fractional parts, also in scientific notation), telephone numbers, email
 addresses, or URLs.</p>
 <p>Theoretically, the concept of regular pattern matching dates back to the
-so-called regular languages and finite state automata <span id="id3">[<a class="reference internal" href="../z_bibliography.html#id26" title="S.C. Kleene. Representation of events in nerve nets and finite automata. Technical Report RM-704, The RAND Corporation, Santa Monica, CA, 1951. URL https://www.rand.org/content/dam/rand/pubs/research_memoranda/2008/RM704.pdf.">Kle51</a>]</span>, see
-also <span id="id4">[<a class="reference internal" href="../z_bibliography.html#id29" title="J.E. Hopcroft and J.D. Ullman. Introduction to Automata Theory, Languages, and Computation. Addison-Wesley, 1979.">HU79</a>]</span> and <span id="id5">[<a class="reference internal" href="../z_bibliography.html#id27" title="M. Rabin and D. Scott. Finite automata and their decision problems. IBM Journal of Research and Development, 3:114–125, 1959.">RS59</a>]</span>. Regexes in the form
+so-called regular languages and finite state automata <span id="id3">[<a class="reference internal" href="../z_bibliography.html#id26" title="Kleene, S.C. (1951).  Representation of events in nerve nets and finite automata. Technical Report RM-704, The RAND Corporation, Santa Monica, CA. URL https://www.rand.org/content/dam/rand/pubs/research_memoranda/2008/RM704.pdf.">6</a>]</span>, see
+also <span id="id4">[<a class="reference internal" href="../z_bibliography.html#id29" title="Hopcroft, J.E. and Ullman, J.D. (1979).  Introduction to Automata Theory, Languages, and Computation. Addison-Wesley.">5</a>]</span> and <span id="id5">[<a class="reference internal" href="../z_bibliography.html#id27" title="Rabin, M. and Scott, D. (1959).  Finite automata and their decision problems. IBM Journal of Research and Development, 3:114–125.">9</a>]</span>. Regexes in the form
 as we know it today
 have already been present in one of the pre-Unix implementations of the
-command-line text editor <em>qed</em> (<span id="id6">[<a class="reference internal" href="../z_bibliography.html#id28" title="D.M. Ritchie and K.L. Thompson. QED text editor. Technical Report 70107-002, Bell Telephone Laboratories, Inc., 1970. URL: https://wayback.archive-it.org/all/20150203071645/http://cm.bell-labs.com/cm/cs/who/dmr/qedman.pdf.">RT70</a>]</span>; the predecessor of the
+command-line text editor <em>qed</em> (<span id="id6">[<a class="reference internal" href="../z_bibliography.html#id28" title="Ritchie, D.M. and Thompson, K.L. (1970).  QED text editor. Technical Report 70107-002, Bell Telephone Laboratories, Inc. URL: https://wayback.archive-it.org/all/20150203071645/http://cm.bell-labs.com/cm/cs/who/dmr/qedman.pdf.">10</a>]</span>; the predecessor of the
 well-known <em>sed</em>).</p>
 <p>Base R gives access to two different regex matching engines (via
 functions such as <code class="docutils literal notranslate"><span class="pre">gregexpr()</span></code> and <code class="docutils literal notranslate"><span class="pre">grep()</span></code>):</p>
@@ -246,7 +248,7 @@ text editors and development environments
 <a class="reference external" href="https://code.visualstudio.com/"><em>VSCode</em></a>,
 and <a class="reference external" href="https://www.rstudio.com/products/rstudio/"><em>RStudio</em></a>) support finding or replacing patterns with
 regexes. Therefore, they should be amongst the instruments at every data
-scientist’s disposal. One general introduction to regexes is <span id="id7">[<a class="reference internal" href="../z_bibliography.html#id25" title="J.E.F. Friedl. Mastering Regular Expressions. O'Reilly, 2006.">Fri06</a>]</span>.
+scientist’s disposal. One general introduction to regexes is <span id="id7">[<a class="reference internal" href="../z_bibliography.html#id25" title="Friedl, J.E.F. (2006).  Mastering Regular Expressions. O'Reilly.">1</a>]</span>.
 The <em>ICU</em> flavour is summarised at
 <a class="reference external" href="https://unicode-org.github.io/icu/userguide/strings/regexp.html">https://unicode-org.github.io/icu/userguide/strings/regexp.html</a>.</p>
 <p>Below we provide a concise yet comprehensive introduction to the topic
@@ -368,7 +370,7 @@ can be altered by setting the <code class="docutils literal notranslate"><span c
 <h3>Defining Character Sets<a class="headerlink" href="#defining-character-sets" title="Permalink to this heading"></a></h3>
 <p>Sets of characters can be introduced by enumerating their members within
 a pair of square brackets. For instance, “<code class="docutils literal notranslate"><span class="pre">[abc]</span></code>” denotes the set
-${\mathtt{a},\mathtt{b},\mathtt{c}}$ – such a regular expression
+<span class="math notranslate nohighlight">\(\{\mathtt{a},\mathtt{b},\mathtt{c}\}\)</span> – such a regular expression
 matches one (and only one) symbol from this set. Moreover, in:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;[hj]am&quot;</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
@@ -693,7 +695,7 @@ capture group, and so forth.</p>
 <p>If we just need the grouping part of “<code class="docutils literal notranslate"><span class="pre">(...)</span></code>”, i.e., without the
 capturing feature, “<code class="docutils literal notranslate"><span class="pre">(?:...)</span></code>” can be applied. Also, named capture
 groups defined like “<code class="docutils literal notranslate"><span class="pre">(?&lt;name&gt;...)</span></code>” are fully supported since version
-1.7.1 of our package (for historical notes see <span id="id9">[<a class="reference internal" href="../z_bibliography.html#id31" title="T.D. Hocking. Comparing namedCapture with other R packages for regular expressions. The R Journal, 11/2:328–346, 2019.">Hoc19</a>]</span>).</p>
+1.7.1 of our package (for historical notes see <span id="id9">[<a class="reference internal" href="../z_bibliography.html#id31" title="Hocking, T.D. (2019).  Comparing namedCapture with other R packages for regular expressions. The R Journal, 11/2:328–346.">4</a>]</span>).</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_match_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;(?:\\w+)=&#39;(?&lt;value&gt;.+?)&#39;&quot;</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">##                               value           </span>
@@ -857,8 +859,8 @@ discussion and a workaround.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2013-2023, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2023-05-15T10:42:19+1000.
+    <p>&#169; Copyright 2013–2023, Marek Gagolewski.
+      <span class="lastupdated">Last updated on 2023-07-02T15:43:25+1000.
       </span></p>
   </div>
 

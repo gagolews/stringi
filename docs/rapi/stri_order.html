@@ -38,6 +38,8 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/sphinx_highlight.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -281,7 +283,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="stri-order-ordering-permutation">
+  <section class="tex2jax_ignore mathjax_ignore" id="stri-order-ordering-permutation">
 <h1>stri_order: Ordering Permutation<a class="headerlink" href="#stri-order-ordering-permutation" title="Permalink to this heading"></a></h1>
 <section id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h2>
@@ -324,7 +326,7 @@
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this heading"></a></h2>
 <p>For more information on <span class="pkg">ICU</span>’s Collator and how to tune it up in <span class="pkg">stringi</span>, refer to <a class="reference internal" href="stri_opts_collator.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_opts_collator</span></code></span></a>.</p>
 <p>As usual in <span class="pkg">stringi</span>, non-character inputs are coerced to strings, see an example below for a somewhat non-intuitive behavior of lexicographic sorting on numeric inputs.</p>
-<p>This function uses a stable sort algorithm (<span class="pkg">STL</span>’s <code class="docutils literal notranslate"><span class="pre">stable_sort</span></code>), which performs up to $N*log^2(N)$ element comparisons, where $N$ is the length of <code class="docutils literal notranslate"><span class="pre">str</span></code>.</p>
+<p>This function uses a stable sort algorithm (<span class="pkg">STL</span>’s <code class="docutils literal notranslate"><span class="pre">stable_sort</span></code>), which performs up to <span class="math notranslate nohighlight">\(N*log^2(N)\)</span> element comparisons, where <span class="math notranslate nohighlight">\(N\)</span> is the length of <code class="docutils literal notranslate"><span class="pre">str</span></code>.</p>
 <p>For ordering with regards to multiple criteria (such as sorting data frames by more than 1 column), see <a class="reference internal" href="stri_rank.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_rank</span></code></span></a>.</p>
 </section>
 <section id="value">
@@ -374,8 +376,8 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2013-2023, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2023-05-15T10:42:19+1000.
+    <p>&#169; Copyright 2013–2023, Marek Gagolewski.
+      <span class="lastupdated">Last updated on 2023-07-02T15:43:25+1000.
       </span></p>
   </div>
 

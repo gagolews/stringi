@@ -1,13 +1,8 @@
+# Copyleft (C) 2020-2023, Marek Gagolewski <https://www.gagolewski.com>
 # Configuration file for the Sphinx documentation builder.
 
-
-#import sys
-#import os
-#import sphinx
-#import matplotlib.sphinxext
-#import IPython.sphinxext
-import sphinx_rtd_theme
-import re
+import sys, os, sphinx_rtd_theme, re
+sys.path.append(os.getcwd())
 
 def get_package_version():
     with open("../../DESCRIPTION") as f:
@@ -17,7 +12,7 @@ def get_package_version():
 # -- Project information -----------------------------------------------------
 
 project = 'stringi'
-copyright = '2013-2023, Marek Gagolewski'
+copyright = '2013–2023, Marek Gagolewski'
 author = 'Marek Gagolewski'
 html_title = project
 html_short_title = project
@@ -43,8 +38,11 @@ extensions = [
     'sphinxcontrib.bibtex',
 ]
 
-myst_enable_extensions = ["deflist"]
-
+myst_enable_extensions = [
+    "colon_fence",
+    "dollarmath",
+    "deflist",
+]
 
 templates_path = ['_templates']
 
@@ -77,5 +75,7 @@ html_css_files = ['css/custom.css']
 
 pygments_style = 'colorful'
 
-bibtex_bibfiles = ['bibliography.bib']
-bibtex_default_style = 'alpha'
+# BibTeX biblography + Marek's custom pybtex style
+import alphamarek
+bibtex_default_style = "alphamarek"
+bibtex_bibfiles = ["bibliography.bib"]

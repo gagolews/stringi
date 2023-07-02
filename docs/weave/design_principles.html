@@ -173,14 +173,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="general-design-principles">
+  <section class="tex2jax_ignore mathjax_ignore" id="general-design-principles">
 <h1>General Design Principles<a class="headerlink" href="#general-design-principles" title="Permalink to this heading"></a></h1>
 <blockquote>
-<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that was published the <em>Journal of Statistical Software</em>; see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="M. Gagolewski. stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59, 2022. doi:10.18637/jss.v103.i02.">Gag22</a>]</span>. To learn more about R, check out Marek’s recent open-access (free!) textbook <a class="reference external" href="https://deepr.gagolewski.com/"><em>Deep R Programming</em></a> <span id="id2">[<a class="reference internal" href="../z_bibliography.html#id4" title="M. Gagolewski. Deep R Programming. Zenodo, Melbourne, 2023. ISBN 978-0-6455719-2-9 (reserved). early draft. URL: https://deepr.gagolewski.com/, doi:10.5281/zenodo.7490464.">Gag23</a>]</span>.</p>
+<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that was published the <em>Journal of Statistical Software</em>; see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="Gagolewski, M. (2022).  stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59. DOI: 10.18637/jss.v103.i02.">2</a>]</span>. To learn more about R, check out Marek’s recent open-access (free!) textbook <a class="reference external" href="https://deepr.gagolewski.com/"><em>Deep R Programming</em></a> <span id="id2">[<a class="reference internal" href="../z_bibliography.html#id4" title="Gagolewski, M. (2023).  Deep R Programming. Zenodo, Melbourne. ISBN 978-0-6455719-2-9. URL: https://deepr.gagolewski.com/, DOI: 10.5281/zenodo.7490464.">3</a>]</span>.</p>
 </div></blockquote>
 <p>The API of the early releases of <em>stringi</em> has been designed to be
 fairly compatible with that of the 0.6.2 version of the <a class="reference external" href="https://stringr.tidyverse.org/"><em>stringr</em></a>
-package <span id="id3">[<a class="reference internal" href="../z_bibliography.html#id12" title="H. Wickham. stringr: Modern, consistent string processing. The R Journal, 2(2):38–40, 2010.">Wic10</a>]</span> (dated 2012<a class="footnote-reference brackets" href="#footstringr" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>),
+package <span id="id3">[<a class="reference internal" href="../z_bibliography.html#id12" title="Wickham, H. (2010).  stringr: Modern, consistent string processing. The R Journal, 2(2):38–40.">11</a>]</span> (dated 2012<a class="footnote-reference brackets" href="#footstringr" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>),
 with some fixes in the consistency of the
 handling of missing values and zero-length vectors, amongst others.
 However, instead of being merely thin wrappers around base R<a class="footnote-reference brackets" href="#footstringx" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> functions,
@@ -439,7 +439,7 @@ are treated in the same manner. For example, if a function expects a
 character vector on input and an object of another type is provided,
 <code class="docutils literal notranslate"><span class="pre">as.character()</span></code> is called first (we see that in the example above,
 “<code class="docutils literal notranslate"><span class="pre">1:2</span></code>” is treated as <code class="docutils literal notranslate"><span class="pre">c(&quot;1&quot;,</span> <span class="pre">&quot;2&quot;)</span></code>).</p>
-<p>Following <span id="id6">[<a class="reference internal" href="../z_bibliography.html#id12" title="H. Wickham. stringr: Modern, consistent string processing. The R Journal, 2(2):38–40, 2010.">Wic10</a>]</span>, <em>stringi</em> makes sure the output data
+<p>Following <span id="id6">[<a class="reference internal" href="../z_bibliography.html#id12" title="Wickham, H. (2010).  stringr: Modern, consistent string processing. The R Journal, 2(2):38–40.">11</a>]</span>, <em>stringi</em> makes sure the output data
 types are consistent and that different functions are interoperable.
 This makes operation chaining easier and less error-prone.</p>
 <p>For example, <code class="docutils literal notranslate"><span class="pre">stri_extract_first_regex()</span></code> finds the first occurrence of
@@ -608,7 +608,7 @@ calling “<code class="docutils literal notranslate"><span class="pre">x[]</spa
 <p>Interestingly, in 2015 the aforementioned
 <em>stringr</em> package was rewritten as a set of wrappers around some of
 the <em>stringi</em> functions instead of the base R ones. In Section 14.7 of
-<em>R for Data Science</em> <span id="id7">[<a class="reference internal" href="../z_bibliography.html#id11" title="H. Wickham and G. Grolemund. R for Data Science. O'Reilly, 2017.">WG17</a>]</span> we read:
+<em>R for Data Science</em> <span id="id7">[<a class="reference internal" href="../z_bibliography.html#id11" title="Wickham, H. and Grolemund, G. (2017).  R for Data Science. O'Reilly.">12</a>]</span> we read:
 “<em>stringr</em> is useful when you’re learning because it exposes a minimal
 set of functions, which have been carefully picked to handle the most
 common string manipulation functions. <em>stringi</em>, on the other hand, is
@@ -639,8 +639,8 @@ replacements for and enhancements of the base R functions
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2013-2023, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2023-05-15T10:42:19+1000.
+    <p>&#169; Copyright 2013–2023, Marek Gagolewski.
+      <span class="lastupdated">Last updated on 2023-07-02T15:43:25+1000.
       </span></p>
   </div>
 

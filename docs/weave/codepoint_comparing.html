@@ -175,10 +175,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="code-pointwise-comparing">
+  <section class="tex2jax_ignore mathjax_ignore" id="code-pointwise-comparing">
 <span id="sec-fixed"></span><h1>Code-Pointwise Comparing<a class="headerlink" href="#code-pointwise-comparing" title="Permalink to this heading"></a></h1>
 <blockquote>
-<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that was published the <em>Journal of Statistical Software</em>; see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="M. Gagolewski. stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59, 2022. doi:10.18637/jss.v103.i02.">Gag22</a>]</span>. To learn more about R, check out Marek’s recent open-access (free!) textbook <a class="reference external" href="https://deepr.gagolewski.com/"><em>Deep R Programming</em></a> <span id="id2">[<a class="reference internal" href="../z_bibliography.html#id4" title="M. Gagolewski. Deep R Programming. Zenodo, Melbourne, 2023. ISBN 978-0-6455719-2-9 (reserved). early draft. URL: https://deepr.gagolewski.com/, doi:10.5281/zenodo.7490464.">Gag23</a>]</span>.</p>
+<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that was published the <em>Journal of Statistical Software</em>; see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="Gagolewski, M. (2022).  stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59. DOI: 10.18637/jss.v103.i02.">2</a>]</span>. To learn more about R, check out Marek’s recent open-access (free!) textbook <a class="reference external" href="https://deepr.gagolewski.com/"><em>Deep R Programming</em></a> <span id="id2">[<a class="reference internal" href="../z_bibliography.html#id4" title="Gagolewski, M. (2023).  Deep R Programming. Zenodo, Melbourne. ISBN 978-0-6455719-2-9. URL: https://deepr.gagolewski.com/, DOI: 10.5281/zenodo.7490464.">3</a>]</span>.</p>
 </div></blockquote>
 <p>There are many settings where we are faced with testing whether two
 strings (or parts thereof) consist of exactly the same Unicode code
@@ -203,7 +203,7 @@ the 2nd operand. There is only one exact match.</p>
 <section id="searching-for-fixed-strings">
 <span id="sec-strsearch"></span><h2>Searching for Fixed Strings<a class="headerlink" href="#searching-for-fixed-strings" title="Permalink to this heading"></a></h2>
 <p>For detecting if a string contains a given fixed substring
-(code-pointwisely), the fast KMP <span id="id3">[<a class="reference internal" href="../z_bibliography.html#id24" title="D. Knuth, J.H. Morris, and V. Pratt. Fast pattern matching in strings. SIAM Journal on Computing, 6(2):323–350, 1977.">KMP77</a>]</span> algorithm, with
+(code-pointwisely), the fast KMP <span id="id3">[<a class="reference internal" href="../z_bibliography.html#id24" title="Knuth, D., Morris, J.H., and Pratt, V. (1977).  Fast pattern matching in strings. SIAM Journal on Computing, 6(2):323–350.">7</a>]</span> algorithm, with
 worst time complexity of <em>O(n+p)</em> (where <em>n</em> is the length of the string
 and <em>p</em> is the length of the pattern), has been implemented in <em>stringi</em>
 (with numerous tweaks for even faster matching).</p>
@@ -539,8 +539,8 @@ purpose; see <a class="reference internal" href="regular_expressions.html#sec-re
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2013-2023, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2023-05-15T10:42:19+1000.
+    <p>&#169; Copyright 2013–2023, Marek Gagolewski.
+      <span class="lastupdated">Last updated on 2023-07-02T15:43:25+1000.
       </span></p>
   </div>
 
