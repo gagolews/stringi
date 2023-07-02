@@ -186,13 +186,13 @@ Other datetime: [`stri_datetime_add()`](stri_datetime_add.md), [`stri_datetime_c
 ```r
 x <- c('2015-02-28', '2015-02-29')
 stri_datetime_parse(x, 'yyyy-MM-dd')
-## [1] "2015-02-28 10:41:57 AEDT" NA
+## [1] "2015-02-28 15:43:05 AEDT" NA
 stri_datetime_parse(x, 'yyyy-MM-dd', lenient=TRUE)
-## [1] "2015-02-28 10:41:57 AEDT" "2015-03-01 10:41:57 AEDT"
+## [1] "2015-02-28 15:43:05 AEDT" "2015-03-01 15:43:05 AEDT"
 stri_datetime_parse(x %s+% " 00:00:00", "yyyy-MM-dd HH:mm:ss")
 ## [1] "2015-02-28 00:00:00 AEDT" NA
 stri_datetime_parse('19 lipca 2015', 'date_long', locale='pl_PL')
-## [1] "2015-07-19 10:41:57 AEST"
+## [1] "2015-07-19 15:43:05 AEST"
 stri_datetime_format(stri_datetime_now(), 'datetime_relative_medium')
-## [1] "today, 10:41:57 am"
+## [1] "today, 3:43:05 pm"
 ```

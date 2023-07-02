@@ -186,10 +186,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="basic-string-operations">
+  <section class="tex2jax_ignore mathjax_ignore" id="basic-string-operations">
 <span id="sec-basic"></span><h1>Basic String Operations<a class="headerlink" href="#basic-string-operations" title="Permalink to this heading"></a></h1>
 <blockquote>
-<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that was published the <em>Journal of Statistical Software</em>; see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="M. Gagolewski. stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59, 2022. doi:10.18637/jss.v103.i02.">Gag22</a>]</span>. To learn more about R, check out Marek’s recent open-access (free!) textbook <a class="reference external" href="https://deepr.gagolewski.com/"><em>Deep R Programming</em></a> <span id="id2">[<a class="reference internal" href="../z_bibliography.html#id4" title="M. Gagolewski. Deep R Programming. Zenodo, Melbourne, 2023. ISBN 978-0-6455719-2-9 (reserved). early draft. URL: https://deepr.gagolewski.com/, doi:10.5281/zenodo.7490464.">Gag23</a>]</span>.</p>
+<div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that was published the <em>Journal of Statistical Software</em>; see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="Gagolewski, M. (2022).  stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59. DOI: 10.18637/jss.v103.i02.">2</a>]</span>. To learn more about R, check out Marek’s open-access (free!) textbook <a class="reference external" href="https://deepr.gagolewski.com/"><em>Deep R Programming</em></a> <span id="id2">[<a class="reference internal" href="../z_bibliography.html#id4" title="Gagolewski, M. (2023).  Deep R Programming. Zenodo, Melbourne. ISBN 978-0-6455719-2-9. URL: https://deepr.gagolewski.com/, DOI: 10.5281/zenodo.7490464.">3</a>]</span>.</p>
 </div></blockquote>
 <section id="computing-length-and-width">
 <h2>Computing Length and Width<a class="headerlink" href="#computing-length-and-width" title="Permalink to this heading"></a></h2>
@@ -219,7 +219,7 @@ is a missing (<code class="docutils literal notranslate"><span class="pre">NA</s
 is undefined as well.</p>
 <p>When formatting strings for display (e.g., in a report dynamically
 generated with <code class="docutils literal notranslate"><span class="pre">Sweave()</span></code> or
-<a class="reference external" href="https://yihui.org/knitr/"><em>knitr</em></a> <span id="id3">[<a class="reference internal" href="../z_bibliography.html#id35" title="Y. Xie. Dynamic Documents with R and knitr. Chapman and Hall/CRC, 2015.">Xie15</a>]</span>), a string’s width
+<a class="reference external" href="https://yihui.org/knitr/"><em>knitr</em></a> <span id="id3">[<a class="reference internal" href="../z_bibliography.html#id35" title="Xie, Y. (2015).  Dynamic Documents with R and knitr. Chapman and Hall/CRC.">13</a>]</span>), a string’s width
 estimate may be more informative – an approximate number of text
 columns it will occupy when printed using a monospaced font. In
 particular, many Chinese, Japanese, Korean, and most emoji characters
@@ -279,18 +279,18 @@ was implicitly coerced via a call to <code class="docutils literal notranslate">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">pythons</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Graham Chapman&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;John Cleese&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Terry Gilliam&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="s">&quot;Eric Idle&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Terry Jones&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Michael Palin&quot;</span><span class="p">)</span>
 <span class="p">(</span><span class="n">pythons</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">stri_split_fixed</span><span class="p">(</span><span class="n">pythons</span><span class="p">,</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">simplify</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
-<span class="c1">##      [,1]      [,2]     </span>
+<span class="c1">##      [,1]      [,2]</span>
 <span class="c1">## [1,] &quot;Graham&quot;  &quot;Chapman&quot;</span>
-<span class="c1">## [2,] &quot;John&quot;    &quot;Cleese&quot; </span>
+<span class="c1">## [2,] &quot;John&quot;    &quot;Cleese&quot;</span>
 <span class="c1">## [3,] &quot;Terry&quot;   &quot;Gilliam&quot;</span>
-<span class="c1">## [4,] &quot;Eric&quot;    &quot;Idle&quot;   </span>
-<span class="c1">## [5,] &quot;Terry&quot;   &quot;Jones&quot;  </span>
+<span class="c1">## [4,] &quot;Eric&quot;    &quot;Idle&quot;</span>
+<span class="c1">## [5,] &quot;Terry&quot;   &quot;Jones&quot;</span>
 <span class="c1">## [6,] &quot;Michael&quot; &quot;Palin&quot;</span>
 <span class="nf">stri_join</span><span class="p">(</span><span class="n">pythons</span><span class="p">[,</span><span class="w"> </span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="n">pythons</span><span class="p">[,</span><span class="w"> </span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;, &quot;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;Chapman, Graham&quot; &quot;Cleese, John&quot;    &quot;Gilliam, Terry&quot;  &quot;Idle, Eric&quot;     </span>
+<span class="c1">## [1] &quot;Chapman, Graham&quot; &quot;Cleese, John&quot;    &quot;Gilliam, Terry&quot;  &quot;Idle, Eric&quot;</span>
 <span class="c1">## [5] &quot;Jones, Terry&quot;    &quot;Palin, Michael&quot;</span>
 <span class="nf">outer</span><span class="p">(</span><span class="kc">LETTERS</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">],</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">stri_join</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;.&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># outer product</span>
-<span class="c1">##      [,1]  [,2]  [,3]  [,4]  [,5] </span>
+<span class="c1">##      [,1]  [,2]  [,3]  [,4]  [,5]</span>
 <span class="c1">## [1,] &quot;A.1&quot; &quot;A.2&quot; &quot;A.3&quot; &quot;A.4&quot; &quot;A.5&quot;</span>
 <span class="c1">## [2,] &quot;B.1&quot; &quot;B.2&quot; &quot;B.3&quot; &quot;B.4&quot; &quot;B.5&quot;</span>
 <span class="c1">## [3,] &quot;C.1&quot; &quot;C.2&quot; &quot;C.3&quot; &quot;C.4&quot; &quot;C.5&quot;</span>
@@ -382,10 +382,10 @@ the strings provided:</p>
 <span class="w">  </span><span class="n">length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w">           </span><span class="m">3</span><span class="p">,</span><span class="w">      </span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">))))</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] &quot;s&quot; &quot;a&quot; &quot;m&quot;</span>
-<span class="c1">## </span>
+<span class="c1">##</span>
 <span class="c1">## [[2]]</span>
 <span class="c1">## [1] &quot;con&quot;</span>
-<span class="c1">## </span>
+<span class="c1">##</span>
 <span class="c1">## [[3]]</span>
 <span class="c1">## [1] &quot;orgh&quot; &quot;ghu&quot;</span>
 </pre></div>
@@ -406,8 +406,8 @@ aforementioned <code class="docutils literal notranslate"><span class="pre">stri
 function whose aim is to convert such lists to matrices.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_list2matrix</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">by_row</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">n_min</span><span class="o">=</span><span class="m">5</span><span class="p">)</span>
 <span class="c1">##      [,1]   [,2]  [,3] [,4] [,5]</span>
-<span class="c1">## [1,] &quot;s&quot;    &quot;a&quot;   &quot;m&quot;  &quot;&quot;   &quot;&quot;  </span>
-<span class="c1">## [2,] &quot;con&quot;  &quot;&quot;    &quot;&quot;   &quot;&quot;   &quot;&quot;  </span>
+<span class="c1">## [1,] &quot;s&quot;    &quot;a&quot;   &quot;m&quot;  &quot;&quot;   &quot;&quot;</span>
+<span class="c1">## [2,] &quot;con&quot;  &quot;&quot;    &quot;&quot;   &quot;&quot;   &quot;&quot;</span>
 <span class="c1">## [3,] &quot;orgh&quot; &quot;ghu&quot; &quot;&quot;   &quot;&quot;   &quot;&quot;</span>
 </pre></div>
 </div>
@@ -446,7 +446,7 @@ end ones. Such matrices are generated, amongst others, by the
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_sub_all</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;abcdefgh&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ijklmnop&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">from_to</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] &quot;ab&quot; &quot;cd&quot; &quot;ef&quot; &quot;gh&quot;</span>
-<span class="c1">## </span>
+<span class="c1">##</span>
 <span class="c1">## [[2]]</span>
 <span class="c1">## [1] &quot;ij&quot; &quot;kl&quot; &quot;mn&quot; &quot;op&quot;</span>
 </pre></div>
@@ -550,8 +550,8 @@ vector is also possible.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2013-2023, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2023-05-15T10:42:19+1000.
+    <p>&#169; Copyright 2013–2023, Marek Gagolewski.
+      <span class="lastupdated">Last updated on 2023-07-02T15:43:25+1000.
       </span></p>
   </div>
 

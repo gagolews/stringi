@@ -3,7 +3,7 @@ Basic String Operations
 =======================
 
 
-> This tutorial is based on the [paper on *stringi*](https://dx.doi.org/10.18637/jss.v103.i02) that was published the *Journal of Statistical Software*; see {cite}`stringi`. To learn more about R, check out Marek's recent open-access (free!) textbook [*Deep R Programming*](https://deepr.gagolewski.com/) {cite}`deepr`.
+> This tutorial is based on the [paper on *stringi*](https://dx.doi.org/10.18637/jss.v103.i02) that was published the *Journal of Statistical Software*; see {cite}`stringi`. To learn more about R, check out Marek's open-access (free!) textbook [*Deep R Programming*](https://deepr.gagolewski.com/) {cite}`deepr`.
 
 
 
@@ -130,18 +130,18 @@ More examples:
 pythons <- c("Graham Chapman", "John Cleese", "Terry Gilliam",
   "Eric Idle", "Terry Jones", "Michael Palin")
 (pythons <- stri_split_fixed(pythons, " ", simplify=TRUE))
-##      [,1]      [,2]     
+##      [,1]      [,2]
 ## [1,] "Graham"  "Chapman"
-## [2,] "John"    "Cleese" 
+## [2,] "John"    "Cleese"
 ## [3,] "Terry"   "Gilliam"
-## [4,] "Eric"    "Idle"   
-## [5,] "Terry"   "Jones"  
+## [4,] "Eric"    "Idle"
+## [5,] "Terry"   "Jones"
 ## [6,] "Michael" "Palin"
 stri_join(pythons[, 2], pythons[, 1], sep=", ")
-## [1] "Chapman, Graham" "Cleese, John"    "Gilliam, Terry"  "Idle, Eric"     
+## [1] "Chapman, Graham" "Cleese, John"    "Gilliam, Terry"  "Idle, Eric"
 ## [5] "Jones, Terry"    "Palin, Michael"
 outer(LETTERS[1:3], 1:5, stri_join, sep=".")  # outer product
-##      [,1]  [,2]  [,3]  [,4]  [,5] 
+##      [,1]  [,2]  [,3]  [,4]  [,5]
 ## [1,] "A.1" "A.2" "A.3" "A.4" "A.5"
 ## [2,] "B.1" "B.2" "B.3" "B.4" "B.5"
 ## [3,] "C.1" "C.2" "C.3" "C.4" "C.5"
@@ -276,10 +276,10 @@ the strings provided:
   length = list(1,           3,      c(4, 3))))
 ## [[1]]
 ## [1] "s" "a" "m"
-## 
+##
 ## [[2]]
 ## [1] "con"
-## 
+##
 ## [[3]]
 ## [1] "orgh" "ghu"
 ```
@@ -307,8 +307,8 @@ function whose aim is to convert such lists to matrices.
 ```r
 stri_list2matrix(z, by_row=TRUE, fill="", n_min=5)
 ##      [,1]   [,2]  [,3] [,4] [,5]
-## [1,] "s"    "a"   "m"  ""   ""  
-## [2,] "con"  ""    ""   ""   ""  
+## [1,] "s"    "a"   "m"  ""   ""
+## [2,] "con"  ""    ""   ""   ""
 ## [3,] "orgh" "ghu" ""   ""   ""
 ```
 
@@ -358,7 +358,7 @@ Note the difference between the above output and the following one:
 stri_sub_all(c("abcdefgh", "ijklmnop"), from_to)
 ## [[1]]
 ## [1] "ab" "cd" "ef" "gh"
-## 
+##
 ## [[2]]
 ## [1] "ij" "kl" "mn" "op"
 ```

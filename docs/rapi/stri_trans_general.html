@@ -281,16 +281,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="stri-trans-general-general-text-transforms-including-transliteration">
+  <section class="tex2jax_ignore mathjax_ignore" id="stri-trans-general-general-text-transforms-including-transliteration">
 <h1>stri_trans_general: General Text Transforms, Including Transliteration<a class="headerlink" href="#stri-trans-general-general-text-transforms-including-transliteration" title="Permalink to this heading"></a></h1>
 <section id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h2>
 <p><span class="pkg">ICU</span> General transforms provide different ways for processing Unicode text. They are useful in handling a variety of different tasks, including:</p>
 <ul class="simple">
-<li><p>Upper Case, Lower Case, Title Case, Full/Halfwidth conversions,</p></li>
-<li><p>Normalization,</p></li>
-<li><p>Hex and Character Name conversions,</p></li>
-<li><p>Script to Script conversion/transliteration.</p></li>
+<li><p>locale-independent upper case, lower case, title case, full/halfwidth conversions,</p></li>
+<li><p>normalization,</p></li>
+<li><p>hex and character name conversions,</p></li>
+<li><p>script to script conversion/transliteration.</p></li>
 </ul>
 </section>
 <section id="usage">
@@ -325,10 +325,11 @@
 </section>
 <section id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this heading"></a></h2>
-<p><span class="pkg">ICU</span> Transforms were mainly designed to transliterate characters from one script to another (for example, from Greek to Latin, or Japanese Katakana to Latin). However, these services are also capable of handling a much broader range of tasks. In particular, the Transforms include pre-built transformations for case conversions, for normalization conversions, for the removal of given characters, and also for a variety of language and script transliterations. Transforms can be chained together to perform a series of operations and each step of the process can use a UnicodeSet to restrict the characters that are affected.</p>
+<p><span class="pkg">ICU</span> Transforms were mainly designed to transliterate characters from one script to another (for example, from Greek to Latin, or Japanese Katakana to Latin). However, these services are also capable of handling a much broader range of tasks. In particular, the Transforms include prebuilt transformations for case conversions, for normalization conversions, for the removal of given characters, and also for a variety of language and script transliterations. Transforms can be chained together to perform a series of operations and each step of the process can use a UnicodeSet to restrict the characters that are affected.</p>
 <p>To get the list of available transforms, call <a class="reference internal" href="stri_trans_list.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_list</span></code></span></a>.</p>
 <p>Note that transliterators are often combined in sequence to achieve a desired transformation. This is analogous to the composition of mathematical functions. For example, given a script that converts lowercase ASCII characters from Latin script to Katakana script, it is convenient to first (1) separate input base characters and accents, and then (2) convert uppercase to lowercase. To achieve this, a compound transform can be specified as follows: <code class="docutils literal notranslate"><span class="pre">NFKD;</span> <span class="pre">Lower;</span> <span class="pre">Latin-Katakana;</span></code> (with the default <code class="docutils literal notranslate"><span class="pre">rules=FALSE</span></code>).</p>
 <p>Custom rule-based transliteration is also supported, see the <span class="pkg">ICU</span> manual and below for some examples.</p>
+<p>Transliteration is not dependent on the current locale.</p>
 </section>
 <section id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this heading"></a></h2>
@@ -403,8 +404,8 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2013-2023, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2023-05-15T10:42:19+1000.
+    <p>&#169; Copyright 2013–2023, Marek Gagolewski.
+      <span class="lastupdated">Last updated on 2023-07-02T15:43:25+1000.
       </span></p>
   </div>
 

@@ -281,7 +281,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="stri-datetime-format-date-and-time-formatting-and-parsing">
+  <section class="tex2jax_ignore mathjax_ignore" id="stri-datetime-format-date-and-time-formatting-and-parsing">
 <h1>stri_datetime_format: Date and Time Formatting and Parsing<a class="headerlink" href="#stri-datetime-format-date-and-time-formatting-and-parsing" title="Permalink to this heading"></a></h1>
 <section id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h2>
@@ -862,15 +862,15 @@
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;2015-02-28&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;2015-02-29&#39;</span><span class="p">)</span>
 <span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;yyyy-MM-dd&#39;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2015-02-28 10:41:57 AEDT&quot; NA</span>
+<span class="c1">## [1] &quot;2015-02-28 15:43:05 AEDT&quot; NA</span>
 <span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;yyyy-MM-dd&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">lenient</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2015-02-28 10:41:57 AEDT&quot; &quot;2015-03-01 10:41:57 AEDT&quot;</span>
+<span class="c1">## [1] &quot;2015-02-28 15:43:05 AEDT&quot; &quot;2015-03-01 15:43:05 AEDT&quot;</span>
 <span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">%s+%</span><span class="w"> </span><span class="s">&quot; 00:00:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;yyyy-MM-dd HH:mm:ss&quot;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;2015-02-28 00:00:00 AEDT&quot; NA</span>
 <span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="s">&#39;19 lipca 2015&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;date_long&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">locale</span><span class="o">=</span><span class="s">&#39;pl_PL&#39;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2015-07-19 10:41:57 AEST&quot;</span>
+<span class="c1">## [1] &quot;2015-07-19 15:43:05 AEST&quot;</span>
 <span class="nf">stri_datetime_format</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span><span class="w"> </span><span class="s">&#39;datetime_relative_medium&#39;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;today, 10:41:57 am&quot;</span>
+<span class="c1">## [1] &quot;today, 3:43:05 pm&quot;</span>
 </pre></div>
 </div>
 </section>
@@ -888,8 +888,8 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2013-2023, Marek Gagolewski.
-      <span class="lastupdated">Last updated on 2023-05-15T10:42:19+1000.
+    <p>&#169; Copyright 2013–2023, Marek Gagolewski.
+      <span class="lastupdated">Last updated on 2023-07-02T15:43:25+1000.
       </span></p>
   </div>
 
