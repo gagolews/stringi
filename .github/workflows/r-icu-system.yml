@@ -16,10 +16,10 @@ jobs:
         sudo apt-get update
         sudo apt-get -y upgrade
         sudo apt-get -y install libcurl4-openssl-dev r-base-dev devscripts libicu-dev language-pack-pl
-        sudo Rscript -e "install.packages(c('tinytest', 'Rcpp'))"
+        sudo Rscript -e "install.packages(c('tinytest', 'Rcpp', 'roxygen2', 'pkgbuild'))"
     - name: Install stringi
       run: |
         LC_ALL="pl_PL.UTF-8" sudo make r-icu-system
     - name: Test stringi
       run: |
-        LC_ALL="pl_PL.UTF-8" sudo make test
+        LC_ALL="pl_PL.UTF-8" sudo make tinytest
