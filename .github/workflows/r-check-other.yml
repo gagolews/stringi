@@ -51,7 +51,7 @@ jobs:
 
       - name: Test
         run: |
-          source("devel/tinytest.R")
+          source(".devel/tinytest.R")
         shell: Rscript {0}
 
       - name: Check

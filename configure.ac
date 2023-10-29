@@ -1,5 +1,5 @@
 # autoconf/configure script for stringi
-# Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com>
+# Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com/>
 # https://stringi.gagolewski.com/
 
 

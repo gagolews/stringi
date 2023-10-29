@@ -9,11 +9,13 @@
 
 
 > A comprehensive tutorial and reference manual is available
-at <https://stringi.gagolewski.com/>.
+> at <https://stringi.gagolewski.com/>.
 
 > Check out [**stringx**](https://stringx.gagolewski.com/) for a set of wrappers
-around **stringi** with a base R-compatible API.
+> around **stringi** with a base R-compatible API.
 
+> To learn more about R, check out Marek's open-access (free!) textbook
+> [Deep R Programming](https://deepr.gagolewski.com/).
 
 **stringi**  (pronounced “stringy”, IPA [strinɡi]) is THE *R*
 package for string/text/natural language processing.
@@ -55,7 +57,7 @@ package (and since the 2015 v1.0.0 *stringr* is powered by *stringi*).
 *Journal of Statistical Software*  **103**(2), 2022, 1–59,
 <https://dx.doi.org/10.18637/jss.v103.i02>.
 
-**CRAN Entry**: https://cran.r-project.org/web/packages/stringi/
+**CRAN Entry**: https://CRAN.R-project.org/package=stringi
 
 **System Requirements**: *R >= 3.1*, *ICU4C >= 55* (refer to the
 [INSTALL](https://raw.githubusercontent.com/gagolews/stringi/master/INSTALL)

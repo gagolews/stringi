@@ -4,7 +4,7 @@
 ^\.Rproj\.user$
 ^.*\.kdev4$
 ^\.kdev4
-^devel
+^.devel
 kate-swp$
 ^src/icu61
 ^src/boost
