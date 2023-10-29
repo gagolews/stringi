@@ -31,17 +31,20 @@ r: autoconf
 	                      --enable-gcc-debug \
 	                      --enable-gcc-pedantic"
 
-r-icu-system:
+r-icu-system: autoconf
 	R CMD INSTALL .
 
-r-icu-bundle:
+r-icu-bundle: autoconf
 	R CMD INSTALL . --configure-args='--disable-pkg-config'
 
-r-icu-bundle55:
+r-icu-bundle55: autoconf
 	R CMD INSTALL . --configure-args='--disable-cxx11 --disable-pkg-config'
 
-test: r
+tinytest:
 	Rscript -e 'source(".devel/tinytest.R")'
+
+test: r tinytest
+	# test (do not merge with tinytest - allows r-icu-system etc.)
 
 build: autoconf
 	cd .. && R CMD build ${PKGNAME}
