@@ -1,4 +1,4 @@
-name: stringi for R
+name: stringi for R (system ICU)
 
 on:
   push:
@@ -8,18 +8,30 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.config.os }}
+
+    name: ${{ matrix.config.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: ubuntu-latest}
+          - {os: ubuntu-20.04}
+
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Install dependencies
       run: |
         sudo apt-get update
         sudo apt-get -y upgrade
         sudo apt-get -y install libcurl4-openssl-dev r-base-dev devscripts libicu-dev language-pack-pl
-        sudo Rscript -e "install.packages(c('tinytest', 'Rcpp', 'roxygen2', 'pkgbuild'))"
+        sudo Rscript -e "install.packages(c('tinytest', 'Rcpp'))"
     - name: Install stringi
       run: |
-        LC_ALL="pl_PL.UTF-8" sudo make r-icu-system
+        sudo R CMD INSTALL .
     - name: Test stringi
       run: |
-        LC_ALL="pl_PL.UTF-8" sudo make tinytest
+        sudo Rscript -e 'source(".devel/tinytest.R")'
+        LC_ALL="pl_PL.UTF-8" Rscript -e 'source(".devel/tinytest.R")'
+        LC_ALL="C" Rscript -e 'source(".devel/tinytest.R")'
