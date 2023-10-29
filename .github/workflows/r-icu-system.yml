@@ -22,4 +22,4 @@ jobs:
         LC_ALL="pl_PL.UTF-8" sudo make r-icu-system
     - name: Test stringi
       run: |
-        LC_ALL="pl_PL.UTF-8" sudo make tinytest
+        LC_ALL="pl_PL.UTF-8" sudo make test

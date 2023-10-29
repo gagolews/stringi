@@ -26,7 +26,7 @@ jobs:
         sudo make r-icu-bundle
     - name: Test stringi
       run: |
-        sudo make tinytest
+        sudo make test
     - name: Check stringi
       run: |
         sudo make check
