@@ -31,13 +31,13 @@ r: autoconf
 	                      --enable-gcc-debug \
 	                      --enable-gcc-pedantic"
 
-r-icu-system: autoconf
+r-icu-system:
 	R CMD INSTALL .
 
-r-icu-bundle: autoconf
+r-icu-bundle:
 	R CMD INSTALL . --configure-args='--disable-pkg-config'
 
-r-icu-bundle55: autoconf
+r-icu-bundle55:
 	R CMD INSTALL . --configure-args='--disable-cxx11 --disable-pkg-config'
 
 tinytest:
