@@ -1,3 +1,4 @@
+<a href="https://stringi.gagolewski.com"><img src="https://www.gagolewski.com/_static/img/stringi.png" align="right" height="128" width="128" /></a>
 # [**stringi**](https://stringi.gagolewski.com/)
 
 ### Fast and Portable Character String Processing in R (with the Unicode ICU)
@@ -10,10 +11,10 @@
 
 > A comprehensive tutorial and reference manual is available
 > at <https://stringi.gagolewski.com/>.
-
+> 
 > Check out [**stringx**](https://stringx.gagolewski.com/) for a set of wrappers
 > around **stringi** with a base R-compatible API.
-
+> 
 > To learn more about R, check out Marek's open-access (free!) textbook
 > [Deep R Programming](https://deepr.gagolewski.com/).
 
