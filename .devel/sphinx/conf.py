@@ -14,6 +14,7 @@ pkg_title = "stringi"
 pkg_version = get_package_version()
 copyright_year = "2013–2023"
 html_baseurl = "https://stringi.gagolewski.com/"
+html_logo = "https://www.gagolewski.com/_static/img/stringi.png"
 github_url = "https://github.com/gagolews/stringi"
 github_star_repo = "gagolews/stringi"
 analytics_id = None  # don't use it! this site does not track its users
