@@ -11,7 +11,7 @@
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=b4e99bb3" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=dd03ec4f" />
     
     
 
@@ -938,15 +938,15 @@
 <h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;2015-02-28&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;2015-02-29&#39;</span><span class="p">)</span>
 <span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;yyyy-MM-dd&#39;</span><span class="p">)</span>
-<span></span><span class="c1">## [1] &quot;2015-02-28 12:05:18 AEDT&quot; NA</span>
+<span></span><span class="c1">## [1] &quot;2015-02-28 13:33:10 AEDT&quot; NA</span>
 <span></span><span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;yyyy-MM-dd&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">lenient</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-<span></span><span class="c1">## [1] &quot;2015-02-28 12:05:18 AEDT&quot; &quot;2015-03-01 12:05:18 AEDT&quot;</span>
+<span></span><span class="c1">## [1] &quot;2015-02-28 13:33:10 AEDT&quot; &quot;2015-03-01 13:33:10 AEDT&quot;</span>
 <span></span><span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">%s+%</span><span class="w"> </span><span class="s">&quot; 00:00:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;yyyy-MM-dd HH:mm:ss&quot;</span><span class="p">)</span>
 <span></span><span class="c1">## [1] &quot;2015-02-28 00:00:00 AEDT&quot; NA</span>
 <span></span><span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="s">&#39;19 lipca 2015&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;date_long&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">locale</span><span class="o">=</span><span class="s">&#39;pl_PL&#39;</span><span class="p">)</span>
-<span></span><span class="c1">## [1] &quot;2015-07-19 12:05:18 AEST&quot;</span>
+<span></span><span class="c1">## [1] &quot;2015-07-19 13:33:10 AEST&quot;</span>
 <span></span><span class="nf">stri_datetime_format</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span><span class="w"> </span><span class="s">&#39;datetime_relative_medium&#39;</span><span class="p">)</span>
-<span></span><span class="c1">## [1] &quot;today, 12:05:18 pm&quot;</span>
+<span></span><span class="c1">## [1] &quot;today, 1:33:10 pm&quot;</span>
 </pre></div>
 </div>
 </section>
@@ -987,7 +987,7 @@
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-11-01T12:05:33+1100.
+              Last updated on 2023-11-02T13:33:26+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
