@@ -11,7 +11,7 @@
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=b4e99bb3" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=dd03ec4f" />
     
     
 
@@ -509,14 +509,14 @@
 <span class="c1">##         💩</span>
 <span class="c1">##       &lt;NA&gt;</span>
 <span></span><span class="nf">stri_sprintf</span><span class="p">(</span><span class="s">&quot;UNIX time %1$f is %1$s.&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">())</span>
-<span></span><span class="c1">## [1] &quot;UNIX time 1698800727.665766 is 2023-11-01 12:05:27.665766.&quot;</span>
+<span></span><span class="c1">## [1] &quot;UNIX time 1698892400.519570 is 2023-11-02 13:33:20.51957.&quot;</span>
 <span></span><span class="c1"># the following do not work in sprintf()</span>
 <span class="nf">stri_sprintf</span><span class="p">(</span><span class="s">&quot;%1$#- *2$.*3$f&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">1.23456</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w">  </span><span class="c1"># two asterisks</span>
 <span></span><span class="c1">## [1] &quot; 1.235    &quot;</span>
 <span></span><span class="nf">stri_sprintf</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;%f&quot;</span><span class="p">),</span><span class="w"> </span><span class="kc">pi</span><span class="p">)</span><span class="w">  </span><span class="c1"># re-coercion needed</span>
 <span></span><span class="c1">## [1] &quot;3.14159265358979&quot; &quot;3.141593&quot;</span>
 <span></span><span class="nf">stri_sprintf</span><span class="p">(</span><span class="s">&quot;%1$s is %1$f UNIX time.&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">())</span><span class="w">  </span><span class="c1"># re-coercion needed</span>
-<span></span><span class="c1">## [1] &quot;2023-11-01 12:05:27.667544 is 1698800727.667544 UNIX time.&quot;</span>
+<span></span><span class="c1">## [1] &quot;2023-11-02 13:33:20.521353 is 1698892400.521353 UNIX time.&quot;</span>
 <span></span><span class="nf">stri_sprintf</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;%s&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="m">11</span><span class="o">:</span><span class="m">12</span><span class="p">))</span><span class="w">  </span><span class="c1"># re-coercion needed</span>
 <span></span><span class="c1">## [1] &quot;1&quot;  &quot;12&quot;</span>
 <span></span><span class="nf">stri_sprintf</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;%d&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="m">11</span><span class="o">:</span><span class="m">12</span><span class="p">))</span><span class="w">  </span><span class="c1"># re-coercion needed</span>
@@ -561,7 +561,7 @@
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-11-01T12:05:33+1100.
+              Last updated on 2023-11-02T13:33:26+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
