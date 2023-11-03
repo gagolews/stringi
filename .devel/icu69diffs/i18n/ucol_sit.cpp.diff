@@ -1,0 +1,14 @@
+--- /tmp/stringi-bbbf25bbe6e1aa198389dd08636a3360b5788213/src/icu69/i18n/ucol_sit.cpp	2021-05-01 15:37:10.000000000 +1000
++++ i18n/ucol_sit.cpp	2021-05-23 17:51:44.338741847 +1000
+@@ -359,7 +359,11 @@
+             if(!s->entries[i].isEmpty()) {
+                 if(len) {
+                     if(len < capacity) {
++#ifdef U_STRINGI_PATCHES
++                        uprv_strncat(destination, "_", capacity);
++#else /* !U_STRINGI_PATCHES */
+                         uprv_strcat(destination, "_");
++#endif /* U_STRINGI_PATCHES */
+                     }
+                     len++;
+                 }

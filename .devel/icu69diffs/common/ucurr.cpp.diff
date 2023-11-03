@@ -1,0 +1,15 @@
+--- /tmp/stringi-bbbf25bbe6e1aa198389dd08636a3360b5788213/src/icu69/common/ucurr.cpp	2021-05-01 15:37:10.000000000 +1000
++++ common/ucurr.cpp	2021-05-23 17:51:44.042744757 +1000
+@@ -382,7 +382,12 @@
+         if (len > (int32_t)(sizeof(id)-1)) {
+             len = (sizeof(id)-1);
+         }
++#ifdef U_STRINGI_PATCHES
++        uprv_strncpy(id, _id, ULOC_FULLNAME_CAPACITY-1);
++        id[ULOC_FULLNAME_CAPACITY-1] = '\0';
++#else /* !U_STRINGI_PATCHES */
+         uprv_strncpy(id, _id, len);
++#endif /* U_STRINGI_PATCHES */
+         id[len] = 0;
+         u_memcpy(iso, _iso, ISO_CURRENCY_CODE_LENGTH);
+         iso[ISO_CURRENCY_CODE_LENGTH] = 0;

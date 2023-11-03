@@ -1,0 +1,55 @@
+--- /tmp/stringi-bbbf25bbe6e1aa198389dd08636a3360b5788213/src/icu69/common/locmap.cpp	2021-05-01 15:37:10.000000000 +1000
++++ common/locmap.cpp	2021-05-23 17:51:43.974745418 +1000
+@@ -1029,6 +1029,7 @@
+ //
+ /////////////////////////////////////
+ */
++#ifndef U_STRINGI_PATCHES
+ #if U_PLATFORM_HAS_WIN32_API && UCONFIG_USE_WINDOWS_LCID_MAPPING_API
+ /*
+  * Various language tags needs to be changed:
+@@ -1047,6 +1048,7 @@
+     }
+ 
+ #endif
++#endif  // !U_STRINGI_PATCHES
+ 
+ U_CAPI int32_t
+ uprv_convertToPosix(uint32_t hostid, char *posixID, int32_t posixIDCapacity, UErrorCode* status)
+@@ -1102,8 +1104,36 @@
+                     break;
+                 }
+             }
++
++#ifdef U_STRINGI_PATCHES
++// warning: 'char* strcat(char*, const char*)' accessing 4 or more bytes at offsets 0 and 3 may overlap 1 byte at offset 3 [-Wrestrict]
++            /*
++            * Various language tags needs to be changed:
++            * quz -> qu
++            * prs -> fa
++            */
++            if (tmpLen >= 3) {
++                if (locName[0] == 'q' && locName[1] == 'u' && locName[2] == 'z') {
++//                     locName[2] = 0;
++//                     uprv_strcat(locName, locName+3);
++                    for (i = 2; i < LOCALE_NAME_MAX_LENGTH-1; i++)
++                        locName[i] = locName[i+1];
++                    locName[LOCALE_NAME_MAX_LENGTH-1] = 0;
++                } else if (locName[0] == 'p' && locName[1] == 'r' && locName[2] == 's') {
++                    locName[0] = 'f'; locName[1] = 'a';
++//                     locName[2] = 0;
++//                     uprv_strcat(locName, locName+3);
++                    for (i = 2; i < LOCALE_NAME_MAX_LENGTH-1; i++)
++                        locName[i] = locName[i+1];
++                    locName[LOCALE_NAME_MAX_LENGTH-1] = 0;
++                }
++
++            }
++#else  // !U_STRINGI_PATCHES
+             // TODO: Need to understand this better, why isn't it an alias?
+             FIX_LANGUAGE_ID_TAG(locName, tmpLen);
++#endif
++
+             pPosixID = locName;
+         }
+     }

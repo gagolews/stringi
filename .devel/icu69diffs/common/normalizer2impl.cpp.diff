@@ -1,0 +1,12 @@
+--- /tmp/stringi-bbbf25bbe6e1aa198389dd08636a3360b5788213/src/icu69/common/normalizer2impl.cpp	2021-05-01 15:37:10.000000000 +1000
++++ common/normalizer2impl.cpp	2021-05-23 17:51:43.978745379 +1000
+@@ -87,6 +87,9 @@
+         return ((c&7)<<18) | ((cpStart[1]&0x3f)<<12) | ((cpStart[2]&0x3f)<<6) | (cpStart[3]&0x3f);
+     default:
+         UPRV_UNREACHABLE;  // Should not occur.
++#ifdef U_STRINGI_PATCHES
++        return c;
++#endif
+     }
+ }
+ 

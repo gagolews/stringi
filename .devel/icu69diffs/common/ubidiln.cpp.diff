@@ -1,0 +1,12 @@
+--- /tmp/stringi-bbbf25bbe6e1aa198389dd08636a3360b5788213/src/icu69/common/ubidiln.cpp	2021-05-01 15:37:10.000000000 +1000
++++ common/ubidiln.cpp	2021-05-23 17:51:44.006745111 +1000
+@@ -531,6 +531,9 @@
+     }
+     /* we should never get here */
+     UPRV_UNREACHABLE;
++#ifdef U_STRINGI_PATCHES
++    return 0;
++#endif
+ }
+ 
+ /*

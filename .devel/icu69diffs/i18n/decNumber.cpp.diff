@@ -1,0 +1,99 @@
+--- /tmp/stringi-bbbf25bbe6e1aa198389dd08636a3360b5788213/src/icu69/i18n/decNumber.cpp	2021-05-01 15:37:10.000000000 +1000
++++ i18n/decNumber.cpp	2021-05-23 17:51:44.242742791 +1000
+@@ -1411,10 +1411,12 @@
+ /* fastpath in decLnOp.  The final division is done to the requested  */
+ /* precision.                                                         */
+ /* ------------------------------------------------------------------ */
+-#if defined(__clang__) || U_GCC_MAJOR_MINOR >= 406
+-#pragma GCC diagnostic push
+-#pragma GCC diagnostic ignored "-Warray-bounds"
+-#endif
++// #ifndef U_STRINGI_PATCHES
++// #if defined(__clang__) || U_GCC_MAJOR_MINOR >= 406
++// #pragma GCC diagnostic push
++// #pragma GCC diagnostic ignored "-Warray-bounds"
++// #endif
++// #endif /* U_STRINGI_PATCHES */
+ U_CAPI decNumber * U_EXPORT2 uprv_decNumberLog10(decNumber *res, const decNumber *rhs,
+                           decContext *set) {
+   uInt status=0, ignore=0;         /* status accumulators  */
+@@ -1550,9 +1552,11 @@
+   #endif
+   return res;
+   } /* decNumberLog10  */
+-#if defined(__clang__) || U_GCC_MAJOR_MINOR >= 406
+-#pragma GCC diagnostic pop
+-#endif
++// #ifndef U_STRINGI_PATCHES
++// #if defined(__clang__) || U_GCC_MAJOR_MINOR >= 406
++// #pragma GCC diagnostic pop
++// #endif
++// #endif /* U_STRINGI_PATCHES */
+ 
+ /* ------------------------------------------------------------------ */
+ /* decNumberMax -- compare two Numbers and return the maximum         */
+@@ -2826,10 +2830,12 @@
+ /* result setexp(approx, e div 2)  % fix exponent                     */
+ /* end sqrt                                                           */
+ /* ------------------------------------------------------------------ */
+-#if defined(__clang__) || U_GCC_MAJOR_MINOR >= 406
+-#pragma GCC diagnostic push
+-#pragma GCC diagnostic ignored "-Warray-bounds"
+-#endif
++// #ifndef U_STRINGI_PATCHES
++// #if defined(__clang__) || U_GCC_MAJOR_MINOR >= 406
++// #pragma GCC diagnostic push
++// #pragma GCC diagnostic ignored "-Warray-bounds"
++// #endif
++// #endif /* U_STRINGI_PATCHES */
+ U_CAPI decNumber * U_EXPORT2 uprv_decNumberSquareRoot(decNumber *res, const decNumber *rhs,
+                                 decContext *set) {
+   decContext workset, approxset;   /* work contexts  */
+@@ -3159,9 +3165,11 @@
+   #endif
+   return res;
+   } /* decNumberSquareRoot  */
+-#if defined(__clang__) || U_GCC_MAJOR_MINOR >= 406
+-#pragma GCC diagnostic pop
+-#endif
++// #ifndef U_STRINGI_PATCHES
++// #if defined(__clang__) || U_GCC_MAJOR_MINOR >= 406
++// #pragma GCC diagnostic pop
++// #endif
++// #endif /* U_STRINGI_PATCHES */
+ 
+ /* ------------------------------------------------------------------ */
+ /* decNumberSubtract -- subtract two Numbers                          */
+@@ -5623,10 +5631,12 @@
+ /* 5. The static buffers are larger than might be expected to allow   */
+ /*    for calls from decNumberPower.                                  */
+ /* ------------------------------------------------------------------ */
+-#if defined(__clang__) || U_GCC_MAJOR_MINOR >= 406
+-#pragma GCC diagnostic push
+-#pragma GCC diagnostic ignored "-Warray-bounds"
+-#endif
++// #ifndef U_STRINGI_PATCHES
++// #if defined(__clang__) || U_GCC_MAJOR_MINOR >= 406
++// #pragma GCC diagnostic push
++// #pragma GCC diagnostic ignored "-Warray-bounds"
++// #endif
++// #endif /* U_STRINGI_PATCHES */
+ decNumber * decLnOp(decNumber *res, const decNumber *rhs,
+                     decContext *set, uInt *status) {
+   uInt ignore=0;                   /* working status accumulator  */
+@@ -5848,9 +5858,12 @@
+   /* [status is handled by caller]  */
+   return res;
+   } /* decLnOp  */
+-#if defined(__clang__) || U_GCC_MAJOR_MINOR >= 406
+-#pragma GCC diagnostic pop
+-#endif
++// #ifndef U_STRINGI_PATCHES
++// #if defined(__clang__) || U_GCC_MAJOR_MINOR >= 406
++// #pragma GCC diagnostic pop
++// #endif
++// #endif /* U_STRINGI_PATCHES */
++
+ 
+ /* ------------------------------------------------------------------ */
+ /* decQuantizeOp  -- force exponent to requested value                */

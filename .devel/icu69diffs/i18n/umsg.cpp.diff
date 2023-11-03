@@ -1,0 +1,12 @@
+--- /tmp/stringi-bbbf25bbe6e1aa198389dd08636a3360b5788213/src/icu69/i18n/umsg.cpp	2021-05-01 15:37:10.000000000 +1000
++++ i18n/umsg.cpp	2021-05-23 17:51:44.346741769 +1000
+@@ -591,6 +591,9 @@
+             // understand MeasureFormats, modify this code to do the
+             // right thing. [alan]
+             UPRV_UNREACHABLE;
++#ifdef U_STRINGI_PATCHES
++            break;
++#endif
+ 
+         // better not happen!
+         case Formattable::kArray:

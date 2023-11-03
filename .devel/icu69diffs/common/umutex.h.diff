@@ -1,0 +1,23 @@
+--- /tmp/stringi-bbbf25bbe6e1aa198389dd08636a3360b5788213/src/icu69/common/umutex.h	2021-05-01 15:37:10.000000000 +1000
++++ common/umutex.h	2021-05-23 17:51:44.054744639 +1000
+@@ -46,13 +46,17 @@
+ #if defined(__clang__) || defined(_MSC_VER)
+   #if defined(__clang__)
+     // Suppress the warning that the explicit instantiation after explicit specialization has no effect.
+-    #pragma clang diagnostic push
+-    #pragma clang diagnostic ignored "-Winstantiation-after-specialization"
++// #ifndef U_STRINGI_PATCHES
++//     #pragma clang diagnostic push
++//     #pragma clang diagnostic ignored "-Winstantiation-after-specialization"
++// #endif
+   #endif
+ template struct U_COMMON_API std::atomic<int32_t>;
+ template struct U_COMMON_API std::atomic<std::mutex *>;
+   #if defined(__clang__)
+-    #pragma clang diagnostic pop
++// #ifndef U_STRINGI_PATCHES
++//     #pragma clang diagnostic pop
++// #endif
+   #endif
+ #elif defined(__GNUC__)
+ // For GCC this class is already exported/visible, so no need for U_COMMON_API.

@@ -1,0 +1,14 @@
+--- /tmp/stringi-bbbf25bbe6e1aa198389dd08636a3360b5788213/src/icu69/unicode/umachine.h	2021-05-01 15:37:10.000000000 +1000
++++ unicode/umachine.h	2021-05-23 17:51:44.418741061 +1000
+@@ -113,7 +113,11 @@
+ /** Obsolete/same as U_CAPI; was used to declare a function as a draft public ICU C API  */
+ #define U_DRAFT  U_CAPI
+ /** This is used to declare a function as a deprecated public ICU C API  */
++#ifdef U_STRINGI_PATCHES
++#define U_DEPRECATED U_CAPI
++#else /* !U_STRINGI_PATCHES */
+ #define U_DEPRECATED U_CAPI U_ATTRIBUTE_DEPRECATED
++#endif /* U_STRINGI_PATCHES */
+ /** Obsolete/same as U_CAPI; was used to declare a function as an obsolete public ICU C API  */
+ #define U_OBSOLETE U_CAPI
+ /** Obsolete/same as U_CAPI; was used to declare a function as an internal ICU C API  */

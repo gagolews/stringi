@@ -1,0 +1,31 @@
+--- /tmp/stringi-bbbf25bbe6e1aa198389dd08636a3360b5788213/src/icu69/i18n/plurrule.cpp	2021-05-01 15:37:10.000000000 +1000
++++ i18n/plurrule.cpp	2022-12-22 09:38:43.011435782 +1100
+@@ -1609,6 +1609,9 @@
+         return PLURAL_OPERAND_E;
+     default:
+         UPRV_UNREACHABLE;  // unexpected.
++#ifdef U_STRINGI_PATCHES
++        return PLURAL_OPERAND_N;
++#endif
+     }
+ }
+ 
+@@ -1810,7 +1813,7 @@
+ 
+     // Slow path, convert with sprintf, parse converted output.
+     char  buf[30] = {0};
+-    sprintf(buf, "%1.15e", n);
++    snprintf(buf, 30, "%1.15e", n);    // MAREK's patch sprintf -> snprintf
+     // formatted number looks like this: 1.234567890123457e-01
+     int exponent = atoi(buf+18);
+     int numFractionDigits = 15;
+@@ -1882,6 +1885,9 @@
+         case PLURAL_OPERAND_C: return exponent;
+         default:
+              UPRV_UNREACHABLE;  // unexpected.
++#ifdef U_STRINGI_PATCHES
++             return 0.0;
++#endif
+     }
+ }
+ 

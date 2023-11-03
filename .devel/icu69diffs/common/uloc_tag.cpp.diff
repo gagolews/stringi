@@ -1,0 +1,14 @@
+--- /tmp/stringi-bbbf25bbe6e1aa198389dd08636a3360b5788213/src/icu69/common/uloc_tag.cpp	2021-05-01 15:37:10.000000000 +1000
++++ common/uloc_tag.cpp	2021-05-23 17:51:44.054744639 +1000
+@@ -2120,7 +2120,11 @@
+                 if (*redundantTagEnd  == '\0' || *redundantTagEnd == SEP) {
+                     const char* preferredTag = REDUNDANT[i + 1];
+                     size_t preferredTagLen = uprv_strlen(preferredTag);
++#ifdef U_STRINGI_PATCHES
++                    uprv_strncpy(t->buf, preferredTag, tagLen);
++#else /* !U_STRINGI_PATCHES */
+                     uprv_strncpy(t->buf, preferredTag, preferredTagLen);
++#endif /* U_STRINGI_PATCHES */
+                     if (*redundantTagEnd == SEP) {
+                         uprv_memmove(tagBuf + preferredTagLen,
+                                      redundantTagEnd,
