@@ -1,23 +1,14 @@
 Contributions are welcome!
 
 
-* [BUILD TIME] TODO... src/icu55 and src/icu69 should be downloaded only on demand...
-
-* [NEW FEATURE] TODO.... #469: `stri_datetime_parse` .. new argument -
-`default_time`
-    a Calendar set on input to the date and time to be used for missing values in the date/time string being parsed
-
-* [BUGFIX] TODO.... #469: `stri_datetime_parse` did not reset the `Calendar` object
-    when parsing multiple dates.
-
-* [NEW FEATURE] TODO... #476 U_USING_DEFAULT_ERROR on unknown locales
-
 * [NEW FEATURE] TODO... #81 number format
 
 * [NEW FEATURE] TODO... #477 sprintf localised number format
 
 * [NEW FEATURE] TODO... #471: split into overlapping or non-overlapping chunks,
     possibly of different lengths
+
+* [NEW FEATURE] TODO... #445 stri_dup: add sep argument
 
 * [BUILD TIME] TODO..
 Tomas Kalibera suggests to use the Rtools version of ICU for Windows:

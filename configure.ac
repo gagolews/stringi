@@ -1,21 +1,21 @@
-# autoconf/configure script for stringi
+# autoconf/configure script for stringi <https://stringi.gagolewski.com/>
 # Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com/>
-# https://stringi.gagolewski.com/
 
-
-##### COMPATIBILITY NOTES #####################################################
+##### COMPATIBILITY NOTES/CHANGELOG ############################################
 
 # 2014-04-10 R 3.1 CXX1X
-# 2017-04-21 R 3.4 CXX11
+# 2017-04-21 R 3.4 CXX11, CXX14, CXX17
+# 2020-04-24 R 4.0 A C++ compiler must conform to C++11
 
-# 2015-04-01 ICU 55.1 is supported on old Solarises.
+# 2015-04-01 ICU 55.1 was supported on old Solaris boxes (until stringi-1.8.1)
 # 2017-11-01 ICU 60.1 requires full C++11 support
 # 2018-03-26 ICU 61.1 has U_CHARSET_IS_UTF8=1 set by default and has no C files
-# 2021-04-07 ICU 69.1
-
-# TODO: In the future, support only ICU >= 61 and R 3.4 (C++11 only) --
-# TODO: this will simplify the build chain. Yet, what follows is battle-tested,
-# TODO: so we won't do it unless absolutely necessary.
+                      (minimal requirement since stringi-1.8.1)
+# 2021-04-07 ICU 69.1 (bundled with stringi 1.6.1)
+# 2023-10-31 ICU 74.1 (bundled with stringi 1.8.1,
+    together with icudata; compressed with xz and included in the package
+    source tarball as suggested by BR)
+# 2024-04-xx ICU 75 will require C++17 (!)
 
 
 # TODO: The standard way to use external libraries on macOS and Windows
@@ -34,11 +34,11 @@
 
 ##### INIT ####################################################################
 
-AC_INIT([stringi],[1.7],[https://stringi.gagolewski.com])
+AC_INIT([stringi], [1.8], [https://stringi.gagolewski.com/])
 
-ICU_VERSION_NEEDED="55" # minimal version of ICU4C required to build stringi
-# We still support ICU 55.1 because of... yes, Solaris.
-# It was a good exercise, though.
+ICU_VERSION_NEEDED="61"  # minimal version of ICU4C required to build stringi
+ICU_BUNDLE_VERSION="69"  # TODO
+ICUDT_DIR="icu${ICU_BUNDLE_VERSION}/data"
 
 m4_ifndef([AC_CONFIG_MACRO_DIRS], [
     m4_defun([_AM_CONFIG_MACRO_DIRS], [])
@@ -62,49 +62,26 @@ AC_ARG_VAR([CAT], [The 'cat' command used for generating the list
 AC_ARG_VAR([PKG_CONFIG], [The 'pkg-config' command to determine
     an appropriate build configuration for the system ICU.])
 
-AC_ARG_VAR(ICUDT_DIR, [Optional directory with an already downloaded ICU
-    data archive (icudt; icu*.zip); either an absolute path or
-    a path relative to <package source dir>/src; defaults to icuXX/data.])
-
 AC_ARG_VAR(PKG_CONFIG_PATH, [An optional list of directories to search for
     pkg-config's .pc files.])
 
-AC_ARG_VAR([CC], [Purposely ignored.])
+AC_ARG_VAR([CC], [(ignored)])
 
-AC_ARG_VAR([CFLAGS], [Purposely ignored.])
+AC_ARG_VAR([CFLAGS], [(ignored)])
 
-AC_ARG_VAR([CPP], [Purposely ignored.])
+AC_ARG_VAR([CPP], [(ignored)])
 
-AC_ARG_VAR([CPPFLAGS], [Purposely ignored.])
+AC_ARG_VAR([CPPFLAGS], [(ignored)])
 
-AC_ARG_VAR([CXX], [Purposely ignored.])
+AC_ARG_VAR([CXX], [(ignored)])
 
-AC_ARG_VAR([CXXFLAGS], [Purposely ignored.])
+AC_ARG_VAR([CXXFLAGS], [(ignored)])
 
-# AC_ARG_VAR([CXXCPP], [Purposely ignored.])
+# AC_ARG_VAR([CXXCPP], [(ignored)])
 
-AC_ARG_VAR([LDFLAGS], [Purposely ignored.])
+AC_ARG_VAR([LDFLAGS], [(ignored)])
 
-AC_ARG_VAR([LIBS], [Purposely ignored.])
-
-
-
-
-AC_ARG_ENABLE([cxx11],
-    AS_HELP_STRING([--disable-cxx11],
-        [Disable C++11; if you build ICU4C from sources,
-        make sure your C++ compiler supports the long long type.
-        If C++11 is disabled, the older ICU4C 55.1 bundle will be used.]))
-
-AC_ARG_VAR([STRINGI_DISABLE_CXX11],
-    [Disable C++11; see also --disable-cxx11.])
-
-
-if test "x$enable_cxx11" != "xno" -a -z "${STRINGI_DISABLE_CXX11}"; then
-    enable_cxx11="yes"
-else
-    enable_cxx11="no"
-fi
+AC_ARG_VAR([LIBS], [(ignored)])
 
 
 
@@ -128,9 +105,9 @@ fi
 
 AC_ARG_ENABLE([pkg_config],
     AS_HELP_STRING([--disable-pkg-config],
-        [Disable pkg-config for locating the system ICU;
-        ICU4C will be compiled from sources
-        (strongly recommended for portability across platforms).]))
+        [Disable locating the system ICU with 'pkg-config'; ICU4C will be
+        compiled from sources (strongly recommended for portability
+        across all the platforms).]))
 
 AC_ARG_VAR([STRINGI_DISABLE_PKG_CONFIG],
     [Enforce our ICU source bundle; see also --disable-pkg-config.])
@@ -211,10 +188,10 @@ with_extra_libs="${with_extra_libs} ${STRINGI_LIBS}"
 
 MSG_CONFIG_FAIL="
 *** *********************************************************************
-*** stringi cannot be built with these settings in place.
+*** stringi cannot be built with the current settings in place.
 *** See the INSTALL file for the solutions to the most common problems.
 *** Moreover, explore the list of open and closed issues at
-*** https://github.com/gagolews/stringi/issues/
+*** https://github.com/gagolews/stringi/issues
 *** *********************************************************************
 "
 
@@ -247,6 +224,7 @@ if test ! -e "${R_PATH}"; then
 fi
 AC_MSG_RESULT($R_PATH)
 
+
 AC_MSG_CHECKING([for endianness])
 "${R_PATH}" --vanilla --slave -e "if (.Platform\$endian!=\"little\") q(\"no\", 1, FALSE)"
 if test $? -ne 0; then
@@ -256,35 +234,6 @@ else
     ICUDT_ENDIANNESS="little"
     AC_MSG_RESULT(little)
 fi
-
-AC_MSG_CHECKING([for R >= 3.1.0 for C++11 use])
-R_GE_31=`"${R_PATH}" --vanilla --slave -e 'cat(if (getRversion() >= numeric_version("3.1.0")) "yes" else "no")'`
-if test "x$R_GE_31" = "xyes"; then
-    AC_MSG_RESULT([yes])
-else
-    AC_MSG_RESULT([no])
-    echo "*** Support for R < 3.1 is deprecated."
-    echo "*** Whatever follows, comes with no warranty."
-    # TODO: exit 1 (Depends: R (>= 3.1))
-    # TODO: echo "${MSG_CONFIG_FAIL}"
-    # TODO: in the distant future, support only R >= 3.4
-
-    if test "x$enable_cxx11" = "xyes"; then
-        echo "*** Disabling C++11 use."
-        enable_cxx11="no"
-    fi
-fi
-
-AC_MSG_CHECKING([for R < 3.4.0 for CXX1X flag use])
-R_GE_34=`"${R_PATH}" --vanilla --slave -e 'cat(if (getRversion() >= numeric_version("3.4.0")) "yes" else "no")'`
-if test "x$R_GE_34" = "xyes"; then
-    AC_MSG_RESULT([no])
-    STRINGI_CXX1X="CXX11"
-else
-    AC_MSG_RESULT([yes])
-    STRINGI_CXX1X="CXX1X"
-fi
-
 
 
 
@@ -299,7 +248,7 @@ if test "x$CAT" = "x"; then
 fi
 
 
-###### SETUP COMPILER FLAGS FOR TESTING ######################################
+###### SETUP COMPILER FLAGS FOR TESTING ########################################
 
 if test "x$enable_gcc_debug" = "xyes"; then
     #  -fsanitize=address -fno-omit-frame-pointer
@@ -314,19 +263,14 @@ if test "x$enable_gcc_pedantic" = "xyes"; then
 fi
 
 
-if test -z "${ICUDT_DIR}"; then
-    ICUDT_DIR_FORCE="yes"
-else
-    ICUDT_DIR_FORCE="no"
-fi
-
+################################################################################
 
 
 ### AUXILIARY FUNCTIONS ########################################################
 
-disable_cxx11() {
+enable_cxx11() {
     echo "*** Trying with C++11 compiler disabled."
-    enable_cxx11="no"
+    force_cxx11="yes"
     # unset cached C++ compiler features:
     unset ac_cv_cxx_compiler_gnu
     unset ac_cv_c_compiler_gnu
@@ -346,19 +290,402 @@ disable_cxx11() {
 }
 
 
+# Basic C++ compiler checks: are long long type and stl data structures
+# available? These are absolutely necessary to compile ICU>=55.
+#
+# If this is the case, return 0
+check_cpp() {
+    AC_LANG([C++])
+    AC_PROG_CXX
+    AC_MSG_CHECKING([whether the C++ compiler supports the 'long long' type])
+    AC_LINK_IFELSE([AC_LANG_SOURCE([
+        #include <iostream>
+        using namespace std;
+
+        int main() {
+            long long x = 1;
+            cout << x << endl;
+
+            cout << 1LL << 1ULL << endl;
+            cout << 9223372036854775807LL << 18446744073709551615ULL << endl;
+
+            return 0;
+        }
+    ])],
+    [
+        AC_MSG_RESULT([yes])
+    ],[
+        AC_MSG_RESULT([no])
+        return 1
+    ])
+
+    AC_CXX_HAVE_STL
+    if test "$ac_cv_cxx_have_stl" = not; then
+        return 1
+    fi
+
+    AC_MSG_CHECKING([whether std::map is available])
+    AC_LINK_IFELSE([AC_LANG_SOURCE([
+        #include <iostream>
+        #include <map>
+        #include <vector>
+        #include <utility>
+
+        int main() {
+            std::map< int, std::vector< int > > curmap;
+            std::vector<int> v1(10);
+            curmap.insert(std::pair< int, std::vector< int > >(100, v1));
+            std::cout << curmap.size() << std::endl;
+            return 0;
+        }
+    ])],
+    [
+        AC_MSG_RESULT([yes])
+    ],[
+        AC_MSG_RESULT([no])
+        return 1
+    ])
+
+    return 0
+}  # end check_cpp()
 
 
+detect_icu_with_pkg_config() {
+
+    # Retrieve pkg-config's path
+    AC_PATH_PROG(PKG_CONFIG, pkg-config, no,
+        [$PATH:/usr/local/bin:/bin:/usr/bin:ext/bin:ext:/sw/bin:/opt/bin])
+
+    if test ! -f "${PKG_CONFIG}"; then
+        echo "*** 'pkg-config' not found"
+        #echo "${MSG_CONFIG_FAIL}"
+        return 1  # go back immediately
+    fi
+
+    # check if pkg-config knows about icu-i18n
+    AC_MSG_CHECKING([with 'pkg-config' for the system ICU4C (icu-i18n icu-uc)])
+    if ! `"${PKG_CONFIG}" --exists icu-i18n icu-uc`; then
+        # pkg config doesn't know about icu-i18n
+        AC_MSG_RESULT(no)
+        echo "*** pkg-config did not detect ICU4C-devel libraries installed"
+        #echo "${MSG_CONFIG_FAIL}"
+        return 1 # nothing more to do
+    fi
+
+    # check which version of ICU4C is installed
+    ICU_VERSION=`"${PKG_CONFIG}" --modversion icu-i18n`
+    AC_MSG_RESULT($ICU_VERSION)
+
+    # check for a suitable version
+    AC_MSG_CHECKING([for ICU4C >= $ICU_VERSION_NEEDED])
+    #VERSION_CHECK=`expr $ICU_VERSION ">=" $ICU_VERSION_NEEDED`
+    #if test "$VERSION_CHECK" != "1" ; then
+    if ! `"${PKG_CONFIG}" --atleast-version=${ICU_VERSION_NEEDED} icu-i18n icu-uc`; then
+        AC_MSG_RESULT(no)
+        echo "*** ICU4C ${ICU_VERSION} has been detected"
+        echo "*** Minimal requirements, i.e., ICU4C >= ${ICU_VERSION_NEEDED}, are not met"
+        #echo "${MSG_CONFIG_FAIL}"
+        return 1 # you may quit querying pkg-config here
+    fi
+    AC_MSG_RESULT(yes) # detected version of ICU4C is sufficient
+
+    export PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 # always provide system -L
+    AC_MSG_CHECKING([for additional CPPFLAGS, LDFLAGS, and LIBS required])
+    ICU_CPPFLAGS=`"${PKG_CONFIG}" --cflags icu-uc icu-i18n`
+    ICU_LDFLAGS=`"${PKG_CONFIG}" --libs-only-L icu-uc icu-i18n`
+    ICU_LIBS=`"${PKG_CONFIG}" --libs-only-l icu-uc icu-i18n`
+    AC_MSG_RESULT(done)
+
+    return 0
+}  # end detect_icu_with_pkg_config()
+
+
+check_icu_with_pkg_config() {
+    CPPFLAGS="${CPPFLAGS} ${ICU_CPPFLAGS}"
+    LDFLAGS="${LDFLAGS} ${ICU_LDFLAGS}"
+    LIBS="${LIBS} ${ICU_LIBS}"
+
+    AC_LANG([C++])
+
+    AC_MSG_CHECKING([whether an ICU4C-based project can be built])
+    AC_LINK_IFELSE([AC_LANG_SOURCE([
+        #include <unicode/unistr.h>
+        #include <unicode/uvernum.h>
+        #include <unicode/ptypes.h>
+        #include <unicode/uchar.h>
+        #include <unicode/utypes.h>
+        #include <stdio.h>
+        using namespace icu;
+
+        int main() {
+            // base tests
+            UnicodeString x("abc");
+            x = x+x;
+            printf(U_ICU_VERSION);
+
+            return 0;
+        }
+    ])],
+    [
+        AC_MSG_RESULT([yes])
+    ],[
+        AC_MSG_RESULT([no])
+        echo "*** This version of ICU4C cannot be used."
+        #echo "${MSG_CONFIG_FAIL}"
+        return 1
+    ])
+
+    AC_MSG_CHECKING([programmatically for sufficient U_ICU_VERSION_MAJOR_NUM])
+    AC_LINK_IFELSE([AC_LANG_SOURCE([
+        #include <unicode/uvernum.h>
+        #if U_ICU_VERSION_MAJOR_NUM < ${ICU_VERSION_NEEDED}
+        #error "insufficient U_ICU_VERSION_MAJOR_NUM"
+        #endif
+
+        int main() {
+            return 0;
+        }
+    ])],
+    [
+        AC_MSG_RESULT([yes])
+    ],[
+        AC_MSG_RESULT([no])
+        echo "*** This version of ICU4C cannot be used."
+        #echo "${MSG_CONFIG_FAIL}"
+        return 1
+    ])
+
+    AC_MSG_CHECKING([the capabilities of the ICU data library (ucnv, uloc, utrans)])
+    AC_LINK_IFELSE([AC_LANG_SOURCE([
+        #include <unicode/unistr.h>
+        #include <unicode/uvernum.h>
+        #include <unicode/ptypes.h>
+        #include <unicode/uchar.h>
+        #include <unicode/utypes.h>
+        #include <unicode/ucnv.h>
+        #include <unicode/ustring.h>
+        #include <unicode/stringpiece.h>
+        #include <unicode/utf8.h>
+        #include <unicode/utf16.h>
+        #include <unicode/normalizer2.h>
+        #include <unicode/locid.h>
+        #include <unicode/uloc.h>
+        #include <unicode/regex.h>
+        #include <unicode/brkiter.h>
+        #include <unicode/coll.h>
+        #include <unicode/ucol.h>
+        #include <unicode/ucsdet.h>
+        #include <unicode/stsearch.h>
+        #include <unicode/ulocdata.h>
+        #include <unicode/usearch.h>
+        #include <unicode/uniset.h>
+        #include <stdio.h>
+        #include <unicode/translit.h>
+        #include <unicode/uclean.h>
+        using namespace icu;
+
+        int main() {
+            UErrorCode status = U_ZERO_ERROR;
+            u_init(&status);
+            if (U_FAILURE(status)) {
+                printf("ICU init failed: %s", u_errorName(status));
+                return 10;
+            }
+
+            // check if we have some converters installed (icudt)
+            int c = ucnv_countAvailable();
+            if (c <= 0)
+                return 11;
+
+            // check if we have some locales defined (icudt)
+            c = uloc_countAvailable();
+            if (c <= 0)
+                return 12;
+
+            status = U_ZERO_ERROR;
+            StringEnumeration* trans_enum = Transliterator::getAvailableIDs(status);
+            if (!U_SUCCESS(status)) return 13;
+
+            trans_enum->reset(status);
+            if (!U_SUCCESS(status)) return 14;
+
+            c = trans_enum->count(status);
+            if (!U_SUCCESS(status)) return 15;
+            if (c <= 0) return 16;
+
+            delete trans_enum;
+            return 0;
+        }
+    ])],
+    [
+        AC_MSG_RESULT([yes])
+    ],[
+        AC_MSG_RESULT([no])
+        echo "*** The available ICU4C cannot be used."
+        #echo "${MSG_CONFIG_FAIL}"
+        return 1
+    ])
+
+    AC_MSG_CHECKING([the capabilities of the ICU data library (ucol)])
+    AC_LINK_IFELSE([AC_LANG_SOURCE([
+        #include <unicode/unistr.h>
+        #include <unicode/uvernum.h>
+        #include <unicode/ptypes.h>
+        #include <unicode/uchar.h>
+        #include <unicode/utypes.h>
+        #include <unicode/ucnv.h>
+        #include <unicode/ustring.h>
+        #include <unicode/stringpiece.h>
+        #include <unicode/utf8.h>
+        #include <unicode/utf16.h>
+        #include <unicode/normalizer2.h>
+        #include <unicode/locid.h>
+        #include <unicode/uloc.h>
+        #include <unicode/regex.h>
+        #include <unicode/brkiter.h>
+        #include <unicode/coll.h>
+        #include <unicode/ucol.h>
+        #include <unicode/ucsdet.h>
+        #include <unicode/stsearch.h>
+        #include <unicode/ulocdata.h>
+        #include <unicode/usearch.h>
+        #include <unicode/uniset.h>
+        #include <stdio.h>
+        using namespace icu;
+
+        int main() {
+            UnicodeString a = UnicodeString::fromUTF8("hladny");
+            UnicodeString b = UnicodeString::fromUTF8("chladny");
+
+            UErrorCode status = U_ZERO_ERROR;
+            Locale l = Locale::createFromName("sk_SK");
+            Collator* c = Collator::createInstance(l, status);
+            if (!U_SUCCESS(status))
+                return 1;
+
+            status = U_ZERO_ERROR;
+            if (UCOL_GREATER != c->compare(a, b, status))
+                return 2;
+            if (!U_SUCCESS(status))
+                return 3;
+
+            delete c;
+            return 0;
+        }
+    ])],
+    [
+        AC_MSG_RESULT([yes])
+    ], [
+        AC_MSG_RESULT([no])
+        echo "*** The available ICU4C cannot be used."
+        #echo "${MSG_CONFIG_FAIL}"
+        return 1
+    ])
+
+    return 0
+}  # end check_icu_with_pkg_config()
+
+
+check_flags_icu_bundle() {
+    CPPFLAGS="${CPPFLAGS} -Isrc/ -Isrc/icu${ICU_BUNDLE_VERSION} -Isrc/icu${ICU_BUNDLE_VERSION}/unicode \
+        -Isrc/icu${ICU_BUNDLE_VERSION}/common -Isrc/icu${ICU_BUNDLE_VERSION}/i18n -DU_STATIC_IMPLEMENTATION \
+        -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -D_REENTRANT" # don't use uconfig_local yet
+
+    # NOTE: One way for dealing with the *Compiler or options invalid for pre-UNIX 03
+    # X/Open applications and pre-2001 POSIX applications* error on Solaris
+    # is to file a patch for sys/feature_tests.h. Unfortunately, the original
+    # file is copyrighted, so we have to cope with this error in another way:
+    # add the -D_XPG6 flag manually.
+
+    AC_LANG([C++])
+    AC_MSG_CHECKING([whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp])
+    AC_COMPILE_IFELSE([
+        AC_LANG_SOURCE([`${CAT} src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp`])
+    ],
+    [
+        AC_MSG_RESULT([yes])
+    ],[
+        AC_MSG_RESULT([no])
+        echo "*** The ICU4C bundle cannot be built."
+        return 1
+    ])
+
+    AC_LANG([C++])
+    AC_MSG_CHECKING([whether we may compile src/icu${ICU_BUNDLE_VERSION}/i18n/number_affixutils.cpp])
+    AC_COMPILE_IFELSE([
+        AC_LANG_SOURCE([`${CAT} src/icu${ICU_BUNDLE_VERSION}/i18n/number_affixutils.cpp`])
+    ],
+    [
+        AC_MSG_RESULT([yes])
+    ],[
+        AC_MSG_RESULT([no])
+        echo "*** The ICU4C bundle cannot be built."
+        return 1
+    ])
+
+    if test ${ICU_BUNDLE_VERSION} -ge 69; then
+
+        AC_MSG_CHECKING([whether alignof(std::max_align_t) is available])
+        AC_LINK_IFELSE([AC_LANG_SOURCE([
+            #include <iostream>
+            #include <cstddef>
+            int main() {
+                std::cout << alignof(std::max_align_t) << std::endl;
+                return 0;
+            }
+        ])],
+        [
+            AC_MSG_RESULT([yes])
+        ],[
+            AC_MSG_RESULT([no])
+            old_with_extra_cxxflags="${with_extra_cxxflags}"
+            with_extra_cxxflags="${with_extra_cxxflags} -DSTRINGI_MAX_ALIGN_T_STD"
+            CXXFLAGS="${CXXFLAGS} ${with_extra_cxxflags}"
+            AC_MSG_CHECKING([whether alignof(::max_align_t) is available with])
+            AC_LINK_IFELSE([AC_LANG_SOURCE([
+                #include <iostream>
+                #include <cstddef>
+
+                #ifdef __cplusplus
+                #include <stddef.h>
+                extern "C++"
+                {
+                    namespace std
+                    {
+                        using ::max_align_t;
+                    }
+                }
+                #endif
+
+                int main() {
+                    std::cout << alignof(std::max_align_t) << std::endl;
+                    return 0;
+                }
+            ])],
+            [
+                AC_MSG_RESULT([yes])
+            ],[
+                AC_MSG_RESULT([no])
+                with_extra_cxxflags="${old_with_extra_cxxflags}"
+                echo "*** The ICU4C bundle cannot be built."
+                return 1
+            ])
+        ])
+
+    fi
+
+    return 0
+}  # end check_flags_icu_bundle()
 
 
 ################################################################################
 
+force_cxx11="no"  # start by using the default 'CXX' compiler
+
 while true; do
-    # if C++11 support is enabled, we'll try it first;
-    # if it fails, we'll switch to C++98
-    # if this fails again, we'll stop right there
-
-    # TODO: In year 2069, support C++11 only with R >= 3.4  <== because Solaris
-
+    # Step 1.  force_cxx11="no"
+    # Step 2.  force_cxx11="yes"
+    # Step 3.  Fail.
 
     CC=`"${R_PATH}" CMD config CC`
     #CPP=`"${R_PATH}" CMD config CXXCPP`
@@ -370,38 +697,33 @@ while true; do
     LIBS=
     LDFLAGS=
 
-    if test "x$enable_cxx11" = "xyes"; then
-        CXX_tmp1=`"${R_PATH}" CMD config ${STRINGI_CXX1X}`
-        CXX_tmp2=`"${R_PATH}" CMD config ${STRINGI_CXX1X}STD`
-        CXX="${CXX_tmp1} ${CXX_tmp2}"
-        CXXFLAGS_base=`"${R_PATH}" CMD config ${STRINGI_CXX1X}FLAGS`
-        CXXFLAGS_pic=`"${R_PATH}" CMD config ${STRINGI_CXX1X}PICFLAGS`
-        CXXFLAGS="${CXXFLAGS_base} ${CXXFLAGS_pic}"
-        STRINGI_CXXSTD="CXX_STD=CXX11"
-        ICU_BUNDLE_VERSION="69"
-    else
+
+    if test $force_cxx11 = "no"; then
+        STRINGI_CXXSTD=""
+
         CXX=`"${R_PATH}" CMD config CXX`
+
         CXXFLAGS_base=`"${R_PATH}" CMD config CXXFLAGS`
         CXXFLAGS_pic=`"${R_PATH}" CMD config CXXPICFLAGS`
         CXXFLAGS="${CXXFLAGS_base} ${CXXFLAGS_pic}"
-        STRINGI_CXXSTD=""
-        ICU_BUNDLE_VERSION="55"
+    else
+        STRINGI_CXXSTD="CXX_STD=CXX11"
+
+        CXX_tmp1=`"${R_PATH}" CMD config CXX11`
+        CXX_tmp2=`"${R_PATH}" CMD config CXX11STD`
+        CXX="${CXX_tmp1} ${CXX_tmp2}"
+
+        CXXFLAGS_base=`"${R_PATH}" CMD config CXX11FLAGS`
+        CXXFLAGS_pic=`"${R_PATH}" CMD config CXX11PICFLAGS`
+        CXXFLAGS="${CXXFLAGS_base} ${CXXFLAGS_pic}"
     fi
+
 
     CFLAGS="${CFLAGS} ${with_extra_cflags}"
     CXXFLAGS="${CXXFLAGS} ${with_extra_cxxflags}"
     CPPFLAGS="${CPPFLAGS} ${with_extra_cppflags}"
     LDFLAGS="${LDFLAGS} ${with_extra_ldflags}"
     LIBS="${LIBS} ${with_extra_libs}"
-
-
-    # set ICUDT_DIR
-    AC_MSG_CHECKING([for local ICUDT_DIR])
-    if test "x$ICUDT_DIR_FORCE" = "xyes"; then
-    # Remember to update the configure.win file too
-        ICUDT_DIR="icu${ICU_BUNDLE_VERSION}/data"
-    fi
-    AC_MSG_RESULT($ICUDT_DIR)
 
 
     AC_LANG([C])
@@ -412,70 +734,9 @@ while true; do
     ])
 
 
-    # Basic C++ compiler checks: are long long type and stl data structures
-    # available? These are absolutely needed to compile ICU>=55.
-    #
-    # If this is the case, return 0
-    check_cpp() {
-        AC_LANG([C++])
-        AC_PROG_CXX
-        AC_MSG_CHECKING([whether the C++ compiler supports the long long type])
-        AC_LINK_IFELSE([AC_LANG_SOURCE([
-            #include <iostream>
-            using namespace std;
-
-            int main() {
-                long long x = 1;
-                cout << x << endl;
-
-                cout << 1LL << 1ULL << endl;
-                cout << 9223372036854775807LL << 18446744073709551615ULL << endl;
-
-                return 0;
-            }
-        ])],
-        [
-            AC_MSG_RESULT([yes])
-        ],[
-            AC_MSG_RESULT([no])
-            return 1
-        ])
-
-        AC_CXX_HAVE_STL
-        if test "$ac_cv_cxx_have_stl" = not; then
-            return 1
-        fi
-
-        AC_MSG_CHECKING([whether std::map is available])
-        AC_LINK_IFELSE([AC_LANG_SOURCE([
-            #include <iostream>
-            #include <map>
-            #include <vector>
-            #include <utility>
-
-            int main() {
-                std::map< int, std::vector< int > > curmap;
-                std::vector<int> v1(10);
-                curmap.insert(std::pair< int, std::vector< int > >(100, v1));
-                std::cout << curmap.size() << std::endl;
-                return 0;
-            }
-        ])],
-        [
-            AC_MSG_RESULT([yes])
-        ],[
-            AC_MSG_RESULT([no])
-            return 1
-        ])
-
-        return 0
-    }  # end check_cpp()
-
-    ##### Checking whether the C++ compiler supports the long long type etc.
-
     if ! check_cpp; then
-        if test "x$enable_cxx11" = "xyes"; then
-            disable_cxx11
+        if test $force_cxx11 = "no"; then
+            enable_cxx11
             continue
         else
             echo "${MSG_CONFIG_FAIL}"
@@ -483,448 +744,8 @@ while true; do
         fi
     fi
 
+
     ##### CHECK FOR ICU4C ##########################################################
-
-    detect_icu_with_pkg_config() {
-        # Note that according to
-        # https://unicode-org.github.io/icu/userguide/icu/howtouseicu.html,
-        # icu-config is deprecated and no longer recommended for production use.
-
-        # Retrieve pkg-config's path
-        AC_PATH_PROG(PKG_CONFIG, pkg-config, no,
-                [$PATH:/usr/local/bin:/bin:/usr/bin:ext/bin:ext:/sw/bin:/opt/bin]) # auto-detect
-
-        if test ! -f "${PKG_CONFIG}"; then
-            echo "*** pkg-config cannot be found"
-            #echo "${MSG_CONFIG_FAIL}"
-            return 1 # go back immediately
-        fi
-
-        # check if pkg-config knows about icu-i18n
-        AC_MSG_CHECKING([with pkg-config for the system ICU4C])
-        if ! `"${PKG_CONFIG}" --exists icu-i18n icu-uc`; then
-            # pkg config doesn't know about icu-i18n
-            AC_MSG_RESULT(no)
-            echo "*** pkg-config did not detect ICU4C-devel libraries installed"
-            #echo "${MSG_CONFIG_FAIL}"
-            return 1 # nothing more to do
-        fi
-
-        # check which version of ICU4C is installed
-        ICU_VERSION=`"${PKG_CONFIG}" --modversion icu-i18n`
-        AC_MSG_RESULT($ICU_VERSION)
-
-        # check for a suitable version
-        AC_MSG_CHECKING([for ICU4C >= $ICU_VERSION_NEEDED])
-        #VERSION_CHECK=`expr $ICU_VERSION ">=" $ICU_VERSION_NEEDED`
-        #if test "$VERSION_CHECK" != "1" ; then
-        if ! `"${PKG_CONFIG}" --atleast-version=${ICU_VERSION_NEEDED} icu-i18n icu-uc`; then
-            AC_MSG_RESULT(no)
-            echo "*** ICU4C ${ICU_VERSION} has been detected"
-            echo "*** Minimal requirements, i.e., ICU4C >= ${ICU_VERSION_NEEDED}, are not met"
-            #echo "${MSG_CONFIG_FAIL}"
-            return 1 # you may quit querying pkg-config here
-        fi
-        AC_MSG_RESULT(yes) # detected version of ICU4C is sufficient
-
-        export PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 # always provide system -L
-        AC_MSG_CHECKING([for additional required CPPFLAGS, LDFLAGS, and LIBS])
-        ICU_CPPFLAGS=`"${PKG_CONFIG}" --cflags icu-uc icu-i18n`
-        ICU_LDFLAGS=`"${PKG_CONFIG}" --libs-only-L icu-uc icu-i18n`
-        ICU_LIBS=`"${PKG_CONFIG}" --libs-only-l icu-uc icu-i18n`
-        AC_MSG_RESULT(done)
-
-        # It has been indicated that icu-config may return 32bit libs
-        # when 64bit libs are not available, even if we compile a 64bit version.
-        # Thus, we should then check if the current settings are valid anyway.
-
-        return 0
-    }  # end detect_icu_with_pkg_config()
-
-
-    check_icu_with_pkg_config() {
-        CPPFLAGS="${CPPFLAGS} ${ICU_CPPFLAGS}"
-        LDFLAGS="${LDFLAGS} ${ICU_LDFLAGS}"
-        LIBS="${LIBS} ${ICU_LIBS}"
-
-        AC_LANG([C++])
-
-        AC_MSG_CHECKING([whether an ICU4C-based project can be built])
-        AC_LINK_IFELSE([AC_LANG_SOURCE([
-            #include <unicode/unistr.h>
-            #include <unicode/uvernum.h>
-            #include <unicode/ptypes.h>
-            #include <unicode/uchar.h>
-            #include <unicode/utypes.h>
-            #include <stdio.h>
-            using namespace icu;
-
-            int main() {
-                // base tests
-                UnicodeString x("abc");
-                x = x+x;
-                printf(U_ICU_VERSION);
-
-                return 0;
-            }
-        ])],
-        [
-            AC_MSG_RESULT([yes])
-        ],[
-            AC_MSG_RESULT([no])
-            echo "*** This version of ICU4C cannot be used."
-            #echo "${MSG_CONFIG_FAIL}"
-            return 1
-        ])
-
-        AC_MSG_CHECKING([programmatically for sufficient U_ICU_VERSION_MAJOR_NUM])
-        AC_LINK_IFELSE([AC_LANG_SOURCE([
-            #include <unicode/uvernum.h>
-            #if U_ICU_VERSION_MAJOR_NUM < ${ICU_VERSION_NEEDED}
-            #error "insufficient U_ICU_VERSION_MAJOR_NUM"
-            #endif
-
-            int main() {
-                return 0;
-            }
-        ])],
-        [
-            AC_MSG_RESULT([yes])
-        ],[
-            AC_MSG_RESULT([no])
-            echo "*** This version of ICU4C cannot be used."
-            #echo "${MSG_CONFIG_FAIL}"
-            return 1
-        ])
-
-        AC_MSG_CHECKING([programmatically if U_CHARSET_IS_UTF8 is defined and set])
-        AC_LINK_IFELSE([AC_LANG_SOURCE([
-            #include <unicode/unistr.h>
-            #include <unicode/uvernum.h>
-            #include <unicode/ptypes.h>
-            #include <unicode/uchar.h>
-            #include <unicode/utypes.h>
-            #include <unicode/utf8.h>
-            #include <unicode/utf16.h>
-            #include <unicode/ucnv.h>
-
-            int main() {
-                #ifdef U_CHARSET_IS_UTF8
-                #if U_CHARSET_IS_UTF8
-                #error "U_CHARSET_IS_UTF8 is defined and set"
-                return 10;
-                #endif
-                #endif
-
-                /* we additionally verify if ucnv_setDefaultName() has no effect */
-                ucnv_setDefaultName("ISO-8859-2");
-                const char* val = ucnv_getDefaultName();
-                if (*(val+0)=='U' &&
-                    *(val+1)=='T' &&
-                    *(val+2)=='F' &&
-                    *(val+3)=='-' &&
-                    *(val+4)=='8'
-                    ) {
-                    return 1; /*   :(   */
-                } else {
-                    return 0; /*   :)   */
-                }
-            }
-        ])],
-        [
-            # U_CHARSET_IS_UTF8 is not defined
-            AC_MSG_RESULT([no])
-            U_CHARSET_IS_UTF8=0
-        ],[
-            # U_CHARSET_IS_UTF8 is defined
-            AC_MSG_RESULT([yes])
-
-            ## issue#314: fail now:
-            #echo "*** The available ICU4C cannot be used."
-            #return 1
-
-            # issue#335: revert#314; allow U_CHARSET_IS_UTF8=1;
-            # but warn in stri_enc_set()
-            U_CHARSET_IS_UTF8=1
-            # => continue
-        ])
-
-        AC_MSG_CHECKING([the capabilities of the ICU data library (ucnv, uloc, utrans)])
-        AC_LINK_IFELSE([AC_LANG_SOURCE([
-            #include <unicode/unistr.h>
-            #include <unicode/uvernum.h>
-            #include <unicode/ptypes.h>
-            #include <unicode/uchar.h>
-            #include <unicode/utypes.h>
-            #include <unicode/ucnv.h>
-            #include <unicode/ustring.h>
-            #include <unicode/stringpiece.h>
-            #include <unicode/utf8.h>
-            #include <unicode/utf16.h>
-            #include <unicode/normalizer2.h>
-            #include <unicode/locid.h>
-            #include <unicode/uloc.h>
-            #include <unicode/regex.h>
-            #include <unicode/brkiter.h>
-            #include <unicode/coll.h>
-            #include <unicode/ucol.h>
-            #include <unicode/ucsdet.h>
-            #include <unicode/stsearch.h>
-            #include <unicode/ulocdata.h>
-            #include <unicode/usearch.h>
-            #include <unicode/uniset.h>
-            #include <stdio.h>
-            #include <unicode/translit.h>
-            #include <unicode/uclean.h>
-            using namespace icu;
-
-            int main() {
-                UErrorCode status = U_ZERO_ERROR;
-                u_init(&status);
-                if (U_FAILURE(status)) {
-                    printf("ICU init failed: %s", u_errorName(status));
-                    return 10;
-                }
-
-                // check if we have some converters installed (icudt)
-                int c = ucnv_countAvailable();
-                if (c <= 0)
-                    return 11;
-
-                // check if we have some locales defined (icudt)
-                c = uloc_countAvailable();
-                if (c <= 0)
-                    return 12;
-
-                status = U_ZERO_ERROR;
-                StringEnumeration* trans_enum = Transliterator::getAvailableIDs(status);
-                if (!U_SUCCESS(status)) return 13;
-
-                trans_enum->reset(status);
-                if (!U_SUCCESS(status)) return 14;
-
-                c = trans_enum->count(status);
-                if (!U_SUCCESS(status)) return 15;
-                if (c <= 0) return 16;
-
-                delete trans_enum;
-                return 0;
-            }
-        ])],
-        [
-            AC_MSG_RESULT([yes])
-        ],[
-            AC_MSG_RESULT([no])
-            echo "*** The available ICU4C cannot be used."
-            #echo "${MSG_CONFIG_FAIL}"
-            return 1
-        ])
-
-        AC_MSG_CHECKING([the capabilities of the ICU data library (ucol)])
-        AC_LINK_IFELSE([AC_LANG_SOURCE([
-            #include <unicode/unistr.h>
-            #include <unicode/uvernum.h>
-            #include <unicode/ptypes.h>
-            #include <unicode/uchar.h>
-            #include <unicode/utypes.h>
-            #include <unicode/ucnv.h>
-            #include <unicode/ustring.h>
-            #include <unicode/stringpiece.h>
-            #include <unicode/utf8.h>
-            #include <unicode/utf16.h>
-            #include <unicode/normalizer2.h>
-            #include <unicode/locid.h>
-            #include <unicode/uloc.h>
-            #include <unicode/regex.h>
-            #include <unicode/brkiter.h>
-            #include <unicode/coll.h>
-            #include <unicode/ucol.h>
-            #include <unicode/ucsdet.h>
-            #include <unicode/stsearch.h>
-            #include <unicode/ulocdata.h>
-            #include <unicode/usearch.h>
-            #include <unicode/uniset.h>
-            #include <stdio.h>
-            using namespace icu;
-
-            int main() {
-                UnicodeString a = UnicodeString::fromUTF8("hladny");
-                UnicodeString b = UnicodeString::fromUTF8("chladny");
-
-                UErrorCode status = U_ZERO_ERROR;
-                Locale l = Locale::createFromName("sk_SK");
-                Collator* c = Collator::createInstance(l, status);
-                if (!U_SUCCESS(status))
-                    return 1;
-
-                status = U_ZERO_ERROR;
-                if (UCOL_GREATER != c->compare(a, b, status))
-                    return 2;
-                if (!U_SUCCESS(status))
-                    return 3;
-
-                delete c;
-                return 0;
-            }
-        ])],
-        [
-            AC_MSG_RESULT([yes])
-        ], [
-            AC_MSG_RESULT([no])
-            echo "*** The available ICU4C cannot be used."
-            #echo "${MSG_CONFIG_FAIL}"
-            return 1
-        ])
-
-        return 0
-    }  # end check_icu_with_pkg_config()
-
-
-    check_flags_icu_bundle() {
-        CPPFLAGS="${CPPFLAGS} -Isrc/ -Isrc/icu${ICU_BUNDLE_VERSION} -Isrc/icu${ICU_BUNDLE_VERSION}/unicode \
-            -Isrc/icu${ICU_BUNDLE_VERSION}/common -Isrc/icu${ICU_BUNDLE_VERSION}/i18n -DU_STATIC_IMPLEMENTATION \
-            -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -D_REENTRANT" # don't use uconfig_local yet
-
-        # one way for dealing with the *Compiler or options invalid for pre-UNIX 03
-        # X/Open applications and pre-2001 POSIX applications* error on Solaris
-        # is to file a patch for sys/feature_tests.h. Unfortunately, the original
-        # file is copyrighted, so we have to cope with this error in another way:
-        # adding -D_XPG6 flag conditionally.
-
-        if test ${ICU_BUNDLE_VERSION} -le 60; then
-            # ICU >=61 doesn't provide any .c files anymore
-            AC_LANG([C])
-            AC_MSG_CHECKING([whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/umapfile.c])
-            AC_COMPILE_IFELSE([
-                AC_LANG_SOURCE([`${CAT} src/icu${ICU_BUNDLE_VERSION}/common/umapfile.c`])
-            ], [
-                AC_MSG_RESULT([yes])
-            ], [
-                AC_MSG_RESULT([no])
-                with_extra_cflags="${with_extra_cflags} -D_XPG6"
-                CFLAGS="${CFLAGS} -D_XPG6"
-                AC_MSG_CHECKING([whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/umapfile.c with -D_XPG6])
-                AC_COMPILE_IFELSE([
-                    AC_LANG_SOURCE([`${CAT} src/icu${ICU_BUNDLE_VERSION}/common/umapfile.c`])
-                ],
-                [
-                    AC_MSG_RESULT([yes])
-                ],[
-                    AC_MSG_RESULT([no])
-                    echo "*** The ICU bundle cannot be built."
-                    return 1
-                ])
-            ])
-        fi
-
-        AC_LANG([C++])
-        AC_MSG_CHECKING([whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp])
-        AC_COMPILE_IFELSE([
-            AC_LANG_SOURCE([`${CAT} src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp`])
-        ],
-        [
-            AC_MSG_RESULT([yes])
-        ],[
-            AC_MSG_RESULT([no])
-            with_extra_cxxflags="${with_extra_cxxflags} -D_XPG6"
-            CXXFLAGS="${CXXFLAGS} -D_XPG6"
-            AC_MSG_CHECKING([whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp with -D_XPG6])
-            AC_COMPILE_IFELSE([
-                AC_LANG_SOURCE([`${CAT} src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp`])
-            ],
-            [
-                AC_MSG_RESULT([yes])
-            ],[
-                AC_MSG_RESULT([no])
-                echo "*** The ICU4C bundle cannot be built."
-                return 1
-            ])
-        ])
-
-        if test ${ICU_BUNDLE_VERSION} -gt 60; then
-            AC_LANG([C++])
-            AC_MSG_CHECKING([whether we may compile src/icu${ICU_BUNDLE_VERSION}/i18n/number_affixutils.cpp])
-            AC_COMPILE_IFELSE([
-                AC_LANG_SOURCE([`${CAT} src/icu${ICU_BUNDLE_VERSION}/i18n/number_affixutils.cpp`])
-            ],
-            [
-                AC_MSG_RESULT([yes])
-            ],[
-                AC_MSG_RESULT([no])
-                old_with_extra_cxxflags="${with_extra_cxxflags}"
-                with_extra_cxxflags="${with_extra_cxxflags} -D_XPG6"
-                CXXFLAGS="${CXXFLAGS} -D_XPG6"
-                AC_MSG_CHECKING([whether we may compile src/icu${ICU_BUNDLE_VERSION}/i18n/number_affixutils.cpp with -D_XPG6])
-                AC_COMPILE_IFELSE([
-                    AC_LANG_SOURCE([`${CAT} src/icu${ICU_BUNDLE_VERSION}/i18n/number_affixutils.cpp`])
-                ],
-                [
-                    AC_MSG_RESULT([yes])
-                ],[
-                    AC_MSG_RESULT([no])
-                    with_extra_cxxflags="${old_with_extra_cxxflags}"
-                    echo "*** The ICU4C bundle cannot be built."
-                    return 1
-                ])
-            ])
-
-        fi
-
-        if test ${ICU_BUNDLE_VERSION} -ge 69; then
-
-            AC_MSG_CHECKING([whether alignof(std::max_align_t) is available])
-            AC_LINK_IFELSE([AC_LANG_SOURCE([
-                #include <iostream>
-                #include <cstddef>
-                int main() {
-                    std::cout << alignof(std::max_align_t) << std::endl;
-                    return 0;
-                }
-            ])],
-            [
-                AC_MSG_RESULT([yes])
-            ],[
-                AC_MSG_RESULT([no])
-                old_with_extra_cxxflags="${with_extra_cxxflags}"
-                with_extra_cxxflags="${with_extra_cxxflags} -DSTRINGI_MAX_ALIGN_T_STD"
-                CXXFLAGS="${CXXFLAGS} -D_XPG6"
-                AC_MSG_CHECKING([whether alignof(::max_align_t) is available])
-                AC_LINK_IFELSE([AC_LANG_SOURCE([
-                    #include <iostream>
-                    #include <cstddef>
-
-                    #ifdef __cplusplus
-                    #include <stddef.h>
-                    extern "C++"
-                    {
-                        namespace std
-                        {
-                            using ::max_align_t;
-                        }
-                    }
-                    #endif
-
-                    int main() {
-                        std::cout << alignof(std::max_align_t) << std::endl;
-                        return 0;
-                    }
-                ])],
-                [
-                    AC_MSG_RESULT([yes])
-                ],[
-                    AC_MSG_RESULT([no])
-                    with_extra_cxxflags="${old_with_extra_cxxflags}"
-                    echo "*** The ICU4C bundle cannot be built."
-                    return 1
-                ])
-            ])
-
-        fi
-
-        return 0
-    }  # end check_flags_icu_bundle()
-
-
 
     ICU_FOUND=0
     if test $enable_pkg_config = "no"; then
@@ -958,8 +779,8 @@ while true; do
         echo "*** Failed to configure package build with forced system ICU usage."
         echo "*** Consider installing, e.g., libicu-devel (RedHat, Fedora) or libicu-dev (Debian, Ubuntu)"
         echo "*** together with pkg-config."
-        if test "x$enable_cxx11" = "xyes"; then
-            disable_cxx11
+        if test $force_cxx11 = "no"; then
+            enable_cxx11
             continue
         else
             echo "${MSG_CONFIG_FAIL}"
@@ -967,7 +788,7 @@ while true; do
         fi
     fi
 
-    echo "*** Using the ICU ${ICU_BUNDLE_VERSION} bundle."
+    echo "*** Using the ICU ${ICU_BUNDLE_VERSION} bundle that comes with 'stringi'."
 
     ICU_BUNDLE_OK=0
     OLD_CFLAGS=$CFLAGS
@@ -987,8 +808,8 @@ while true; do
     fi
 
     echo "*** Failed to configure package build with the ICU bundle usage."
-    if test "x$enable_cxx11" = "xyes"; then
-        disable_cxx11
+    if test $force_cxx11 = "no"; then
+        enable_cxx11
         continue
     else
         echo "${MSG_CONFIG_FAIL}"
@@ -996,6 +817,7 @@ while true; do
     fi
 
 done # end while
+
 
 ###### DOWNLOAD ICUDT (IF NEEDED) ##############################################
 
@@ -1016,6 +838,7 @@ if test $ICU_FOUND = 0; then
         exit 1
     fi
 fi
+
 
 ##### PREPARE LIST OF SOURCE FILES #############################################
 
