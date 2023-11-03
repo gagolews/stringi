@@ -1,0 +1,11 @@
+--- /tmp/stringi-bbbf25bbe6e1aa198389dd08636a3360b5788213/src/icu69/i18n/choicfmt.cpp	2021-05-01 15:37:10.000000000 +1000
++++ i18n/choicfmt.cpp	2022-12-22 09:38:43.011435782 +1100
+@@ -175,7 +175,7 @@
+     char *itrPtr = temp;
+     char *expPtr;
+ 
+-    sprintf(temp, "%.*g", DBL_DIG, value);
++    snprintf(temp, DBL_DIG + 16, "%.*g", DBL_DIG, value);  // MAREK's patch sprintf -> snprintf
+ 
+     /* Find and convert the decimal point.
+        Using setlocale on some machines will cause sprintf to use a comma for certain locales.

@@ -651,6 +651,7 @@ ac_subst_vars='LTLIBOBJS
 LIBOBJS
 ICUDT_ENDIANNESS
 ICU_BUNDLE_VERSION
+ICUDT_DIR
 ICU_FOUND
 STRINGI_CXXSTD
 STRINGI_OBJECTS
@@ -680,7 +681,6 @@ CPP
 CFLAGS
 CC
 PKG_CONFIG_PATH
-ICUDT_DIR
 PKG_CONFIG
 CAT
 R_HOME
@@ -742,7 +742,6 @@ target_alias
 R_HOME
 CAT
 PKG_CONFIG
-ICUDT_DIR
 PKG_CONFIG_PATH
 CC
 CFLAGS
@@ -1414,9 +1413,6 @@ Some influential environment variables:
               to compile.
   PKG_CONFIG  The 'pkg-config' command to determine an appropriate build
               configuration for the system ICU.
-  ICUDT_DIR   Optional directory with an already downloaded ICU data archive
-              (icudt; icu*.zip); either an absolute path or a path relative to
-              <package source dir>/src; defaults to icuXX/data.
   PKG_CONFIG_PATH
               An optional list of directories to search for pkg-config's .pc
               files.
@@ -2583,6 +2579,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 ICU_VERSION_NEEDED="61"  # minimal version of ICU4C required to build stringi
 ICU_BUNDLE_VERSION="69"  # TODO
+ICUDT_DIR="icu${ICU_BUNDLE_VERSION}/data"
 
 
 
@@ -2601,8 +2598,6 @@ ICU_BUNDLE_VERSION="69"  # TODO
 
 # shell variables/arguments accepted:
 # R_HOME - R's home dir
-
-
 
 
 
@@ -2885,22 +2880,6 @@ fi
 
 
 ################################################################################
-
-if test -z "${ICUDT_DIR}"; then
-    ICUDT_DIR_FORCE="yes"
-else
-    ICUDT_DIR_FORCE="no"
-fi
-
-# set ICUDT_DIR
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for local ICUDT_DIR" >&5
-printf %s "checking for local ICUDT_DIR... " >&6; }
-if test "x$ICUDT_DIR_FORCE" = "xyes"; then
-    # Remember to update the configure.win file too
-    ICUDT_DIR="icu${ICU_BUNDLE_VERSION}/data"
-fi
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ICUDT_DIR" >&5
-printf "%s\n" "$ICUDT_DIR" >&6; }
 
 
 ### AUXILIARY FUNCTIONS ########################################################

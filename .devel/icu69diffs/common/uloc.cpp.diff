@@ -1,0 +1,20 @@
+--- /tmp/stringi-bbbf25bbe6e1aa198389dd08636a3360b5788213/src/icu69/common/uloc.cpp	2021-05-01 15:37:10.000000000 +1000
++++ common/uloc.cpp	2021-05-23 17:51:44.050744678 +1000
+@@ -525,7 +525,7 @@
+ U_CAPI const char * U_EXPORT2
+ locale_getKeywordsStart(const char *localeID) {
+     const char *result = NULL;
+-    if((result = uprv_strchr(localeID, '@')) != NULL) {
++    if ((result = (uprv_strchr(localeID, '@'))) != NULL) {
+         return result;
+     }
+ #if (U_CHARSET_FAMILY == U_EBCDIC_FAMILY)
+@@ -536,7 +536,7 @@
+         static const uint8_t ebcdicSigns[] = { 0x7C, 0x44, 0x66, 0x80, 0xAC, 0xAE, 0xAF, 0xB5, 0xEC, 0xEF, 0x00 };
+         const uint8_t *charToFind = ebcdicSigns;
+         while(*charToFind) {
+-            if((result = uprv_strchr(localeID, *charToFind)) != NULL) {
++            if ((result = (uprv_strchr(localeID, *charToFind))) != NULL) {
+                 return result;
+             }
+             charToFind++;
