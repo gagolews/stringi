@@ -1,6 +1,6 @@
 Package: stringi
-Version: 1.7.12
-Date: 2023-11-02
+Version: 1.7.9001
+Date: 2023-11-03
 Title: Fast and Portable Character String Processing Facilities
 Description: A collection of character string/text/natural language
     processing tools for pattern searching (e.g., with 'Java'-like regular
@@ -17,10 +17,10 @@ URL:
     https://github.com/gagolews/stringi,
     https://icu.unicode.org/
 BugReports: https://github.com/gagolews/stringi/issues
-SystemRequirements: C++11, ICU4C (>= 55, optional)
+SystemRequirements: ICU4C (>= 61, optional)
 Type: Package
 Depends:
-    R (>= 3.1)
+    R (>= 3.4)
 Imports:
     tools,
     utils,
