@@ -40,7 +40,7 @@ done
 ```
 
 
-## Fetch ICU4C
+## Update ICU4C
 
 1. Download https://github.com/unicode-org/icu/releases/download/release-74-1/icu4c-74_1-src.zip
 
@@ -55,32 +55,43 @@ done
 7. Execute from ./src/icu74/:
 
     ```bash
-    rm -f **/*.rc **/*.vcproj **/*.vcxproj **/*filters **/BUILD* **/Makefile.in
-    mv i18n/sources.txt ../icu74_i18n_cpp.txt
-    mv common/sources.txt ../icu74_common_cpp.txt
-    mv stubdata/sources.txt ../icu74_stubdata_cpp.txt
+    rm -f **/*.rc **/*.vcproj **/*.vcxproj **/*filters **/BUILD* **/Makefile.in **/sources.txt
     ```
 
+    ```r
+    icu <- "icu74"
+    for (base in c("i18n", "common", "stubdata")) {
+        cat(
+            paste0(collapse=" \\\n", icu, "/", base, "/", dir(base, pattern=glob2rx("*.cpp"))),
+            file=sprintf("../%s_%s_cpp.txt", icu, base),
+            sep="\n"
+        )
+    }
+    ```
 
-# ICU data
+8. Execute from: ./src/icu74/data
 
-Destination: ./src/icu74/data
+    ```{bash}
+    for endian in l b; do
+        wget -nc https://github.com/unicode-org/icu/releases/download/release-74-1/icu4c-74_1-data-bin-${endian}.zip
+        unzip -o icu4c-74_1-data-bin-${endian}.zip
+        sha256sum -b icudt74${endian}.dat > icudt74${endian}.dat.sha256sum
+        md5sum -b icudt74${endian}.dat > icudt74${endian}.dat.md5sum
+        xz -z -e -9 icudt74${endian}.dat
+    done
+    ```
 
-```{bash}
-for endian in l b; do
-    wget -nc https://github.com/unicode-org/icu/releases/download/release-74-1/icu4c-74_1-data-bin-${endian}.zip
-    unzip -o icu4c-74_1-data-bin-${endian}.zip
-    sha256sum -b icudt74${endian}.dat > icudt74${endian}.dat.sha256sum
-    xz -z -e -9 icudt74${endian}.dat
-done
-```
+    Only include icudt74l.dat.xz in the source bundle.
+    icudt74b.dat should be downloaded on demand during install.
 
-Only include icudt74l.dat.xz in the source bundle.
-icudt74b.dat should be downloaded on demand during install.
+9. Update configure.ac, configure.win, Makevars.in, Makevars.win, install.R, etc.
 
+    ```bash
+    autoconf && ./configure --disable-pkg-config
+    ```
 
+10. Patch ICU4C based on the aforementioned diffs;
+    use `#ifdef U_STRINGI_PATCHES`
 
-
-## TODO: Patch ICU
-
-! Use `#ifdef U_STRINGI_PATCHES`
+11. Build with github-actions, use win-builder, etc.
+    Good luck. ;)

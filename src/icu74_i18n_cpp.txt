@@ -1,243 +1,243 @@
-alphaindex.cpp
-anytrans.cpp
-astro.cpp
-basictz.cpp
-bocsu.cpp
-brktrans.cpp
-buddhcal.cpp
-calendar.cpp
-casetrn.cpp
-cecal.cpp
-chnsecal.cpp
-choicfmt.cpp
-coleitr.cpp
-coll.cpp
-collation.cpp
-collationbuilder.cpp
-collationcompare.cpp
-collationdata.cpp
-collationdatabuilder.cpp
-collationdatareader.cpp
-collationdatawriter.cpp
-collationfastlatin.cpp
-collationfastlatinbuilder.cpp
-collationfcd.cpp
-collationiterator.cpp
-collationkeys.cpp
-collationroot.cpp
-collationrootelements.cpp
-collationruleparser.cpp
-collationsets.cpp
-collationsettings.cpp
-collationtailoring.cpp
-collationweights.cpp
-compactdecimalformat.cpp
-coptccal.cpp
-cpdtrans.cpp
-csdetect.cpp
-csmatch.cpp
-csr2022.cpp
-csrecog.cpp
-csrmbcs.cpp
-csrsbcs.cpp
-csrucode.cpp
-csrutf8.cpp
-curramt.cpp
-currfmt.cpp
-currpinf.cpp
-currunit.cpp
-dangical.cpp
-datefmt.cpp
-dayperiodrules.cpp
-dcfmtsym.cpp
-decContext.cpp
-decNumber.cpp
-decimfmt.cpp
-displayoptions.cpp
-double-conversion-bignum-dtoa.cpp
-double-conversion-bignum.cpp
-double-conversion-cached-powers.cpp
-double-conversion-double-to-string.cpp
-double-conversion-fast-dtoa.cpp
-double-conversion-string-to-double.cpp
-double-conversion-strtod.cpp
-dtfmtsym.cpp
-dtitvfmt.cpp
-dtitvinf.cpp
-dtptngen.cpp
-dtrule.cpp
-erarules.cpp
-esctrn.cpp
-ethpccal.cpp
-fmtable.cpp
-fmtable_cnv.cpp
-format.cpp
-formatted_string_builder.cpp
-formattedval_iterimpl.cpp
-formattedval_sbimpl.cpp
-formattedvalue.cpp
-fphdlimp.cpp
-fpositer.cpp
-funcrepl.cpp
-gender.cpp
-gregocal.cpp
-gregoimp.cpp
-hebrwcal.cpp
-indiancal.cpp
-inputext.cpp
-islamcal.cpp
-iso8601cal.cpp
-japancal.cpp
-listformatter.cpp
-measfmt.cpp
-measunit.cpp
-measunit_extra.cpp
-measure.cpp
-msgfmt.cpp
-name2uni.cpp
-nfrs.cpp
-nfrule.cpp
-nfsubs.cpp
-nortrans.cpp
-nultrans.cpp
-number_affixutils.cpp
-number_asformat.cpp
-number_capi.cpp
-number_compact.cpp
-number_currencysymbols.cpp
-number_decimalquantity.cpp
-number_decimfmtprops.cpp
-number_fluent.cpp
-number_formatimpl.cpp
-number_grouping.cpp
-number_integerwidth.cpp
-number_longnames.cpp
-number_mapper.cpp
-number_modifiers.cpp
-number_multiplier.cpp
-number_notation.cpp
-number_output.cpp
-number_padding.cpp
-number_patternmodifier.cpp
-number_patternstring.cpp
-number_rounding.cpp
-number_scientific.cpp
-number_simple.cpp
-number_skeletons.cpp
-number_symbolswrapper.cpp
-number_usageprefs.cpp
-number_utils.cpp
-numfmt.cpp
-numparse_affixes.cpp
-numparse_compositions.cpp
-numparse_currency.cpp
-numparse_decimal.cpp
-numparse_impl.cpp
-numparse_parsednumber.cpp
-numparse_scientific.cpp
-numparse_symbols.cpp
-numparse_validators.cpp
-numrange_capi.cpp
-numrange_fluent.cpp
-numrange_impl.cpp
-numsys.cpp
-olsontz.cpp
-persncal.cpp
-pluralranges.cpp
-plurfmt.cpp
-plurrule.cpp
-quant.cpp
-quantityformatter.cpp
-rbnf.cpp
-rbt.cpp
-rbt_data.cpp
-rbt_pars.cpp
-rbt_rule.cpp
-rbt_set.cpp
-rbtz.cpp
-regexcmp.cpp
-regeximp.cpp
-regexst.cpp
-regextxt.cpp
-region.cpp
-reldatefmt.cpp
-reldtfmt.cpp
-rematch.cpp
-remtrans.cpp
-repattrn.cpp
-rulebasedcollator.cpp
-scientificnumberformatter.cpp
-scriptset.cpp
-search.cpp
-selfmt.cpp
-sharedbreakiterator.cpp
-simpletz.cpp
-smpdtfmt.cpp
-smpdtfst.cpp
-sortkey.cpp
-standardplural.cpp
-string_segment.cpp
-strmatch.cpp
-strrepl.cpp
-stsearch.cpp
-taiwncal.cpp
-timezone.cpp
-titletrn.cpp
-tmunit.cpp
-tmutamt.cpp
-tmutfmt.cpp
-tolowtrn.cpp
-toupptrn.cpp
-translit.cpp
-transreg.cpp
-tridpars.cpp
-tzfmt.cpp
-tzgnames.cpp
-tznames.cpp
-tznames_impl.cpp
-tzrule.cpp
-tztrans.cpp
-ucal.cpp
-ucln_in.cpp
-ucol.cpp
-ucol_res.cpp
-ucol_sit.cpp
-ucoleitr.cpp
-ucsdet.cpp
-udat.cpp
-udateintervalformat.cpp
-udatpg.cpp
-ufieldpositer.cpp
-uitercollationiterator.cpp
-ulistformatter.cpp
-ulocdata.cpp
-umsg.cpp
-unesctrn.cpp
-uni2name.cpp
-units_data.cpp
-units_complexconverter.cpp
-units_converter.cpp
-units_router.cpp
-unum.cpp
-unumsys.cpp
-upluralrules.cpp
-uregex.cpp
-uregexc.cpp
-uregion.cpp
-usearch.cpp
-uspoof.cpp
-uspoof_build.cpp
-uspoof_conf.cpp
-uspoof_impl.cpp
-utf16collationiterator.cpp
-utf8collationiterator.cpp
-utmscale.cpp
-utrans.cpp
-vtzone.cpp
-vzone.cpp
-windtfmt.cpp
-winnmfmt.cpp
-wintzimpl.cpp
-zonemeta.cpp
-zrule.cpp
-ztrans.cpp
+icu74/i18n/alphaindex.cpp \
+icu74/i18n/anytrans.cpp \
+icu74/i18n/astro.cpp \
+icu74/i18n/basictz.cpp \
+icu74/i18n/bocsu.cpp \
+icu74/i18n/brktrans.cpp \
+icu74/i18n/buddhcal.cpp \
+icu74/i18n/calendar.cpp \
+icu74/i18n/casetrn.cpp \
+icu74/i18n/cecal.cpp \
+icu74/i18n/chnsecal.cpp \
+icu74/i18n/choicfmt.cpp \
+icu74/i18n/coleitr.cpp \
+icu74/i18n/coll.cpp \
+icu74/i18n/collation.cpp \
+icu74/i18n/collationbuilder.cpp \
+icu74/i18n/collationcompare.cpp \
+icu74/i18n/collationdata.cpp \
+icu74/i18n/collationdatabuilder.cpp \
+icu74/i18n/collationdatareader.cpp \
+icu74/i18n/collationdatawriter.cpp \
+icu74/i18n/collationfastlatin.cpp \
+icu74/i18n/collationfastlatinbuilder.cpp \
+icu74/i18n/collationfcd.cpp \
+icu74/i18n/collationiterator.cpp \
+icu74/i18n/collationkeys.cpp \
+icu74/i18n/collationroot.cpp \
+icu74/i18n/collationrootelements.cpp \
+icu74/i18n/collationruleparser.cpp \
+icu74/i18n/collationsets.cpp \
+icu74/i18n/collationsettings.cpp \
+icu74/i18n/collationtailoring.cpp \
+icu74/i18n/collationweights.cpp \
+icu74/i18n/compactdecimalformat.cpp \
+icu74/i18n/coptccal.cpp \
+icu74/i18n/cpdtrans.cpp \
+icu74/i18n/csdetect.cpp \
+icu74/i18n/csmatch.cpp \
+icu74/i18n/csr2022.cpp \
+icu74/i18n/csrecog.cpp \
+icu74/i18n/csrmbcs.cpp \
+icu74/i18n/csrsbcs.cpp \
+icu74/i18n/csrucode.cpp \
+icu74/i18n/csrutf8.cpp \
+icu74/i18n/curramt.cpp \
+icu74/i18n/currfmt.cpp \
+icu74/i18n/currpinf.cpp \
+icu74/i18n/currunit.cpp \
+icu74/i18n/dangical.cpp \
+icu74/i18n/datefmt.cpp \
+icu74/i18n/dayperiodrules.cpp \
+icu74/i18n/dcfmtsym.cpp \
+icu74/i18n/decContext.cpp \
+icu74/i18n/decimfmt.cpp \
+icu74/i18n/decNumber.cpp \
+icu74/i18n/displayoptions.cpp \
+icu74/i18n/double-conversion-bignum-dtoa.cpp \
+icu74/i18n/double-conversion-bignum.cpp \
+icu74/i18n/double-conversion-cached-powers.cpp \
+icu74/i18n/double-conversion-double-to-string.cpp \
+icu74/i18n/double-conversion-fast-dtoa.cpp \
+icu74/i18n/double-conversion-string-to-double.cpp \
+icu74/i18n/double-conversion-strtod.cpp \
+icu74/i18n/dtfmtsym.cpp \
+icu74/i18n/dtitvfmt.cpp \
+icu74/i18n/dtitvinf.cpp \
+icu74/i18n/dtptngen.cpp \
+icu74/i18n/dtrule.cpp \
+icu74/i18n/erarules.cpp \
+icu74/i18n/esctrn.cpp \
+icu74/i18n/ethpccal.cpp \
+icu74/i18n/fmtable_cnv.cpp \
+icu74/i18n/fmtable.cpp \
+icu74/i18n/format.cpp \
+icu74/i18n/formatted_string_builder.cpp \
+icu74/i18n/formattedval_iterimpl.cpp \
+icu74/i18n/formattedval_sbimpl.cpp \
+icu74/i18n/formattedvalue.cpp \
+icu74/i18n/fphdlimp.cpp \
+icu74/i18n/fpositer.cpp \
+icu74/i18n/funcrepl.cpp \
+icu74/i18n/gender.cpp \
+icu74/i18n/gregocal.cpp \
+icu74/i18n/gregoimp.cpp \
+icu74/i18n/hebrwcal.cpp \
+icu74/i18n/indiancal.cpp \
+icu74/i18n/inputext.cpp \
+icu74/i18n/islamcal.cpp \
+icu74/i18n/iso8601cal.cpp \
+icu74/i18n/japancal.cpp \
+icu74/i18n/listformatter.cpp \
+icu74/i18n/measfmt.cpp \
+icu74/i18n/measunit_extra.cpp \
+icu74/i18n/measunit.cpp \
+icu74/i18n/measure.cpp \
+icu74/i18n/msgfmt.cpp \
+icu74/i18n/name2uni.cpp \
+icu74/i18n/nfrs.cpp \
+icu74/i18n/nfrule.cpp \
+icu74/i18n/nfsubs.cpp \
+icu74/i18n/nortrans.cpp \
+icu74/i18n/nultrans.cpp \
+icu74/i18n/number_affixutils.cpp \
+icu74/i18n/number_asformat.cpp \
+icu74/i18n/number_capi.cpp \
+icu74/i18n/number_compact.cpp \
+icu74/i18n/number_currencysymbols.cpp \
+icu74/i18n/number_decimalquantity.cpp \
+icu74/i18n/number_decimfmtprops.cpp \
+icu74/i18n/number_fluent.cpp \
+icu74/i18n/number_formatimpl.cpp \
+icu74/i18n/number_grouping.cpp \
+icu74/i18n/number_integerwidth.cpp \
+icu74/i18n/number_longnames.cpp \
+icu74/i18n/number_mapper.cpp \
+icu74/i18n/number_modifiers.cpp \
+icu74/i18n/number_multiplier.cpp \
+icu74/i18n/number_notation.cpp \
+icu74/i18n/number_output.cpp \
+icu74/i18n/number_padding.cpp \
+icu74/i18n/number_patternmodifier.cpp \
+icu74/i18n/number_patternstring.cpp \
+icu74/i18n/number_rounding.cpp \
+icu74/i18n/number_scientific.cpp \
+icu74/i18n/number_simple.cpp \
+icu74/i18n/number_skeletons.cpp \
+icu74/i18n/number_symbolswrapper.cpp \
+icu74/i18n/number_usageprefs.cpp \
+icu74/i18n/number_utils.cpp \
+icu74/i18n/numfmt.cpp \
+icu74/i18n/numparse_affixes.cpp \
+icu74/i18n/numparse_compositions.cpp \
+icu74/i18n/numparse_currency.cpp \
+icu74/i18n/numparse_decimal.cpp \
+icu74/i18n/numparse_impl.cpp \
+icu74/i18n/numparse_parsednumber.cpp \
+icu74/i18n/numparse_scientific.cpp \
+icu74/i18n/numparse_symbols.cpp \
+icu74/i18n/numparse_validators.cpp \
+icu74/i18n/numrange_capi.cpp \
+icu74/i18n/numrange_fluent.cpp \
+icu74/i18n/numrange_impl.cpp \
+icu74/i18n/numsys.cpp \
+icu74/i18n/olsontz.cpp \
+icu74/i18n/persncal.cpp \
+icu74/i18n/pluralranges.cpp \
+icu74/i18n/plurfmt.cpp \
+icu74/i18n/plurrule.cpp \
+icu74/i18n/quant.cpp \
+icu74/i18n/quantityformatter.cpp \
+icu74/i18n/rbnf.cpp \
+icu74/i18n/rbt_data.cpp \
+icu74/i18n/rbt_pars.cpp \
+icu74/i18n/rbt_rule.cpp \
+icu74/i18n/rbt_set.cpp \
+icu74/i18n/rbt.cpp \
+icu74/i18n/rbtz.cpp \
+icu74/i18n/regexcmp.cpp \
+icu74/i18n/regeximp.cpp \
+icu74/i18n/regexst.cpp \
+icu74/i18n/regextxt.cpp \
+icu74/i18n/region.cpp \
+icu74/i18n/reldatefmt.cpp \
+icu74/i18n/reldtfmt.cpp \
+icu74/i18n/rematch.cpp \
+icu74/i18n/remtrans.cpp \
+icu74/i18n/repattrn.cpp \
+icu74/i18n/rulebasedcollator.cpp \
+icu74/i18n/scientificnumberformatter.cpp \
+icu74/i18n/scriptset.cpp \
+icu74/i18n/search.cpp \
+icu74/i18n/selfmt.cpp \
+icu74/i18n/sharedbreakiterator.cpp \
+icu74/i18n/simpletz.cpp \
+icu74/i18n/smpdtfmt.cpp \
+icu74/i18n/smpdtfst.cpp \
+icu74/i18n/sortkey.cpp \
+icu74/i18n/standardplural.cpp \
+icu74/i18n/string_segment.cpp \
+icu74/i18n/strmatch.cpp \
+icu74/i18n/strrepl.cpp \
+icu74/i18n/stsearch.cpp \
+icu74/i18n/taiwncal.cpp \
+icu74/i18n/timezone.cpp \
+icu74/i18n/titletrn.cpp \
+icu74/i18n/tmunit.cpp \
+icu74/i18n/tmutamt.cpp \
+icu74/i18n/tmutfmt.cpp \
+icu74/i18n/tolowtrn.cpp \
+icu74/i18n/toupptrn.cpp \
+icu74/i18n/translit.cpp \
+icu74/i18n/transreg.cpp \
+icu74/i18n/tridpars.cpp \
+icu74/i18n/tzfmt.cpp \
+icu74/i18n/tzgnames.cpp \
+icu74/i18n/tznames_impl.cpp \
+icu74/i18n/tznames.cpp \
+icu74/i18n/tzrule.cpp \
+icu74/i18n/tztrans.cpp \
+icu74/i18n/ucal.cpp \
+icu74/i18n/ucln_in.cpp \
+icu74/i18n/ucol_res.cpp \
+icu74/i18n/ucol_sit.cpp \
+icu74/i18n/ucol.cpp \
+icu74/i18n/ucoleitr.cpp \
+icu74/i18n/ucsdet.cpp \
+icu74/i18n/udat.cpp \
+icu74/i18n/udateintervalformat.cpp \
+icu74/i18n/udatpg.cpp \
+icu74/i18n/ufieldpositer.cpp \
+icu74/i18n/uitercollationiterator.cpp \
+icu74/i18n/ulistformatter.cpp \
+icu74/i18n/ulocdata.cpp \
+icu74/i18n/umsg.cpp \
+icu74/i18n/unesctrn.cpp \
+icu74/i18n/uni2name.cpp \
+icu74/i18n/units_complexconverter.cpp \
+icu74/i18n/units_converter.cpp \
+icu74/i18n/units_data.cpp \
+icu74/i18n/units_router.cpp \
+icu74/i18n/unum.cpp \
+icu74/i18n/unumsys.cpp \
+icu74/i18n/upluralrules.cpp \
+icu74/i18n/uregex.cpp \
+icu74/i18n/uregexc.cpp \
+icu74/i18n/uregion.cpp \
+icu74/i18n/usearch.cpp \
+icu74/i18n/uspoof_build.cpp \
+icu74/i18n/uspoof_conf.cpp \
+icu74/i18n/uspoof_impl.cpp \
+icu74/i18n/uspoof.cpp \
+icu74/i18n/utf16collationiterator.cpp \
+icu74/i18n/utf8collationiterator.cpp \
+icu74/i18n/utmscale.cpp \
+icu74/i18n/utrans.cpp \
+icu74/i18n/vtzone.cpp \
+icu74/i18n/vzone.cpp \
+icu74/i18n/windtfmt.cpp \
+icu74/i18n/winnmfmt.cpp \
+icu74/i18n/wintzimpl.cpp \
+icu74/i18n/zonemeta.cpp \
+icu74/i18n/zrule.cpp \
+icu74/i18n/ztrans.cpp

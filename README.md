@@ -47,7 +47,7 @@ with contributions from Bartłomiej Tartanus and many others.
 
 The package's API was inspired by that of the early (pre-tidyverse; v0.6.2)
 version of Hadley Wickham's
-[stringr](https://cran.r-project.org/web/packages/stringr/)
+[*stringr*](https://cran.r-project.org/web/packages/stringr/)
 package (and since the 2015 v1.0.0 *stringr* is powered by *stringi*).
 
 
@@ -60,19 +60,18 @@ package (and since the 2015 v1.0.0 *stringr* is powered by *stringi*).
 
 **CRAN Entry**: https://CRAN.R-project.org/package=stringi
 
-**System Requirements**: *R >= 3.1*, *ICU4C >= 55* (refer to the
+**System Requirements**: *R >= 3.4*, *ICU4C >= 61* (refer to the
 [INSTALL](https://raw.githubusercontent.com/gagolews/stringi/master/INSTALL)
 file for more details)
 
 **License**: *stringi*'s source code is distributed under the open source
-BSD-3-clause license, for more details see the
-[LICENSE](https://raw.githubusercontent.com/gagolews/stringi/master/LICENSE) file.
+BSD-3-clause license. For more details, see
+[LICENSE](https://raw.githubusercontent.com/gagolews/stringi/master/LICENSE).
 
-This *git* repository also contains a custom subset of *ICU4C* source code
-which is copyrighted by Unicode, Inc. and others.
-A binary version of the Unicode Character Database is included.
-For more details on copyright holders see the
-[LICENSE](https://raw.githubusercontent.com/gagolews/stringi/master/LICENSE) file.
+This *git* repository also contains a custom subset of *ICU4C* source code which
+is copyrighted by Unicode, Inc. and others. A binary version of the Unicode
+Character Database is included. For more details on copyright holders, see
+[LICENSE](https://raw.githubusercontent.com/gagolews/stringi/master/LICENSE).
 The *ICU* project is covered by the
 [Unicode license](https://github.com/unicode-org/icu/blob/main/icu4c/LICENSE) —
 a simple, permissive non-copyleft free software license, compatible with

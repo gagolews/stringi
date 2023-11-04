@@ -8,7 +8,7 @@ dest <- file.path(R_PACKAGE_DIR, paste("libs", R_ARCH, sep=""))
 dir.create(dest, recursive=TRUE, showWarnings=FALSE)
 file.copy(libfile, dest, overwrite=TRUE)
 
-# copy icudt when building ICU from sources
+# copy icudt when building ICU from sources:
 copyicudt <- !as.logical(@ICU_FOUND@)
 
 if (copyicudt) {
@@ -17,20 +17,20 @@ if (copyicudt) {
    if (length(dir(outdir, pattern=glob2rx("*.dat"))) == 0) {
       # avoids multiple download attempts while multiarch building
       if (!stri_install_icudt(FALSE, outdir, "@ICUDT_DIR@", @ICU_BUNDLE_VERSION@))
-         stop("icudt could not be downloaded. check your internet connectivity")
+         stop("icudt could not be downloaded; check your internet connectivity")
    }
 }
 
-# Copy symbols.rds
+# Copy symbols.rds:
 if (file.exists('symbols.rds'))
    file.copy('symbols.rds', dest, overwrite=TRUE)
 
 
-# Create ../include/stringi.h
+# Create ../include/stringi.h:
 dir.create(file.path(R_PACKAGE_DIR, 'include'), showWarnings=FALSE)
 file.copy('stri_exports.h', file.path(R_PACKAGE_DIR, 'include', 'stringi.h'))
 
-# Create ../include/stringi.cpp
+# Create ../include/stringi.cpp:
 f <- file(file.path(R_PACKAGE_DIR, 'include', 'stringi.cpp'), open='w')
 copyright <- readLines("stri_exports.h")
 i <- which.min(nchar(copyright) > 0)

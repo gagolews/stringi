@@ -1,201 +1,201 @@
-appendable.cpp
-bmpset.cpp
-brkeng.cpp
-brkiter.cpp
-bytesinkutil.cpp
-bytestream.cpp
-bytestrie.cpp
-bytestriebuilder.cpp
-bytestrieiterator.cpp
-caniter.cpp
-characterproperties.cpp
-chariter.cpp
-charstr.cpp
-cmemory.cpp
-cstr.cpp
-cstring.cpp
-cwchar.cpp
-dictbe.cpp
-dictionarydata.cpp
-dtintrv.cpp
-edits.cpp
-emojiprops.cpp
-errorcode.cpp
-filteredbrk.cpp
-filterednormalizer2.cpp
-icudataver.cpp
-icuplug.cpp
-loadednormalizer2impl.cpp
-localebuilder.cpp
-localematcher.cpp
-localeprioritylist.cpp
-locavailable.cpp
-locbased.cpp
-locdispnames.cpp
-locdistance.cpp
-locdspnm.cpp
-locid.cpp
-loclikely.cpp
-loclikelysubtags.cpp
-locmap.cpp
-locresdata.cpp
-locutil.cpp
-lsr.cpp
-lstmbe.cpp
-messagepattern.cpp
-mlbe.cpp
-normalizer2.cpp
-normalizer2impl.cpp
-normlzr.cpp
-parsepos.cpp
-patternprops.cpp
-pluralmap.cpp
-propname.cpp
-propsvec.cpp
-punycode.cpp
-putil.cpp
-rbbi.cpp
-rbbi_cache.cpp
-rbbidata.cpp
-rbbinode.cpp
-rbbirb.cpp
-rbbiscan.cpp
-rbbisetb.cpp
-rbbistbl.cpp
-rbbitblb.cpp
-resbund.cpp
-resbund_cnv.cpp
-resource.cpp
-restrace.cpp
-ruleiter.cpp
-schriter.cpp
-serv.cpp
-servlk.cpp
-servlkf.cpp
-servls.cpp
-servnotf.cpp
-servrbf.cpp
-servslkf.cpp
-sharedobject.cpp
-simpleformatter.cpp
-static_unicode_sets.cpp
-stringpiece.cpp
-stringtriebuilder.cpp
-uarrsort.cpp
-ubidi.cpp
-ubidi_props.cpp
-ubidiln.cpp
-ubiditransform.cpp
-ubidiwrt.cpp
-ubrk.cpp
-ucase.cpp
-ucasemap.cpp
-ucasemap_titlecase_brkiter.cpp
-ucat.cpp
-uchar.cpp
-ucharstrie.cpp
-ucharstriebuilder.cpp
-ucharstrieiterator.cpp
-uchriter.cpp
-ucln_cmn.cpp
-ucmndata.cpp
-ucnv.cpp
-ucnv2022.cpp
-ucnv_bld.cpp
-ucnv_cb.cpp
-ucnv_cnv.cpp
-ucnv_ct.cpp
-ucnv_err.cpp
-ucnv_ext.cpp
-ucnv_io.cpp
-ucnv_lmb.cpp
-ucnv_set.cpp
-ucnv_u16.cpp
-ucnv_u32.cpp
-ucnv_u7.cpp
-ucnv_u8.cpp
-ucnvbocu.cpp
-ucnvdisp.cpp
-ucnvhz.cpp
-ucnvisci.cpp
-ucnvlat1.cpp
-ucnvmbcs.cpp
-ucnvscsu.cpp
-ucnvsel.cpp
-ucol_swp.cpp
-ucptrie.cpp
-ucurr.cpp
-udata.cpp
-udatamem.cpp
-udataswp.cpp
-uenum.cpp
-uhash.cpp
-uhash_us.cpp
-uidna.cpp
-uinit.cpp
-uinvchar.cpp
-uiter.cpp
-ulist.cpp
-uloc.cpp
-uloc_keytype.cpp
-uloc_tag.cpp
-ulocale.cpp
-ulocbuilder.cpp
-umapfile.cpp
-umath.cpp
-umutablecptrie.cpp
-umutex.cpp
-unames.cpp
-unifiedcache.cpp
-unifilt.cpp
-unifunct.cpp
-uniset.cpp
-uniset_closure.cpp
-uniset_props.cpp
-unisetspan.cpp
-unistr.cpp
-unistr_case.cpp
-unistr_case_locale.cpp
-unistr_cnv.cpp
-unistr_props.cpp
-unistr_titlecase_brkiter.cpp
-unorm.cpp
-unormcmp.cpp
-uobject.cpp
-uprops.cpp
-ures_cnv.cpp
-uresbund.cpp
-uresdata.cpp
-usc_impl.cpp
-uscript.cpp
-uscript_props.cpp
-uset.cpp
-uset_props.cpp
-usetiter.cpp
-ushape.cpp
-usprep.cpp
-ustack.cpp
-ustr_cnv.cpp
-ustr_titlecase_brkiter.cpp
-ustr_wcs.cpp
-ustrcase.cpp
-ustrcase_locale.cpp
-ustrenum.cpp
-ustrfmt.cpp
-ustring.cpp
-ustrtrns.cpp
-utext.cpp
-utf_impl.cpp
-util.cpp
-util_props.cpp
-utrace.cpp
-utrie.cpp
-utrie2.cpp
-utrie2_builder.cpp
-utrie_swap.cpp
-uts46.cpp
-utypes.cpp
-uvector.cpp
-uvectr32.cpp
-uvectr64.cpp
-wintz.cpp
+icu74/common/appendable.cpp \
+icu74/common/bmpset.cpp \
+icu74/common/brkeng.cpp \
+icu74/common/brkiter.cpp \
+icu74/common/bytesinkutil.cpp \
+icu74/common/bytestream.cpp \
+icu74/common/bytestrie.cpp \
+icu74/common/bytestriebuilder.cpp \
+icu74/common/bytestrieiterator.cpp \
+icu74/common/caniter.cpp \
+icu74/common/characterproperties.cpp \
+icu74/common/chariter.cpp \
+icu74/common/charstr.cpp \
+icu74/common/cmemory.cpp \
+icu74/common/cstr.cpp \
+icu74/common/cstring.cpp \
+icu74/common/cwchar.cpp \
+icu74/common/dictbe.cpp \
+icu74/common/dictionarydata.cpp \
+icu74/common/dtintrv.cpp \
+icu74/common/edits.cpp \
+icu74/common/emojiprops.cpp \
+icu74/common/errorcode.cpp \
+icu74/common/filteredbrk.cpp \
+icu74/common/filterednormalizer2.cpp \
+icu74/common/icudataver.cpp \
+icu74/common/icuplug.cpp \
+icu74/common/loadednormalizer2impl.cpp \
+icu74/common/localebuilder.cpp \
+icu74/common/localematcher.cpp \
+icu74/common/localeprioritylist.cpp \
+icu74/common/locavailable.cpp \
+icu74/common/locbased.cpp \
+icu74/common/locdispnames.cpp \
+icu74/common/locdistance.cpp \
+icu74/common/locdspnm.cpp \
+icu74/common/locid.cpp \
+icu74/common/loclikely.cpp \
+icu74/common/loclikelysubtags.cpp \
+icu74/common/locmap.cpp \
+icu74/common/locresdata.cpp \
+icu74/common/locutil.cpp \
+icu74/common/lsr.cpp \
+icu74/common/lstmbe.cpp \
+icu74/common/messagepattern.cpp \
+icu74/common/mlbe.cpp \
+icu74/common/normalizer2.cpp \
+icu74/common/normalizer2impl.cpp \
+icu74/common/normlzr.cpp \
+icu74/common/parsepos.cpp \
+icu74/common/patternprops.cpp \
+icu74/common/pluralmap.cpp \
+icu74/common/propname.cpp \
+icu74/common/propsvec.cpp \
+icu74/common/punycode.cpp \
+icu74/common/putil.cpp \
+icu74/common/rbbi_cache.cpp \
+icu74/common/rbbi.cpp \
+icu74/common/rbbidata.cpp \
+icu74/common/rbbinode.cpp \
+icu74/common/rbbirb.cpp \
+icu74/common/rbbiscan.cpp \
+icu74/common/rbbisetb.cpp \
+icu74/common/rbbistbl.cpp \
+icu74/common/rbbitblb.cpp \
+icu74/common/resbund_cnv.cpp \
+icu74/common/resbund.cpp \
+icu74/common/resource.cpp \
+icu74/common/restrace.cpp \
+icu74/common/ruleiter.cpp \
+icu74/common/schriter.cpp \
+icu74/common/serv.cpp \
+icu74/common/servlk.cpp \
+icu74/common/servlkf.cpp \
+icu74/common/servls.cpp \
+icu74/common/servnotf.cpp \
+icu74/common/servrbf.cpp \
+icu74/common/servslkf.cpp \
+icu74/common/sharedobject.cpp \
+icu74/common/simpleformatter.cpp \
+icu74/common/static_unicode_sets.cpp \
+icu74/common/stringpiece.cpp \
+icu74/common/stringtriebuilder.cpp \
+icu74/common/uarrsort.cpp \
+icu74/common/ubidi_props.cpp \
+icu74/common/ubidi.cpp \
+icu74/common/ubidiln.cpp \
+icu74/common/ubiditransform.cpp \
+icu74/common/ubidiwrt.cpp \
+icu74/common/ubrk.cpp \
+icu74/common/ucase.cpp \
+icu74/common/ucasemap_titlecase_brkiter.cpp \
+icu74/common/ucasemap.cpp \
+icu74/common/ucat.cpp \
+icu74/common/uchar.cpp \
+icu74/common/ucharstrie.cpp \
+icu74/common/ucharstriebuilder.cpp \
+icu74/common/ucharstrieiterator.cpp \
+icu74/common/uchriter.cpp \
+icu74/common/ucln_cmn.cpp \
+icu74/common/ucmndata.cpp \
+icu74/common/ucnv_bld.cpp \
+icu74/common/ucnv_cb.cpp \
+icu74/common/ucnv_cnv.cpp \
+icu74/common/ucnv_ct.cpp \
+icu74/common/ucnv_err.cpp \
+icu74/common/ucnv_ext.cpp \
+icu74/common/ucnv_io.cpp \
+icu74/common/ucnv_lmb.cpp \
+icu74/common/ucnv_set.cpp \
+icu74/common/ucnv_u16.cpp \
+icu74/common/ucnv_u32.cpp \
+icu74/common/ucnv_u7.cpp \
+icu74/common/ucnv_u8.cpp \
+icu74/common/ucnv.cpp \
+icu74/common/ucnv2022.cpp \
+icu74/common/ucnvbocu.cpp \
+icu74/common/ucnvdisp.cpp \
+icu74/common/ucnvhz.cpp \
+icu74/common/ucnvisci.cpp \
+icu74/common/ucnvlat1.cpp \
+icu74/common/ucnvmbcs.cpp \
+icu74/common/ucnvscsu.cpp \
+icu74/common/ucnvsel.cpp \
+icu74/common/ucol_swp.cpp \
+icu74/common/ucptrie.cpp \
+icu74/common/ucurr.cpp \
+icu74/common/udata.cpp \
+icu74/common/udatamem.cpp \
+icu74/common/udataswp.cpp \
+icu74/common/uenum.cpp \
+icu74/common/uhash_us.cpp \
+icu74/common/uhash.cpp \
+icu74/common/uidna.cpp \
+icu74/common/uinit.cpp \
+icu74/common/uinvchar.cpp \
+icu74/common/uiter.cpp \
+icu74/common/ulist.cpp \
+icu74/common/uloc_keytype.cpp \
+icu74/common/uloc_tag.cpp \
+icu74/common/uloc.cpp \
+icu74/common/ulocale.cpp \
+icu74/common/ulocbuilder.cpp \
+icu74/common/umapfile.cpp \
+icu74/common/umath.cpp \
+icu74/common/umutablecptrie.cpp \
+icu74/common/umutex.cpp \
+icu74/common/unames.cpp \
+icu74/common/unifiedcache.cpp \
+icu74/common/unifilt.cpp \
+icu74/common/unifunct.cpp \
+icu74/common/uniset_closure.cpp \
+icu74/common/uniset_props.cpp \
+icu74/common/uniset.cpp \
+icu74/common/unisetspan.cpp \
+icu74/common/unistr_case_locale.cpp \
+icu74/common/unistr_case.cpp \
+icu74/common/unistr_cnv.cpp \
+icu74/common/unistr_props.cpp \
+icu74/common/unistr_titlecase_brkiter.cpp \
+icu74/common/unistr.cpp \
+icu74/common/unorm.cpp \
+icu74/common/unormcmp.cpp \
+icu74/common/uobject.cpp \
+icu74/common/uprops.cpp \
+icu74/common/ures_cnv.cpp \
+icu74/common/uresbund.cpp \
+icu74/common/uresdata.cpp \
+icu74/common/usc_impl.cpp \
+icu74/common/uscript_props.cpp \
+icu74/common/uscript.cpp \
+icu74/common/uset_props.cpp \
+icu74/common/uset.cpp \
+icu74/common/usetiter.cpp \
+icu74/common/ushape.cpp \
+icu74/common/usprep.cpp \
+icu74/common/ustack.cpp \
+icu74/common/ustr_cnv.cpp \
+icu74/common/ustr_titlecase_brkiter.cpp \
+icu74/common/ustr_wcs.cpp \
+icu74/common/ustrcase_locale.cpp \
+icu74/common/ustrcase.cpp \
+icu74/common/ustrenum.cpp \
+icu74/common/ustrfmt.cpp \
+icu74/common/ustring.cpp \
+icu74/common/ustrtrns.cpp \
+icu74/common/utext.cpp \
+icu74/common/utf_impl.cpp \
+icu74/common/util_props.cpp \
+icu74/common/util.cpp \
+icu74/common/utrace.cpp \
+icu74/common/utrie_swap.cpp \
+icu74/common/utrie.cpp \
+icu74/common/utrie2_builder.cpp \
+icu74/common/utrie2.cpp \
+icu74/common/uts46.cpp \
+icu74/common/utypes.cpp \
+icu74/common/uvector.cpp \
+icu74/common/uvectr32.cpp \
+icu74/common/uvectr64.cpp \
+icu74/common/wintz.cpp
