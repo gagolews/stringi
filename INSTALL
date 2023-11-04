@@ -52,11 +52,9 @@ Additional features and options of the `./configure` script:
 * `--disable-pkg-config`: Disable `pkg-config`;
     ICU4C will be compiled from sources.
 
-* `--with-extra-cflags=FLAGS`: Additional C compiler flags.
-
-* `--with-extra-cppflags=FLAGS`: Additional C/C++ preprocessor flags.
-
 * `--with-extra-cxxflags=FLAGS`: Additional C++ compiler flags.
+
+* `--with-extra-cppflags=FLAGS`: Additional C++ preprocessor flags.
 
 * `--with-extra-ldflags=FLAGS`: Additional linker flags.
 
@@ -83,11 +81,9 @@ Some environment variables:
 * `STRINGI_DISABLE_ICU_BUNDLE`: Enforce system ICU;
     see also `--disable-icu-bundle`.
 
-* `STRINGI_CFLAGS`: see `--with-extra-cflags`.
+* `STRINGI_CXXFLAGS`: see `--with-extra-cxxflags`.
 
 * `STRINGI_CPPFLAGS`: see `--with-extra-cppflags`.
-
-* `STRINGI_CXXFLAGS`: see `--with-extra-cxxflags`.
 
 * `STRINGI_LDFLAGS`: see `--with-extra-ldflags`.
 
