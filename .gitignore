@@ -52,4 +52,4 @@ cache-knitr/
 cache/
 
 # Sphinx documentation
-devel/sphinx/_build
+.devel/sphinx/_build
