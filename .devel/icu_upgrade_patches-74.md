@@ -1,6 +1,6 @@
 # ICU 74 Patching Info
 
-## Diffs for ICU69 (Patches applied in due course)
+## Diffs for ICU 69 (Patches applied in due course)
 
 ```bash
 COMMIT_ORIGINAL=bbbf25bbe6e1aa198389dd08636a3360b5788213
@@ -40,26 +40,47 @@ done
 ```
 
 
-## TODO: Download ICU
+## Fetch ICU4C
 
-https://github.com/unicode-org/icu/releases/tag/release-74-1
+1. Download https://github.com/unicode-org/icu/releases/download/release-74-1/icu4c-74_1-src.zip
 
-https://github.com/unicode-org/icu/releases/download/release-74-1/icu4c-74_1-src.zip
+2. From the extracted archive, copy source/common, i18n, stubdata to ./src/icu74
 
-icudt is available for download from:
+3. Move ./src/icu74/i18n/unicode and ./src/icu74/common/unicode to ./src/icu74/unicode (together)
 
-https://github.com/unicode-org/icu/releases/download/release-74-1/icu4c-74_1-data-bin-b.zip
-https://github.com/unicode-org/icu/releases/download/release-74-1/icu4c-74_1-data-bin-l.zip
+4. Update ./LICENSE
 
-Compress icudt-l with xz, include in the source bundle
+5. Create ./src/icu74/LICENSE
 
-icudt-b should be downloaded on demand during install
+7. Execute from ./src/icu74/:
+
+    ```bash
+    rm -f **/*.rc **/*.vcproj **/*.vcxproj **/*filters **/BUILD* **/Makefile.in
+    mv i18n/sources.txt ../icu74_i18n_cpp.txt
+    mv common/sources.txt ../icu74_common_cpp.txt
+    mv stubdata/sources.txt ../icu74_stubdata_cpp.txt
+    ```
 
 
-! Use `#ifdef U_STRINGI_PATCHES`
+# ICU data
+
+Destination: ./src/icu74/data
+
+```{bash}
+for endian in l b; do
+    wget -nc https://github.com/unicode-org/icu/releases/download/release-74-1/icu4c-74_1-data-bin-${endian}.zip
+    unzip -o icu4c-74_1-data-bin-${endian}.zip
+    sha256sum -b icudt74${endian}.dat > icudt74${endian}.dat.sha256sum
+    xz -z -e -9 icudt74${endian}.dat
+done
+```
+
+Only include icudt74l.dat.xz in the source bundle.
+icudt74b.dat should be downloaded on demand during install.
+
+
 
 
 ## TODO: Patch ICU
 
-
-? use sources.txt.
+! Use `#ifdef U_STRINGI_PATCHES`
