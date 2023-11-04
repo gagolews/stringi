@@ -125,10 +125,12 @@ stri_download_icudt <- function(inpath, icu_bundle_version)
 
     allok <- FALSE
     for (m in mirrors) {
-        if (identical(status <- download_from_mirror(m, fname, xzpath), TRUE)) {
+        status <- download_from_mirror(m, sprintf("%s.xz", fname), xzpath)
+        if (identical(status, TRUE)) {
             allok <- TRUE
             break
-        } else message(status)
+        }
+        else message(status)
     }
 
     if (!allok || !file.exists(xzpath)) {
