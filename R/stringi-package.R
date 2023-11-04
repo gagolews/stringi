@@ -1,6 +1,6 @@
 # kate: default-dictionary en_US
 
-## This file is part of the 'stringi' package for R.
+## This file is part of the R package 'stringi'.
 ## Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com/>
 ## All rights reserved.
 ##

@@ -52,7 +52,7 @@ done
 
 5. Create ./src/icu74/LICENSE
 
-7. Execute from ./src/icu74/:
+6. Execute from ./src/icu74/:
 
     ```bash
     rm -f **/*.rc **/*.vcproj **/*.vcxproj **/*filters **/BUILD* **/Makefile.in **/sources.txt
@@ -69,7 +69,7 @@ done
     }
     ```
 
-8. Execute from: ./src/icu74/data
+7. Execute from: ./src/icu74/data
 
     ```{bash}
     for endian in l b; do
@@ -84,14 +84,14 @@ done
     Only include icudt74l.dat.xz in the source bundle.
     icudt74b.dat should be downloaded on demand during install.
 
-9. Update configure.ac, configure.win, Makevars.in, Makevars.win, install.R, etc.
+8. Update configure.ac, configure.win, Makevars.in, Makevars.win, install.R, etc.
 
     ```bash
     autoconf && ./configure --disable-pkg-config
     ```
 
-10. Patch ICU4C based on the aforementioned diffs;
+9. Patch ICU4C based on the aforementioned diffs;
     use `#ifdef U_STRINGI_PATCHES`
 
-11. Build with github-actions, use win-builder, etc.
+10. Build with github-actions, use win-builder, etc.
     Good luck. ;)
