@@ -1,7 +1,9 @@
 ^.devel
 TODO
-^src/icu../data
+^src/icu55
 ^src/icu61
+^src/icu69
+^src/icu74/data/icudt74b.dat.xz$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^.*\.kdev4$

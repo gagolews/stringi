@@ -1,7 +1,7 @@
 # kate: default-dictionary en_US
 
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com>
+## Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com/>
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -33,203 +33,110 @@
 
 # internal functions used whilst installing stringi
 
-
-
 icudt_fname <- c(
-    little55 = "icudt55l.zip",
-    big55 = "icudt55b.zip",
-    little61 = "icudt61l.zip",
-    big61 = "icudt61b.zip",
-    little69 = "icu4c-69_1-data-bin-l.zip",
-    big69 = "icu4c-69_1-data-bin-b.zip"
-)
-
-icudt_md5ex <- c(
-    little55 = "ff345529f230cc39bb8d450af0607708",
-    big55 = "1194f0dd879d3c1c1f189cde5fd90efe",
-    little61 = "6d14e059b26606f08bad3b41eb3b5c93",
-    big61 = "45719f3208b2d67132efa620cecccb56",
-    little69 = "58ecd3e72e9d96ea2876dd89627afeb8",
-    big69 = "e86eba75d1f39be63713569dc0dc9524"
+    little74 = "icudt74l.dat",
+    big74    = "icudt74b.dat"
 )
 
 
-# icudt_mirrors <- c(
-# #     "https://github.com/unicode-org/icu/releases/download/release-69-1/",
-#     "https://raw.githubusercontent.com/gagolews/stringi/master/src/icu69/data/",
-#     "https://raw.githubusercontent.com/gagolews/stringi/master/src/icu61/data/",
-#     "https://raw.githubusercontent.com/gagolews/stringi/master/src/icu55/data/",
-#     "http://raw.githubusercontent.com/gagolews/stringi/master/src/icu69/data/",
-#     "http://raw.githubusercontent.com/gagolews/stringi/master/src/icu61/data/",
-#     "http://raw.githubusercontent.com/gagolews/stringi/master/src/icu55/data/"
-# )
-
-
-# @rdname stri_install
-stri_install_check <- function(silent = FALSE)
+# This function is not exported; it is called by install.libs.r(.in)
+stri_install_icudt <- function(outpath, inpath, icu_bundle_version)
 {
-    # As of v1.1.3, this function is no longer exported.
-    # It was deprecated in 0.5-5.
+    # remember about importFrom tools md5sum -> stringi-package.R
 
-    stopifnot(is.logical(silent), length(silent) == 1)
-
-    allok <- tryCatch({
-        if (!silent)
-            message(stri_info(TRUE))  # this may also throw an error
-
-        if (length(stri_enc_list()) <= 0)
-            stop("no encodings are supported")
-        if (length(stri_locale_list()) <= 0)
-            stop("no locales are supported")
-        if (length(stri_trans_list()) <= 0)
-            stop("no transliterators are supported")
-        TRUE
-    }, error = function(e) {
-        FALSE
-    })
-
-    if (!silent) {
-        if (allok)
-            message("All tests completed successfully.") else {
-            message("It seems that the ICU data library has not been installed properly.")
-            message("Call stri_install_icudt() to fix this problem.")
-        }
+    xzpath <- stri_download_icudt(inpath, icu_bundle_version)
+    if (identical(xzpath, FALSE) || !file.exists(xzpath)) {
+        return(invisible(FALSE))
     }
 
-    invisible(allok)
+    basepath <- substr(xzpath, 1, nchar(xzpath)-3)  # ~~".xz"~~
+
+    message("decompressing ", xzpath, " to: ", outpath)
+    fin <- xzfile(xzpath, "rb")
+    fout <- file(basepath, "wb")
+    repeat {
+        chunk <- readBin(fin, raw(), 8192L)
+        if (length(chunk) <= 0) break
+        writeBin(chunk, fout)
+    }
+    close(fout)
+    close(fin)
+
+    md5ex <- scan(sprintf("%s.md5sum", basepath), what=character(), n=1, quiet=TRUE)
+    md5ob <- tools::md5sum(basepath)
+    if (is.na(md5ob) || md5ob != md5ex) {
+        message(sprintf("md5sum mismatch for %s (%s vs %s)",
+            basepath, as.character(md5ob), as.character(md5ex)
+        ))
+        file.remove(basepath)
+        return(invisible(FALSE))
+    }
+
+    file.copy(basepath, file.path(outpath, basename(basepath)), overwrite=TRUE)
+    file.remove(basepath)
+
+    message(sprintf("%s installed successfully", basepath))
+    invisible(TRUE)
 }
 
 
-# @rdname stri_install
+# This function is not exported;
+# it is called by configure(.ac) and stri_install_icudt above
 stri_download_icudt <- function(inpath, icu_bundle_version)
 {
     fname <- icudt_fname[paste0(.Platform$endian, icu_bundle_version)]
+    path <- file.path(inpath, fname)
 
-    md5ex <- icudt_md5ex[paste0(.Platform$endian, icu_bundle_version)]
-
-#     mirrors <- icudt_mirrors
+    commit_id <- "bbe75eca8f9ef4dc72dc5c6e36c8f8306a324b7e"
     mirrors <- sprintf(
-        "%s://raw.githubusercontent.com/gagolews/stringi/master/src/icu%d/data/",
+        "%s://raw.githubusercontent.com/gagolews/stringi/%s/src/icu%d/data/",
         c("https", "http"),
+        commit_id,
         icu_bundle_version
     )
 
-    icudtzipfname <- file.path(inpath, fname)  #tempfile(fileext='.zip')
+    xzpath <- sprintf("%s.xz", path)
 
-    if (file.exists(icudtzipfname)) {
-        md5ob <- tools::md5sum(icudtzipfname)
-        if (is.na(md5ob)) {
-            message(
-                sprintf("error checking md5sum for %s", icudtzipfname)
-            )
-            return(invisible(FALSE))
-        }
-        if (md5ob != md5ex) {
-            message(sprintf(
-                "md5sum mismatch for %s (%s vs. %s)",
-                icudtzipfname,
-                as.character(md5ob),
-                as.character(md5ex)
-            ))
-            return(invisible(FALSE))
-        }
-        message("icudt already downloaded")
-        return(icudtzipfname)
+    if (file.exists(xzpath)) {
+        message(sprintf("%s exists", xzpath))
+        return(xzpath)
     }
 
-    # if (!is.null(inpath)) {
-    #    stopifnot(is.character(inpath), length(inpath) > 0, !is.na(inpath))
-    #    mirrors <- c(inpath, mirrors)
-    # }
-
-    download_from_mirror <- function(href, fname, icudtzipfname) {
+    download_from_mirror <- function(href, fname, xzpath) {
         tryCatch({
-            suppressWarnings(file.remove(icudtzipfname))
+            suppressWarnings(file.remove(xzpath))
             # download icudt
             if (
                 download.file(
-                    paste(href, fname, sep = ""), icudtzipfname, mode = "wb"
+                    paste(href, fname, sep = ""), xzpath, mode = "wb"
                 ) != 0
             ) {
                 return("download error")
             }
-            if (!file.exists(icudtzipfname)) {
+            if (!file.exists(xzpath)) {
                 return("download error")
-            }
-            md5ob <- tools::md5sum(icudtzipfname)
-            if (is.na(md5ob)) {
-                return(sprintf("error checking md5sum for %s", icudtzipfname))
-            }
-            if (md5ob != md5ex) {
-                return(sprintf(
-                    "md5sum mismatch for %s (%s vs. %s)",
-                    icudtzipfname,
-                    as.character(md5ob),
-                    as.character(md5ex)
-                ))
             }
             TRUE
         }, error = function(e) as.character(e))
     }
 
-    message("downloading the ICU data library (icudt)")
-    message("output path: ", icudtzipfname)
-    if (!exists("dir.exists") || !dir.exists(inpath)) {
-        # dir.exists is R >= 3.2.0
-        suppressWarnings(dir.create(inpath))
-    }
+    message(sprintf("downloading the ICU data library (%s)...", xzpath))
+    if (!dir.exists(inpath)) suppressWarnings(dir.create(inpath))
 
     allok <- FALSE
     for (m in mirrors) {
-        if (identical(status <- download_from_mirror(m, fname, icudtzipfname), TRUE)) {
+        if (identical(status <- download_from_mirror(m, fname, xzpath), TRUE)) {
             allok <- TRUE
             break
         } else message(status)
     }
 
-    if (!allok || !file.exists(icudtzipfname)) {
-        suppressWarnings(file.remove(icudtzipfname))
-        message("icudt download failed")
+    if (!allok || !file.exists(xzpath)) {
+        suppressWarnings(file.remove(xzpath))
+        message(sprintf("Error: %s could not be downloaded", xzpath))
         return(invisible(FALSE))
     }
 
-    message("icudt has been downloaded successfully")
-    return(icudtzipfname)
-}
-
-
-# @rdname stri_install
-stri_install_icudt <- function(check = TRUE, outpath = NULL, inpath = NULL, icu_bundle_version = NULL)
-{
-    # As of v1.1.3, this function is no longer exported.
-    # It was deprecated in v0.5-5.
-
-    stopifnot(is.logical(check), length(check) == 1, !is.na(check))
-    if (check && stri_install_check(TRUE)) {
-        message("icudt has already been installed")
-        return(invisible(TRUE))
-    }
-
-    # remember about importFrom tools md5sum -> stringi-package.R
-    # use this very code in install.libs.R directly
-
-    icudtzipfname <- stri_download_icudt(inpath, icu_bundle_version)
-    if (identical(icudtzipfname, FALSE) || !file.exists(icudtzipfname)) {
-        return(invisible(FALSE))
-    }
-
-    if (is.null(outpath))
-        outpath <- file.path(path.package("stringi"), "libs")
-
-    stopifnot(is.character(outpath), length(outpath) == 1, file.exists(outpath))
-
-    message("decompressing icudt ", icudtzipfname, " to: ", outpath)
-    res <- unzip(icudtzipfname, exdir = outpath, overwrite = TRUE)
-    if (!is.character(res) || length(res) <= 0) {
-        message("error decompressing icudt")
-        return(invisible(FALSE))
-    }
-
-    message("icudt has been installed successfully")
-    invisible(TRUE)
+    message(sprintf("%s downloaded successfully", xzpath))
+    return(xzpath)
 }

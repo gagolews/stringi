@@ -3,9 +3,9 @@
 
 ## 1.8.1 (under development)
 
-* [GENERAL] ...ICU bundle updated to version 74.1 (Unicode 15.1, CLDR 44).
+* [GENERAL] ICU bundle updated to version 74.1 (Unicode 15.1, CLDR 44).
 
-* [BUILD TIME] ...As per the suggestion of Prof. Brian Ripley, `icudt` (ICU data)
+* [BUILD TIME] As per the suggestion of Prof. Brian Ripley, `icudt74l` (ICU data)
   is now included in the source tarball (compressed with xz to save space).
   This allows for building *stringi* on systems with no internet access.
 

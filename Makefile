@@ -43,8 +43,9 @@ r-icu-bundle55:
 tinytest:
 	Rscript -e 'source(".devel/tinytest.R")'
 
+
+# (do not merge with tinytest - allows r-icu-system etc.)
 test: r tinytest
-	# test (do not merge with tinytest - allows r-icu-system etc.)
 
 build: autoconf
 	cd .. && R CMD build ${PKGNAME}
