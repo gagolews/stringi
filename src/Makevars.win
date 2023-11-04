@@ -1,10 +1,10 @@
 ## `stringi` Makevars.win
-## Copyright (c) 2013-2021, Marek Gagolewski <https://www.gagolewski.com>
+## Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com/>
 
 
-CXX_STD=CXX11
+#CXX_STD=CXX11
 
-PKG_CPPFLAGS=-I. -Iicu69/ -Iicu69/unicode -Iicu69/common -Iicu69/i18n \
+PKG_CPPFLAGS=-I. -Iicu74/ -Iicu74/unicode -Iicu74/common -Iicu74/i18n \
 -DU_STRINGI_PATCHES -DUCONFIG_USE_LOCAL \
 -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION \
 -DU_I18N_IMPLEMENTATION -DU_TOOLUTIL_IMPLEMENTATION \
@@ -27,17 +27,14 @@ PKG_CPPFLAGS=-I. -Iicu69/ -Iicu69/unicode -Iicu69/common -Iicu69/i18n \
 STRI_SOURCES_CPP=$(wildcard stri_*.cpp)
 STRI_OBJECTS=$(STRI_SOURCES_CPP:.cpp=.o)
 
-ICU_COMMON_SOURCES_CPP=$(wildcard icu69/common/*.cpp)
-ICU_COMMON_SOURCES_C=$(wildcard icu69/common/*.c)
-ICU_COMMON_OBJECTS=$(ICU_COMMON_SOURCES_CPP:.cpp=.o) $(ICU_COMMON_SOURCES_C:.c=.o)
+ICU_COMMON_SOURCES_CPP=$(wildcard icu74/common/*.cpp)
+ICU_COMMON_OBJECTS=$(ICU_COMMON_SOURCES_CPP:.cpp=.o)
 
-ICU_I18N_SOURCES_CPP=$(wildcard icu69/i18n/*.cpp)
-ICU_I18N_SOURCES_C=$(wildcard icu69/i18n/*.c)
-ICU_I18N_OBJECTS=$(ICU_I18N_SOURCES_CPP:.cpp=.o) $(ICU_I18N_SOURCES_C:.c=.o)
+ICU_I18N_SOURCES_CPP=$(wildcard icu74/i18n/*.cpp)
+ICU_I18N_OBJECTS=$(ICU_I18N_SOURCES_CPP:.cpp=.o)
 
-ICU_STUBDATA_SOURCES_CPP=$(wildcard icu69/stubdata/*.cpp)
-ICU_STUBDATA_SOURCES_C=$(wildcard icu69/stubdata/*.c)
-ICU_STUBDATA_OBJECTS=$(ICU_STUBDATA_SOURCES_CPP:.cpp=.o) $(ICU_STUBDATA_SOURCES_C:.c=.o)
+ICU_STUBDATA_SOURCES_CPP=$(wildcard icu74/stubdata/*.cpp)
+ICU_STUBDATA_OBJECTS=$(ICU_STUBDATA_SOURCES_CPP:.cpp=.o)
 
 OBJECTS=$(STRI_OBJECTS)
 
@@ -54,4 +51,3 @@ libicu_common.a: $(ICU_COMMON_OBJECTS)
 libicu_i18n.a: $(ICU_I18N_OBJECTS)
 
 libicu_stubdata.a: $(ICU_STUBDATA_OBJECTS)
-

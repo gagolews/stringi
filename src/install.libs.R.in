@@ -16,7 +16,7 @@ if (copyicudt) {
    outdir <- file.path(R_PACKAGE_DIR, "libs")
    if (length(dir(outdir, pattern=glob2rx("*.dat"))) == 0) {
       # avoids multiple download attempts while multiarch building
-      if (!stri_install_icudt(FALSE, outdir, "@ICUDT_DIR@", @ICU_BUNDLE_VERSION@))
+      if (!stri_install_icudt(outdir, "@ICUDT_DIR@", @ICU_BUNDLE_VERSION@))
          stop("icudt could not be downloaded; check your internet connectivity")
    }
 }

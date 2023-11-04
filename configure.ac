@@ -37,7 +37,7 @@
 AC_INIT([stringi], [1.8], [https://stringi.gagolewski.com/])
 
 ICU_VERSION_NEEDED="61"  # minimal version of ICU4C required to build stringi
-ICU_BUNDLE_VERSION="69"  # TODO
+ICU_BUNDLE_VERSION="74"  # version of the ICU4C bundle shipped with stringi
 ICUDT_DIR="icu${ICU_BUNDLE_VERSION}/data"
 
 m4_ifndef([AC_CONFIG_MACRO_DIRS], [
@@ -65,11 +65,11 @@ AC_ARG_VAR([PKG_CONFIG], [The 'pkg-config' command to determine
 AC_ARG_VAR(PKG_CONFIG_PATH, [An optional list of directories to search for
     pkg-config's .pc files.])
 
-AC_ARG_VAR([CC], [(ignored)])
+#AC_ARG_VAR([CC], [(ignored)])
 
-AC_ARG_VAR([CFLAGS], [(ignored)])
+#AC_ARG_VAR([CFLAGS], [(ignored)])
 
-AC_ARG_VAR([CPP], [(ignored)])
+#AC_ARG_VAR([CPP], [(ignored)])
 
 AC_ARG_VAR([CPPFLAGS], [(ignored)])
 
@@ -142,9 +142,9 @@ else
 fi
 
 
-AC_ARG_WITH([extra_cflags],
-    AS_HELP_STRING([--with-extra-cflags=FLAGS],
-        [Additional C compiler flags; see also the STRINGI_CFLAGS environment variable]))
+#AC_ARG_WITH([extra_cflags],
+#    AS_HELP_STRING([--with-extra-cflags=FLAGS],
+#        [Additional C compiler flags; see also the STRINGI_CFLAGS environment variable]))
 
 AC_ARG_WITH([extra_cppflags],
     AS_HELP_STRING([--with-extra-cppflags=FLAGS],
@@ -162,8 +162,8 @@ AC_ARG_WITH([extra_libs],
     AS_HELP_STRING([--with-extra-libs=FLAGS],
         [Additional libraries to link against; see also the STRINGI_LIBS environment variable]))
 
-AC_ARG_VAR([STRINGI_CFLAGS],
-    [Additional C compiler flags; see also --with-extra-cflags.])
+#AC_ARG_VAR([STRINGI_CFLAGS],
+#    [Additional C compiler flags; see also --with-extra-cflags.])
 
 AC_ARG_VAR([STRINGI_CPPFLAGS],
     [Additional C/C++ preprocessor flags; see also --with-extra-cppflags.])
@@ -178,7 +178,7 @@ AC_ARG_VAR([STRINGI_LIBS],
     [Additional libraries to link against; see also --with-extra-libs.])
 
 
-with_extra_cflags="${with_extra_cflags} ${STRINGI_CFLAGS}"
+#with_extra_cflags="${with_extra_cflags} ${STRINGI_CFLAGS}"
 with_extra_cppflags="${with_extra_cppflags} ${STRINGI_CPPFLAGS}"
 with_extra_cxxflags="${with_extra_cxxflags} ${STRINGI_CXXFLAGS}"
 with_extra_ldflags="${with_extra_ldflags} ${STRINGI_LDFLAGS}"
@@ -188,7 +188,7 @@ with_extra_libs="${with_extra_libs} ${STRINGI_LIBS}"
 
 MSG_CONFIG_FAIL="
 *** *********************************************************************
-*** stringi cannot be built with the current settings in place.
+*** 'stringi' cannot be built with the current settings in place.
 *** See the INSTALL file for the solutions to the most common problems.
 *** Moreover, explore the list of open and closed issues at
 *** https://github.com/gagolews/stringi/issues
@@ -258,7 +258,7 @@ else
 fi
 
 if test "x$enable_gcc_pedantic" = "xyes"; then
-    with_extra_cflags="${with_extra_cflags} -Wall -Wextra -pedantic"
+    #with_extra_cflags="${with_extra_cflags} -Wall -Wextra -pedantic"
     with_extra_cxxflags="${with_extra_cxxflags} -Wall -Wextra -pedantic"
 fi
 
@@ -295,8 +295,9 @@ enable_cxx11() {
 #
 # If this is the case, return 0
 check_cpp() {
-    AC_LANG([C++])
+    AC_LANG(C++)
     AC_PROG_CXX
+
     AC_MSG_CHECKING([whether the C++ compiler supports the 'long long' type])
     AC_LINK_IFELSE([AC_LANG_SOURCE([
         #include <iostream>
@@ -404,8 +405,6 @@ check_icu_with_pkg_config() {
     CPPFLAGS="${CPPFLAGS} ${ICU_CPPFLAGS}"
     LDFLAGS="${LDFLAGS} ${ICU_LDFLAGS}"
     LIBS="${LIBS} ${ICU_LIBS}"
-
-    AC_LANG([C++])
 
     AC_MSG_CHECKING([whether an ICU4C-based project can be built])
     AC_LINK_IFELSE([AC_LANG_SOURCE([
@@ -597,7 +596,6 @@ check_flags_icu_bundle() {
     # file is copyrighted, so we have to cope with this error in another way:
     # add the -D_XPG6 flag manually.
 
-    AC_LANG([C++])
     AC_MSG_CHECKING([whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp])
     AC_COMPILE_IFELSE([
         AC_LANG_SOURCE([`${CAT} src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp`])
@@ -610,7 +608,6 @@ check_flags_icu_bundle() {
         return 1
     ])
 
-    AC_LANG([C++])
     AC_MSG_CHECKING([whether we may compile src/icu${ICU_BUNDLE_VERSION}/i18n/number_affixutils.cpp])
     AC_COMPILE_IFELSE([
         AC_LANG_SOURCE([`${CAT} src/icu${ICU_BUNDLE_VERSION}/i18n/number_affixutils.cpp`])
@@ -687,13 +684,15 @@ while true; do
     # Step 2.  force_cxx11="yes"
     # Step 3.  Fail.
 
-    CC=`"${R_PATH}" CMD config CC`
+    #CC=`"${R_PATH}" CMD config CC`
     #CPP=`"${R_PATH}" CMD config CXXCPP`
-    LD=`"${R_PATH}" CMD config SHLIB_CXXLD`
-    CFLAGS_base=`"${R_PATH}" CMD config CFLAGS`
-    CFLAGS_pic=`"${R_PATH}" CMD config CPICFLAGS`
-    CFLAGS="${CFLAGS_base} ${CFLAGS_pic}"
+    #CFLAGS_base=`"${R_PATH}" CMD config CFLAGS`
+    #CFLAGS_pic=`"${R_PATH}" CMD config CPICFLAGS`
+    #CFLAGS="${CFLAGS_base} ${CFLAGS_pic}"
+
     CPPFLAGS=`"${R_PATH}" CMD config CPPFLAGS`
+
+    LD=`"${R_PATH}" CMD config SHLIB_CXXLD`
     LIBS=
     LDFLAGS=
 
@@ -719,20 +718,11 @@ while true; do
     fi
 
 
-    CFLAGS="${CFLAGS} ${with_extra_cflags}"
+    #CFLAGS="${CFLAGS} ${with_extra_cflags}"
     CXXFLAGS="${CXXFLAGS} ${with_extra_cxxflags}"
     CPPFLAGS="${CPPFLAGS} ${with_extra_cppflags}"
     LDFLAGS="${LDFLAGS} ${with_extra_ldflags}"
     LIBS="${LIBS} ${with_extra_libs}"
-
-
-    AC_LANG([C])
-    AC_PROG_CC
-
-    AC_CHECK_HEADER([elf.h], [
-        with_extra_cppflags="${with_extra_cppflags} -DU_HAVE_ELF_H"
-    ])
-
 
     if ! check_cpp; then
         if test $force_cxx11 = "no"; then
@@ -743,7 +733,6 @@ while true; do
             exit 1
         fi
     fi
-
 
     ##### CHECK FOR ICU4C ##########################################################
 
@@ -776,9 +765,10 @@ while true; do
     fi
 
     if test $enable_icu_bundle = "no"; then
-        echo "*** Failed to configure package build with forced system ICU usage."
-        echo "*** Consider installing, e.g., libicu-devel (RedHat, Fedora) or libicu-dev (Debian, Ubuntu)"
-        echo "*** together with pkg-config."
+        echo "*** *********************************************************************"
+        echo "*** Failed to configure 'stringi' with the enforced use of the system ICU"
+        echo "*** Consider installing, e.g., libicu-devel (RHEL, Fedora)"
+        echo "*** or libicu-dev (Debian, Ubuntu) along with 'pkg-config'"
         if test $force_cxx11 = "no"; then
             enable_cxx11
             continue
@@ -791,14 +781,14 @@ while true; do
     echo "*** Using the ICU ${ICU_BUNDLE_VERSION} bundle that comes with 'stringi'."
 
     ICU_BUNDLE_OK=0
-    OLD_CFLAGS=$CFLAGS
+    #OLD_CFLAGS=$CFLAGS
     OLD_CXXFLAGS=$CXXFLAGS
     OLD_CPPFLAGS=$CPPFLAGS
     OLD_LIBS=$LIBS
     if check_flags_icu_bundle; then
         ICU_BUNDLE_OK=1  # success
     fi
-    CFLAGS=$OLD_CFLAGS
+    #CFLAGS=$OLD_CFLAGS
     CXXFLAGS=$OLD_CXXFLAGS
     CPPFLAGS=$OLD_CPPFLAGS
 
@@ -819,18 +809,22 @@ while true; do
 done # end while
 
 
+AC_CHECK_HEADER([elf.h], [
+    with_extra_cppflags="${with_extra_cppflags} -DU_HAVE_ELF_H"
+])
+
+
 ###### DOWNLOAD ICUDT (IF NEEDED) ##############################################
 
 if test $ICU_FOUND = 0; then
     # There are systems with no internet access
-    AC_MSG_CHECKING([whether the ICU data library can be downloaded])
+    AC_MSG_CHECKING([whether the ICU data library is available])
     "${R_PATH}" --vanilla --slave -e "setwd(\"src/\"); \
         source(\"../R/install.R\"); \
         if (identical(FALSE,stri_download_icudt(\"${ICUDT_DIR}\",${ICU_BUNDLE_VERSION}))) \
             stop(\"Stopping on error\")"
     if test $? -ne 0; then
         echo "*** *********************************************************************"
-        echo "*** stringi cannot be built."
         echo "*** Failed to download the ICU data library (icudt). Stopping now."
         echo "*** For build environments that have no internet access,"
         echo "*** see the INSTALL file for a workaround."
@@ -840,7 +834,7 @@ if test $ICU_FOUND = 0; then
 fi
 
 
-##### PREPARE LIST OF SOURCE FILES #############################################
+##### PREPARE SOURCE FILES LISTS ###############################################
 
 STRINGI_SOURCES_CPP=`${CAT} src/stri_cpp.txt`
 AC_SUBST(STRINGI_SOURCES_CPP)
@@ -848,30 +842,21 @@ AC_SUBST(STRINGI_SOURCES_CPP)
 STRINGI_ICU_COMMON_SOURCES_CPP=`${CAT} src/icu${ICU_BUNDLE_VERSION}_common_cpp.txt`
 AC_SUBST(STRINGI_ICU_COMMON_SOURCES_CPP)
 
-STRINGI_ICU_COMMON_SOURCES_C=`${CAT} src/icu${ICU_BUNDLE_VERSION}_common_c.txt`
-AC_SUBST(STRINGI_ICU_COMMON_SOURCES_C)
-
 STRINGI_ICU_I18N_SOURCES_CPP=`${CAT} src/icu${ICU_BUNDLE_VERSION}_i18n_cpp.txt`
 AC_SUBST(STRINGI_ICU_I18N_SOURCES_CPP)
-
-STRINGI_ICU_I18N_SOURCES_C=`${CAT} src/icu${ICU_BUNDLE_VERSION}_i18n_c.txt`
-AC_SUBST(STRINGI_ICU_I18N_SOURCES_C)
 
 STRINGI_ICU_STUBDATA_SOURCES_CPP=`${CAT} src/icu${ICU_BUNDLE_VERSION}_stubdata_cpp.txt`
 AC_SUBST(STRINGI_ICU_STUBDATA_SOURCES_CPP)
 
-STRINGI_ICU_STUBDATA_SOURCES_C=`${CAT} src/icu${ICU_BUNDLE_VERSION}_stubdata_c.txt`
-AC_SUBST(STRINGI_ICU_STUBDATA_SOURCES_C)
 
-
-##### SETUP COMPILER 2 ###########################################################
+##### SETUP COMPILER 2 #########################################################
 
 if test $ICU_FOUND = 0; then
     if test $enable_icu_bundle = "no"; then
         echo "*** *********************************************************************"
-        echo "*** Failed to configure package build with forced system ICU usage"
-        echo "*** Consider installing, e.g., libicu-devel (RHEL, Fedora) or libicu-dev (Debian, Ubuntu)"
-        echo "*** together with pkg-config"
+        echo "*** Failed to configure 'stringi' with the enforced use of the system ICU"
+        echo "*** Consider installing, e.g., libicu-devel (RHEL, Fedora)"
+        echo "*** or libicu-dev (Debian, Ubuntu) along with 'pkg-config'"
         echo "${MSG_CONFIG_FAIL}"
         exit 1
     fi
@@ -879,7 +864,7 @@ if test $ICU_FOUND = 0; then
     # build ICU4C from sources
     STRINGI_OBJECTS="\$(STRI_OBJECTS) \$(ICU_COMMON_OBJECTS) \
         \$(ICU_I18N_OBJECTS) \$(ICU_STUBDATA_OBJECTS)"
-    STRINGI_CFLAGS=""
+    #STRINGI_CFLAGS=""
     STRINGI_CPPFLAGS="-I. -Iicu${ICU_BUNDLE_VERSION} \
         -DU_STRINGI_PATCHES \
         -Iicu${ICU_BUNDLE_VERSION}/unicode -Iicu${ICU_BUNDLE_VERSION}/common \
@@ -892,17 +877,17 @@ if test $ICU_FOUND = 0; then
 else
     # use system ICU4C
     STRINGI_OBJECTS="\$(STRI_OBJECTS)"
-    STRINGI_CFLAGS=""
+    #STRINGI_CFLAGS=""
     STRINGI_CPPFLAGS="-I. ${ICU_CPPFLAGS}"
     STRINGI_CXXFLAGS=""
     STRINGI_LDFLAGS="${ICU_LDFLAGS}"
     STRINGI_LIBS="${ICU_LIBS}"
 fi
 
-with_extra_cflags="${with_extra_cflags} ${CFLAGS_pic}"
+#with_extra_cflags="${with_extra_cflags} ${CFLAGS_pic}"
 with_extra_cxxflags="${with_extra_cxxflags} ${CXXFLAGS_pic}"
 
-STRINGI_CFLAGS="${STRINGI_CFLAGS} ${with_extra_cflags}"
+#STRINGI_CFLAGS="${STRINGI_CFLAGS} ${with_extra_cflags}"
 STRINGI_CPPFLAGS="${STRINGI_CPPFLAGS} ${with_extra_cppflags}"
 STRINGI_CXXFLAGS="${STRINGI_CXXFLAGS} ${with_extra_cxxflags}"
 STRINGI_LDFLAGS="${STRINGI_LDFLAGS} ${with_extra_ldflags}"
@@ -910,9 +895,9 @@ STRINGI_LIBS="${STRINGI_LIBS} ${with_extra_libs}"
 
 AC_SUBST(STRINGI_OBJECTS)
 AC_SUBST(STRINGI_CXXSTD)
+#AC_SUBST(STRINGI_CFLAGS)
 AC_SUBST(STRINGI_CXXFLAGS)
 AC_SUBST(STRINGI_CPPFLAGS)
-AC_SUBST(STRINGI_CFLAGS)
 AC_SUBST(STRINGI_LDFLAGS)
 AC_SUBST(STRINGI_LIBS)
 AC_SUBST(ICU_FOUND)
@@ -936,20 +921,20 @@ if test $ICU_FOUND = 0; then
     echo "    ICUDT_ENDIANNESS=${ICUDT_ENDIANNESS}"
 fi
 echo "    STRINGI_CXXSTD=${STRINGI_CXXSTD}"
-echo "    STRINGI_CFLAGS=${STRINGI_CFLAGS}"
-echo "    STRINGI_CPPFLAGS=${STRINGI_CPPFLAGS}"
+#echo "    STRINGI_CFLAGS=${STRINGI_CFLAGS}"
 echo "    STRINGI_CXXFLAGS=${STRINGI_CXXFLAGS}"
+echo "    STRINGI_CPPFLAGS=${STRINGI_CPPFLAGS}"
 echo "    STRINGI_LDFLAGS=${STRINGI_LDFLAGS}"
 echo "    STRINGI_LIBS=${STRINGI_LIBS}"
 echo ""
 echo "*** Compiler settings used:"
-echo "    CC=${CC}"
+#echo "    CC=${CC}"
 #echo "    CPP=${CPP}"
-echo "    LD=${LD}"
-echo "    CFLAGS=${CFLAGS}"
-echo "    CPPFLAGS=${CPPFLAGS}"
+#echo "    CFLAGS=${CFLAGS}"
 echo "    CXX=${CXX}"
 echo "    CXXFLAGS=${CXXFLAGS}"
+echo "    CPPFLAGS=${CPPFLAGS}"
+echo "    LD=${LD}"
 echo "    LDFLAGS=${LDFLAGS}"
 echo "    LIBS=${LIBS}"
 echo ""
