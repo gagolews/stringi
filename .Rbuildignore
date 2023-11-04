@@ -1,12 +1,12 @@
-^NEWS_TODO$
+^.devel
+TODO
 ^src/icu../data
+^src/icu61
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^.*\.kdev4$
 ^\.kdev4
-^.devel
 kate-swp$
-^src/icu61
 ^src/boost
 ^src-i386
 ^src-x64
@@ -38,5 +38,4 @@ kate-swp$
 ^Makefile
 ^stringi_.*\.tar\.gz$
 ^CODE_OF_CONDUCT
-TODO
 ^CITATION\.cff$
