@@ -1022,7 +1022,9 @@ void blueprint_helpers::parseCurrencyOption(const StringSegment& segment, MacroP
         status = U_NUMBER_SKELETON_SYNTAX_ERROR;
         return;
     }
-    const char16_t* currencyCode = segment.toTempUnicodeString().getBuffer();
+    //const char16_t* currencyCode = segment.toTempUnicodeString().getBuffer();
+    UnicodeString tmp = segment.toTempUnicodeString();
+    const UChar* currencyCode = tmp.getBuffer();  // Marek's patch
     UErrorCode localStatus = U_ZERO_ERROR;
     CurrencyUnit currency(currencyCode, localStatus);
     if (U_FAILURE(localStatus)) {
@@ -1346,7 +1348,7 @@ bool blueprint_helpers::parseFracSigOption(const StringSegment& segment, MacroPr
     }
     auto& oldPrecision = static_cast<const FractionPrecision&>(macros.precision);
     if (offset < segment.length()) {
-        UNumberRoundingPriority priority;
+        UNumberRoundingPriority priority = UNUM_ROUNDING_PRIORITY_RELAXED;
         if (maxSig == -1) {
             // The wildcard character is not allowed with the priority annotation
             status = U_NUMBER_SKELETON_SYNTAX_ERROR;

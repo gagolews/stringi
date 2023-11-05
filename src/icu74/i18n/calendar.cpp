@@ -838,10 +838,15 @@ Calendar::operator=(const Calendar &right)
         fWeekendCease            = right.fWeekendCease;
         fWeekendCeaseMillis      = right.fWeekendCeaseMillis;
         fNextStamp               = right.fNextStamp;
-        uprv_strncpy(validLocale, right.validLocale, sizeof(validLocale));
-        uprv_strncpy(actualLocale, right.actualLocale, sizeof(actualLocale));
-        validLocale[sizeof(validLocale)-1] = 0;
-        actualLocale[sizeof(validLocale)-1] = 0;
+
+        // fix for an annoying compiler warning (false positive)...
+        // snprintf writes at most *size* bytes (including the terminating null byte *str* (1st arg)
+        snprintf((char*)validLocale, ULOC_FULLNAME_CAPACITY, "%s", (char*)right.validLocale);
+        snprintf((char*)actualLocale, ULOC_FULLNAME_CAPACITY, "%s", (char*)right.actualLocale);
+        // uprv_strncpy(validLocale, right.validLocale, sizeof(validLocale));
+        // uprv_strncpy(actualLocale, right.actualLocale, sizeof(actualLocale));
+        // validLocale[sizeof(validLocale)-1] = 0;
+        // actualLocale[sizeof(validLocale)-1] = 0;
     }
 
     return *this;
