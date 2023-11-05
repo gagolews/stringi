@@ -41,7 +41,14 @@
  // do not turn on!
 */
 
+#if defined(__GNUC__) && __GNUC__ >= 3
+#define NORET __attribute__((noreturn))
+#else
+#define NORET
+#endif
+extern "C" void NORET Rf_error(const char *, ...);
 
+#define UPRV_UNREACHABLE_EXIT (Rf_error("ICU internal error: UPRV_UNREACHABLE"))
 
 
 #if !STRI_ICU_FOUND

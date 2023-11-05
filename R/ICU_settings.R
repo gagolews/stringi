@@ -69,7 +69,11 @@ stri_info <- function(short = FALSE)
     stopifnot(is.logical(short), length(short) == 1)
 
     info <- .Call(C_stri_info)
-    if (info$Charset.native$Name.friendly != "UTF-8") {
+    loclist <- stri_locale_list()
+    locale <- info$Locale$Name
+    charset <- info$Charset.native$Name.friendly
+
+    if (charset != "UTF-8") {
         if (!identical(info$Charset.native$ASCII.subset, TRUE))
             warning(stri_paste("Your native character encoding is not a superset of US-ASCII. ",
                 "Consider switching to UTF-8."))
@@ -78,16 +82,13 @@ stri_info <- function(short = FALSE)
                 "Consider switching to UTF-8."))
     }
 
-    loclist <- stri_locale_list()
-    if (!(info$Locale$Name %in% loclist))
+    if (!(locale %in% loclist))
         warning(stri_paste("Your current locale is not on the list of ",
             "available locales; see stri_locale_list(). ",
             "Some functions may not work properly. "))
 
     if (!short)
         return(info) else {
-        locale <- info$Locale$Name
-        charset <- info$Charset.native$Name.friendly
         return(sprintf("stringi_%s (%s.%s; ICU4C %s [%s%s]; Unicode %s)", as.character(packageVersion("stringi")),
             locale, charset, info$ICU.version, if (info$ICU.system) "system" else "bundle",
             if (info$ICU.UTF8) "#U_CHARSET_IS_UTF8" else "", info$Unicode.version))

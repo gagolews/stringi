@@ -7,7 +7,7 @@ install.packages("stringi")
 ```
 
 However, due to the overwhelming complexity of the ICU4C library,
-upon which *stringi* is based, and the colourful diversity of environments
+upon which *stringi* is based, and the diversity of environments
 it operates on, you might still experience a few issues.
 Hopefully, they can be resolved with the help of this short manual.
 
@@ -18,7 +18,9 @@ Below we also describe some available build process tweaks.
 
 The stringi package depends on the ICU4C >= 61 library.
 
-If we install the package from sources and one of the following is true:
+ICU will be built together with stringi based on the customised
+ICU4C 74.1 source bundle that is shipped with the package
+if we install the package from sources and one of the following is true:
 
 * this requirement is not met (check out <https://icu.unicode.org/download>,
     the `libicu-devel` package on Fedora/CentOS/OpenSUSE,
@@ -31,10 +33,7 @@ If we install the package from sources and one of the following is true:
     argument, or the `STRINGI_DISABLE_PKG_CONFIG` environment variable
     is set to non-zero or
     `install.packages("stringi", configure.args="--disable-pkg-config")`
-    is executed,
-
-then ICU will be built together with stringi based on the customised
-ICU4C 74.1 source bundle that is shipped with the package.
+    is executed.
 
 > Actually, to get the most out of stringi, you are strongly encouraged to rely
 > on our ICU4C bundle. This ensures maximum portability across all platforms
