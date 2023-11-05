@@ -14,5 +14,6 @@ Contributions are welcome!
     for Windows: "Rtools43 has icu 72.1, Rtools42 has 71.1."; see also some notes
     in configure.ac
 
-* [LATER] compress, move, remove src/icu55*, src/icu61*, src/icu69*;
-    the *.dat files may still be downloaded by old R/install.R files
+* [LATER] compress, move, remove src/icu55/data/*, src/icu61/data/*,
+    and src/icu69/data/*; currently, the *.dat files may still be downloaded
+    by old R/install.R files.
