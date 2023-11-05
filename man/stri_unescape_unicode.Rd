@@ -33,7 +33,7 @@ Moreover, the function understands the following ones:
 For \code{\\xXX} and \code{\\ooo}, beware of non-valid UTF-8 byte sequences.
 
 Note that some versions of R on Windows cannot handle
-characters defined with  {\\UXXXXXXXX}.
+characters defined with \code{\\UXXXXXXXX}.
 We are working on that.
 }
 \examples{

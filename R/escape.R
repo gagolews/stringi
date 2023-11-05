@@ -1,7 +1,7 @@
 # kate: default-dictionary en_US
 
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2021, Marek Gagolewski <https://www.gagolewski.com>
+## Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com/>
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -44,7 +44,7 @@
 #' (also recognized in R) convention is used.
 #' We get \code{\\a}, \code{\\b}, \code{\\t}, \code{\\n}, \code{\\v},
 #' \code{\\f}, \code{\\r}, \code{\"}, \code{\'}, \code{\\\\}
-#' or either {\\uXXXX} (4 hex digits) or {\\UXXXXXXXX} (8 hex digits)
+#' or either \code{\\uXXXX} (4 hex digits) or \code{\\UXXXXXXXX} (8 hex digits)
 #' otherwise.
 #'
 #'
@@ -90,7 +90,7 @@ stri_escape_unicode <- function(str)
 #' For \code{\\xXX} and \code{\\ooo}, beware of non-valid UTF-8 byte sequences.
 #'
 #' Note that some versions of R on Windows cannot handle
-#' characters defined with  {\\UXXXXXXXX}.
+#' characters defined with \code{\\UXXXXXXXX}.
 #' We are working on that.
 #'
 #' @param str character vector
