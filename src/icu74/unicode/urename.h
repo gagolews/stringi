@@ -981,7 +981,7 @@
 #define ufmt_ptou U_ICU_ENTRY_POINT_RENAME(ufmt_ptou)
 #define ufmt_uto64 U_ICU_ENTRY_POINT_RENAME(ufmt_uto64)
 #define ufmt_utop U_ICU_ENTRY_POINT_RENAME(ufmt_utop)
-#define ufmtval_getString U_ICU_ENTRY_POINT_RENAME(ufmtval_getString)
+// #define ufmtval_getString U_ICU_ENTRY_POINT_RENAME(ufmtval_getString)
 #define ufmtval_nextPosition U_ICU_ENTRY_POINT_RENAME(ufmtval_nextPosition)
 #define ugender_getInstance U_ICU_ENTRY_POINT_RENAME(ugender_getInstance)
 #define ugender_getListGender U_ICU_ENTRY_POINT_RENAME(ugender_getListGender)

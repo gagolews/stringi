@@ -25,6 +25,8 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get -y upgrade
+        sudo echo "pl_PL.UTF-8" >> /etc/locale.gen
+        sudo locale-gen
         sudo apt-get -y install libcurl4-openssl-dev r-base-dev devscripts libicu-dev language-pack-pl
         sudo Rscript -e "install.packages(c('tinytest', 'Rcpp'))"
     - name: Install stringi
@@ -32,6 +34,6 @@ jobs:
         sudo R CMD INSTALL .
     - name: Test stringi
       run: |
-        sudo Rscript -e 'source(".devel/tinytest.R")'
+        Rscript -e 'source(".devel/tinytest.R")'
         LC_ALL="pl_PL.UTF-8" Rscript -e 'source(".devel/tinytest.R")'
         LC_ALL="C" Rscript -e 'source(".devel/tinytest.R")'

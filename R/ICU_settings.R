@@ -82,11 +82,6 @@ stri_info <- function(short = FALSE)
                 "Consider switching to UTF-8."))
     }
 
-    if (!(locale %in% loclist))
-        warning(stri_paste("Your current locale is not on the list of ",
-            "available locales; see stri_locale_list(). ",
-            "Some functions may not work properly. "))
-
     if (!short)
         return(info) else {
         return(sprintf("stringi_%s (%s.%s; ICU4C %s [%s%s]; Unicode %s)", as.character(packageVersion("stringi")),

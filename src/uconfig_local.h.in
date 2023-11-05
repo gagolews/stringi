@@ -49,7 +49,8 @@
 extern "C" void NORET Rf_error(const char *, ...);
 
 #define UPRV_UNREACHABLE_EXIT (Rf_error("ICU internal error: UPRV_UNREACHABLE"))
-
+#define DOUBLE_CONVERSION_UNIMPLEMENTED() (Rf_error("ICU internal error: DOUBLE_CONVERSION_UNIMPLEMENTED"))
+#define DOUBLE_CONVERSION_UNREACHABLE()   (Rf_error("ICU internal error: DOUBLE_CONVERSION_UNREACHABLE"))
 
 #if !STRI_ICU_FOUND
 // if compiling ICU from sources, use:
