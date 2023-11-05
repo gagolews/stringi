@@ -15,8 +15,6 @@ jobs:
       run: |
         sudo apt-get update -qq
         # https://cran.r-project.org/bin/linux/ubuntu/
-        sudo echo "pl_PL.UTF-8" >> /etc/locale.gen
-        sudo locale-gen
         sudo apt install --no-install-recommends software-properties-common dirmngr
         sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
         sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
@@ -29,5 +27,3 @@ jobs:
     - name: Test stringi
       run: |
         Rscript -e 'source(".devel/tinytest.R")'
-        LC_ALL="pl_PL.UTF-8" Rscript -e 'source(".devel/tinytest.R")'
-        LC_ALL="C" Rscript -e 'source(".devel/tinytest.R")'

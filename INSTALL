@@ -14,6 +14,21 @@ Hopefully, they can be resolved with the help of this short manual.
 Below we also describe some available build process tweaks.
 
 
+> To get the most out of stringi, you are strongly encouraged to rely
+> on our custom ICU4C 74.1 bundle by calling:
+>
+> ```r
+> install.packages("stringi", configure.args="--disable-pkg-config")
+> ```
+>
+> This ensures maximum portability across all platforms
+> (Windows and macOS users fetch the pre-compiled binaries
+> from CRAN built precisely this way).
+
+
+
+
+
 ## ICU4C
 
 The stringi package depends on the ICU4C >= 61 library.
@@ -34,11 +49,6 @@ if we install the package from sources and one of the following is true:
     is set to non-zero or
     `install.packages("stringi", configure.args="--disable-pkg-config")`
     is executed.
-
-> Actually, to get the most out of stringi, you are strongly encouraged to rely
-> on our ICU4C bundle. This ensures maximum portability across all platforms
-> (Windows and macOS users fetch the pre-compiled binaries
-> from CRAN built precisely this way).
 
 
 
