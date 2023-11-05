@@ -374,7 +374,7 @@ stri_extract_all_regex(x, "\\p{S}")         # symbols
 ##  [1] "|" "<" ">" "=" "+" "^" "$" "€" "`" "~" "×"
 ```
 
-We strongly recommend, wherever possible, the use of the portable
+We strongly recommend, wherever possible, using the portable
 "`[\p{P}\p{S}]`" as an alternative to the *PCRE*'s "`[:punct:]`".
 
 
@@ -686,7 +686,7 @@ For example, "`\1`" denotes whatever has been consumed by the first
 capture group.
 
 Even though, in general, parsing HTML code with regexes is not
-recommended, let's consider the following examples:
+recommended, let us consider the following examples:
 
 
 

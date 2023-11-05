@@ -1,36 +1,61 @@
 # Changelog
 
 
+## 1.8.1 (under development)
+
+* [GENERAL] ICU bundle updated to version 74.1 (Unicode 15.1, CLDR 44).
+
+* [BUILD TIME] As per the suggestion of Prof. Brian Ripley, `icudt74l` (ICU data)
+  is now included in the source tarball (compressed with xz to save space).
+  This allows for building *stringi* on systems with no internet access.
+
+* [BUILD TIME] Support for Solaris has now been dropped. The package is no
+    longer shipped with the very outdated ICU55 bundle. A compiler supporting
+    at least C++11 is now required. ICU >= 61 is now required.
+
+
+
+* [NEW FEATURE] TODO.... #469: `stri_datetime_parse` .. new argument -
+`default_time`
+    a Calendar set on input to the date and time to be used for missing values in the date/time string being parsed
+
+* [BUGFIX] TODO.... #469: `stri_datetime_parse` did not reset the `Calendar` object
+    when parsing multiple dates.
+
+* [NEW FEATURE] TODO... #476 U_USING_DEFAULT_ERROR on unknown locales
+
+
+
 ## 1.7.12 (2023-01-09)
 
 * [BUGFIX] Fixed some potential problems reported by `rchk`.
 
 * [NOTE] [BACKWARD INCOMPATIBLE CHANGE IF ICU >= 72]
-  If building against ICU >= 72,
-  note a backward incompatible change: `@` is no longer a word break;
-  see <https://github.com/unicode-org/cldr/pull/2256> for more details.
+  If building against ICU >= 72, note a backward incompatible change:
+  `@` is no longer considered a word break; for more details, see
+  <https://github.com/unicode-org/cldr/pull/2256>.
 
 
 ## 1.7.8 (2022-07-11)
 
 * [DOCUMENTATION] Paper on *stringi* has been published in
-    the *Journal of Statistical Software*;
-    see <https://doi.org/10.18637/jss.v103.i02>.
+  the *Journal of Statistical Software*;
+  see <https://doi.org/10.18637/jss.v103.i02>.
 
 * [BUGFIX] #473, #397: Fixed buffer overflow in `stri_dup`.
-    `stri_dup`, `stri_paste`, ... fail more graciously on attempts to
-    generate strings of length >= 2^31 each.
+  `stri_dup`, `stri_paste`, ... fail more graciously on attempts to
+  generate strings of length >= 2^31 each.
 
 * [BUILD TIME] #480: Using `Rf_isNull` instead of `isNull`.
 
 * [DOCUMENTATION] #462: That the `numeric=TRUE` collator
-    does not handle negative numbers correctly is now mentioned in the manual.
+  does not handle negative numbers correctly is now mentioned in the manual.
 
 
 ## 1.7.6 (2021-11-29)
 
 * [BUILD TIME] #463: Added loongarch support in ICU's double conversion
-    (@liuxiang88).
+  (@liuxiang88).
 
 * [BUGFIX] #467: The UCRT build on Windows was not marking strings as `latin1`.
 

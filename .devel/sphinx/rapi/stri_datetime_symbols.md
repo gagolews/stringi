@@ -448,7 +448,8 @@ stri_datetime_symbols(width='abbreviated')
 
 ```
 ## $Month
-##  [1] "Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov" "Dec"
+##  [1] "Jan"  "Feb"  "Mar"  "Apr"  "May"  "June" "July" "Aug"  "Sept" "Oct" 
+## [11] "Nov"  "Dec" 
 ## 
 ## $Weekday
 ## [1] "Sun" "Mon" "Tue" "Wed" "Thu" "Fri" "Sat"
@@ -472,10 +473,10 @@ stri_datetime_symbols(width='narrow')
 ##  [1] "J" "F" "M" "A" "M" "J" "J" "A" "S" "O" "N" "D"
 ## 
 ## $Weekday
-## [1] "Su." "M."  "Tu." "W."  "Th." "F."  "Sa."
+## [1] "S" "M" "T" "W" "T" "F" "S"
 ## 
 ## $Quarter
-## character(0)
+## [1] "1" "2" "3" "4"
 ## 
 ## $AmPm
 ## [1] "am" "pm"

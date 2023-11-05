@@ -8,8 +8,15 @@ set.seed(123)
 library("tinytest")
 library("stringi")
 library("methods")
+
 # options(encoding="UTF-8")  # e.g., on Windows
 cat(stri_info(short=TRUE), "\n")
+
+if (stringi::stri_info()$ICU.system) {
+    cat("stri_locale_list: ", paste(stringi::stri_locale_list(), collapse=", "), "\n")
+    cat("stri_enc_list: ", paste(stringi::stri_enc_list(), collapse=", "), "\n")
+}
+
 testWarnings <- TRUE
 
 if (testWarnings) {
