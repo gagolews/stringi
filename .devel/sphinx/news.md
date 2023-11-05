@@ -17,11 +17,11 @@
 
 
 * [NEW FEATURE] TODO.... #469: `stri_datetime_parse` .. new argument -
-`default_time`
-    a Calendar set on input to the date and time to be used for missing values in the date/time string being parsed
+  `default_time` a Calendar set on input to the date and time to be used
+  for missing values in the date/time string being parsed
 
-* [BUGFIX] TODO.... #469: `stri_datetime_parse` did not reset the `Calendar` object
-    when parsing multiple dates.
+* [BUGFIX] TODO.... #469: `stri_datetime_parse` did not reset the `Calendar`
+  object when parsing multiple dates.
 
 * [NEW FEATURE] TODO... #476 U_USING_DEFAULT_ERROR on unknown locales
 
@@ -33,7 +33,7 @@
 
 ## 1.7.12 (2023-01-09)
 
-* [BUGFIX] Fixed some potential problems reported by `rchk`.
+* [BUGFIX] Fixed a few issues reported by `rchk`.
 
 * [NOTE] [BACKWARD INCOMPATIBLE CHANGE IF ICU >= 72]
   If building against ICU >= 72, note a backward incompatible change:
@@ -47,7 +47,7 @@
   the *Journal of Statistical Software*;
   see <https://doi.org/10.18637/jss.v103.i02>.
 
-* [BUGFIX] #473, #397: Fixed buffer overflow in `stri_dup`.
+* [BUGFIX] #473, #397: Fixed buffer overflow in `stri_dup`; Also,
   `stri_dup`, `stri_paste`, ... fail more graciously on attempts to
   generate strings of length >= 2^31 each.
 
