@@ -5,13 +5,14 @@
 
 * [GENERAL] ICU bundle updated to version 74.1 (Unicode 15.1, CLDR 44).
 
-* [BUILD TIME] As per the suggestion of Prof. Brian Ripley, `icudt74l` (ICU data)
-  is now included in the source tarball (compressed with xz to save space).
-  This allows for building *stringi* on systems with no internet access.
+* [BUILD TIME] As per the suggestion of Prof. Brian Ripley, `icudt74l`
+  (ICU data -- little endian) is now included in the source tarball (compressed
+  with xz to save space). This allows for building *stringi* on systems with
+  no internet access.
 
 * [BUILD TIME] Support for Solaris has now been dropped. The package is no
-    longer shipped with the very outdated ICU55 bundle. A compiler supporting
-    at least C++11 is now required. ICU >= 61 is now required.
+  longer shipped with the very outdated ICU55 bundle. A compiler supporting
+  at least C++11 is now required. ICU >= 61 is now required.
 
 
 
@@ -23,6 +24,10 @@
     when parsing multiple dates.
 
 * [NEW FEATURE] TODO... #476 U_USING_DEFAULT_ERROR on unknown locales
+
+* TODO.... ...#490?
+
+* TODO.... ...#491?
 
 
 

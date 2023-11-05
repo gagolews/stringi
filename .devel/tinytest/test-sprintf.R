@@ -22,7 +22,15 @@ expect_identical(stri_sprintf("%0000000000000000001$#0+ *0000002$.*003$e", 1.234
 
 f <- c("%10.3f", "%010.3f", "%+10.3f", "%- 10.3f")
 x <- c(-Inf, -0, 0, Inf, NaN, NA_real_)
-expect_identical(outer(f, x, stri_sprintf, na_string="NA"), outer(f, x, sprintf))
+expect_identical(
+as.character(outer(f, x, stri_sprintf, na_string="NA")),
+    c("      -Inf", "      -Inf", "      -Inf", "-Inf      ",
+    "    -0.000",    "-00000.000", "    -0.000", "-0.000    ",
+    "     0.000", "000000.000",    "    +0.000", " 0.000    ",
+    "       Inf", "       Inf", "      +Inf",    " Inf      ",
+    "       NaN", "       NaN", "       NaN", " NaN      ",
+    "        NA", "        NA", "        NA", " NA       ")
+)
 
 expect_identical(stri_sprintf("% .0f", x, na_string=NA, inf_string=NA, nan_string=NA),
     c(NA, "-0", " 0", NA, NA, NA))
@@ -200,7 +208,7 @@ expect_identical(stri_sprintf("%- 5d", c(-123, 123, 0)), sprintf("%- 5d", c(-123
 expect_identical(stri_sprintf("%-+5d", c(-123, 123, 0)), sprintf("%-+5d", c(-123, 123, 0)))
 expect_identical(stri_sprintf("%-0+5d", c(-123, 123, 0)), sprintf("%-0+5d", c(-123, 123, 0)))
 expect_identical(stri_sprintf("%-0 5d", c(-123, 123, 0)), sprintf("%-0 5d", c(-123, 123, 0)))
-expect_identical(stri_sprintf("%08s", "abc"), sprintf("%08s", "abc"))
+#expect_identical(stri_sprintf("%08s", "abc"), sprintf("%08s", "abc"))  # undefined behaviour for strings according to man 3 sprintf
 expect_identical(stri_sprintf("%-8s", "abc"), sprintf("%-8s", "abc"))
 expect_identical(stri_sprintf("%+8s", "abc"), sprintf("%+8s", "abc"))
 expect_identical(stri_sprintf("%1$s %s %2$s %s", 1, 2), sprintf("%1$s %s %2$s %s", 1, 2))
@@ -234,7 +242,7 @@ expect_identical(stri_sprintf("%G", 1e-6 * pi), sprintf("%G", 1e-6 * pi))
 expect_identical(stri_sprintf("%1.f", 101), sprintf("%1.f", 101))
 expect_identical(stri_sprintf("%1$d %1$x %1$X", 0:15), sprintf("%1$d %1$x %1$X", 0:15))
 expect_identical(stri_sprintf("min 10-char string '%10s'", c("a", "ABC", "and an even longer one")), sprintf("min 10-char string '%10s'", c("a", "ABC", "and an even longer one")))
-expect_identical(stri_sprintf("%09s", month.name), sprintf("%09s", month.name))
+expect_identical(stri_sprintf("% 9s", month.name), sprintf("% 9s", month.name))
 expect_identical(stri_sprintf(paste0("e with %2d digits = %.", 1:18, "g"), 1:18, exp(1)), sprintf(paste0("e with %2d digits = %.", 1:18, "g"), 1:18, exp(1)))
 expect_identical(stri_sprintf("second %2$1.0f, first %1$5.2f, third %3$1.0f", pi, 2, 3), sprintf("second %2$1.0f, first %1$5.2f, third %3$1.0f", pi, 2, 3))
 expect_identical(stri_sprintf("precision %.*f, width '%*.3f'", 3, pi, 8, pi), sprintf("precision %.*f, width '%*.3f'", 3, pi, 8, pi))

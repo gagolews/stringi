@@ -193,26 +193,26 @@ ucfpos_close(UConstrainedFieldPosition* ptr) {
 }
 
 
-U_CAPI const char16_t* U_EXPORT2
-ufmtval_getString(
-        const UFormattedValue* ufmtval,
-        int32_t* pLength,
-        UErrorCode* ec) {
-    const auto* impl = UFormattedValueApiHelper::validate(ufmtval, *ec);
-    if (U_FAILURE(*ec)) {
-        return nullptr;
-    }
-    UnicodeString readOnlyAlias = impl->fFormattedValue->toTempString(*ec);
-    if (U_FAILURE(*ec)) {
-        return nullptr;
-    }
-    if (pLength != nullptr) {
-        *pLength = readOnlyAlias.length();
-    }
-    // Note: this line triggers -Wreturn-local-addr, but it is safe because toTempString is
-    // defined to return memory owned by the ufmtval argument.
-    return readOnlyAlias.getBuffer();
-}
+// U_CAPI const char16_t* U_EXPORT2
+// ufmtval_getString(
+//         const UFormattedValue* ufmtval,
+//         int32_t* pLength,
+//         UErrorCode* ec) {
+//     const auto* impl = UFormattedValueApiHelper::validate(ufmtval, *ec);
+//     if (U_FAILURE(*ec)) {
+//         return nullptr;
+//     }
+//     UnicodeString readOnlyAlias = impl->fFormattedValue->toTempString(*ec);
+//     if (U_FAILURE(*ec)) {
+//         return nullptr;
+//     }
+//     if (pLength != nullptr) {
+//         *pLength = readOnlyAlias.length();
+//     }
+//     // Note: this line triggers -Wreturn-local-addr, but it is safe because toTempString is
+//     // defined to return memory owned by the ufmtval argument.
+//     return readOnlyAlias.getBuffer();
+// }
 
 
 U_CAPI UBool U_EXPORT2
