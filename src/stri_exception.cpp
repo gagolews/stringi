@@ -72,7 +72,7 @@ const char* ICUError::getICUerrorName(UErrorCode status)
     case U_PLUGIN_CHANGED_LEVEL_WARNING:
         return "A plugin caused a level change. May not be an error, but later plugins may not load.";
     case U_ZERO_ERROR:
-        return "No error, no warning (why did stringi report that??? file a bug report, please; thanks!)";
+        return "No error, no warning (Why have stringi reported this? Please file a bug report.)";
     case U_ILLEGAL_ARGUMENT_ERROR:
         return "Illegal argument.";
     case U_MISSING_RESOURCE_ERROR:

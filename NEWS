@@ -14,6 +14,8 @@
   longer shipped with the very outdated ICU55 bundle. A compiler supporting
   at least C++11 is now required. ICU >= 61 is now required.
 
+* [BUGFIX] #487: Some functions did not accept ASCII strings longer than
+  858993457 characters on input.
 
 
 * [NEW FEATURE] TODO.... #469: `stri_datetime_parse` .. new argument -
@@ -24,10 +26,6 @@
   object when parsing multiple dates.
 
 * [NEW FEATURE] TODO... #476 U_USING_DEFAULT_ERROR on unknown locales
-
-* TODO.... ...#490?
-
-* TODO.... ...#491?
 
 
 
