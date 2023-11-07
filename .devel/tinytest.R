@@ -26,4 +26,5 @@ if (testWarnings) {
 }
 
 rm(testWarnings)
+warnings()
 cat(stri_info(short=TRUE), "\n")

@@ -157,7 +157,7 @@ SEXP stri_timezone_set(SEXP tz) {
 }
 
 
-/** Get localized time zone info
+/** Get localised time zone info
  *
  * @param tz single string or NULL
  * @param locale single string or NULL
@@ -169,7 +169,8 @@ SEXP stri_timezone_set(SEXP tz) {
  * @version 0.5-1 (Marek Gagolewski, 2015-03-01)
  *    new out: WindowsID, NameDaylight, new in: display_type
  */
-SEXP stri_timezone_info(SEXP tz, SEXP locale, SEXP display_type) {
+SEXP stri_timezone_info(SEXP tz, SEXP locale, SEXP display_type)
+{
     TimeZone* curtz = stri__prepare_arg_timezone(tz, "tz", R_NilValue);
     const char* qloc = stri__prepare_arg_locale(locale, "locale", true); /* this is R_alloc'ed */
     const char* dtype_str = stri__prepare_arg_string_1_notNA(display_type, "display_type"); /* this is R_alloc'ed */
@@ -229,6 +230,11 @@ SEXP stri_timezone_info(SEXP tz, SEXP locale, SEXP display_type) {
     UnicodeString val_name;
     curtz->getDisplayName(false, dtype, Locale::createFromName(qloc), val_name);
     SET_VECTOR_ELT(vals, curidx, stri__make_character_vector_UnicodeString_ptr(1, &val_name));
+
+    // TODO: If the display name is not available for the locale,
+    // then getDisplayName returns a string in the localised GMT offset format
+    // such as GMT[+-]HH:mm. -- we can't check+warn if it is a valid locale
+    // otherwise other than by comparing the output to this pattern
 
     ++curidx;
     if ((bool)curtz->useDaylightTime()) {

@@ -54,9 +54,9 @@ const char* ICUError::getICUerrorName(UErrorCode status)
 {
     switch(status) {
     case U_USING_FALLBACK_WARNING:
-        return "A resource bundle lookup returned a fallback result. (not an error)";
+        return "A resource bundle lookup returned a result from a fallback (more general) locale.";  // (not an error)
     case U_USING_DEFAULT_WARNING:
-        return "A resource bundle lookup returned a result from the root locale. (not an error)";
+        return "A resource bundle lookup returned a result either from the root or the default locale.";  // (not an error)
     case U_SAFECLONE_ALLOCATED_WARNING:
         return "A SafeClone operation required allocating memory. (informational only)";
     case U_STATE_OLD_WARNING:

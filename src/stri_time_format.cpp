@@ -149,7 +149,8 @@ DateFormat* stri__get_date_format(
  * @version 0.5-1 (Marek Gagolewski, 2015-02-22) use tz
  * @version 1.6.3 (Marek Gagolewski, 2021-05-24) #434: vectorise wrt format
  */
-SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale) {
+SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale)
+{
     const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
     PROTECT(time = stri__prepare_arg_POSIXct(time, "time"));
     PROTECT(format = stri__prepare_arg_string(format, "format"));
@@ -168,13 +169,12 @@ SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale) {
     StriContainerDouble time_cont(time, vectorize_length);
     StriContainerUTF8 format_cont(format, vectorize_length);
 
-    UErrorCode status = U_ZERO_ERROR;
-    cal = Calendar::createInstance(locale_val, status);
-    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+    cal = stri__get_calendar(locale_val);
 
     cal->adoptTimeZone(tz_val);
     tz_val = NULL; /* The Calendar takes ownership of the TimeZone. */
 
+    UErrorCode status = U_ZERO_ERROR;
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
@@ -265,7 +265,8 @@ SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale) {
  * @version 1.6.3 (Marek Gagolewski, 2021-05-24) #434: vectorise wrt format
  * @version 1.6.3 (Marek Gagolewski, 2021-06-07) empty retval should have a class too
  */
-SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP lenient, SEXP tz, SEXP locale) {
+SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP lenient, SEXP tz, SEXP locale)
+{
     const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
     PROTECT(str = stri__prepare_arg_string(str, "str"));
     PROTECT(format = stri__prepare_arg_string(format, "format"));
@@ -291,15 +292,14 @@ SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP lenient, SEXP tz, SEXP loca
     StriContainerUTF16 str_cont(str, vectorize_length);
     StriContainerUTF8 format_cont(format, vectorize_length);
 
-    UErrorCode status = U_ZERO_ERROR;
-    cal = Calendar::createInstance(locale_val, status);
-    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+    cal = stri__get_calendar(locale_val);
 
     cal->adoptTimeZone(tz_val);
     tz_val = NULL; /* The Calendar takes ownership of the TimeZone. */
 
     cal->setLenient(lenient_val);
 
+    UErrorCode status = U_ZERO_ERROR;
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocVector(REALSXP, vectorize_length));
 

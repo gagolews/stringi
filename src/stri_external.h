@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' project.
- * Copyright (c) 2013-2022, Marek Gagolewski <https://www.gagolewski.com>
+ * Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com/>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -60,6 +60,7 @@
 #include <unicode/brkiter.h>
 #include <unicode/rbbi.h>
 #include <unicode/timezone.h>
+#include <unicode/calendar.h>
 using namespace icu;
 
 // #define USE_RINTERNALS  removed 2021-08-12 - do not use anymore

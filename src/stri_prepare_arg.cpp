@@ -1455,6 +1455,9 @@ const char* stri__prepare_arg_string_1_notNA(SEXP x, const char* argname)
  *
  * @version 1.5.4 (Marek Gagolewski, 2021-04-07)
  *    BUGFIX: locale='' is the default
+ *
+ * @version 1.8.1 (Marek Gagolewski, 2023-11-07)
+ *    C is an alias of en_US_POSIX
  */
 const char* stri__prepare_arg_locale(
     SEXP loc,
@@ -1462,8 +1465,12 @@ const char* stri__prepare_arg_locale(
     bool allowdefault,
     bool allowna
 ) {
+    const char* default_locale = uloc_getDefault();
+    if (!strcmp(default_locale, "C") || !strcmp(default_locale, "c"))
+        default_locale = "en_US_POSIX";
+
     if (allowdefault && Rf_isNull(loc))
-        return uloc_getDefault();
+        return default_locale;
     else {
         PROTECT(loc = stri__prepare_arg_string_1(loc, argname));
         if (STRING_ELT(loc, 0) == NA_STRING) {
@@ -1471,10 +1478,14 @@ const char* stri__prepare_arg_locale(
             if (allowna) return NULL;
             else Rf_error(MSG__ARG_EXPECTED_NOT_NA, argname); // Rf_error allowed here
         }
-        if (strlen((const char*)CHAR(STRING_ELT(loc, 0))) == 0) {
+        else if (strlen((const char*)CHAR(STRING_ELT(loc, 0))) == 0) {
             UNPROTECT(1);
-            if (allowdefault) return uloc_getDefault();
+            if (allowdefault) return default_locale;
             else Rf_error(MSG__LOCALE_INCORRECT_ID); // Rf_error allowed here
+        }
+        else if (!strcmp(CHAR(STRING_ELT(loc, 0)), "C") || !strcmp(CHAR(STRING_ELT(loc, 0)), "c")) {
+            UNPROTECT(1);
+            return "en_US_POSIX";
         }
 
         UErrorCode err = U_ZERO_ERROR;
@@ -1498,7 +1509,7 @@ const char* stri__prepare_arg_locale(
 
         if (ret_n == 0) {
             UNPROTECT(1);
-            if (allowdefault) return uloc_getDefault();
+            if (allowdefault) return default_locale;
             else Rf_error(MSG__LOCALE_INCORRECT_ID); // Rf_error allowed here
         }
 
@@ -1508,7 +1519,7 @@ const char* stri__prepare_arg_locale(
                 UNPROTECT(1);
                 Rf_error(MSG__LOCALE_INCORRECT_ID);
             }
-            const char* ret_default = uloc_getDefault();
+            const char* ret_default = default_locale;
             R_len_t ret_detault_n = strlen(ret_default);
             const char* ret_tmp2 = ret;
             ret = R_alloc(ret_detault_n+ret_n+1, (int)sizeof(char));
@@ -1520,7 +1531,7 @@ const char* stri__prepare_arg_locale(
         return ret;
     }
 
-    // won't come here anyway
+    // won't arrive here anyway
     return NULL; // avoid compiler warning
 }
 
@@ -1580,7 +1591,7 @@ TimeZone* stri__prepare_arg_timezone(SEXP tz, const char* argname, bool allowdef
             return ret;
     }
 
-    // won't come here anyway
+    // won't arrive here anyway
     return NULL; // avoid compiler warning
 }
 

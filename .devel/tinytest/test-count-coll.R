@@ -25,8 +25,25 @@ expect_equivalent(stri_count_coll("bababababaab", "aab"), 1L)
 
 
 # stri_opts_collator tests:
-expect_equivalent(stri_count_coll("bababababaab", "aab", opts_collator = stri_opts_collator(locale = "UNKNOWN")),
+expect_equivalent(suppressWarnings(stri_count_coll("bababababaab", "aab", opts_collator = stri_opts_collator(locale = "UNKNOWN"))),
     1L)
+expect_warning(stri_count_coll("bababababaab", "aab", opts_collator = stri_opts_collator(locale = "UNKNOWN")))
+
+expect_equivalent(stri_count_coll("bababababaab", "aab", opts_collator = stri_opts_collator(locale = "C")),
+    1L)
+
+old_loc <- stri_locale_set("UNKNOWN")
+expect_warning(stri_count_coll("bababababaab", "aab"))
+stri_locale_set(old_loc)
+
+expect_equivalent(stri_count_coll("bababababaab", "aab", opts_collator = stri_opts_collator(locale = "C")),
+    1L)
+
+old_loc <- stri_locale_set("C")
+expect_equivalent(stri_count_coll("bababababaab", "aab"), 1L)
+stri_locale_set(old_loc)
+
+
 expect_equivalent(stri_count_coll("bababababaab", "aab", opts_collator = stri_opts_collator(strength = -100)),
     1L)
 expect_error(stri_count_coll("bababababaab", "aab", opts_collator = stri_opts_collator(strength = 100)))

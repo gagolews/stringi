@@ -120,6 +120,7 @@ void stri__locate_set_dimnames_matrix(
 
 // date/time
 void stri__set_class_POSIXct(SEXP x);
+Calendar* stri__get_calendar(const char* locale_val);
 
 // ------------------------------------------------------------------------
 

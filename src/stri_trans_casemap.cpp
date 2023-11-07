@@ -188,13 +188,16 @@ SEXP stri_trans_casemap(SEXP str, int _type, SEXP locale)
     const char* qloc = stri__prepare_arg_locale(locale, "locale", true); /* this is R_alloc'ed */
     PROTECT(str = stri__prepare_arg_string(str, "str")); // prepare string argument
 
-// version 0.2-1 - Does not work with ICU 4.8 (but we require ICU >= 50)
+    // version 0.2-1 - Does not work with ICU 4.8 (but we require ICU >= 50)
     UCaseMap* ucasemap = NULL;
 
     STRI__ERROR_HANDLER_BEGIN(1)
     UErrorCode status = U_ZERO_ERROR;
     ucasemap = ucasemap_open(qloc, U_FOLD_CASE_DEFAULT, &status);
     STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+
+    // NOTE: we can't check if there submitted locale is valid,
+    // because there is no API for it [ULOC_VALID_LOCALE]
 
     R_len_t str_n = LENGTH(str);
     StriContainerUTF8 str_cont(str, str_n);
@@ -290,7 +293,8 @@ SEXP stri_trans_casemap(SEXP str, int _type, SEXP locale)
  * @version 0.6-1 (Marek Gagolewski, 2015-07-11)
  *    call stri_trans_casemap
 */
-SEXP stri_trans_tolower(SEXP str, SEXP locale) {
+SEXP stri_trans_tolower(SEXP str, SEXP locale)
+{
     return stri_trans_casemap(str, STRI_CASEMAP_TOLOWER, locale);
 }
 
@@ -307,7 +311,8 @@ SEXP stri_trans_tolower(SEXP str, SEXP locale) {
  * @version 0.6-1 (Marek Gagolewski, 2015-07-11)
  *    call stri_trans_casemap
 */
-SEXP stri_trans_toupper(SEXP str, SEXP locale) {
+SEXP stri_trans_toupper(SEXP str, SEXP locale)
+{
     return stri_trans_casemap(str, STRI_CASEMAP_TOUPPER, locale);
 }
 

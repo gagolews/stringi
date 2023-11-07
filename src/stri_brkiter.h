@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' project.
- * Copyright (c) 2013-2021, Marek Gagolewski <https://www.gagolewski.com>
+ * Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com/>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -62,7 +62,8 @@ protected:
 
 private:
 
-    void setEmptyOpts() {
+    void setEmptyOpts()
+    {
         locale = NULL;
         type = UBRK_CHARACTER;
         skip_rules = NULL;
@@ -136,6 +137,14 @@ private:
             }
         }
         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+
+        // NOTE: this is too invasive, there are very few dedicated brkiters!
+        // if (status == U_USING_DEFAULT_WARNING && uiterator) {
+        //     UErrorCode status2 = U_ZERO_ERROR;
+        //     const char* valid_locale = ubrk_getLocaleByType(uiterator, ULOC_VALID_LOCALE, &status2);
+        //     if (valid_locale && !strcmp(valid_locale, "root"))
+        //         Rf_warning(ICUError::getICUerrorName(status));
+        // }
     }
 
 
@@ -238,8 +247,17 @@ private:
             default:
                 throw StriException(MSG__INTERNAL_ERROR);
             }
+
         }
         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+
+        // NOTE: this is too invasive, there are very few dedicated brkiters!
+        // if (status == U_USING_DEFAULT_WARNING && rbiterator) {
+        //     UErrorCode status2 = U_ZERO_ERROR;
+        //     const char* valid_locale = rbiterator->getLocaleID(ULOC_VALID_LOCALE, status2);
+        //     if (valid_locale && !strcmp(valid_locale, "root"))
+        //         Rf_warning(ICUError::getICUerrorName(status));
+        // }
     }
 
     bool ignoreBoundary();
