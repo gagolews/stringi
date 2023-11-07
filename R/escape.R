@@ -35,12 +35,14 @@
 #' Escape Unicode Code Points
 #'
 #' @description
-#' Escapes all Unicode (not ASCII-printable) code points.
+#' Generates an ASCII string where all non-printable characters
+#' and non-ASCII characters are converted to escape sequences.
 #'
 #' @details
+#'
 #' For non-printable and certain special (well-known,
-#' see also R man page \link{Quotes})
-#' ASCII characters the following
+#' see also the R man page \link{Quotes})
+#' ASCII characters, the following
 #' (also recognized in R) convention is used.
 #' We get \code{\\a}, \code{\\b}, \code{\\t}, \code{\\n}, \code{\\v},
 #' \code{\\f}, \code{\\r}, \code{\"}, \code{\'}, \code{\\\\}
@@ -48,7 +50,7 @@
 #' otherwise.
 #'
 #'
-#' As usual, any input string is converted to Unicode
+#' As usual in stringi, any input string is converted to Unicode
 #' before executing the escape process.
 #'
 #'
@@ -72,16 +74,14 @@ stri_escape_unicode <- function(str)
 #' Un-escape All Escape Sequences
 #'
 #' @description
-#' Un-escapes all known escape sequences
+#' Un-escapes all known escape sequences.
 #'
 #' @details
-#' Uses \pkg{ICU} facilities to un-escape Unicode character sequences.
+#' Uses \pkg{ICU}'s facilities to un-escape Unicode character sequences.
 #'
-#' The following ASCII standard escapes are recognized:
+#' The following escape sequences are recognized:
 #' \code{\\a}, \code{\\b}, \code{\\t}, \code{\\n}, \code{\\v}, \code{\\?},
-#' \code{\\e}, \code{\\f}, \code{\\r}, \code{\"}, \code{\'}, \code{\\\\}.
-#'
-#' Moreover, the function understands the following ones:
+#' \code{\\e}, \code{\\f}, \code{\\r}, \code{\"}, \code{\'}, \code{\\\\},
 #' \code{\\uXXXX} (4 hex digits),
 #' \code{\\UXXXXXXXX} (8 hex digits),
 #' \code{\\xXX} (1-2 hex digits),
@@ -91,14 +91,13 @@ stri_escape_unicode <- function(str)
 #'
 #' Note that some versions of R on Windows cannot handle
 #' characters defined with \code{\\UXXXXXXXX}.
-#' We are working on that.
 #'
 #' @param str character vector
 #'
 #' @return
 #' Returns a character vector.
 #' If an escape sequence is ill-formed,
-#' result will be \code{NA} and a warning will be given.
+#' the result will be \code{NA} and a warning will be given.
 #'
 #' @examples
 #' stri_unescape_unicode('a\\u0105!\\u0032\\n')
