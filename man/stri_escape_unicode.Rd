@@ -13,12 +13,13 @@ stri_escape_unicode(str)
 Returns a character vector.
 }
 \description{
-Escapes all Unicode (not ASCII-printable) code points.
+Generates an ASCII string where all non-printable characters
+and non-ASCII characters are converted to escape sequences.
 }
 \details{
 For non-printable and certain special (well-known,
-see also R man page \link{Quotes})
-ASCII characters the following
+see also the R man page \link{Quotes})
+ASCII characters, the following
 (also recognized in R) convention is used.
 We get \code{\\a}, \code{\\b}, \code{\\t}, \code{\\n}, \code{\\v},
 \code{\\f}, \code{\\r}, \code{\"}, \code{\'}, \code{\\\\}
@@ -26,7 +27,7 @@ or either \code{\\uXXXX} (4 hex digits) or \code{\\UXXXXXXXX} (8 hex digits)
 otherwise.
 
 
-As usual, any input string is converted to Unicode
+As usual in stringi, any input string is converted to Unicode
 before executing the escape process.
 }
 \examples{

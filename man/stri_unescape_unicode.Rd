@@ -12,19 +12,17 @@ stri_unescape_unicode(str)
 \value{
 Returns a character vector.
 If an escape sequence is ill-formed,
-result will be \code{NA} and a warning will be given.
+the result will be \code{NA} and a warning will be given.
 }
 \description{
-Un-escapes all known escape sequences
+Un-escapes all known escape sequences.
 }
 \details{
-Uses \pkg{ICU} facilities to un-escape Unicode character sequences.
+Uses \pkg{ICU}'s facilities to un-escape Unicode character sequences.
 
-The following ASCII standard escapes are recognized:
+The following escape sequences are recognized:
 \code{\\a}, \code{\\b}, \code{\\t}, \code{\\n}, \code{\\v}, \code{\\?},
-\code{\\e}, \code{\\f}, \code{\\r}, \code{\"}, \code{\'}, \code{\\\\}.
-
-Moreover, the function understands the following ones:
+\code{\\e}, \code{\\f}, \code{\\r}, \code{\"}, \code{\'}, \code{\\\\},
 \code{\\uXXXX} (4 hex digits),
 \code{\\UXXXXXXXX} (8 hex digits),
 \code{\\xXX} (1-2 hex digits),
@@ -34,7 +32,6 @@ For \code{\\xXX} and \code{\\ooo}, beware of non-valid UTF-8 byte sequences.
 
 Note that some versions of R on Windows cannot handle
 characters defined with \code{\\UXXXXXXXX}.
-We are working on that.
 }
 \examples{
 stri_unescape_unicode('a\\\\u0105!\\\\u0032\\\\n')
