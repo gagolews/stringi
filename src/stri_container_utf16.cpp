@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' project.
- * Copyright (c) 2013-2021, Marek Gagolewski <https://www.gagolewski.com>
+ * Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com/>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -97,11 +97,11 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
     for (R_len_t i=0; i<this->n; ++i)
         this->str[i].setToBogus(); // in case it fails during conversion (this is NA)
 
-    /* Important: ICU provides full internationalization functionality
+    /* Important: ICU provides full internationalisation functionality
     without any conversion table data. The common library contains
     code to handle several important encodings algorithmically: US-ASCII,
     ISO-8859-1, UTF-7/8/16/32, SCSU, BOCU-1, CESU-8, and IMAP-mailbox-name */
-    StriUcnv ucnvASCII("US-ASCII");
+    //StriUcnv ucnvASCII("US-ASCII");
 #if defined(_WIN32) || defined(_WIN64)
     // #270: latin-1 is windows-1252 on Windows
     StriUcnv ucnvLatin1("WINDOWS-1252");
@@ -116,37 +116,41 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
             continue; // keep NA
         }
 
-        if (IS_ASCII(curs)) {
-            // Version 1:
-            UConverter* ucnv = ucnvASCII.getConverter();
-            UErrorCode status = U_ZERO_ERROR;
-            this->str[i].setTo(
-                UnicodeString((const char*)CHAR(curs), (int32_t)LENGTH(curs), ucnv, status)
-            );
-            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-
-            // Performance improvement attempt #1:
-            // this->str[i] = new UnicodeString(UnicodeString::fromUTF8(CHAR(curs)));
-            // if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR);
-            // slower than the above
-
-            // Performance improvement attempt #2:
-            // Create UChar buf with LENGTH(curs) items, fill it with (CHAR(curs)[i], 0x00), i=1,...
-            // This wasn't faster than the ucnvASCII approach.
-
-            // Performance improvement attempt #3:
-            // slightly slower than ucnvASCII
-            // R_len_t curs_n = LENGTH(curs);
-            // const char* curs_s = CHAR(curs);
-            // this->str[i].remove(); // unset bogus (NA)
-            // UChar* buf = this->str[i].getBuffer(curs_n);
-            // for (R_len_t k=0; k<curs_n; ++k)
-            //   buf[k] = (UChar)curs_s[k]; // well, this is ASCII :)
-            // this->str[i].releaseBuffer(curs_n);
-        }
-        else if (IS_UTF8(curs)) {
+        // if (IS_ASCII(curs)) {
+        //     // Version 1:
+        //     UConverter* ucnv = ucnvASCII.getConverter();
+        //     UErrorCode status = U_ZERO_ERROR;
+        //     this->str[i].setTo(
+        //         UnicodeString((const char*)CHAR(curs), (int32_t)LENGTH(curs), ucnv, status)
+        //     );
+        //     STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+        //
+        //     // Performance improvement attempt #1:
+        //     // this->str[i] = new UnicodeString(UnicodeString::fromUTF8(CHAR(curs)));
+        //     // if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR);
+        //     // slower than the above
+        //
+        //     // Performance improvement attempt #2:
+        //     // Create UChar buf with LENGTH(curs) items, fill it with (CHAR(curs)[i], 0x00), i=1,...
+        //     // This wasn't faster than the ucnvASCII approach.
+        //
+        //     // Performance improvement attempt #3:
+        //     // slightly slower than ucnvASCII
+        //     // R_len_t curs_n = LENGTH(curs);
+        //     // const char* curs_s = CHAR(curs);
+        //     // this->str[i].remove(); // unset bogus (NA)
+        //     // UChar* buf = this->str[i].getBuffer(curs_n);
+        //     // for (R_len_t k=0; k<curs_n; ++k)
+        //     //   buf[k] = (UChar)curs_s[k]; // well, this is ASCII :)
+        //     // this->str[i].releaseBuffer(curs_n);
+        // }
+        // else
+        if (IS_ASCII(curs) || IS_UTF8(curs)) {
             // using ucnvUTF8 is slower for UTF-8
             // the same is done for native encoding && ucnvNative_isUTF8
+
+            // this is slower if IS_ASCII than ucnvASCII, but doesn't limit
+            // the input string length to 858993458 characters (#487)
             this->str[i].setTo(UnicodeString::fromUTF8(CHAR(curs)));
         }
         else if (IS_LATIN1(curs)) {
