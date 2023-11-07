@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' project.
- * Copyright (c) 2013-2021, Marek Gagolewski <https://www.gagolewski.com>
+ * Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com/>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -65,6 +65,9 @@
  *
  * @version 1.1.6 (Marek Gagolewski, 2017-11-10)
  *    PROTECT STRING_ELT(names, i)
+ *
+ * @version 1.8.1 (Marek Gagolewski, 2023-11-07)
+ *    #476: Warn when falling back to the root locale, make C==en_US_POSIX
  */
 UCollator* stri__ucol_open(SEXP opts_collator)
 {
@@ -73,10 +76,22 @@ UCollator* stri__ucol_open(SEXP opts_collator)
 
     R_len_t narg = Rf_isNull(opts_collator)?0:LENGTH(opts_collator);
 
+    const char* default_locale = stri__prepare_arg_locale(R_NilValue, "locale", true);
+
     if (narg <= 0) { // no custom settings - use default Collator
         UErrorCode status = U_ZERO_ERROR;
-        UCollator* col = ucol_open(uloc_getDefault(), &status);
+        UCollator* col = ucol_open(default_locale, &status);
         STRI__CHECKICUSTATUS_RFERROR(status, {/* do nothing special on err */}) // error() allowed here
+
+        if (status == U_USING_DEFAULT_WARNING) {
+            UErrorCode status2 = U_ZERO_ERROR;
+            const char* valid_locale = ucol_getLocaleByType(col, ULOC_VALID_LOCALE, &status2);
+            if (valid_locale && !strcmp(valid_locale, "root"))
+                Rf_warning(ICUError::getICUerrorName(status));
+        }
+        // else if (status == U_USING_FALLBACK_WARNING)  // warning on this would be too invasive
+        //    Rf_warning(ICUError::getICUerrorName(status));
+
         return col;
     }
 
@@ -94,7 +109,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
     UColAttributeValue  opt_STRENGTH =  UCOL_DEFAULT_STRENGTH;
     UColAttributeValue  opt_NUMERIC_COLLATION = UCOL_DEFAULT;
 //   USearchAttributeValue  opt_OVERLAP = USEARCH_OFF;
-    const char*         opt_LOCALE = uloc_getDefault();
+    const char*         opt_LOCALE = default_locale;
 
     for (R_len_t i=0; i<narg; ++i) {
         if (STRING_ELT(names, i) == NA_STRING)
@@ -148,6 +163,16 @@ UCollator* stri__ucol_open(SEXP opts_collator)
     UErrorCode status = U_ZERO_ERROR;
     UCollator* col = ucol_open(opt_LOCALE, &status);
     STRI__CHECKICUSTATUS_RFERROR(status, { /* nothing special on err */ }) // error() allowed here
+
+    if (status == U_USING_DEFAULT_WARNING) {
+        UErrorCode status2 = U_ZERO_ERROR;
+        const char* valid_locale = ucol_getLocaleByType(col, ULOC_VALID_LOCALE, &status2);
+        if (valid_locale && !strcmp(valid_locale, "root"))
+            Rf_warning(ICUError::getICUerrorName(status));
+    }
+    // else if (status == U_USING_FALLBACK_WARNING)  // warning on this would be too invasive
+    //    Rf_warning(ICUError::getICUerrorName(status));
+
 
     // set other opts
 //   if (opt_OVERLAP != UCOL_OFF) {

@@ -57,6 +57,8 @@ more information, refer to the ICU user guide.
 
 For a list of locales that are recognized by \pkg{ICU},
 call \code{\link{stri_locale_list}}.
+
+Note that in \pkg{stringi}, 'C' is a synonym of `en_US_POSIX`.
 }
 
 \section{A Note on Default Locales}{
@@ -65,14 +67,10 @@ call \code{\link{stri_locale_list}}.
 Each locale-sensitive function in \pkg{stringi}
 selects the current default locale if an empty string or \code{NULL}
 is provided as its \code{locale} argument. Default locales are available
-to all the functions:
-they are initially set to be the system locale on that platform,
-and may be changed with \code{\link{stri_locale_set}},
-for example, if automatic  detection fails to recognize
-your locale properly.
+to all the functions; initially, the system locale on that platform is used,
+but it may be changed by calling \code{\link{stri_locale_set}}.
 
-It is suggested that your program should avoid changing
-the default locale.
+Your program should avoid changing the default locale.
 All locale-sensitive functions may request
 any desired locale per-call (by specifying the \code{locale} argument),
 i.e., without referencing to the default locale.
@@ -88,6 +86,10 @@ performs a locale-aware string comparison. It is used for string comparing,
 ordering, sorting, and searching. See \code{\link{stri_opts_collator}}
 for the description on how to tune its settings, and its \code{locale}
 argument in particular.
+
+When choosing a resource bundle that is not available in the requested
+locale nor in its more general variants (e.g., `es_ES` vs `es`),
+a warning is emitted.
 
 Other locale-sensitive functions include, e.g.,
 \code{\link{stri_trans_tolower}} (that does character case mapping).

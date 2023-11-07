@@ -95,7 +95,7 @@ SEXP stri_locale_info(SEXP loc)
         SET_VECTOR_ELT(vals, i, Rf_ScalarString(NA_STRING));
 
     UErrorCode err = U_ZERO_ERROR;
-    char buf[ULOC_FULLNAME_CAPACITY]; // this is sufficient
+    char buf[ULOC_FULLNAME_CAPACITY];  // this is sufficient
 
     uloc_getLanguage(qloc, buf, ULOC_FULLNAME_CAPACITY, &err);
     if (U_FAILURE(err)) err = U_ZERO_ERROR;

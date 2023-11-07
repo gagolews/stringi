@@ -5,8 +5,12 @@
 
 * [GENERAL] ICU bundle updated to version 74.1 (Unicode 15.1, CLDR 44).
 
+* [NEW FEATURE] #476: A warning is emitted when selecting an unknown locale
+  for collation as it most likely indicates that a wrong resource is being used.
+  Furthermore, the `C` locale identifier now resolves to `en_US_POSIX`.
+
 * [BUILD TIME] As per the suggestion of Prof. Brian Ripley, `icudt74l`
-  (ICU data -- little endian) is now included in the source tarball (compressed
+  (ICU data - little endian) is now included in the source tarball (compressed
   with xz to save space). This allows for building *stringi* on systems with
   no internet access.
 
@@ -24,8 +28,6 @@
 
 * [BUGFIX] TODO.... #469: `stri_datetime_parse` did not reset the `Calendar`
   object when parsing multiple dates.
-
-* [NEW FEATURE] TODO... #476 U_USING_DEFAULT_ERROR on unknown locales
 
 
 

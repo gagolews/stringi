@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' project.
- * Copyright (c) 2013-2021, Marek Gagolewski <https://www.gagolewski.com>
+ * Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com/>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -72,6 +72,31 @@ SEXP stri_datetime_now()
 }
 
 
+/** Get calendar
+ *
+ * @return Calendar
+ *
+ * @version 1.8.1 (Marek Gagolewski, 2023-11-07)
+ */
+Calendar* stri__get_calendar(const char* locale_val)
+{
+    UErrorCode status = U_ZERO_ERROR;
+    Calendar* cal = Calendar::createInstance(locale_val, status);
+    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+
+    // NOTE: unfortunately, in ICU 74.1 U_USING_DEFAULT_WARNING is never emitted
+    // if (status == U_USING_DEFAULT_WARNING && cal) {
+    //     // UErrorCode status2 = U_ZERO_ERROR;
+    //     // const char* valid_locale = cal->getLocaleID(ULOC_VALID_LOCALE, status2);
+    //     // if (valid_locale && !strcmp(valid_locale, "root"))
+    //     Rf_warning(ICUError::getICUerrorName(status));
+    // }
+
+    return cal;
+}
+
+
+
 /** Date-time arithmetic
  *
  * @param time
@@ -83,9 +108,14 @@ SEXP stri_datetime_now()
  * @return POSIXct
  *
  * @version 0.5-1 (Marek Gagolewski, 2014-12-30)
+ *
  * @version 0.5-1 (Marek Gagolewski, 2015-03-06) tz arg added
+ *
+ * @version 1.8.1 (Marek Gagolewski, 2023-11-07)
+ *     #476: Warn when falling back to the root locale, make C==en_US_POSIX
  */
-SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP tz, SEXP locale) {
+SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP tz, SEXP locale)
+{
     PROTECT(time = stri__prepare_arg_POSIXct(time, "time"));
     PROTECT(value = stri__prepare_arg_integer(value, "value"));
     if (!Rf_isNull(tz)) PROTECT(tz = stri__prepare_arg_string_1(tz, "tz"));
@@ -136,13 +166,13 @@ SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP tz, SEXP locale) 
         throw StriException(MSG__INCORRECT_MATCH_OPTION, "units");
     }
 
-    UErrorCode status = U_ZERO_ERROR;
-    cal = Calendar::createInstance(locale_val, status);
-    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+
+    cal = stri__get_calendar(locale_val);
 
     cal->adoptTimeZone(tz_val);
     tz_val = NULL; /* The Calendar takes ownership of the TimeZone. */
 
+    UErrorCode status = U_ZERO_ERROR;
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocVector(REALSXP, vectorize_length));
     double* ret_val = REAL(ret);
@@ -199,9 +229,14 @@ SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP tz, SEXP locale) 
  * @return list
  *
  * @version 0.5-1 (Marek Gagolewski, 2015-01-01)
+ *
  * @version 0.5-1 (Marek Gagolewski, 2015-03-03) tz arg added
+ *
+ * @version 1.8.1 (Marek Gagolewski, 2023-11-07)
+ *     #476: Warn when falling back to the root locale, make C==en_US_POSIX
  */
-SEXP stri_datetime_fields(SEXP time, SEXP tz, SEXP locale) {
+SEXP stri_datetime_fields(SEXP time, SEXP tz, SEXP locale)
+{
     PROTECT(time = stri__prepare_arg_POSIXct(time, "time"));
     const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
     if (!Rf_isNull(tz)) PROTECT(tz = stri__prepare_arg_string_1(tz, "tz"));
@@ -213,13 +248,12 @@ SEXP stri_datetime_fields(SEXP time, SEXP tz, SEXP locale) {
     R_len_t vectorize_length = LENGTH(time);
     StriContainerDouble time_cont(time, vectorize_length);
 
-    UErrorCode status = U_ZERO_ERROR;
-    cal = Calendar::createInstance(locale_val, status);
-    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+    cal = stri__get_calendar(locale_val);
 
     cal->adoptTimeZone(tz_val);
     tz_val = NULL; /* The Calendar takes ownership of the TimeZone. */
 
+    UErrorCode status = U_ZERO_ERROR;
     SEXP ret;
 #define STRI__FIELDS_NUM 14
     STRI__PROTECT(ret = Rf_allocVector(VECSXP, STRI__FIELDS_NUM));
@@ -349,6 +383,9 @@ SEXP stri_datetime_fields(SEXP time, SEXP tz, SEXP locale) {
  * @version 0.5-1 (Marek Gagolewski, 2015-01-11) lenient arg added
  * @version 0.5-1 (Marek Gagolewski, 2015-03-02) tz arg added
  * @version 1.1.2 (Marek Gagolewski, 2016-09-30) round() is not C++98
+ *
+ * @version 1.8.1 (Marek Gagolewski, 2023-11-07)
+ *     #476: Warn when falling back to the root locale, make C==en_US_POSIX
  */
 SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour,
                           SEXP minute, SEXP second, SEXP lenient, SEXP tz, SEXP locale)
@@ -378,15 +415,14 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour,
     StriContainerInteger minute_cont(minute, vectorize_length);
     StriContainerDouble second_cont(second, vectorize_length);
 
-    UErrorCode status = U_ZERO_ERROR;
-    cal = Calendar::createInstance(locale_val, status);
-    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+    cal = stri__get_calendar(locale_val);
 
     cal->setLenient(lenient_val);
 
     cal->adoptTimeZone(tz_val);
     tz_val = NULL; /* The Calendar takes ownership of the TimeZone. */
 
+    UErrorCode status = U_ZERO_ERROR;
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocVector(REALSXP, vectorize_length));
     double* ret_val = REAL(ret);

@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' project.
- * Copyright (c) 2013-2021, Marek Gagolewski <https://www.gagolewski.com>
+ * Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com/>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -65,7 +65,7 @@ void StriBrkIterOptions::setType(SEXP opts_brkiter, const char* _default) {
         SEXP names = Rf_getAttrib(opts_brkiter, R_NamesSymbol);
         if (names == R_NilValue || LENGTH(names) != narg)
             Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC); // error() allowed here
-        // search for "locale" option
+        // search for "type" option
         for (R_len_t i=0; i<narg; ++i) {
             if (STRING_ELT(names, i) == NA_STRING)
                 Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC); // error() allowed here

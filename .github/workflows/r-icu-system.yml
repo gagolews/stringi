@@ -33,3 +33,5 @@ jobs:
     - name: Test stringi
       run: |
         Rscript -e 'source(".devel/tinytest.R")'
+        LC_ALL="C" Rscript -e 'source(".devel/tinytest.R")'
+        LC_ALL="pl_PL" Rscript -e 'source(".devel/tinytest.R")'
