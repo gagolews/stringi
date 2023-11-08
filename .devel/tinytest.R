@@ -15,8 +15,11 @@ cat(stri_info(short=TRUE), "\n")
 testWarnings <- TRUE
 
 if (testWarnings) {
+    oldOptions <- options(warn=1)
     t <- run_test_dir(".devel/tinytest/", verbose=TRUE)
     print(t, limit=25, nlong=25, sidefx=TRUE)
+    do.call(options, oldOptions)
+    rm(oldOptions)
 } else {
     oldOptions <- options(warn=10)
     t <- run_test_dir(".devel/tinytest/")
@@ -26,5 +29,4 @@ if (testWarnings) {
 }
 
 rm(testWarnings)
-warnings()
 cat(stri_info(short=TRUE), "\n")
