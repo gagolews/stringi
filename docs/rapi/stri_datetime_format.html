@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="stri_datetime_fstr: -Style Format Strings" href="stri_datetime_fstr.html" /><link rel="prev" title="stri_datetime_fields: Get Values for Date and Time Fields" href="stri_datetime_fields.html" />
         <link rel="canonical" href="https://stringi.gagolewski.com/rapi/stri_datetime_format.html" />
 
-    <!-- Generated with Sphinx 7.2.5 and Furo 2023.08.19 -->
+    <link rel="shortcut icon" href="https://www.gagolewski.com/_static/img/stringi.png"/><!-- Generated with Sphinx 7.2.5 and Furo 2023.08.19 -->
         <title>stri_datetime_format: Date and Time Formatting and Parsing - R Package stringi</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
@@ -22,8 +22,6 @@
   --color-code-foreground: black;
   --admonition-font-size: 95%;
   --admonition-title-font-size: 95%;
-  --color-brand-primary: red;
-  --color-brand-content: #CC3333;
   
   }
   @media not print {
@@ -32,8 +30,6 @@
   --color-code-foreground: #d0d0d0;
   --admonition-font-size: 95%;
   --admonition-title-font-size: 95%;
-  --color-brand-primary: #ff2b53;
-  --color-brand-content: #dd3333;
   
     }
     @media (prefers-color-scheme: dark) {
@@ -42,8 +38,6 @@
   --color-code-foreground: #d0d0d0;
   --admonition-font-size: 95%;
   --admonition-title-font-size: 95%;
-  --color-brand-primary: #ff2b53;
-  --color-brand-content: #dd3333;
   
       }
     }
@@ -166,7 +160,7 @@
 <a class="sidebar-brand" href="../index.html">stringi</a>
 </span>
 <div class="sidebar-brand">
-1.7.12
+1.8.1
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -387,7 +381,7 @@
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">time</span></code></p></td>
-<td><p>an object of class <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/DateTimeClasses.html"><code class="docutils literal notranslate"><span class="pre">POSIXct</span></code></a> (<code class="docutils literal notranslate"><span class="pre">as.POSIXct</span></code> will be called on character vectors and objects of class <code class="docutils literal notranslate"><span class="pre">POSIXlt</span></code>, <code class="docutils literal notranslate"><span class="pre">Date</span></code>, and <code class="docutils literal notranslate"><span class="pre">factor</span></code>)</p></td>
+<td><p>an object of class <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/DateTimeClasses.html"><code class="docutils literal notranslate"><span class="pre">POSIXct</span></code></a> with date-time data to be formatted (<code class="docutils literal notranslate"><span class="pre">as.POSIXct</span></code> will be called on character vectors and objects of class <code class="docutils literal notranslate"><span class="pre">POSIXlt</span></code>, <code class="docutils literal notranslate"><span class="pre">Date</span></code>, and <code class="docutils literal notranslate"><span class="pre">factor</span></code>)</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">format</span></code></p></td>
 <td><p>character vector, see Details; see also <a class="reference internal" href="stri_datetime_fstr.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_datetime_fstr</span></code></span></a></p></td>
@@ -399,7 +393,7 @@
 <td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">''</span></code> for the default locale, or a single string with locale identifier; a non-Gregorian calendar may be specified by setting the <code class="docutils literal notranslate"><span class="pre">&#64;calendar=name</span></code> keyword</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p></td>
-<td><p>character vector</p></td>
+<td><p>character vector with strings to be parsed</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lenient</span></code></p></td>
 <td><p>single logical value; should date/time parsing be lenient?</p></td>
@@ -411,8 +405,8 @@
 <section id="details">
 <h2>Details<a class="headerlink" href="#details" title="Link to this heading">#</a></h2>
 <p>Vectorized over <code class="docutils literal notranslate"><span class="pre">format</span></code> and <code class="docutils literal notranslate"><span class="pre">time</span></code> or <code class="docutils literal notranslate"><span class="pre">str</span></code>.</p>
-<p>By default, <code class="docutils literal notranslate"><span class="pre">stri_datetime_format</span></code> (for the sake of compatibility with the <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/help/strftime.html"><code class="docutils literal notranslate"><span class="pre">strftime</span></code></a> function) formats a date/time object using the current default time zone.</p>
-<p>Unspecified fields (e.g., seconds where only hours and minutes are given) are filled with the ones based on current date and time.</p>
+<p>When parsing strings, unspecified date-time fields (e.g., seconds where only hours and minutes are given) are based on today’s midnight in the local time zone (for compatibility with <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/help/strptime.html"><code class="docutils literal notranslate"><span class="pre">strptime</span></code></a>).</p>
+<p>By default, <code class="docutils literal notranslate"><span class="pre">stri_datetime_format</span></code> (for compatibility with the <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/help/strftime.html"><code class="docutils literal notranslate"><span class="pre">strftime</span></code></a> function) formats a date/time object using the current default time zone.</p>
 <p><code class="docutils literal notranslate"><span class="pre">format</span></code> may be one of <code class="docutils literal notranslate"><span class="pre">DT_STYLE</span></code> or <code class="docutils literal notranslate"><span class="pre">DT_relative_STYLE</span></code>, where <code class="docutils literal notranslate"><span class="pre">DT</span></code> is equal to <code class="docutils literal notranslate"><span class="pre">date</span></code>, <code class="docutils literal notranslate"><span class="pre">time</span></code>, or <code class="docutils literal notranslate"><span class="pre">datetime</span></code>, and <code class="docutils literal notranslate"><span class="pre">STYLE</span></code> is equal to <code class="docutils literal notranslate"><span class="pre">full</span></code>, <code class="docutils literal notranslate"><span class="pre">long</span></code>, <code class="docutils literal notranslate"><span class="pre">medium</span></code>, or <code class="docutils literal notranslate"><span class="pre">short</span></code>. This gives a locale-dependent date and/or time format. Note that currently <span class="pkg">ICU</span> does not support <code class="docutils literal notranslate"><span class="pre">relative</span></code> <code class="docutils literal notranslate"><span class="pre">time</span></code> formats, thus this flag is currently ignored in such a context.</p>
 <p>Otherwise, <code class="docutils literal notranslate"><span class="pre">format</span></code> is a pattern: a string where specific sequences of characters are replaced with date/time data from a calendar when formatting or used to generate data for a calendar when parsing. For example, <code class="docutils literal notranslate"><span class="pre">y</span></code> stands for ‘year’. Characters may be used multiple times: <code class="docutils literal notranslate"><span class="pre">yy</span></code> might produce <code class="docutils literal notranslate"><span class="pre">99</span></code>, whereas <code class="docutils literal notranslate"><span class="pre">yyyy</span></code> yields <code class="docutils literal notranslate"><span class="pre">1999</span></code>. For most numerical fields, the number of characters specifies the field width. For example, if <code class="docutils literal notranslate"><span class="pre">h</span></code> is the hour, <code class="docutils literal notranslate"><span class="pre">h</span></code> might produce <code class="docutils literal notranslate"><span class="pre">5</span></code>, but <code class="docutils literal notranslate"><span class="pre">hh</span></code> yields <code class="docutils literal notranslate"><span class="pre">05</span></code>. For some characters, the count specifies whether an abbreviated or full form should be used.</p>
 <p>Two single quotes represent a literal single quote, either inside or outside single quotes. Text within single quotes is not interpreted in any way (except for two adjacent single quotes). Otherwise, all ASCII letters from <code class="docutils literal notranslate"><span class="pre">a</span></code> to <code class="docutils literal notranslate"><span class="pre">z</span></code> and <code class="docutils literal notranslate"><span class="pre">A</span></code> to <code class="docutils literal notranslate"><span class="pre">Z</span></code> are reserved as syntax characters, and require quoting if they are to represent literal characters. In addition, certain ASCII punctuation characters may become available in the future (e.g., <code class="docutils literal notranslate"><span class="pre">:</span></code> being interpreted as the time separator and <code class="docutils literal notranslate"><span class="pre">/</span></code> as a date separator, and replaced by respective locale-sensitive characters in display).</p>
@@ -938,15 +932,15 @@
 <h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;2015-02-28&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;2015-02-29&#39;</span><span class="p">)</span>
 <span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;yyyy-MM-dd&#39;</span><span class="p">)</span>
-<span></span><span class="c1">## [1] &quot;2015-02-28 13:33:10 AEDT&quot; NA</span>
+<span></span><span class="c1">## [1] &quot;2015-02-28 AEDT&quot; NA</span>
 <span></span><span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;yyyy-MM-dd&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">lenient</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-<span></span><span class="c1">## [1] &quot;2015-02-28 13:33:10 AEDT&quot; &quot;2015-03-01 13:33:10 AEDT&quot;</span>
-<span></span><span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">%s+%</span><span class="w"> </span><span class="s">&quot; 00:00:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;yyyy-MM-dd HH:mm:ss&quot;</span><span class="p">)</span>
-<span></span><span class="c1">## [1] &quot;2015-02-28 00:00:00 AEDT&quot; NA</span>
+<span></span><span class="c1">## [1] &quot;2015-02-28 AEDT&quot; &quot;2015-03-01 AEDT&quot;</span>
+<span></span><span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">%s+%</span><span class="w"> </span><span class="s">&quot; 17:13&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;yyyy-MM-dd HH:mm&quot;</span><span class="p">)</span>
+<span></span><span class="c1">## [1] &quot;2015-02-28 17:13:00 AEDT&quot; NA</span>
 <span></span><span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="s">&#39;19 lipca 2015&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;date_long&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">locale</span><span class="o">=</span><span class="s">&#39;pl_PL&#39;</span><span class="p">)</span>
-<span></span><span class="c1">## [1] &quot;2015-07-19 13:33:10 AEST&quot;</span>
+<span></span><span class="c1">## [1] &quot;2015-07-19 AEST&quot;</span>
 <span></span><span class="nf">stri_datetime_format</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span><span class="w"> </span><span class="s">&#39;datetime_relative_medium&#39;</span><span class="p">)</span>
-<span></span><span class="c1">## [1] &quot;today, 1:33:10 pm&quot;</span>
+<span></span><span class="c1">## [1] &quot;today, 5:00:49 pm&quot;</span>
 </pre></div>
 </div>
 </section>
@@ -987,7 +981,7 @@
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-11-02T13:33:26+1100.
+              Last updated on 2023-11-08T17:01:04+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -1029,7 +1023,7 @@
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=d8accc85"></script>
+</div><script src="../_static/documentation_options.js?v=1166ed6b"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=32e29ea5"></script>

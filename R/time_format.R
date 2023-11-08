@@ -1,7 +1,7 @@
 # kate: default-dictionary en_US
 
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2021, Marek Gagolewski <https://www.gagolewski.com>
+## Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com/>
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -41,12 +41,14 @@
 #' @details
 #' Vectorized over \code{format} and \code{time} or \code{str}.
 #'
-#' By default, \code{stri_datetime_format} (for the sake of compatibility
+#' When parsing strings, unspecified date-time fields
+#' (e.g., seconds where only hours and minutes are given)
+#' are based on today's midnight in the local time zone
+#' (for compatibility with \code{\link[base]{strptime}}).
+#'
+#' By default, \code{stri_datetime_format} (for compatibility
 #' with the \code{\link[base]{strftime}} function)
 #' formats a date/time object using the current default time zone.
-#'
-#' Unspecified fields (e.g., seconds where only hours and minutes are given)
-#' are filled with the ones based on current date and time.
 #'
 #' \code{format} may be one of \code{DT_STYLE} or \code{DT_relative_STYLE},
 #' where \code{DT} is equal to \code{date}, \code{time}, or \code{datetime},
@@ -194,11 +196,12 @@
 #' uuuu-MM-dd'T'HH:mm:ssZ \tab 2015-12-31T23:59:59+0100 (the ISO 8601 guideline) \cr
 #' }
 #'
-#' @param time an object of class \code{\link{POSIXct}}
+#' @param time an object of class \code{\link{POSIXct}} with date-time data
+#'     to be formatted
 #'     (\code{as.POSIXct} will be called on character vectors
 #'     and objects of class \code{POSIXlt}, \code{Date}, and \code{factor})
+#' @param str character vector with strings to be parsed
 #' @param format character vector, see Details; see also \code{\link{stri_datetime_fstr}}
-#' @param str character vector
 #' @param tz \code{NULL} or \code{''} for the default time zone
 #'     or a single string with a timezone identifier,
 #'     see \code{\link{stri_timezone_get}} and \code{\link{stri_timezone_list}}
@@ -221,7 +224,7 @@
 #' x <- c('2015-02-28', '2015-02-29')
 #' stri_datetime_parse(x, 'yyyy-MM-dd')
 #' stri_datetime_parse(x, 'yyyy-MM-dd', lenient=TRUE)
-#' stri_datetime_parse(x %s+% " 00:00:00", "yyyy-MM-dd HH:mm:ss")
+#' stri_datetime_parse(x %s+% " 17:13", "yyyy-MM-dd HH:mm")
 #' stri_datetime_parse('19 lipca 2015', 'date_long', locale='pl_PL')
 #' stri_datetime_format(stri_datetime_now(), 'datetime_relative_medium')
 #'

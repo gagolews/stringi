@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' project.
- * Copyright (c) 2013-2021, Marek Gagolewski <https://www.gagolewski.com>
+ * Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com/>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -264,6 +264,7 @@ SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale)
  * @version 0.5-1 (Marek Gagolewski, 2015-03-01) set tzone attrib on retval
  * @version 1.6.3 (Marek Gagolewski, 2021-05-24) #434: vectorise wrt format
  * @version 1.6.3 (Marek Gagolewski, 2021-06-07) empty retval should have a class too
+ * @version 1.8.1 (Marek Gagolewski, 2023-11-08) #469: default time is midnight today
  */
 SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP lenient, SEXP tz, SEXP locale)
 {
@@ -299,6 +300,8 @@ SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP lenient, SEXP tz, SEXP loca
 
     cal->setLenient(lenient_val);
 
+    UDate now = cal->getNow();
+
     UErrorCode status = U_ZERO_ERROR;
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocVector(REALSXP, vectorize_length));
@@ -329,6 +332,18 @@ SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP lenient, SEXP tz, SEXP loca
         }
 
         status = U_ZERO_ERROR;
+        cal->setTime(now, status);
+        STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+
+        // weirdly, all the time fields must be reset
+        cal->clear(UCAL_MILLISECOND);
+        cal->clear(UCAL_SECOND);
+        cal->clear(UCAL_MINUTE);
+        cal->clear(UCAL_AM_PM);
+        cal->clear(UCAL_HOUR);
+        cal->clear(UCAL_HOUR_OF_DAY);
+        cal->clear(UCAL_MILLISECONDS_IN_DAY);
+
         ParsePosition pos;
         fmt->parse(str_cont.get(i), *cal, pos);
 

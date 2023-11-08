@@ -1,7 +1,7 @@
 # kate: default-dictionary en_US
 
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2021, Marek Gagolewski <https://www.gagolewski.com>
+## Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com/>
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -41,12 +41,18 @@
 #' Vectorized over \code{year}, \code{month}, \code{day}, \code{hour},
 #' \code{hour}, \code{minute}, and \code{second}.
 #'
-#' @param year integer vector; 0 is 1BC, -1 is 2BC, etc.
-#' @param month integer vector; months are 1-based
-#' @param day integer vector
-#' @param hour integer vector
-#' @param minute integer vector
-#' @param second numeric vector; fractional seconds are allowed
+#' @param year integer vector; 0 is 1BCE, -1 is 2BCE, etc.;
+#'     \code{NULL} for the current year
+#' @param month integer vector; months are 1-based;
+#'     \code{NULL} for the current month
+#' @param day integer vector;
+#'     \code{NULL} for the current day
+#' @param hour integer vector;
+#'     \code{NULL} for the current hour
+#' @param minute integer vector;
+#'     \code{NULL} for the current minute
+#' @param second numeric vector; fractional seconds are allowed;
+#'     \code{NULL} for the current seconds (without milliseconds)
 #' @param tz \code{NULL} or \code{''} for the default time zone or
 #' a single string with time zone identifier, see \code{\link{stri_timezone_list}}
 #' @param lenient single logical value; should the operation be lenient?
@@ -59,18 +65,31 @@
 #'
 #' @examples
 #' stri_datetime_create(2015, 12, 31, 23, 59, 59.999)
-#' stri_datetime_create(5775, 8, 1, locale='@@calendar=hebrew') # 1 Nisan 5775 -> 2015-03-21
+#' stri_datetime_create(5775, 8, 1, locale='@@calendar=hebrew')  # 1 Nisan 5775 -> 2015-03-21
 #' stri_datetime_create(2015, 02, 29)
 #' stri_datetime_create(2015, 02, 29, lenient=TRUE)
+#' stri_datetime_create(hour=15, minute=59)
 #'
 #' @family datetime
 #' @export
-stri_datetime_create <- function(year, month, day,
-    hour = 12L, minute = 0L, second = 0,
+stri_datetime_create <- function(
+    year = NULL, month = NULL, day = NULL,
+    hour = 0L, minute = 0L, second = 0,
     lenient = FALSE, tz = NULL, locale = NULL)
 {
-    .Call(C_stri_datetime_create, year, month, day, hour, minute, second, lenient,
-        tz, locale)
+    if (any(sapply(list(year, month, day, hour, minute, second), is.null))) {
+        now <- stri_datetime_fields(stri_datetime_now(), tz=tz, locale=locale)
+
+        if (is.null(year))   year   <- now[["Year"]]
+        if (is.null(month))  month  <- now[["Month"]]
+        if (is.null(day))    day    <- now[["Day"]]
+        if (is.null(hour))   hour   <- now[["Hour"]]
+        if (is.null(minute)) minute <- now[["Minute"]]
+        if (is.null(second)) second <- now[["Second"]]
+    }
+
+    .Call(C_stri_datetime_create, year, month, day, hour, minute, second,
+        lenient, tz, locale)
 }
 
 

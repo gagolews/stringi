@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="stri_detect: Detect Pattern Occurrences" href="stri_detect.html" /><link rel="prev" title="stri_datetime_now: Get Current Date and Time" href="stri_datetime_now.html" />
         <link rel="canonical" href="https://stringi.gagolewski.com/rapi/stri_datetime_symbols.html" />
 
-    <!-- Generated with Sphinx 7.2.5 and Furo 2023.08.19 -->
+    <link rel="shortcut icon" href="https://www.gagolewski.com/_static/img/stringi.png"/><!-- Generated with Sphinx 7.2.5 and Furo 2023.08.19 -->
         <title>stri_datetime_symbols: List Localizable Date-Time Formatting Data - R Package stringi</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
@@ -22,8 +22,6 @@
   --color-code-foreground: black;
   --admonition-font-size: 95%;
   --admonition-title-font-size: 95%;
-  --color-brand-primary: red;
-  --color-brand-content: #CC3333;
   
   }
   @media not print {
@@ -32,8 +30,6 @@
   --color-code-foreground: #d0d0d0;
   --admonition-font-size: 95%;
   --admonition-title-font-size: 95%;
-  --color-brand-primary: #ff2b53;
-  --color-brand-content: #dd3333;
   
     }
     @media (prefers-color-scheme: dark) {
@@ -42,8 +38,6 @@
   --color-code-foreground: #d0d0d0;
   --admonition-font-size: 95%;
   --admonition-title-font-size: 95%;
-  --color-brand-primary: #ff2b53;
-  --color-brand-content: #dd3333;
   
       }
     }
@@ -166,7 +160,7 @@
 <a class="sidebar-brand" href="../index.html">stringi</a>
 </span>
 <div class="sidebar-brand">
-1.7.12
+1.8.1
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -489,6 +483,8 @@
 <span class="c1">## $Era</span>
 <span class="c1">## [1] &quot;AH&quot;</span>
 <span></span><span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="s">&#39;@calendar=persian&#39;</span><span class="p">)</span>
+<span></span><span class="c1">## Warning in stri_datetime_symbols(&quot;@calendar=persian&quot;): A resource bundle lookup</span>
+<span class="c1">## returned a result either from the root or the default locale.</span>
 <span></span><span class="c1">## $Month</span>
 <span class="c1">##  [1] &quot;Farvardin&quot;   &quot;Ordibehesht&quot; &quot;Khordad&quot;     &quot;Tir&quot;         &quot;Mordad&quot;     </span>
 <span class="c1">##  [6] &quot;Shahrivar&quot;   &quot;Mehr&quot;        &quot;Aban&quot;        &quot;Azar&quot;        &quot;Dey&quot;        </span>
@@ -525,6 +521,8 @@
 <span class="c1">## $Era</span>
 <span class="c1">## [1] &quot;Saka&quot;</span>
 <span></span><span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="s">&#39;@calendar=coptic&#39;</span><span class="p">)</span>
+<span></span><span class="c1">## Warning in stri_datetime_symbols(&quot;@calendar=coptic&quot;): A resource bundle lookup</span>
+<span class="c1">## returned a result either from the root or the default locale.</span>
 <span></span><span class="c1">## $Month</span>
 <span class="c1">##  [1] &quot;Tout&quot;      &quot;Baba&quot;      &quot;Hator&quot;     &quot;Kiahk&quot;     &quot;Toba&quot;      &quot;Amshir&quot;   </span>
 <span class="c1">##  [7] &quot;Baramhat&quot;  &quot;Baramouda&quot; &quot;Bashans&quot;   &quot;Paona&quot;     &quot;Epep&quot;      &quot;Mesra&quot;    </span>
@@ -724,7 +722,8 @@
 <span class="c1">## [1] &quot;Before Christ&quot; &quot;Anno Domini&quot;</span>
 <span></span><span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="s">&#39;abbreviated&#39;</span><span class="p">)</span>
 <span></span><span class="c1">## $Month</span>
-<span class="c1">##  [1] &quot;Jan&quot; &quot;Feb&quot; &quot;Mar&quot; &quot;Apr&quot; &quot;May&quot; &quot;Jun&quot; &quot;Jul&quot; &quot;Aug&quot; &quot;Sep&quot; &quot;Oct&quot; &quot;Nov&quot; &quot;Dec&quot;</span>
+<span class="c1">##  [1] &quot;Jan&quot;  &quot;Feb&quot;  &quot;Mar&quot;  &quot;Apr&quot;  &quot;May&quot;  &quot;June&quot; &quot;July&quot; &quot;Aug&quot;  &quot;Sept&quot; &quot;Oct&quot; </span>
+<span class="c1">## [11] &quot;Nov&quot;  &quot;Dec&quot; </span>
 <span class="c1">## </span>
 <span class="c1">## $Weekday</span>
 <span class="c1">## [1] &quot;Sun&quot; &quot;Mon&quot; &quot;Tue&quot; &quot;Wed&quot; &quot;Thu&quot; &quot;Fri&quot; &quot;Sat&quot;</span>
@@ -742,10 +741,10 @@
 <span class="c1">##  [1] &quot;J&quot; &quot;F&quot; &quot;M&quot; &quot;A&quot; &quot;M&quot; &quot;J&quot; &quot;J&quot; &quot;A&quot; &quot;S&quot; &quot;O&quot; &quot;N&quot; &quot;D&quot;</span>
 <span class="c1">## </span>
 <span class="c1">## $Weekday</span>
-<span class="c1">## [1] &quot;Su.&quot; &quot;M.&quot;  &quot;Tu.&quot; &quot;W.&quot;  &quot;Th.&quot; &quot;F.&quot;  &quot;Sa.&quot;</span>
+<span class="c1">## [1] &quot;S&quot; &quot;M&quot; &quot;T&quot; &quot;W&quot; &quot;T&quot; &quot;F&quot; &quot;S&quot;</span>
 <span class="c1">## </span>
 <span class="c1">## $Quarter</span>
-<span class="c1">## character(0)</span>
+<span class="c1">## [1] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot;</span>
 <span class="c1">## </span>
 <span class="c1">## $AmPm</span>
 <span class="c1">## [1] &quot;am&quot; &quot;pm&quot;</span>
@@ -792,7 +791,7 @@
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-11-02T13:33:26+1100.
+              Last updated on 2023-11-08T17:01:04+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -834,7 +833,7 @@
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=d8accc85"></script>
+</div><script src="../_static/documentation_options.js?v=1166ed6b"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
