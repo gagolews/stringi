@@ -1466,7 +1466,7 @@ const char* stri__prepare_arg_locale(
     bool allowna
 ) {
     const char* default_locale = uloc_getDefault();
-    Rprintf("locale='%s'\n", default_locale);
+
     if (!strcmp(default_locale, "C") || !strcmp(default_locale, "c"))
         default_locale = "en_US_POSIX";
 
