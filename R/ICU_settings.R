@@ -69,7 +69,7 @@ stri_info <- function(short = FALSE)
     stopifnot(is.logical(short), length(short) == 1)
 
     info <- .Call(C_stri_info)
-    loclist <- stri_locale_list()
+    #loclist <- stri_locale_list()
     locale <- info$Locale$Name
     charset <- info$Charset.native$Name.friendly
 
