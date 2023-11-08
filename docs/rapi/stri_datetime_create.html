@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="stri_datetime_fields: Get Values for Date and Time Fields" href="stri_datetime_fields.html" /><link rel="prev" title="stri_datetime_add: Date and Time Arithmetic" href="stri_datetime_add.html" />
         <link rel="canonical" href="https://stringi.gagolewski.com/rapi/stri_datetime_create.html" />
 
-    <!-- Generated with Sphinx 7.2.5 and Furo 2023.08.19 -->
+    <link rel="shortcut icon" href="https://www.gagolewski.com/_static/img/stringi.png"/><!-- Generated with Sphinx 7.2.5 and Furo 2023.08.19 -->
         <title>stri_datetime_create: Create a Date-Time Object - R Package stringi</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
@@ -22,8 +22,6 @@
   --color-code-foreground: black;
   --admonition-font-size: 95%;
   --admonition-title-font-size: 95%;
-  --color-brand-primary: red;
-  --color-brand-content: #CC3333;
   
   }
   @media not print {
@@ -32,8 +30,6 @@
   --color-code-foreground: #d0d0d0;
   --admonition-font-size: 95%;
   --admonition-title-font-size: 95%;
-  --color-brand-primary: #ff2b53;
-  --color-brand-content: #dd3333;
   
     }
     @media (prefers-color-scheme: dark) {
@@ -42,8 +38,6 @@
   --color-code-foreground: #d0d0d0;
   --admonition-font-size: 95%;
   --admonition-title-font-size: 95%;
-  --color-brand-primary: #ff2b53;
-  --color-brand-content: #dd3333;
   
       }
     }
@@ -166,7 +160,7 @@
 <a class="sidebar-brand" href="../index.html">stringi</a>
 </span>
 <div class="sidebar-brand">
-1.7.12
+1.8.1
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -360,10 +354,10 @@
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">#</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_create</span><span class="p">(</span>
-<span class="w">  </span><span class="n">year</span><span class="p">,</span>
-<span class="w">  </span><span class="n">month</span><span class="p">,</span>
-<span class="w">  </span><span class="n">day</span><span class="p">,</span>
-<span class="w">  </span><span class="n">hour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">12L</span><span class="p">,</span>
+<span class="w">  </span><span class="n">year</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span>
+<span class="w">  </span><span class="n">month</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span>
+<span class="w">  </span><span class="n">day</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span>
+<span class="w">  </span><span class="n">hour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0L</span><span class="p">,</span>
 <span class="w">  </span><span class="n">minute</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0L</span><span class="p">,</span>
 <span class="w">  </span><span class="n">second</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span>
 <span class="w">  </span><span class="n">lenient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span>
@@ -384,22 +378,22 @@
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">year</span></code></p></td>
-<td><p>integer vector; 0 is 1BC, -1 is 2BC, etc.</p></td>
+<td><p>integer vector; 0 is 1BCE, -1 is 2BCE, etc.; <code class="docutils literal notranslate"><span class="pre">NULL</span></code> for the current year</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">month</span></code></p></td>
-<td><p>integer vector; months are 1-based</p></td>
+<td><p>integer vector; months are 1-based; <code class="docutils literal notranslate"><span class="pre">NULL</span></code> for the current month</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">day</span></code></p></td>
-<td><p>integer vector</p></td>
+<td><p>integer vector; <code class="docutils literal notranslate"><span class="pre">NULL</span></code> for the current day</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hour</span></code></p></td>
-<td><p>integer vector</p></td>
+<td><p>integer vector; <code class="docutils literal notranslate"><span class="pre">NULL</span></code> for the current hour</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">minute</span></code></p></td>
-<td><p>integer vector</p></td>
+<td><p>integer vector; <code class="docutils literal notranslate"><span class="pre">NULL</span></code> for the current minute</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">second</span></code></p></td>
-<td><p>numeric vector; fractional seconds are allowed</p></td>
+<td><p>numeric vector; fractional seconds are allowed; <code class="docutils literal notranslate"><span class="pre">NULL</span></code> for the current seconds (without milliseconds)</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lenient</span></code></p></td>
 <td><p>single logical value; should the operation be lenient?</p></td>
@@ -436,12 +430,14 @@
 <h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_create</span><span class="p">(</span><span class="m">2015</span><span class="p">,</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">31</span><span class="p">,</span><span class="w"> </span><span class="m">23</span><span class="p">,</span><span class="w"> </span><span class="m">59</span><span class="p">,</span><span class="w"> </span><span class="m">59.999</span><span class="p">)</span>
 <span></span><span class="c1">## [1] &quot;2015-12-31 23:59:59 AEDT&quot;</span>
-<span></span><span class="nf">stri_datetime_create</span><span class="p">(</span><span class="m">5775</span><span class="p">,</span><span class="w"> </span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span><span class="w"> </span><span class="c1"># 1 Nisan 5775 -&gt; 2015-03-21</span>
-<span></span><span class="c1">## [1] &quot;2015-03-21 12:00:00 AEDT&quot;</span>
+<span></span><span class="nf">stri_datetime_create</span><span class="p">(</span><span class="m">5775</span><span class="p">,</span><span class="w"> </span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span><span class="w">  </span><span class="c1"># 1 Nisan 5775 -&gt; 2015-03-21</span>
+<span></span><span class="c1">## [1] &quot;2015-03-21 AEDT&quot;</span>
 <span></span><span class="nf">stri_datetime_create</span><span class="p">(</span><span class="m">2015</span><span class="p">,</span><span class="w"> </span><span class="m">02</span><span class="p">,</span><span class="w"> </span><span class="m">29</span><span class="p">)</span>
 <span></span><span class="c1">## [1] NA</span>
 <span></span><span class="nf">stri_datetime_create</span><span class="p">(</span><span class="m">2015</span><span class="p">,</span><span class="w"> </span><span class="m">02</span><span class="p">,</span><span class="w"> </span><span class="m">29</span><span class="p">,</span><span class="w"> </span><span class="n">lenient</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-<span></span><span class="c1">## [1] &quot;2015-03-01 12:00:00 AEDT&quot;</span>
+<span></span><span class="c1">## [1] &quot;2015-03-01 AEDT&quot;</span>
+<span></span><span class="nf">stri_datetime_create</span><span class="p">(</span><span class="n">hour</span><span class="o">=</span><span class="m">15</span><span class="p">,</span><span class="w"> </span><span class="n">minute</span><span class="o">=</span><span class="m">59</span><span class="p">)</span>
+<span></span><span class="c1">## [1] &quot;2023-11-08 15:59:00 AEDT&quot;</span>
 </pre></div>
 </div>
 </section>
@@ -482,7 +478,7 @@
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-11-02T13:33:26+1100.
+              Last updated on 2023-11-08T17:01:04+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -523,7 +519,7 @@
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=d8accc85"></script>
+</div><script src="../_static/documentation_options.js?v=1166ed6b"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=32e29ea5"></script>

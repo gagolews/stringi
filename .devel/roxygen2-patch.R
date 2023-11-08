@@ -1,4 +1,4 @@
-# Copyleft 2021-2023, Marek Gagolewski <https://www.gagolewski.com>
+# Copyleft 2021-2023, Marek Gagolewski <https://www.gagolewski.com/>
 # Adding author and other metadata to every Rd file
 
 library("roxygen2")

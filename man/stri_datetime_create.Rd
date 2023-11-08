@@ -5,10 +5,10 @@
 \title{Create a Date-Time Object}
 \usage{
 stri_datetime_create(
-  year,
-  month,
-  day,
-  hour = 12L,
+  year = NULL,
+  month = NULL,
+  day = NULL,
+  hour = 0L,
   minute = 0L,
   second = 0,
   lenient = FALSE,
@@ -17,17 +17,23 @@ stri_datetime_create(
 )
 }
 \arguments{
-\item{year}{integer vector; 0 is 1BC, -1 is 2BC, etc.}
+\item{year}{integer vector; 0 is 1BCE, -1 is 2BCE, etc.;
+\code{NULL} for the current year}
 
-\item{month}{integer vector; months are 1-based}
+\item{month}{integer vector; months are 1-based;
+\code{NULL} for the current month}
 
-\item{day}{integer vector}
+\item{day}{integer vector;
+\code{NULL} for the current day}
 
-\item{hour}{integer vector}
+\item{hour}{integer vector;
+\code{NULL} for the current hour}
 
-\item{minute}{integer vector}
+\item{minute}{integer vector;
+\code{NULL} for the current minute}
 
-\item{second}{numeric vector; fractional seconds are allowed}
+\item{second}{numeric vector; fractional seconds are allowed;
+\code{NULL} for the current seconds (without milliseconds)}
 
 \item{lenient}{single logical value; should the operation be lenient?}
 
@@ -50,9 +56,10 @@ Vectorized over \code{year}, \code{month}, \code{day}, \code{hour},
 }
 \examples{
 stri_datetime_create(2015, 12, 31, 23, 59, 59.999)
-stri_datetime_create(5775, 8, 1, locale='@calendar=hebrew') # 1 Nisan 5775 -> 2015-03-21
+stri_datetime_create(5775, 8, 1, locale='@calendar=hebrew')  # 1 Nisan 5775 -> 2015-03-21
 stri_datetime_create(2015, 02, 29)
 stri_datetime_create(2015, 02, 29, lenient=TRUE)
+stri_datetime_create(hour=15, minute=59)
 
 }
 \seealso{

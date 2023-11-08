@@ -1,34 +1,34 @@
 # Changelog
 
 
-## 1.8.1 (under development)
+## 1.8.1 (2023-11-08)
 
 * [GENERAL] ICU bundle updated to version 74.1 (Unicode 15.1, CLDR 44).
 
+* [BACKWARD INCOMPATIBLE] [BUILD TIME] Support for Solaris has now been dropped.
+  The package is no longer shipped with the very outdated ICU55 bundle.
+  A compiler supporting at least C++11 as well as ICU >= 61 are now required.
+
+* [BACKWARD INCOMPATIBLE] #469: Missing date-time fields in
+  `stri_datetime_parse` and `stri_datetime_create` now default to today's
+  midnight local time.
+
 * [BUILD TIME] As per the suggestion of Prof. Brian Ripley, `icudt74l`
-  (ICU data -- little endian) is now included in the source tarball (compressed
+  (ICU data - little endian) is now included in the source tarball (compressed
   with xz to save space). This allows for building *stringi* on systems with
   no internet access.
 
-* [BUILD TIME] Support for Solaris has now been dropped. The package is no
-  longer shipped with the very outdated ICU55 bundle. A compiler supporting
-  at least C++11 is now required. ICU >= 61 is now required.
+* [NEW FEATURE] #476: A warning is emitted when selecting an unknown locale
+  for collation as it most likely indicates that a wrong resource is being
+  returned.
 
+* [NEW FEATURE] The `C` locale identifier now resolves to `en_US_POSIX`.
 
-
-* [NEW FEATURE] TODO.... #469: `stri_datetime_parse` .. new argument -
-  `default_time` a Calendar set on input to the date and time to be used
-  for missing values in the date/time string being parsed
-
-* [BUGFIX] TODO.... #469: `stri_datetime_parse` did not reset the `Calendar`
+* [BUGFIX] #469: `stri_datetime_parse` did not reset the `Calendar`
   object when parsing multiple dates.
 
-* [NEW FEATURE] TODO... #476 U_USING_DEFAULT_ERROR on unknown locales
-
-* TODO.... ...#490?
-
-* TODO.... ...#491?
-
+* [BUGFIX] #487: Some functions did not accept ASCII strings longer than
+  858993457 characters on input.
 
 
 ## 1.7.12 (2023-01-09)
@@ -243,7 +243,7 @@
 ## 1.5.3 (2020-09-04)
 
 * [DOCUMENTATION] stringi home page has moved to
-  <https://stringi.gagolewski.com> and now includes a comprehensive reference
+  <https://stringi.gagolewski.com/> and now includes a comprehensive reference
   manual.
 
 * [NEW FEATURE] #400: `%s$%` and `%stri$%` are now binary operators

@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Collation" href="collation.html" /><link rel="prev" title="Code-Pointwise Comparing" href="codepoint_comparing.html" />
         <link rel="canonical" href="https://stringi.gagolewski.com/weave/regular_expressions.html" />
 
-    <!-- Generated with Sphinx 7.2.5 and Furo 2023.08.19 -->
+    <link rel="shortcut icon" href="https://www.gagolewski.com/_static/img/stringi.png"/><!-- Generated with Sphinx 7.2.5 and Furo 2023.08.19 -->
         <title>Regular Expressions - R Package stringi</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
@@ -22,8 +22,6 @@
   --color-code-foreground: black;
   --admonition-font-size: 95%;
   --admonition-title-font-size: 95%;
-  --color-brand-primary: red;
-  --color-brand-content: #CC3333;
   
   }
   @media not print {
@@ -32,8 +30,6 @@
   --color-code-foreground: #d0d0d0;
   --admonition-font-size: 95%;
   --admonition-title-font-size: 95%;
-  --color-brand-primary: #ff2b53;
-  --color-brand-content: #dd3333;
   
     }
     @media (prefers-color-scheme: dark) {
@@ -42,8 +38,6 @@
   --color-code-foreground: #d0d0d0;
   --admonition-font-size: 95%;
   --admonition-title-font-size: 95%;
-  --color-brand-primary: #ff2b53;
-  --color-brand-content: #dd3333;
   
       }
     }
@@ -166,7 +160,7 @@
 <a class="sidebar-brand" href="../index.html">stringi</a>
 </span>
 <div class="sidebar-brand">
-1.7.12
+1.8.1
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -670,7 +664,7 @@ captures symbols:</p>
 <span class="c1">##  [1] &quot;|&quot; &quot;&lt;&quot; &quot;&gt;&quot; &quot;=&quot; &quot;+&quot; &quot;^&quot; &quot;$&quot; &quot;€&quot; &quot;`&quot; &quot;~&quot; &quot;×&quot;</span>
 </pre></div>
 </div>
-<p>We strongly recommend, wherever possible, the use of the portable
+<p>We strongly recommend, wherever possible, using the portable
 “<code class="docutils literal notranslate"><span class="pre">[\p{P}\p{S}]</span></code>” as an alternative to the <em>PCRE</em>’s “<code class="docutils literal notranslate"><span class="pre">[:punct:]</span></code>”.</p>
 </section>
 </section>
@@ -911,7 +905,7 @@ Moreover, “<code class="docutils literal notranslate"><span class="pre">\$</sp
 For example, “<code class="docutils literal notranslate"><span class="pre">\1</span></code>” denotes whatever has been consumed by the first
 capture group.</p>
 <p>Even though, in general, parsing HTML code with regexes is not
-recommended, let’s consider the following examples:</p>
+recommended, let us consider the following examples:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="s">&quot;&lt;strong&gt;&lt;em&gt;spam&lt;/em&gt;&lt;/strong&gt;&lt;code&gt;eggs&lt;/code&gt;&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;&lt;[a-z]+&gt;.*?&lt;/[a-z]+&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&lt;([a-z]+)&gt;.*?&lt;/\\1&gt;&quot;</span><span class="p">))</span>
 <span class="c1">## [[1]]</span>
@@ -1034,7 +1028,7 @@ discussion and a workaround.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-11-02T13:33:26+1100.
+              Last updated on 2023-11-08T17:01:04+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -1099,7 +1093,7 @@ discussion and a workaround.</p>
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=d8accc85"></script>
+</div><script src="../_static/documentation_options.js?v=1166ed6b"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=32e29ea5"></script>

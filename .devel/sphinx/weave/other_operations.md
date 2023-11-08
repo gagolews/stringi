@@ -23,7 +23,8 @@ purpose of splitting text into lines, word-wrapping, counting characters
 or words, locating particular text units (e.g., the 3rd sentence), etc.
 
 Generally, text boundary analysis is a locale-sensitive operation
-(see the [Unicode Standard Annex \#29: Unicode Text Segmentation](https://unicode.org/reports/tr29/)). For example, in Japanese and Chinese, spaces are
+(see the [Unicode Standard Annex \#29: Unicode Text Segmentation](https://unicode.org/reports/tr29/)).
+For example, in Japanese and Chinese, spaces are
 not used for the separation of words -- a line break can occur even in the
 middle of a word. Nevertheless, these languages have punctuation and
 diacritical marks that cannot start or end a line, so this must also be

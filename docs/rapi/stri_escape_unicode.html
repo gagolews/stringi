@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="stri_extract_boundaries: Extract Data Between Text Boundaries" href="stri_extract_boundaries.html" /><link rel="prev" title="stri_encode: Convert Strings Between Given Encodings" href="stri_encode.html" />
         <link rel="canonical" href="https://stringi.gagolewski.com/rapi/stri_escape_unicode.html" />
 
-    <!-- Generated with Sphinx 7.2.5 and Furo 2023.08.19 -->
+    <link rel="shortcut icon" href="https://www.gagolewski.com/_static/img/stringi.png"/><!-- Generated with Sphinx 7.2.5 and Furo 2023.08.19 -->
         <title>stri_escape_unicode: Escape Unicode Code Points - R Package stringi</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
@@ -22,8 +22,6 @@
   --color-code-foreground: black;
   --admonition-font-size: 95%;
   --admonition-title-font-size: 95%;
-  --color-brand-primary: red;
-  --color-brand-content: #CC3333;
   
   }
   @media not print {
@@ -32,8 +30,6 @@
   --color-code-foreground: #d0d0d0;
   --admonition-font-size: 95%;
   --admonition-title-font-size: 95%;
-  --color-brand-primary: #ff2b53;
-  --color-brand-content: #dd3333;
   
     }
     @media (prefers-color-scheme: dark) {
@@ -42,8 +38,6 @@
   --color-code-foreground: #d0d0d0;
   --admonition-font-size: 95%;
   --admonition-title-font-size: 95%;
-  --color-brand-primary: #ff2b53;
-  --color-brand-content: #dd3333;
   
       }
     }
@@ -166,7 +160,7 @@
 <a class="sidebar-brand" href="../index.html">stringi</a>
 </span>
 <div class="sidebar-brand">
-1.7.12
+1.8.1
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -355,7 +349,7 @@
 <h1>stri_escape_unicode: Escape Unicode Code Points<a class="headerlink" href="#stri-escape-unicode-escape-unicode-code-points" title="Link to this heading">#</a></h1>
 <section id="description">
 <h2>Description<a class="headerlink" href="#description" title="Link to this heading">#</a></h2>
-<p>Escapes all Unicode (not ASCII-printable) code points.</p>
+<p>Generates an ASCII string where all non-printable characters and non-ASCII characters are converted to escape sequences.</p>
 </section>
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">#</a></h2>
@@ -382,8 +376,8 @@
 </section>
 <section id="details">
 <h2>Details<a class="headerlink" href="#details" title="Link to this heading">#</a></h2>
-<p>For non-printable and certain special (well-known, see also R man page <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Quotes.html">Quotes</a>) ASCII characters the following (also recognized in R) convention is used. We get <code class="docutils literal notranslate"><span class="pre">\a</span></code>, <code class="docutils literal notranslate"><span class="pre">\b</span></code>, <code class="docutils literal notranslate"><span class="pre">\t</span></code>, <code class="docutils literal notranslate"><span class="pre">\n</span></code>, <code class="docutils literal notranslate"><span class="pre">\v</span></code>, <code class="docutils literal notranslate"><span class="pre">\f</span></code>, <code class="docutils literal notranslate"><span class="pre">\r</span></code>, <code class="docutils literal notranslate"><span class="pre">\&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">\'</span></code>, <code class="docutils literal notranslate"><span class="pre">\\</span></code> or either \uXXXX (4 hex digits) or \UXXXXXXXX (8 hex digits) otherwise.</p>
-<p>As usual, any input string is converted to Unicode before executing the escape process.</p>
+<p>For non-printable and certain special (well-known, see also the R man page <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Quotes.html">Quotes</a>) ASCII characters, the following (also recognized in R) convention is used. We get <code class="docutils literal notranslate"><span class="pre">\a</span></code>, <code class="docutils literal notranslate"><span class="pre">\b</span></code>, <code class="docutils literal notranslate"><span class="pre">\t</span></code>, <code class="docutils literal notranslate"><span class="pre">\n</span></code>, <code class="docutils literal notranslate"><span class="pre">\v</span></code>, <code class="docutils literal notranslate"><span class="pre">\f</span></code>, <code class="docutils literal notranslate"><span class="pre">\r</span></code>, <code class="docutils literal notranslate"><span class="pre">\&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">\'</span></code>, <code class="docutils literal notranslate"><span class="pre">\\</span></code> or either <code class="docutils literal notranslate"><span class="pre">\uXXXX</span></code> (4 hex digits) or <code class="docutils literal notranslate"><span class="pre">\UXXXXXXXX</span></code> (8 hex digits) otherwise.</p>
+<p>As usual in stringi, any input string is converted to Unicode before executing the escape process.</p>
 </section>
 <section id="value">
 <h2>Value<a class="headerlink" href="#value" title="Link to this heading">#</a></h2>
@@ -443,7 +437,7 @@
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-11-02T13:33:26+1100.
+              Last updated on 2023-11-08T17:01:04+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -484,7 +478,7 @@
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=d8accc85"></script>
+</div><script src="../_static/documentation_options.js?v=1166ed6b"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=32e29ea5"></script>

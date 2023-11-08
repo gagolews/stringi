@@ -17,8 +17,8 @@ x <- stri_datetime_create(2010:2015, 1, 1)
 expect_equivalent(length(x), 6)
 expect_equivalent(attr(x, "tzone"), NULL)
 
-expect_equivalent(format(x), c("2010-01-01 12:00:00", "2011-01-01 12:00:00",
-    "2012-01-01 12:00:00", "2013-01-01 12:00:00", "2014-01-01 12:00:00", "2015-01-01 12:00:00"))
+expect_equivalent(format(x), c("2010-01-01", "2011-01-01",
+    "2012-01-01", "2013-01-01", "2014-01-01", "2015-01-01"))
 
 x <- stri_datetime_create(2010:2015, 1:6, 1, 12, 59, 50:55, tz = "Europe/Moscow")
 expect_equivalent(length(x), 6)
@@ -33,13 +33,12 @@ expect_equivalent(attr(x, "tzone"), "Europe/Moscow")
 stri_datetime_format(x)
 
 expect_equivalent(stri_datetime_format(stri_datetime_create(0, 1, 1), "Y"), "0")
-expect_equivalent(stri_datetime_format(stri_datetime_create(-1, 1, 1), "Y"),
-    "-1")
+expect_equivalent(stri_datetime_format(stri_datetime_create(-1, 1, 1), "Y"), "-1")
 
 expect_equivalent(strftime(stri_datetime_create(5775, 8, 1, locale = "@@calendar=hebrew"),
     "%Y-%m-%d"), "5775-08-01")
 expect_true(is.na(stri_datetime_create(2015, 2, 29)))
-expect_equivalent(format(stri_datetime_create(2015, 2, 29, lenient = TRUE)),
+expect_equivalent(format(stri_datetime_create(2015, 2, 29, 12, lenient = TRUE)),
     "2015-03-01 12:00:00")
 
 

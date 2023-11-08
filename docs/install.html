@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="General Design Principles" href="weave/design_principles.html" /><link rel="prev" title="stringi: Fast and Portable Character String Processing in R" href="index.html" />
         <link rel="canonical" href="https://stringi.gagolewski.com/install.html" />
 
-    <!-- Generated with Sphinx 7.2.5 and Furo 2023.08.19 -->
+    <link rel="shortcut icon" href="https://www.gagolewski.com/_static/img/stringi.png"/><!-- Generated with Sphinx 7.2.5 and Furo 2023.08.19 -->
         <title>Installing stringi - R Package stringi</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
@@ -22,8 +22,6 @@
   --color-code-foreground: black;
   --admonition-font-size: 95%;
   --admonition-title-font-size: 95%;
-  --color-brand-primary: red;
-  --color-brand-content: #CC3333;
   
   }
   @media not print {
@@ -32,8 +30,6 @@
   --color-code-foreground: #d0d0d0;
   --admonition-font-size: 95%;
   --admonition-title-font-size: 95%;
-  --color-brand-primary: #ff2b53;
-  --color-brand-content: #dd3333;
   
     }
     @media (prefers-color-scheme: dark) {
@@ -42,8 +38,6 @@
   --color-code-foreground: #d0d0d0;
   --admonition-font-size: 95%;
   --admonition-title-font-size: 95%;
-  --color-brand-primary: #ff2b53;
-  --color-brand-content: #dd3333;
   
       }
     }
@@ -166,7 +160,7 @@
 <a class="sidebar-brand" href="index.html">stringi</a>
 </span>
 <div class="sidebar-brand">
-1.7.12
+1.8.1
 </div>
 <form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -358,113 +352,53 @@
 </pre></div>
 </div>
 <p>However, due to the overwhelming complexity of the ICU4C library,
-upon which <em>stringi</em> is based, and the colourful diversity of operating systems,
-their flavours, and particular setups, some users may still experience
-a few issues that hopefully can be resolved with the help of this short manual.</p>
-<p>Also, some build tweaks are possible.</p>
+upon which <em>stringi</em> is based, and the diversity of environments
+it operates on, you might still experience a few issues.
+Hopefully, they can be resolved with the help of this short manual.</p>
+<p>Below we also describe some available build process tweaks.</p>
+<blockquote>
+<div><p>To get the most out of stringi, you are strongly encouraged to rely
+on our custom ICU4C 74.1 bundle by calling:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;stringi&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">configure.args</span><span class="o">=</span><span class="s">&quot;--disable-pkg-config&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This ensures maximum portability across all platforms
+(Windows and macOS users fetch the pre-compiled binaries
+from CRAN built precisely this way).</p>
+</div></blockquote>
 <section id="icu4c">
 <h2>ICU4C<a class="headerlink" href="#icu4c" title="Link to this heading">#</a></h2>
-<p>The stringi package depends on the ICU4C &gt;= 55 library.</p>
-<p>If we install the package from sources and either:</p>
+<p>The stringi package depends on the ICU4C &gt;= 61 library.</p>
+<p>ICU will be built together with stringi based on the customised
+ICU4C 74.1 source bundle that is shipped with the package
+if we install the package from sources and one of the following is true:</p>
 <ul class="simple">
 <li><p>this requirement is not met (check out <a class="reference external" href="https://icu.unicode.org/download">https://icu.unicode.org/download</a>,
-the <code class="docutils literal notranslate"><span class="pre">libicu-devel</span></code> rpm on Fedora/CentOS/OpenSUSE,
-<code class="docutils literal notranslate"><span class="pre">libicu-dev</span></code> on Ubuntu/Debian, etc.),</p></li>
+the <code class="docutils literal notranslate"><span class="pre">libicu-devel</span></code> package on Fedora/CentOS/OpenSUSE,
+<code class="docutils literal notranslate"><span class="pre">libicu-dev</span></code> on Ubuntu/Debian, etc.), or</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">pkg-config</span></code> fails to find appropriate build settings
 for ICU-based projects, or</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">INSTALL</span></code> is called with the <code class="docutils literal notranslate"><span class="pre">--configure-args='--disable-pkg-config'</span></code>
-argument, or environment variable <code class="docutils literal notranslate"><span class="pre">STRINGI_DISABLE_PKG_CONFIG</span></code> is
-set to non-zero or
+argument, or the <code class="docutils literal notranslate"><span class="pre">STRINGI_DISABLE_PKG_CONFIG</span></code> environment variable
+is set to non-zero or
 <code class="docutils literal notranslate"><span class="pre">install.packages(&quot;stringi&quot;,</span> <span class="pre">configure.args=&quot;--disable-pkg-config&quot;)</span></code>
-is executed,</p></li>
+is executed.</p></li>
 </ul>
-<p>then ICU will be built together with stringi.
-A custom subset of ICU4C 69.1 is shipped with the package.
-We also include ICU4C 55.1 which can be used as a fallback version
-(e.g., on older Solaris boxes).</p>
-<blockquote>
-<div><p>To get the most out of stringi, you are strongly encouraged to rely on our
-ICU4C package bundle. This ensures maximum portability across all platforms
-(Windows and macOS users by default fetch the pre-compiled binaries
-from CRAN built precisely this way).</p>
-</div></blockquote>
-</section>
-<section id="icu-data-library-and-no-internet-access">
-<h2>ICU Data Library and No Internet Access<a class="headerlink" href="#icu-data-library-and-no-internet-access" title="Link to this heading">#</a></h2>
-<p>Note that if you choose to use our ICU4C bundle, then – by default – the
-ICU data library will be downloaded from one of our mirror servers.
-However, if you have already downloaded a version of <code class="docutils literal notranslate"><span class="pre">icudt*.zip</span></code> suitable
-for your platform (big/little-endian), you may wish to install the
-package by calling:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;stringi&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">configure.vars</span><span class="o">=</span><span class="s">&quot;ICUDT_DIR=&lt;icudt_dir&gt;&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Moreover, if you have <strong>no internet access</strong> on the machines
-you try to install stringi on, try fetching the latest development version
-of the package, as it is shipped with the <code class="docutils literal notranslate"><span class="pre">ICU</span></code> data archives.
-You can build a distributable source package that includes all the required
-ICU data files (for off-line use) by omitting some relevant lines in
-the <code class="docutils literal notranslate"><span class="pre">.Rbuildignore</span></code> file. The following command sequence should do the trick:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>https://github.com/gagolews/stringi/archive/master.zip<span class="w"> </span>-O<span class="w"> </span>stringi.zip
-unzip<span class="w"> </span>stringi.zip
-sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;/\/icu..\/data/d&#39;</span><span class="w"> </span>stringi-master/.Rbuildignore
-R<span class="w"> </span>CMD<span class="w"> </span>build<span class="w"> </span>stringi-master
-</pre></div>
-</div>
-<p>Assuming the most recent development version of the package is numbered x.y.z,
-a file named <code class="docutils literal notranslate"><span class="pre">stringi_x.y.z.tar.gz</span></code> is created in the current working directory.
-The package can now be installed (the source bundle may be propagated via
-<code class="docutils literal notranslate"><span class="pre">scp</span></code> etc.) by executing:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>R<span class="w"> </span>CMD<span class="w"> </span>INSTALL<span class="w"> </span>stringi_x.y.z.tar.gz
-</pre></div>
-</div>
-<p>Alternatively, call from within an R session:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;stringi_x.y.z.tar.gz&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">repos</span><span class="o">=</span><span class="kc">NULL</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<section id="c-11-issues">
-<h2>C++11 Issues<a class="headerlink" href="#c-11-issues" title="Link to this heading">#</a></h2>
-<p>A decent C++11 compiler is required to build ICU4C 69.1 from sources.</p>
-<p>Note that Pre-4.9.0 GCC has a
-<a class="reference external" href="https://gcc.gnu.org/bugzilla/show_bug.cgi?id=56019">bug</a> where
-<code class="docutils literal notranslate"><span class="pre">::max_align_t</span></code> has been defined, but not <code class="docutils literal notranslate"><span class="pre">std::max_align_t</span></code>.
-If our built-in workaround does not work, you may try calling:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;stringi&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">configure.args</span><span class="o">=</span><span class="s">&quot;--with-extra-cxxflags=&#39;-std=c++11&#39;&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Overall, your build chain may be misconfigured, check out,
-amongst others, <code class="docutils literal notranslate"><span class="pre">&lt;R_inst_dir&gt;/etc/Makeconf</span></code> (e.g., are you using
-<code class="docutils literal notranslate"><span class="pre">-std=gnu++11</span></code> instead of <code class="docutils literal notranslate"><span class="pre">-std=c++11</span></code>?). Refer to
-<a class="reference external" href="https://cran.r-project.org/doc/manuals/r-release/R-admin.html">https://cran.r-project.org/doc/manuals/r-release/R-admin.html</a>
-for more details.</p>
-<p>There is an option of using the fallback version of ICU4C 55.1.
-However, it requires the support of the <code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">long</span></code> type in a few functions,
-(this is not part of the C++98 standard; works on Solaris, though). Try:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;stringi&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">configure.args</span><span class="o">=</span><span class="s">&quot;--disable-cxx11&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
 </section>
 <section id="customising-the-build-process">
 <h2>Customising the Build Process<a class="headerlink" href="#customising-the-build-process" title="Link to this heading">#</a></h2>
 <p>Additional features and options of the <code class="docutils literal notranslate"><span class="pre">./configure</span></code> script:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--disable-cxx11</span></code>: Disable C++11; if you build ICU4C from
-sources, make sure your C++ compiler supports the <code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">long</span></code> type.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--disable-icu-bundle</span></code>: Enforce system ICU.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--disable-pkg-config</span></code>: Disable <code class="docutils literal notranslate"><span class="pre">pkg-config</span></code>;
 ICU4C will be compiled from sources.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--with-extra-cflags=FLAGS</span></code>: Additional C compiler flags.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--with-extra-cppflags=FLAGS</span></code>: Additional C/C++ preprocessor flags.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--with-extra-cxxflags=FLAGS</span></code>: Additional C++ compiler flags.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--with-extra-cppflags=FLAGS</span></code>: Additional C++ preprocessor flags.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--with-extra-ldflags=FLAGS</span></code>: Additional linker flags.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--with-extra-libs=FLAGS</span></code>: Additional libraries to link against.</p></li>
 </ul>
-<p>Some influential environment variables:</p>
+<p>Some environment variables:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">ICUDT_DIR</span></code>: Optional directory with an already downloaded ICU data
-archive (<code class="docutils literal notranslate"><span class="pre">icudt*.zip</span></code>); either an absolute path or a
-path relative to <code class="docutils literal notranslate"><span class="pre">&lt;package</span> <span class="pre">source</span> <span class="pre">dir&gt;/src</span></code>; defaults to <code class="docutils literal notranslate"><span class="pre">icuXX/data</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">PKG_CONFIG_PATH</span></code>: An optional list of directories to search for
 <code class="docutils literal notranslate"><span class="pre">pkg-config</span></code>’s <code class="docutils literal notranslate"><span class="pre">.pc</span></code> files.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">R_HOME</span></code>: Override the R directory, e.g.,
@@ -472,30 +406,25 @@ path relative to <code class="docutils literal notranslate"><span class="pre">&l
 <li><p><code class="docutils literal notranslate"><span class="pre">CAT</span></code>: The <code class="docutils literal notranslate"><span class="pre">cat</span></code> command used to generate the list of source files to compile.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">PKG_CONFIG</span></code>:The <code class="docutils literal notranslate"><span class="pre">pkg-config</span></code> command used to fetch the necessary compiler
 flags to link to the existing <code class="docutils literal notranslate"><span class="pre">libicu</span></code> installation.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">STRINGI_DISABLE_CXX11</span></code>: Disable C++11;
-see also <code class="docutils literal notranslate"><span class="pre">--disable-cxx11</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">STRINGI_DISABLE_PKG_CONFIG</span></code>: Compile ICU from sources;
 see also <code class="docutils literal notranslate"><span class="pre">--disable-pkg-config</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">STRINGI_DISABLE_ICU_BUNDLE</span></code>: Enforce system ICU;
 see also <code class="docutils literal notranslate"><span class="pre">--disable-icu-bundle</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">STRINGI_CFLAGS</span></code>: see <code class="docutils literal notranslate"><span class="pre">--with-extra-cflags</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">STRINGI_CPPFLAGS</span></code>: see <code class="docutils literal notranslate"><span class="pre">--with-extra-cppflags</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">STRINGI_CXXFLAGS</span></code>: see <code class="docutils literal notranslate"><span class="pre">--with-extra-cxxflags</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">STRINGI_CPPFLAGS</span></code>: see <code class="docutils literal notranslate"><span class="pre">--with-extra-cppflags</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">STRINGI_LDFLAGS</span></code>: see <code class="docutils literal notranslate"><span class="pre">--with-extra-ldflags</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">STRINGI_LIBS</span></code>: see <code class="docutils literal notranslate"><span class="pre">--with-extra-libs</span></code>.</p></li>
 </ul>
 </section>
-<section id="conclusion">
-<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
-<p>We expect that with a correctly configured C++11 compiler and properly
-installed system ICU4C distribution, you should face no problems
-installing the package, especially if you use our ICU4C bundle and
-have a working internet access.</p>
-<p>If you do not manage to set up a successful stringi build, do not
+<section id="final-notes">
+<h2>Final Notes<a class="headerlink" href="#final-notes" title="Link to this heading">#</a></h2>
+<p>If you do not manage to set up a successful build, do not
 hesitate to <a class="reference external" href="https://github.com/gagolews/stringi/issues">file a bug report</a>.
 However, please check the list of archived (closed) issues first –
-it is very likely that a solution to your problem has already been posted.</p>
-<p>To help diagnose your error further, please run (from the terminal):</p>
+it is quite likely that a solution to your problem has already been posted.</p>
+<p>To help diagnose your error further, please run (from the terminal)
+the following commands and submit the output from <code class="docutils literal notranslate"><span class="pre">./configure</span></code>
+as well as the contents of <code class="docutils literal notranslate"><span class="pre">config.log</span></code>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/tmp
 wget<span class="w"> </span>https://github.com/gagolews/stringi/archive/master.zip
 unzip<span class="w"> </span>master.zip
@@ -503,8 +432,6 @@ unzip<span class="w"> </span>master.zip
 ./configure
 </pre></div>
 </div>
-<p>And submit the output from <code class="docutils literal notranslate"><span class="pre">./configure</span></code> as well as the contents of
-<code class="docutils literal notranslate"><span class="pre">config.log</span></code>.</p>
 </section>
 </section>
 
@@ -543,7 +470,7 @@ unzip<span class="w"> </span>master.zip
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-11-02T13:33:26+1100.
+              Last updated on 2023-11-08T17:01:04+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -566,10 +493,8 @@ unzip<span class="w"> </span>master.zip
             <ul>
 <li><a class="reference internal" href="#">Installing <em>stringi</em></a><ul>
 <li><a class="reference internal" href="#icu4c">ICU4C</a></li>
-<li><a class="reference internal" href="#icu-data-library-and-no-internet-access">ICU Data Library and No Internet Access</a></li>
-<li><a class="reference internal" href="#c-11-issues">C++11 Issues</a></li>
 <li><a class="reference internal" href="#customising-the-build-process">Customising the Build Process</a></li>
-<li><a class="reference internal" href="#conclusion">Conclusion</a></li>
+<li><a class="reference internal" href="#final-notes">Final Notes</a></li>
 </ul>
 </li>
 </ul>
@@ -581,7 +506,7 @@ unzip<span class="w"> </span>master.zip
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=d8accc85"></script>
+</div><script src="_static/documentation_options.js?v=1166ed6b"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=32e29ea5"></script>
