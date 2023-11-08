@@ -9,6 +9,8 @@ library("tinytest")
 library("stringi")
 library("methods")
 
+str(stringi::stri_info())
+
 # options(encoding="UTF-8")  # e.g., on Windows
 cat(stri_info(short=TRUE), "\n")
 
