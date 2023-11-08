@@ -13,6 +13,7 @@ str(stringi::stri_info())
 
 # options(encoding="UTF-8")  # e.g., on Windows
 cat(stri_info(short=TRUE), "\n")
+cat(Sys.getlocale(), "\n")
 
 testWarnings <- TRUE
 
