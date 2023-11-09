@@ -7,7 +7,7 @@ Reads a text file in ins entirety, re-encodes it, and splits it into text lines.
 ## Usage
 
 ``` r
-stri_read_lines(con, encoding = NULL, fname = con, fallback_encoding = NULL)
+stri_read_lines(con, encoding = NULL, fname = con)
 ```
 
 ## Arguments

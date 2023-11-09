@@ -111,7 +111,7 @@ stri_read_raw <- function(con, fname = con)
 #' @family files
 #' @export
 stri_read_lines <- function(con, encoding = NULL,
-    fname = con, fallback_encoding = NULL)
+    fname = con)
 {
     if (!missing(fname) && missing(con)) { # DEPRECATED
         warning("The 'fname' argument in stri_read_lines is a deprecated alias of 'con' and will be removed in a future release of 'stringi'.")
