@@ -185,7 +185,7 @@ SEXP stri_trans_casemap(SEXP str, int _type, SEXP locale)
 {
     if (_type < 1 || _type > 3)
         Rf_error(MSG__INCORRECT_INTERNAL_ARG);
-    const char* qloc = stri__prepare_arg_locale(locale, "locale", true); /* this is R_alloc'ed */
+    const char* qloc = stri__prepare_arg_locale(locale, "locale"); /* this is R_alloc'ed */
     PROTECT(str = stri__prepare_arg_string(str, "str")); // prepare string argument
 
     // version 0.2-1 - Does not work with ICU 4.8 (but we require ICU >= 50)
@@ -196,6 +196,7 @@ SEXP stri_trans_casemap(SEXP str, int _type, SEXP locale)
     ucasemap = ucasemap_open(qloc, U_FOLD_CASE_DEFAULT, &status);
     STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
+    // TODO: U_USING_DEFAULT_WARNING when qloc!=0
     // NOTE: we can't check if there submitted locale is valid,
     // because there is no API for it [ULOC_VALID_LOCALE]
 

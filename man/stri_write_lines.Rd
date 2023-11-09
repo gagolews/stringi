@@ -23,7 +23,7 @@ the current default one}
 
 \item{sep}{newline separator}
 
-\item{fname}{deprecated alias of \code{con}}
+\item{fname}{[DEPRECATED] alias of \code{con}}
 }
 \value{
 This function returns nothing noteworthy.

@@ -34,7 +34,7 @@ Your program should avoid changing the default locale. All locale-sensitive func
 
 One of many examples of locale-dependent services is the Collator, which performs a locale-aware string comparison. It is used for string comparing, ordering, sorting, and searching. See [`stri_opts_collator`](stri_opts_collator.md) for the description on how to tune its settings, and its `locale` argument in particular.
 
-When choosing a resource bundle that is not available in the requested locale nor in its more general variants (e.g., \'es_ES\' vs \'es\'), a warning is emitted.
+When choosing a resource bundle that is not available in the explicitly requested locale (but not when using the default locale) nor in its more general variants (e.g., \'es_ES\' vs \'es\'), a warning is emitted.
 
 Other locale-sensitive functions include, e.g., [`stri_trans_tolower`](stri_trans_casemap.md) (that does character case mapping).
 

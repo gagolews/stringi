@@ -101,7 +101,7 @@ Some environment variables:
 
 
 
-## Final Notes
+## Getting Help
 
 If you do not manage to set up a successful build, do not
 hesitate to [file a bug report](https://github.com/gagolews/stringi/issues).

@@ -16,7 +16,7 @@ stri_rand_lipsum(n_paragraphs, start_lipsum = TRUE, nparagraphs = n_paragraphs)
 |----------------|------------------------------------------------------------------------------------------|
 | `n_paragraphs` | single integer, number of paragraphs to generate                                         |
 | `start_lipsum` | single logical value; should the resulting text start with *Lorem ipsum dolor sit amet*? |
-| `nparagraphs`  | deprecated alias of `n_paragraphs`                                                       |
+| `nparagraphs`  | \[DEPRECATED\] alias of `n_paragraphs`                                                   |
 
 ## Details
 

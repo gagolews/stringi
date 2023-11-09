@@ -131,7 +131,7 @@ stri_rand_strings <- function(n, length, pattern = "[A-Za-z0-9]")
 #' @param n_paragraphs single integer, number of paragraphs to generate
 #' @param start_lipsum single logical value; should the resulting
 #' text start with \emph{Lorem ipsum dolor sit amet}?
-#' @param nparagraphs deprecated alias of \code{n_paragraphs}
+#' @param nparagraphs [DEPRECATED] alias of \code{n_paragraphs}
 #'
 #' @return Returns a character vector of length \code{n_paragraphs}.
 #'
@@ -147,7 +147,7 @@ stri_rand_lipsum <- function(n_paragraphs, start_lipsum = TRUE,
     nparagraphs=n_paragraphs)
 {
     if (!missing(nparagraphs) && missing(n_paragraphs)) { # DEPRECATED
-        # TODO: warning
+        warning("The 'nparagraphs' argument in stri_rand_lipsum is a deprecated alias of 'n_paragraphs' and will be removed in a future release of 'stringi'.")
         n_paragraphs <- nparagraphs
     }
 

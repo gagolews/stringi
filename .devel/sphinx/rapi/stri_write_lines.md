@@ -24,7 +24,7 @@ stri_write_lines(
 | `con`      | name of the output file or a connection object (opened in the binary mode) |
 | `encoding` | output encoding, `NULL` or `''` for the current default one                |
 | `sep`      | newline separator                                                          |
-| `fname`    | deprecated alias of `con`                                                  |
+| `fname`    | \[DEPRECATED\] alias of `con`                                              |
 
 ## Details
 

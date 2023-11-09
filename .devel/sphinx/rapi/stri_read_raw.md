@@ -15,7 +15,7 @@ stri_read_raw(con, fname = con)
 |         |                                                                            |
 |---------|----------------------------------------------------------------------------|
 | `con`   | name of the output file or a connection object (opened in the binary mode) |
-| `fname` | deprecated alias of `con`                                                  |
+| `fname` | \[DEPRECATED\] alias of `con`                                              |
 
 ## Details
 

@@ -348,22 +348,31 @@
           <section class="tex2jax_ignore mathjax_ignore" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Link to this heading">#</a></h1>
 <section id="id1">
-<h2>1.8.1 (2023-11-08)<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<h2>1.8.1 (2023-11-09)<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>[GENERAL] ICU bundle updated to version 74.1 (Unicode 15.1, CLDR 44).</p></li>
-<li><p>[BACKWARD INCOMPATIBLE] [BUILD TIME] Support for Solaris has now been dropped.
-The package is no longer shipped with the very outdated ICU55 bundle.
+<li><p>[BACKWARD INCOMPATIBILITY] [BUILD TIME] Support for Solaris has now been
+dropped. The package is no longer shipped with the very outdated ICU55 bundle.
 A compiler supporting at least C++11 as well as ICU &gt;= 61 are now required.</p></li>
-<li><p>[BACKWARD INCOMPATIBLE] #469: Missing date-time fields in
+<li><p>[BACKWARD INCOMPATIBILITY] #469: Missing date-time fields in
 <code class="docutils literal notranslate"><span class="pre">stri_datetime_parse</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_datetime_create</span></code> now default to today’s
 midnight local time.</p></li>
+<li><p>[BACKWARD INCOMPATIBILITY] Removed the long-deprecated and defunct
+<code class="docutils literal notranslate"><span class="pre">fallback_encoding</span></code> parameter of <code class="docutils literal notranslate"><span class="pre">stri_read_lines</span></code> and the ellipsis
+parameter of <code class="docutils literal notranslate"><span class="pre">stri_opts_collator</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_opts_regex</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_opts_fixed</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">stri_opts_regex</span></code>.</p></li>
 <li><p>[BUILD TIME] As per the suggestion of Prof. Brian Ripley, <code class="docutils literal notranslate"><span class="pre">icudt74l</span></code>
 (ICU data - little endian) is now included in the source tarball (compressed
 with xz to save space). This allows for building <em>stringi</em> on systems with
 no internet access.</p></li>
-<li><p>[NEW FEATURE] #476: A warning is emitted when selecting an unknown locale
-for collation as it most likely indicates that a wrong resource is being
-returned.</p></li>
+<li><p>[NEW FEATURE] #476: In break iterator-, date-time-, and collator-based
+operations (e.g., <code class="docutils literal notranslate"><span class="pre">stri_sort</span></code>), a warning is emitted when the <em>root</em> ICU
+resource bundle is returned when using an <em>explicitly</em> requested locale.
+This might happen when we pass an ‘unknown’ <code class="docutils literal notranslate"><span class="pre">locale</span></code> argument to these
+functions. Note that when relying on the default <code class="docutils literal notranslate"><span class="pre">locale=NULL</span></code> argument,
+no warning is emitted. In such a case, checking
+if the default locale as returned by <code class="docutils literal notranslate"><span class="pre">stri_enc_get</span></code> is amongst
+those listed in <code class="docutils literal notranslate"><span class="pre">stri_enc_list</span></code> is recommended.</p></li>
 <li><p>[NEW FEATURE] The <code class="docutils literal notranslate"><span class="pre">C</span></code> locale identifier now resolves to <code class="docutils literal notranslate"><span class="pre">en_US_POSIX</span></code>.</p></li>
 <li><p>[BUGFIX] #469: <code class="docutils literal notranslate"><span class="pre">stri_datetime_parse</span></code> did not reset the <code class="docutils literal notranslate"><span class="pre">Calendar</span></code>
 object when parsing multiple dates.</p></li>
@@ -1209,7 +1218,7 @@ scheduled for milestone 0.1.</p></li>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-11-08T17:01:04+1100.
+              Last updated on 2023-11-09T11:25:05+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -1231,7 +1240,7 @@ scheduled for milestone 0.1.</p></li>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Changelog</a><ul>
-<li><a class="reference internal" href="#id1">1.8.1 (2023-11-08)</a></li>
+<li><a class="reference internal" href="#id1">1.8.1 (2023-11-09)</a></li>
 <li><a class="reference internal" href="#id2">1.7.12 (2023-01-09)</a></li>
 <li><a class="reference internal" href="#id3">1.7.8 (2022-07-11)</a></li>
 <li><a class="reference internal" href="#id4">1.7.6 (2021-11-29)</a></li>

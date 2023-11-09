@@ -7,16 +7,15 @@ A convenience function used to tune up the behavior of `stri_*_fixed` functions,
 ## Usage
 
 ``` r
-stri_opts_fixed(case_insensitive = FALSE, overlap = FALSE, ...)
+stri_opts_fixed(case_insensitive = FALSE, overlap = FALSE)
 ```
 
 ## Arguments
 
-|                    |                                                                                                                            |
-|--------------------|----------------------------------------------------------------------------------------------------------------------------|
-| `case_insensitive` | logical; enable simple case insensitive matching                                                                           |
-| `overlap`          | logical; enable overlapping matches\' detection                                                                            |
-| `...`              | \[DEPRECATED\] any other arguments passed to this function generate a warning; this argument will be removed in the future |
+|                    |                                                  |
+|--------------------|--------------------------------------------------|
+| `case_insensitive` | logical; enable simple case insensitive matching |
+| `overlap`          | logical; enable overlapping matches\' detection  |
 
 ## Details
 

@@ -1,26 +1,36 @@
 # Changelog
 
 
-## 1.8.1 (2023-11-08)
+## 1.8.1 (2023-11-09)
 
 * [GENERAL] ICU bundle updated to version 74.1 (Unicode 15.1, CLDR 44).
 
-* [BACKWARD INCOMPATIBLE] [BUILD TIME] Support for Solaris has now been dropped.
-  The package is no longer shipped with the very outdated ICU55 bundle.
+* [BACKWARD INCOMPATIBILITY] [BUILD TIME] Support for Solaris has now been
+  dropped. The package is no longer shipped with the very outdated ICU55 bundle.
   A compiler supporting at least C++11 as well as ICU >= 61 are now required.
 
-* [BACKWARD INCOMPATIBLE] #469: Missing date-time fields in
+* [BACKWARD INCOMPATIBILITY] #469: Missing date-time fields in
   `stri_datetime_parse` and `stri_datetime_create` now default to today's
   midnight local time.
+
+* [BACKWARD INCOMPATIBILITY] Removed the long-deprecated and defunct
+  `fallback_encoding` parameter of `stri_read_lines` and the ellipsis
+  parameter of `stri_opts_collator`, `stri_opts_regex`, `stri_opts_fixed`,
+  and `stri_opts_regex`.
 
 * [BUILD TIME] As per the suggestion of Prof. Brian Ripley, `icudt74l`
   (ICU data - little endian) is now included in the source tarball (compressed
   with xz to save space). This allows for building *stringi* on systems with
   no internet access.
 
-* [NEW FEATURE] #476: A warning is emitted when selecting an unknown locale
-  for collation as it most likely indicates that a wrong resource is being
-  returned.
+* [NEW FEATURE] #476: In break iterator-, date-time-, and collator-based
+  operations (e.g., `stri_sort`), a warning is emitted when the *root* ICU
+  resource bundle is returned when using an *explicitly* requested locale.
+  This might happen when we pass an 'unknown' `locale` argument to these
+  functions. Note that when relying on the default `locale=NULL` argument,
+  no warning is emitted. In such a case, checking
+  if the default locale as returned by `stri_enc_get` is amongst
+  those listed in `stri_enc_list` is recommended.
 
 * [NEW FEATURE] The `C` locale identifier now resolves to `en_US_POSIX`.
 

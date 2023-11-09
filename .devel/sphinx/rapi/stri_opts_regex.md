@@ -19,8 +19,7 @@ stri_opts_regex(
   uword,
   error_on_unknown_escapes,
   time_limit = 0L,
-  stack_limit = 0L,
-  ...
+  stack_limit = 0L
 )
 ```
 
@@ -40,7 +39,6 @@ stri_opts_regex(
 | `error_on_unknown_escapes` | logical; whether to generate an error on unrecognized backslash escapes; if set, fail with an error on patterns that contain backslash-escaped ASCII letters without a known special meaning; otherwise, these escaped letters represent themselves                              |
 | `time_limit`               | integer; processing time limit, in \~milliseconds (but not precisely so, depends on the CPU speed), for match operations; setting a limit is desirable if poorly written regexes are expected on input; 0 for no limit                                                           |
 | `stack_limit`              | integer; maximal size, in bytes, of the heap storage available for the match backtracking stack; setting a limit is desirable if poorly written regexes are expected on input; 0 for no limit                                                                                    |
-| `...`                      | \[DEPRECATED\] any other arguments passed to this function generate a warning; this argument will be removed in the future                                                                                                                                                       |
 
 ## Details
 

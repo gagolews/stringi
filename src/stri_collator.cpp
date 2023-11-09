@@ -76,22 +76,12 @@ UCollator* stri__ucol_open(SEXP opts_collator)
 
     R_len_t narg = Rf_isNull(opts_collator)?0:LENGTH(opts_collator);
 
-    const char* default_locale = stri__prepare_arg_locale(R_NilValue, "locale", true);
+    const char* default_locale = stri__prepare_arg_locale(R_NilValue, "locale");
 
     if (narg <= 0) { // no custom settings - use default Collator
         UErrorCode status = U_ZERO_ERROR;
         UCollator* col = ucol_open(default_locale, &status);
         STRI__CHECKICUSTATUS_RFERROR(status, {/* do nothing special on err */}) // error() allowed here
-
-        if (status == U_USING_DEFAULT_WARNING) {
-            UErrorCode status2 = U_ZERO_ERROR;
-            const char* valid_locale = ucol_getLocaleByType(col, ULOC_VALID_LOCALE, &status2);
-            if (valid_locale && !strcmp(valid_locale, "root"))
-                Rf_warning(ICUError::getICUerrorName(status));
-        }
-        // else if (status == U_USING_FALLBACK_WARNING)  // warning on this would be too invasive
-        //    Rf_warning(ICUError::getICUerrorName(status));
-
         return col;
     }
 
@@ -122,7 +112,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
 
         PROTECT(tmp_arg = VECTOR_ELT(opts_collator, i));
         if (!strcmp(curname, "locale")) {
-            opt_LOCALE = stri__prepare_arg_locale(tmp_arg, "locale", true); /* this is R_alloc'ed */
+            opt_LOCALE = stri__prepare_arg_locale(tmp_arg, "locale"); /* this is R_alloc'ed */
         } else if  (!strcmp(curname, "strength")) {
             int val = stri__prepare_arg_integer_1_notNA(tmp_arg, "strength");
             if (val < (int)UCOL_PRIMARY + 1) val = (int)UCOL_PRIMARY + 1;
@@ -164,7 +154,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
     UCollator* col = ucol_open(opt_LOCALE, &status);
     STRI__CHECKICUSTATUS_RFERROR(status, { /* nothing special on err */ }) // error() allowed here
 
-    if (status == U_USING_DEFAULT_WARNING) {
+    if (status == U_USING_DEFAULT_WARNING && opt_LOCALE) {
         UErrorCode status2 = U_ZERO_ERROR;
         const char* valid_locale = ucol_getLocaleByType(col, ULOC_VALID_LOCALE, &status2);
         if (valid_locale && !strcmp(valid_locale, "root"))

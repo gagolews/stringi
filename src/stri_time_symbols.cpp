@@ -52,7 +52,7 @@
  */
 SEXP stri_datetime_symbols(SEXP locale, SEXP context, SEXP width)
 {
-    const char* qloc = stri__prepare_arg_locale(locale, "locale", true); /* this is R_alloc'ed */
+    const char* qloc = stri__prepare_arg_locale(locale, "locale"); /* this is R_alloc'ed */
 
     const char* context_str = stri__prepare_arg_string_1_notNA(context, "context");
     const char* context_opts[] = {"format", "standalone", NULL};
@@ -88,7 +88,7 @@ SEXP stri_datetime_symbols(SEXP locale, SEXP context, SEXP width)
         sym = DateFormatSymbols(loc, calendar_type.data(), status);
     STRI__CHECKICUSTATUS_RFERROR(status, {/* do nothing special on err */})
 
-    if (status == U_USING_DEFAULT_WARNING) {
+    if (status == U_USING_DEFAULT_WARNING && qloc) {
         //UErrorCode status2 = U_ZERO_ERROR;
         //const char* valid_locale = sym.getLocale(ULOC_VALID_LOCALE, status2).getBaseName();
         // NOTE! It does not fall back to the "root" locale!

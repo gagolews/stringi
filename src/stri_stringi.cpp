@@ -303,6 +303,12 @@ extern "C" void R_init_stringi(DllInfo* dll)
     if (U_FAILURE(status))
         Rf_error("ICU init failed: %s", u_errorName(status));
 
+    if (stri__is_C_locale(uloc_getDefault())) {   // C locale -> en_US_POSIX
+        status = U_ZERO_ERROR;
+        uloc_setDefault("en_US_POSIX", &status);
+        Rf_error("ICU init failed: %s", u_errorName(status));
+    }
+
     R_registerRoutines(dll, NULL, cCallMethods, NULL, NULL);
     R_useDynamicSymbols(dll, (Rboolean)FALSE);
 #if defined(R_VERSION) && R_VERSION >= R_Version(3, 0, 0)

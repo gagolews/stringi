@@ -16,8 +16,7 @@ stri_opts_collator(
   case_level = FALSE,
   normalization = FALSE,
   normalisation = normalization,
-  numeric = FALSE,
-  ...
+  numeric = FALSE
 )
 
 stri_coll(
@@ -29,8 +28,7 @@ stri_coll(
   case_level = FALSE,
   normalization = FALSE,
   normalisation = normalization,
-  numeric = FALSE,
-  ...
+  numeric = FALSE
 )
 ```
 
@@ -47,7 +45,6 @@ stri_coll(
 | `normalization`     | single logical value; if `TRUE`, then incremental check is performed to see whether the input data is in the FCD form. If the data is not in the FCD form, incremental NFD normalization is performed                                                                       |
 | `normalisation`     | alias of `normalization`                                                                                                                                                                                                                                                    |
 | `numeric`           | single logical value; when turned on, this attribute generates a collation key for the numeric value of substrings of digits; this is a way to get \'100\' to sort AFTER \'2\'; note that negative or non-integer numbers will not be ordered properly                      |
-| `...`               | \[DEPRECATED\] any other arguments passed to this function generate a warning; this argument will be removed in the future                                                                                                                                                  |
 
 ## Details
 
