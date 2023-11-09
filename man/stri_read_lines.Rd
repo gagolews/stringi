@@ -4,7 +4,7 @@
 \alias{stri_read_lines}
 \title{Read Text Lines from a Text File}
 \usage{
-stri_read_lines(con, encoding = NULL, fname = con, fallback_encoding = NULL)
+stri_read_lines(con, encoding = NULL, fname = con)
 }
 \arguments{
 \item{con}{name of the output file or a connection object
