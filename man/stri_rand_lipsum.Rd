@@ -12,7 +12,7 @@ stri_rand_lipsum(n_paragraphs, start_lipsum = TRUE, nparagraphs = n_paragraphs)
 \item{start_lipsum}{single logical value; should the resulting
 text start with \emph{Lorem ipsum dolor sit amet}?}
 
-\item{nparagraphs}{deprecated alias of \code{n_paragraphs}}
+\item{nparagraphs}{[DEPRECATED] alias of \code{n_paragraphs}}
 }
 \value{
 Returns a character vector of length \code{n_paragraphs}.

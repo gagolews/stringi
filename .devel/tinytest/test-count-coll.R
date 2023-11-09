@@ -33,7 +33,7 @@ expect_equivalent(stri_count_coll("bababababaab", "aab", opts_collator = stri_op
     1L)
 
 old_loc <- stri_locale_set("UNKNOWN")
-expect_warning(stri_count_coll("bababababaab", "aab"))
+expect_equivalent(stri_count_coll("bababababaab", "aab"), 1L)
 stri_locale_set(old_loc)
 
 expect_equivalent(stri_count_coll("bababababaab", "aab", opts_collator = stri_opts_collator(locale = "C")),

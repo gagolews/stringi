@@ -18,8 +18,7 @@ stri_opts_brkiter(
   skip_line_soft,
   skip_line_hard,
   skip_sentence_term,
-  skip_sentence_sep,
-  ...
+  skip_sentence_sep
 )
 ```
 
@@ -38,7 +37,6 @@ stri_opts_brkiter(
 | `skip_line_hard`     | logical; perform no action for hard, or mandatory line breaks                                                                                                                                                  |
 | `skip_sentence_term` | logical; perform no action for sentences ending with a sentence terminator (\'`.`\', \'`,`\', \'`?`\', \'`!`\'), possibly followed by a hard separator (`CR`, `LF`, `PS`, etc.)                                |
 | `skip_sentence_sep`  | logical; perform no action for sentences that do not contain an ending sentence terminator, but are ended by a hard separator or end of input                                                                  |
-| `...`                | \[DEPRECATED\] any other arguments passed to this function generate a warning; this argument will be removed in the future                                                                                     |
 
 ## Details
 

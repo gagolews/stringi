@@ -260,8 +260,10 @@ stri_unique <- function(str, ..., opts_collator = NULL)
 #' @export
 stri_duplicated <- function(str, from_last = FALSE,
     fromLast = from_last, ..., opts_collator = NULL) {
-    if (!missing(fromLast)) # DEPRECATED
+    if (!missing(fromLast)) {
+        warning("The 'fromLast' argument in stri_duplicated is a deprecated alias of 'from_last' and will be removed in a future release of 'stringi'.")
         from_last <- fromLast
+    }
     if (!missing(...))
         opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
     .Call(C_stri_duplicated, str, from_last, opts_collator)
@@ -272,8 +274,10 @@ stri_duplicated <- function(str, from_last = FALSE,
 #' @export
 stri_duplicated_any <- function(str, from_last = FALSE, fromLast = from_last, ...,
     opts_collator = NULL) {
-    if (!missing(fromLast)) # DEPRECATED
+    if (!missing(fromLast)) {  # DEPRECATED
+        warning("The 'fromLast' argument in stri_duplicated_any is a deprecated alias of 'from_last' and will be removed in a future release of 'stringi'.")
         from_last <- fromLast
+    }
     if (!missing(...))
         opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
     .Call(C_stri_duplicated_any, str, from_last, opts_collator)

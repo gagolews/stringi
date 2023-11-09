@@ -16,8 +16,7 @@ stri_opts_regex(
   uword,
   error_on_unknown_escapes,
   time_limit = 0L,
-  stack_limit = 0L,
-  ...
+  stack_limit = 0L
 )
 }
 \arguments{
@@ -65,9 +64,6 @@ setting a limit is desirable if poorly written regexes are expected on input;
 \item{stack_limit}{integer; maximal size, in bytes, of the heap storage available
 for the match backtracking stack; setting a limit is desirable if poorly
 written regexes are expected on input; 0 for no limit}
-
-\item{...}{[DEPRECATED] any other arguments passed to this function
-generate a warning; this argument will be removed in the future}
 }
 \value{
 Returns a named list object; missing settings are left with default values.

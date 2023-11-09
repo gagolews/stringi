@@ -311,11 +311,9 @@ stri_enc_detect <- function(str, filter_angle_brackets = FALSE)
 #' \code{\link{stri_enc_detect}} (uses \pkg{ICU} facilities).
 #'
 #' @param str character vector, a raw vector, or
-#' a list of \code{raw} vectors
-#' @param locale \code{NULL} or \code{''}
-#' for default locale,
-#' \code{NA} for just checking the UTF-* family,
-#' or a single string with locale identifier.
+#'     a list of \code{raw} vectors
+#' @param locale \code{NULL} or \code{''} for the default locale,
+#'     or a single string with locale identifier.
 #'
 #' @return
 #' Just like \code{\link{stri_enc_detect}},
@@ -335,6 +333,7 @@ stri_enc_detect <- function(str, filter_angle_brackets = FALSE)
 #' @export
 stri_enc_detect2 <- function(str, locale = NULL)
 {
+    warning("stri_enc_detect2 is deprecated and will be removed in a future release of 'stringi'.")
     suppressWarnings(lapply(.Call(C_stri_enc_detect2, str, locale), as.data.frame,
         stringsAsFactors = FALSE))
 }

@@ -4,15 +4,12 @@
 \alias{stri_opts_fixed}
 \title{Generate a List with Fixed Pattern Search Engine's Settings}
 \usage{
-stri_opts_fixed(case_insensitive = FALSE, overlap = FALSE, ...)
+stri_opts_fixed(case_insensitive = FALSE, overlap = FALSE)
 }
 \arguments{
 \item{case_insensitive}{logical; enable simple case insensitive matching}
 
 \item{overlap}{logical; enable overlapping matches' detection}
-
-\item{...}{[DEPRECATED] any other arguments passed to this function
-generate a warning; this argument will be removed in the future}
 }
 \value{
 Returns a named list object.

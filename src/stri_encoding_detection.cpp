@@ -702,7 +702,7 @@ SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets)
 // -----------------------------------------------------------------------
 
 
-/** locale-dependent 8-bit converter check
+/** locale-dependent 8-bit converter check  [DEPRECATED]
  *
  * help struct for stri_enc_detect2
  *
@@ -805,7 +805,7 @@ struct Converter8bit {
 // -----------------------------------------------------------------------
 
 
-/** Guesses text encoding; help struct for stri_enc_detect2
+/** Guesses text encoding; help struct for stri_enc_detect2  [DEPRECATED]
  *
  * @version 0.1-?? (Marek Gagolewski)
  *
@@ -986,7 +986,7 @@ struct EncGuess {
 // -----------------------------------------------------------------------
 
 
-/** Detect encoding with initial guess
+/** Detect encoding with initial guess  [DEPRECATED]
  *
  * @param str character or raw vector or a list of raw vectors
  * @param loc locale id
@@ -1008,7 +1008,7 @@ struct EncGuess {
 SEXP stri_enc_detect2(SEXP str, SEXP loc)
 {
     const char* qloc = /* this is R_alloc'ed */
-        stri__prepare_arg_locale(loc, "locale", true, true); // allowdefault, allowna
+        stri__prepare_arg_locale(loc, "locale");
     // raw vector, character vector, or list of raw vectors:
     PROTECT(str = stri__prepare_arg_list_raw(str, "str"));
 

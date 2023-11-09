@@ -1419,6 +1419,23 @@ const char* stri__prepare_arg_string_1_notNA(SEXP x, const char* argname)
 }
 
 
+/**
+ * Check if we are dealing with the 'C' locale (it should be resolved to
+ * en_US_POSIX)
+ *
+ * "C", "c", "C.UTF-8", "c.UTF-8", "C.any_other_encoding", etc.
+ *
+ * @version 1.8.1 (Marek Gagolewski, 2023-11-09)
+ *
+ * @param str string
+ * @return bool
+ */
+bool stri__is_C_locale(const char* str)
+{
+    return str && ((str[0] == 'C' || str[0] == 'c')
+        && (str[1] == '\0' || str[1] == '.'));
+}
+
 
 /**
  * Prepare character vector argument that will be used to choose a locale
@@ -1434,9 +1451,10 @@ const char* stri__prepare_arg_string_1_notNA(SEXP x, const char* argname)
  * @param allowdefault do we allow \code{R_NilValue} or a single empty string
  *    to work as a default locale selector?
  * @param allowna do we allow \code{NA} in \code{loc}?
- *    This will return \code{NULL} as result
+ *    This will return \code{NULL} as result [DEPRECATED, only used in stri_enc_detect2]
  * @param argname argument name (message formatting)
- * @return string a \code{C} string with extracted locale name
+ * @return string a \code{C} string with extracted locale name;
+ *    can be NULL if allownull is TRUE
  *
  *
  * @version 0.1-?? (Marek Gagolewski)
@@ -1457,83 +1475,86 @@ const char* stri__prepare_arg_string_1_notNA(SEXP x, const char* argname)
  *    BUGFIX: locale='' is the default
  *
  * @version 1.8.1 (Marek Gagolewski, 2023-11-07)
- *    C is an alias of en_US_POSIX
+ *    C is an alias of en_US_POSIX; allowna argument dropped,
+ *    new argument: allownull
  */
 const char* stri__prepare_arg_locale(
     SEXP loc,
     const char* argname,
     bool allowdefault,
-    bool allowna
+    bool allownull
 ) {
-    const char* default_locale = uloc_getDefault();
+    const char* default_locale = (allownull)?NULL:uloc_getDefault();
 
-    if (!strcmp(default_locale, "C") || !strcmp(default_locale, "c"))
+    if (default_locale && stri__is_C_locale(default_locale))
         default_locale = "en_US_POSIX";
 
-    if (allowdefault && Rf_isNull(loc))
-        return default_locale;
-    else {
-        PROTECT(loc = stri__prepare_arg_string_1(loc, argname));
-        if (STRING_ELT(loc, 0) == NA_STRING) {
-            UNPROTECT(1);
-            if (allowna) return NULL;
-            else Rf_error(MSG__ARG_EXPECTED_NOT_NA, argname); // Rf_error allowed here
-        }
-        else if (strlen((const char*)CHAR(STRING_ELT(loc, 0))) == 0) {
-            UNPROTECT(1);
-            if (allowdefault) return default_locale;
-            else Rf_error(MSG__LOCALE_INCORRECT_ID); // Rf_error allowed here
-        }
-        else if (!strcmp(CHAR(STRING_ELT(loc, 0)), "C") || !strcmp(CHAR(STRING_ELT(loc, 0)), "c")) {
-            UNPROTECT(1);
-            return "en_US_POSIX";
-        }
-
-        UErrorCode err = U_ZERO_ERROR;
-        char buf[ULOC_FULLNAME_CAPACITY];
-        uloc_canonicalize((const char*)CHAR(STRING_ELT(loc, 0)), buf, ULOC_FULLNAME_CAPACITY, &err);
-        STRI__CHECKICUSTATUS_RFERROR(err, {;})
-
-        R_len_t ret_n = strlen(buf);
-        char* ret = R_alloc(ret_n+1, (int)sizeof(char));
-        memcpy(ret, buf, ret_n+1);
-
-        // right-trim
-        while (ret_n > 0 && (ret[ret_n-1] == ' ' || ret[ret_n-1] == '\t' || ret[ret_n-1] == '\n' || ret[ret_n-1] == '\r'))
-            ret[--ret_n] = '\0';
-
-        // left-trim
-        while (ret[0] == ' ' || ret[0] == '\t' || ret[0] == '\n' || ret[0] == '\r') {
-            ++ret;
-            --ret_n;
-        }
-
-        if (ret_n == 0) {
-            UNPROTECT(1);
-            if (allowdefault) return default_locale;
-            else Rf_error(MSG__LOCALE_INCORRECT_ID); // Rf_error allowed here
-        }
-
-        if (ret[0] == ULOC_KEYWORD_SEPARATOR) { // length is > 0
-            // no locale specifier, just keywords
-            if (!allowdefault) {
-                UNPROTECT(1);
-                Rf_error(MSG__LOCALE_INCORRECT_ID);
-            }
-            const char* ret_default = default_locale;
-            R_len_t ret_detault_n = strlen(ret_default);
-            const char* ret_tmp2 = ret;
-            ret = R_alloc(ret_detault_n+ret_n+1, (int)sizeof(char));
-            memcpy(ret, ret_default, ret_detault_n);
-            memcpy(ret+ret_detault_n, ret_tmp2, ret_n+1);
-        }
-
-        UNPROTECT(1);
-        return ret;
+    if (Rf_isNull(loc)) {
+        if (allowdefault) return default_locale;
+        else Rf_error(MSG__ARG_EXPECTED_NOT_NULL, argname); // Rf_error allowed here
     }
 
-    // won't arrive here anyway
-    return NULL; // avoid compiler warning
+    PROTECT(loc = stri__prepare_arg_string_1(loc, argname));
+    if (STRING_ELT(loc, 0) == NA_STRING) {
+        UNPROTECT(1);
+        Rf_error(MSG__ARG_EXPECTED_NOT_NA, argname); // Rf_error allowed here
+    }
+
+    const char* qloc = CHAR(STRING_ELT(loc, 0));
+    if (qloc[0] == '\0') {  // empty string
+        UNPROTECT(1);
+        if (allowdefault) return default_locale;
+        else Rf_error(MSG__LOCALE_INCORRECT_ID); // Rf_error allowed here
+    }
+
+    UErrorCode err = U_ZERO_ERROR;
+    char buf[ULOC_FULLNAME_CAPACITY];
+    uloc_canonicalize(qloc, buf, ULOC_FULLNAME_CAPACITY, &err);
+    UNPROTECT(1); // qloc, loc no longer used
+    STRI__CHECKICUSTATUS_RFERROR(err, {;})
+
+    R_len_t ret_n = strlen(buf);
+    char* ret = R_alloc(ret_n+1, (int)sizeof(char));
+    memcpy(ret, buf, ret_n+1);
+
+    // right-trim
+    while (ret_n > 0 && (ret[ret_n-1] == ' ' || ret[ret_n-1] == '\t' || ret[ret_n-1] == '\n' || ret[ret_n-1] == '\r'))
+        ret[--ret_n] = '\0';
+
+    // left-trim
+    while (ret[0] == ' ' || ret[0] == '\t' || ret[0] == '\n' || ret[0] == '\r') {
+        ++ret;
+        --ret_n;
+    }
+
+    if (ret_n == 0) {
+        if (allowdefault) return default_locale;
+        else Rf_error(MSG__LOCALE_INCORRECT_ID); // Rf_error allowed here
+    }
+
+    if (stri__is_C_locale(ret))
+        return "en_US_POSIX";
+
+    if (ret[0] == ULOC_KEYWORD_SEPARATOR) {  // length is > 0
+        // no locale specifier, just keywords
+        if (!allowdefault) {
+            Rf_error(MSG__LOCALE_INCORRECT_ID);
+        }
+        const char* ret_default;
+        if (default_locale) ret_default = default_locale;
+        else {
+            ret_default = uloc_getDefault();
+            if (stri__is_C_locale(ret_default))
+                ret_default = "en_US_POSIX";
+        }
+        R_len_t ret_detault_n = strlen(ret_default);
+        const char* ret_tmp2 = ret;
+        ret = R_alloc(ret_detault_n+ret_n+1, (int)sizeof(char));
+        memcpy(ret, ret_default, ret_detault_n);
+        memcpy(ret+ret_detault_n, ret_tmp2, ret_n+1);
+    }
+
+    return ret;
 }
 
 

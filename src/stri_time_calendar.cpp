@@ -81,16 +81,16 @@ SEXP stri_datetime_now()
 Calendar* stri__get_calendar(const char* locale_val)
 {
     UErrorCode status = U_ZERO_ERROR;
-    Calendar* cal = Calendar::createInstance(locale_val, status);
+    Calendar* cal = Calendar::createInstance(Locale::createFromName(locale_val), status);
     STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
     // NOTE: unfortunately, in ICU 74.1 U_USING_DEFAULT_WARNING is never emitted
-    // if (status == U_USING_DEFAULT_WARNING && cal) {
-    //     // UErrorCode status2 = U_ZERO_ERROR;
-    //     // const char* valid_locale = cal->getLocaleID(ULOC_VALID_LOCALE, status2);
-    //     // if (valid_locale && !strcmp(valid_locale, "root"))
-    //     Rf_warning(ICUError::getICUerrorName(status));
-    // }
+    if (status == U_USING_DEFAULT_WARNING && cal && locale_val) {
+        UErrorCode status2 = U_ZERO_ERROR;
+        const char* valid_locale = cal->getLocaleID(ULOC_VALID_LOCALE, status2);
+        if (valid_locale && !strcmp(valid_locale, "root"))
+        Rf_warning(ICUError::getICUerrorName(status));
+    }
 
     return cal;
 }
@@ -127,7 +127,7 @@ SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP tz, SEXP locale)
     const char* units_opts[] = {"years", "months", "weeks", "days", "hours", "minutes", "seconds", "milliseconds", NULL};
     int units_cur = stri__match_arg(units_val, units_opts);
 
-    const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
+    const char* locale_val = stri__prepare_arg_locale(locale, "locale");
 
     TimeZone* tz_val = stri__prepare_arg_timezone(tz, "tz", true/*allowdefault*/);
 
@@ -238,7 +238,7 @@ SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP tz, SEXP locale)
 SEXP stri_datetime_fields(SEXP time, SEXP tz, SEXP locale)
 {
     PROTECT(time = stri__prepare_arg_POSIXct(time, "time"));
-    const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
+    const char* locale_val = stri__prepare_arg_locale(locale, "locale");
     if (!Rf_isNull(tz)) PROTECT(tz = stri__prepare_arg_string_1(tz, "tz"));
     else             PROTECT(tz); /* needed to set tzone attrib */
 
@@ -387,16 +387,17 @@ SEXP stri_datetime_fields(SEXP time, SEXP tz, SEXP locale)
  * @version 1.8.1 (Marek Gagolewski, 2023-11-07)
  *     #476: Warn when falling back to the root locale, make C==en_US_POSIX
  */
-SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour,
-                          SEXP minute, SEXP second, SEXP lenient, SEXP tz, SEXP locale)
-{
+SEXP stri_datetime_create(
+    SEXP year, SEXP month, SEXP day, SEXP hour,
+    SEXP minute, SEXP second, SEXP lenient, SEXP tz, SEXP locale
+) {
     PROTECT(year = stri__prepare_arg_integer(year, "year"));
     PROTECT(month = stri__prepare_arg_integer(month, "month"));
     PROTECT(day = stri__prepare_arg_integer(day, "day"));
     PROTECT(hour = stri__prepare_arg_integer(hour, "hour"));
     PROTECT(minute = stri__prepare_arg_integer(minute, "minute"));
     PROTECT(second = stri__prepare_arg_double(second, "second"));
-    const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
+    const char* locale_val = stri__prepare_arg_locale(locale, "locale");
     bool lenient_val = stri__prepare_arg_logical_1_notNA(lenient, "lenient");
     if (!Rf_isNull(tz)) PROTECT(tz = stri__prepare_arg_string_1(tz, "tz"));
     else             PROTECT(tz); /* needed to set tzone attrib */

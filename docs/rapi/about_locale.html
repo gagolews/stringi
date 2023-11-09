@@ -373,7 +373,7 @@
 <section id="locale-sensitive-functions-in-stringi">
 <h2>Locale-Sensitive Functions in <span class="pkg">stringi</span><a class="headerlink" href="#locale-sensitive-functions-in-stringi" title="Link to this heading">#</a></h2>
 <p>One of many examples of locale-dependent services is the Collator, which performs a locale-aware string comparison. It is used for string comparing, ordering, sorting, and searching. See <a class="reference internal" href="stri_opts_collator.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_opts_collator</span></code></span></a> for the description on how to tune its settings, and its <code class="docutils literal notranslate"><span class="pre">locale</span></code> argument in particular.</p>
-<p>When choosing a resource bundle that is not available in the requested locale nor in its more general variants (e.g., ‘es_ES’ vs ‘es’), a warning is emitted.</p>
+<p>When choosing a resource bundle that is not available in the explicitly requested locale (but not when using the default locale) nor in its more general variants (e.g., ‘es_ES’ vs ‘es’), a warning is emitted.</p>
 <p>Other locale-sensitive functions include, e.g., <a class="reference internal" href="stri_trans_casemap.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_tolower</span></code></span></a> (that does character case mapping).</p>
 </section>
 <section id="author-s">
@@ -431,7 +431,7 @@
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-11-08T17:01:04+1100.
+              Last updated on 2023-11-09T11:25:05+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>

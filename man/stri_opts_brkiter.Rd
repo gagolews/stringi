@@ -15,8 +15,7 @@ stri_opts_brkiter(
   skip_line_soft,
   skip_line_hard,
   skip_sentence_term,
-  skip_sentence_sep,
-  ...
+  skip_sentence_sep
 )
 }
 \arguments{
@@ -56,9 +55,6 @@ ending with a sentence terminator ('\code{.}', '\code{,}', '\code{?}',
 \item{skip_sentence_sep}{logical; perform no action for sentences
 that do not contain an ending sentence terminator, but are ended
 by a hard separator or end of input}
-
-\item{...}{[DEPRECATED] any other arguments passed to this function
-generate a warning; this argument will be removed in the future}
 }
 \value{
 Returns a named list object.

@@ -260,7 +260,7 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
     if (exdent_val < 0) Rf_error(MSG__INCORRECT_NAMED_ARG "; " MSG__EXPECTED_POSITIVE, "exdent");
 
 
-    const char* qloc = stri__prepare_arg_locale(locale, "locale", true); /* this is R_alloc'ed */
+    const char* qloc = stri__prepare_arg_locale(locale, "locale"); /* this is R_alloc'ed */
     Locale loc = Locale::createFromName(qloc);
     PROTECT(str     = stri__prepare_arg_string(str, "str"));
     PROTECT(prefix  = stri__prepare_arg_string_1(prefix, "prefix"));
@@ -274,13 +274,13 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
     briter = BreakIterator::createLineInstance(loc, status);
     STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
-    // NOTE: this is too invasive, there are very few dedicated brkiters!
-    // if (status == U_USING_DEFAULT_WARNING) {
-    //     UErrorCode status2 = U_ZERO_ERROR;
-    //     const char* valid_locale = briter->getLocaleID(ULOC_VALID_LOCALE, status2);
-    //     if (valid_locale && !strcmp(valid_locale, "root"))
-    //         Rf_warning(ICUError::getICUerrorName(status));
-    // }
+    // NOTE: this is very invasive for there are very few dedicated brkiters!
+    if (status == U_USING_DEFAULT_WARNING && qloc) {
+        UErrorCode status2 = U_ZERO_ERROR;
+        const char* valid_locale = briter->getLocaleID(ULOC_VALID_LOCALE, status2);
+        if (valid_locale && !strcmp(valid_locale, "root"))
+            Rf_warning(ICUError::getICUerrorName(status));
+    }
 
     R_len_t str_length = LENGTH(str);
     StriContainerUTF8_indexable str_cont(str, str_length);

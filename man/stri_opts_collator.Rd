@@ -14,8 +14,7 @@ stri_opts_collator(
   case_level = FALSE,
   normalization = FALSE,
   normalisation = normalization,
-  numeric = FALSE,
-  ...
+  numeric = FALSE
 )
 
 stri_coll(
@@ -27,8 +26,7 @@ stri_coll(
   case_level = FALSE,
   normalization = FALSE,
   normalisation = normalization,
-  numeric = FALSE,
-  ...
+  numeric = FALSE
 )
 }
 \arguments{
@@ -67,9 +65,6 @@ when turned on, this attribute generates a collation key for
 the numeric value of substrings of digits;
 this is a way to get '100' to sort AFTER '2';
 note that negative or non-integer numbers will not be ordered properly}
-
-\item{...}{[DEPRECATED] any other arguments passed to this function
-generate a warning; this argument will be removed in the future}
 }
 \value{
 Returns a named list object; missing settings are left with default values.

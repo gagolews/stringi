@@ -10,9 +10,7 @@ stri_enc_detect2(str, locale = NULL)
 \item{str}{character vector, a raw vector, or
 a list of \code{raw} vectors}
 
-\item{locale}{\code{NULL} or \code{''}
-for default locale,
-\code{NA} for just checking the UTF-* family,
+\item{locale}{\code{NULL} or \code{''} for the default locale,
 or a single string with locale identifier.}
 }
 \value{

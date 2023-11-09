@@ -79,8 +79,6 @@
 #' the numeric value of substrings of digits;
 #' this is a way to get '100' to sort AFTER '2';
 #' note that negative or non-integer numbers will not be ordered properly
-#' @param ... [DEPRECATED] any other arguments passed to this function
-#'     generate a warning; this argument will be removed in the future
 #'
 #' @return
 #' Returns a named list object; missing settings are left with default values.
@@ -108,12 +106,11 @@
 #' stri_cmp('number100', 'number2', numeric=TRUE) # equivalent
 #' stri_cmp('above mentioned', 'above-mentioned')
 #' stri_cmp('above mentioned', 'above-mentioned', alternate_shifted=TRUE)
-stri_opts_collator <- function(locale = NULL, strength = 3L, alternate_shifted = FALSE,
+stri_opts_collator <- function(
+    locale = NULL, strength = 3L, alternate_shifted = FALSE,
     french = FALSE, uppercase_first = NA, case_level = FALSE, normalization = FALSE,
-    normalisation = normalization, numeric = FALSE, ...) {
-    if (!missing(...))
-        warning("Unknown option to `stri_opts_collator`.")
-
+    normalisation = normalization, numeric = FALSE
+) {
     opts <- list()
     if (!missing(locale))
         opts["locale"] <- locale
@@ -192,8 +189,6 @@ stri_coll <- stri_opts_collator
 #' @param stack_limit integer; maximal size, in bytes, of the heap storage available
 #' for the match backtracking stack; setting a limit is desirable if poorly
 #' written regexes are expected on input; 0 for no limit
-#' @param ... [DEPRECATED] any other arguments passed to this function
-#'     generate a warning; this argument will be removed in the future
 #'
 #' @return
 #' Returns a named list object; missing settings are left with default values.
@@ -214,17 +209,14 @@ stri_coll <- stri_opts_collator
 #' stri_detect_regex('ala', 'ALA', opts_regex=stri_opts_regex(case_insensitive=TRUE))
 #' stri_detect_regex('ala', 'ALA', case_insensitive=TRUE) # equivalent
 #' stri_detect_regex('ala', '(?i)ALA') # equivalent
-stri_opts_regex <- function(case_insensitive, comments,
+stri_opts_regex <- function(
+    case_insensitive, comments,
     dotall, dot_all = dotall,
     literal,
     multiline, multi_line = multiline,
     unix_lines, uword, error_on_unknown_escapes,
-    time_limit = 0L, stack_limit = 0L,
-    ...)
-{
-    if (!missing(...))
-        warning("Unknown option to `stri_opts_regex`.")
-
+    time_limit = 0L, stack_limit = 0L
+) {
     opts <- list()
     if (!missing(case_insensitive))
         opts["case_insensitive"] <- case_insensitive
@@ -303,8 +295,6 @@ stri_opts_regex <- function(case_insensitive, comments,
 #' @param skip_sentence_sep logical; perform no action for sentences
 #' that do not contain an ending sentence terminator, but are ended
 #' by a hard separator or end of input
-#' @param ... [DEPRECATED] any other arguments passed to this function
-#'     generate a warning; this argument will be removed in the future
 #'
 #' @return
 #' Returns a named list object.
@@ -319,13 +309,11 @@ stri_opts_regex <- function(case_insensitive, comments,
 #'
 #' \emph{Boundary Analysis} -- ICU User Guide,
 #' \url{https://unicode-org.github.io/icu/userguide/boundaryanalysis/}
-stri_opts_brkiter <- function(type, locale, skip_word_none, skip_word_number,
+stri_opts_brkiter <- function(
+    type, locale, skip_word_none, skip_word_number,
     skip_word_letter, skip_word_kana, skip_word_ideo, skip_line_soft,
-    skip_line_hard, skip_sentence_term, skip_sentence_sep, ...)
-{
-    if (!missing(...))
-        warning("Unknown option to `stri_opts_brkiter`.")
-
+    skip_line_hard, skip_sentence_term, skip_sentence_sep
+) {
     opts <- list()
     if (!missing(type))
         opts["type"] <- type
@@ -373,8 +361,6 @@ stri_opts_brkiter <- function(type, locale, skip_word_none, skip_word_number,
 #'
 #' @param case_insensitive logical; enable simple case insensitive matching
 #' @param overlap logical; enable overlapping matches' detection
-#' @param ... [DEPRECATED] any other arguments passed to this function
-#'     generate a warning; this argument will be removed in the future
 #'
 #' @return
 #' Returns a named list object.
@@ -390,11 +376,8 @@ stri_opts_brkiter <- function(type, locale, skip_word_none, skip_word_number,
 #' stri_detect_fixed('ala', 'ALA') # case-sensitive by default
 #' stri_detect_fixed('ala', 'ALA', opts_fixed=stri_opts_fixed(case_insensitive=TRUE))
 #' stri_detect_fixed('ala', 'ALA', case_insensitive=TRUE) # equivalent
-stri_opts_fixed <- function(case_insensitive = FALSE, overlap = FALSE, ...)
+stri_opts_fixed <- function(case_insensitive = FALSE, overlap = FALSE)
 {
-    if (!missing(...))
-        warning("Unknown option to `stri_opts_fixed`.")
-
     opts <- list()
     if (!missing(case_insensitive))
         opts["case_insensitive"] <- case_insensitive

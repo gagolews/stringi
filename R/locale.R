@@ -106,6 +106,8 @@
 #' behavior of \pkg{stringi} while using a modified default locale.
 #'
 #'
+#'
+#'
 #' @section Locale-Sensitive Functions in \pkg{stringi}:
 #'
 #' One of many examples of locale-dependent services is the Collator, which
@@ -114,8 +116,9 @@
 #' for the description on how to tune its settings, and its \code{locale}
 #' argument in particular.
 #'
-#' When choosing a resource bundle that is not available in the requested
-#' locale nor in its more general variants (e.g., `es_ES` vs `es`),
+#' When choosing a resource bundle that is not available in the explicitly
+#' requested locale (but not when using the default locale)
+#' nor in its more general variants (e.g., `es_ES` vs `es`),
 #' a warning is emitted.
 #'
 #' Other locale-sensitive functions include, e.g.,

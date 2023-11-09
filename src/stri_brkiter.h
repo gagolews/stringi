@@ -101,6 +101,9 @@ public:
  * @version 1.1.3 (Marek Gagolewski, 2017-01-07) UBRK_COUNT deprecated
  *
  * @version 1.1.6 (Marek Gagolewski, 2017-04-22) Add support for RBBI
+ *
+ * @version 1.8.1 (Marek Gagolewski, 2023-11-09)
+ *     warn if resource bundle for an explicitly set locale is unavailable
  */
 class StriUBreakIterator : public StriBrkIterOptions {
 private:
@@ -138,13 +141,12 @@ private:
         }
         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
-        // NOTE: this is too invasive, there are very few dedicated brkiters!
-        // if (status == U_USING_DEFAULT_WARNING && uiterator) {
-        //     UErrorCode status2 = U_ZERO_ERROR;
-        //     const char* valid_locale = ubrk_getLocaleByType(uiterator, ULOC_VALID_LOCALE, &status2);
-        //     if (valid_locale && !strcmp(valid_locale, "root"))
-        //         Rf_warning(ICUError::getICUerrorName(status));
-        // }
+        if (status == U_USING_DEFAULT_WARNING && uiterator && locale) {
+            UErrorCode status2 = U_ZERO_ERROR;
+            const char* valid_locale = ubrk_getLocaleByType(uiterator, ULOC_VALID_LOCALE, &status2);
+            if (valid_locale && !strcmp(valid_locale, "root"))
+                Rf_warning(ICUError::getICUerrorName(status));
+        }
     }
 
 
@@ -203,6 +205,9 @@ public:
  * separate class
  *
  * @version 1.1.6 (Marek Gagolewski, 2017-04-22) Add support for RBBI
+ *
+ * @version 1.8.1 (Marek Gagolewski, 2023-11-09)
+ *     warn if resource bundle for an explicitly set locale is unavailable
  */
 class StriRuleBasedBreakIterator : public StriBrkIterOptions {
 private:
@@ -251,13 +256,12 @@ private:
         }
         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
-        // NOTE: this is too invasive, there are very few dedicated brkiters!
-        // if (status == U_USING_DEFAULT_WARNING && rbiterator) {
-        //     UErrorCode status2 = U_ZERO_ERROR;
-        //     const char* valid_locale = rbiterator->getLocaleID(ULOC_VALID_LOCALE, status2);
-        //     if (valid_locale && !strcmp(valid_locale, "root"))
-        //         Rf_warning(ICUError::getICUerrorName(status));
-        // }
+        if (status == U_USING_DEFAULT_WARNING && rbiterator && locale) {
+            UErrorCode status2 = U_ZERO_ERROR;
+            const char* valid_locale = rbiterator->getLocaleID(ULOC_VALID_LOCALE, status2);
+            if (valid_locale && !strcmp(valid_locale, "root"))
+                Rf_warning(ICUError::getICUerrorName(status));
+        }
     }
 
     bool ignoreBoundary();

@@ -243,6 +243,9 @@
 #define MSG__ARG_EXPECTED_NOT_EMPTY \
    "argument `%s` should be a non-empty vector"
 
+#define MSG__ARG_EXPECTED_NOT_NULL \
+   "argument `%s` should not be a NULL"
+
 #define MSG__ARG_EXPECTED_1_STRING \
    "argument `%s` should be a single character string; only the first element is used"
 

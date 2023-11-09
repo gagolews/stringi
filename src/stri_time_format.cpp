@@ -151,7 +151,7 @@ DateFormat* stri__get_date_format(
  */
 SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale)
 {
-    const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
+    const char* locale_val = stri__prepare_arg_locale(locale, "locale");
     PROTECT(time = stri__prepare_arg_POSIXct(time, "time"));
     PROTECT(format = stri__prepare_arg_string(format, "format"));
 
@@ -268,7 +268,7 @@ SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale)
  */
 SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP lenient, SEXP tz, SEXP locale)
 {
-    const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
+    const char* locale_val = stri__prepare_arg_locale(locale, "locale");
     PROTECT(str = stri__prepare_arg_string(str, "str"));
     PROTECT(format = stri__prepare_arg_string(format, "format"));
     bool lenient_val = stri__prepare_arg_logical_1_notNA(lenient, "lenient");

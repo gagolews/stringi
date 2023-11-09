@@ -172,7 +172,7 @@ SEXP stri_timezone_set(SEXP tz) {
 SEXP stri_timezone_info(SEXP tz, SEXP locale, SEXP display_type)
 {
     TimeZone* curtz = stri__prepare_arg_timezone(tz, "tz", R_NilValue);
-    const char* qloc = stri__prepare_arg_locale(locale, "locale", true); /* this is R_alloc'ed */
+    const char* qloc = stri__prepare_arg_locale(locale, "locale"); /* this is R_alloc'ed */
     const char* dtype_str = stri__prepare_arg_string_1_notNA(display_type, "display_type"); /* this is R_alloc'ed */
     const char* dtype_opts[] = {
         "short", "long", "generic_short", "generic_long", "gmt_short", "gmt_long",
@@ -231,6 +231,7 @@ SEXP stri_timezone_info(SEXP tz, SEXP locale, SEXP display_type)
     curtz->getDisplayName(false, dtype, Locale::createFromName(qloc), val_name);
     SET_VECTOR_ELT(vals, curidx, stri__make_character_vector_UnicodeString_ptr(1, &val_name));
 
+    // TODO: U_USING_DEFAULT_WARNING when qloc!=0
     // TODO: If the display name is not available for the locale,
     // then getDisplayName returns a string in the localised GMT offset format
     // such as GMT[+-]HH:mm. -- we can't check+warn if it is a valid locale
