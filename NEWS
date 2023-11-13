@@ -16,11 +16,11 @@
 * [BACKWARD INCOMPATIBILITY] Removed the long-deprecated and defunct
   `fallback_encoding` parameter of `stri_read_lines` and the ellipsis
   parameter of `stri_opts_collator`, `stri_opts_regex`, `stri_opts_fixed`,
-  and `stri_opts_regex`.
+  `stri_opts_brkiter`, and `stri_opts_regex`.
 
 * [BUILD TIME] As per the suggestion of Prof. Brian Ripley, `icudt74l`
   (ICU data - little endian) is now included in the source tarball (compressed
-  with xz to save space). This allows for building *stringi* on systems with
+  with xz to save space). This allows for building **`stringi`** on systems with
   no internet access.
 
 * [NEW FEATURE] #476: In break iterator-, date-time-, and collator-based
@@ -53,7 +53,7 @@
 
 ## 1.7.8 (2022-07-11)
 
-* [DOCUMENTATION] Paper on *stringi* has been published in
+* [DOCUMENTATION] Paper on **`stringi`** has been published in
   the *Journal of Statistical Software*;
   see <https://doi.org/10.18637/jss.v103.i02>.
 
@@ -77,12 +77,12 @@
 
 ## 1.7.5 (2021-10-04)
 
-* [DOCUMENTATION] Paper on *stringi* has been accepted for
+* [DOCUMENTATION] Paper on **`stringi`** has been accepted for
   publication in the *Journal of Statistical Software*,
   see <https://stringi.gagolewski.com/_static/vignette/stringi.pdf>
   for a draft version.
 
-* [DOCUMENTATION] The *stringi* website at <https://stringi.gagolewski.com/>
+* [DOCUMENTATION] The **`stringi`** website at <https://stringi.gagolewski.com/>
   now features a comprehensive tutorial based on the aforementioned paper.
 
 * [DOCUMENTATION] The *ICU* Project site has been moved to
@@ -222,8 +222,8 @@
   stringi will be built against the battle-tested ICU4C 55.1.
   The update to ICU brings Unicode 13.0 and CLDR 39 support.
 
-* [DOCUMENTATION] A draft version of a paper on `stringi` is now available at
-  <https://stringi.gagolewski.com/_static/vignette/stringi.pdf>.
+* [DOCUMENTATION] A draft version of a paper on **`stringi`** is now available
+  at <https://stringi.gagolewski.com/_static/vignette/stringi.pdf>.
 
 * [GENERAL] stringi now requires R >= 3.1 (`CXX_STD` of `CXX11` or `CXX1X`).
 
@@ -699,7 +699,7 @@ documentation object `stri_datetime_format`: `...`
 * [NEW FEATURE] #117: `stri_extract_all_*()`, `stri_locate_all_*()`,
   `stri_match_all_*()` gained a new argument: `omit_no_match`.
   Setting it to `TRUE` makes these functions compatible with their
-  `stringr` equivalents.
+  **`stringr`** equivalents.
 
 * [NEW FEATURE] #118: `stri_wrap()` gained `indent`, `exdent`, `initial`,
   and `prefix` arguments. Moreover, Knuth's dynamic word wrapping algorithm

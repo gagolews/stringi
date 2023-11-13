@@ -1,5 +1,5 @@
 <a href="https://stringi.gagolewski.com/"><img src="https://www.gagolewski.com/_static/img/stringi.png" align="right" height="128" width="128" /></a>
-# [**stringi**](https://stringi.gagolewski.com/)
+# [**`stringi`**](https://stringi.gagolewski.com/)
 
 ### Fast and Portable Character String Processing in R (with the Unicode ICU)
 
@@ -12,14 +12,14 @@
 > A comprehensive tutorial and reference manual is available
 > at <https://stringi.gagolewski.com/>.
 >
-> Check out [**stringx**](https://stringx.gagolewski.com/) for a set of wrappers
-> around **stringi** with a base R-compatible API.
+> Check out [**`stringx`**](https://stringx.gagolewski.com/) for a set of wrappers
+> around **`stringi`** with a base R-compatible API.
 >
 > To learn more about R, check out Marek's open-access (free!) textbook
 > [Deep R Programming](https://deepr.gagolewski.com/).
 
-**stringi**  (pronounced “stringy”, IPA [strinɡi]) is THE *R*
-package for string/text/natural language processing.
+**`stringi`**  (pronounced “stringy”, IPA [strinɡi])
+is THE *R* package for string/text/natural language processing.
 It is very fast, consistent, convenient, and — thanks to the
 [ICU – International Components for Unicode](https://icu.unicode.org/)
 library — portable across all locales and platforms.
@@ -47,14 +47,14 @@ with contributions from Bartłomiej Tartanus and many others.
 
 The package's API was inspired by that of the early (pre-tidyverse; v0.6.2)
 version of Hadley Wickham's
-[*stringr*](https://cran.r-project.org/web/packages/stringr/)
-package (and since the 2015 v1.0.0 *stringr* is powered by *stringi*).
+[**`stringr`**](https://cran.r-project.org/web/packages/stringr/)
+package (and since the 2015 v1.0.0 **`stringr`** is powered by **`stringi`**).
 
 
 **Homepage**: https://stringi.gagolewski.com/
 
 **Citation**: Gagolewski M.,
-*stringi*: Fast and portable character string processing in R,
+**`stringi`**: Fast and portable character string processing in R,
 *Journal of Statistical Software*  **103**(2), 2022, 1–59,
 <https://dx.doi.org/10.18637/jss.v103.i02>.
 
@@ -64,7 +64,7 @@ package (and since the 2015 v1.0.0 *stringr* is powered by *stringi*).
 [INSTALL](https://raw.githubusercontent.com/gagolews/stringi/master/INSTALL)
 file for more details)
 
-**License**: *stringi*'s source code is distributed under the open source
+**License**: **`stringi`**'s source code is distributed under the open source
 BSD-3-clause license. For more details, see
 [LICENSE](https://raw.githubusercontent.com/gagolews/stringi/master/LICENSE).
 
