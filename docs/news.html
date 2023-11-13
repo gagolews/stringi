@@ -360,10 +360,10 @@ midnight local time.</p></li>
 <li><p>[BACKWARD INCOMPATIBILITY] Removed the long-deprecated and defunct
 <code class="docutils literal notranslate"><span class="pre">fallback_encoding</span></code> parameter of <code class="docutils literal notranslate"><span class="pre">stri_read_lines</span></code> and the ellipsis
 parameter of <code class="docutils literal notranslate"><span class="pre">stri_opts_collator</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_opts_regex</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_opts_fixed</span></code>,
-and <code class="docutils literal notranslate"><span class="pre">stri_opts_regex</span></code>.</p></li>
+<code class="docutils literal notranslate"><span class="pre">stri_opts_brkiter</span></code>, and <code class="docutils literal notranslate"><span class="pre">stri_opts_regex</span></code>.</p></li>
 <li><p>[BUILD TIME] As per the suggestion of Prof. Brian Ripley, <code class="docutils literal notranslate"><span class="pre">icudt74l</span></code>
 (ICU data - little endian) is now included in the source tarball (compressed
-with xz to save space). This allows for building <em>stringi</em> on systems with
+with xz to save space). This allows for building <strong><code class="docutils literal notranslate"><span class="pre">stringi</span></code></strong> on systems with
 no internet access.</p></li>
 <li><p>[NEW FEATURE] #476: In break iterator-, date-time-, and collator-based
 operations (e.g., <code class="docutils literal notranslate"><span class="pre">stri_sort</span></code>), a warning is emitted when the <em>root</em> ICU
@@ -393,7 +393,7 @@ If building against ICU &gt;= 72, note a backward incompatible change:
 <section id="id3">
 <h2>1.7.8 (2022-07-11)<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>[DOCUMENTATION] Paper on <em>stringi</em> has been published in
+<li><p>[DOCUMENTATION] Paper on <strong><code class="docutils literal notranslate"><span class="pre">stringi</span></code></strong> has been published in
 the <em>Journal of Statistical Software</em>;
 see <a class="reference external" href="https://doi.org/10.18637/jss.v103.i02">https://doi.org/10.18637/jss.v103.i02</a>.</p></li>
 <li><p>[BUGFIX] #473, #397: Fixed buffer overflow in <code class="docutils literal notranslate"><span class="pre">stri_dup</span></code>; Also,
@@ -415,11 +415,11 @@ does not handle negative numbers correctly is now mentioned in the manual.</p></
 <section id="id5">
 <h2>1.7.5 (2021-10-04)<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>[DOCUMENTATION] Paper on <em>stringi</em> has been accepted for
+<li><p>[DOCUMENTATION] Paper on <strong><code class="docutils literal notranslate"><span class="pre">stringi</span></code></strong> has been accepted for
 publication in the <em>Journal of Statistical Software</em>,
 see <a class="reference external" href="https://stringi.gagolewski.com/_static/vignette/stringi.pdf">https://stringi.gagolewski.com/_static/vignette/stringi.pdf</a>
 for a draft version.</p></li>
-<li><p>[DOCUMENTATION] The <em>stringi</em> website at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a>
+<li><p>[DOCUMENTATION] The <strong><code class="docutils literal notranslate"><span class="pre">stringi</span></code></strong> website at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a>
 now features a comprehensive tutorial based on the aforementioned paper.</p></li>
 <li><p>[DOCUMENTATION] The <em>ICU</em> Project site has been moved to
 <a class="reference external" href="https://icu.unicode.org/">https://icu.unicode.org/</a>.</p></li>
@@ -536,8 +536,8 @@ which is used on most Windows and OS X builds as well as on *nix systems
 not equipped with system ICU. However, if the C++11 support is disabled,
 stringi will be built against the battle-tested ICU4C 55.1.
 The update to ICU brings Unicode 13.0 and CLDR 39 support.</p></li>
-<li><p>[DOCUMENTATION] A draft version of a paper on <code class="docutils literal notranslate"><span class="pre">stringi</span></code> is now available at
-<a class="reference external" href="https://stringi.gagolewski.com/_static/vignette/stringi.pdf">https://stringi.gagolewski.com/_static/vignette/stringi.pdf</a>.</p></li>
+<li><p>[DOCUMENTATION] A draft version of a paper on <strong><code class="docutils literal notranslate"><span class="pre">stringi</span></code></strong> is now available
+at <a class="reference external" href="https://stringi.gagolewski.com/_static/vignette/stringi.pdf">https://stringi.gagolewski.com/_static/vignette/stringi.pdf</a>.</p></li>
 <li><p>[GENERAL] stringi now requires R &gt;= 3.1 (<code class="docutils literal notranslate"><span class="pre">CXX_STD</span></code> of <code class="docutils literal notranslate"><span class="pre">CXX11</span></code> or <code class="docutils literal notranslate"><span class="pre">CXX1X</span></code>).</p></li>
 <li><p>[NEW FEATURE] #408: <code class="docutils literal notranslate"><span class="pre">stri_trans_casefold()</span></code> performs case folding;
 this is different from case mapping, which is locale-dependent.
@@ -926,7 +926,7 @@ matches, see <code class="docutils literal notranslate"><span class="pre">?stri_
 <li><p>[NEW FEATURE] #117: <code class="docutils literal notranslate"><span class="pre">stri_extract_all_*()</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_locate_all_*()</span></code>,
 <code class="docutils literal notranslate"><span class="pre">stri_match_all_*()</span></code> gained a new argument: <code class="docutils literal notranslate"><span class="pre">omit_no_match</span></code>.
 Setting it to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> makes these functions compatible with their
-<code class="docutils literal notranslate"><span class="pre">stringr</span></code> equivalents.</p></li>
+<strong><code class="docutils literal notranslate"><span class="pre">stringr</span></code></strong> equivalents.</p></li>
 <li><p>[NEW FEATURE] #118: <code class="docutils literal notranslate"><span class="pre">stri_wrap()</span></code> gained <code class="docutils literal notranslate"><span class="pre">indent</span></code>, <code class="docutils literal notranslate"><span class="pre">exdent</span></code>, <code class="docutils literal notranslate"><span class="pre">initial</span></code>,
 and <code class="docutils literal notranslate"><span class="pre">prefix</span></code> arguments. Moreover, Knuth’s dynamic word wrapping algorithm
 now assumes that the cost of printing the last line is zero, see #128.</p></li>
@@ -1218,7 +1218,7 @@ scheduled for milestone 0.1.</p></li>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-11-09T12:07:05+1100.
+              Last updated on 2023-11-14T08:45:22+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>

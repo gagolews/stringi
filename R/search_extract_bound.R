@@ -126,8 +126,12 @@ stri_extract_first_boundaries <- function(str, ..., opts_brkiter = NULL)
 stri_extract_all_words <- function(str, simplify = FALSE, omit_no_match = FALSE,
     locale = NULL)
 {
-    stri_extract_all_boundaries(str, simplify, omit_no_match, opts_brkiter = stri_opts_brkiter(type = "word",
-        skip_word_none = TRUE, locale = locale))
+    stri_extract_all_boundaries(
+        str, simplify, omit_no_match,
+        opts_brkiter = stri_opts_brkiter(
+            type = "word", skip_word_none = TRUE, locale = locale
+        )
+    )
 }
 
 
