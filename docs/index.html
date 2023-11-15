@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Installing stringi" href="install.html" />
         <link rel="canonical" href="https://stringi.gagolewski.com/index.html" />
 
-    <link rel="shortcut icon" href="https://www.gagolewski.com/_static/img/stringi.png"/><!-- Generated with Sphinx 7.2.5 and Furo 2023.08.19 -->
+    <link rel="shortcut icon" href="https://www.gagolewski.com/_static/img/stringi.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>R Package stringi</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
@@ -345,14 +345,15 @@
           </label>
         </div>
         <article role="main">
-          <section id="stringi-fast-and-portable-character-string-processing-in-r">
+          <section class="tex2jax_ignore mathjax_ignore" id="stringi-fast-and-portable-character-string-processing-in-r">
 <h1>stringi: Fast and Portable Character String Processing in R<a class="headerlink" href="#stringi-fast-and-portable-character-string-processing-in-r" title="Link to this heading">#</a></h1>
 <blockquote class="epigraph">
-<div><p><strong>stringi (pronounced “stringy”, IPA [strinɡi]) is THE R package
+<div><p><strong class="program">stringi</strong> (pronounced “stringy”, IPA [strinɡi]) is THE R package
 for fast, portable, correct, consistent, and convenient string/text
-processing in any locale or character encoding.</strong></p>
+processing in any locale or character encoding.</p>
 </div></blockquote>
-<p>Thanks to <a class="reference external" href="https://icu.unicode.org/">ICU</a>, <em>stringi</em> fully supports a wide
+<p>Thanks to <a class="reference external" href="https://icu.unicode.org/"><strong class="program">ICU – International Components for Unicode</strong></a>,
+<strong class="program">stringi</strong> fully supports a wide
 range of <a class="reference external" href="https://www.unicode.org/">Unicode</a> standards
 (see also <a class="reference external" href="https://www.youtube.com/watch?v=-n2nlPHEMG8">this video</a>).</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_extract_all</span><span class="p">(</span><span class="n">regex</span><span class="o">=</span><span class="s">&quot;\\p{Emoji}&quot;</span><span class="p">,</span>
@@ -370,7 +371,7 @@ range of <a class="reference external" href="https://www.unicode.org/">Unicode</
 <span class="c1">## [1] &quot;cudný&quot;   &quot;čudný&quot;   &quot;hladný&quot;  &quot;chladný&quot;</span>
 </pre></div>
 </div>
-<p><em>stringi</em> comes with numerous functions related to data cleansing,
+<p><strong class="program">stringi</strong> comes with numerous functions related to data cleansing,
 information extraction, and natural language processing:</p>
 <ul class="simple">
 <li><p>string concatenation, padding, wrapping, and substring extraction,</p></li>
@@ -382,27 +383,29 @@ information extraction, and natural language processing:</p>
 <li><p>date-time formatting and parsing,</p></li>
 </ul>
 <p>and many more.</p>
-<p><em>stringi</em> is among the most often downloaded <a class="reference external" href="https://r-project.org/">R</a>
-packages. <img alt="downloads1" src="https://cranlogs.r-pkg.org/badges/grand-total/stringi" /> <img alt="downloads2" src="https://cranlogs.r-pkg.org/badges/last-month/stringi" /></p>
+<p><strong class="program">stringi</strong> is among the most often downloaded <a class="reference external" href="https://r-project.org/">R</a>
+packages.</p>
+<img alt="https://cranlogs.r-pkg.org/badges/grand-total/stringi" src="https://cranlogs.r-pkg.org/badges/grand-total/stringi" />
+<img alt="https://cranlogs.r-pkg.org/badges/last-month/stringi" src="https://cranlogs.r-pkg.org/badges/last-month/stringi" />
 <p>You can obtain it from <a class="reference external" href="https://cran.r-project.org/package=stringi">CRAN</a>
 by calling:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;stringi&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><em>stringi</em>’s source code is hosted on
+<p><strong class="program">stringi</strong>’s source code is hosted on
 <a class="reference external" href="https://github.com/gagolews/stringi">GitHub</a>.
 It is distributed under the open source BSD-3-clause
 <a class="reference external" href="https://raw.githubusercontent.com/gagolews/stringi/master/LICENSE">license</a>.</p>
 <p>The package’s API was inspired by that of the early (pre-tidyverse; v0.6.2)
 version of Hadley Wickham’s
-<a class="reference external" href="https://cran.r-project.org/package=stringr">stringr</a>
-package (and since the 2015 v1.0.0 <em>stringr</em> is powered by <em>stringi</em>).
+<a class="reference external" href="https://cran.r-project.org/package=stringr"><strong class="program">stringr</strong></a>
+package (and since the 2015 v1.0.0 <strong class="program">stringr</strong> is powered by <strong class="program">stringi</strong>).
 Moreover, Hadley suggested quite a few new package features.
 The contributions from Bartłomiej Tartanus and
 <a class="reference external" href="https://github.com/gagolews/stringi/graphs/contributors">many others</a>
 is greatly appreciated. Thanks!</p>
-<p><strong>See also</strong>: <a class="reference external" href="https://stringx.gagolewski.com/">stringx</a> –
-a set of wrappers around <em>stringi</em> with a base R-compatible API.</p>
+<p><strong>See also</strong>: <a class="reference external" href="https://stringx.gagolewski.com/"><strong class="program">stringx</strong></a> –
+a set of wrappers around <strong class="program">stringi</strong> with a base R-compatible API.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>To learn more about R, check out Marek’s open-access (free!) textbook
@@ -410,9 +413,31 @@ a set of wrappers around <em>stringi</em> with a base R-compatible API.</p>
 <span id="id1">[<a class="reference internal" href="z_bibliography.html#id4" title="Gagolewski, M. (2023).  Deep R Programming. Zenodo, Melbourne. ISBN 978-0-6455719-2-9. URL: https://deepr.gagolewski.com/, DOI: 10.5281/zenodo.7490464.">3</a>]</span>.</p>
 </div>
 <p><strong>Citation</strong>: Gagolewski M.,
-<em>stringi</em>: Fast and portable character string processing in R,
+<strong class="program">stringi</strong>: Fast and portable character string processing in R,
 <em>Journal of Statistical Software</em>  103(2), 2022, 1–59,
 <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">doi:10.18637/jss.v103.i02</a>.</p>
+<!--
+% COMMENT
+% This should be part of some other section maybe.
+%
+% Base R functions are not suitable for natural language processing.
+% In fact, Unicode should be part of every major platform/programming
+% environment/application now. Still teaching only the K&R char* strings
+% is too English-centric (as the early computer era was dominated by the US).
+% https://en.wikipedia.org/wiki/List_of_languages_by_total_number_of_speakers:
+% English ~1350 million speakers (but only 370 are native)
+% Mandarin Chinese 1120 billion (920 native
+% Hindi 600 billion
+% Spanish 540
+% Arabic 270
+% Some languages (Python 3, PERL?, ..) switched to Unicode already;
+% ICU takes you one step further
+% 36% of the world population use the Latin alphabet https://en.wikipedia.org/wiki/Latin_script
+% Why would I use stringi over stringr? Using stringr you use stringi already.
+% It's not about the API, it's about correctness.
+% TODO: stringx
+% stringi is not tidyverse
+-->
 <div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
@@ -448,7 +473,7 @@ a set of wrappers around <em>stringi</em> with a base R-compatible API.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-11-14T08:45:22+1100.
+              Last updated on 2023-11-16T10:51:45+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
