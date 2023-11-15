@@ -77,9 +77,9 @@ stri_datetime_fields(stri_datetime_now())
 
 ```
 ##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth
-## 1 2023    11  14    8     45      7         253         47           3
+## 1 2023    11  16   10     51     30           7         47           3
 ##   DayOfYear DayOfWeek Hour12 AmPm Era
-## 1       318         3      8    1   2
+## 1       320         5     10    1   2
 ```
 
 ```r
@@ -88,9 +88,9 @@ stri_datetime_fields(stri_datetime_now(), locale='@calendar=hebrew')
 
 ```
 ##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth
-## 1 5784     3   1    8     45      7         258         10           1
+## 1 5784     3   3   10     51     30          11         10           1
 ##   DayOfYear DayOfWeek Hour12 AmPm Era
-## 1        60         3      8    1   1
+## 1        62         5     10    1   1
 ```
 
 ```r
