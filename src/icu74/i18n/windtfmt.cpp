@@ -97,6 +97,8 @@ UnicodeString* Win32DateFormat::getTimeDateFormat(const Calendar *cal, const Loc
     return result;
 }
 
+
+#if !defined(STRI_DISABLE_RESOLVE_LOCALE_NAME) || STRI_DISABLE_RESOLVE_LOCALE_NAME == 0
 // TODO: This is copied in both winnmfmt.cpp and windtfmt.cpp, but really should
 // be factored out into a common helper for both.
 static UErrorCode GetEquivalentWindowsLocaleName(const Locale& locale, UnicodeString** buffer)
@@ -163,13 +165,16 @@ static UErrorCode GetEquivalentWindowsLocaleName(const Locale& locale, UnicodeSt
     }
     return status;
 }
+#endif
+
+
 
 // TODO: Range-check timeStyle, dateStyle
 Win32DateFormat::Win32DateFormat(DateFormat::EStyle timeStyle, DateFormat::EStyle dateStyle, const Locale &locale, UErrorCode &status)
   : DateFormat(), fDateTimeMsg(nullptr), fTimeStyle(timeStyle), fDateStyle(dateStyle), fLocale(locale), fZoneID(), fWindowsLocaleName(nullptr)
 {
     if (U_SUCCESS(status)) {
-#if USE_RESOLVE_LOCALE_NAME
+#if !defined(STRI_DISABLE_RESOLVE_LOCALE_NAME) || STRI_DISABLE_RESOLVE_LOCALE_NAME == 0
         GetEquivalentWindowsLocaleName(locale, &fWindowsLocaleName);
 #endif
         // Note: In the previous code, it would look up the LCID for the locale, and if

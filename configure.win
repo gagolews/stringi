@@ -9,15 +9,15 @@ ICU_BUNDLE_VERSION=74
 
 # some systems do not have ResolveLocaleName - this applies to mingw
 # on 32-bit windows shipped with older Rtools (R < 4.2)
-USE_RESOLVE_LOCALE_NAME=`"${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" -e '
-    cat(as.integer(getRversion() >= "4.2"))
+DISABLE_RESOLVE_LOCALE_NAME=`"${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" -e '
+    cat(as.integer(getRversion() < "4.2"))
 '`
 
 
 echo "ICU_FOUND=${ICU_FOUND}"
 echo "ICU_BUNDLE_VERSION=${ICU_BUNDLE_VERSION}"
 echo "ICUDT_DIR=${ICUDT_DIR}"
-echo "USE_RESOLVE_LOCALE_NAME=${USE_RESOLVE_LOCALE_NAME}"
+echo "DISABLE_RESOLVE_LOCALE_NAME=${DISABLE_RESOLVE_LOCALE_NAME}"
 
 
 "${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" -e '
@@ -25,7 +25,7 @@ echo "USE_RESOLVE_LOCALE_NAME=${USE_RESOLVE_LOCALE_NAME}"
    fout <- "src/uconfig_local.h";
    f <- readLines(fin);
    f <- gsub("@ICU_FOUND@", '"${ICU_FOUND}"', f, fixed = TRUE);
-   f <- gsub("@USE_RESOLVE_LOCALE_NAME@", '"${USE_RESOLVE_LOCALE_NAME}"', f, fixed = TRUE);
+   f <- gsub("@DISABLE_RESOLVE_LOCALE_NAME@", '"${DISABLE_RESOLVE_LOCALE_NAME}"', f, fixed = TRUE);
    f <- gsub("@ICUDT_DIR@", "'"${ICUDT_DIR}"'", f, fixed = TRUE);
    f <- gsub("@ICU_BUNDLE_VERSION@", "'"${ICU_BUNDLE_VERSION}"'", f, fixed = TRUE);
    f <- gsub("@ICUDT_ENDIANNESS@", .Platform$endian, f, fixed = TRUE);
@@ -39,7 +39,7 @@ echo "USE_RESOLVE_LOCALE_NAME=${USE_RESOLVE_LOCALE_NAME}"
    fout <- "src/install.libs.R";
    f <- readLines(fin);
    f <- gsub("@ICU_FOUND@", '"${ICU_FOUND}"', f, fixed = TRUE);
-   f <- gsub("@USE_RESOLVE_LOCALE_NAME@", '"${USE_RESOLVE_LOCALE_NAME}"', f, fixed = TRUE);
+   f <- gsub("@DISABLE_RESOLVE_LOCALE_NAME@", '"${DISABLE_RESOLVE_LOCALE_NAME}"', f, fixed = TRUE);
    f <- gsub("@ICUDT_DIR@", "'"${ICUDT_DIR}"'", f, fixed = TRUE);
    f <- gsub("@ICU_BUNDLE_VERSION@", "'"${ICU_BUNDLE_VERSION}"'", f, fixed = TRUE);
    f <- gsub("@ICUDT_ENDIANNESS@", .Platform$endian, f, fixed = TRUE);
