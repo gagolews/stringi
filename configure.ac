@@ -178,7 +178,6 @@ AC_ARG_VAR([STRINGI_LIBS],
     [Additional libraries to link against; see also --with-extra-libs.])
 
 
-#with_extra_cflags="${with_extra_cflags} ${STRINGI_CFLAGS}"
 with_extra_cppflags="${with_extra_cppflags} ${STRINGI_CPPFLAGS}"
 with_extra_cxxflags="${with_extra_cxxflags} ${STRINGI_CXXFLAGS}"
 with_extra_ldflags="${with_extra_ldflags} ${STRINGI_LDFLAGS}"
@@ -392,6 +391,7 @@ detect_icu_with_pkg_config() {
 
     export PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 # always provide system -L
     AC_MSG_CHECKING([for additional CPPFLAGS, LDFLAGS, and LIBS required])
+
     ICU_CPPFLAGS=`"${PKG_CONFIG}" --cflags icu-uc icu-i18n`
     ICU_LDFLAGS=`"${PKG_CONFIG}" --libs-only-L icu-uc icu-i18n`
     ICU_LIBS=`"${PKG_CONFIG}" --libs-only-l icu-uc icu-i18n`
@@ -402,9 +402,10 @@ detect_icu_with_pkg_config() {
 
 
 check_icu_with_pkg_config() {
-    CPPFLAGS="${CPPFLAGS} ${ICU_CPPFLAGS}"
-    LDFLAGS="${LDFLAGS} ${ICU_LDFLAGS}"
-    LIBS="${LIBS} ${ICU_LIBS}"
+    CXXFLAGS="${with_extra_cxxflags} ${R_CXXPICFLAGS} ${R_CXXFLAGS}"
+    CPPFLAGS="${with_extra_cppflags} ${ICU_CPPFLAGS} ${R_CPPFLAGS}"
+    LDFLAGS="${with_extra_ldflags} ${ICU_LDFLAGS} ${R_LDFLAGS}"
+    LIBS="${with_extra_libs} ${ICU_LIBS} ${R_LIBS}"
 
     AC_MSG_CHECKING([whether an ICU4C-based project can be built])
     AC_LINK_IFELSE([AC_LANG_SOURCE([
@@ -586,9 +587,26 @@ check_icu_with_pkg_config() {
 
 
 check_flags_icu_bundle() {
-    CPPFLAGS="${CPPFLAGS} -Isrc/ -Isrc/icu${ICU_BUNDLE_VERSION} -Isrc/icu${ICU_BUNDLE_VERSION}/unicode \
-        -Isrc/icu${ICU_BUNDLE_VERSION}/common -Isrc/icu${ICU_BUNDLE_VERSION}/i18n -DU_STATIC_IMPLEMENTATION \
-        -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -D_REENTRANT" # don't use uconfig_local yet
+    # files are relative to src/ now, then we'll make it the current dir
+    ICU_CPPFLAGS="-DU_STRINGI_PATCHES \
+        -Isrc/icu${ICU_BUNDLE_VERSION} \
+        -Isrc/icu${ICU_BUNDLE_VERSION}/unicode \
+        -Isrc/icu${ICU_BUNDLE_VERSION}/common \
+        -Isrc/icu${ICU_BUNDLE_VERSION}/i18n \
+        -DU_STATIC_IMPLEMENTATION \
+        -DU_COMMON_IMPLEMENTATION \
+        -DU_I18N_IMPLEMENTATION \
+        -D_REENTRANT \
+        -DUCONFIG_USE_LOCAL"  # but don't use uconfig_local yet, see below
+        #-DU_HIDE_DRAFT_API
+        #-DU_HIDE_DEPRECATED_API"
+    ICU_LDFLAGS=""
+    ICU_LIBS=""
+
+    CXXFLAGS="${with_extra_cxxflags} ${R_CXXPICFLAGS} ${R_CXXFLAGS}"
+    CPPFLAGS="${with_extra_cppflags} ${ICU_CPPFLAGS} ${R_CPPFLAGS} -UUCONFIG_USE_LOCAL"  # don't use uconfig_local yet
+    LDFLAGS="${with_extra_ldflags} ${ICU_LDFLAGS} ${R_LDFLAGS}"
+    LIBS="${with_extra_libs} ${ICU_LIBS} ${R_LIBS}"
 
     # NOTE: One way for dealing with the *Compiler or options invalid for pre-UNIX 03
     # X/Open applications and pre-2001 POSIX applications* error on Solaris
@@ -635,10 +653,9 @@ check_flags_icu_bundle() {
             AC_MSG_RESULT([yes])
         ],[
             AC_MSG_RESULT([no])
-            old_with_extra_cxxflags="${with_extra_cxxflags}"
-            with_extra_cxxflags="${with_extra_cxxflags} -DSTRINGI_MAX_ALIGN_T_STD"
-            CXXFLAGS="${CXXFLAGS} ${with_extra_cxxflags}"
-            AC_MSG_CHECKING([whether alignof(::max_align_t) is available with])
+
+            CPPFLAGS="${with_extra_cppflags} -DSTRINGI_MAX_ALIGN_T_STD ${ICU_CPPFLAGS} ${R_CPPFLAGS} -UUCONFIG_USE_LOCAL"
+            AC_MSG_CHECKING([whether alignof(::max_align_t) is available])
             AC_LINK_IFELSE([AC_LANG_SOURCE([
                 #include <iostream>
                 #include <cstddef>
@@ -661,9 +678,9 @@ check_flags_icu_bundle() {
             ])],
             [
                 AC_MSG_RESULT([yes])
+                with_extra_cppflags="${with_extra_cppflags} -DSTRINGI_MAX_ALIGN_T_STD"
             ],[
                 AC_MSG_RESULT([no])
-                with_extra_cxxflags="${old_with_extra_cxxflags}"
                 echo "*** The ICU4C bundle cannot be built."
                 return 1
             ])
@@ -684,17 +701,11 @@ while true; do
     # Step 2.  force_cxx11="yes"
     # Step 3.  Fail.
 
-    #CC=`"${R_PATH}" CMD config CC`
-    #CPP=`"${R_PATH}" CMD config CXXCPP`
-    #CFLAGS_base=`"${R_PATH}" CMD config CFLAGS`
-    #CFLAGS_pic=`"${R_PATH}" CMD config CPICFLAGS`
-    #CFLAGS="${CFLAGS_base} ${CFLAGS_pic}"
-
-    CPPFLAGS=`"${R_PATH}" CMD config CPPFLAGS`
-
     LD=`"${R_PATH}" CMD config SHLIB_CXXLD`
-    LIBS=
-    LDFLAGS=
+
+    R_CPPFLAGS=`"${R_PATH}" CMD config CPPFLAGS`
+    R_LIBS=
+    R_LDFLAGS=
 
 
     if test $force_cxx11 = "no"; then
@@ -702,9 +713,8 @@ while true; do
 
         CXX=`"${R_PATH}" CMD config CXX`
 
-        CXXFLAGS_base=`"${R_PATH}" CMD config CXXFLAGS`
-        CXXFLAGS_pic=`"${R_PATH}" CMD config CXXPICFLAGS`
-        CXXFLAGS="${CXXFLAGS_base} ${CXXFLAGS_pic}"
+        R_CXXFLAGS=`"${R_PATH}" CMD config CXXFLAGS`
+        R_CXXPICFLAGS=`"${R_PATH}" CMD config CXXPICFLAGS`
     else
         STRINGI_CXXSTD="CXX_STD=CXX11"
 
@@ -712,17 +722,15 @@ while true; do
         CXX_tmp2=`"${R_PATH}" CMD config CXX11STD`
         CXX="${CXX_tmp1} ${CXX_tmp2}"
 
-        CXXFLAGS_base=`"${R_PATH}" CMD config CXX11FLAGS`
-        CXXFLAGS_pic=`"${R_PATH}" CMD config CXX11PICFLAGS`
-        CXXFLAGS="${CXXFLAGS_base} ${CXXFLAGS_pic}"
+        R_CXXFLAGS=`"${R_PATH}" CMD config CXX11FLAGS`
+        R_CXXPICFLAGS=`"${R_PATH}" CMD config CXX11PICFLAGS`
     fi
 
 
-    #CFLAGS="${CFLAGS} ${with_extra_cflags}"
-    CXXFLAGS="${CXXFLAGS} ${with_extra_cxxflags}"
-    CPPFLAGS="${CPPFLAGS} ${with_extra_cppflags}"
-    LDFLAGS="${LDFLAGS} ${with_extra_ldflags}"
-    LIBS="${LIBS} ${with_extra_libs}"
+    CXXFLAGS="${with_extra_cxxflags} ${R_CXXFLAGS}"
+    CPPFLAGS="${with_extra_cppflags} ${R_CPPFLAGS}"
+    LDFLAGS="${with_extra_ldflags} ${R_LDFLAGS}"
+    LIBS="${with_extra_libs} ${R_LIBS}"
 
     if ! check_cpp; then
         if test $force_cxx11 = "no"; then
@@ -741,9 +749,6 @@ while true; do
         # Use of pkg-config disabled, nothing to do
         echo "*** System ICU4C has been disabled."
     else
-        OLD_CPPFLAGS=$CPPFLAGS
-        OLD_LDFLAGS=$LDFLAGS
-        OLD_LIBS=$LIBS
         if ! detect_icu_with_pkg_config; then
             echo "*** Trying with 'standard' fallback flags"
             # (#238, #220) trying "standard" fallback flags
@@ -754,9 +759,6 @@ while true; do
         if check_icu_with_pkg_config; then
             ICU_FOUND=1  # success
         fi
-        CPPFLAGS=$OLD_CPPFLAGS
-        LDFLAGS=$OLD_LDFLAGS
-        LIBS=$OLD_LIBS
     fi
 
 
@@ -781,17 +783,9 @@ while true; do
     echo "*** Using the ICU ${ICU_BUNDLE_VERSION} bundle that comes with 'stringi'."
 
     ICU_BUNDLE_OK=0
-    #OLD_CFLAGS=$CFLAGS
-    OLD_CXXFLAGS=$CXXFLAGS
-    OLD_CPPFLAGS=$CPPFLAGS
-    OLD_LIBS=$LIBS
     if check_flags_icu_bundle; then
         ICU_BUNDLE_OK=1  # success
     fi
-    #CFLAGS=$OLD_CFLAGS
-    CXXFLAGS=$OLD_CXXFLAGS
-    CPPFLAGS=$OLD_CPPFLAGS
-
 
     if test $ICU_BUNDLE_OK = 1; then
         break  # all set!
@@ -819,7 +813,7 @@ AC_CHECK_HEADER([elf.h], [
 if test $ICU_FOUND = 0; then
     # There are systems with no internet access
     AC_MSG_CHECKING([whether the ICU data library is available])
-    "${R_PATH}" --vanilla --slave -e "setwd(\"src/\"); \
+    "${R_PATH}" --vanilla -s -e "setwd(\"src/\"); \
         source(\"../R/install.R\"); \
         if (identical(FALSE,stri_download_icudt(\"${ICUDT_DIR}\",${ICU_BUNDLE_VERSION}))) \
             stop(\"Stopping on error\")"
@@ -864,34 +858,18 @@ if test $ICU_FOUND = 0; then
     # build ICU4C from sources
     STRINGI_OBJECTS="\$(STRI_OBJECTS) \$(ICU_COMMON_OBJECTS) \
         \$(ICU_I18N_OBJECTS) \$(ICU_STUBDATA_OBJECTS)"
-    #STRINGI_CFLAGS=""
-    STRINGI_CPPFLAGS="-I. -Iicu${ICU_BUNDLE_VERSION} \
-        -DU_STRINGI_PATCHES \
-        -Iicu${ICU_BUNDLE_VERSION}/unicode -Iicu${ICU_BUNDLE_VERSION}/common \
-        -Iicu${ICU_BUNDLE_VERSION}/i18n -DU_STATIC_IMPLEMENTATION \
-        -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL"
-            #-DU_HIDE_DRAFT_API -DU_HIDE_DEPRECATED_API"
-    STRINGI_CXXFLAGS=""
-    STRINGI_LDFLAGS=""
-    STRINGI_LIBS=""
+
+    # replace all occurrences of -Isrc/* with -I* in ICU_CPPFLAGS via a rich man's 'sed' ;)
+    ICU_CPPFLAGS=`"${R_PATH}" --vanilla -s -e "cat(gsub('-Isrc/', '-I', '${ICU_CPPFLAGS}', fixed=TRUE))"`
 else
     # use system ICU4C
     STRINGI_OBJECTS="\$(STRI_OBJECTS)"
-    #STRINGI_CFLAGS=""
-    STRINGI_CPPFLAGS="-I. ${ICU_CPPFLAGS}"
-    STRINGI_CXXFLAGS=""
-    STRINGI_LDFLAGS="${ICU_LDFLAGS}"
-    STRINGI_LIBS="${ICU_LIBS}"
 fi
 
-#with_extra_cflags="${with_extra_cflags} ${CFLAGS_pic}"
-with_extra_cxxflags="${with_extra_cxxflags} ${CXXFLAGS_pic}"
-
-#STRINGI_CFLAGS="${STRINGI_CFLAGS} ${with_extra_cflags}"
-STRINGI_CPPFLAGS="${STRINGI_CPPFLAGS} ${with_extra_cppflags}"
-STRINGI_CXXFLAGS="${STRINGI_CXXFLAGS} ${with_extra_cxxflags}"
-STRINGI_LDFLAGS="${STRINGI_LDFLAGS} ${with_extra_ldflags}"
-STRINGI_LIBS="${STRINGI_LIBS} ${with_extra_libs}"
+STRINGI_CXXFLAGS="${with_extra_cxxflags} ${R_CXXPICFLAGS}"
+STRINGI_CPPFLAGS="-I. ${with_extra_cppflags} ${ICU_CPPFLAGS}"
+STRINGI_LDFLAGS="${with_extra_ldflags} ${ICU_LDFLAGS}"
+STRINGI_LIBS="${with_extra_libs} ${ICU_LIBS}"
 
 AC_SUBST(STRINGI_OBJECTS)
 AC_SUBST(STRINGI_CXXSTD)
@@ -921,7 +899,6 @@ if test $ICU_FOUND = 0; then
     echo "    ICUDT_ENDIANNESS=${ICUDT_ENDIANNESS}"
 fi
 echo "    STRINGI_CXXSTD=${STRINGI_CXXSTD}"
-#echo "    STRINGI_CFLAGS=${STRINGI_CFLAGS}"
 echo "    STRINGI_CXXFLAGS=${STRINGI_CXXFLAGS}"
 echo "    STRINGI_CPPFLAGS=${STRINGI_CPPFLAGS}"
 echo "    STRINGI_LDFLAGS=${STRINGI_LDFLAGS}"
@@ -932,9 +909,9 @@ echo "*** Compiler settings used:"
 #echo "    CPP=${CPP}"
 #echo "    CFLAGS=${CFLAGS}"
 echo "    CXX=${CXX}"
-echo "    CXXFLAGS=${CXXFLAGS}"
-echo "    CPPFLAGS=${CPPFLAGS}"
 echo "    LD=${LD}"
-echo "    LDFLAGS=${LDFLAGS}"
-echo "    LIBS=${LIBS}"
+echo "    CXXFLAGS=${R_CXXFLAGS}"
+echo "    CPPFLAGS=${R_CPPFLAGS}"
+echo "    LDFLAGS=${R_LDFLAGS}"
+echo "    LIBS=${R_LIBS}"
 echo ""
