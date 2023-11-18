@@ -377,8 +377,6 @@ public:
 };
 
 
-
-
 /** Parses and stores info on a single sprintf format (conversion) specifier
  *
  * @version 1.6.2 (Marek Gagolewski, 2021-05-24)

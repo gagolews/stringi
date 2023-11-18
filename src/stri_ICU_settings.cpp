@@ -64,7 +64,8 @@
  *
  * @version 1.3.1 (Marek Gagolewski, 2019-02-06)
  *    new retval field: ICU.UTF8
-*/
+ *
+ */
 SEXP stri_info()
 {
     STRI__ERROR_HANDLER_BEGIN(0)
