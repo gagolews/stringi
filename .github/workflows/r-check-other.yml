@@ -47,12 +47,6 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
-      - uses: r-lib/actions/check-r-package@v2
-        env:
-          _R_CHECK_CRAN_INCOMING_: false
-        with:
-          upload-snapshots: true
-
       - name: Install
         run: |
           install.packages(".", repos=NULL, type="source")
@@ -62,4 +56,10 @@ jobs:
         run: |
           install.packages("tinytest")
           source(".devel/tinytest.R")
+        shell: Rscript {0}
+
+      - name: Check
+        env:
+          _R_CHECK_CRAN_INCOMING_: false
+        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "error", check_dir = "check")
         shell: Rscript {0}

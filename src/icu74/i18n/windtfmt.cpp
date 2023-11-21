@@ -98,7 +98,7 @@ UnicodeString* Win32DateFormat::getTimeDateFormat(const Calendar *cal, const Loc
 }
 
 
-#if U_PLATFORM_HAS_WIN32_API && UCONFIG_USE_WINDOWS_LCID_MAPPING_API
+#if UCONFIG_USE_WINDOWS_LCID_MAPPING_API
 // TODO: This is copied in both winnmfmt.cpp and windtfmt.cpp, but really should
 // be factored out into a common helper for both.
 static UErrorCode GetEquivalentWindowsLocaleName(const Locale& locale, UnicodeString** buffer)
@@ -174,9 +174,13 @@ Win32DateFormat::Win32DateFormat(DateFormat::EStyle timeStyle, DateFormat::EStyl
   : DateFormat(), fDateTimeMsg(nullptr), fTimeStyle(timeStyle), fDateStyle(dateStyle), fLocale(locale), fZoneID(), fWindowsLocaleName(nullptr)
 {
     if (U_SUCCESS(status)) {
-#if U_PLATFORM_HAS_WIN32_API && UCONFIG_USE_WINDOWS_LCID_MAPPING_API
+
+#if UCONFIG_USE_WINDOWS_LCID_MAPPING_API
         GetEquivalentWindowsLocaleName(locale, &fWindowsLocaleName);
+#else
+#warning GetEquivalentWindowsLocaleName has been disabled
 #endif
+
         // Note: In the previous code, it would look up the LCID for the locale, and if
         // the locale was not recognized then it would get an LCID of 0, which is a
         // synonym for LOCALE_USER_DEFAULT on Windows.
