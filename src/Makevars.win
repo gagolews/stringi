@@ -2,7 +2,9 @@
 ## Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com/>
 
 
-#CXX_STD=CXX11
+.PHONY: all
+
+PKG_LIBS=-L. -licu_stubdata -licu_common -licu_i18n
 
 PKG_CPPFLAGS=-I. -Iicu74/ -Iicu74/unicode -Iicu74/common -Iicu74/i18n \
 -DUCONFIG_USE_LOCAL \
@@ -18,36 +20,38 @@ PKG_CPPFLAGS=-I. -Iicu74/ -Iicu74/unicode -Iicu74/common -Iicu74/i18n \
 # 0x0A00 == Windows 10
 # ICU 69 uses LOCALE_ALLOW_NEUTRAL_NAMES which is Windows 7 and later
 
+
 ## There is(*) a Cygwin bug which reports "mem alloc error" while linking
 ## too many .o files at once (I suppose this is the reason, at least).
 ## Thus, below we split the build process into a few parts using static libs.
 ## Voila, it's fixed.
 ## (*) Have been, in 2013. Haven't tested that ever since. No need to.
 
+
 STRI_SOURCES_CPP=$(wildcard stri_*.cpp)
 STRI_OBJECTS=$(STRI_SOURCES_CPP:.cpp=.o)
+
+stringi_objs.a: $(STRI_OBJECTS)
+
 
 ICU_STUBDATA_SOURCES_CPP=$(wildcard icu74/stubdata/*.cpp)
 ICU_STUBDATA_OBJECTS=$(ICU_STUBDATA_SOURCES_CPP:.cpp=.o)
 
+libicu_stubdata.a: $(ICU_STUBDATA_OBJECTS)
+
+
 ICU_COMMON_SOURCES_CPP=$(wildcard icu74/common/*.cpp)
 ICU_COMMON_OBJECTS=$(ICU_COMMON_SOURCES_CPP:.cpp=.o)
+
+libicu_common.a: $(ICU_COMMON_OBJECTS)
+
 
 ICU_I18N_SOURCES_CPP=$(wildcard icu74/i18n/*.cpp)
 ICU_I18N_OBJECTS=$(ICU_I18N_SOURCES_CPP:.cpp=.o)
 
-OBJECTS=$(STRI_OBJECTS)
+libicu_i18n.a: $(ICU_I18N_OBJECTS)
 
-.PHONY: all
+
+$(SHLIB): stringi_objs.a libicu_stubdata.a libicu_common.a libicu_i18n.a
 
 all: $(SHLIB)
-
-$(SHLIB): $(OBJECTS) libicu_stubdata.a libicu_common.a libicu_i18n.a
-
-PKG_LIBS=-L. -licu_stubdata -licu_common -licu_i18n
-
-libicu_stubdata.a: $(ICU_STUBDATA_OBJECTS)
-
-libicu_common.a: $(ICU_COMMON_OBJECTS)
-
-libicu_i18n.a: $(ICU_I18N_OBJECTS)
