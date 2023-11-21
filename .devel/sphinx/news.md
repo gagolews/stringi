@@ -1,6 +1,16 @@
 # Changelog
 
 
+## 1.8.2 (under development)
+
+* [BUILD TIME] [BUGFIX] #501: Fixed failing build on 32-bit Windows
+  (Windows API `ResolveLocaleName` function not available).
+
+* [BUILD TIME] [BUGFIX] #502: `PKG_CPPFLAGS` are now considered
+  before other `CPPFLAGS` (the same with other flag types) in
+  the `configure` script to make it compatible with what happens in `Makevars`.
+
+
 ## 1.8.1 (2023-11-09)
 
 * [GENERAL] ICU bundle updated to version 74.1 (Unicode 15.1, CLDR 44).

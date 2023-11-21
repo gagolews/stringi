@@ -160,7 +160,7 @@
 <a class="sidebar-brand" href="../index.html">stringi</a>
 </span>
 <div class="sidebar-brand">
-1.8.1
+1.8.1.9001
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -503,14 +503,14 @@
 <span class="c1">##         💩</span>
 <span class="c1">##       &lt;NA&gt;</span>
 <span></span><span class="nf">stri_sprintf</span><span class="p">(</span><span class="s">&quot;UNIX time %1$f is %1$s.&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">())</span>
-<span></span><span class="c1">## [1] &quot;UNIX time 1700092299.497165 is 2023-11-16 10:51:39.497165.&quot;</span>
+<span></span><span class="c1">## [1] &quot;UNIX time 1700537593.184348 is 2023-11-21 14:33:13.184348.&quot;</span>
 <span></span><span class="c1"># the following do not work in sprintf()</span>
 <span class="nf">stri_sprintf</span><span class="p">(</span><span class="s">&quot;%1$#- *2$.*3$f&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">1.23456</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w">  </span><span class="c1"># two asterisks</span>
 <span></span><span class="c1">## [1] &quot; 1.235    &quot;</span>
 <span></span><span class="nf">stri_sprintf</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;%f&quot;</span><span class="p">),</span><span class="w"> </span><span class="kc">pi</span><span class="p">)</span><span class="w">  </span><span class="c1"># re-coercion needed</span>
 <span></span><span class="c1">## [1] &quot;3.14159265358979&quot; &quot;3.141593&quot;</span>
 <span></span><span class="nf">stri_sprintf</span><span class="p">(</span><span class="s">&quot;%1$s is %1$f UNIX time.&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">())</span><span class="w">  </span><span class="c1"># re-coercion needed</span>
-<span></span><span class="c1">## [1] &quot;2023-11-16 10:51:39.49887 is 1700092299.498870 UNIX time.&quot;</span>
+<span></span><span class="c1">## [1] &quot;2023-11-21 14:33:13.18612 is 1700537593.186120 UNIX time.&quot;</span>
 <span></span><span class="nf">stri_sprintf</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;%s&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="m">11</span><span class="o">:</span><span class="m">12</span><span class="p">))</span><span class="w">  </span><span class="c1"># re-coercion needed</span>
 <span></span><span class="c1">## [1] &quot;1&quot;  &quot;12&quot;</span>
 <span></span><span class="nf">stri_sprintf</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;%d&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="m">11</span><span class="o">:</span><span class="m">12</span><span class="p">))</span><span class="w">  </span><span class="c1"># re-coercion needed</span>
@@ -555,7 +555,7 @@
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-11-16T10:51:45+1100.
+              Last updated on 2023-11-21T14:33:19+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -597,7 +597,7 @@
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=1166ed6b"></script>
+</div><script src="../_static/documentation_options.js?v=8323ae8b"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=32e29ea5"></script>

@@ -160,7 +160,7 @@
 <a class="sidebar-brand" href="index.html">stringi</a>
 </span>
 <div class="sidebar-brand">
-1.8.1
+1.8.1.9001
 </div>
 <form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -347,6 +347,16 @@
         <article role="main">
           <section class="tex2jax_ignore mathjax_ignore" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Link to this heading">#</a></h1>
+<section id="under-development">
+<h2>1.8.2 (under development)<a class="headerlink" href="#under-development" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>[BUILD TIME] [BUGFIX] #501: Fixed failing build on 32-bit Windows
+(Windows API <code class="docutils literal notranslate"><span class="pre">ResolveLocaleName</span></code> function not available).</p></li>
+<li><p>[BUILD TIME] [BUGFIX] #502: <code class="docutils literal notranslate"><span class="pre">PKG_CPPFLAGS</span></code> are now considered
+before other <code class="docutils literal notranslate"><span class="pre">CPPFLAGS</span></code> (the same with other flag types) in
+the <code class="docutils literal notranslate"><span class="pre">configure</span></code> script to make it compatible with what happens in <code class="docutils literal notranslate"><span class="pre">Makevars</span></code>.</p></li>
+</ul>
+</section>
 <section id="id1">
 <h2>1.8.1 (2023-11-09)<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <ul class="simple">
@@ -1218,7 +1228,7 @@ scheduled for milestone 0.1.</p></li>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-11-16T10:51:45+1100.
+              Last updated on 2023-11-21T14:33:19+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -1240,6 +1250,7 @@ scheduled for milestone 0.1.</p></li>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Changelog</a><ul>
+<li><a class="reference internal" href="#under-development">1.8.2 (under development)</a></li>
 <li><a class="reference internal" href="#id1">1.8.1 (2023-11-09)</a></li>
 <li><a class="reference internal" href="#id2">1.7.12 (2023-01-09)</a></li>
 <li><a class="reference internal" href="#id3">1.7.8 (2022-07-11)</a></li>
@@ -1295,7 +1306,7 @@ scheduled for milestone 0.1.</p></li>
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=1166ed6b"></script>
+</div><script src="_static/documentation_options.js?v=8323ae8b"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=32e29ea5"></script>

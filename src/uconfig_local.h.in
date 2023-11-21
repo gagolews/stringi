@@ -35,6 +35,12 @@
 
 #define STRI_ICU_FOUND @ICU_FOUND@
 
+// used on Windows only, some do not have it
+#define STRI_DISABLE_RESOLVE_LOCALE_NAME @DISABLE_RESOLVE_LOCALE_NAME@
+
+#if STRI_DISABLE_RESOLVE_LOCALE_NAME
+#define UCONFIG_USE_WINDOWS_LCID_MAPPING_API 0
+#endif
 
 /* This caused a serious bug on Solaris, see #94:
  //  #define U_DISABLE_RENAMING 1
