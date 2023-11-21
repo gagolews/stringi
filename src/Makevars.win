@@ -31,27 +31,33 @@ PKG_CPPFLAGS=-I. -Iicu74/ -Iicu74/unicode -Iicu74/common -Iicu74/i18n \
 STRI_SOURCES_CPP=$(wildcard stri_*.cpp)
 STRI_OBJECTS=$(STRI_SOURCES_CPP:.cpp=.o)
 
-stringi_objs.a: $(STRI_OBJECTS)
-
 
 ICU_STUBDATA_SOURCES_CPP=$(wildcard icu74/stubdata/*.cpp)
 ICU_STUBDATA_OBJECTS=$(ICU_STUBDATA_SOURCES_CPP:.cpp=.o)
-
-libicu_stubdata.a: $(ICU_STUBDATA_OBJECTS)
 
 
 ICU_COMMON_SOURCES_CPP=$(wildcard icu74/common/*.cpp)
 ICU_COMMON_OBJECTS=$(ICU_COMMON_SOURCES_CPP:.cpp=.o)
 
-libicu_common.a: $(ICU_COMMON_OBJECTS)
-
 
 ICU_I18N_SOURCES_CPP=$(wildcard icu74/i18n/*.cpp)
 ICU_I18N_OBJECTS=$(ICU_I18N_SOURCES_CPP:.cpp=.o)
 
-libicu_i18n.a: $(ICU_I18N_OBJECTS)
-
-
-$(SHLIB): stringi_objs.a libicu_stubdata.a libicu_common.a libicu_i18n.a
 
 all: $(SHLIB)
+
+$(SHLIB): stringi_objs.a libicu_common.a libicu_i18n.a libicu_stubdata.a
+
+stringi_objs.a: $(STRI_OBJECTS)
+
+libicu_common.a: $(ICU_COMMON_OBJECTS)
+
+libicu_i18n.a: $(ICU_I18N_OBJECTS)
+
+libicu_stubdata.a: $(ICU_STUBDATA_OBJECTS)
+
+
+clean:
+    rm $(STRI_OBJECTS) $(ICU_COMMON_OBJECTS) $(ICU_I18N_OBJECTS) \
+        $(ICU_STUBDATA_OBJECTS) stringi_objs.a libicu_common.a libicu_i18n.a \
+        libicu_stubdata.a
