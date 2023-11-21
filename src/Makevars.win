@@ -33,29 +33,29 @@ ICU_COMMON_OBJECTS=$(ICU_COMMON_SOURCES_CPP:.cpp=.o)
 ICU_I18N_SOURCES_CPP=$(wildcard icu74/i18n/*.cpp)
 ICU_I18N_OBJECTS=$(ICU_I18N_SOURCES_CPP:.cpp=.o)
 
-OBJECTS=$(STRI_OBJECTS) $(ICU_COMMON_OBJECTS) $(ICU_I18N_OBJECTS) $(ICU_STUBDATA_OBJECTS)
+#OBJECTS=$(STRI_OBJECTS) $(ICU_COMMON_OBJECTS) $(ICU_I18N_OBJECTS) $(ICU_STUBDATA_OBJECTS)
 
 
 ## There was a Cygwin bug which reported "mem alloc error" while linking
-## too many .o files at once (I suppose this is the reason, at least).
-## Thus, below we split the build process into a few parts using static libs.
-## Voila, it's fixed.
-## (*) Have been, in 2013. Haven't tested that ever since. No need to.
-# .PHONY: all
-#
-# all: $(SHLIB)
-#
-# $(SHLIB): stringi_objs.a libicu_common.a libicu_i18n.a libicu_stubdata.a
-#
-# stringi_objs.a: $(STRI_OBJECTS)
-#
-# libicu_common.a: $(ICU_COMMON_OBJECTS)
-#
-# libicu_i18n.a: $(ICU_I18N_OBJECTS)
-#
-# libicu_stubdata.a: $(ICU_STUBDATA_OBJECTS)
-#
-# clean:
-# 	rm $(STRI_OBJECTS) $(ICU_COMMON_OBJECTS) $(ICU_I18N_OBJECTS) \
-# 		$(ICU_STUBDATA_OBJECTS) stringi_objs.a libicu_common.a libicu_i18n.a \
-# 		libicu_stubdata.a
+## too many .o files at once. At other times, we can get a "make: execvp: sh:
+## Argument list too long" error. Thus, below we split the build process into
+## a few parts using static libs.
+
+.PHONY: all
+
+all: $(SHLIB)
+
+$(SHLIB): stringi_objs.a libicu_common.a libicu_i18n.a libicu_stubdata.a
+
+stringi_objs.a: $(STRI_OBJECTS)
+
+libicu_common.a: $(ICU_COMMON_OBJECTS)
+
+libicu_i18n.a: $(ICU_I18N_OBJECTS)
+
+libicu_stubdata.a: $(ICU_STUBDATA_OBJECTS)
+
+clean:
+	rm $(STRI_OBJECTS) $(ICU_COMMON_OBJECTS) $(ICU_I18N_OBJECTS) \
+		$(ICU_STUBDATA_OBJECTS) stringi_objs.a libicu_common.a libicu_i18n.a \
+		libicu_stubdata.a
