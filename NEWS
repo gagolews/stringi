@@ -1,7 +1,7 @@
 # Changelog
 
 
-## 1.8.2 (under development)
+## 1.8.2 (2021-11-22)
 
 * [BUILD TIME] [BUGFIX] #501: Fixed failing build on 32-bit Windows
   (Windows API `ResolveLocaleName` function not available).
@@ -9,6 +9,9 @@
 * [BUILD TIME] [BUGFIX] #502: `PKG_CPPFLAGS` are now considered
   before other `CPPFLAGS` (the same with other flag types) in
   the `configure` script to make it compatible with what happens in `Makevars`.
+
+* [BUILD TIME] [BUGFIX] Support for ICU's `double`conversion on Loongarch
+    has been restored (see #463).
 
 
 ## 1.8.1 (2023-11-09)
@@ -79,7 +82,7 @@
 
 ## 1.7.6 (2021-11-29)
 
-* [BUILD TIME] #463: Added loongarch support in ICU's double conversion
+* [BUILD TIME] #463: Added Loongarch support in ICU's double conversion
   (@liuxiang88).
 
 * [BUGFIX] #467: The UCRT build on Windows was not marking strings as `latin1`.
