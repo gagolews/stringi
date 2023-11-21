@@ -655,6 +655,7 @@ ICUDT_DIR
 ICU_FOUND
 STRINGI_CXXSTD
 STRINGI_OBJECTS
+DISABLE_RESOLVE_LOCALE_NAME
 STRINGI_ICU_STUBDATA_SOURCES_CPP
 STRINGI_ICU_I18N_SOURCES_CPP
 STRINGI_ICU_COMMON_SOURCES_CPP
@@ -3700,7 +3701,7 @@ rm -f core conftest.err conftest.$ac_objext conftest.beam \
 
 check_flags_icu_bundle() {
     # files are relative to src/ now, then we'll make it the current dir
-    ICU_CPPFLAGS="-DU_STRINGI_PATCHES \
+    ICU_CPPFLAGS="\
         -Isrc/icu${ICU_BUNDLE_VERSION} \
         -Isrc/icu${ICU_BUNDLE_VERSION}/unicode \
         -Isrc/icu${ICU_BUNDLE_VERSION}/common \
@@ -4067,6 +4068,9 @@ STRINGI_CXXFLAGS="${with_extra_cxxflags} ${R_CXXPICFLAGS}"
 STRINGI_CPPFLAGS="-I. ${with_extra_cppflags} ${ICU_CPPFLAGS}"
 STRINGI_LDFLAGS="${with_extra_ldflags} ${ICU_LDFLAGS}"
 STRINGI_LIBS="${with_extra_libs} ${ICU_LIBS}"
+
+DISABLE_RESOLVE_LOCALE_NAME=1  # this does not apply on non-Windows platforms
+
 
 
 

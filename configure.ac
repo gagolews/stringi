@@ -1,3 +1,4 @@
+# kate: hl bash
 # autoconf/configure script for stringi <https://stringi.gagolewski.com/>
 # Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com/>
 
@@ -588,7 +589,7 @@ check_icu_with_pkg_config() {
 
 check_flags_icu_bundle() {
     # files are relative to src/ now, then we'll make it the current dir
-    ICU_CPPFLAGS="-DU_STRINGI_PATCHES \
+    ICU_CPPFLAGS="\
         -Isrc/icu${ICU_BUNDLE_VERSION} \
         -Isrc/icu${ICU_BUNDLE_VERSION}/unicode \
         -Isrc/icu${ICU_BUNDLE_VERSION}/common \
@@ -870,6 +871,9 @@ STRINGI_CXXFLAGS="${with_extra_cxxflags} ${R_CXXPICFLAGS}"
 STRINGI_CPPFLAGS="-I. ${with_extra_cppflags} ${ICU_CPPFLAGS}"
 STRINGI_LDFLAGS="${with_extra_ldflags} ${ICU_LDFLAGS}"
 STRINGI_LIBS="${with_extra_libs} ${ICU_LIBS}"
+
+DISABLE_RESOLVE_LOCALE_NAME=1  # this does not apply on non-Windows platforms
+AC_SUBST(DISABLE_RESOLVE_LOCALE_NAME)
 
 AC_SUBST(STRINGI_OBJECTS)
 AC_SUBST(STRINGI_CXXSTD)

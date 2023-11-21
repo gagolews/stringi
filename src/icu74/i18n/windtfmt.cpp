@@ -97,6 +97,8 @@ UnicodeString* Win32DateFormat::getTimeDateFormat(const Calendar *cal, const Loc
     return result;
 }
 
+
+#if UCONFIG_USE_WINDOWS_LCID_MAPPING_API
 // TODO: This is copied in both winnmfmt.cpp and windtfmt.cpp, but really should
 // be factored out into a common helper for both.
 static UErrorCode GetEquivalentWindowsLocaleName(const Locale& locale, UnicodeString** buffer)
@@ -147,7 +149,7 @@ static UErrorCode GetEquivalentWindowsLocaleName(const Locale& locale, UnicodeSt
         // This means that it will fail for locales where ICU has a completely different
         // name (like ku vs ckb), and it will also not work for alternate sort locale
         // names like "de-DE-u-co-phonebk".
-        
+
         // TODO: We could add some sort of exception table for cases like ku vs ckb.
 
         int length = ResolveLocaleName(bcp47Tag, windowsLocaleName, UPRV_LENGTHOF(windowsLocaleName));
@@ -163,17 +165,26 @@ static UErrorCode GetEquivalentWindowsLocaleName(const Locale& locale, UnicodeSt
     }
     return status;
 }
+#endif
+
+
 
 // TODO: Range-check timeStyle, dateStyle
 Win32DateFormat::Win32DateFormat(DateFormat::EStyle timeStyle, DateFormat::EStyle dateStyle, const Locale &locale, UErrorCode &status)
   : DateFormat(), fDateTimeMsg(nullptr), fTimeStyle(timeStyle), fDateStyle(dateStyle), fLocale(locale), fZoneID(), fWindowsLocaleName(nullptr)
 {
     if (U_SUCCESS(status)) {
+
+#if UCONFIG_USE_WINDOWS_LCID_MAPPING_API
         GetEquivalentWindowsLocaleName(locale, &fWindowsLocaleName);
+#else
+#warning GetEquivalentWindowsLocaleName has been disabled
+#endif
+
         // Note: In the previous code, it would look up the LCID for the locale, and if
         // the locale was not recognized then it would get an LCID of 0, which is a
         // synonym for LOCALE_USER_DEFAULT on Windows.
-        // If the above method fails, then fWindowsLocaleName will remain as nullptr, and 
+        // If the above method fails, then fWindowsLocaleName will remain as nullptr, and
         // then we will pass nullptr to API GetLocaleInfoEx, which is the same as passing
         // LOCALE_USER_DEFAULT.
 
