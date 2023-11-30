@@ -92,7 +92,7 @@
    "incorrect opts_regex setting: '%s'; ignoring"
 
 #define MSG__INVALID_CODE_POINT \
-   "invalid Unicode code point \\U%08.8x"
+   "invalid Unicode code point \\U%08x"
 
 #define MSG__INVALID_CODE_POINT_FIXING \
    "invalid UTF-8 code point definition; fixing"
@@ -113,19 +113,19 @@
    "number of items to replace is not a multiple of replacement length"
 
 #define MSG__UNCONVERTABLE_CODE_POINT \
-   "the Unicode code point \\U%08.8x cannot be converted to destination encoding"
+   "the Unicode code point \\U%08x cannot be converted to destination encoding"
 
 #define MSG__UNCONVERTABLE_BINARY_1 \
-   "input data \\x%02.2x in the current source encoding could not be converted to Unicode"
+   "input data \\x%02x in the current source encoding could not be converted to Unicode"
 
 #define MSG__UNCONVERTABLE_BINARY_2 \
-   "input data \\x%02.2x\\x%02.2x in the current source encoding could not be converted to Unicode"
+   "input data \\x%02x\\x%02x in the current source encoding could not be converted to Unicode"
 
 #define MSG__UNCONVERTABLE_BINARY_3 \
-   "input data \\x%02.2x\\x%02.2x\\x%02.2x in the current source encoding could not be converted to Unicode"
+   "input data \\x%02x\\x%02x\\x%02x in the current source encoding could not be converted to Unicode"
 
 #define MSG__UNCONVERTABLE_BINARY_4 \
-   "input data \\x%02.2x\\x%02.2x\\x%02.2x\\x%02.2x in the current source encoding could not be converted to Unicode"
+   "input data \\x%02x\\x%02x\\x%02x\\x%02x in the current source encoding could not be converted to Unicode"
 
 #define MSG__UNCONVERTABLE_BINARY_n \
    "some input data in the current source encoding could not be converted to Unicode"

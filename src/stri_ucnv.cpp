@@ -307,7 +307,7 @@ bool StriUcnv::hasASCIIsubset()
         c = ucnv_getNextUChar(m_ucnv, &ascii1, ascii2, &status);
         if (U_FAILURE(status)) {
 #ifndef NDEBUG
-            Rf_warning("Cannot convert ASCII character 0x%2x (encoding=%s)",
+            Rf_warning("Cannot convert ASCII character 0x%02x (encoding=%s)",
                        (int)ascii_last[0],
                        ucnv_getName(m_ucnv, &status));
 #endif
@@ -372,7 +372,7 @@ bool StriUcnv::is1to1Unicode()
         c = ucnv_getNextUChar(m_ucnv, &ascii1, ascii2, &status);
         if (U_FAILURE(status)) {
 #ifndef NDEBUG
-            Rf_warning("Cannot convert character 0x%2x (encoding=%s)",
+            Rf_warning("Cannot convert character 0x%02x (encoding=%s)",
                        (int)(unsigned char)ascii_last[0],
                        ucnv_getName(m_ucnv, &status));
 #endif
@@ -387,7 +387,7 @@ bool StriUcnv::is1to1Unicode()
         UChar lead = U16_LEAD(c); //, trail = U16_TRAIL(c);
         if (!U16_IS_SINGLE(lead)) {
 #ifndef NDEBUG
-            Rf_warning("Problematic character 0x%2x -> \\u%8x (encoding=%s)",
+            Rf_warning("Problematic character 0x%02x -> \\u%08x (encoding=%s)",
                        (int)ascii_last[0],
                        c,
                        ucnv_getName(m_ucnv, &status));
@@ -401,7 +401,7 @@ bool StriUcnv::is1to1Unicode()
             ucnv_fromUChars(m_ucnv, buf, buflen, (UChar*)&c, 1, &status);
             if (U_FAILURE(status)) {
 #ifndef NDEBUG
-                Rf_warning("Cannot convert character 0x%2x (encoding=%s)",
+                Rf_warning("Cannot convert character 0x%02x (encoding=%s)",
                            (int)(unsigned char)ascii_last[0],
                            ucnv_getName(m_ucnv, &status));
 #endif
@@ -410,7 +410,7 @@ bool StriUcnv::is1to1Unicode()
 
             if (buf[1] != '\0' || buf[0] != ascii_last[0]) {
 #ifndef NDEBUG
-                Rf_warning("Problematic character 0x%2x -> \\u%8x -> 0x%2x (encoding=%s)",
+                Rf_warning("Problematic character 0x%02x -> \\u%08x -> 0x%02x (encoding=%s)",
                            (int)(unsigned char)ascii_last[0],
                            c,
                            (int)buf[0],

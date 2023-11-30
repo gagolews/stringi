@@ -89,7 +89,7 @@ Calendar* stri__get_calendar(const char* locale_val)
         UErrorCode status2 = U_ZERO_ERROR;
         const char* valid_locale = cal->getLocaleID(ULOC_VALID_LOCALE, status2);
         if (valid_locale && !strcmp(valid_locale, "root"))
-        Rf_warning(ICUError::getICUerrorName(status));
+        Rf_warning("%s", ICUError::getICUerrorName(status));
     }
 
     return cal;

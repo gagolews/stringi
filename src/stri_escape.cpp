@@ -144,17 +144,17 @@ SEXP stri_escape_unicode(SEXP str)
                     if ((char)c >= 32 && (char)c <= 126) // printable characters
                         out.append(1, (char)c);
                     else {
-                        snprintf(buf, StriEscape_BUFSIZE, "\\u%4.4x", (uint16_t)c);
+                        snprintf(buf, StriEscape_BUFSIZE, "\\u%04x", (uint16_t)c);
                         out.append(buf, 6);
                     }
                 }
             }
             else if (c <= 0xffff) {
-                snprintf(buf, StriEscape_BUFSIZE, "\\u%4.4x", (uint16_t)c);
+                snprintf(buf, StriEscape_BUFSIZE, "\\u%04x", (uint16_t)c);
                 out.append(buf, 6);
             }
             else {
-                snprintf(buf, StriEscape_BUFSIZE, "\\U%8.8x", (uint32_t)c);
+                snprintf(buf, StriEscape_BUFSIZE, "\\U%08x", (uint32_t)c);
                 out.append(buf, 10);
             }
         }

@@ -1,7 +1,13 @@
 # Changelog
 
 
-## 1.8.2 (2021-11-22)
+## 1.8.3 (under development)
+
+## [BUILD TIME] [BUGFIX] Fixed the *format string is not a string literal
+  (potentially insecure)* warnings.
+
+
+## 1.8.2 (2023-11-22)
 
 * [BUILD TIME] [BUGFIX] #501: Fixed failing build on 32-bit Windows
   (Windows API `ResolveLocaleName` function not available).
