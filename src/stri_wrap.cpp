@@ -279,7 +279,7 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
         UErrorCode status2 = U_ZERO_ERROR;
         const char* valid_locale = briter->getLocaleID(ULOC_VALID_LOCALE, status2);
         if (valid_locale && !strcmp(valid_locale, "root"))
-            Rf_warning(ICUError::getICUerrorName(status));
+            Rf_warning("%s", ICUError::getICUerrorName(status));
     }
 
     R_len_t str_length = LENGTH(str);

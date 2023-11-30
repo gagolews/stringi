@@ -145,7 +145,7 @@ private:
             UErrorCode status2 = U_ZERO_ERROR;
             const char* valid_locale = ubrk_getLocaleByType(uiterator, ULOC_VALID_LOCALE, &status2);
             if (valid_locale && !strcmp(valid_locale, "root"))
-                Rf_warning(ICUError::getICUerrorName(status));
+                Rf_warning("%s", ICUError::getICUerrorName(status));
         }
     }
 
@@ -260,7 +260,7 @@ private:
             UErrorCode status2 = U_ZERO_ERROR;
             const char* valid_locale = rbiterator->getLocaleID(ULOC_VALID_LOCALE, status2);
             if (valid_locale && !strcmp(valid_locale, "root"))
-                Rf_warning(ICUError::getICUerrorName(status));
+                Rf_warning("%s", ICUError::getICUerrorName(status));
         }
     }
 
