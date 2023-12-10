@@ -1,7 +1,13 @@
 # Changelog
 
 
-## 1.8.2 (2021-11-22)
+## 1.8.3 (2023-12-10)
+
+## [BUILD TIME] [BUGFIX] Fixed the *format string is not a string literal
+  (potentially insecure)* warnings.
+
+
+## 1.8.2 (2023-11-22)
 
 * [BUILD TIME] [BUGFIX] #501: Fixed failing build on 32-bit Windows
   (Windows API `ResolveLocaleName` function not available).
@@ -10,7 +16,7 @@
   before other `CPPFLAGS` (the same with other flag types) in
   the `configure` script to make it compatible with what happens in `Makevars`.
 
-* [BUILD TIME] [BUGFIX] Support for ICU's `double`conversion on Loongarch
+* [BUILD TIME] [BUGFIX] Support for ICU's `double` conversion on Loongarch
     has been restored (see #463).
 
 
