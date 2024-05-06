@@ -189,7 +189,7 @@ stri_datetime_parse(x, 'yyyy-MM-dd')
 ```
 
 ```
-## [1] "2015-02-28 AEDT" NA
+## [1] "2015-02-28 CET" NA
 ```
 
 ```r
@@ -197,7 +197,7 @@ stri_datetime_parse(x, 'yyyy-MM-dd', lenient=TRUE)
 ```
 
 ```
-## [1] "2015-02-28 AEDT" "2015-03-01 AEDT"
+## [1] "2015-02-28 CET" "2015-03-01 CET"
 ```
 
 ```r
@@ -205,7 +205,7 @@ stri_datetime_parse(x %s+% " 17:13", "yyyy-MM-dd HH:mm")
 ```
 
 ```
-## [1] "2015-02-28 17:13:00 AEDT" NA
+## [1] "2015-02-28 17:13:00 CET" NA
 ```
 
 ```r
@@ -213,7 +213,7 @@ stri_datetime_parse('19 lipca 2015', 'date_long', locale='pl_PL')
 ```
 
 ```
-## [1] "2015-07-19 AEST"
+## [1] "2015-07-19 CEST"
 ```
 
 ```r
@@ -221,5 +221,5 @@ stri_datetime_format(stri_datetime_now(), 'datetime_relative_medium')
 ```
 
 ```
-## [1] "today, 7:10:26 pm"
+## [1] "today, 11:01:46 am"
 ```

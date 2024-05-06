@@ -1,6 +1,6 @@
 # kate: hl Makefile
 ## `stringi` Makevars.win
-## Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com/>
+## Copyright (c) 2013-2024, Marek Gagolewski <https://www.gagolewski.com/>
 
 PKG_CPPFLAGS=-I. -Iicu74/ -Iicu74/unicode -Iicu74/common -Iicu74/i18n \
 -DUCONFIG_USE_LOCAL \
@@ -8,11 +8,10 @@ PKG_CPPFLAGS=-I. -Iicu74/ -Iicu74/unicode -Iicu74/common -Iicu74/i18n \
 -DU_I18N_IMPLEMENTATION -DU_TOOLUTIL_IMPLEMENTATION \
 -UDEBUG -DNDEBUG -DWINVER=0x0601 -D_WIN32_WINNT=0x0601 \
 -DU_USE_STRTOD_L=0
-# 0x0600 == Windows Vista
+# 0x0600 == Windows Vista/Server 2008
 # 0x0601 == Windows 7
 # 0x0602 == Windows 8
 # 0x0603 == Windows 8.1
-# 0x0A00 == Windows 10
 # 0x0A00 == Windows 10
 # ICU 69 uses LOCALE_ALLOW_NEUTRAL_NAMES which is Windows 7 and later
 

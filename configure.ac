@@ -1,6 +1,6 @@
 # kate: hl bash
 # autoconf/configure script for stringi <https://stringi.gagolewski.com/>
-# Copyright (c) 2013-2023, Marek Gagolewski <https://www.gagolewski.com/>
+# Copyright (c) 2013-2024, Marek Gagolewski <https://www.gagolewski.com/>
 
 ##### COMPATIBILITY NOTES/CHANGELOG ############################################
 

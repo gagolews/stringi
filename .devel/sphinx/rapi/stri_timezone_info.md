@@ -65,19 +65,19 @@ stri_timezone_info()
 
 ```
 ## $ID
-## [1] "Australia/Melbourne"
+## [1] "Europe/Warsaw"
 ## 
 ## $Name
-## [1] "Australian Eastern Standard Time"
+## [1] "Central European Standard Time"
 ## 
 ## $Name.Daylight
-## [1] "Australian Eastern Daylight Time"
+## [1] "Central European Summer Time"
 ## 
 ## $Name.Windows
-## [1] "AUS Eastern Standard Time"
+## [1] "Central European Standard Time"
 ## 
 ## $RawOffset
-## [1] 10
+## [1] 1
 ## 
 ## $UsesDaylightTime
 ## [1] TRUE
@@ -89,19 +89,19 @@ stri_timezone_info(locale='sk_SK')
 
 ```
 ## $ID
-## [1] "Australia/Melbourne"
+## [1] "Europe/Warsaw"
 ## 
 ## $Name
-## [1] "východoaustrálsky štandardný čas"
+## [1] "stredoeurópsky štandardný čas"
 ## 
 ## $Name.Daylight
-## [1] "východoaustrálsky letný čas"
+## [1] "stredoeurópsky letný čas"
 ## 
 ## $Name.Windows
-## [1] "AUS Eastern Standard Time"
+## [1] "Central European Standard Time"
 ## 
 ## $RawOffset
-## [1] 10
+## [1] 1
 ## 
 ## $UsesDaylightTime
 ## [1] TRUE

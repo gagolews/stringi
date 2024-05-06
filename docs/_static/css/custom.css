@@ -1,9 +1,13 @@
 /* --------------------------------------------------------------------------
-   Copyleft (C) 2021-2023, Marek Gagolewski <https://www.gagolewski.com/>
+   Copyleft (C) 2021-2024, Marek Gagolewski <https://www.gagolewski.com/>
    -------------------------------------------------------------------------- */
 
 @import url("fonts/Alegreya-fontspec.css");
 @import url("fonts/ubuntu-fontspec.css");
+
+.katex {
+    font-size: inherit;
+}
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
@@ -11,7 +15,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 body {
-    font-family: Lato,proxima-nova,Helvetica Neue,Arial,sans-serif;
+    font-family: Alegreya Sans,Lato,proxima-nova,Helvetica Neue,Arial,sans-serif;
     font-weight: 400;
 }
 
@@ -128,7 +132,8 @@ p code.notranslate, p code.literal, p tt.literal {
 
 strong.command, strong.program, .rst-content code, .rst-content div[class^="highlight"] pre, .rst-content tt, .rst-content pre, pre, samp, kbd, code {
     font-family: Ubuntu Mono,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,Courier,monospace;
-/*     font-size: 90%; */
+    letter-spacing: -0.15pt;
+    font-size: 95%;
 /*     font-style: normal; */
 }
 
