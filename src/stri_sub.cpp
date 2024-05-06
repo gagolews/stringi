@@ -78,7 +78,7 @@ R_len_t stri__sub_prepare_from_to_length(SEXP& from, SEXP& to, SEXP& length,
             SEXP t2;
             PROTECT(t2 = VECTOR_ELT(t, 1));
             if (
-                isString(t2) && LENGTH(t2) == 2 &&
+                Rf_isString(t2) && LENGTH(t2) == 2 &&
                 strcmp("length", CHAR(STRING_ELT(t2, 1))) == 0
             ) {
                 fromlength_matrix = true;

@@ -58,8 +58,8 @@ public:
     {
         this->data = NULL;
 #ifndef NDEBUG
-        if (!isReal(rvec))
-            throw StriException("DEBUG: !isReal in StriContainerDouble");
+        if (!Rf_isReal(rvec))
+            throw StriException("DEBUG: !Rf_isReal in StriContainerDouble");
 #endif
         R_len_t ndata = LENGTH(rvec);
         this->init_Base(ndata, _nrecycle, true);

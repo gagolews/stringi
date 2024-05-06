@@ -337,7 +337,7 @@ SEXP stri__prepare_arg_string(SEXP x, const char* argname, bool allow_error)
     if ((SEXP*)argname == (SEXP*)R_NilValue)
         argname = "<noname>";
 
-    if (Rf_isVectorList(x) || isObject(x))  // factor is an object too
+    if (Rf_isVectorList(x) || Rf_isObject(x))  // factor is an object too
     {
         if (Rf_isVectorList(x) && !stri__check_list_of_scalars(x))
             Rf_warning(MSG__WARN_LIST_COERCION);
@@ -351,11 +351,11 @@ SEXP stri__prepare_arg_string(SEXP x, const char* argname, bool allow_error)
         return stri__call_as_character((void*)x);
 #endif
     }
-    else if ((bool)isString(x))
+    else if ((bool)Rf_isString(x))
         return x; // return as-is
     else if (Rf_isVectorAtomic(x) || Rf_isNull(x))
         return Rf_coerceVector(x, STRSXP);
-    else if ((bool)isSymbol(x))
+    else if ((bool)Rf_isSymbol(x))
         return Rf_ScalarString(PRINTNAME(x));
 
     Rf_error(MSG__ARG_EXPECTED_STRING, argname); // allowed here
@@ -430,7 +430,7 @@ SEXP stri__prepare_arg_double(SEXP x, const char* argname, bool factors_as_strin
         UNPROTECT(2);
         return x;
     }
-    else if (Rf_isVectorList(x) || isObject(x))  // factor is an object too
+    else if (Rf_isVectorList(x) || Rf_isObject(x))  // factor is an object too
     {
         if (Rf_isVectorList(x) && !stri__check_list_of_scalars(x))
             Rf_warning(MSG__WARN_LIST_COERCION);
@@ -444,7 +444,7 @@ SEXP stri__prepare_arg_double(SEXP x, const char* argname, bool factors_as_strin
         return stri__call_as_double((void*)x);
 #endif
     }
-    else if ((bool)isReal(x))
+    else if ((bool)Rf_isReal(x))
         return x; //return as-is
     else if (Rf_isVectorAtomic(x) || Rf_isNull(x))
         return Rf_coerceVector(x, REALSXP);
@@ -522,7 +522,7 @@ SEXP stri__prepare_arg_integer(SEXP x, const char* argname, bool factors_as_stri
         UNPROTECT(2);
         return x;
     }
-    else if (Rf_isVectorList(x) || isObject(x))  // factor is an object too
+    else if (Rf_isVectorList(x) || Rf_isObject(x))  // factor is an object too
     {
         if (Rf_isVectorList(x) && !stri__check_list_of_scalars(x))
             Rf_warning(MSG__WARN_LIST_COERCION);
@@ -606,7 +606,7 @@ SEXP stri__prepare_arg_logical(SEXP x, const char* argname, bool allow_error)
         return stri__call_as_logical((void*)x);
 #endif
     }
-    else if (Rf_isVectorList(x) || isObject(x))
+    else if (Rf_isVectorList(x) || Rf_isObject(x))
     {
         if (Rf_isVectorList(x) && !stri__check_list_of_scalars(x))
             Rf_warning(MSG__WARN_LIST_COERCION);
@@ -620,7 +620,7 @@ SEXP stri__prepare_arg_logical(SEXP x, const char* argname, bool allow_error)
         return stri__call_as_logical((void*)x);
 #endif
     }
-    else if ((bool)isLogical(x))
+    else if ((bool)Rf_isLogical(x))
         return x; // return as-is
     else if (Rf_isVectorAtomic(x) || Rf_isNull(x))
         return Rf_coerceVector(x, LGLSXP);
@@ -691,7 +691,7 @@ SEXP stri__prepare_arg_raw(SEXP x, const char* argname, bool factors_as_strings,
         UNPROTECT(2);
         return x;
     }
-    else if (Rf_isVectorList(x) || isObject(x))
+    else if (Rf_isVectorList(x) || Rf_isObject(x))
     {
         if (Rf_isVectorList(x) && !stri__check_list_of_scalars(x))
             Rf_warning(MSG__WARN_LIST_COERCION);
@@ -808,7 +808,7 @@ SEXP stri__prepare_arg_string_1(SEXP x, const char* argname)
 //         PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
 //         nprotect = 2;
 //     }
-//     else if (Rf_isVectorList(x) || isObject(x))
+//     else if (Rf_isVectorList(x) || Rf_isObject(x))
 //     {
 //         if (Rf_isVectorList(x)) {
 //             R_len_t nv = LENGTH(x);
@@ -825,13 +825,13 @@ SEXP stri__prepare_arg_string_1(SEXP x, const char* argname)
 //         PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
 //         nprotect = 2;
 //     }
-//     else if ((bool)isString(x))
+//     else if ((bool)Rf_isString(x))
 //         nprotect = 0;
 //     else if (Rf_isVectorAtomic(x) || Rf_isNull(x)) {
 //         PROTECT(x = Rf_coerceVector(x, STRSXP));
 //         nprotect = 1;
 //     }
-//     else if ((bool)isSymbol(x)) {
+//     else if ((bool)Rf_isSymbol(x)) {
 //         PROTECT(x = Rf_ScalarString(PRINTNAME(x)));
 //         nprotect = 1;
 //     }
@@ -910,7 +910,7 @@ SEXP stri__prepare_arg_double_1(SEXP x, const char* argname, bool factors_as_str
 //         PROTECT(x = Rf_coerceVector(x, REALSXP));
 //         nprotect = 3;
 //     }
-//     else if (Rf_isVectorList(x) || isObject(x))
+//     else if (Rf_isVectorList(x) || Rf_isObject(x))
 //     {
 //         if (Rf_isVectorList(x)) {
 //             R_len_t nv = LENGTH(x);
@@ -927,7 +927,7 @@ SEXP stri__prepare_arg_double_1(SEXP x, const char* argname, bool factors_as_str
 //         PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
 //         nprotect = 2;
 //     }
-//     else if ((bool)isReal(x))
+//     else if ((bool)Rf_isReal(x))
 //         nprotect = 0;
 //     else if (Rf_isVectorAtomic(x) || Rf_isNull(x)) {
 //         PROTECT(x = Rf_coerceVector(x, REALSXP));
@@ -1007,7 +1007,7 @@ SEXP stri__prepare_arg_integer_1(SEXP x, const char* argname, bool factors_as_st
 //         PROTECT(x = Rf_coerceVector(x, INTSXP));
 //         nprotect = 3;
 //     }
-//     else if (Rf_isVectorList(x) || isObject(x))
+//     else if (Rf_isVectorList(x) || Rf_isObject(x))
 //     {
 //         if (Rf_isVectorList(x)) {
 //             R_len_t nv = LENGTH(x);
@@ -1110,7 +1110,7 @@ SEXP stri__prepare_arg_logical_1(SEXP x, const char* argname)
 //         PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
 //         nprotect = 2;
 //     }
-//     else if (Rf_isVectorList(x) || isObject(x))
+//     else if (Rf_isVectorList(x) || Rf_isObject(x))
 //     {
 //         if (Rf_isVectorList(x)) {
 //             R_len_t nv = LENGTH(x);
@@ -1127,7 +1127,7 @@ SEXP stri__prepare_arg_logical_1(SEXP x, const char* argname)
 //         PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
 //         nprotect = 2;
 //     }
-//     else if ((bool)isLogical(x)) {
+//     else if ((bool)Rf_isLogical(x)) {
 //         nprotect = 0;
 //         // do nothing
 //     }
