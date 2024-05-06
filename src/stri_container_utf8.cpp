@@ -64,8 +64,8 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
     this->str = NULL;
 
 #ifndef NDEBUG
-    if (!isString(rstr))
-        throw StriException("DEBUG: !isString in StriContainerUTF8::StriContainerUTF8(SEXP rstr)");
+    if (!Rf_isString(rstr))
+        throw StriException("DEBUG: !Rf_isString in StriContainerUTF8::StriContainerUTF8(SEXP rstr)");
 #endif
     R_len_t nrstr = LENGTH(rstr);
     this->init_Base(nrstr, _nrecycle, _shallowrecycle, rstr); // calling LENGTH(rstr) fails on constructor call

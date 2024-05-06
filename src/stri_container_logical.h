@@ -59,8 +59,8 @@ public:
     {
         this->data = NULL;
 #ifndef NDEBUG
-        if (!isLogical(rvec))
-            throw StriException("DEBUG: !isLogical in StriContainerLogical");
+        if (!Rf_isLogical(rvec))
+            throw StriException("DEBUG: !Rf_isLogical in StriContainerLogical");
 #endif
         R_len_t ndata = LENGTH(rvec);
         this->init_Base(ndata, _nrecycle, true);

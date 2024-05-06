@@ -69,8 +69,8 @@ public:
     StriContainerCharClass(SEXP rvec, R_len_t _nrecycle, bool negate=false)
     {
 #ifndef NDEBUG
-        if (!isString(rvec))
-            throw StriException("DEBUG: !isString in StriContainerCharClass::StriContainerCharClass(SEXP rvec)");
+        if (!Rf_isString(rvec))
+            throw StriException("DEBUG: !Rf_isString in StriContainerCharClass::StriContainerCharClass(SEXP rvec)");
 #endif
         int _n = LENGTH(rvec);
         this->init_Base(_n, _nrecycle, true);
