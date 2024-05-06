@@ -43,7 +43,7 @@ all: $(SHLIB)
 
 $(SHLIB): $(OBJECTS) libicu_common.a libicu_i18n.a libicu_stubdata.a
 
-PKG_LIBS=-L. -licu_stubdata -licu_common -licu_i18n
+PKG_LIBS=-L. -licu_i18n -licu_common -licu_stubdata
 
 libicu_common.a: $(ICU_COMMON_OBJECTS)
 
