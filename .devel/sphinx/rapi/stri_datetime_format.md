@@ -221,5 +221,5 @@ stri_datetime_format(stri_datetime_now(), 'datetime_relative_medium')
 ```
 
 ```
-## [1] "today, 11:01:46 am"
+## [1] "today, 2:48:12 pm"
 ```

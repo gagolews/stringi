@@ -1,9 +1,10 @@
 # Changelog
 
 
-## 1.8.3.9xxx (under development)
+## 1.8.4 (2024-05-06)
 
-* ...
+* [BUILD TIME] [BUGFIX] #508: Fixed build errors on Windows
+    (thanks to @jeoren and @kalibera).
 
 
 ## 1.8.3 (2023-12-10)
