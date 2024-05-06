@@ -53,7 +53,7 @@ oldloc <- stri_locale_set('pt_BR')
 ```
 
 ```
-## You are now working with stringi_1.8.3 (pt_BR.UTF-8; ICU4C 74.1 [bundle]; Unicode 15.1)
+## You are now working with stringi_1.8.3.9001 (pt_BR.UTF-8; ICU4C 74.1 [bundle]; Unicode 15.1)
 ```
 
 ```r
@@ -65,7 +65,7 @@ stri_locale_set(oldloc) # restore the previous default locale
 ```
 
 ```
-## You are now working with stringi_1.8.3 (en_AU.UTF-8; ICU4C 74.1 [bundle]; Unicode 15.1)
+## You are now working with stringi_1.8.3.9001 (en_AU.UTF-8; ICU4C 74.1 [bundle]; Unicode 15.1)
 ```
 
 ```r
