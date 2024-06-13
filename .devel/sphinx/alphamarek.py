@@ -113,7 +113,7 @@ class AlphaMarek(AlphaStyle):
             self.format_btitle(e, 'title'),
             self.format_volume_and_series(e),
             sentence [
-                field('publisher'),
+                optional_field('publisher'),
                 optional_field('address'),
                 self.format_edition(e)
             ],
