@@ -445,13 +445,16 @@ SEXP stri_enc_toascii(SEXP str)
  * @version 0.1-?? (Marek Gagolewski, 2013-11-12)
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-28)
- *          use StriUcnv
+ *     use StriUcnv
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-01)
- *          calc required buf size a priori
+ *     calc required buf size a priori
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
- *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *     #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.8.4.9001 (Marek Gagolewski, 2024-06-13)
+ *     #512: Fixed PROTECT stack imbalance in `stri_encode_from_marked`.
  */
 SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
 {
@@ -459,12 +462,16 @@ SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
     const char* selected_to   = stri__prepare_arg_enc(to, "to", true); /* this is R_alloc'ed */
     bool to_raw_logical = stri__prepare_arg_logical_1_notNA(to_raw, "to_raw");
 
-    STRI__ERROR_HANDLER_BEGIN(1)
     R_len_t str_n = LENGTH(str);
+    if (str_n <= 0) {
+        UNPROTECT(1);
+        return Rf_allocVector(to_raw_logical?VECSXP:STRSXP, 0);
+    }
+
+    STRI__ERROR_HANDLER_BEGIN(1)
     StriContainerUTF16 str_cont(str, str_n);
 
     // get the number of strings to convert; if == 0, then you know what's the result
-    if (str_n <= 0) return Rf_allocVector(to_raw_logical?VECSXP:STRSXP, 0);
 
     // Open converters
     StriUcnv ucnv(selected_to);
