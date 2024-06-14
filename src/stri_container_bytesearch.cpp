@@ -138,7 +138,7 @@ StriByteSearchMatcher* StriContainerByteSearch::getMatcher(R_len_t i) {
  *          special procedure for patternLen <= 4
  *
  * @version 0.2-4 (Marek Gagolewski, 2014-05-15)
- *          BUGFIX: load of misaligned adresses
+ *          BUGFIX: load of misaligned addresses
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-30)
  *          BUGFIX: ret USEARCH_DONE immediately if startPos is too far away
@@ -277,7 +277,7 @@ StriByteSearchMatcher* StriContainerByteSearch::getMatcher(R_len_t i) {
  * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
  *
  * @version 0.2-4 (Marek Gagolewski, 2014-05-15)
- *          BUGFIX: load of misaligned adresses
+ *          BUGFIX: load of misaligned addresses
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-30)
  *          BUGFIX: ret USEARCH_DONE immediately if startPos indicates no match
