@@ -235,7 +235,7 @@ SEXP stri_stats_latex(SEXP str)
 
             case stControlSequence:
                 if (isLetter) {
-                    // "\begin{[a-zA-z]+}" is an environment, and you can't define a command like \begin
+                    // "\begin{[a-zA-Z]+}" is an environment, and you can't define a command like \begin
                     if (c == (UChar32)'b' && !strncmp(cs+j, "egin", 4) /* plain ASCII compare - it's OK */) {
                         ++stats[lsEnvir];
                         state = stEnvironment;
