@@ -43,7 +43,7 @@ Other random: [`stri_rand_lipsum()`](stri_rand_lipsum.md), [`stri_rand_strings()
 
 
 
-```r
+``` r
 stri_rand_shuffle(c('abcdefghi', '0123456789'))
 ```
 
@@ -51,7 +51,7 @@ stri_rand_shuffle(c('abcdefghi', '0123456789'))
 ## [1] "cheidfbag"  "5096873241"
 ```
 
-```r
+``` r
 # you can do better than this with stri_rand_strings:
 stri_rand_shuffle(rep(stri_paste(letters, collapse=''), 10))
 ```

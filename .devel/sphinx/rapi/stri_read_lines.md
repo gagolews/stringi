@@ -12,11 +12,11 @@ stri_read_lines(con, encoding = NULL, fname = con)
 
 ## Arguments
 
-|            |                                                                                 |
-|------------|---------------------------------------------------------------------------------|
-| `con`      | name of the output file or a connection object (opened in the binary mode)      |
+|  |  |
+|----|----|
+| `con` | name of the output file or a connection object (opened in the binary mode) |
 | `encoding` | single string; input encoding; `NULL` or `''` for the current default encoding. |
-| `fname`    | \[DEPRECATED\] alias of `con`                                                   |
+| `fname` | \[DEPRECATED\] alias of `con` |
 
 ## Details
 

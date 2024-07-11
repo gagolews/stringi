@@ -55,7 +55,7 @@ Other stats: [`stri_stats_general()`](stri_stats_general.md)
 
 
 
-```r
+``` r
 s <- c('Lorem \\textbf{ipsum} dolor sit \\textit{amet}, consectetur adipisicing elit.',
        '\\begin{small}Proin nibh augue,\\end{small} suscipit a, scelerisque sed, lacinia in, mi.',
        '')

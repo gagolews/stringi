@@ -40,17 +40,17 @@ stri_printf(
 
 ## Arguments
 
-|              |                                                                                                                                                                          |
-|--------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `format`     | character vector of format strings                                                                                                                                       |
-| `...`        | vectors (coercible to integer, real, or character)                                                                                                                       |
-| `na_string`  | single string to represent missing values; if `NA`, missing values in `...` result in the corresponding outputs be missing too; use `"NA"` for compatibility with base R |
-| `inf_string` | single string to represent the (unsigned) infinity (`NA` allowed)                                                                                                        |
-| `nan_string` | single string to represent the not-a-number (`NA` allowed)                                                                                                               |
-| `use_length` | single logical value; should the number of code points be used when applying modifiers such as `%20s` instead of the total code point width?                             |
-| `file`       | see [`cat`](https://stat.ethz.ch/R-manual/R-devel/library/base/help/cat.html)                                                                                            |
-| `sep`        | see [`cat`](https://stat.ethz.ch/R-manual/R-devel/library/base/help/cat.html)                                                                                            |
-| `append`     | see [`cat`](https://stat.ethz.ch/R-manual/R-devel/library/base/help/cat.html)                                                                                            |
+|  |  |
+|----|----|
+| `format` | character vector of format strings |
+| `...` | vectors (coercible to integer, real, or character) |
+| `na_string` | single string to represent missing values; if `NA`, missing values in `...` result in the corresponding outputs be missing too; use `"NA"` for compatibility with base R |
+| `inf_string` | single string to represent the (unsigned) infinity (`NA` allowed) |
+| `nan_string` | single string to represent the not-a-number (`NA` allowed) |
+| `use_length` | single logical value; should the number of code points be used when applying modifiers such as `%20s` instead of the total code point width? |
+| `file` | see [`cat`](https://stat.ethz.ch/R-manual/R-devel/library/base/help/cat.html) |
+| `sep` | see [`cat`](https://stat.ethz.ch/R-manual/R-devel/library/base/help/cat.html) |
+| `append` | see [`cat`](https://stat.ethz.ch/R-manual/R-devel/library/base/help/cat.html) |
 
 ## Details
 
@@ -97,7 +97,7 @@ Other length: [`%s$%()`](+25s+24+25.md), [`stri_isempty()`](stri_isempty.md), [`
 
 
 
-```r
+``` r
 stri_printf("%4s=%.3f", c("e", "e\u00b2", "\u03c0", "\u03c0\u00b2"),
     c(exp(1), exp(2), pi, pi^2))
 ```
@@ -109,7 +109,7 @@ stri_printf("%4s=%.3f", c("e", "e\u00b2", "\u03c0", "\u03c0\u00b2"),
 ##   π²=9.870
 ```
 
-```r
+``` r
 x <- c(
   "xxabcd",
   "xx\u0105\u0106\u0107\u0108",
@@ -127,7 +127,7 @@ stri_printf("[%10s]", x)  # minimum width = 10
 ## [    ​​​​🏴󠁧󠁢󠁳󠁣󠁴󠁿abcd]
 ```
 
-```r
+``` r
 stri_printf("[%-10.3s]", x)  # output of max width = 3, but pad to width of 10
 ```
 
@@ -137,7 +137,7 @@ stri_printf("[%-10.3s]", x)  # output of max width = 3, but pad to width of 10
 ## [​​​​🏴󠁧󠁢󠁳󠁣󠁴󠁿a       ]
 ```
 
-```r
+``` r
 stri_printf("[%10s]", x, use_length=TRUE)  # minimum number of Unicode code points = 10
 ```
 
@@ -147,7 +147,7 @@ stri_printf("[%10s]", x, use_length=TRUE)  # minimum number of Unicode code poin
 ## [​​​​🏴󠁧󠁢󠁳󠁣󠁴󠁿abcd]
 ```
 
-```r
+``` r
 # vectorization wrt all arguments:
 p <- runif(10)
 stri_sprintf(ifelse(p > 0.5, "P(Y=1)=%1$.2f", "P(Y=0)=%2$.2f"), p, 1-p)
@@ -158,7 +158,7 @@ stri_sprintf(ifelse(p > 0.5, "P(Y=1)=%1$.2f", "P(Y=0)=%2$.2f"), p, 1-p)
 ##  [6] "P(Y=0)=0.95" "P(Y=1)=0.53" "P(Y=1)=0.89" "P(Y=1)=0.55" "P(Y=0)=0.54"
 ```
 
-```r
+``` r
 # using a "preformatted" logical vector:
 x <- c(TRUE, FALSE, FALSE, NA, TRUE, FALSE)
 stri_sprintf("%s) %s", letters[seq_along(x)], c("\u2718", "\u2713")[x+1])
@@ -168,7 +168,7 @@ stri_sprintf("%s) %s", letters[seq_along(x)], c("\u2718", "\u2713")[x+1])
 ## [1] "a) ✓" "b) ✘" "c) ✘" NA     "e) ✓" "f) ✘"
 ```
 
-```r
+``` r
 # custom NA/Inf/NaN strings:
 stri_printf("%+10.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_),
     na_string="<NA>", nan_string="\U0001F4A9", inf_string="\u221E")
@@ -183,15 +183,15 @@ stri_printf("%+10.3f", c(-Inf, -0, 0, Inf, NaN, NA_real_),
 ##       <NA>
 ```
 
-```r
+``` r
 stri_sprintf("UNIX time %1$f is %1$s.", Sys.time())
 ```
 
 ```
-## [1] "UNIX time 1714999701.996432 is 2024-05-06 14:48:21.996432."
+## [1] "UNIX time 1720693877.359658 is 2024-07-11 12:31:17.359658."
 ```
 
-```r
+``` r
 # the following do not work in sprintf()
 stri_sprintf("%1$#- *2$.*3$f", 1.23456, 10, 3)  # two asterisks
 ```
@@ -200,7 +200,7 @@ stri_sprintf("%1$#- *2$.*3$f", 1.23456, 10, 3)  # two asterisks
 ## [1] " 1.235    "
 ```
 
-```r
+``` r
 stri_sprintf(c("%s", "%f"), pi)  # re-coercion needed
 ```
 
@@ -208,15 +208,15 @@ stri_sprintf(c("%s", "%f"), pi)  # re-coercion needed
 ## [1] "3.14159265358979" "3.141593"
 ```
 
-```r
+``` r
 stri_sprintf("%1$s is %1$f UNIX time.", Sys.time())  # re-coercion needed
 ```
 
 ```
-## [1] "2024-05-06 14:48:21.998135 is 1714999701.998135 UNIX time."
+## [1] "2024-07-11 12:31:17.361472 is 1720693877.361472 UNIX time."
 ```
 
-```r
+``` r
 stri_sprintf(c("%d", "%s"), factor(11:12))  # re-coercion needed
 ```
 
@@ -224,7 +224,7 @@ stri_sprintf(c("%d", "%s"), factor(11:12))  # re-coercion needed
 ## [1] "1"  "12"
 ```
 
-```r
+``` r
 stri_sprintf(c("%s", "%d"), factor(11:12))  # re-coercion needed
 ```
 

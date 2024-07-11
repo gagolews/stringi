@@ -89,8 +89,8 @@ The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.c
 Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R, \emph{Journal of Statistical Software} 103(2), 2022, 1-59, \doi{10.18637/jss.v103.i02}
 
 Other text_boundaries: 
-\code{\link{about_search_boundaries}},
 \code{\link{about_search}},
+\code{\link{about_search_boundaries}},
 \code{\link{stri_count_boundaries}()},
 \code{\link{stri_extract_all_boundaries}()},
 \code{\link{stri_locate_all_boundaries}()},

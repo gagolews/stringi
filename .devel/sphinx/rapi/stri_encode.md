@@ -14,12 +14,12 @@ stri_conv(str, from = NULL, to = NULL, to_raw = FALSE)
 
 ## Arguments
 
-|          |                                                                                                                                                                                                  |
-|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`    | a character vector, a raw vector, or a list of `raw` vectors to be converted                                                                                                                     |
-| `from`   | input encoding: `NULL` or `''` for the default encoding or internal encoding marks\' usage (see Details); otherwise, a single string with encoding name, see [`stri_enc_list`](stri_enc_list.md) |
-| `to`     | target encoding: `NULL` or `''` for default encoding (see [`stri_enc_get`](stri_enc_set.md)), or a single string with encoding name                                                              |
-| `to_raw` | a single logical value; indicates whether a list of raw vectors rather than a character vector should be returned                                                                                |
+|  |  |
+|----|----|
+| `str` | a character vector, a raw vector, or a list of `raw` vectors to be converted |
+| `from` | input encoding: `NULL` or `''` for the default encoding or internal encoding marks\' usage (see Details); otherwise, a single string with encoding name, see [`stri_enc_list`](stri_enc_list.md) |
+| `to` | target encoding: `NULL` or `''` for default encoding (see [`stri_enc_get`](stri_enc_set.md)), or a single string with encoding name |
+| `to_raw` | a single logical value; indicates whether a list of raw vectors rather than a character vector should be returned |
 
 ## Details
 

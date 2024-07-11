@@ -12,10 +12,10 @@ stri_timezone_info(tz = NULL, locale = NULL, display_type = "long")
 
 ## Arguments
 
-|                |                                                                                                                                               |
-|----------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
-| `tz`           | `NULL` or `''` for default time zone, or a single string with time zone ID otherwise                                                          |
-| `locale`       | `NULL` or `''` for default locale, or a single string with locale identifier                                                                  |
+|  |  |
+|----|----|
+| `tz` | `NULL` or `''` for default time zone, or a single string with time zone ID otherwise |
+| `locale` | `NULL` or `''` for default locale, or a single string with locale identifier |
 | `display_type` | single string; one of `'short'`, `'long'`, `'generic_short'`, `'generic_long'`, `'gmt_short'`, `'gmt_long'`, `'common'`, `'generic_location'` |
 
 ## Details
@@ -59,7 +59,7 @@ Other timezone: [`stri_timezone_get()`](stri_timezone_set.md), [`stri_timezone_l
 
 
 
-```r
+``` r
 stri_timezone_info()
 ```
 
@@ -83,7 +83,7 @@ stri_timezone_info()
 ## [1] TRUE
 ```
 
-```r
+``` r
 stri_timezone_info(locale='sk_SK')
 ```
 
@@ -107,7 +107,7 @@ stri_timezone_info(locale='sk_SK')
 ## [1] TRUE
 ```
 
-```r
+``` r
 sapply(c('short', 'long', 'generic_short', 'generic_long',
          'gmt_short', 'gmt_long', 'common', 'generic_location'),
   function(e) stri_timezone_info('Europe/London', display_type=e))

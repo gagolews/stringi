@@ -12,9 +12,9 @@ stri_datetime_fstr(x, ignore_special = TRUE)
 
 ## Arguments
 
-|                  |                                                                                                                                                        |
-|------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `x`              | character vector of date/time format strings                                                                                                           |
+|  |  |
+|----|----|
+| `x` | character vector of date/time format strings |
 | `ignore_special` | if `FALSE`, special identifiers like `"datetime_full"` or `date_relative_short` (see [`stri_datetime_format`](stri_datetime_format.md)) are left as-is |
 
 ## Details
@@ -44,7 +44,7 @@ Other datetime: [`stri_datetime_add()`](stri_datetime_add.md), [`stri_datetime_c
 
 
 
-```r
+``` r
 stri_datetime_fstr('%Y-%m-%d %H:%M:%S')
 ```
 

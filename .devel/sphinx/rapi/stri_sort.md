@@ -12,13 +12,13 @@ stri_sort(str, decreasing = FALSE, na_last = NA, ..., opts_collator = NULL)
 
 ## Arguments
 
-|                 |                                                                                                                                                                                                                         |
-|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`           | a character vector                                                                                                                                                                                                      |
-| `decreasing`    | a single logical value; should the sort order be nondecreasing (`FALSE`, default, i.e., weakly increasing) or nonincreasing (`TRUE`)?                                                                                   |
-| `na_last`       | a single logical value; controls the treatment of `NA`s in `str`. If `TRUE`, then missing values in `str` are put at the end; if `FALSE`, they are put at the beginning; if `NA`, then they are removed from the output |
-| `...`           | additional settings for `opts_collator`                                                                                                                                                                                 |
-| `opts_collator` | a named list with <span class="pkg">ICU</span> Collator\'s options, see [`stri_opts_collator`](stri_opts_collator.md), `NULL` for default collation options                                                             |
+|  |  |
+|----|----|
+| `str` | a character vector |
+| `decreasing` | a single logical value; should the sort order be nondecreasing (`FALSE`, default, i.e., weakly increasing) or nonincreasing (`TRUE`)? |
+| `na_last` | a single logical value; controls the treatment of `NA`s in `str`. If `TRUE`, then missing values in `str` are put at the end; if `FALSE`, they are put at the beginning; if `NA`, then they are removed from the output |
+| `...` | additional settings for `opts_collator` |
+| `opts_collator` | a named list with <span class="pkg">ICU</span> Collator\'s options, see [`stri_opts_collator`](stri_opts_collator.md), `NULL` for default collation options |
 
 ## Details
 
@@ -53,7 +53,7 @@ Other locale_sensitive: [`%s<%()`](+25s+3C+25.md), [`about_locale`](about_locale
 
 
 
-```r
+``` r
 stri_sort(c('hladny', 'chladny'), locale='pl_PL')
 ```
 
@@ -61,7 +61,7 @@ stri_sort(c('hladny', 'chladny'), locale='pl_PL')
 ## [1] "chladny" "hladny"
 ```
 
-```r
+``` r
 stri_sort(c('hladny', 'chladny'), locale='sk_SK')
 ```
 
@@ -69,7 +69,7 @@ stri_sort(c('hladny', 'chladny'), locale='sk_SK')
 ## [1] "hladny"  "chladny"
 ```
 
-```r
+``` r
 stri_sort(sample(LETTERS))
 ```
 
@@ -78,7 +78,7 @@ stri_sort(sample(LETTERS))
 ## [20] "T" "U" "V" "W" "X" "Y" "Z"
 ```
 
-```r
+``` r
 stri_sort(c(1, 100, 2, 101, 11, 10))  # lexicographic order
 ```
 
@@ -86,7 +86,7 @@ stri_sort(c(1, 100, 2, 101, 11, 10))  # lexicographic order
 ## [1] "1"   "10"  "100" "101" "11"  "2"
 ```
 
-```r
+``` r
 stri_sort(c(1, 100, 2, 101, 11, 10), numeric=TRUE)  # OK for integers
 ```
 
@@ -94,7 +94,7 @@ stri_sort(c(1, 100, 2, 101, 11, 10), numeric=TRUE)  # OK for integers
 ## [1] "1"   "2"   "10"  "11"  "100" "101"
 ```
 
-```r
+``` r
 stri_sort(c(0.25, 0.5, 1, -1, -2, -3), numeric=TRUE)  # incorrect
 ```
 

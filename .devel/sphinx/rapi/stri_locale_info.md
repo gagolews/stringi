@@ -12,15 +12,15 @@ stri_locale_info(locale = NULL)
 
 ## Arguments
 
-|          |                                                                               |
-|----------|-------------------------------------------------------------------------------|
+|  |  |
+|----|----|
 | `locale` | `NULL` or `''` for default locale, or a single string with locale identifier. |
 
 ## Details
 
 With this function you may obtain some basic information on any provided locale identifier, even if it is unsupported by <span class="pkg">ICU</span> or if you pass a malformed locale identifier (the one that is not, e.g., of the form Language_Country). See [stringi-locale](about_locale.md) for discussion.
 
-This function does not do anything really complicated. In many cases it is similar to a call to [`as.list(stri_split_fixed(locale, '_', 3L)[[1]])`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/list.html), with `locale` case mapped. It may be used, however, to get insight on how ICU understands a given locale identifier.
+This function does not do anything really complicated. In many cases it is similar to a call to [`as.list(`[`stri_split_fixed`](stri_split.md)`(locale, '_', 3L)[[1]])`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/list.html), with `locale` case mapped. It may be used, however, to get insight on how ICU understands a given locale identifier.
 
 ## Value
 
@@ -43,7 +43,7 @@ Other locale_management: [`about_locale`](about_locale.md), [`stri_locale_list()
 
 
 
-```r
+``` r
 stri_locale_info('pl_PL')
 ```
 
@@ -61,7 +61,7 @@ stri_locale_info('pl_PL')
 ## [1] "pl_PL"
 ```
 
-```r
+``` r
 stri_locale_info('Pl_pL') # the same result
 ```
 

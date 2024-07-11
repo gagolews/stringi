@@ -91,7 +91,7 @@ Other transform: [`stri_trans_char()`](stri_trans_char.md), [`stri_trans_general
 
 
 
-```r
+``` r
 stri_trans_nfd('\u0105') # a with ogonek -> a, ogonek
 ```
 
@@ -99,7 +99,7 @@ stri_trans_nfd('\u0105') # a with ogonek -> a, ogonek
 ## [1] "ą"
 ```
 
-```r
+``` r
 stri_trans_nfkc('\ufdfa') # 1 codepoint -> 18 codepoints
 ```
 

@@ -82,17 +82,17 @@ stri_replace_last_regex(str, pattern, replacement, ..., opts_regex = NULL)
 
 ## Arguments
 
-|                                                  |                                                                                                                                                                                                                                            |
-|--------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`                                            | character vector; strings to search in                                                                                                                                                                                                     |
-| `replacement`                                    | character vector with replacements for matched patterns                                                                                                                                                                                    |
-| `...`                                            | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_regex`, `opts_fixed`, and so on                                                                                       |
-| `mode`                                           | single string; one of: `'first'` (the default), `'all'`, `'last'`                                                                                                                                                                          |
-| `pattern`, `regex`, `fixed`, `coll`, `charclass` | character vector; search patterns; for more details refer to [stringi-search](about_search.md)                                                                                                                                             |
-| `merge`                                          | single logical value; should consecutive matches be merged into one string; `stri_replace_all_charclass` only                                                                                                                              |
-| `vectorize_all`                                  | single logical value; should each occurrence of a pattern in every string be replaced by a corresponding replacement string?; `stri_replace_all_*` only                                                                                    |
-| `vectorise_all`                                  | alias of `vectorize_all`                                                                                                                                                                                                                   |
-| `opts_collator`, `opts_fixed`, `opts_regex`      | a named list used to tune up the search engine\'s settings; see [`stri_opts_collator`](stri_opts_collator.md), [`stri_opts_fixed`](stri_opts_fixed.md), and [`stri_opts_regex`](stri_opts_regex.md), respectively; `NULL` for the defaults |
+|  |  |
+|----|----|
+| `str` | character vector; strings to search in |
+| `replacement` | character vector with replacements for matched patterns |
+| `...` | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_regex`, `opts_fixed`, and so on |
+| `mode` | single string; one of: `'first'` (the default), `'all'`, `'last'` |
+| `pattern`, `regex`, `fixed`, `coll`, `charclass` | character vector; search patterns; for more details refer to [stringi-search](about_search.md) |
+| `merge` | single logical value; should consecutive matches be merged into one string; `stri_replace_all_charclass` only |
+| `vectorize_all` | single logical value; should each occurrence of a pattern in every string be replaced by a corresponding replacement string?; `stri_replace_all_*` only |
+| `vectorise_all` | alias of `vectorize_all` |
+| `opts_collator`, `opts_fixed`, `opts_regex` | a named list used to tune up the search engine\'s settings; see [`stri_opts_collator`](stri_opts_collator.md), [`stri_opts_fixed`](stri_opts_fixed.md), and [`stri_opts_regex`](stri_opts_regex.md), respectively; `NULL` for the defaults |
 
 ## Details
 
@@ -129,7 +129,7 @@ Other search_replace: [`about_search`](about_search.md), [`stri_replace_rstr()`]
 
 
 
-```r
+``` r
 stri_replace_all_charclass('aaaa', '[a]', 'b', merge=c(TRUE, FALSE))
 ```
 
@@ -143,7 +143,7 @@ stri_replace_all_charclass('aaaa', '[a]', 'b', merge=c(TRUE, FALSE))
 ## [1] "b"
 ```
 
-```r
+``` r
 stri_replace_all_charclass('a\nb\tc   d', '\\p{WHITE_SPACE}', ' ')
 ```
 
@@ -151,7 +151,7 @@ stri_replace_all_charclass('a\nb\tc   d', '\\p{WHITE_SPACE}', ' ')
 ## [1] "a b c   d"
 ```
 
-```r
+``` r
 stri_replace_all_charclass('a\nb\tc   d', '\\p{WHITE_SPACE}', ' ', merge=TRUE)
 ```
 
@@ -159,7 +159,7 @@ stri_replace_all_charclass('a\nb\tc   d', '\\p{WHITE_SPACE}', ' ', merge=TRUE)
 ## [1] "a b c d"
 ```
 
-```r
+``` r
 s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
 stri_replace_all_fixed(s, ' ', '#')
 ```
@@ -168,7 +168,7 @@ stri_replace_all_fixed(s, ' ', '#')
 ## [1] "Lorem#ipsum#dolor#sit#amet,#consectetur#adipisicing#elit."
 ```
 
-```r
+``` r
 stri_replace_all_fixed(s, 'o', '0')
 ```
 
@@ -176,7 +176,7 @@ stri_replace_all_fixed(s, 'o', '0')
 ## [1] "L0rem ipsum d0l0r sit amet, c0nsectetur adipisicing elit."
 ```
 
-```r
+``` r
 stri_replace_all_fixed(c('1', 'NULL', '3'), 'NULL', NA)
 ```
 
@@ -184,7 +184,7 @@ stri_replace_all_fixed(c('1', 'NULL', '3'), 'NULL', NA)
 ## [1] "1" NA  "3"
 ```
 
-```r
+``` r
 stri_replace_all_regex(s, ' .*? ', '#')
 ```
 
@@ -192,7 +192,7 @@ stri_replace_all_regex(s, ' .*? ', '#')
 ## [1] "Lorem#dolor#amet,#adipisicing elit."
 ```
 
-```r
+``` r
 stri_replace_all_regex(s, '(el|s)it', '1234')
 ```
 
@@ -200,7 +200,7 @@ stri_replace_all_regex(s, '(el|s)it', '1234')
 ## [1] "Lorem ipsum dolor 1234 amet, consectetur adipisicing 1234."
 ```
 
-```r
+``` r
 stri_replace_all_regex('abaca', 'a', c('!', '*'))
 ```
 
@@ -208,7 +208,7 @@ stri_replace_all_regex('abaca', 'a', c('!', '*'))
 ## [1] "!b!c!" "*b*c*"
 ```
 
-```r
+``` r
 stri_replace_all_regex('123|456|789', '(\\p{N}).(\\p{N})', '$2-$1')
 ```
 
@@ -216,7 +216,7 @@ stri_replace_all_regex('123|456|789', '(\\p{N}).(\\p{N})', '$2-$1')
 ## [1] "3-1|6-4|9-7"
 ```
 
-```r
+``` r
 stri_replace_all_regex(c('stringi R', 'REXAMINE', '123'), '( R|R.)', ' r ')
 ```
 
@@ -224,7 +224,7 @@ stri_replace_all_regex(c('stringi R', 'REXAMINE', '123'), '( R|R.)', ' r ')
 ## [1] "stringi r " " r XAMINE"  "123"
 ```
 
-```r
+``` r
 # named capture groups are available since ICU 55
 ## Not run: 
 stri_replace_all_regex('words 123 and numbers 456',
@@ -235,7 +235,7 @@ stri_replace_all_regex('words 123 and numbers 456',
 ## [1] "words !123! and numbers !456!"
 ```
 
-```r
+``` r
 ## End(Not run)
 
 # Compare the results:
@@ -249,7 +249,7 @@ stri_replace_all_fixed('The quick brown fox jumped over the lazy dog.',
 ## [3] "The quick brown bear jumped over the lazy dog."
 ```
 
-```r
+``` r
 stri_replace_all_fixed('The quick brown fox jumped over the lazy dog.',
      c('quick', 'brown', 'fox'), c('slow',  'black', 'bear'), vectorize_all=FALSE)
 ```
@@ -258,7 +258,7 @@ stri_replace_all_fixed('The quick brown fox jumped over the lazy dog.',
 ## [1] "The slow black bear jumped over the lazy dog."
 ```
 
-```r
+``` r
 # Compare the results:
 stri_replace_all_fixed('The quicker brown fox jumped over the lazy dog.',
      c('quick', 'brown', 'fox'), c('slow',  'black', 'bear'), vectorize_all=FALSE)
@@ -268,7 +268,7 @@ stri_replace_all_fixed('The quicker brown fox jumped over the lazy dog.',
 ## [1] "The slower black bear jumped over the lazy dog."
 ```
 
-```r
+``` r
 stri_replace_all_regex('The quicker brown fox jumped over the lazy dog.',
      '\\b'%s+%c('quick', 'brown', 'fox')%s+%'\\b', c('slow',  'black', 'bear'), vectorize_all=FALSE)
 ```
@@ -277,7 +277,7 @@ stri_replace_all_regex('The quicker brown fox jumped over the lazy dog.',
 ## [1] "The quicker black bear jumped over the lazy dog."
 ```
 
-```r
+``` r
 # Searching for the last occurrence:
 # Note the difference - regex searches left to right, with no overlaps.
 stri_replace_last_fixed("agAGA", "aga", "*", case_insensitive=TRUE)
@@ -287,7 +287,7 @@ stri_replace_last_fixed("agAGA", "aga", "*", case_insensitive=TRUE)
 ## [1] "ag*"
 ```
 
-```r
+``` r
 stri_replace_last_regex("agAGA", "aga", "*", case_insensitive=TRUE)
 ```
 

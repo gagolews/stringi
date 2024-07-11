@@ -12,8 +12,8 @@ stri_enc_fromutf32(vec)
 
 ## Arguments
 
-|       |                                                                                                                                          |
-|-------|------------------------------------------------------------------------------------------------------------------------------------------|
+|  |  |
+|----|----|
 | `vec` | a list of integer vectors (or objects coercible to such vectors) or `NULL`s. For convenience, a single integer vector can also be given. |
 
 ## Details

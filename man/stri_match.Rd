@@ -139,8 +139,8 @@ Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R
 
 Other search_extract: 
 \code{\link{about_search}},
-\code{\link{stri_extract_all_boundaries}()},
-\code{\link{stri_extract_all}()}
+\code{\link{stri_extract_all}()},
+\code{\link{stri_extract_all_boundaries}()}
 }
 \concept{search_extract}
 \author{

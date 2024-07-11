@@ -41,14 +41,14 @@ stri_detect_regex(
 
 ## Arguments
 
-|                                                  |                                                                                                                                                                                                                                            |
-|--------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`                                            | character vector; strings to search in                                                                                                                                                                                                     |
-| `...`                                            | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_regex`, `opts_fixed`, and so on                                                                                       |
-| `pattern`, `regex`, `fixed`, `coll`, `charclass` | character vector; search patterns; for more details refer to [stringi-search](about_search.md)                                                                                                                                             |
-| `negate`                                         | single logical value; whether a no-match to a pattern is rather of interest                                                                                                                                                                |
-| `max_count`                                      | single integer; allows to stop searching once a given number of occurrences is detected; `-1` (the default) inspects all elements                                                                                                          |
-| `opts_collator`, `opts_fixed`, `opts_regex`      | a named list used to tune up the search engine\'s settings; see [`stri_opts_collator`](stri_opts_collator.md), [`stri_opts_fixed`](stri_opts_fixed.md), and [`stri_opts_regex`](stri_opts_regex.md), respectively; `NULL` for the defaults |
+|  |  |
+|----|----|
+| `str` | character vector; strings to search in |
+| `...` | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_regex`, `opts_fixed`, and so on |
+| `pattern`, `regex`, `fixed`, `coll`, `charclass` | character vector; search patterns; for more details refer to [stringi-search](about_search.md) |
+| `negate` | single logical value; whether a no-match to a pattern is rather of interest |
+| `max_count` | single integer; allows to stop searching once a given number of occurrences is detected; `-1` (the default) inspects all elements |
+| `opts_collator`, `opts_fixed`, `opts_regex` | a named list used to tune up the search engine\'s settings; see [`stri_opts_collator`](stri_opts_collator.md), [`stri_opts_fixed`](stri_opts_fixed.md), and [`stri_opts_regex`](stri_opts_regex.md), respectively; `NULL` for the defaults |
 
 ## Details
 
@@ -83,7 +83,7 @@ Other search_detect: [`about_search`](about_search.md), [`stri_startswith()`](st
 
 
 
-```r
+``` r
 stri_detect_fixed(c('stringi R', 'R STRINGI', '123'), c('i', 'R', '0'))
 ```
 
@@ -91,7 +91,7 @@ stri_detect_fixed(c('stringi R', 'R STRINGI', '123'), c('i', 'R', '0'))
 ## [1]  TRUE  TRUE FALSE
 ```
 
-```r
+``` r
 stri_detect_fixed(c('stringi R', 'R STRINGI', '123'), 'R')
 ```
 
@@ -99,7 +99,7 @@ stri_detect_fixed(c('stringi R', 'R STRINGI', '123'), 'R')
 ## [1]  TRUE  TRUE FALSE
 ```
 
-```r
+``` r
 stri_detect_charclass(c('stRRRingi','R STRINGI', '123'),
    c('\\p{Ll}', '\\p{Lu}', '\\p{Zs}'))
 ```
@@ -108,7 +108,7 @@ stri_detect_charclass(c('stRRRingi','R STRINGI', '123'),
 ## [1]  TRUE  TRUE FALSE
 ```
 
-```r
+``` r
 stri_detect_regex(c('stringi R', 'R STRINGI', '123'), 'R.')
 ```
 
@@ -116,7 +116,7 @@ stri_detect_regex(c('stringi R', 'R STRINGI', '123'), 'R.')
 ## [1] FALSE  TRUE FALSE
 ```
 
-```r
+``` r
 stri_detect_regex(c('stringi R', 'R STRINGI', '123'), '[[:alpha:]]*?')
 ```
 
@@ -124,7 +124,7 @@ stri_detect_regex(c('stringi R', 'R STRINGI', '123'), '[[:alpha:]]*?')
 ## [1] TRUE TRUE TRUE
 ```
 
-```r
+``` r
 stri_detect_regex(c('stringi R', 'R STRINGI', '123'), '[a-zC1]')
 ```
 
@@ -132,7 +132,7 @@ stri_detect_regex(c('stringi R', 'R STRINGI', '123'), '[a-zC1]')
 ## [1]  TRUE FALSE  TRUE
 ```
 
-```r
+``` r
 stri_detect_regex(c('stringi R', 'R STRINGI', '123'), '( R|RE)')
 ```
 
@@ -140,7 +140,7 @@ stri_detect_regex(c('stringi R', 'R STRINGI', '123'), '( R|RE)')
 ## [1]  TRUE FALSE FALSE
 ```
 
-```r
+``` r
 stri_detect_regex('stringi', 'STRING.', case_insensitive=TRUE)
 ```
 
@@ -148,7 +148,7 @@ stri_detect_regex('stringi', 'STRING.', case_insensitive=TRUE)
 ## [1] TRUE
 ```
 
-```r
+``` r
 stri_detect_regex(c('abc', 'def', '123', 'ghi', '456', '789', 'jkl'),
    '^[0-9]+$', max_count=1)
 ```
@@ -157,7 +157,7 @@ stri_detect_regex(c('abc', 'def', '123', 'ghi', '456', '789', 'jkl'),
 ## [1] FALSE FALSE  TRUE    NA    NA    NA    NA
 ```
 
-```r
+``` r
 stri_detect_regex(c('abc', 'def', '123', 'ghi', '456', '789', 'jkl'),
    '^[0-9]+$', max_count=2)
 ```
@@ -166,7 +166,7 @@ stri_detect_regex(c('abc', 'def', '123', 'ghi', '456', '789', 'jkl'),
 ## [1] FALSE FALSE  TRUE FALSE  TRUE    NA    NA
 ```
 
-```r
+``` r
 stri_detect_regex(c('abc', 'def', '123', 'ghi', '456', '789', 'jkl'),
    '^[0-9]+$', negate=TRUE, max_count=3)
 ```

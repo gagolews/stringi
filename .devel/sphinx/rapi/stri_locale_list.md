@@ -37,7 +37,7 @@ Other locale_management: [`about_locale`](about_locale.md), [`stri_locale_info()
 
 
 
-```r
+``` r
 stri_locale_list()
 ```
 

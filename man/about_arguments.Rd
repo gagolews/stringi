@@ -83,12 +83,12 @@ Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R
 Other stringi_general_topics: 
 \code{\link{about_encoding}},
 \code{\link{about_locale}},
+\code{\link{about_search}},
 \code{\link{about_search_boundaries}},
 \code{\link{about_search_charclass}},
 \code{\link{about_search_coll}},
 \code{\link{about_search_fixed}},
 \code{\link{about_search_regex}},
-\code{\link{about_search}},
 \code{\link{about_stringi}}
 }
 \concept{prepare_arg}

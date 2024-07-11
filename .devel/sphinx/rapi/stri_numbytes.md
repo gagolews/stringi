@@ -49,7 +49,7 @@ Other length: [`%s$%()`](+25s+24+25.md), [`stri_isempty()`](stri_isempty.md), [`
 
 
 
-```r
+``` r
 stri_numbytes(letters)
 ```
 
@@ -57,7 +57,7 @@ stri_numbytes(letters)
 ##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 ```
 
-```r
+``` r
 stri_numbytes(c('abc', '123', '\u0105\u0104'))
 ```
 
@@ -65,7 +65,7 @@ stri_numbytes(c('abc', '123', '\u0105\u0104'))
 ## [1] 3 3 4
 ```
 
-```r
+``` r
 ## Not run: 
 # this used to fail on Windows, where there were no native support
 # for 4-bytes Unicode characters; see, however, stri_unescape_unicode():
@@ -76,6 +76,6 @@ stri_numbytes('\U001F600') # compare stri_length('\U001F600')
 ## [1] 4
 ```
 
-```r
+``` r
 ## End(Not run)
 ```

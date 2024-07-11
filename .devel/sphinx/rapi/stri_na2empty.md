@@ -37,7 +37,7 @@ Other utils: [`stri_list2matrix()`](stri_list2matrix.md), [`stri_remove_empty()`
 
 
 
-```r
+``` r
 stri_na2empty(c('a', NA, '', 'b'))
 ```
 

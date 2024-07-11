@@ -116,17 +116,17 @@ stri_locate_last_fixed(
 
 ## Arguments
 
-|                                                  |                                                                                                                                                                                                                                                   |
-|--------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`                                            | character vector; strings to search in                                                                                                                                                                                                            |
-| `...`                                            | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_regex`, `opts_fixed`, and so on                                                                                              |
-| `mode`                                           | single string; one of: `'first'` (the default), `'all'`, `'last'`                                                                                                                                                                                 |
-| `pattern`, `regex`, `fixed`, `coll`, `charclass` | character vector; search patterns; for more details refer to [stringi-search](about_search.md)                                                                                                                                                    |
-| `merge`                                          | single logical value; indicates whether consecutive sequences of indexes in the resulting matrix should be merged; `stri_locate_all_charclass` only                                                                                               |
-| `omit_no_match`                                  | single logical value; if `TRUE`, a no-match will be indicated by a matrix with 0 rows `stri_locate_all_*` only                                                                                                                                    |
-| `get_length`                                     | single logical value; if `FALSE` (default), generate *from-to* matrices; otherwise, output *from-length* ones                                                                                                                                     |
-| `opts_collator`, `opts_fixed`, `opts_regex`      | named list used to tune up the selected search engine\'s settings; see [`stri_opts_collator`](stri_opts_collator.md), [`stri_opts_fixed`](stri_opts_fixed.md), and [`stri_opts_regex`](stri_opts_regex.md), respectively; `NULL` for the defaults |
-| `capture_groups`                                 | single logical value; whether positions of matches to parenthesized subexpressions should be returned too (as `capture_groups` attribute); `stri_locate_*_regex` only                                                                             |
+|  |  |
+|----|----|
+| `str` | character vector; strings to search in |
+| `...` | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_regex`, `opts_fixed`, and so on |
+| `mode` | single string; one of: `'first'` (the default), `'all'`, `'last'` |
+| `pattern`, `regex`, `fixed`, `coll`, `charclass` | character vector; search patterns; for more details refer to [stringi-search](about_search.md) |
+| `merge` | single logical value; indicates whether consecutive sequences of indexes in the resulting matrix should be merged; `stri_locate_all_charclass` only |
+| `omit_no_match` | single logical value; if `TRUE`, a no-match will be indicated by a matrix with 0 rows `stri_locate_all_*` only |
+| `get_length` | single logical value; if `FALSE` (default), generate *from-to* matrices; otherwise, output *from-length* ones |
+| `opts_collator`, `opts_fixed`, `opts_regex` | named list used to tune up the selected search engine\'s settings; see [`stri_opts_collator`](stri_opts_collator.md), [`stri_opts_fixed`](stri_opts_fixed.md), and [`stri_opts_regex`](stri_opts_regex.md), respectively; `NULL` for the defaults |
+| `capture_groups` | single logical value; whether positions of matches to parenthesized subexpressions should be returned too (as `capture_groups` attribute); `stri_locate_*_regex` only |
 
 ## Details
 
@@ -160,14 +160,14 @@ Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character str
 
 Other search_locate: [`about_search`](about_search.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md)
 
-Other indexing: [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_sub_all()`](stri_sub_all.md), [`stri_sub()`](stri_sub.md)
+Other indexing: [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_sub()`](stri_sub.md), [`stri_sub_all()`](stri_sub_all.md)
 
 ## Examples
 
 
 
 
-```r
+``` r
 stri_locate_all('stringi', fixed='i')
 ```
 
@@ -178,7 +178,7 @@ stri_locate_all('stringi', fixed='i')
 ## [2,]     7   7
 ```
 
-```r
+``` r
 stri_locate_first_coll('hladn\u00FD', 'HLADNY', strength=1, locale='sk_SK')
 ```
 
@@ -187,7 +187,7 @@ stri_locate_first_coll('hladn\u00FD', 'HLADNY', strength=1, locale='sk_SK')
 ## [1,]     1   6
 ```
 
-```r
+``` r
 stri_locate_all_regex(
     c('breakfast=eggs;lunch=pizza', 'breakfast=spam', 'no food here'),
    '(?<when>\\w+)=(?<what>\\w+)',
@@ -238,7 +238,7 @@ stri_locate_all_regex(
 ## [1,]    NA  NA
 ```
 
-```r
+``` r
 stri_locate_all_fixed("abababa", "ABA", case_insensitive=TRUE, overlap=TRUE)
 ```
 
@@ -250,7 +250,7 @@ stri_locate_all_fixed("abababa", "ABA", case_insensitive=TRUE, overlap=TRUE)
 ## [3,]     5   7
 ```
 
-```r
+``` r
 stri_locate_first_fixed("ababa", "aba")
 ```
 
@@ -259,7 +259,7 @@ stri_locate_first_fixed("ababa", "aba")
 ## [1,]     1   3
 ```
 
-```r
+``` r
 stri_locate_last_fixed("ababa", "aba")  # starts from end
 ```
 
@@ -268,7 +268,7 @@ stri_locate_last_fixed("ababa", "aba")  # starts from end
 ## [1,]     3   5
 ```
 
-```r
+``` r
 stri_locate_last_regex("ababa", "aba")  # no overlaps, from left to right
 ```
 
@@ -277,7 +277,7 @@ stri_locate_last_regex("ababa", "aba")  # no overlaps, from left to right
 ## [1,]     1   3
 ```
 
-```r
+``` r
 x <- c("yes yes", "no", NA)
 stri_locate_all_fixed(x, "yes")
 ```
@@ -297,7 +297,7 @@ stri_locate_all_fixed(x, "yes")
 ## [1,]    NA  NA
 ```
 
-```r
+``` r
 stri_locate_all_fixed(x, "yes", omit_no_match=TRUE)
 ```
 
@@ -315,7 +315,7 @@ stri_locate_all_fixed(x, "yes", omit_no_match=TRUE)
 ## [1,]    NA  NA
 ```
 
-```r
+``` r
 stri_locate_all_fixed(x, "yes", get_length=TRUE)
 ```
 
@@ -334,7 +334,7 @@ stri_locate_all_fixed(x, "yes", get_length=TRUE)
 ## [1,]    NA     NA
 ```
 
-```r
+``` r
 stri_locate_all_fixed(x, "yes", get_length=TRUE, omit_no_match=TRUE)
 ```
 
@@ -352,7 +352,7 @@ stri_locate_all_fixed(x, "yes", get_length=TRUE, omit_no_match=TRUE)
 ## [1,]    NA     NA
 ```
 
-```r
+``` r
 stri_locate_first_fixed(x, "yes")
 ```
 
@@ -363,7 +363,7 @@ stri_locate_first_fixed(x, "yes")
 ## [3,]    NA  NA
 ```
 
-```r
+``` r
 stri_locate_first_fixed(x, "yes", get_length=TRUE)
 ```
 
@@ -374,7 +374,7 @@ stri_locate_first_fixed(x, "yes", get_length=TRUE)
 ## [3,]    NA     NA
 ```
 
-```r
+``` r
 # Use regex positive-lookahead to locate overlapping pattern matches:
 stri_locate_all_regex('ACAGAGACTTTAGATAGAGAAGA', '(?=AGA)')
 ```
@@ -390,6 +390,6 @@ stri_locate_all_regex('ACAGAGACTTTAGATAGAGAAGA', '(?=AGA)')
 ## [6,]    21  20
 ```
 
-```r
+``` r
 # note that start > end here (match of length zero)
 ```

@@ -34,8 +34,8 @@ Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R
 
 Other encoding_detection: 
 \code{\link{about_encoding}},
-\code{\link{stri_enc_detect2}()},
 \code{\link{stri_enc_detect}()},
+\code{\link{stri_enc_detect2}()},
 \code{\link{stri_enc_isutf16be}()},
 \code{\link{stri_enc_isutf8}()}
 }

@@ -98,10 +98,10 @@ The official online manual of <span class="pkg">stringi</span> at <https://strin
 
 Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, [doi:10.18637/jss.v103.i02](https://doi.org/10.18637/jss.v103.i02)
 
-Other stringi_general_topics: [`about_arguments`](about_arguments.md), [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_charclass`](about_search_charclass.md), [`about_search_coll`](about_search_coll.md), [`about_search_fixed`](about_search_fixed.md), [`about_search_regex`](about_search_regex.md), [`about_search`](about_search.md), [`about_stringi`](about_stringi.md)
+Other stringi_general_topics: [`about_arguments`](about_arguments.md), [`about_locale`](about_locale.md), [`about_search`](about_search.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_charclass`](about_search_charclass.md), [`about_search_coll`](about_search_coll.md), [`about_search_fixed`](about_search_fixed.md), [`about_search_regex`](about_search_regex.md), [`about_stringi`](about_stringi.md)
 
 Other encoding_management: [`stri_enc_info()`](stri_enc_info.md), [`stri_enc_list()`](stri_enc_list.md), [`stri_enc_mark()`](stri_enc_mark.md), [`stri_enc_set()`](stri_enc_set.md)
 
-Other encoding_detection: [`stri_enc_detect2()`](stri_enc_detect2.md), [`stri_enc_detect()`](stri_enc_detect.md), [`stri_enc_isascii()`](stri_enc_isascii.md), [`stri_enc_isutf16be()`](stri_enc_isutf16.md), [`stri_enc_isutf8()`](stri_enc_isutf8.md)
+Other encoding_detection: [`stri_enc_detect()`](stri_enc_detect.md), [`stri_enc_detect2()`](stri_enc_detect2.md), [`stri_enc_isascii()`](stri_enc_isascii.md), [`stri_enc_isutf16be()`](stri_enc_isutf16.md), [`stri_enc_isutf8()`](stri_enc_isutf8.md)
 
 Other encoding_conversion: [`stri_enc_fromutf32()`](stri_enc_fromutf32.md), [`stri_enc_toascii()`](stri_enc_toascii.md), [`stri_enc_tonative()`](stri_enc_tonative.md), [`stri_enc_toutf32()`](stri_enc_toutf32.md), [`stri_enc_toutf8()`](stri_enc_toutf8.md), [`stri_encode()`](stri_encode.md)

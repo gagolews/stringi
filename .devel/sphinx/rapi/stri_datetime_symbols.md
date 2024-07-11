@@ -12,11 +12,11 @@ stri_datetime_symbols(locale = NULL, context = "standalone", width = "wide")
 
 ## Arguments
 
-|           |                                                                              |
-|-----------|------------------------------------------------------------------------------|
-| `locale`  | `NULL` or `''` for default locale, or a single string with locale identifier |
-| `context` | single string; one of: `'format'`, `'standalone'`                            |
-| `width`   | single string; one of: `'abbreviated'`, `'wide'`, `'narrow'`                 |
+|  |  |
+|----|----|
+| `locale` | `NULL` or `''` for default locale, or a single string with locale identifier |
+| `context` | single string; one of: `'format'`, `'standalone'` |
+| `width` | single string; one of: `'abbreviated'`, `'wide'`, `'narrow'` |
 
 ## Details
 
@@ -61,7 +61,7 @@ Other datetime: [`stri_datetime_add()`](stri_datetime_add.md), [`stri_datetime_c
 
 
 
-```r
+``` r
 stri_datetime_symbols() # uses the Gregorian calendar in most locales
 ```
 
@@ -78,13 +78,13 @@ stri_datetime_symbols() # uses the Gregorian calendar in most locales
 ## [1] "1st quarter" "2nd quarter" "3rd quarter" "4th quarter"
 ## 
 ## $AmPm
-## [1] "am" "pm"
+## [1] "AM" "PM"
 ## 
 ## $Era
 ## [1] "Before Christ" "Anno Domini"
 ```
 
-```r
+``` r
 stri_datetime_symbols('@calendar=hebrew')
 ```
 
@@ -101,13 +101,13 @@ stri_datetime_symbols('@calendar=hebrew')
 ## [1] "1st quarter" "2nd quarter" "3rd quarter" "4th quarter"
 ## 
 ## $AmPm
-## [1] "am" "pm"
+## [1] "AM" "PM"
 ## 
 ## $Era
 ## [1] "AM"
 ```
 
-```r
+``` r
 stri_datetime_symbols('he_IL@calendar=hebrew')
 ```
 
@@ -130,7 +130,7 @@ stri_datetime_symbols('he_IL@calendar=hebrew')
 ## [1] "לבריאת העולם"
 ```
 
-```r
+``` r
 stri_datetime_symbols('@calendar=islamic')
 ```
 
@@ -148,13 +148,13 @@ stri_datetime_symbols('@calendar=islamic')
 ## [1] "1st quarter" "2nd quarter" "3rd quarter" "4th quarter"
 ## 
 ## $AmPm
-## [1] "am" "pm"
+## [1] "AM" "PM"
 ## 
 ## $Era
 ## [1] "AH"
 ```
 
-```r
+``` r
 stri_datetime_symbols('@calendar=persian')
 ```
 
@@ -177,13 +177,13 @@ stri_datetime_symbols('@calendar=persian')
 ## [1] "1st quarter" "2nd quarter" "3rd quarter" "4th quarter"
 ## 
 ## $AmPm
-## [1] "am" "pm"
+## [1] "AM" "PM"
 ## 
 ## $Era
 ## [1] "AP"
 ```
 
-```r
+``` r
 stri_datetime_symbols('@calendar=indian')
 ```
 
@@ -201,13 +201,13 @@ stri_datetime_symbols('@calendar=indian')
 ## [1] "1st quarter" "2nd quarter" "3rd quarter" "4th quarter"
 ## 
 ## $AmPm
-## [1] "am" "pm"
+## [1] "AM" "PM"
 ## 
 ## $Era
 ## [1] "Saka"
 ```
 
-```r
+``` r
 stri_datetime_symbols('@calendar=coptic')
 ```
 
@@ -230,13 +230,13 @@ stri_datetime_symbols('@calendar=coptic')
 ## [1] "1st quarter" "2nd quarter" "3rd quarter" "4th quarter"
 ## 
 ## $AmPm
-## [1] "am" "pm"
+## [1] "AM" "PM"
 ## 
 ## $Era
 ## [1] "ERA0" "ERA1"
 ```
 
-```r
+``` r
 stri_datetime_symbols('@calendar=japanese')
 ```
 
@@ -253,7 +253,7 @@ stri_datetime_symbols('@calendar=japanese')
 ## [1] "1st quarter" "2nd quarter" "3rd quarter" "4th quarter"
 ## 
 ## $AmPm
-## [1] "am" "pm"
+## [1] "AM" "PM"
 ## 
 ## $Era
 ##   [1] "Taika (645–650)"        "Hakuchi (650–671)"      "Hakuhō (672–686)"      
@@ -337,7 +337,7 @@ stri_datetime_symbols('@calendar=japanese')
 ## [235] "Shōwa"                  "Heisei"                 "Reiwa"
 ```
 
-```r
+``` r
 stri_datetime_symbols('ja_JP_TRADITIONAL') # uses the Japanese calendar by default
 ```
 
@@ -359,7 +359,7 @@ stri_datetime_symbols('ja_JP_TRADITIONAL') # uses the Japanese calendar by defau
 ## [1] "紀元前" "西暦"
 ```
 
-```r
+``` r
 stri_datetime_symbols('th_TH_TRADITIONAL') # uses the Buddhist calendar
 ```
 
@@ -381,7 +381,7 @@ stri_datetime_symbols('th_TH_TRADITIONAL') # uses the Buddhist calendar
 ## [1] "ปีก่อนคริสตกาล" "คริสต์ศักราช"
 ```
 
-```r
+``` r
 stri_datetime_symbols('pl_PL', context='format')
 ```
 
@@ -405,7 +405,7 @@ stri_datetime_symbols('pl_PL', context='format')
 ## [1] "przed naszą erą" "naszej ery"
 ```
 
-```r
+``` r
 stri_datetime_symbols('pl_PL', context='standalone')
 ```
 
@@ -429,7 +429,7 @@ stri_datetime_symbols('pl_PL', context='standalone')
 ## [1] "przed naszą erą" "naszej ery"
 ```
 
-```r
+``` r
 stri_datetime_symbols(width='wide')
 ```
 
@@ -446,20 +446,19 @@ stri_datetime_symbols(width='wide')
 ## [1] "1st quarter" "2nd quarter" "3rd quarter" "4th quarter"
 ## 
 ## $AmPm
-## [1] "am" "pm"
+## [1] "AM" "PM"
 ## 
 ## $Era
 ## [1] "Before Christ" "Anno Domini"
 ```
 
-```r
+``` r
 stri_datetime_symbols(width='abbreviated')
 ```
 
 ```
 ## $Month
-##  [1] "Jan"  "Feb"  "Mar"  "Apr"  "May"  "June" "July" "Aug"  "Sept" "Oct" 
-## [11] "Nov"  "Dec" 
+##  [1] "Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov" "Dec"
 ## 
 ## $Weekday
 ## [1] "Sun" "Mon" "Tue" "Wed" "Thu" "Fri" "Sat"
@@ -468,13 +467,13 @@ stri_datetime_symbols(width='abbreviated')
 ## [1] "Q1" "Q2" "Q3" "Q4"
 ## 
 ## $AmPm
-## [1] "am" "pm"
+## [1] "AM" "PM"
 ## 
 ## $Era
 ## [1] "BC" "AD"
 ```
 
-```r
+``` r
 stri_datetime_symbols(width='narrow')
 ```
 
@@ -489,7 +488,7 @@ stri_datetime_symbols(width='narrow')
 ## [1] "1" "2" "3" "4"
 ## 
 ## $AmPm
-## [1] "am" "pm"
+## [1] "AM" "PM"
 ## 
 ## $Era
 ## [1] "B" "A"

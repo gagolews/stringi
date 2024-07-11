@@ -39,13 +39,13 @@ stri_pad(
 
 ## Arguments
 
-|              |                                                                                                                                           |
-|--------------|-------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`        | character vector                                                                                                                          |
-| `width`      | integer vector giving minimal output string lengths                                                                                       |
-| `pad`        | character vector giving padding code points                                                                                               |
+|  |  |
+|----|----|
+| `str` | character vector |
+| `width` | integer vector giving minimal output string lengths |
+| `pad` | character vector giving padding code points |
 | `use_length` | single logical value; should the number of code points be used instead of the total code point width (see [`stri_width`](stri_width.md))? |
-| `side`       | \[`stri_pad` only\] single character string; sides on which padding character is added (`left` (default), `right`, or `both`)             |
+| `side` | \[`stri_pad` only\] single character string; sides on which padding character is added (`left` (default), `right`, or `both`) |
 
 ## Details
 
@@ -78,7 +78,7 @@ Other length: [`%s$%()`](+25s+24+25.md), [`stri_isempty()`](stri_isempty.md), [`
 
 
 
-```r
+``` r
 stri_pad_left('stringi', 10, pad='#')
 ```
 
@@ -86,7 +86,7 @@ stri_pad_left('stringi', 10, pad='#')
 ## [1] "###stringi"
 ```
 
-```r
+``` r
 stri_pad_both('stringi', 8:12, pad='*')
 ```
 
@@ -94,7 +94,7 @@ stri_pad_both('stringi', 8:12, pad='*')
 ## [1] "stringi*"     "*stringi*"    "*stringi**"   "**stringi**"  "**stringi***"
 ```
 
-```r
+``` r
 # center on screen:
 cat(stri_pad_both(c('the', 'string', 'processing', 'package'),
    getOption('width')*0.9), sep='\n')
@@ -107,7 +107,7 @@ cat(stri_pad_both(c('the', 'string', 'processing', 'package'),
 ##                                 package
 ```
 
-```r
+``` r
 cat(stri_pad_both(c('\ud6c8\ubbfc\uc815\uc74c', # takes width into account
    stri_trans_nfkd('\ud6c8\ubbfc\uc815\uc74c'), 'abcd'),
    width=10), sep='\n')

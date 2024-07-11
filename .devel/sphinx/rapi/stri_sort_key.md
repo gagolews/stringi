@@ -12,10 +12,10 @@ stri_sort_key(str, ..., opts_collator = NULL)
 
 ## Arguments
 
-|                 |                                                                                                                                                             |
-|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`           | a character vector                                                                                                                                          |
-| `...`           | additional settings for `opts_collator`                                                                                                                     |
+|  |  |
+|----|----|
+| `str` | a character vector |
+| `...` | additional settings for `opts_collator` |
 | `opts_collator` | a named list with <span class="pkg">ICU</span> Collator\'s options, see [`stri_opts_collator`](stri_opts_collator.md), `NULL` for default collation options |
 
 ## Details
@@ -49,7 +49,7 @@ Other locale_sensitive: [`%s<%()`](+25s+3C+25.md), [`about_locale`](about_locale
 
 
 
-```r
+``` r
 stri_sort_key(c('hladny', 'chladny'), locale='pl_PL')
 ```
 
@@ -57,7 +57,7 @@ stri_sort_key(c('hladny', 'chladny'), locale='pl_PL')
 ## [1] "8@*0DZ\001\n\001\n"  ".8@*0DZ\001\v\001\v"
 ```
 
-```r
+``` r
 stri_sort_key(c('hladny', 'chladny'), locale='sk_SK')
 ```
 

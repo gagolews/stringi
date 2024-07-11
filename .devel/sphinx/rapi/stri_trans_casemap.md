@@ -18,11 +18,11 @@ stri_trans_totitle(str, ..., opts_brkiter = NULL)
 
 ## Arguments
 
-|                |                                                                                                                                                                                                       |
-|----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`          | character vector                                                                                                                                                                                      |
-| `locale`       | `NULL` or `''` for case mapping following the conventions of the default locale, or a single string with locale identifier, see [stringi-locale](about_locale.md).                                    |
-| `...`          | additional settings for `opts_brkiter`                                                                                                                                                                |
+|  |  |
+|----|----|
+| `str` | character vector |
+| `locale` | `NULL` or `''` for case mapping following the conventions of the default locale, or a single string with locale identifier, see [stringi-locale](about_locale.md). |
+| `...` | additional settings for `opts_brkiter` |
 | `opts_brkiter` | a named list with <span class="pkg">ICU</span> BreakIterator\'s settings, see [`stri_opts_brkiter`](stri_opts_brkiter.md); `NULL` for default break iterator, i.e., `word`; `stri_trans_totitle` only |
 
 ## Details
@@ -61,18 +61,18 @@ The official online manual of <span class="pkg">stringi</span> at <https://strin
 
 Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, [doi:10.18637/jss.v103.i02](https://doi.org/10.18637/jss.v103.i02)
 
-Other locale_sensitive: [`%s<%()`](+25s+3C+25.md), [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_coll`](about_search_coll.md), [`stri_compare()`](stri_compare.md), [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_duplicated()`](stri_duplicated.md), [`stri_enc_detect2()`](stri_enc_detect2.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_opts_collator()`](stri_opts_collator.md), [`stri_order()`](stri_order.md), [`stri_rank()`](stri_rank.md), [`stri_sort_key()`](stri_sort_key.md), [`stri_sort()`](stri_sort.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_unique()`](stri_unique.md), [`stri_wrap()`](stri_wrap.md)
+Other locale_sensitive: [`%s<%()`](+25s+3C+25.md), [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_coll`](about_search_coll.md), [`stri_compare()`](stri_compare.md), [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_duplicated()`](stri_duplicated.md), [`stri_enc_detect2()`](stri_enc_detect2.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_opts_collator()`](stri_opts_collator.md), [`stri_order()`](stri_order.md), [`stri_rank()`](stri_rank.md), [`stri_sort()`](stri_sort.md), [`stri_sort_key()`](stri_sort_key.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_unique()`](stri_unique.md), [`stri_wrap()`](stri_wrap.md)
 
 Other transform: [`stri_trans_char()`](stri_trans_char.md), [`stri_trans_general()`](stri_trans_general.md), [`stri_trans_list()`](stri_trans_list.md), [`stri_trans_nfc()`](stri_trans_nf.md)
 
-Other text_boundaries: [`about_search_boundaries`](about_search_boundaries.md), [`about_search`](about_search.md), [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_opts_brkiter()`](stri_opts_brkiter.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_split_lines()`](stri_split_lines.md), [`stri_wrap()`](stri_wrap.md)
+Other text_boundaries: [`about_search`](about_search.md), [`about_search_boundaries`](about_search_boundaries.md), [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_opts_brkiter()`](stri_opts_brkiter.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_split_lines()`](stri_split_lines.md), [`stri_wrap()`](stri_wrap.md)
 
 ## Examples
 
 
 
 
-```r
+``` r
 stri_trans_toupper('\u00DF', 'de_DE') # small German Eszett / scharfes S
 ```
 
@@ -80,7 +80,7 @@ stri_trans_toupper('\u00DF', 'de_DE') # small German Eszett / scharfes S
 ## [1] "SS"
 ```
 
-```r
+``` r
 stri_cmp_eq(stri_trans_toupper('i', 'en_US'), stri_trans_toupper('i', 'tr_TR'))
 ```
 
@@ -88,7 +88,7 @@ stri_cmp_eq(stri_trans_toupper('i', 'en_US'), stri_trans_toupper('i', 'tr_TR'))
 ## [1] FALSE
 ```
 
-```r
+``` r
 stri_trans_toupper(c('abc', '123', '\u0105\u0104'))
 ```
 
@@ -96,7 +96,7 @@ stri_trans_toupper(c('abc', '123', '\u0105\u0104'))
 ## [1] "ABC" "123" "ĄĄ"
 ```
 
-```r
+``` r
 stri_trans_tolower(c('AbC', '123', '\u0105\u0104'))
 ```
 
@@ -104,7 +104,7 @@ stri_trans_tolower(c('AbC', '123', '\u0105\u0104'))
 ## [1] "abc" "123" "ąą"
 ```
 
-```r
+``` r
 stri_trans_totitle(c('AbC', '123', '\u0105\u0104'))
 ```
 
@@ -112,7 +112,7 @@ stri_trans_totitle(c('AbC', '123', '\u0105\u0104'))
 ## [1] "Abc" "123" "Ąą"
 ```
 
-```r
+``` r
 stri_trans_casefold(c('AbC', '123', '\u0105\u0104'))
 ```
 
@@ -120,7 +120,7 @@ stri_trans_casefold(c('AbC', '123', '\u0105\u0104'))
 ## [1] "abc" "123" "ąą"
 ```
 
-```r
+``` r
 stri_trans_totitle('stringi is a FREE R pAcKaGe. WItH NO StrinGS attached.') # word boundary
 ```
 
@@ -128,7 +128,7 @@ stri_trans_totitle('stringi is a FREE R pAcKaGe. WItH NO StrinGS attached.') # w
 ## [1] "Stringi Is A Free R Package. With No Strings Attached."
 ```
 
-```r
+``` r
 stri_trans_totitle('stringi is a FREE R pAcKaGe. WItH NO StrinGS attached.', type='sentence')
 ```
 

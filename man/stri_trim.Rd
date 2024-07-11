@@ -80,8 +80,8 @@ Other search_replace:
 \code{\link{stri_replace_rstr}()}
 
 Other search_charclass: 
-\code{\link{about_search_charclass}},
-\code{\link{about_search}}
+\code{\link{about_search}},
+\code{\link{about_search_charclass}}
 }
 \concept{search_charclass}
 \concept{search_replace}

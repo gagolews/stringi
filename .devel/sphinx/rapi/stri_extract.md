@@ -79,16 +79,16 @@ stri_extract_last_fixed(str, pattern, ..., opts_fixed = NULL)
 
 ## Arguments
 
-|                                                  |                                                                                                                                                                                                                                       |
-|--------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`                                            | character vector; strings to search in                                                                                                                                                                                                |
-| `...`                                            | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_regex`, and so on                                                                                                |
-| `mode`                                           | single string; one of: `'first'` (the default), `'all'`, `'last'`                                                                                                                                                                     |
-| `pattern`, `regex`, `fixed`, `coll`, `charclass` | character vector; search patterns; for more details refer to [stringi-search](about_search.md)                                                                                                                                        |
-| `merge`                                          | single logical value; indicates whether consecutive pattern matches will be merged into one string; `stri_extract_all_charclass` only                                                                                                 |
-| `simplify`                                       | single logical value; if `TRUE` or `NA`, then a character matrix is returned; otherwise (the default), a list of character vectors is given, see Value; `stri_extract_all_*` only                                                     |
-| `omit_no_match`                                  | single logical value; if `FALSE`, then a missing value will indicate that there was no match; `stri_extract_all_*` only                                                                                                               |
-| `opts_collator`, `opts_fixed`, `opts_regex`      | a named list to tune up the search engine\'s settings; see [`stri_opts_collator`](stri_opts_collator.md), [`stri_opts_fixed`](stri_opts_fixed.md), and [`stri_opts_regex`](stri_opts_regex.md), respectively; `NULL` for the defaults |
+|  |  |
+|----|----|
+| `str` | character vector; strings to search in |
+| `...` | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_regex`, and so on |
+| `mode` | single string; one of: `'first'` (the default), `'all'`, `'last'` |
+| `pattern`, `regex`, `fixed`, `coll`, `charclass` | character vector; search patterns; for more details refer to [stringi-search](about_search.md) |
+| `merge` | single logical value; indicates whether consecutive pattern matches will be merged into one string; `stri_extract_all_charclass` only |
+| `simplify` | single logical value; if `TRUE` or `NA`, then a character matrix is returned; otherwise (the default), a list of character vectors is given, see Value; `stri_extract_all_*` only |
+| `omit_no_match` | single logical value; if `FALSE`, then a missing value will indicate that there was no match; `stri_extract_all_*` only |
+| `opts_collator`, `opts_fixed`, `opts_regex` | a named list to tune up the search engine\'s settings; see [`stri_opts_collator`](stri_opts_collator.md), [`stri_opts_fixed`](stri_opts_fixed.md), and [`stri_opts_regex`](stri_opts_regex.md), respectively; `NULL` for the defaults |
 
 ## Details
 
@@ -125,7 +125,7 @@ Other search_extract: [`about_search`](about_search.md), [`stri_extract_all_boun
 
 
 
-```r
+``` r
 stri_extract_all('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 ```
 
@@ -143,7 +143,7 @@ stri_extract_all('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{L
 ## [1] "aa" "aa"
 ```
 
-```r
+``` r
 stri_extract_all('Bartolini', coll='i')
 ```
 
@@ -152,7 +152,7 @@ stri_extract_all('Bartolini', coll='i')
 ## [1] "i" "i"
 ```
 
-```r
+``` r
 stri_extract_all('stringi is so good!', charclass='\\p{Zs}') # all white-spaces
 ```
 
@@ -161,7 +161,7 @@ stri_extract_all('stringi is so good!', charclass='\\p{Zs}') # all white-spaces
 ## [1] " " " " " "
 ```
 
-```r
+``` r
 stri_extract_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\p{Ll}')
 ```
 
@@ -176,7 +176,7 @@ stri_extract_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\p{Ll}')
 ## [1] NA
 ```
 
-```r
+``` r
 stri_extract_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\p{Ll}', merge=FALSE)
 ```
 
@@ -191,7 +191,7 @@ stri_extract_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\p{Ll}', merge=FALS
 ## [1] NA
 ```
 
-```r
+``` r
 stri_extract_first_charclass('AaBbCc', '\\p{Ll}')
 ```
 
@@ -199,7 +199,7 @@ stri_extract_first_charclass('AaBbCc', '\\p{Ll}')
 ## [1] "a"
 ```
 
-```r
+``` r
 stri_extract_last_charclass('AaBbCc', '\\p{Ll}')
 ```
 
@@ -207,7 +207,7 @@ stri_extract_last_charclass('AaBbCc', '\\p{Ll}')
 ## [1] "c"
 ```
 
-```r
+``` r
 ## Not run: 
 # emoji support available since ICU 57
 stri_extract_all_charclass(stri_enc_fromutf32(32:55200), '\\p{EMOJI}')
@@ -262,7 +262,7 @@ stri_extract_all_charclass(stri_enc_fromutf32(32:55200), '\\p{EMOJI}')
 ## [89] "㊗"                       "㊙"
 ```
 
-```r
+``` r
 ## End(Not run)
 
 stri_extract_all_coll(c('AaaaaaaA', 'AAAA'), 'a')
@@ -276,7 +276,7 @@ stri_extract_all_coll(c('AaaaaaaA', 'AAAA'), 'a')
 ## [1] NA
 ```
 
-```r
+``` r
 stri_extract_first_coll(c('Yy\u00FD', 'AAA'), 'y', strength=2, locale='sk_SK')
 ```
 
@@ -284,7 +284,7 @@ stri_extract_first_coll(c('Yy\u00FD', 'AAA'), 'y', strength=2, locale='sk_SK')
 ## [1] "Y" NA
 ```
 
-```r
+``` r
 stri_extract_last_coll(c('Yy\u00FD', 'AAA'), 'y',  strength=1, locale='sk_SK')
 ```
 
@@ -292,7 +292,7 @@ stri_extract_last_coll(c('Yy\u00FD', 'AAA'), 'y',  strength=1, locale='sk_SK')
 ## [1] "ý" NA
 ```
 
-```r
+``` r
 stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 ```
 
@@ -310,7 +310,7 @@ stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{L
 ## [1] "aa" "aa"
 ```
 
-```r
+``` r
 stri_extract_first_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 ```
 
@@ -318,7 +318,7 @@ stri_extract_first_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p
 ## [1] "a"    "aaaa" "aaa"  "aa"
 ```
 
-```r
+``` r
 stri_extract_last_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 ```
 
@@ -326,7 +326,7 @@ stri_extract_last_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{
 ## [1] "a"    "aaaa" "aaa"  "aa"
 ```
 
-```r
+``` r
 stri_list2matrix(stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+')))
 ```
 
@@ -338,7 +338,7 @@ stri_list2matrix(stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+')))
 ## [4,] "a"  NA
 ```
 
-```r
+``` r
 stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+'), simplify=TRUE)
 ```
 
@@ -348,7 +348,7 @@ stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+'), simplify=TRUE)
 ## [2,] "aaaa" ""   ""   ""
 ```
 
-```r
+``` r
 stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+'), simplify=NA)
 ```
 
@@ -358,7 +358,7 @@ stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+'), simplify=NA)
 ## [2,] "aaaa" NA   NA   NA
 ```
 
-```r
+``` r
 stri_extract_all_fixed('abaBAba', 'Aba', case_insensitive=TRUE)
 ```
 
@@ -367,7 +367,7 @@ stri_extract_all_fixed('abaBAba', 'Aba', case_insensitive=TRUE)
 ## [1] "aba" "Aba"
 ```
 
-```r
+``` r
 stri_extract_all_fixed('abaBAba', 'Aba', case_insensitive=TRUE, overlap=TRUE)
 ```
 
@@ -376,7 +376,7 @@ stri_extract_all_fixed('abaBAba', 'Aba', case_insensitive=TRUE, overlap=TRUE)
 ## [1] "aba" "aBA" "Aba"
 ```
 
-```r
+``` r
 # Searching for the last occurrence:
 # Note the difference - regex searches left to right, with no overlaps.
 stri_extract_last_fixed("agAGA", "aga", case_insensitive=TRUE)
@@ -386,7 +386,7 @@ stri_extract_last_fixed("agAGA", "aga", case_insensitive=TRUE)
 ## [1] "AGA"
 ```
 
-```r
+``` r
 stri_extract_last_regex("agAGA", "aga", case_insensitive=TRUE)
 ```
 

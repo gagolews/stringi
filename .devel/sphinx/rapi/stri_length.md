@@ -45,7 +45,7 @@ Other length: [`%s$%()`](+25s+24+25.md), [`stri_isempty()`](stri_isempty.md), [`
 
 
 
-```r
+``` r
 stri_length(LETTERS)
 ```
 
@@ -53,7 +53,7 @@ stri_length(LETTERS)
 ##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 ```
 
-```r
+``` r
 stri_length(c('abc', '123', '\u0105\u0104'))
 ```
 
@@ -61,7 +61,7 @@ stri_length(c('abc', '123', '\u0105\u0104'))
 ## [1] 3 3 2
 ```
 
-```r
+``` r
 stri_length('\u0105') # length is one, but...
 ```
 
@@ -69,7 +69,7 @@ stri_length('\u0105') # length is one, but...
 ## [1] 1
 ```
 
-```r
+``` r
 stri_numbytes('\u0105') # 2 bytes are used
 ```
 
@@ -77,7 +77,7 @@ stri_numbytes('\u0105') # 2 bytes are used
 ## [1] 2
 ```
 
-```r
+``` r
 stri_numbytes(stri_trans_nfkd('\u0105')) # 3 bytes here but...
 ```
 
@@ -85,7 +85,7 @@ stri_numbytes(stri_trans_nfkd('\u0105')) # 3 bytes here but...
 ## [1] 3
 ```
 
-```r
+``` r
 stri_length(stri_trans_nfkd('\u0105')) # ...two code points (!)
 ```
 
@@ -93,7 +93,7 @@ stri_length(stri_trans_nfkd('\u0105')) # ...two code points (!)
 ## [1] 2
 ```
 
-```r
+``` r
 stri_count_boundaries(stri_trans_nfkd('\u0105'), type='character') # ...and one Unicode character
 ```
 

@@ -254,8 +254,8 @@ Other search_locate:
 
 Other indexing: 
 \code{\link{stri_locate_all_boundaries}()},
-\code{\link{stri_sub_all}()},
-\code{\link{stri_sub}()}
+\code{\link{stri_sub}()},
+\code{\link{stri_sub_all}()}
 }
 \concept{indexing}
 \concept{search_locate}

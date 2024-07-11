@@ -19,13 +19,13 @@ stri_split_boundaries(
 
 ## Arguments
 
-|                |                                                                                                                                                                                      |
-|----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`          | character vector or an object coercible to                                                                                                                                           |
-| `n`            | integer vector, maximal number of strings to return                                                                                                                                  |
-| `tokens_only`  | single logical value; may affect the result if `n` is positive, see Details                                                                                                          |
-| `simplify`     | single logical value; if `TRUE` or `NA`, then a character matrix is returned; otherwise (the default), a list of character vectors is given, see Value                               |
-| `...`          | additional settings for `opts_brkiter`                                                                                                                                               |
+|  |  |
+|----|----|
+| `str` | character vector or an object coercible to |
+| `n` | integer vector, maximal number of strings to return |
+| `tokens_only` | single logical value; may affect the result if `n` is positive, see Details |
+| `simplify` | single logical value; if `TRUE` or `NA`, then a character matrix is returned; otherwise (the default), a list of character vectors is given, see Value |
+| `...` | additional settings for `opts_brkiter` |
 | `opts_brkiter` | a named list with <span class="pkg">ICU</span> BreakIterator\'s settings, see [`stri_opts_brkiter`](stri_opts_brkiter.md); `NULL` for the default break iterator, i.e., `line_break` |
 
 ## Details
@@ -54,18 +54,18 @@ The official online manual of <span class="pkg">stringi</span> at <https://strin
 
 Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, [doi:10.18637/jss.v103.i02](https://doi.org/10.18637/jss.v103.i02)
 
-Other search_split: [`about_search`](about_search.md), [`stri_split_lines()`](stri_split_lines.md), [`stri_split()`](stri_split.md)
+Other search_split: [`about_search`](about_search.md), [`stri_split()`](stri_split.md), [`stri_split_lines()`](stri_split_lines.md)
 
-Other locale_sensitive: [`%s<%()`](+25s+3C+25.md), [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_coll`](about_search_coll.md), [`stri_compare()`](stri_compare.md), [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_duplicated()`](stri_duplicated.md), [`stri_enc_detect2()`](stri_enc_detect2.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_opts_collator()`](stri_opts_collator.md), [`stri_order()`](stri_order.md), [`stri_rank()`](stri_rank.md), [`stri_sort_key()`](stri_sort_key.md), [`stri_sort()`](stri_sort.md), [`stri_trans_tolower()`](stri_trans_casemap.md), [`stri_unique()`](stri_unique.md), [`stri_wrap()`](stri_wrap.md)
+Other locale_sensitive: [`%s<%()`](+25s+3C+25.md), [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_coll`](about_search_coll.md), [`stri_compare()`](stri_compare.md), [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_duplicated()`](stri_duplicated.md), [`stri_enc_detect2()`](stri_enc_detect2.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_opts_collator()`](stri_opts_collator.md), [`stri_order()`](stri_order.md), [`stri_rank()`](stri_rank.md), [`stri_sort()`](stri_sort.md), [`stri_sort_key()`](stri_sort_key.md), [`stri_trans_tolower()`](stri_trans_casemap.md), [`stri_unique()`](stri_unique.md), [`stri_wrap()`](stri_wrap.md)
 
-Other text_boundaries: [`about_search_boundaries`](about_search_boundaries.md), [`about_search`](about_search.md), [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_opts_brkiter()`](stri_opts_brkiter.md), [`stri_split_lines()`](stri_split_lines.md), [`stri_trans_tolower()`](stri_trans_casemap.md), [`stri_wrap()`](stri_wrap.md)
+Other text_boundaries: [`about_search`](about_search.md), [`about_search_boundaries`](about_search_boundaries.md), [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_opts_brkiter()`](stri_opts_brkiter.md), [`stri_split_lines()`](stri_split_lines.md), [`stri_trans_tolower()`](stri_trans_casemap.md), [`stri_wrap()`](stri_wrap.md)
 
 ## Examples
 
 
 
 
-```r
+``` r
 test <- 'The\u00a0above-mentioned    features are very useful. ' %s+%
    'Spam, spam, eggs, bacon, and spam. 123 456 789'
 stri_split_boundaries(test, type='line')
@@ -79,7 +79,7 @@ stri_split_boundaries(test, type='line')
 ## [13] "123 "          "456 "          "789"
 ```
 
-```r
+``` r
 stri_split_boundaries(test, type='word')
 ```
 
@@ -94,7 +94,7 @@ stri_split_boundaries(test, type='word')
 ## [37] "789"
 ```
 
-```r
+``` r
 stri_split_boundaries(test, type='word', skip_word_none=TRUE)
 ```
 
@@ -105,7 +105,7 @@ stri_split_boundaries(test, type='word', skip_word_none=TRUE)
 ## [13] "spam"      "123"       "456"       "789"
 ```
 
-```r
+``` r
 stri_split_boundaries(test, type='word', skip_word_none=TRUE, skip_word_letter=TRUE)
 ```
 
@@ -114,7 +114,7 @@ stri_split_boundaries(test, type='word', skip_word_none=TRUE, skip_word_letter=T
 ## [1] "123" "456" "789"
 ```
 
-```r
+``` r
 stri_split_boundaries(test, type='word', skip_word_none=TRUE, skip_word_number=TRUE)
 ```
 
@@ -125,7 +125,7 @@ stri_split_boundaries(test, type='word', skip_word_none=TRUE, skip_word_number=T
 ## [13] "spam"
 ```
 
-```r
+``` r
 stri_split_boundaries(test, type='sentence')
 ```
 
@@ -136,7 +136,7 @@ stri_split_boundaries(test, type='sentence')
 ## [3] "123 456 789"
 ```
 
-```r
+``` r
 stri_split_boundaries(test, type='sentence', skip_sentence_sep=TRUE)
 ```
 
@@ -146,7 +146,7 @@ stri_split_boundaries(test, type='sentence', skip_sentence_sep=TRUE)
 ## [2] "Spam, spam, eggs, bacon, and spam. "
 ```
 
-```r
+``` r
 stri_split_boundaries(test, type='character')
 ```
 
@@ -159,7 +159,7 @@ stri_split_boundaries(test, type='character')
 ## [77] "d" " " "s" "p" "a" "m" "." " " "1" "2" "3" " " "4" "5" "6" " " "7" "8" "9"
 ```
 
-```r
+``` r
 # a filtered break iterator with the new ICU:
 stri_split_boundaries('Mr. Jones and Mrs. Brown are very happy.
 So am I, Prof. Smith.', type='sentence', locale='en_US@ss=standard') # ICU >= 56 only

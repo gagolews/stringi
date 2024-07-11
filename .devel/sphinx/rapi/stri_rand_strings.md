@@ -12,10 +12,10 @@ stri_rand_strings(n, length, pattern = "[A-Za-z0-9]")
 
 ## Arguments
 
-|           |                                                                                                                                |
-|-----------|--------------------------------------------------------------------------------------------------------------------------------|
-| `n`       | single integer, number of observations                                                                                         |
-| `length`  | integer vector, desired string lengths                                                                                         |
+|  |  |
+|----|----|
+| `n` | single integer, number of observations |
+| `length` | integer vector, desired string lengths |
 | `pattern` | character vector specifying character classes to draw elements from, see [stringi-search-charclass](about_search_charclass.md) |
 
 ## Details
@@ -47,7 +47,7 @@ Other random: [`stri_rand_lipsum()`](stri_rand_lipsum.md), [`stri_rand_shuffle()
 
 
 
-```r
+``` r
 stri_rand_strings(5, 10) # 5 strings of length 10
 ```
 
@@ -55,7 +55,7 @@ stri_rand_strings(5, 10) # 5 strings of length 10
 ## [1] "HmPsw2WtYS" "xSgZ6tF2Kx" "tgdzehXaH9" "xtgn1TlDJE" "8PPM98ESGr"
 ```
 
-```r
+``` r
 stri_rand_strings(5, sample(1:10, 5, replace=TRUE)) # 5 strings of random lengths
 ```
 
@@ -63,7 +63,7 @@ stri_rand_strings(5, sample(1:10, 5, replace=TRUE)) # 5 strings of random length
 ## [1] "tNf5N"     "HoRoonR"   "kdi0T"     "DNbL6F"    "fPm6QztsA"
 ```
 
-```r
+``` r
 stri_rand_strings(10, 5, '[\\p{script=latin}&\\p{Ll}]') # small letters from the Latin script
 ```
 
@@ -72,7 +72,7 @@ stri_rand_strings(10, 5, '[\\p{script=latin}&\\p{Ll}]') # small letters from the
 ##  [8] "𝼙ųĕšữ"   "ẋꭕổꜳᶖ"   "ềꞹꝸ𝼕ᴒ"
 ```
 
-```r
+``` r
 # generate n random passwords of length in [8, 14]
 # consisting of at least one digit, small and big ASCII letter:
 n <- 10

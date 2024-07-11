@@ -12,11 +12,11 @@ stri_rand_lipsum(n_paragraphs, start_lipsum = TRUE, nparagraphs = n_paragraphs)
 
 ## Arguments
 
-|                |                                                                                          |
-|----------------|------------------------------------------------------------------------------------------|
-| `n_paragraphs` | single integer, number of paragraphs to generate                                         |
+|  |  |
+|----|----|
+| `n_paragraphs` | single integer, number of paragraphs to generate |
 | `start_lipsum` | single logical value; should the resulting text start with *Lorem ipsum dolor sit amet*? |
-| `nparagraphs`  | \[DEPRECATED\] alias of `n_paragraphs`                                                   |
+| `nparagraphs` | \[DEPRECATED\] alias of `n_paragraphs` |
 
 ## Details
 
@@ -45,7 +45,7 @@ Other random: [`stri_rand_shuffle()`](stri_rand_shuffle.md), [`stri_rand_strings
 
 
 
-```r
+``` r
 cat(sapply(
    stri_wrap(stri_rand_lipsum(10), 80, simplify=FALSE),
    stri_flatten, collapse='\n'), sep='\n\n')
@@ -144,7 +144,7 @@ cat(sapply(
 ## dictum. Ante id urna quis convallis.
 ```
 
-```r
+``` r
 cat(stri_rand_lipsum(10), sep='\n\n')
 ```
 

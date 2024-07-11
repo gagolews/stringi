@@ -6,10 +6,10 @@
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Collation" href="collation.html" /><link rel="prev" title="Code-Pointwise Comparing" href="codepoint_comparing.html" />
         <link rel="canonical" href="https://stringi.gagolewski.com/weave/regular_expressions.html" />
 
-    <link rel="shortcut icon" href="https://www.gagolewski.com/_static/img/stringi.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+    <link rel="shortcut icon" href="https://www.gagolewski.com/_static/img/stringi.png"/><!-- Generated with Sphinx 7.3.7 and Furo 2024.05.06 -->
         <title>Regular Expressions - R Package stringi</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=387cc868" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=5282ffc2" />
     
@@ -76,7 +76,7 @@
   <symbol id="svg-sun" viewBox="0 0 24 24">
     <title>Light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
       <circle cx="12" cy="12" r="5"></circle>
       <line x1="12" y1="1" x2="12" y2="3"></line>
       <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -91,7 +91,7 @@
   <symbol id="svg-moon" viewBox="0 0 24 24">
     <title>Dark mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
     </svg>
@@ -99,7 +99,7 @@
   <symbol id="svg-sun-half" viewBox="0 0 24 24">
     <title>Auto light/dark mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <circle cx="12" cy="12" r="9" />
       <path d="M13 12h5" />
@@ -107,6 +107,60 @@
       <path d="M13 18h1" />
       <path d="M13 9h4" />
       <path d="M13 6h1" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" /
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
     </svg>
   </symbol>
 </svg>
@@ -160,7 +214,7 @@
 <a class="sidebar-brand" href="../index.html">stringi</a>
 </span>
 <div class="sidebar-brand">
-1.8.4
+1.8.4.9001
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -324,11 +378,7 @@
         <div class="content-icon-container">
           <div class="edit-this-page">
   <a class="muted-link" href="https://github.com/gagolews/stringi/issues/" title="Edit this page">
-    <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
-      <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
-    </svg>
+    <svg><use href="#svg-pencil"></use></svg>
     <span class="visually-hidden">Edit this page</span>
   </a>
 </div><div class="theme-toggle-container theme-toggle-content">
@@ -346,7 +396,7 @@
         </div>
         <article role="main">
           <section class="tex2jax_ignore mathjax_ignore" id="regular-expressions">
-<span id="sec-regex"></span><h1>Regular Expressions<a class="headerlink" href="#regular-expressions" title="Link to this heading">#</a></h1>
+<span id="sec-regex"></span><h1>Regular Expressions<a class="headerlink" href="#regular-expressions" title="Link to this heading">¶</a></h1>
 <blockquote>
 <div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that was published in the <em>Journal of Statistical Software</em>; see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="Gagolewski, M. (2022).  stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59. DOI: 10.18637/jss.v103.i02.">2</a>]</span>. To learn more about R, check out Marek’s open-access (free!) textbook <a class="reference external" href="https://deepr.gagolewski.com/"><em>Deep R Programming</em></a> <span id="id2">[<a class="reference internal" href="../z_bibliography.html#id4" title="Gagolewski, M. (2023).  Deep R Programming. Zenodo, Melbourne. ISBN 978-0-6455719-2-9. URL: https://deepr.gagolewski.com/, DOI: 10.5281/zenodo.7490464.">3</a>]</span>.</p>
 </div></blockquote>
@@ -444,7 +494,7 @@ engine.</p>
 </table>
 </div>
 <section id="matching-individual-characters">
-<span id="sec-regexindividualchars"></span><h2>Matching Individual Characters<a class="headerlink" href="#matching-individual-characters" title="Link to this heading">#</a></h2>
+<span id="sec-regexindividualchars"></span><h2>Matching Individual Characters<a class="headerlink" href="#matching-individual-characters" title="Link to this heading">¶</a></h2>
 <p>We begin by discussing different ways to define character sets. In this
 part, determining the length of all matching substrings will be quite
 straightforward.</p>
@@ -492,7 +542,7 @@ another backslash.</p>
 since R 4.0 we can also input the so-called literal strings like
 <code class="docutils literal notranslate"><span class="pre">r&quot;(\.)&quot;</span></code>.</p>
 <section id="matching-any-character">
-<h3>Matching Any Character<a class="headerlink" href="#matching-any-character" title="Link to this heading">#</a></h3>
+<h3>Matching Any Character<a class="headerlink" href="#matching-any-character" title="Link to this heading">¶</a></h3>
 <p>The (unescaped) dot, “<code class="docutils literal notranslate"><span class="pre">.</span></code>”, matches any code point except the newline.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;Spam, ham,\njam, SPAM, eggs, and spam&quot;</span>
 <span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;..am&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
@@ -513,7 +563,7 @@ can be altered by setting the <code class="docutils literal notranslate"><span c
 </div>
 </section>
 <section id="defining-character-sets">
-<h3>Defining Character Sets<a class="headerlink" href="#defining-character-sets" title="Link to this heading">#</a></h3>
+<h3>Defining Character Sets<a class="headerlink" href="#defining-character-sets" title="Link to this heading">¶</a></h3>
 <p>Sets of characters can be introduced by enumerating their members within
 a pair of square brackets. For instance, “<code class="docutils literal notranslate"><span class="pre">[abc]</span></code>” denotes the set
 <span class="math notranslate nohighlight">\(\{\mathtt{a},\mathtt{b},\mathtt{c}\}\)</span> – such a regular expression
@@ -542,7 +592,7 @@ backslash-escape must be used. For example, “<code class="docutils literal not
 backslash or a square bracket.</p>
 </section>
 <section id="complementing-sets">
-<h3>Complementing Sets<a class="headerlink" href="#complementing-sets" title="Link to this heading">#</a></h3>
+<h3>Complementing Sets<a class="headerlink" href="#complementing-sets" title="Link to this heading">¶</a></h3>
 <p>Including “<code class="docutils literal notranslate"><span class="pre">^</span></code>” after the opening square bracket denotes the set
 complement. Hence, “<code class="docutils literal notranslate"><span class="pre">[^abc]</span></code>” matches any code point except “<code class="docutils literal notranslate"><span class="pre">a</span></code>”,
 “<code class="docutils literal notranslate"><span class="pre">b</span></code>”, and “<code class="docutils literal notranslate"><span class="pre">c</span></code>”. Here is an example where we seek any substring that
@@ -555,7 +605,7 @@ consists of 3 non-spaces.</p>
 </div>
 </section>
 <section id="defining-code-point-ranges">
-<h3>Defining Code Point Ranges<a class="headerlink" href="#defining-code-point-ranges" title="Link to this heading">#</a></h3>
+<h3>Defining Code Point Ranges<a class="headerlink" href="#defining-code-point-ranges" title="Link to this heading">¶</a></h3>
 <p>Each Unicode code point can be referenced by its unique numeric
 identifier; see <a class="reference internal" href="input_output.html#sec-codepoints"><span class="std std-ref">Dealing with Unicode Code Points</span></a> for more details. For instance, “<code class="docutils literal notranslate"><span class="pre">a</span></code>” is
 assigned code U+0061, and “<code class="docutils literal notranslate"><span class="pre">z</span></code>” is mapped to U+007A. In the pre-Unicode
@@ -578,7 +628,7 @@ should be avoided. Note the missing “<code class="docutils literal notranslate
 ogonek) in the result.</p>
 </section>
 <section id="using-predefined-character-sets">
-<h3>Using Predefined Character Sets<a class="headerlink" href="#using-predefined-character-sets" title="Link to this heading">#</a></h3>
+<h3>Using Predefined Character Sets<a class="headerlink" href="#using-predefined-character-sets" title="Link to this heading">¶</a></h3>
 <p>Each code point is assigned a unique general category, which can be
 thought of as a character’s class, see
 <a class="reference external" href="https://unicode.org/reports/tr44/">Unicode Standard Annex #44: {U}nicode Character Database</a>. Sets of characters
@@ -630,7 +680,7 @@ equivalent to “<code class="docutils literal notranslate"><span class="pre">[^
 denote their complements.</p>
 </section>
 <section id="avoiding-posix-classes">
-<h3>Avoiding POSIX Classes<a class="headerlink" href="#avoiding-posix-classes" title="Link to this heading">#</a></h3>
+<h3>Avoiding POSIX Classes<a class="headerlink" href="#avoiding-posix-classes" title="Link to this heading">¶</a></h3>
 <p>The use of the POSIX-like character classes should be avoided because
 they are generally not well-defined.</p>
 <p>In particular, in POSIX-like regex engines, “<code class="docutils literal notranslate"><span class="pre">[:punct:]</span></code>” stands for the
@@ -669,9 +719,9 @@ captures symbols:</p>
 </section>
 </section>
 <section id="alternating-and-grouping-subexpressions">
-<h2>Alternating and Grouping Subexpressions<a class="headerlink" href="#alternating-and-grouping-subexpressions" title="Link to this heading">#</a></h2>
+<h2>Alternating and Grouping Subexpressions<a class="headerlink" href="#alternating-and-grouping-subexpressions" title="Link to this heading">¶</a></h2>
 <section id="alternation-operator">
-<h3>Alternation Operator<a class="headerlink" href="#alternation-operator" title="Link to this heading">#</a></h3>
+<h3>Alternation Operator<a class="headerlink" href="#alternation-operator" title="Link to this heading">¶</a></h3>
 <p>The alternation operator, “<code class="docutils literal notranslate"><span class="pre">|</span></code>”, matches either its left or its right
 branch, for instance:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;spam, egg, ham, jam, algae, and an amalgam of spam, all al dente&quot;</span>
@@ -688,7 +738,7 @@ or “<code class="docutils literal notranslate"><span class="pre">ham</span></c
 see <a class="reference internal" href="#sec-capturing"><span class="std std-ref">Capture Groups and References Thereto</span></a>.</p>
 </section>
 <section id="grouping-subexpressions">
-<h3>Grouping Subexpressions<a class="headerlink" href="#grouping-subexpressions" title="Link to this heading">#</a></h3>
+<h3>Grouping Subexpressions<a class="headerlink" href="#grouping-subexpressions" title="Link to this heading">¶</a></h3>
 <p>Also, matching is always done left-to-right, on a first-come,
 first-served basis. So, if the left branch is a subset of the right
 one, the latter will never be matched. In particular,
@@ -696,7 +746,7 @@ one, the latter will never be matched. In particular,
 “<code class="docutils literal notranslate"><span class="pre">(algae|alga|al)</span></code>”.</p>
 </section>
 <section id="non-grouping-parentheses">
-<h3>Non-grouping Parentheses<a class="headerlink" href="#non-grouping-parentheses" title="Link to this heading">#</a></h3>
+<h3>Non-grouping Parentheses<a class="headerlink" href="#non-grouping-parentheses" title="Link to this heading">¶</a></h3>
 <p>Some parenthesised subexpressions – those in which the opening bracket
 is followed by the question mark – have a distinct meaning. In
 particular, “<code class="docutils literal notranslate"><span class="pre">(?#...)</span></code>” denotes a free-format comment that is ignored by
@@ -728,7 +778,7 @@ subfragments thereof may sometimes be more readable:</p>
 </section>
 </section>
 <section id="quantifiers">
-<h2>Quantifiers<a class="headerlink" href="#quantifiers" title="Link to this heading">#</a></h2>
+<h2>Quantifiers<a class="headerlink" href="#quantifiers" title="Link to this heading">¶</a></h2>
 <p>More often than not, a variable number of instances of the same
 subexpression needs to be captured, or its presence should be
 optional. This can be achieved by means of the following quantifiers:</p>
@@ -790,7 +840,7 @@ are needed.</p>
 digits. The second one finds digits that are possibly (but not
 necessarily) followed by a dot and a digit sequence.</p>
 <section id="performance-notes">
-<h3>Performance Notes<a class="headerlink" href="#performance-notes" title="Link to this heading">#</a></h3>
+<h3>Performance Notes<a class="headerlink" href="#performance-notes" title="Link to this heading">¶</a></h3>
 <p><em>ICU</em>, just like <em>PCRE</em>, uses a nondeterministic finite automaton-type
 algorithm. Hence, due to backtracking, some ill-defined regexes can lead
 to exponential matching times (e.g., “<code class="docutils literal notranslate"><span class="pre">(a+)+b</span></code>” applied on
@@ -818,12 +868,12 @@ library) packages and the references therein for a discussion.</p>
 </section>
 </section>
 <section id="capture-groups-and-references-thereto">
-<span id="sec-capturing"></span><h2>Capture Groups and References Thereto<a class="headerlink" href="#capture-groups-and-references-thereto" title="Link to this heading">#</a></h2>
+<span id="sec-capturing"></span><h2>Capture Groups and References Thereto<a class="headerlink" href="#capture-groups-and-references-thereto" title="Link to this heading">¶</a></h2>
 <p>Round-bracketed subexpressions carry one additional characteristic: they
 form the so-called capture groups that can be extracted separately or be
 referred to in other parts of the same regex.</p>
 <section id="extracting-capture-group-matches">
-<h3>Extracting Capture Group Matches<a class="headerlink" href="#extracting-capture-group-matches" title="Link to this heading">#</a></h3>
+<h3>Extracting Capture Group Matches<a class="headerlink" href="#extracting-capture-group-matches" title="Link to this heading">¶</a></h3>
 <p>The above is evident when we use the versions of <code class="docutils literal notranslate"><span class="pre">stri_extract()</span></code> that
 are sensitive to the presence of capture groups:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;name=&#39;Sir Launcelot&#39;, quest=&#39;Seek the Grail&#39;, favecolour=&#39;blue&#39;&quot;</span>
@@ -852,7 +902,7 @@ groups defined like “<code class="docutils literal notranslate"><span class="p
 </div>
 </section>
 <section id="locating-capture-group-matches">
-<h3>Locating Capture Group Matches<a class="headerlink" href="#locating-capture-group-matches" title="Link to this heading">#</a></h3>
+<h3>Locating Capture Group Matches<a class="headerlink" href="#locating-capture-group-matches" title="Link to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">capture_groups</span></code> attribute in <code class="docutils literal notranslate"><span class="pre">stri_locate__regex</span></code> enables us to
 pinpoint the matches to the parenthesised subexpressions as well:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_locate_all_regex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;(?&lt;key&gt;\\w+)=&#39;(?&lt;value&gt;.+?)&#39;&quot;</span><span class="p">,</span>
@@ -882,7 +932,7 @@ pinpoint the matches to the parenthesised subexpressions as well:</p>
 matches to the 2nd capture group in the first input string.</p>
 </section>
 <section id="replacing-with-capture-group-matches">
-<h3>Replacing with Capture Group Matches<a class="headerlink" href="#replacing-with-capture-group-matches" title="Link to this heading">#</a></h3>
+<h3>Replacing with Capture Group Matches<a class="headerlink" href="#replacing-with-capture-group-matches" title="Link to this heading">¶</a></h3>
 <p>Matches to particular capture groups can be recalled in replacement
 strings when using <code class="docutils literal notranslate"><span class="pre">stri_replace()</span></code>. Here, the match in its entirety is
 denoted with “<code class="docutils literal notranslate"><span class="pre">$0</span></code>”, then “<code class="docutils literal notranslate"><span class="pre">$1</span></code>” stores whatever was caught by the first
@@ -900,7 +950,7 @@ Moreover, “<code class="docutils literal notranslate"><span class="pre">\$</sp
 </div>
 </section>
 <section id="back-referencing">
-<h3>Back-Referencing<a class="headerlink" href="#back-referencing" title="Link to this heading">#</a></h3>
+<h3>Back-Referencing<a class="headerlink" href="#back-referencing" title="Link to this heading">¶</a></h3>
 <p>Matches to capture groups can also be part of the regexes themselves.
 For example, “<code class="docutils literal notranslate"><span class="pre">\1</span></code>” denotes whatever has been consumed by the first
 capture group.</p>
@@ -923,11 +973,11 @@ syntax (the angle brackets are part of the token), as in, e.g.,
 </section>
 </section>
 <section id="anchoring">
-<h2>Anchoring<a class="headerlink" href="#anchoring" title="Link to this heading">#</a></h2>
+<h2>Anchoring<a class="headerlink" href="#anchoring" title="Link to this heading">¶</a></h2>
 <p>Lastly, let’s mention how to match a pattern at a given abstract
 position within a string.</p>
 <section id="matching-at-the-beginning-or-end-of-a-string">
-<h3>Matching at the Beginning or End of a String<a class="headerlink" href="#matching-at-the-beginning-or-end-of-a-string" title="Link to this heading">#</a></h3>
+<h3>Matching at the Beginning or End of a String<a class="headerlink" href="#matching-at-the-beginning-or-end-of-a-string" title="Link to this heading">¶</a></h3>
 <p>“<code class="docutils literal notranslate"><span class="pre">^</span></code>” and “<code class="docutils literal notranslate"><span class="pre">$</span></code>” match, respectively, the start and the end of the string (or
 each line within a string, if the <code class="docutils literal notranslate"><span class="pre">multi_line</span></code> option is set to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>).</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam egg&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bacon spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;egg spam bacon&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sausage&quot;</span><span class="p">)</span>
@@ -946,7 +996,7 @@ the string, at the beginning, at the end, at the beginning or end, and
 in strings that are equal to the pattern itself.</p>
 </section>
 <section id="matching-at-word-boundaries">
-<h3>Matching at Word Boundaries<a class="headerlink" href="#matching-at-word-boundaries" title="Link to this heading">#</a></h3>
+<h3>Matching at Word Boundaries<a class="headerlink" href="#matching-at-word-boundaries" title="Link to this heading">¶</a></h3>
 <p>Furthermore, “<code class="docutils literal notranslate"><span class="pre">\b</span></code>” matches at a “word boundary”, e.g., near spaces,
 punctuation marks, or at the start/end of a string (i.e., wherever there
 is a transition between a word, “<code class="docutils literal notranslate"><span class="pre">\w</span></code>”, and a non-word character,
@@ -963,7 +1013,7 @@ sequence of digits, and if it’s present but not followed by a word
 boundary, do not retry by matching a word boundary only.</p>
 </section>
 <section id="looking-behind-and-ahead">
-<h3>Looking Behind and Ahead<a class="headerlink" href="#looking-behind-and-ahead" title="Link to this heading">#</a></h3>
+<h3>Looking Behind and Ahead<a class="headerlink" href="#looking-behind-and-ahead" title="Link to this heading">¶</a></h3>
 <p>There are also ways to guarantee that a pattern occurrence begins or
 ends with a match to some subexpression: “<code class="docutils literal notranslate"><span class="pre">(?&lt;=...)...</span></code>” is the
 so-called look-behind, whereas “<code class="docutils literal notranslate"><span class="pre">...(?=...)</span></code>” denotes the look-ahead.
@@ -1028,7 +1078,7 @@ discussion and a workaround.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2024-05-06T14:48:28+0200.
+              Last updated on 2024-07-11T12:31:23+0200.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -1093,10 +1143,10 @@ discussion and a workaround.</p>
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=496f73d5"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+</div><script src="../_static/documentation_options.js?v=0cf862ba"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>

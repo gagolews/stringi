@@ -23,12 +23,12 @@ stri_trim(
 
 ## Arguments
 
-|           |                                                                                                                                                                                              |
-|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`     | a character vector of strings to be trimmed                                                                                                                                                  |
+|  |  |
+|----|----|
+| `str` | a character vector of strings to be trimmed |
 | `pattern` | a single pattern, specifying the class of characters (see [stringi-search-charclass](about_search_charclass.md)) to to be preserved (if `negate` is `FALSE`; default) or trimmed (otherwise) |
-| `negate`  | either `TRUE` or `FALSE`; see `pattern`                                                                                                                                                      |
-| `side`    | character \[`stri_trim` only\]; defaults to `'both'`                                                                                                                                         |
+| `negate` | either `TRUE` or `FALSE`; see `pattern` |
+| `side` | character \[`stri_trim` only\]; defaults to `'both'` |
 
 ## Details
 
@@ -60,14 +60,14 @@ Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character str
 
 Other search_replace: [`about_search`](about_search.md), [`stri_replace_all()`](stri_replace.md), [`stri_replace_rstr()`](stri_replace_rstr.md)
 
-Other search_charclass: [`about_search_charclass`](about_search_charclass.md), [`about_search`](about_search.md)
+Other search_charclass: [`about_search`](about_search.md), [`about_search_charclass`](about_search_charclass.md)
 
 ## Examples
 
 
 
 
-```r
+``` r
 stri_trim_left('               aaa')
 ```
 
@@ -75,7 +75,7 @@ stri_trim_left('               aaa')
 ## [1] "aaa"
 ```
 
-```r
+``` r
 stri_trim_right('r-project.org/', '\\P{P}')
 ```
 
@@ -83,7 +83,7 @@ stri_trim_right('r-project.org/', '\\P{P}')
 ## [1] "r-project.org"
 ```
 
-```r
+``` r
 stri_trim_both(' Total of 23.5 bitcoins. ', '\\p{N}')
 ```
 
@@ -91,7 +91,7 @@ stri_trim_both(' Total of 23.5 bitcoins. ', '\\p{N}')
 ## [1] "23.5"
 ```
 
-```r
+``` r
 stri_trim_both(' Total of 23.5 bitcoins. ', '\\P{N}', negate=TRUE)
 ```
 

@@ -26,20 +26,20 @@ stri_wrap(
 
 ## Arguments
 
-|                     |                                                                                                                                                                                                                                                                |
-|---------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`               | character vector of strings to reformat                                                                                                                                                                                                                        |
-| `width`             | single integer giving the suggested maximal total width/number of code points per line                                                                                                                                                                         |
-| `cost_exponent`     | single numeric value, values not greater than zero will select a greedy word-wrapping algorithm; otherwise this value denotes the exponent in the cost function of a (more aesthetic) dynamic programming-based algorithm (values in \[2, 3\] are recommended) |
-| `simplify`          | single logical value, see Value                                                                                                                                                                                                                                |
-| `normalize`         | single logical value, see Details                                                                                                                                                                                                                              |
-| `normalise`         | alias of `normalize`                                                                                                                                                                                                                                           |
-| `indent`            | single non-negative integer; gives the indentation of the first line in each paragraph                                                                                                                                                                         |
-| `exdent`            | single non-negative integer; specifies the indentation of subsequent lines in paragraphs                                                                                                                                                                       |
-| `prefix`, `initial` | single strings; `prefix` is used as prefix for each line except the first, for which `initial` is utilized                                                                                                                                                     |
-| `whitespace_only`   | single logical value; allow breaks only at white-spaces? if `FALSE`, <span class="pkg">ICU</span>\'s line break iterator is used to split text into words, which is suitable for natural language processing                                                   |
-| `use_length`        | single logical value; should the number of code points be used instead of the total code point width (see [`stri_width`](stri_width.md))?                                                                                                                      |
-| `locale`            | `NULL` or `''` for text boundary analysis following the conventions of the default locale, or a single string with locale identifier, see [stringi-locale](about_locale.md)                                                                                    |
+|  |  |
+|----|----|
+| `str` | character vector of strings to reformat |
+| `width` | single integer giving the suggested maximal total width/number of code points per line |
+| `cost_exponent` | single numeric value, values not greater than zero will select a greedy word-wrapping algorithm; otherwise this value denotes the exponent in the cost function of a (more aesthetic) dynamic programming-based algorithm (values in \[2, 3\] are recommended) |
+| `simplify` | single logical value, see Value |
+| `normalize` | single logical value, see Details |
+| `normalise` | alias of `normalize` |
+| `indent` | single non-negative integer; gives the indentation of the first line in each paragraph |
+| `exdent` | single non-negative integer; specifies the indentation of subsequent lines in paragraphs |
+| `prefix`, `initial` | single strings; `prefix` is used as prefix for each line except the first, for which `initial` is utilized |
+| `whitespace_only` | single logical value; allow breaks only at white-spaces? if `FALSE`, <span class="pkg">ICU</span>\'s line break iterator is used to split text into words, which is suitable for natural language processing |
+| `use_length` | single logical value; should the number of code points be used instead of the total code point width (see [`stri_width`](stri_width.md))? |
+| `locale` | `NULL` or `''` for text boundary analysis following the conventions of the default locale, or a single string with locale identifier, see [stringi-locale](about_locale.md) |
 
 ## Details
 
@@ -73,16 +73,16 @@ The official online manual of <span class="pkg">stringi</span> at <https://strin
 
 Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, [doi:10.18637/jss.v103.i02](https://doi.org/10.18637/jss.v103.i02)
 
-Other locale_sensitive: [`%s<%()`](+25s+3C+25.md), [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_coll`](about_search_coll.md), [`stri_compare()`](stri_compare.md), [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_duplicated()`](stri_duplicated.md), [`stri_enc_detect2()`](stri_enc_detect2.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_opts_collator()`](stri_opts_collator.md), [`stri_order()`](stri_order.md), [`stri_rank()`](stri_rank.md), [`stri_sort_key()`](stri_sort_key.md), [`stri_sort()`](stri_sort.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_trans_tolower()`](stri_trans_casemap.md), [`stri_unique()`](stri_unique.md)
+Other locale_sensitive: [`%s<%()`](+25s+3C+25.md), [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_coll`](about_search_coll.md), [`stri_compare()`](stri_compare.md), [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_duplicated()`](stri_duplicated.md), [`stri_enc_detect2()`](stri_enc_detect2.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_opts_collator()`](stri_opts_collator.md), [`stri_order()`](stri_order.md), [`stri_rank()`](stri_rank.md), [`stri_sort()`](stri_sort.md), [`stri_sort_key()`](stri_sort_key.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_trans_tolower()`](stri_trans_casemap.md), [`stri_unique()`](stri_unique.md)
 
-Other text_boundaries: [`about_search_boundaries`](about_search_boundaries.md), [`about_search`](about_search.md), [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_opts_brkiter()`](stri_opts_brkiter.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_split_lines()`](stri_split_lines.md), [`stri_trans_tolower()`](stri_trans_casemap.md)
+Other text_boundaries: [`about_search`](about_search.md), [`about_search_boundaries`](about_search_boundaries.md), [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_opts_brkiter()`](stri_opts_brkiter.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_split_lines()`](stri_split_lines.md), [`stri_trans_tolower()`](stri_trans_casemap.md)
 
 ## Examples
 
 
 
 
-```r
+``` r
 s <- stri_paste(
    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin ',
    'nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel ',
@@ -104,7 +104,7 @@ cat(stri_wrap(s, 20, 0.0), sep='\n') # greedy
 ## tellus.
 ```
 
-```r
+``` r
 cat(stri_wrap(s, 20, 2.0), sep='\n') # dynamic
 ```
 
@@ -122,7 +122,7 @@ cat(stri_wrap(s, 20, 2.0), sep='\n') # dynamic
 ## tellus.
 ```
 
-```r
+``` r
 cat(stri_pad(stri_wrap(s), side='both'), sep='\n')
 ```
 

@@ -2,7 +2,7 @@
 
 ## Description
 
-These functions return or modify a sub-vector where there is a match to a given pattern. In other words, they are roughly equivalent (but faster and easier to use) to a call to `str[stri_detect(str, ...)]` or `str[stri_detect(str, ...)] <- value`.
+These functions return or modify a sub-vector where there is a match to a given pattern. In other words, they are roughly equivalent (but faster and easier to use) to a call to `str[`[`stri_detect`](stri_detect.md)`(str, ...)]` or `str[`[`stri_detect`](stri_detect.md)`(str, ...)] <- value`.
 
 ## Usage
 
@@ -51,15 +51,15 @@ stri_subset_regex(str, pattern, negate=FALSE, ..., opts_regex=NULL) <- value
 
 ## Arguments
 
-|                                                  |                                                                                                                                                                                                                                            |
-|--------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`                                            | character vector; strings to search within                                                                                                                                                                                                 |
-| `...`                                            | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_regex`, `opts_fixed`, and so on                                                                                       |
-| `value`                                          | non-empty character vector of replacement strings; replacement function only                                                                                                                                                               |
-| `pattern`, `regex`, `fixed`, `coll`, `charclass` | character vector; search patterns (no more than the length of `str`); for more details refer to [stringi-search](about_search.md)                                                                                                          |
-| `omit_na`                                        | single logical value; should missing values be excluded from the result?                                                                                                                                                                   |
-| `negate`                                         | single logical value; whether a no-match is rather of interest                                                                                                                                                                             |
-| `opts_collator`, `opts_fixed`, `opts_regex`      | a named list used to tune up the search engine\'s settings; see [`stri_opts_collator`](stri_opts_collator.md), [`stri_opts_fixed`](stri_opts_fixed.md), and [`stri_opts_regex`](stri_opts_regex.md), respectively; `NULL` for the defaults |
+|  |  |
+|----|----|
+| `str` | character vector; strings to search within |
+| `...` | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_regex`, `opts_fixed`, and so on |
+| `value` | non-empty character vector of replacement strings; replacement function only |
+| `pattern`, `regex`, `fixed`, `coll`, `charclass` | character vector; search patterns (no more than the length of `str`); for more details refer to [stringi-search](about_search.md) |
+| `omit_na` | single logical value; should missing values be excluded from the result? |
+| `negate` | single logical value; whether a no-match is rather of interest |
+| `opts_collator`, `opts_fixed`, `opts_regex` | a named list used to tune up the search engine\'s settings; see [`stri_opts_collator`](stri_opts_collator.md), [`stri_opts_fixed`](stri_opts_fixed.md), and [`stri_opts_regex`](stri_opts_regex.md), respectively; `NULL` for the defaults |
 
 ## Details
 
@@ -90,7 +90,7 @@ Other search_subset: [`about_search`](about_search.md)
 
 
 
-```r
+``` r
 stri_subset_regex(c('stringi R', '123', 'ID456', ''), '^[0-9]+$')
 ```
 
@@ -98,7 +98,7 @@ stri_subset_regex(c('stringi R', '123', 'ID456', ''), '^[0-9]+$')
 ## [1] "123"
 ```
 
-```r
+``` r
 x <- c('stringi R', '123', 'ID456', '')
 `stri_subset_regex<-`(x, '[0-9]+$', negate=TRUE, value=NA)  # returns a copy
 ```
@@ -107,7 +107,7 @@ x <- c('stringi R', '123', 'ID456', '')
 ## [1] NA      "123"   "ID456" NA
 ```
 
-```r
+``` r
 stri_subset_regex(x, '[0-9]+$') <- NA  # modifies `x` in-place
 print(x)
 ```

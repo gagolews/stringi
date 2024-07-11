@@ -12,11 +12,11 @@ stri_trans_char(str, pattern, replacement)
 
 ## Arguments
 
-|               |                                                                  |
-|---------------|------------------------------------------------------------------|
-| `str`         | character vector                                                 |
-| `pattern`     | a single character string providing code points to be translated |
-| `replacement` | a single character string giving translated code points          |
+|  |  |
+|----|----|
+| `str` | character vector |
+| `pattern` | a single character string providing code points to be translated |
+| `replacement` | a single character string giving translated code points |
 
 ## Details
 
@@ -49,7 +49,7 @@ Other transform: [`stri_trans_general()`](stri_trans_general.md), [`stri_trans_l
 
 
 
-```r
+``` r
 stri_trans_char('id.123', '.', '_')
 ```
 
@@ -57,7 +57,7 @@ stri_trans_char('id.123', '.', '_')
 ## [1] "id_123"
 ```
 
-```r
+``` r
 stri_trans_char('babaab', 'ab', '01')
 ```
 
@@ -65,7 +65,7 @@ stri_trans_char('babaab', 'ab', '01')
 ## [1] "101001"
 ```
 
-```r
+``` r
 stri_trans_char('GCUACGGAGCUUCGGAGCUAG', 'ACGT', 'TGCA')
 ```
 

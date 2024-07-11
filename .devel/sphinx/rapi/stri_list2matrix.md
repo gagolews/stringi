@@ -18,13 +18,13 @@ stri_list2matrix(
 
 ## Arguments
 
-|          |                                                                                                                |
-|----------|----------------------------------------------------------------------------------------------------------------|
-| `x`      | a list of atomic vectors                                                                                       |
-| `byrow`  | a single logical value; should the resulting matrix be transposed?                                             |
-| `fill`   | a single string, see Details                                                                                   |
-| `n_min`  | a single integer value; minimal number of rows (`byrow==FALSE`) or columns (otherwise) in the resulting matrix |
-| `by_row` | alias of `byrow`                                                                                               |
+|  |  |
+|----|----|
+| `x` | a list of atomic vectors |
+| `byrow` | a single logical value; should the resulting matrix be transposed? |
+| `fill` | a single string, see Details |
+| `n_min` | a single integer value; minimal number of rows (`byrow==FALSE`) or columns (otherwise) in the resulting matrix |
+| `by_row` | alias of `byrow` |
 
 ## Details
 
@@ -57,7 +57,7 @@ Other utils: [`stri_na2empty()`](stri_na2empty.md), [`stri_remove_empty()`](stri
 
 
 
-```r
+``` r
 simplify2array(list(c('a', 'b'), c('c', 'd'), c('e', 'f')))
 ```
 
@@ -67,7 +67,7 @@ simplify2array(list(c('a', 'b'), c('c', 'd'), c('e', 'f')))
 ## [2,] "b"  "d"  "f"
 ```
 
-```r
+``` r
 stri_list2matrix(list(c('a', 'b'), c('c', 'd'), c('e', 'f')))
 ```
 
@@ -77,7 +77,7 @@ stri_list2matrix(list(c('a', 'b'), c('c', 'd'), c('e', 'f')))
 ## [2,] "b"  "d"  "f"
 ```
 
-```r
+``` r
 stri_list2matrix(list(c('a', 'b'), c('c', 'd'), c('e', 'f')), byrow=TRUE)
 ```
 
@@ -88,7 +88,7 @@ stri_list2matrix(list(c('a', 'b'), c('c', 'd'), c('e', 'f')), byrow=TRUE)
 ## [3,] "e"  "f"
 ```
 
-```r
+``` r
 simplify2array(list('a', c('b', 'c')))
 ```
 
@@ -100,7 +100,7 @@ simplify2array(list('a', c('b', 'c')))
 ## [1] "b" "c"
 ```
 
-```r
+``` r
 stri_list2matrix(list('a', c('b', 'c')))
 ```
 
@@ -110,7 +110,7 @@ stri_list2matrix(list('a', c('b', 'c')))
 ## [2,] NA   "c"
 ```
 
-```r
+``` r
 stri_list2matrix(list('a', c('b', 'c')), fill='')
 ```
 
@@ -120,7 +120,7 @@ stri_list2matrix(list('a', c('b', 'c')), fill='')
 ## [2,] ""   "c"
 ```
 
-```r
+``` r
 stri_list2matrix(list('a', c('b', 'c')), fill='', n_min=5)
 ```
 

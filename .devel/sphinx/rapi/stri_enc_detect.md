@@ -12,9 +12,9 @@ stri_enc_detect(str, filter_angle_brackets = FALSE)
 
 ## Arguments
 
-|                         |                                                                                                                                                               |
-|-------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`                   | character vector, a raw vector, or a list of `raw` vectors                                                                                                    |
+|  |  |
+|----|----|
+| `str` | character vector, a raw vector, or a list of `raw` vectors |
 | `filter_angle_brackets` | logical; If filtering is enabled, text within angle brackets (\'\<\' and \'\>\') will be removed before detection, which will remove most HTML or XML markup. |
 
 ## Details
@@ -33,40 +33,40 @@ This function should most often be used for byte-marked input strings, especiall
 
 The following table shows all the encodings that can be detected:
 
-|                   |                                                                                 |
-|:------------------|:--------------------------------------------------------------------------------|
-| **Character_Set** | **Languages**                                                                   |
-| UTF-8             | \--                                                                             |
-| UTF-16BE          | \--                                                                             |
-| UTF-16LE          | \--                                                                             |
-| UTF-32BE          | \--                                                                             |
-| UTF-32LE          | \--                                                                             |
-| Shift_JIS         | Japanese                                                                        |
-| ISO-2022-JP       | Japanese                                                                        |
-| ISO-2022-CN       | Simplified Chinese                                                              |
-| ISO-2022-KR       | Korean                                                                          |
-| GB18030           | Chinese                                                                         |
-| Big5              | Traditional Chinese                                                             |
-| EUC-JP            | Japanese                                                                        |
-| EUC-KR            | Korean                                                                          |
-| ISO-8859-1        | Danish, Dutch, English, French, German, Italian, Norwegian, Portuguese, Swedish |
-| ISO-8859-2        | Czech, Hungarian, Polish, Romanian                                              |
-| ISO-8859-5        | Russian                                                                         |
-| ISO-8859-6        | Arabic                                                                          |
-| ISO-8859-7        | Greek                                                                           |
-| ISO-8859-8        | Hebrew                                                                          |
-| ISO-8859-9        | Turkish                                                                         |
-| windows-1250      | Czech, Hungarian, Polish, Romanian                                              |
-| windows-1251      | Russian                                                                         |
-| windows-1252      | Danish, Dutch, English, French, German, Italian, Norwegian, Portuguese, Swedish |
-| windows-1253      | Greek                                                                           |
-| windows-1254      | Turkish                                                                         |
-| windows-1255      | Hebrew                                                                          |
-| windows-1256      | Arabic                                                                          |
-| KOI8-R            | Russian                                                                         |
-| IBM420            | Arabic                                                                          |
-| IBM424            | Hebrew                                                                          |
-|                   |                                                                                 |
+|  |  |
+|:---|:---|
+| **Character_Set** | **Languages** |
+| UTF-8 | \-- |
+| UTF-16BE | \-- |
+| UTF-16LE | \-- |
+| UTF-32BE | \-- |
+| UTF-32LE | \-- |
+| Shift_JIS | Japanese |
+| ISO-2022-JP | Japanese |
+| ISO-2022-CN | Simplified Chinese |
+| ISO-2022-KR | Korean |
+| GB18030 | Chinese |
+| Big5 | Traditional Chinese |
+| EUC-JP | Japanese |
+| EUC-KR | Korean |
+| ISO-8859-1 | Danish, Dutch, English, French, German, Italian, Norwegian, Portuguese, Swedish |
+| ISO-8859-2 | Czech, Hungarian, Polish, Romanian |
+| ISO-8859-5 | Russian |
+| ISO-8859-6 | Arabic |
+| ISO-8859-7 | Greek |
+| ISO-8859-8 | Hebrew |
+| ISO-8859-9 | Turkish |
+| windows-1250 | Czech, Hungarian, Polish, Romanian |
+| windows-1251 | Russian |
+| windows-1252 | Danish, Dutch, English, French, German, Italian, Norwegian, Portuguese, Swedish |
+| windows-1253 | Greek |
+| windows-1254 | Turkish |
+| windows-1255 | Hebrew |
+| windows-1256 | Arabic |
+| KOI8-R | Russian |
+| IBM420 | Arabic |
+| IBM424 | Hebrew |
+|  |  |
 
 ## Value
 
@@ -101,7 +101,7 @@ Other encoding_detection: [`about_encoding`](about_encoding.md), [`stri_enc_dete
 
 
 
-```r
+``` r
 ## Not run:
 ## f <- rawToChar(readBin('test.txt', 'raw', 100000))
 ## stri_enc_detect(f)

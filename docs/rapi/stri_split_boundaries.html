@@ -6,10 +6,10 @@
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="stri_split_lines: Split a String Into Text Lines" href="stri_split_lines.html" /><link rel="prev" title="stri_sort: String Sorting" href="stri_sort.html" />
         <link rel="canonical" href="https://stringi.gagolewski.com/rapi/stri_split_boundaries.html" />
 
-    <link rel="shortcut icon" href="https://www.gagolewski.com/_static/img/stringi.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+    <link rel="shortcut icon" href="https://www.gagolewski.com/_static/img/stringi.png"/><!-- Generated with Sphinx 7.3.7 and Furo 2024.05.06 -->
         <title>stri_split_boundaries: Split a String at Text Boundaries - R Package stringi</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=387cc868" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=5282ffc2" />
     
@@ -76,7 +76,7 @@
   <symbol id="svg-sun" viewBox="0 0 24 24">
     <title>Light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
       <circle cx="12" cy="12" r="5"></circle>
       <line x1="12" y1="1" x2="12" y2="3"></line>
       <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -91,7 +91,7 @@
   <symbol id="svg-moon" viewBox="0 0 24 24">
     <title>Dark mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
     </svg>
@@ -99,7 +99,7 @@
   <symbol id="svg-sun-half" viewBox="0 0 24 24">
     <title>Auto light/dark mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <circle cx="12" cy="12" r="9" />
       <path d="M13 12h5" />
@@ -107,6 +107,60 @@
       <path d="M13 18h1" />
       <path d="M13 9h4" />
       <path d="M13 6h1" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" /
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
     </svg>
   </symbol>
 </svg>
@@ -160,7 +214,7 @@
 <a class="sidebar-brand" href="../index.html">stringi</a>
 </span>
 <div class="sidebar-brand">
-1.8.4
+1.8.4.9001
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -324,11 +378,7 @@
         <div class="content-icon-container">
           <div class="edit-this-page">
   <a class="muted-link" href="https://github.com/gagolews/stringi/issues/" title="Edit this page">
-    <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
-      <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
-    </svg>
+    <svg><use href="#svg-pencil"></use></svg>
     <span class="visually-hidden">Edit this page</span>
   </a>
 </div><div class="theme-toggle-container theme-toggle-content">
@@ -346,13 +396,13 @@
         </div>
         <article role="main">
           <section class="tex2jax_ignore mathjax_ignore" id="stri-split-boundaries-split-a-string-at-text-boundaries">
-<h1>stri_split_boundaries: Split a String at Text Boundaries<a class="headerlink" href="#stri-split-boundaries-split-a-string-at-text-boundaries" title="Link to this heading">#</a></h1>
+<h1>stri_split_boundaries: Split a String at Text Boundaries<a class="headerlink" href="#stri-split-boundaries-split-a-string-at-text-boundaries" title="Link to this heading">¶</a></h1>
 <section id="description">
-<h2>Description<a class="headerlink" href="#description" title="Link to this heading">#</a></h2>
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading">¶</a></h2>
 <p>This function locates text boundaries (like character, word, line, or sentence boundaries) and splits strings at the indicated positions.</p>
 </section>
 <section id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">#</a></h2>
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_split_boundaries</span><span class="p">(</span>
 <span class="w">  </span><span class="n">str</span><span class="p">,</span>
 <span class="w">  </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">-1L</span><span class="p">,</span>
@@ -365,7 +415,7 @@
 </div>
 </section>
 <section id="arguments">
-<h2>Arguments<a class="headerlink" href="#arguments" title="Link to this heading">#</a></h2>
+<h2>Arguments<a class="headerlink" href="#arguments" title="Link to this heading">¶</a></h2>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
@@ -397,31 +447,31 @@
 </div>
 </section>
 <section id="details">
-<h2>Details<a class="headerlink" href="#details" title="Link to this heading">#</a></h2>
+<h2>Details<a class="headerlink" href="#details" title="Link to this heading">¶</a></h2>
 <p>Vectorized over <code class="docutils literal notranslate"><span class="pre">str</span></code> and <code class="docutils literal notranslate"><span class="pre">n</span></code>.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">n</span></code> is negative (the default), then all text pieces are extracted.</p>
 <p>Otherwise, if <code class="docutils literal notranslate"><span class="pre">tokens_only</span></code> is <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> (which is the default), then <code class="docutils literal notranslate"><span class="pre">n-1</span></code> tokens are extracted (if possible) and the <code class="docutils literal notranslate"><span class="pre">n</span></code>-th string gives the (non-split) remainder (see Examples). On the other hand, if <code class="docutils literal notranslate"><span class="pre">tokens_only</span></code> is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, then only full tokens (up to <code class="docutils literal notranslate"><span class="pre">n</span></code> pieces) are extracted.</p>
 <p>For more information on text boundary analysis performed by <span class="pkg">ICU</span>’s <code class="docutils literal notranslate"><span class="pre">BreakIterator</span></code>, see <a class="reference internal" href="about_search_boundaries.html"><span class="std std-doc">stringi-search-boundaries</span></a>.</p>
 </section>
 <section id="value">
-<h2>Value<a class="headerlink" href="#value" title="Link to this heading">#</a></h2>
+<h2>Value<a class="headerlink" href="#value" title="Link to this heading">¶</a></h2>
 <p>If <code class="docutils literal notranslate"><span class="pre">simplify=FALSE</span></code> (the default), then the functions return a list of character vectors.</p>
 <p>Otherwise, <a class="reference internal" href="stri_list2matrix.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_list2matrix</span></code></span></a> with <code class="docutils literal notranslate"><span class="pre">byrow=TRUE</span></code> and <code class="docutils literal notranslate"><span class="pre">n_min=n</span></code> arguments is called on the resulting object. In such a case, a character matrix with <code class="docutils literal notranslate"><span class="pre">length(str)</span></code> rows is returned. Note that <a class="reference internal" href="stri_list2matrix.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_list2matrix</span></code></span></a>’s <code class="docutils literal notranslate"><span class="pre">fill</span></code> argument is set to an empty string and <code class="docutils literal notranslate"><span class="pre">NA</span></code>, for <code class="docutils literal notranslate"><span class="pre">simplify</span></code> equal to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> and <code class="docutils literal notranslate"><span class="pre">NA</span></code>, respectively.</p>
 </section>
 <section id="author-s">
-<h2>Author(s)<a class="headerlink" href="#author-s" title="Link to this heading">#</a></h2>
+<h2>Author(s)<a class="headerlink" href="#author-s" title="Link to this heading">¶</a></h2>
 <p><a class="reference external" href="https://www.gagolewski.com/">Marek Gagolewski</a> and other contributors</p>
 </section>
 <section id="see-also">
-<h2>See Also<a class="headerlink" href="#see-also" title="Link to this heading">#</a></h2>
+<h2>See Also<a class="headerlink" href="#see-also" title="Link to this heading">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
 <p>Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, <em>Journal of Statistical Software</em> 103(2), 2022, 1-59, <a class="reference external" href="https://doi.org/10.18637/jss.v103.i02">doi:10.18637/jss.v103.i02</a></p>
-<p>Other search_split: <a class="reference internal" href="about_search.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></span></a>, <a class="reference internal" href="stri_split_lines.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_split_lines()</span></code></span></a>, <a class="reference internal" href="stri_split.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_split()</span></code></span></a></p>
-<p>Other locale_sensitive: <a class="reference internal" href="#+25s+3C+25.md"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">%s&lt;%()</span></code></span></a>, <a class="reference internal" href="about_locale.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">about_locale</span></code></span></a>, <a class="reference internal" href="about_search_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_boundaries</span></code></span></a>, <a class="reference internal" href="about_search_coll.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_coll</span></code></span></a>, <a class="reference internal" href="stri_compare.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_compare()</span></code></span></a>, <a class="reference internal" href="stri_count_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_count_boundaries()</span></code></span></a>, <a class="reference internal" href="stri_duplicated.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_duplicated()</span></code></span></a>, <a class="reference internal" href="stri_enc_detect2.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_detect2()</span></code></span></a>, <a class="reference internal" href="stri_extract_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_extract_all_boundaries()</span></code></span></a>, <a class="reference internal" href="stri_locate_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_locate_all_boundaries()</span></code></span></a>, <a class="reference internal" href="stri_opts_collator.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_opts_collator()</span></code></span></a>, <a class="reference internal" href="stri_order.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_order()</span></code></span></a>, <a class="reference internal" href="stri_rank.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_rank()</span></code></span></a>, <a class="reference internal" href="stri_sort_key.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_sort_key()</span></code></span></a>, <a class="reference internal" href="stri_sort.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_sort()</span></code></span></a>, <a class="reference internal" href="stri_trans_casemap.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_tolower()</span></code></span></a>, <a class="reference internal" href="stri_unique.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_unique()</span></code></span></a>, <a class="reference internal" href="stri_wrap.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_wrap()</span></code></span></a></p>
-<p>Other text_boundaries: <a class="reference internal" href="about_search_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_boundaries</span></code></span></a>, <a class="reference internal" href="about_search.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></span></a>, <a class="reference internal" href="stri_count_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_count_boundaries()</span></code></span></a>, <a class="reference internal" href="stri_extract_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_extract_all_boundaries()</span></code></span></a>, <a class="reference internal" href="stri_locate_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_locate_all_boundaries()</span></code></span></a>, <a class="reference internal" href="stri_opts_brkiter.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_opts_brkiter()</span></code></span></a>, <a class="reference internal" href="stri_split_lines.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_split_lines()</span></code></span></a>, <a class="reference internal" href="stri_trans_casemap.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_tolower()</span></code></span></a>, <a class="reference internal" href="stri_wrap.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_wrap()</span></code></span></a></p>
+<p>Other search_split: <a class="reference internal" href="about_search.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></span></a>, <a class="reference internal" href="stri_split.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_split()</span></code></span></a>, <a class="reference internal" href="stri_split_lines.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_split_lines()</span></code></span></a></p>
+<p>Other locale_sensitive: <a class="reference internal" href="#+25s+3C+25.md"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">%s&lt;%()</span></code></span></a>, <a class="reference internal" href="about_locale.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">about_locale</span></code></span></a>, <a class="reference internal" href="about_search_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_boundaries</span></code></span></a>, <a class="reference internal" href="about_search_coll.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_coll</span></code></span></a>, <a class="reference internal" href="stri_compare.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_compare()</span></code></span></a>, <a class="reference internal" href="stri_count_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_count_boundaries()</span></code></span></a>, <a class="reference internal" href="stri_duplicated.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_duplicated()</span></code></span></a>, <a class="reference internal" href="stri_enc_detect2.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_detect2()</span></code></span></a>, <a class="reference internal" href="stri_extract_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_extract_all_boundaries()</span></code></span></a>, <a class="reference internal" href="stri_locate_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_locate_all_boundaries()</span></code></span></a>, <a class="reference internal" href="stri_opts_collator.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_opts_collator()</span></code></span></a>, <a class="reference internal" href="stri_order.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_order()</span></code></span></a>, <a class="reference internal" href="stri_rank.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_rank()</span></code></span></a>, <a class="reference internal" href="stri_sort.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_sort()</span></code></span></a>, <a class="reference internal" href="stri_sort_key.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_sort_key()</span></code></span></a>, <a class="reference internal" href="stri_trans_casemap.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_tolower()</span></code></span></a>, <a class="reference internal" href="stri_unique.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_unique()</span></code></span></a>, <a class="reference internal" href="stri_wrap.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_wrap()</span></code></span></a></p>
+<p>Other text_boundaries: <a class="reference internal" href="about_search.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search</span></code></span></a>, <a class="reference internal" href="about_search_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_boundaries</span></code></span></a>, <a class="reference internal" href="stri_count_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_count_boundaries()</span></code></span></a>, <a class="reference internal" href="stri_extract_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_extract_all_boundaries()</span></code></span></a>, <a class="reference internal" href="stri_locate_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_locate_all_boundaries()</span></code></span></a>, <a class="reference internal" href="stri_opts_brkiter.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_opts_brkiter()</span></code></span></a>, <a class="reference internal" href="stri_split_lines.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_split_lines()</span></code></span></a>, <a class="reference internal" href="stri_trans_casemap.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_tolower()</span></code></span></a>, <a class="reference internal" href="stri_wrap.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_wrap()</span></code></span></a></p>
 </section>
 <section id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h2>
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&#39;The\u00a0above-mentioned    features are very useful. &#39;</span><span class="w"> </span><span class="o">%s+%</span>
 <span class="w">   </span><span class="s">&#39;Spam, spam, eggs, bacon, and spam. 123 456 789&#39;</span>
 <span class="nf">stri_split_boundaries</span><span class="p">(</span><span class="n">test</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="o">=</span><span class="s">&#39;line&#39;</span><span class="p">)</span>
@@ -514,7 +564,7 @@
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2024-05-06T14:48:28+0200.
+              Last updated on 2024-07-11T12:31:23+0200.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -555,9 +605,9 @@
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=496f73d5"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+</div><script src="../_static/documentation_options.js?v=0cf862ba"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

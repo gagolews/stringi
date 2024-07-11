@@ -54,15 +54,15 @@ stri_endswith_coll(
 
 ## Arguments
 
-|                                         |                                                                                                                                                                                                  |
-|-----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`                                   | character vector                                                                                                                                                                                 |
-| `...`                                   | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_fixed`, and so on.                                                          |
-| `pattern`, `fixed`, `coll`, `charclass` | character vector defining search patterns; for more details refer to [stringi-search](about_search.md)                                                                                           |
-| `from`                                  | integer vector                                                                                                                                                                                   |
-| `negate`                                | single logical value; whether a no-match to a pattern is rather of interest                                                                                                                      |
-| `to`                                    | integer vector                                                                                                                                                                                   |
-| `opts_collator`, `opts_fixed`           | a named list used to tune up the search engine\'s settings; see [`stri_opts_collator`](stri_opts_collator.md) and [`stri_opts_fixed`](stri_opts_fixed.md), respectively; `NULL` for the defaults |
+|  |  |
+|----|----|
+| `str` | character vector |
+| `...` | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_fixed`, and so on. |
+| `pattern`, `fixed`, `coll`, `charclass` | character vector defining search patterns; for more details refer to [stringi-search](about_search.md) |
+| `from` | integer vector |
+| `negate` | single logical value; whether a no-match to a pattern is rather of interest |
+| `to` | integer vector |
+| `opts_collator`, `opts_fixed` | a named list used to tune up the search engine\'s settings; see [`stri_opts_collator`](stri_opts_collator.md) and [`stri_opts_fixed`](stri_opts_fixed.md), respectively; `NULL` for the defaults |
 
 ## Details
 
@@ -103,7 +103,7 @@ Other search_detect: [`about_search`](about_search.md), [`stri_detect()`](stri_d
 
 
 
-```r
+``` r
 stri_startswith_charclass(' trim me! ', '\\p{WSpace}')
 ```
 
@@ -111,7 +111,7 @@ stri_startswith_charclass(' trim me! ', '\\p{WSpace}')
 ## [1] TRUE
 ```
 
-```r
+``` r
 stri_startswith_fixed(c('a1', 'a2', 'b3', 'a4', 'c5'), 'a')
 ```
 
@@ -119,7 +119,7 @@ stri_startswith_fixed(c('a1', 'a2', 'b3', 'a4', 'c5'), 'a')
 ## [1]  TRUE  TRUE FALSE  TRUE FALSE
 ```
 
-```r
+``` r
 stri_detect_regex(c('a1', 'a2', 'b3', 'a4', 'c5'), '^a')
 ```
 
@@ -127,7 +127,7 @@ stri_detect_regex(c('a1', 'a2', 'b3', 'a4', 'c5'), '^a')
 ## [1]  TRUE  TRUE FALSE  TRUE FALSE
 ```
 
-```r
+``` r
 stri_startswith_fixed('ababa', 'ba')
 ```
 
@@ -135,7 +135,7 @@ stri_startswith_fixed('ababa', 'ba')
 ## [1] FALSE
 ```
 
-```r
+``` r
 stri_startswith_fixed('ababa', 'ba', from=2)
 ```
 
@@ -143,7 +143,7 @@ stri_startswith_fixed('ababa', 'ba', from=2)
 ## [1] TRUE
 ```
 
-```r
+``` r
 stri_startswith_coll(c('a1', 'A2', 'b3', 'A4', 'C5'), 'a', strength=1)
 ```
 
@@ -151,7 +151,7 @@ stri_startswith_coll(c('a1', 'A2', 'b3', 'A4', 'C5'), 'a', strength=1)
 ## [1]  TRUE  TRUE FALSE  TRUE FALSE
 ```
 
-```r
+``` r
 pat <- stri_paste('\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ',
                   '\u0639\u0644\u064a\u0647 \u0648\u0633\u0644\u0645XYZ')
 stri_endswith_coll('\ufdfa\ufdfa\ufdfaXYZ', pat, strength=1)

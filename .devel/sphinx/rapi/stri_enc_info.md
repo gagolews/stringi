@@ -12,8 +12,8 @@ stri_enc_info(enc = NULL)
 
 ## Arguments
 
-|       |                                                                                |
-|-------|--------------------------------------------------------------------------------|
+|  |  |
+|----|----|
 | `enc` | `NULL` or `''` for the default encoding, or a single string with encoding name |
 
 ## Details

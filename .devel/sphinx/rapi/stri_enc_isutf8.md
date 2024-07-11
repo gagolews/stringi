@@ -38,14 +38,14 @@ The official online manual of <span class="pkg">stringi</span> at <https://strin
 
 Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, [doi:10.18637/jss.v103.i02](https://doi.org/10.18637/jss.v103.i02)
 
-Other encoding_detection: [`about_encoding`](about_encoding.md), [`stri_enc_detect2()`](stri_enc_detect2.md), [`stri_enc_detect()`](stri_enc_detect.md), [`stri_enc_isascii()`](stri_enc_isascii.md), [`stri_enc_isutf16be()`](stri_enc_isutf16.md)
+Other encoding_detection: [`about_encoding`](about_encoding.md), [`stri_enc_detect()`](stri_enc_detect.md), [`stri_enc_detect2()`](stri_enc_detect2.md), [`stri_enc_isascii()`](stri_enc_isascii.md), [`stri_enc_isutf16be()`](stri_enc_isutf16.md)
 
 ## Examples
 
 
 
 
-```r
+``` r
 stri_enc_isutf8(letters[1:3])
 ```
 
@@ -53,7 +53,7 @@ stri_enc_isutf8(letters[1:3])
 ## [1] TRUE TRUE TRUE
 ```
 
-```r
+``` r
 stri_enc_isutf8('\u0105\u0104')
 ```
 
@@ -61,7 +61,7 @@ stri_enc_isutf8('\u0105\u0104')
 ## [1] TRUE
 ```
 
-```r
+``` r
 stri_enc_isutf8('\u1234\u0222')
 ```
 

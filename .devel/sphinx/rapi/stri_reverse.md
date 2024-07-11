@@ -41,7 +41,7 @@ Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character str
 
 
 
-```r
+``` r
 stri_reverse(c('123', 'abc d e f'))
 ```
 
@@ -49,7 +49,7 @@ stri_reverse(c('123', 'abc d e f'))
 ## [1] "321"       "f e d cba"
 ```
 
-```r
+``` r
 stri_reverse('ZXY (\u0105\u0104123$^).')
 ```
 
@@ -57,7 +57,7 @@ stri_reverse('ZXY (\u0105\u0104123$^).')
 ## [1] ".)^$321Ąą( YXZ"
 ```
 
-```r
+``` r
 stri_reverse(stri_trans_nfd('\u0105')) == stri_trans_nfd('\u0105') # A, ogonek -> agonek, A
 ```
 

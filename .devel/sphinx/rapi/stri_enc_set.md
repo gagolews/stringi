@@ -14,8 +14,8 @@ stri_enc_get()
 
 ## Arguments
 
-|       |                                                                                                                      |
-|-------|----------------------------------------------------------------------------------------------------------------------|
+|  |  |
+|----|----|
 | `enc` | single string; character encoding name, see [`stri_enc_list`](stri_enc_list.md) for the list of supported encodings. |
 
 ## Details

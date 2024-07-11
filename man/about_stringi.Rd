@@ -2,6 +2,7 @@
 % Please edit documentation in R/stringi-package.R
 \docType{package}
 \name{about_stringi}
+\alias{-package}
 \alias{about_stringi}
 \alias{stringi}
 \alias{stringi-package}
@@ -143,12 +144,12 @@ Other stringi_general_topics:
 \code{\link{about_arguments}},
 \code{\link{about_encoding}},
 \code{\link{about_locale}},
+\code{\link{about_search}},
 \code{\link{about_search_boundaries}},
 \code{\link{about_search_charclass}},
 \code{\link{about_search_coll}},
 \code{\link{about_search_fixed}},
-\code{\link{about_search_regex}},
-\code{\link{about_search}}
+\code{\link{about_search_regex}}
 }
 \author{
 Marek Gagolewski,

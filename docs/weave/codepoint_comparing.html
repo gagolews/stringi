@@ -6,10 +6,10 @@
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Regular Expressions" href="regular_expressions.html" /><link rel="prev" title="Basic String Operations" href="basic_operations.html" />
         <link rel="canonical" href="https://stringi.gagolewski.com/weave/codepoint_comparing.html" />
 
-    <link rel="shortcut icon" href="https://www.gagolewski.com/_static/img/stringi.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+    <link rel="shortcut icon" href="https://www.gagolewski.com/_static/img/stringi.png"/><!-- Generated with Sphinx 7.3.7 and Furo 2024.05.06 -->
         <title>Code-Pointwise Comparing - R Package stringi</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=387cc868" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=5282ffc2" />
     
@@ -76,7 +76,7 @@
   <symbol id="svg-sun" viewBox="0 0 24 24">
     <title>Light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
       <circle cx="12" cy="12" r="5"></circle>
       <line x1="12" y1="1" x2="12" y2="3"></line>
       <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -91,7 +91,7 @@
   <symbol id="svg-moon" viewBox="0 0 24 24">
     <title>Dark mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
     </svg>
@@ -99,7 +99,7 @@
   <symbol id="svg-sun-half" viewBox="0 0 24 24">
     <title>Auto light/dark mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <circle cx="12" cy="12" r="9" />
       <path d="M13 12h5" />
@@ -107,6 +107,60 @@
       <path d="M13 18h1" />
       <path d="M13 9h4" />
       <path d="M13 6h1" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" /
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
     </svg>
   </symbol>
 </svg>
@@ -160,7 +214,7 @@
 <a class="sidebar-brand" href="../index.html">stringi</a>
 </span>
 <div class="sidebar-brand">
-1.8.4
+1.8.4.9001
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -324,11 +378,7 @@
         <div class="content-icon-container">
           <div class="edit-this-page">
   <a class="muted-link" href="https://github.com/gagolews/stringi/issues/" title="Edit this page">
-    <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
-      <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
-    </svg>
+    <svg><use href="#svg-pencil"></use></svg>
     <span class="visually-hidden">Edit this page</span>
   </a>
 </div><div class="theme-toggle-container theme-toggle-content">
@@ -346,7 +396,7 @@
         </div>
         <article role="main">
           <section class="tex2jax_ignore mathjax_ignore" id="code-pointwise-comparing">
-<span id="sec-fixed"></span><h1>Code-Pointwise Comparing<a class="headerlink" href="#code-pointwise-comparing" title="Link to this heading">#</a></h1>
+<span id="sec-fixed"></span><h1>Code-Pointwise Comparing<a class="headerlink" href="#code-pointwise-comparing" title="Link to this heading">¶</a></h1>
 <blockquote>
 <div><p>This tutorial is based on the <a class="reference external" href="https://dx.doi.org/10.18637/jss.v103.i02">paper on <em>stringi</em></a> that was published in the <em>Journal of Statistical Software</em>; see <span id="id1">[<a class="reference internal" href="../z_bibliography.html#id3" title="Gagolewski, M. (2022).  stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59. DOI: 10.18637/jss.v103.i02.">2</a>]</span>. To learn more about R, check out Marek’s open-access (free!) textbook <a class="reference external" href="https://deepr.gagolewski.com/"><em>Deep R Programming</em></a> <span id="id2">[<a class="reference internal" href="../z_bibliography.html#id4" title="Gagolewski, M. (2023).  Deep R Programming. Zenodo, Melbourne. ISBN 978-0-6455719-2-9. URL: https://deepr.gagolewski.com/, DOI: 10.5281/zenodo.7490464.">3</a>]</span>.</p>
 </div></blockquote>
@@ -357,7 +407,7 @@ a nucleotide sequence in a DNA profile and querying for system resources
 based on file names or UUIDs. Such tasks, due to their simplicity, can
 be performed very efficiently.</p>
 <section id="testing-for-equality-of-strings">
-<h2>Testing for Equality of Strings<a class="headerlink" href="#testing-for-equality-of-strings" title="Link to this heading">#</a></h2>
+<h2>Testing for Equality of Strings<a class="headerlink" href="#testing-for-equality-of-strings" title="Link to this heading">¶</a></h2>
 <p>To quickly test whether the corresponding strings in two character
 vectors are identical (in a code-pointwise manner), we can use the
 <code class="docutils literal notranslate"><span class="pre">%s===%</span></code> operator or, equivalently, the <code class="docutils literal notranslate"><span class="pre">stri_cmp_eq()</span></code> function.
@@ -371,7 +421,7 @@ relation.</p>
 the 2nd operand. There is only one exact match.</p>
 </section>
 <section id="searching-for-fixed-strings">
-<span id="sec-strsearch"></span><h2>Searching for Fixed Strings<a class="headerlink" href="#searching-for-fixed-strings" title="Link to this heading">#</a></h2>
+<span id="sec-strsearch"></span><h2>Searching for Fixed Strings<a class="headerlink" href="#searching-for-fixed-strings" title="Link to this heading">¶</a></h2>
 <p>For detecting if a string contains a given fixed substring
 (code-pointwisely), the fast KMP <span id="id3">[<a class="reference internal" href="../z_bibliography.html#id24" title="Knuth, D., Morris, J.H., and Pratt, V. (1977).  Fast pattern matching in strings. SIAM Journal on Computing, 6(2):323–350.">7</a>]</span> algorithm, with
 worst time complexity of <em>O(n+p)</em> (where <em>n</em> is the length of the string
@@ -426,7 +476,7 @@ and the <em>ICU</em> Collator, see <a class="reference internal" href="regular_e
 </div>
 </section>
 <section id="counting-matches">
-<h2>Counting Matches<a class="headerlink" href="#counting-matches" title="Link to this heading">#</a></h2>
+<h2>Counting Matches<a class="headerlink" href="#counting-matches" title="Link to this heading">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">stri_count_fixed()</span></code> function counts the number of times a fixed
 pattern occurs in a given string.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_count_fixed</span><span class="p">(</span><span class="s">&quot;abcabcdefabcabcabdc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;abc&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># search pattern is &quot;abc&quot;</span>
@@ -449,7 +499,7 @@ be forwarded as follows:</p>
 </div>
 </section>
 <section id="search-engine-options">
-<h2>Search Engine Options<a class="headerlink" href="#search-engine-options" title="Link to this heading">#</a></h2>
+<h2>Search Engine Options<a class="headerlink" href="#search-engine-options" title="Link to this heading">¶</a></h2>
 <p>The pattern matching engine may be tuned up by passing further arguments
 to the search functions (via “<code class="docutils literal notranslate"><span class="pre">...</span></code>”; they are redirected as-is to
 <code class="docutils literal notranslate"><span class="pre">stri_opts_fixed()</span></code>). The table below gives the list of available options.</p>
@@ -486,7 +536,7 @@ matches or whether searching should continue at the end of each match
 </div>
 </section>
 <section id="detecting-and-subsetting-patterns">
-<h2>Detecting and Subsetting Patterns<a class="headerlink" href="#detecting-and-subsetting-patterns" title="Link to this heading">#</a></h2>
+<h2>Detecting and Subsetting Patterns<a class="headerlink" href="#detecting-and-subsetting-patterns" title="Link to this heading">¶</a></h2>
 <p>A somewhat simplified version of the above search task asks
 whether a pattern occurs in a string at all. Such an operation can be
 performed with a call to <code class="docutils literal notranslate"><span class="pre">stri_detect_fixed()</span></code>.</p>
@@ -536,7 +586,7 @@ can write “<code class="docutils literal notranslate"><span class="pre">x</spa
 </div>
 </section>
 <section id="locating-and-extracting-patterns">
-<h2>Locating and Extracting Patterns<a class="headerlink" href="#locating-and-extracting-patterns" title="Link to this heading">#</a></h2>
+<h2>Locating and Extracting Patterns<a class="headerlink" href="#locating-and-extracting-patterns" title="Link to this heading">¶</a></h2>
 <p>The functions from the <code class="docutils literal notranslate"><span class="pre">stri_locate()</span></code> family aim to pinpoint the
 positions of pattern matches. First, we may be interested in getting to
 know the location of the first or the last pattern occurrence:</p>
@@ -614,7 +664,7 @@ functions from the <code class="docutils literal notranslate"><span class="pre">
 </div>
 </section>
 <section id="replacing-pattern-occurrences">
-<h2>Replacing Pattern Occurrences<a class="headerlink" href="#replacing-pattern-occurrences" title="Link to this heading">#</a></h2>
+<h2>Replacing Pattern Occurrences<a class="headerlink" href="#replacing-pattern-occurrences" title="Link to this heading">¶</a></h2>
 <p>In order to replace each match with a corresponding replacement string,
 we can refer to <code class="docutils literal notranslate"><span class="pre">stri_replace_all()</span></code>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;aga&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;actg&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ggAGAGAgaGAca&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;agagagaga&quot;</span><span class="p">)</span>
@@ -654,7 +704,7 @@ it with the 2nd corresponding replacement string, and so forth.</p>
 and replace the first and the last match, respectively.</p>
 </section>
 <section id="splitting">
-<h2>Splitting<a class="headerlink" href="#splitting" title="Link to this heading">#</a></h2>
+<h2>Splitting<a class="headerlink" href="#splitting" title="Link to this heading">¶</a></h2>
 <p>To split each element in the <code class="docutils literal notranslate"><span class="pre">haystack</span></code> into substrings, where the
 <code class="docutils literal notranslate"><span class="pre">needles</span></code> define the delimiters that separate the inputs into tokens, we
 call <code class="docutils literal notranslate"><span class="pre">stri_split()</span></code>:</p>
@@ -736,7 +786,7 @@ purpose; see <a class="reference internal" href="regular_expressions.html#sec-re
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2024-05-06T14:48:28+0200.
+              Last updated on 2024-07-11T12:31:23+0200.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -777,9 +827,9 @@ purpose; see <a class="reference internal" href="regular_expressions.html#sec-re
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=496f73d5"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+</div><script src="../_static/documentation_options.js?v=0cf862ba"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

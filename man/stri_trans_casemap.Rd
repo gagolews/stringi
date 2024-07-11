@@ -97,8 +97,8 @@ Other locale_sensitive:
 \code{\link{stri_opts_collator}()},
 \code{\link{stri_order}()},
 \code{\link{stri_rank}()},
-\code{\link{stri_sort_key}()},
 \code{\link{stri_sort}()},
+\code{\link{stri_sort_key}()},
 \code{\link{stri_split_boundaries}()},
 \code{\link{stri_unique}()},
 \code{\link{stri_wrap}()}
@@ -110,8 +110,8 @@ Other transform:
 \code{\link{stri_trans_nfc}()}
 
 Other text_boundaries: 
-\code{\link{about_search_boundaries}},
 \code{\link{about_search}},
+\code{\link{about_search_boundaries}},
 \code{\link{stri_count_boundaries}()},
 \code{\link{stri_extract_all_boundaries}()},
 \code{\link{stri_locate_all_boundaries}()},

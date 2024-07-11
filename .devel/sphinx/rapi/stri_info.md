@@ -12,8 +12,8 @@ stri_info(short = FALSE)
 
 ## Arguments
 
-|         |                                                                                           |
-|---------|-------------------------------------------------------------------------------------------|
+|  |  |
+|----|----|
 | `short` | logical; whether or not the results should be given in a concise form; defaults to `TRUE` |
 
 ## Value

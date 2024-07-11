@@ -16,9 +16,9 @@ e1 %stri*% e2
 
 ## Arguments
 
-|               |                                                                      |
-|---------------|----------------------------------------------------------------------|
-| `str`, `e1`   | a character vector of strings to be duplicated                       |
+|  |  |
+|----|----|
+| `str`, `e1` | a character vector of strings to be duplicated |
 | `times`, `e2` | an integer vector with the numbers of times to duplicate each string |
 
 ## Details
@@ -41,14 +41,14 @@ The official online manual of <span class="pkg">stringi</span> at <https://strin
 
 Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, [doi:10.18637/jss.v103.i02](https://doi.org/10.18637/jss.v103.i02)
 
-Other join: [`%s+%()`](+25s+2B+25.md), [`stri_flatten()`](stri_flatten.md), [`stri_join_list()`](stri_join_list.md), [`stri_join()`](stri_join.md)
+Other join: [`%s+%()`](+25s+2B+25.md), [`stri_flatten()`](stri_flatten.md), [`stri_join()`](stri_join.md), [`stri_join_list()`](stri_join_list.md)
 
 ## Examples
 
 
 
 
-```r
+``` r
 stri_dup('a', 1:5)
 ```
 
@@ -56,7 +56,7 @@ stri_dup('a', 1:5)
 ## [1] "a"     "aa"    "aaa"   "aaaa"  "aaaaa"
 ```
 
-```r
+``` r
 stri_dup(c('a', NA, 'ba'), 4)
 ```
 
@@ -64,7 +64,7 @@ stri_dup(c('a', NA, 'ba'), 4)
 ## [1] "aaaa"     NA         "babababa"
 ```
 
-```r
+``` r
 stri_dup(c('abc', 'pqrst'), c(4, 2))
 ```
 
@@ -72,7 +72,7 @@ stri_dup(c('abc', 'pqrst'), c(4, 2))
 ## [1] "abcabcabcabc" "pqrstpqrst"
 ```
 
-```r
+``` r
 "a" %s*% 5
 ```
 

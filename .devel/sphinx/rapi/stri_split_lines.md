@@ -14,9 +14,9 @@ stri_split_lines1(str)
 
 ## Arguments
 
-|              |                                                                                                                |
-|--------------|----------------------------------------------------------------------------------------------------------------|
-| `str`        | character vector (`stri_split_lines`) or a single string (`stri_split_lines1`)                                 |
+|  |  |
+|----|----|
+| `str` | character vector (`stri_split_lines`) or a single string (`stri_split_lines1`) |
 | `omit_empty` | logical vector; determines whether empty strings should be removed from the result \[`stri_split_lines` only\] |
 
 ## Details
@@ -51,6 +51,6 @@ The official online manual of <span class="pkg">stringi</span> at <https://strin
 
 Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, [doi:10.18637/jss.v103.i02](https://doi.org/10.18637/jss.v103.i02)
 
-Other search_split: [`about_search`](about_search.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_split()`](stri_split.md)
+Other search_split: [`about_search`](about_search.md), [`stri_split()`](stri_split.md), [`stri_split_boundaries()`](stri_split_boundaries.md)
 
-Other text_boundaries: [`about_search_boundaries`](about_search_boundaries.md), [`about_search`](about_search.md), [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_opts_brkiter()`](stri_opts_brkiter.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_trans_tolower()`](stri_trans_casemap.md), [`stri_wrap()`](stri_wrap.md)
+Other text_boundaries: [`about_search`](about_search.md), [`about_search_boundaries`](about_search_boundaries.md), [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_opts_brkiter()`](stri_opts_brkiter.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_trans_tolower()`](stri_trans_casemap.md), [`stri_wrap()`](stri_wrap.md)

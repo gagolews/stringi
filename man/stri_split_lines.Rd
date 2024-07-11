@@ -66,12 +66,12 @@ Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R
 
 Other search_split: 
 \code{\link{about_search}},
-\code{\link{stri_split_boundaries}()},
-\code{\link{stri_split}()}
+\code{\link{stri_split}()},
+\code{\link{stri_split_boundaries}()}
 
 Other text_boundaries: 
-\code{\link{about_search_boundaries}},
 \code{\link{about_search}},
+\code{\link{about_search_boundaries}},
 \code{\link{stri_count_boundaries}()},
 \code{\link{stri_extract_all_boundaries}()},
 \code{\link{stri_locate_all_boundaries}()},
