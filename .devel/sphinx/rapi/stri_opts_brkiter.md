@@ -24,19 +24,19 @@ stri_opts_brkiter(
 
 ## Arguments
 
-|                      |                                                                                                                                                                                                                |
-|----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `type`               | single string; either the break iterator type, one of `character`, `line_break`, `sentence`, `word`, or a custom set of ICU break iteration rules; see [stringi-search-boundaries](about_search_boundaries.md) |
-| `locale`             | single string, `NULL` or `''` for default locale                                                                                                                                                               |
-| `skip_word_none`     | logical; perform no action for \'words\' that do not fit into any other categories                                                                                                                             |
-| `skip_word_number`   | logical; perform no action for words that appear to be numbers                                                                                                                                                 |
-| `skip_word_letter`   | logical; perform no action for words that contain letters, excluding hiragana, katakana, or ideographic characters                                                                                             |
-| `skip_word_kana`     | logical; perform no action for words containing kana characters                                                                                                                                                |
-| `skip_word_ideo`     | logical; perform no action for words containing ideographic characters                                                                                                                                         |
-| `skip_line_soft`     | logical; perform no action for soft line breaks, i.e., positions where a line break is acceptable but not required                                                                                             |
-| `skip_line_hard`     | logical; perform no action for hard, or mandatory line breaks                                                                                                                                                  |
-| `skip_sentence_term` | logical; perform no action for sentences ending with a sentence terminator (\'`.`\', \'`,`\', \'`?`\', \'`!`\'), possibly followed by a hard separator (`CR`, `LF`, `PS`, etc.)                                |
-| `skip_sentence_sep`  | logical; perform no action for sentences that do not contain an ending sentence terminator, but are ended by a hard separator or end of input                                                                  |
+|  |  |
+|----|----|
+| `type` | single string; either the break iterator type, one of `character`, `line_break`, `sentence`, `word`, or a custom set of ICU break iteration rules; see [stringi-search-boundaries](about_search_boundaries.md) |
+| `locale` | single string, `NULL` or `''` for default locale |
+| `skip_word_none` | logical; perform no action for \'words\' that do not fit into any other categories |
+| `skip_word_number` | logical; perform no action for words that appear to be numbers |
+| `skip_word_letter` | logical; perform no action for words that contain letters, excluding hiragana, katakana, or ideographic characters |
+| `skip_word_kana` | logical; perform no action for words containing kana characters |
+| `skip_word_ideo` | logical; perform no action for words containing ideographic characters |
+| `skip_line_soft` | logical; perform no action for soft line breaks, i.e., positions where a line break is acceptable but not required |
+| `skip_line_hard` | logical; perform no action for hard, or mandatory line breaks |
+| `skip_sentence_term` | logical; perform no action for sentences ending with a sentence terminator (\'`.`\', \'`,`\', \'`?`\', \'`!`\'), possibly followed by a hard separator (`CR`, `LF`, `PS`, etc.) |
+| `skip_sentence_sep` | logical; perform no action for sentences that do not contain an ending sentence terminator, but are ended by a hard separator or end of input |
 
 ## Details
 
@@ -64,4 +64,4 @@ The official online manual of <span class="pkg">stringi</span> at <https://strin
 
 Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, [doi:10.18637/jss.v103.i02](https://doi.org/10.18637/jss.v103.i02)
 
-Other text_boundaries: [`about_search_boundaries`](about_search_boundaries.md), [`about_search`](about_search.md), [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_split_lines()`](stri_split_lines.md), [`stri_trans_tolower()`](stri_trans_casemap.md), [`stri_wrap()`](stri_wrap.md)
+Other text_boundaries: [`about_search`](about_search.md), [`about_search_boundaries`](about_search_boundaries.md), [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_split_lines()`](stri_split_lines.md), [`stri_trans_tolower()`](stri_trans_casemap.md), [`stri_wrap()`](stri_wrap.md)

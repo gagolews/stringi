@@ -18,13 +18,13 @@ stri_write_lines(
 
 ## Arguments
 
-|            |                                                                            |
-|------------|----------------------------------------------------------------------------|
-| `str`      | character vector with data to write                                        |
-| `con`      | name of the output file or a connection object (opened in the binary mode) |
-| `encoding` | output encoding, `NULL` or `''` for the current default one                |
-| `sep`      | newline separator                                                          |
-| `fname`    | \[DEPRECATED\] alias of `con`                                              |
+|  |  |
+|----|----|
+| `str` | character vector with data to write |
+| `con` | name of the output file or a connection object (opened in the binary mode) |
+| `encoding` | output encoding, `NULL` or `''` for the current default one |
+| `sep` | newline separator |
+| `fname` | \[DEPRECATED\] alias of `con` |
 
 ## Details
 

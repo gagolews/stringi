@@ -22,17 +22,17 @@ stri_datetime_create(
 
 ## Arguments
 
-|           |                                                                                                                                                             |
-|-----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `year`    | integer vector; 0 is 1BCE, -1 is 2BCE, etc.; `NULL` for the current year                                                                                    |
-| `month`   | integer vector; months are 1-based; `NULL` for the current month                                                                                            |
-| `day`     | integer vector; `NULL` for the current day                                                                                                                  |
-| `hour`    | integer vector; `NULL` for the current hour                                                                                                                 |
-| `minute`  | integer vector; `NULL` for the current minute                                                                                                               |
-| `second`  | numeric vector; fractional seconds are allowed; `NULL` for the current seconds (without milliseconds)                                                       |
-| `lenient` | single logical value; should the operation be lenient?                                                                                                      |
-| `tz`      | `NULL` or `''` for the default time zone or a single string with time zone identifier, see [`stri_timezone_list`](stri_timezone_list.md)                    |
-| `locale`  | `NULL` or `''` for default locale, or a single string with locale identifier; a non-Gregorian calendar may be specified by setting `@calendar=name` keyword |
+|  |  |
+|----|----|
+| `year` | integer vector; 0 is 1BCE, -1 is 2BCE, etc.; `NULL` for the current year |
+| `month` | integer vector; months are 1-based; `NULL` for the current month |
+| `day` | integer vector; `NULL` for the current day |
+| `hour` | integer vector; `NULL` for the current hour |
+| `minute` | integer vector; `NULL` for the current minute |
+| `second` | numeric vector; fractional seconds are allowed; `NULL` for the current seconds (without milliseconds) |
+| `lenient` | single logical value; should the operation be lenient? |
+| `tz` | `NULL` or `''` for the default time zone or a single string with time zone identifier, see [`stri_timezone_list`](stri_timezone_list.md) |
+| `locale` | `NULL` or `''` for default locale, or a single string with locale identifier; a non-Gregorian calendar may be specified by setting `@calendar=name` keyword |
 
 ## Details
 
@@ -59,7 +59,7 @@ Other datetime: [`stri_datetime_add()`](stri_datetime_add.md), [`stri_datetime_f
 
 
 
-```r
+``` r
 stri_datetime_create(2015, 12, 31, 23, 59, 59.999)
 ```
 
@@ -67,7 +67,7 @@ stri_datetime_create(2015, 12, 31, 23, 59, 59.999)
 ## [1] "2015-12-31 23:59:59 CET"
 ```
 
-```r
+``` r
 stri_datetime_create(5775, 8, 1, locale='@calendar=hebrew')  # 1 Nisan 5775 -> 2015-03-21
 ```
 
@@ -75,7 +75,7 @@ stri_datetime_create(5775, 8, 1, locale='@calendar=hebrew')  # 1 Nisan 5775 -> 2
 ## [1] "2015-03-21 CET"
 ```
 
-```r
+``` r
 stri_datetime_create(2015, 02, 29)
 ```
 
@@ -83,7 +83,7 @@ stri_datetime_create(2015, 02, 29)
 ## [1] NA
 ```
 
-```r
+``` r
 stri_datetime_create(2015, 02, 29, lenient=TRUE)
 ```
 
@@ -91,10 +91,10 @@ stri_datetime_create(2015, 02, 29, lenient=TRUE)
 ## [1] "2015-03-01 CET"
 ```
 
-```r
+``` r
 stri_datetime_create(hour=15, minute=59)
 ```
 
 ```
-## [1] "2024-05-06 15:59:00 CEST"
+## [1] "2024-07-11 15:59:00 CEST"
 ```

@@ -90,12 +90,12 @@ Other search_detect:
 \code{\link{stri_startswith}()}
 
 Other search_count: 
-\code{\link{stri_count_boundaries}()},
-\code{\link{stri_count}()}
+\code{\link{stri_count}()},
+\code{\link{stri_count_boundaries}()}
 
 Other search_locate: 
-\code{\link{stri_locate_all_boundaries}()},
-\code{\link{stri_locate_all}()}
+\code{\link{stri_locate_all}()},
+\code{\link{stri_locate_all_boundaries}()}
 
 Other search_replace: 
 \code{\link{stri_replace_all}()},
@@ -103,16 +103,16 @@ Other search_replace:
 \code{\link{stri_trim_both}()}
 
 Other search_split: 
+\code{\link{stri_split}()},
 \code{\link{stri_split_boundaries}()},
-\code{\link{stri_split_lines}()},
-\code{\link{stri_split}()}
+\code{\link{stri_split_lines}()}
 
 Other search_subset: 
 \code{\link{stri_subset}()}
 
 Other search_extract: 
-\code{\link{stri_extract_all_boundaries}()},
 \code{\link{stri_extract_all}()},
+\code{\link{stri_extract_all_boundaries}()},
 \code{\link{stri_match_all}()}
 
 Other stringi_general_topics: 

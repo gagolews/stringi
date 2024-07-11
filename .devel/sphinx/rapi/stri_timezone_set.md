@@ -55,7 +55,7 @@ Other timezone: [`stri_timezone_info()`](stri_timezone_info.md), [`stri_timezone
 
 
 
-```r
+``` r
 ## Not run: 
 oldtz <- stri_timezone_set('Europe/Warsaw')
 # ... many time zone-dependent operations

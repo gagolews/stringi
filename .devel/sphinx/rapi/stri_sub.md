@@ -25,18 +25,18 @@ stri_sub_replace(..., replacement, value = replacement)
 
 ## Arguments
 
-|                          |                                                                                                                                                                                                                                                       |
-|--------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`                    | character vector                                                                                                                                                                                                                                      |
-| `from`                   | integer vector giving the start indexes; alternatively, if `use_matrix=TRUE`, a two-column matrix of type `cbind(from, to)` (unnamed columns or the 2nd column named other than `length`) or `cbind(from, length=length)` (2nd column named `length`) |
-| `to`                     | integer vector giving the end indexes; mutually exclusive with `length` and `from` being a matrix                                                                                                                                                     |
-| `length`                 | integer vector giving the substring lengths; mutually exclusive with `to` and `from` being a matrix                                                                                                                                                   |
-| `use_matrix`             | single logical value; see `from`                                                                                                                                                                                                                      |
-| `ignore_negative_length` | single logical value; whether negative lengths should be ignored or result in missing values                                                                                                                                                          |
-| `omit_na`                | single logical value; indicates whether missing values in any of the indexes or in `value` leave the corresponding input string unchanged \[replacement function only\]                                                                               |
-| `value`                  | a character vector defining the replacement strings \[replacement function only\]                                                                                                                                                                     |
-| `...`                    | arguments to be passed to `stri_sub<-`                                                                                                                                                                                                                |
-| `replacement`            | alias of `value` \[wherever applicable\]                                                                                                                                                                                                              |
+|  |  |
+|----|----|
+| `str` | character vector |
+| `from` | integer vector giving the start indexes; alternatively, if `use_matrix=TRUE`, a two-column matrix of type `cbind(from, to)` (unnamed columns or the 2nd column named other than `length`) or `cbind(from, length=length)` (2nd column named `length`) |
+| `to` | integer vector giving the end indexes; mutually exclusive with `length` and `from` being a matrix |
+| `length` | integer vector giving the substring lengths; mutually exclusive with `to` and `from` being a matrix |
+| `use_matrix` | single logical value; see `from` |
+| `ignore_negative_length` | single logical value; whether negative lengths should be ignored or result in missing values |
+| `omit_na` | single logical value; indicates whether missing values in any of the indexes or in `value` leave the corresponding input string unchanged \[replacement function only\] |
+| `value` | a character vector defining the replacement strings \[replacement function only\] |
+| `...` | arguments to be passed to `stri_sub<-` |
+| `replacement` | alias of `value` \[wherever applicable\] |
 
 ## Details
 
@@ -70,14 +70,14 @@ The official online manual of <span class="pkg">stringi</span> at <https://strin
 
 Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, [doi:10.18637/jss.v103.i02](https://doi.org/10.18637/jss.v103.i02)
 
-Other indexing: [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_locate_all()`](stri_locate.md), [`stri_sub_all()`](stri_sub_all.md)
+Other indexing: [`stri_locate_all()`](stri_locate.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_sub_all()`](stri_sub_all.md)
 
 ## Examples
 
 
 
 
-```r
+``` r
 s <- c("spam, spam, bacon, and spam", "eggs and spam")
 stri_sub(s, from=-4)
 ```
@@ -86,7 +86,7 @@ stri_sub(s, from=-4)
 ## [1] "spam" "spam"
 ```
 
-```r
+``` r
 stri_sub(s, from=1, length=c(10, 4))
 ```
 
@@ -94,7 +94,7 @@ stri_sub(s, from=1, length=c(10, 4))
 ## [1] "spam, spam" "eggs"
 ```
 
-```r
+``` r
 (stri_sub(s, 1, 4) <- 'stringi')
 ```
 
@@ -102,7 +102,7 @@ stri_sub(s, from=1, length=c(10, 4))
 ## [1] "stringi"
 ```
 
-```r
+``` r
 x <- c('12 3456 789', 'abc', '', NA, '667')
 stri_sub(x, stri_locate_first_regex(x, '[0-9]+')) # see stri_extract_first
 ```
@@ -111,7 +111,7 @@ stri_sub(x, stri_locate_first_regex(x, '[0-9]+')) # see stri_extract_first
 ## [1] "12"  NA    NA    NA    "667"
 ```
 
-```r
+``` r
 stri_sub(x, stri_locate_last_regex(x, '[0-9]+'))  # see stri_extract_last
 ```
 
@@ -119,7 +119,7 @@ stri_sub(x, stri_locate_last_regex(x, '[0-9]+'))  # see stri_extract_last
 ## [1] "789" NA    NA    NA    "667"
 ```
 
-```r
+``` r
 stri_sub_replace(x, stri_locate_first_regex(x, '[0-9]+'),
     omit_na=TRUE, replacement='***') # see stri_replace_first
 ```
@@ -128,7 +128,7 @@ stri_sub_replace(x, stri_locate_first_regex(x, '[0-9]+'),
 ## [1] "*** 3456 789" "abc"          ""             NA             "***"
 ```
 
-```r
+``` r
 stri_sub_replace(x, stri_locate_last_regex(x, '[0-9]+'),
     omit_na=TRUE, replacement='***') # see stri_replace_last
 ```
@@ -137,6 +137,6 @@ stri_sub_replace(x, stri_locate_last_regex(x, '[0-9]+'),
 ## [1] "12 3456 ***" "abc"         ""            NA            "***"
 ```
 
-```r
+``` r
 ## Not run: x |> stri_sub_replace(1, 5, replacement='new_substring')
 ```

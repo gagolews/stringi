@@ -12,11 +12,11 @@ stri_datetime_fields(time, tz = attr(time, "tzone"), locale = NULL)
 
 ## Arguments
 
-|          |                                                                                                                                                                                                                      |
-|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `time`   | an object of class [`POSIXct`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/DateTimeClasses.html) (`as.POSIXct` will be called on character vectors and objects of class `POSIXlt`, `Date`, and `factor`) |
-| `tz`     | `NULL` or `''` for the default time zone or a single string with time zone identifier, see [`stri_timezone_list`](stri_timezone_list.md)                                                                             |
-| `locale` | `NULL` or `''` for the current default locale, or a single string with a locale identifier; a non-Gregorian calendar may be specified by setting `@calendar=name` keyword                                            |
+|  |  |
+|----|----|
+| `time` | an object of class [`POSIXct`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/DateTimeClasses.html) (`as.POSIXct` will be called on character vectors and objects of class `POSIXlt`, `Date`, and `factor`) |
+| `tz` | `NULL` or `''` for the default time zone or a single string with time zone identifier, see [`stri_timezone_list`](stri_timezone_list.md) |
+| `locale` | `NULL` or `''` for the current default locale, or a single string with a locale identifier; a non-Gregorian calendar may be specified by setting `@calendar=name` keyword |
 
 ## Details
 
@@ -71,34 +71,34 @@ Other datetime: [`stri_datetime_add()`](stri_datetime_add.md), [`stri_datetime_c
 
 
 
-```r
+``` r
 stri_datetime_fields(stri_datetime_now())
 ```
 
 ```
 ##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth
-## 1 2024     5   6   14     48     12         810         19           2
+## 1 2024     7  11   12     31      6         108         28           2
 ##   DayOfYear DayOfWeek Hour12 AmPm Era
-## 1       127         2      2    2   2
+## 1       193         5      0    2   2
 ```
 
-```r
+``` r
 stri_datetime_fields(stri_datetime_now(), locale='@calendar=hebrew')
 ```
 
 ```
 ##   Year Month Day Hour Minute Second Millisecond WeekOfYear WeekOfMonth
-## 1 5784     8  28   14     48     12         814         35           5
+## 1 5784    11   5   12     31      6         113         44           2
 ##   DayOfYear DayOfWeek Hour12 AmPm Era
-## 1       234         2      2    2   1
+## 1       300         5      0    2   1
 ```
 
-```r
+``` r
 stri_datetime_symbols(locale='@calendar=hebrew')$Month[
    stri_datetime_fields(stri_datetime_now(), locale='@calendar=hebrew')$Month
 ]
 ```
 
 ```
-## [1] "Nisan"
+## [1] "Tamuz"
 ```

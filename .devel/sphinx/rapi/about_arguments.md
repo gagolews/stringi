@@ -10,7 +10,7 @@ If some function violates one of the following rules (for a very important reaso
 
 When a character vector argument is expected, factors and other vectors coercible to characters vectors are silently converted with [`as.character`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/character.html), otherwise an error is generated. Coercion from a list which does not consist of length-1 atomic vectors issues a warning.
 
-When a logical, numeric, or integer vector argument is expected, factors are converted with `as.*(as.character(...))`, and other coercible vectors are converted with `as.*`, otherwise an error is generated.
+When a logical, numeric, or integer vector argument is expected, factors are converted with `as.*(`[`as.character`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/character.html)`(...))`, and other coercible vectors are converted with `as.*`, otherwise an error is generated.
 
 ## Vectorization
 
@@ -42,4 +42,4 @@ The official online manual of <span class="pkg">stringi</span> at <https://strin
 
 Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, [doi:10.18637/jss.v103.i02](https://doi.org/10.18637/jss.v103.i02)
 
-Other stringi_general_topics: [`about_encoding`](about_encoding.md), [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_charclass`](about_search_charclass.md), [`about_search_coll`](about_search_coll.md), [`about_search_fixed`](about_search_fixed.md), [`about_search_regex`](about_search_regex.md), [`about_search`](about_search.md), [`about_stringi`](about_stringi.md)
+Other stringi_general_topics: [`about_encoding`](about_encoding.md), [`about_locale`](about_locale.md), [`about_search`](about_search.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_charclass`](about_search_charclass.md), [`about_search_coll`](about_search_coll.md), [`about_search_fixed`](about_search_fixed.md), [`about_search_regex`](about_search_regex.md), [`about_stringi`](about_stringi.md)

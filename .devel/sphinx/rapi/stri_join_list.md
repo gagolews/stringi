@@ -16,11 +16,11 @@ stri_paste_list(x, sep = "", collapse = NULL)
 
 ## Arguments
 
-|            |                                                                            |
-|------------|----------------------------------------------------------------------------|
-| `x`        | a list consisting of character vectors                                     |
-| `sep`      | a single string; separates strings in each of the character vectors in `x` |
-| `collapse` | a single string or `NULL`; an optional results separator                   |
+|  |  |
+|----|----|
+| `x` | a list consisting of character vectors |
+| `sep` | a single string; separates strings in each of the character vectors in `x` |
+| `collapse` | a single string or `NULL`; an optional results separator |
 
 ## Details
 
@@ -51,7 +51,7 @@ Other join: [`%s+%()`](+25s+2B+25.md), [`stri_dup()`](stri_dup.md), [`stri_flatt
 
 
 
-```r
+``` r
 stri_join_list(
    stri_extract_all_words(c('Lorem ipsum dolor sit amet.',
    'Spam spam bacon sausage and spam.')),
@@ -63,7 +63,7 @@ sep=', ')
 ## [2] "Spam, spam, bacon, sausage, and, spam"
 ```
 
-```r
+``` r
 stri_join_list(
    stri_extract_all_words(c('Lorem ipsum dolor sit amet.',
    'Spam spam bacon sausage and spam.')),
@@ -74,7 +74,7 @@ sep=', ', collapse='. ')
 ## [1] "Lorem, ipsum, dolor, sit, amet. Spam, spam, bacon, sausage, and, spam"
 ```
 
-```r
+``` r
 stri_join_list(
    stri_extract_all_regex(
       c('spam spam bacon', '123 456', 'spam 789 sausage'), '\\p{L}+'
@@ -86,7 +86,7 @@ sep=',')
 ## [1] "spam,spam,bacon" NA                "spam,sausage"
 ```
 
-```r
+``` r
 stri_join_list(
    stri_extract_all_regex(
       c('spam spam bacon', '123 456', 'spam 789 sausage'), '\\p{L}+',

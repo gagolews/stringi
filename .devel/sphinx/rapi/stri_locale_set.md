@@ -14,8 +14,8 @@ stri_locale_get()
 
 ## Arguments
 
-|          |                                                                                                                                                          |
-|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+|  |  |
+|----|----|
 | `locale` | single string of the form `Language`, `Language_Country`, or `Language_Country_Variant`, e.g., `'en_US'`, see [`stri_locale_list`](stri_locale_list.md). |
 
 ## Details
@@ -47,16 +47,16 @@ Other locale_management: [`about_locale`](about_locale.md), [`stri_locale_info()
 
 
 
-```r
+``` r
 ## Not run: 
 oldloc <- stri_locale_set('pt_BR')
 ```
 
 ```
-## You are now working with stringi_1.8.4 (pt_BR.UTF-8; ICU4C 74.1 [bundle]; Unicode 15.1)
+## You are now working with stringi_1.8.4.9001 (pt_BR.UTF-8; ICU4C 75.1 [system#U_CHARSET_IS_UTF8]; Unicode 15.1)
 ```
 
-```r
+``` r
 # ... some locale-dependent operations
 # ... note that you may always modify a locale per-call
 # ... changing the default locale is convenient if you perform
@@ -65,9 +65,9 @@ stri_locale_set(oldloc) # restore the previous default locale
 ```
 
 ```
-## You are now working with stringi_1.8.4 (en_AU.UTF-8; ICU4C 74.1 [bundle]; Unicode 15.1)
+## You are now working with stringi_1.8.4.9001 (en_AU.UTF-8; ICU4C 75.1 [system#U_CHARSET_IS_UTF8]; Unicode 15.1)
 ```
 
-```r
+``` r
 ## End(Not run)
 ```

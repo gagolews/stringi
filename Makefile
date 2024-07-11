@@ -24,6 +24,7 @@ autoconf:
 	        roclets=c('rd', 'collate', 'namespace', 'vignette'),\
 	        load_code=roxygen2::load_installed\
 	    )"
+	# load_installed prevents the unneeded recompilation of the source files
 
 r: autoconf
 	R CMD INSTALL . --html \

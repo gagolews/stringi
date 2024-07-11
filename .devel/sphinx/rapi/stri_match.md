@@ -43,15 +43,15 @@ stri_match_last_regex(
 
 ## Arguments
 
-|                    |                                                                                                                                         |
-|--------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| `str`              | character vector; strings to search in                                                                                                  |
-| `...`              | supplementary arguments passed to the underlying functions, including additional settings for `opts_regex`                              |
-| `mode`             | single string; one of: `'first'` (the default), `'all'`, `'last'`                                                                       |
-| `pattern`, `regex` | character vector; search patterns; for more details refer to [stringi-search](about_search.md)                                          |
-| `omit_no_match`    | single logical value; if `FALSE`, then a row with missing values will indicate that there was no match; `stri_match_all_*` only         |
-| `cg_missing`       | single string to be used if a capture group match is unavailable                                                                        |
-| `opts_regex`       | a named list with <span class="pkg">ICU</span> Regex settings, see [`stri_opts_regex`](stri_opts_regex.md); `NULL` for default settings |
+|  |  |
+|----|----|
+| `str` | character vector; strings to search in |
+| `...` | supplementary arguments passed to the underlying functions, including additional settings for `opts_regex` |
+| `mode` | single string; one of: `'first'` (the default), `'all'`, `'last'` |
+| `pattern`, `regex` | character vector; search patterns; for more details refer to [stringi-search](about_search.md) |
+| `omit_no_match` | single logical value; if `FALSE`, then a row with missing values will indicate that there was no match; `stri_match_all_*` only |
+| `cg_missing` | single string to be used if a capture group match is unavailable |
+| `opts_regex` | a named list with <span class="pkg">ICU</span> Regex settings, see [`stri_opts_regex`](stri_opts_regex.md); `NULL` for default settings |
 
 ## Details
 
@@ -81,14 +81,14 @@ The official online manual of <span class="pkg">stringi</span> at <https://strin
 
 Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, [doi:10.18637/jss.v103.i02](https://doi.org/10.18637/jss.v103.i02)
 
-Other search_extract: [`about_search`](about_search.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_extract_all()`](stri_extract.md)
+Other search_extract: [`about_search`](about_search.md), [`stri_extract_all()`](stri_extract.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md)
 
 ## Examples
 
 
 
 
-```r
+``` r
 stri_match_all_regex('breakfast=eggs, lunch=pizza, dessert=icecream',
    '(\\w+)=(\\w+)')
 ```
@@ -101,7 +101,7 @@ stri_match_all_regex('breakfast=eggs, lunch=pizza, dessert=icecream',
 ## [3,] "dessert=icecream" "dessert"   "icecream"
 ```
 
-```r
+``` r
 stri_match_all_regex(c('breakfast=eggs', 'lunch=pizza', 'no food here'),
    '(\\w+)=(\\w+)')
 ```
@@ -120,7 +120,7 @@ stri_match_all_regex(c('breakfast=eggs', 'lunch=pizza', 'no food here'),
 ## [1,] NA   NA   NA
 ```
 
-```r
+``` r
 stri_match_all_regex(c('breakfast=eggs;lunch=pizza',
    'breakfast=bacon;lunch=spaghetti', 'no food here'),
    '(\\w+)=(\\w+)')
@@ -142,7 +142,7 @@ stri_match_all_regex(c('breakfast=eggs;lunch=pizza',
 ## [1,] NA   NA   NA
 ```
 
-```r
+``` r
 stri_match_all_regex(c('breakfast=eggs;lunch=pizza',
    'breakfast=bacon;lunch=spaghetti', 'no food here'),
    '(?<when>\\w+)=(?<what>\\w+)')  # named capture groups
@@ -164,7 +164,7 @@ stri_match_all_regex(c('breakfast=eggs;lunch=pizza',
 ## [1,] NA NA   NA
 ```
 
-```r
+``` r
 stri_match_first_regex(c('breakfast=eggs;lunch=pizza',
    'breakfast=bacon;lunch=spaghetti', 'no food here'),
    '(\\w+)=(\\w+)')
@@ -177,7 +177,7 @@ stri_match_first_regex(c('breakfast=eggs;lunch=pizza',
 ## [3,] NA                NA          NA
 ```
 
-```r
+``` r
 stri_match_last_regex(c('breakfast=eggs;lunch=pizza',
    'breakfast=bacon;lunch=spaghetti', 'no food here'),
    '(\\w+)=(\\w+)')
@@ -190,7 +190,7 @@ stri_match_last_regex(c('breakfast=eggs;lunch=pizza',
 ## [3,] NA                NA      NA
 ```
 
-```r
+``` r
 stri_match_first_regex(c('abcd', ':abcd', ':abcd:'), '^(:)?([^:]*)(:)?$')
 ```
 
@@ -201,7 +201,7 @@ stri_match_first_regex(c('abcd', ':abcd', ':abcd:'), '^(:)?([^:]*)(:)?$')
 ## [3,] ":abcd:" ":"  "abcd" ":"
 ```
 
-```r
+``` r
 stri_match_first_regex(c('abcd', ':abcd', ':abcd:'), '^(:)?([^:]*)(:)?$', cg_missing='')
 ```
 
@@ -212,7 +212,7 @@ stri_match_first_regex(c('abcd', ':abcd', ':abcd:'), '^(:)?([^:]*)(:)?$', cg_mis
 ## [3,] ":abcd:" ":"  "abcd" ":"
 ```
 
-```r
+``` r
 # Match all the pattern of the form XYX, including overlapping matches:
 stri_match_all_regex('ACAGAGACTTTAGATAGAGAAGA', '(?=(([ACGT])[ACGT]\\2))')[[1]][,2]
 ```
@@ -221,7 +221,7 @@ stri_match_all_regex('ACAGAGACTTTAGATAGAGAAGA', '(?=(([ACGT])[ACGT]\\2))')[[1]][
 ##  [1] "ACA" "AGA" "GAG" "AGA" "TTT" "AGA" "ATA" "AGA" "GAG" "AGA" "AGA"
 ```
 
-```r
+``` r
 # Compare the above to:
 stri_extract_all_regex('ACAGAGACTTTAGATAGAGAAGA', '([ACGT])[ACGT]\\1')
 ```

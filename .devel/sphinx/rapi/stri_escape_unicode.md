@@ -43,7 +43,7 @@ Other escape: [`stri_unescape_unicode()`](stri_unescape_unicode.md)
 
 
 
-```r
+``` r
 stri_escape_unicode('a\u0105!')
 ```
 

@@ -59,7 +59,7 @@ Other length: [`%s$%()`](+25s+24+25.md), [`stri_isempty()`](stri_isempty.md), [`
 
 
 
-```r
+``` r
 stri_width(LETTERS[1:5])
 ```
 
@@ -67,7 +67,7 @@ stri_width(LETTERS[1:5])
 ## [1] 1 1 1 1 1
 ```
 
-```r
+``` r
 stri_width(stri_trans_nfkd('\u0105'))
 ```
 
@@ -75,7 +75,7 @@ stri_width(stri_trans_nfkd('\u0105'))
 ## [1] 1
 ```
 
-```r
+``` r
 stri_width(stri_trans_nfkd('\U0001F606'))
 ```
 
@@ -83,7 +83,7 @@ stri_width(stri_trans_nfkd('\U0001F606'))
 ## [1] 2
 ```
 
-```r
+``` r
 stri_width( # Full-width equivalents of ASCII characters:
    stri_enc_fromutf32(as.list(c(0x3000, 0xFF01:0xFF5E)))
 )
@@ -95,7 +95,7 @@ stri_width( # Full-width equivalents of ASCII characters:
 ## [77] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
 ```
 
-```r
+``` r
 stri_width(stri_trans_nfkd('\ubc1f')) # includes Hangul Jamo medial vowels and final consonants
 ```
 

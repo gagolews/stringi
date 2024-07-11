@@ -58,16 +58,16 @@ Other search_charclass: [`about_search_charclass`](about_search_charclass.md), [
 
 Other search_detect: [`stri_detect()`](stri_detect.md), [`stri_startswith()`](stri_startsendswith.md)
 
-Other search_count: [`stri_count_boundaries()`](stri_count_boundaries.md), [`stri_count()`](stri_count.md)
+Other search_count: [`stri_count()`](stri_count.md), [`stri_count_boundaries()`](stri_count_boundaries.md)
 
-Other search_locate: [`stri_locate_all_boundaries()`](stri_locate_boundaries.md), [`stri_locate_all()`](stri_locate.md)
+Other search_locate: [`stri_locate_all()`](stri_locate.md), [`stri_locate_all_boundaries()`](stri_locate_boundaries.md)
 
 Other search_replace: [`stri_replace_all()`](stri_replace.md), [`stri_replace_rstr()`](stri_replace_rstr.md), [`stri_trim_both()`](stri_trim.md)
 
-Other search_split: [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_split_lines()`](stri_split_lines.md), [`stri_split()`](stri_split.md)
+Other search_split: [`stri_split()`](stri_split.md), [`stri_split_boundaries()`](stri_split_boundaries.md), [`stri_split_lines()`](stri_split_lines.md)
 
 Other search_subset: [`stri_subset()`](stri_subset.md)
 
-Other search_extract: [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_extract_all()`](stri_extract.md), [`stri_match_all()`](stri_match.md)
+Other search_extract: [`stri_extract_all()`](stri_extract.md), [`stri_extract_all_boundaries()`](stri_extract_boundaries.md), [`stri_match_all()`](stri_match.md)
 
 Other stringi_general_topics: [`about_arguments`](about_arguments.md), [`about_encoding`](about_encoding.md), [`about_locale`](about_locale.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_charclass`](about_search_charclass.md), [`about_search_coll`](about_search_coll.md), [`about_search_fixed`](about_search_fixed.md), [`about_search_regex`](about_search_regex.md), [`about_stringi`](about_stringi.md)

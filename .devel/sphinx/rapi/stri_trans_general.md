@@ -20,12 +20,12 @@ stri_trans_general(str, id, rules = FALSE, forward = TRUE)
 
 ## Arguments
 
-|           |                                                                                                                                 |
-|-----------|---------------------------------------------------------------------------------------------------------------------------------|
-| `str`     | character vector                                                                                                                |
-| `id`      | a single string with transform identifier, see [`stri_trans_list`](stri_trans_list.md), or custom transliteration rules         |
-| `rules`   | if `TRUE`, treat `id` as a string with semicolon-separated transliteration rules (see the <span class="pkg">ICU</span> manual); |
-| `forward` | transliteration direction (`TRUE` for forward, `FALSE` for reverse)                                                             |
+|  |  |
+|----|----|
+| `str` | character vector |
+| `id` | a single string with transform identifier, see [`stri_trans_list`](stri_trans_list.md), or custom transliteration rules |
+| `rules` | if `TRUE`, treat `id` as a string with semicolon-separated transliteration rules (see the <span class="pkg">ICU</span> manual); |
+| `forward` | transliteration direction (`TRUE` for forward, `FALSE` for reverse) |
 
 ## Details
 
@@ -64,7 +64,7 @@ Other transform: [`stri_trans_char()`](stri_trans_char.md), [`stri_trans_list()`
 
 
 
-```r
+``` r
 stri_trans_general('gro\u00df', 'latin-ascii')
 ```
 
@@ -72,7 +72,7 @@ stri_trans_general('gro\u00df', 'latin-ascii')
 ## [1] "gross"
 ```
 
-```r
+``` r
 stri_trans_general('stringi', 'latin-greek')
 ```
 
@@ -80,7 +80,7 @@ stri_trans_general('stringi', 'latin-greek')
 ## [1] "στριγγι"
 ```
 
-```r
+``` r
 stri_trans_general('stringi', 'latin-cyrillic')
 ```
 
@@ -88,7 +88,7 @@ stri_trans_general('stringi', 'latin-cyrillic')
 ## [1] "стринги"
 ```
 
-```r
+``` r
 stri_trans_general('stringi', 'upper') # see stri_trans_toupper
 ```
 
@@ -96,7 +96,7 @@ stri_trans_general('stringi', 'upper') # see stri_trans_toupper
 ## [1] "STRINGI"
 ```
 
-```r
+``` r
 stri_trans_general('\u0104', 'nfd; lower') # compound id; see stri_trans_nfd
 ```
 
@@ -104,7 +104,7 @@ stri_trans_general('\u0104', 'nfd; lower') # compound id; see stri_trans_nfd
 ## [1] "ą"
 ```
 
-```r
+``` r
 stri_trans_general('Marek G\u0105golewski', 'pl-pl_FONIPA')
 ```
 
@@ -112,7 +112,7 @@ stri_trans_general('Marek G\u0105golewski', 'pl-pl_FONIPA')
 ## [1] "marɛk ɡɔŋɡɔlɛfski"
 ```
 
-```r
+``` r
 stri_trans_general('\u2620', 'any-name') # character name
 ```
 
@@ -120,7 +120,7 @@ stri_trans_general('\u2620', 'any-name') # character name
 ## [1] "\\N{SKULL AND CROSSBONES}"
 ```
 
-```r
+``` r
 stri_trans_general('\\N{latin small letter a}', 'name-any') # decode name
 ```
 
@@ -128,7 +128,7 @@ stri_trans_general('\\N{latin small letter a}', 'name-any') # decode name
 ## [1] "a"
 ```
 
-```r
+``` r
 stri_trans_general('\u2620', 'hex/c') # to hex
 ```
 
@@ -136,7 +136,7 @@ stri_trans_general('\u2620', 'hex/c') # to hex
 ## [1] "\\u2620"
 ```
 
-```r
+``` r
 stri_trans_general("\u201C\u2026\u201D \u0105\u015B\u0107\u017C",
     "NFKD; NFC; [^\\p{L}] latin-ascii")
 ```
@@ -145,7 +145,7 @@ stri_trans_general("\u201C\u2026\u201D \u0105\u015B\u0107\u017C",
 ## [1] "\"...\" ąśćż"
 ```
 
-```r
+``` r
 x <- "\uC885\uB85C\uAD6C \uC0AC\uC9C1\uB3D9"
 stringi::stri_trans_general(x, "Hangul-Latin")
 ```
@@ -154,7 +154,7 @@ stringi::stri_trans_general(x, "Hangul-Latin")
 ## [1] "jonglogu sajigdong"
 ```
 
-```r
+``` r
 # Deviate from the ICU rules of romanisation of Korean,
 # see https://en.wikipedia.org/wiki/Romanization_of_Korean
 id <- "

@@ -35,7 +35,7 @@ Other transform: [`stri_trans_char()`](stri_trans_char.md), [`stri_trans_general
 
 
 
-```r
+``` r
 stri_trans_list()
 ```
 

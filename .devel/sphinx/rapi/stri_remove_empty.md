@@ -52,7 +52,7 @@ Other utils: [`stri_list2matrix()`](stri_list2matrix.md), [`stri_na2empty()`](st
 
 
 
-```r
+``` r
 stri_remove_empty(stri_na2empty(c('a', NA, '', 'b')))
 ```
 
@@ -60,7 +60,7 @@ stri_remove_empty(stri_na2empty(c('a', NA, '', 'b')))
 ## [1] "a" "b"
 ```
 
-```r
+``` r
 stri_remove_empty(c('a', NA, '', 'b'))
 ```
 
@@ -68,7 +68,7 @@ stri_remove_empty(c('a', NA, '', 'b'))
 ## [1] "a" NA  "b"
 ```
 
-```r
+``` r
 stri_remove_empty(c('a', NA, '', 'b'), TRUE)
 ```
 
@@ -76,7 +76,7 @@ stri_remove_empty(c('a', NA, '', 'b'), TRUE)
 ## [1] "a" "b"
 ```
 
-```r
+``` r
 stri_omit_empty_na(c('a', NA, '', 'b'))
 ```
 

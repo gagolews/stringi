@@ -12,8 +12,8 @@ stri_enc_list(simplify = TRUE)
 
 ## Arguments
 
-|            |                                                                                 |
-|------------|---------------------------------------------------------------------------------|
+|  |  |
+|----|----|
 | `simplify` | single logical value; return a character vector or a list of character vectors? |
 
 ## Details
@@ -43,7 +43,7 @@ Other encoding_management: [`about_encoding`](about_encoding.md), [`stri_enc_inf
 
 
 
-```r
+``` r
 stri_enc_list()
 ```
 
@@ -1253,7 +1253,7 @@ stri_enc_list()
 ## [1203] "x11-compound-text"
 ```
 
-```r
+``` r
 stri_enc_list(FALSE)
 ```
 

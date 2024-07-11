@@ -41,7 +41,7 @@ Other length: [`%s$%()`](+25s+24+25.md), [`stri_length()`](stri_length.md), [`st
 
 
 
-```r
+``` r
 stri_isempty(letters[1:3])
 ```
 
@@ -49,7 +49,7 @@ stri_isempty(letters[1:3])
 ## [1] FALSE FALSE FALSE
 ```
 
-```r
+``` r
 stri_isempty(c(',', '', 'abc', '123', '\u0105\u0104'))
 ```
 
@@ -57,7 +57,7 @@ stri_isempty(c(',', '', 'abc', '123', '\u0105\u0104'))
 ## [1] FALSE  TRUE FALSE FALSE FALSE
 ```
 
-```r
+``` r
 stri_isempty(character(1))
 ```
 

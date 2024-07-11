@@ -12,10 +12,10 @@ stri_read_raw(con, fname = con)
 
 ## Arguments
 
-|         |                                                                            |
-|---------|----------------------------------------------------------------------------|
-| `con`   | name of the output file or a connection object (opened in the binary mode) |
-| `fname` | \[DEPRECATED\] alias of `con`                                              |
+|  |  |
+|----|----|
+| `con` | name of the output file or a connection object (opened in the binary mode) |
+| `fname` | \[DEPRECATED\] alias of `con` |
 
 ## Details
 

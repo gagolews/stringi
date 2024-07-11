@@ -46,8 +46,8 @@ Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R
 Other join: 
 \code{\link{\%s+\%}()},
 \code{\link{stri_flatten}()},
-\code{\link{stri_join_list}()},
-\code{\link{stri_join}()}
+\code{\link{stri_join}()},
+\code{\link{stri_join_list}()}
 }
 \concept{join}
 \author{

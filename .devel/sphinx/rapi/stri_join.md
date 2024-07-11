@@ -16,12 +16,12 @@ stri_paste(..., sep = "", collapse = NULL, ignore_null = FALSE)
 
 ## Arguments
 
-|               |                                                                                                                   |
-|---------------|-------------------------------------------------------------------------------------------------------------------|
-| `...`         | character vectors (or objects coercible to character vectors) whose corresponding elements are to be concatenated |
-| `sep`         | a single string; separates terms                                                                                  |
-| `collapse`    | a single string or `NULL`; an optional results separator                                                          |
-| `ignore_null` | a single logical value; if `TRUE`, then empty vectors provided via `...` are silently ignored                     |
+|  |  |
+|----|----|
+| `...` | character vectors (or objects coercible to character vectors) whose corresponding elements are to be concatenated |
+| `sep` | a single string; separates terms |
+| `collapse` | a single string or `NULL`; an optional results separator |
+| `ignore_null` | a single logical value; if `TRUE`, then empty vectors provided via `...` are silently ignored |
 
 ## Details
 
@@ -56,7 +56,7 @@ Other join: [`%s+%()`](+25s+2B+25.md), [`stri_dup()`](stri_dup.md), [`stri_flatt
 
 
 
-```r
+``` r
 stri_join(1:13, letters)
 ```
 
@@ -66,7 +66,7 @@ stri_join(1:13, letters)
 ## [25] "12y" "13z"
 ```
 
-```r
+``` r
 stri_join(1:13, letters, sep=',')
 ```
 
@@ -76,7 +76,7 @@ stri_join(1:13, letters, sep=',')
 ## [21] "8,u"  "9,v"  "10,w" "11,x" "12,y" "13,z"
 ```
 
-```r
+``` r
 stri_join(1:13, letters, collapse='; ')
 ```
 
@@ -84,7 +84,7 @@ stri_join(1:13, letters, collapse='; ')
 ## [1] "1a; 2b; 3c; 4d; 5e; 6f; 7g; 8h; 9i; 10j; 11k; 12l; 13m; 1n; 2o; 3p; 4q; 5r; 6s; 7t; 8u; 9v; 10w; 11x; 12y; 13z"
 ```
 
-```r
+``` r
 stri_join(1:13, letters, sep=',', collapse='; ')
 ```
 
@@ -92,7 +92,7 @@ stri_join(1:13, letters, sep=',', collapse='; ')
 ## [1] "1,a; 2,b; 3,c; 4,d; 5,e; 6,f; 7,g; 8,h; 9,i; 10,j; 11,k; 12,l; 13,m; 1,n; 2,o; 3,p; 4,q; 5,r; 6,s; 7,t; 8,u; 9,v; 10,w; 11,x; 12,y; 13,z"
 ```
 
-```r
+``` r
 stri_join(c('abc', '123', 'xyz'),'###', 1:6, sep=',')
 ```
 
@@ -100,7 +100,7 @@ stri_join(c('abc', '123', 'xyz'),'###', 1:6, sep=',')
 ## [1] "abc,###,1" "123,###,2" "xyz,###,3" "abc,###,4" "123,###,5" "xyz,###,6"
 ```
 
-```r
+``` r
 stri_join(c('abc', '123', 'xyz'),'###', 1:6, sep=',', collapse='; ')
 ```
 

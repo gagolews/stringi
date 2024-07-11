@@ -42,7 +42,7 @@ Other utils: [`stri_list2matrix()`](stri_list2matrix.md), [`stri_na2empty()`](st
 
 
 
-```r
+``` r
 x <- c('test', NA)
 stri_paste(x, 1:2)                           # 'test1' NA
 ```
@@ -51,7 +51,7 @@ stri_paste(x, 1:2)                           # 'test1' NA
 ## [1] "test1" NA
 ```
 
-```r
+``` r
 paste(x, 1:2)                                # 'test 1' 'NA 2'
 ```
 
@@ -59,7 +59,7 @@ paste(x, 1:2)                                # 'test 1' 'NA 2'
 ## [1] "test 1" "NA 2"
 ```
 
-```r
+``` r
 stri_paste(stri_replace_na(x), 1:2, sep=' ') # 'test 1' 'NA 2'
 ```
 

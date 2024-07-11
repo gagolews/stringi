@@ -223,12 +223,12 @@ Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R
 Other stringi_general_topics: 
 \code{\link{about_arguments}},
 \code{\link{about_locale}},
+\code{\link{about_search}},
 \code{\link{about_search_boundaries}},
 \code{\link{about_search_charclass}},
 \code{\link{about_search_coll}},
 \code{\link{about_search_fixed}},
 \code{\link{about_search_regex}},
-\code{\link{about_search}},
 \code{\link{about_stringi}}
 
 Other encoding_management: 
@@ -238,8 +238,8 @@ Other encoding_management:
 \code{\link{stri_enc_set}()}
 
 Other encoding_detection: 
-\code{\link{stri_enc_detect2}()},
 \code{\link{stri_enc_detect}()},
+\code{\link{stri_enc_detect2}()},
 \code{\link{stri_enc_isascii}()},
 \code{\link{stri_enc_isutf16be}()},
 \code{\link{stri_enc_isutf8}()}

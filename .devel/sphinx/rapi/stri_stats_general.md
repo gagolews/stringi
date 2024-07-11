@@ -53,7 +53,7 @@ Other stats: [`stri_stats_latex()`](stri_stats_latex.md)
 
 
 
-```r
+``` r
 s <- c('Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
        'nibh augue, suscipit a, scelerisque sed, lacinia in, mi.',
        'Cras vel lorem. Etiam pellentesque aliquet tellus.',

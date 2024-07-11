@@ -54,16 +54,16 @@ stri_split_charclass(
 
 ## Arguments
 
-|                                                  |                                                                                                                                                                                                                                            |
-|--------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str`                                            | character vector; strings to search in                                                                                                                                                                                                     |
-| `...`                                            | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_regex`, `opts_fixed`, and so on                                                                                       |
-| `pattern`, `regex`, `fixed`, `coll`, `charclass` | character vector; search patterns; for more details refer to [stringi-search](about_search.md)                                                                                                                                             |
-| `n`                                              | integer vector, maximal number of strings to return, and, at the same time, maximal number of text boundaries to look for                                                                                                                  |
-| `omit_empty`                                     | logical vector; determines whether empty tokens should be removed from the result (`TRUE` or `FALSE`) or replaced with `NA`s (`NA`)                                                                                                        |
-| `tokens_only`                                    | single logical value; may affect the result if `n` is positive, see Details                                                                                                                                                                |
-| `simplify`                                       | single logical value; if `TRUE` or `NA`, then a character matrix is returned; otherwise (the default), a list of character vectors is given, see Value                                                                                     |
-| `opts_collator`, `opts_fixed`, `opts_regex`      | a named list used to tune up the search engine\'s settings; see [`stri_opts_collator`](stri_opts_collator.md), [`stri_opts_fixed`](stri_opts_fixed.md), and [`stri_opts_regex`](stri_opts_regex.md), respectively; `NULL` for the defaults |
+|  |  |
+|----|----|
+| `str` | character vector; strings to search in |
+| `...` | supplementary arguments passed to the underlying functions, including additional settings for `opts_collator`, `opts_regex`, `opts_fixed`, and so on |
+| `pattern`, `regex`, `fixed`, `coll`, `charclass` | character vector; search patterns; for more details refer to [stringi-search](about_search.md) |
+| `n` | integer vector, maximal number of strings to return, and, at the same time, maximal number of text boundaries to look for |
+| `omit_empty` | logical vector; determines whether empty tokens should be removed from the result (`TRUE` or `FALSE`) or replaced with `NA`s (`NA`) |
+| `tokens_only` | single logical value; may affect the result if `n` is positive, see Details |
+| `simplify` | single logical value; if `TRUE` or `NA`, then a character matrix is returned; otherwise (the default), a list of character vectors is given, see Value |
+| `opts_collator`, `opts_fixed`, `opts_regex` | a named list used to tune up the search engine\'s settings; see [`stri_opts_collator`](stri_opts_collator.md), [`stri_opts_fixed`](stri_opts_fixed.md), and [`stri_opts_regex`](stri_opts_regex.md), respectively; `NULL` for the defaults |
 
 ## Details
 
@@ -100,7 +100,7 @@ Other search_split: [`about_search`](about_search.md), [`stri_split_boundaries()
 
 
 
-```r
+``` r
 stri_split_fixed('a_b_c_d', '_')
 ```
 
@@ -109,7 +109,7 @@ stri_split_fixed('a_b_c_d', '_')
 ## [1] "a" "b" "c" "d"
 ```
 
-```r
+``` r
 stri_split_fixed('a_b_c__d', '_')
 ```
 
@@ -118,7 +118,7 @@ stri_split_fixed('a_b_c__d', '_')
 ## [1] "a" "b" "c" ""  "d"
 ```
 
-```r
+``` r
 stri_split_fixed('a_b_c__d', '_', omit_empty=TRUE)
 ```
 
@@ -127,7 +127,7 @@ stri_split_fixed('a_b_c__d', '_', omit_empty=TRUE)
 ## [1] "a" "b" "c" "d"
 ```
 
-```r
+``` r
 stri_split_fixed('a_b_c__d', '_', n=2, tokens_only=FALSE) # 'a' & remainder
 ```
 
@@ -136,7 +136,7 @@ stri_split_fixed('a_b_c__d', '_', n=2, tokens_only=FALSE) # 'a' & remainder
 ## [1] "a"      "b_c__d"
 ```
 
-```r
+``` r
 stri_split_fixed('a_b_c__d', '_', n=2, tokens_only=TRUE) # 'a' & 'b' only
 ```
 
@@ -145,7 +145,7 @@ stri_split_fixed('a_b_c__d', '_', n=2, tokens_only=TRUE) # 'a' & 'b' only
 ## [1] "a" "b"
 ```
 
-```r
+``` r
 stri_split_fixed('a_b_c__d', '_', n=4, omit_empty=TRUE, tokens_only=TRUE)
 ```
 
@@ -154,7 +154,7 @@ stri_split_fixed('a_b_c__d', '_', n=4, omit_empty=TRUE, tokens_only=TRUE)
 ## [1] "a" "b" "c" "d"
 ```
 
-```r
+``` r
 stri_split_fixed('a_b_c__d', '_', n=4, omit_empty=FALSE, tokens_only=TRUE)
 ```
 
@@ -163,7 +163,7 @@ stri_split_fixed('a_b_c__d', '_', n=4, omit_empty=FALSE, tokens_only=TRUE)
 ## [1] "a" "b" "c" ""
 ```
 
-```r
+``` r
 stri_split_fixed('a_b_c__d', '_', omit_empty=NA)
 ```
 
@@ -172,7 +172,7 @@ stri_split_fixed('a_b_c__d', '_', omit_empty=NA)
 ## [1] "a" "b" "c" NA  "d"
 ```
 
-```r
+``` r
 stri_split_fixed(c('ab_c', 'd_ef_g', 'h', ''), '_', n=1, tokens_only=TRUE, omit_empty=TRUE)
 ```
 
@@ -190,7 +190,7 @@ stri_split_fixed(c('ab_c', 'd_ef_g', 'h', ''), '_', n=1, tokens_only=TRUE, omit_
 ## character(0)
 ```
 
-```r
+``` r
 stri_split_fixed(c('ab_c', 'd_ef_g', 'h', ''), '_', n=2, tokens_only=TRUE, omit_empty=TRUE)
 ```
 
@@ -208,7 +208,7 @@ stri_split_fixed(c('ab_c', 'd_ef_g', 'h', ''), '_', n=2, tokens_only=TRUE, omit_
 ## character(0)
 ```
 
-```r
+``` r
 stri_split_fixed(c('ab_c', 'd_ef_g', 'h', ''), '_', n=3, tokens_only=TRUE, omit_empty=TRUE)
 ```
 
@@ -226,7 +226,7 @@ stri_split_fixed(c('ab_c', 'd_ef_g', 'h', ''), '_', n=3, tokens_only=TRUE, omit_
 ## character(0)
 ```
 
-```r
+``` r
 stri_list2matrix(stri_split_fixed(c('ab,c', 'd,ef,g', ',h', ''), ',', omit_empty=TRUE))
 ```
 
@@ -237,7 +237,7 @@ stri_list2matrix(stri_split_fixed(c('ab,c', 'd,ef,g', ',h', ''), ',', omit_empty
 ## [3,] NA   "g"  NA   NA
 ```
 
-```r
+``` r
 stri_split_fixed(c('ab,c', 'd,ef,g', ',h', ''), ',', omit_empty=FALSE, simplify=TRUE)
 ```
 
@@ -249,7 +249,7 @@ stri_split_fixed(c('ab,c', 'd,ef,g', ',h', ''), ',', omit_empty=FALSE, simplify=
 ## [4,] ""   ""   ""
 ```
 
-```r
+``` r
 stri_split_fixed(c('ab,c', 'd,ef,g', ',h', ''), ',', omit_empty=NA, simplify=TRUE)
 ```
 
@@ -261,7 +261,7 @@ stri_split_fixed(c('ab,c', 'd,ef,g', ',h', ''), ',', omit_empty=NA, simplify=TRU
 ## [4,] NA   ""   ""
 ```
 
-```r
+``` r
 stri_split_fixed(c('ab,c', 'd,ef,g', ',h', ''), ',', omit_empty=TRUE, simplify=TRUE)
 ```
 
@@ -273,7 +273,7 @@ stri_split_fixed(c('ab,c', 'd,ef,g', ',h', ''), ',', omit_empty=TRUE, simplify=T
 ## [4,] ""   ""   ""
 ```
 
-```r
+``` r
 stri_split_fixed(c('ab,c', 'd,ef,g', ',h', ''), ',', omit_empty=NA, simplify=NA)
 ```
 
@@ -285,7 +285,7 @@ stri_split_fixed(c('ab,c', 'd,ef,g', ',h', ''), ',', omit_empty=NA, simplify=NA)
 ## [4,] NA   NA   NA
 ```
 
-```r
+``` r
 stri_split_regex(c('ab,c', 'd,ef  ,  g', ',  h', ''),
    '\\p{WHITE_SPACE}*,\\p{WHITE_SPACE}*', omit_empty=NA, simplify=TRUE)
 ```
@@ -298,7 +298,7 @@ stri_split_regex(c('ab,c', 'd,ef  ,  g', ',  h', ''),
 ## [4,] NA   ""   ""
 ```
 
-```r
+``` r
 stri_split_charclass('Lorem ipsum dolor sit amet', '\\p{WHITE_SPACE}')
 ```
 
@@ -307,7 +307,7 @@ stri_split_charclass('Lorem ipsum dolor sit amet', '\\p{WHITE_SPACE}')
 ## [1] "Lorem" "ipsum" "dolor" "sit"   "amet"
 ```
 
-```r
+``` r
 stri_split_charclass(' Lorem  ipsum dolor', '\\p{WHITE_SPACE}', n=3,
    omit_empty=c(FALSE, TRUE))
 ```
@@ -320,7 +320,7 @@ stri_split_charclass(' Lorem  ipsum dolor', '\\p{WHITE_SPACE}', n=3,
 ## [1] "Lorem" "ipsum" "dolor"
 ```
 
-```r
+``` r
 stri_split_regex('Lorem ipsum dolor sit amet',
    '\\p{Z}+') # see also stri_split_charclass
 ```

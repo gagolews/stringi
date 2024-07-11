@@ -1,10 +1,15 @@
 # Changelog
 
 
+## 1.8.4.9xxx (under development)
+
+* [BUGFIX] #512: Fixed PROTECT stack imbalance in `stri_encode_from_marked`.
+
+
 ## 1.8.4 (2024-05-06)
 
 * [BUILD TIME] [BUGFIX] #508: Fixed build errors on Windows
-    (thanks to @jeoren and @kalibera).
+    (thanks to @jeroen and @kalibera).
 
 
 ## 1.8.3 (2023-12-10)
