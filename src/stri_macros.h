@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' project.
- * Copyright (c) 2013-2024, Marek Gagolewski <https://www.gagolewski.com/>
+ * Copyright (c) 2013-2025, Marek Gagolewski <https://www.gagolewski.com/>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -122,24 +122,28 @@
 #endif
 
 #ifndef IS_BYTES
-#define IS_BYTES(x) (LEVELS(x) & BYTES_MASK)
+#define IS_BYTES(x) (Rf_getCharCE(x) == CE_BYTES)
+// #define IS_BYTES(x) (LEVELS(x) & BYTES_MASK)
 #endif
 
 #ifndef IS_LATIN1
-#define IS_LATIN1(x) (LEVELS(x) & LATIN1_MASK)
+#define IS_LATIN1(x) (Rf_getCharCE(x) == CE_LATIN1)
+// #define IS_LATIN1(x) (LEVELS(x) & LATIN1_MASK)
 #endif
 
 #ifndef IS_ASCII
+// #define IS_ASCII(x) (Rf_getCharCE(x) == CE_ANY) /* the function doesn't return this value... */
 #define IS_ASCII(x) (LEVELS(x) & ASCII_MASK)
 #endif
 
 #ifndef IS_UTF8
-#define IS_UTF8(x) (LEVELS(x) & UTF8_MASK)
+#define IS_UTF8(x) (Rf_getCharCE(x) == CE_UTF8)
+// #define IS_UTF8(x) (LEVELS(x) & UTF8_MASK)
 #endif
 
-#ifndef ENC_KNOWN
-#define ENC_KNOWN(x) (LEVELS(x) & (LATIN1_MASK | UTF8_MASK | ASCII_MASK))
-#endif
+//#ifndef ENC_KNOWN
+//#define ENC_KNOWN(x) (LEVELS(x) & (LATIN1_MASK | UTF8_MASK | ASCII_MASK))
+//#endif
 
 #ifndef isRaw
 #define isRaw(x) (TYPEOF(x) == RAWSXP)

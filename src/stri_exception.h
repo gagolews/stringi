@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' project.
- * Copyright (c) 2013-2024, Marek Gagolewski <https://www.gagolewski.com/>
+ * Copyright (c) 2013-2025, Marek Gagolewski <https://www.gagolewski.com/>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -126,8 +126,7 @@ public:
 #define STRI_ASSERT_STR(x) __STRI_ASSERT_STR(x)
 
 #define STRI_ASSERT(EXPR) { if (!(EXPR)) \
-    REprintf( "stringi: Assertion " #EXPR " failed in "\
-        __FILE__ ":" STRI_ASSERT_STR(__LINE__) ); }
+    REprintf("stringi: Assertion %s failed in %s:%d", #EXPR, __FILE__, __LINE__); }
 #endif
 
 

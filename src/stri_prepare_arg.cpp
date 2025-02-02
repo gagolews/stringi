@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' project.
- * Copyright (c) 2013-2024, Marek Gagolewski <https://www.gagolewski.com/>
+ * Copyright (c) 2013-2025, Marek Gagolewski <https://www.gagolewski.com/>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -223,7 +223,7 @@ SEXP stri__prepare_arg_list_integer(SEXP x, const char* argname)
         R_len_t narg = LENGTH(x);
         if (narg <= 0) return x;
 
-        if (NAMED(x) > 0) {
+        if (MAYBE_REFERENCED(x)) {
             // the object should be copied
             SEXP xold = x;
             PROTECT(x = Rf_allocVector(VECSXP, narg));
@@ -278,7 +278,7 @@ SEXP stri__prepare_arg_list_string(SEXP x, const char* argname)
     R_len_t narg = LENGTH(x);
     if (narg <= 0) return x;
 
-    if (NAMED(x) > 0) {
+    if (MAYBE_REFERENCED(x)) {
         // the object should be copied
         SEXP xold = x;
         PROTECT(x = Rf_allocVector(VECSXP, narg));

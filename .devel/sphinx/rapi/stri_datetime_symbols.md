@@ -78,7 +78,7 @@ stri_datetime_symbols() # uses the Gregorian calendar in most locales
 ## [1] "1st quarter" "2nd quarter" "3rd quarter" "4th quarter"
 ## 
 ## $AmPm
-## [1] "AM" "PM"
+## [1] "am" "pm"
 ## 
 ## $Era
 ## [1] "Before Christ" "Anno Domini"
@@ -101,7 +101,7 @@ stri_datetime_symbols('@calendar=hebrew')
 ## [1] "1st quarter" "2nd quarter" "3rd quarter" "4th quarter"
 ## 
 ## $AmPm
-## [1] "AM" "PM"
+## [1] "am" "pm"
 ## 
 ## $Era
 ## [1] "AM"
@@ -148,7 +148,7 @@ stri_datetime_symbols('@calendar=islamic')
 ## [1] "1st quarter" "2nd quarter" "3rd quarter" "4th quarter"
 ## 
 ## $AmPm
-## [1] "AM" "PM"
+## [1] "am" "pm"
 ## 
 ## $Era
 ## [1] "AH"
@@ -177,7 +177,7 @@ stri_datetime_symbols('@calendar=persian')
 ## [1] "1st quarter" "2nd quarter" "3rd quarter" "4th quarter"
 ## 
 ## $AmPm
-## [1] "AM" "PM"
+## [1] "am" "pm"
 ## 
 ## $Era
 ## [1] "AP"
@@ -201,7 +201,7 @@ stri_datetime_symbols('@calendar=indian')
 ## [1] "1st quarter" "2nd quarter" "3rd quarter" "4th quarter"
 ## 
 ## $AmPm
-## [1] "AM" "PM"
+## [1] "am" "pm"
 ## 
 ## $Era
 ## [1] "Saka"
@@ -230,7 +230,7 @@ stri_datetime_symbols('@calendar=coptic')
 ## [1] "1st quarter" "2nd quarter" "3rd quarter" "4th quarter"
 ## 
 ## $AmPm
-## [1] "AM" "PM"
+## [1] "am" "pm"
 ## 
 ## $Era
 ## [1] "ERA0" "ERA1"
@@ -253,7 +253,7 @@ stri_datetime_symbols('@calendar=japanese')
 ## [1] "1st quarter" "2nd quarter" "3rd quarter" "4th quarter"
 ## 
 ## $AmPm
-## [1] "AM" "PM"
+## [1] "am" "pm"
 ## 
 ## $Era
 ##   [1] "Taika (645–650)"        "Hakuchi (650–671)"      "Hakuhō (672–686)"      
@@ -446,7 +446,7 @@ stri_datetime_symbols(width='wide')
 ## [1] "1st quarter" "2nd quarter" "3rd quarter" "4th quarter"
 ## 
 ## $AmPm
-## [1] "AM" "PM"
+## [1] "am" "pm"
 ## 
 ## $Era
 ## [1] "Before Christ" "Anno Domini"
@@ -458,7 +458,8 @@ stri_datetime_symbols(width='abbreviated')
 
 ```
 ## $Month
-##  [1] "Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov" "Dec"
+##  [1] "Jan"  "Feb"  "Mar"  "Apr"  "May"  "June" "July" "Aug"  "Sept" "Oct" 
+## [11] "Nov"  "Dec" 
 ## 
 ## $Weekday
 ## [1] "Sun" "Mon" "Tue" "Wed" "Thu" "Fri" "Sat"
@@ -467,7 +468,7 @@ stri_datetime_symbols(width='abbreviated')
 ## [1] "Q1" "Q2" "Q3" "Q4"
 ## 
 ## $AmPm
-## [1] "AM" "PM"
+## [1] "am" "pm"
 ## 
 ## $Era
 ## [1] "BC" "AD"
@@ -488,7 +489,7 @@ stri_datetime_symbols(width='narrow')
 ## [1] "1" "2" "3" "4"
 ## 
 ## $AmPm
-## [1] "AM" "PM"
+## [1] "am" "pm"
 ## 
 ## $Era
 ## [1] "B" "A"

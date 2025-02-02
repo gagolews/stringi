@@ -1,21 +1,20 @@
 # kate: hl bash
 # autoconf/configure script for stringi <https://stringi.gagolewski.com/>
-# Copyright (c) 2013-2024, Marek Gagolewski <https://www.gagolewski.com/>
+# Copyright (c) 2013-2025, Marek Gagolewski <https://www.gagolewski.com/>
 
 ##### COMPATIBILITY NOTES/CHANGELOG ############################################
 
 # 2014-04-10 R 3.1 CXX1X
 # 2017-04-21 R 3.4 CXX11, CXX14, CXX17
-# 2020-04-24 R 4.0 A C++ compiler must conform to C++11
-
+# 2020-04-24 R 4.0 The active C++ compiler must conform to C++11
 # 2015-04-01 ICU 55.1 was supported on old Solaris boxes (until stringi-1.8.1)
 # 2017-11-01 ICU 60.1 requires full C++11 support
 # 2018-03-26 ICU 61.1 has U_CHARSET_IS_UTF8=1 set by default and has no C files
-                      (minimal requirement since stringi-1.8.1)
+#                      (minimal requirement since stringi-1.8.1)
 # 2021-04-07 ICU 69.1 (bundled with stringi 1.6.1)
 # 2023-10-31 ICU 74.1 (bundled with stringi 1.8.1,
-    together with icudata; compressed with xz and included in the package
-    source tarball as suggested by BR)
+#    together with icudata; compressed with xz and included in the package
+#    source tarball as suggested by BR)
 # 2024-04-xx ICU 75 will require C++17 (!)
 
 
@@ -65,6 +64,10 @@ AC_ARG_VAR([PKG_CONFIG], [The 'pkg-config' command to determine
 
 AC_ARG_VAR(PKG_CONFIG_PATH, [An optional list of directories to search for
     pkg-config's .pc files.])
+
+#'  /systax highlighting bug/
+
+
 
 #AC_ARG_VAR([CC], [(ignored)])
 

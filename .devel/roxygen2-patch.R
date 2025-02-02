@@ -1,4 +1,4 @@
-# Copyleft (C) 2021-2024, Marek Gagolewski <https://www.gagolewski.com>
+# Copyleft (C) 2021-2025, Marek Gagolewski <https://www.gagolewski.com>
 # Adding author and other metadata to every Rd file;
 # There is one and only one official manual. Ad- and tracker-free.
 # Enjoy the free internet.

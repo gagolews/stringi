@@ -458,10 +458,10 @@ do.call(rbind.data.frame,
 ## 2                                AET         Australian Eastern Standard Time
 ## 3                     Africa/Abidjan                      Greenwich Mean Time
 ## 4                       Africa/Accra                      Greenwich Mean Time
-## 5                 Africa/Addis_Ababa                         East Africa Time
+## 5                 Africa/Addis_Ababa                      Eastern Africa Time
 ## 6                     Africa/Algiers           Central European Standard Time
-## 7                      Africa/Asmara                         East Africa Time
-## 8                      Africa/Asmera                         East Africa Time
+## 7                      Africa/Asmara                      Eastern Africa Time
+## 8                      Africa/Asmera                      Eastern Africa Time
 ## 9                      Africa/Bamako                      Greenwich Mean Time
 ## 10                     Africa/Bangui                West Africa Standard Time
 ## 11                     Africa/Banjul                      Greenwich Mean Time
@@ -474,8 +474,8 @@ do.call(rbind.data.frame,
 ## 18                      Africa/Ceuta           Central European Standard Time
 ## 19                    Africa/Conakry                      Greenwich Mean Time
 ## 20                      Africa/Dakar                      Greenwich Mean Time
-## 21              Africa/Dar_es_Salaam                         East Africa Time
-## 22                   Africa/Djibouti                         East Africa Time
+## 21              Africa/Dar_es_Salaam                      Eastern Africa Time
+## 22                   Africa/Djibouti                      Eastern Africa Time
 ## 23                     Africa/Douala                West Africa Standard Time
 ## 24                   Africa/El_Aaiun                                      GMT
 ## 25                   Africa/Freetown                      Greenwich Mean Time
@@ -483,7 +483,7 @@ do.call(rbind.data.frame,
 ## 27                     Africa/Harare                      Central Africa Time
 ## 28               Africa/Johannesburg               South Africa Standard Time
 ## 29                       Africa/Juba                      Central Africa Time
-## 30                    Africa/Kampala                         East Africa Time
+## 30                    Africa/Kampala                      Eastern Africa Time
 ## 31                   Africa/Khartoum                      Central Africa Time
 ## 32                     Africa/Kigali                      Central Africa Time
 ## 33                   Africa/Kinshasa                West Africa Standard Time
@@ -497,9 +497,9 @@ do.call(rbind.data.frame,
 ## 41                     Africa/Maputo                      Central Africa Time
 ## 42                     Africa/Maseru               South Africa Standard Time
 ## 43                    Africa/Mbabane               South Africa Standard Time
-## 44                  Africa/Mogadishu                         East Africa Time
+## 44                  Africa/Mogadishu                      Eastern Africa Time
 ## 45                   Africa/Monrovia                      Greenwich Mean Time
-## 46                    Africa/Nairobi                         East Africa Time
+## 46                    Africa/Nairobi                      Eastern Africa Time
 ## 47                   Africa/Ndjamena                West Africa Standard Time
 ## 48                     Africa/Niamey                West Africa Standard Time
 ## 49                 Africa/Nouakchott                      Greenwich Mean Time
@@ -573,7 +573,7 @@ do.call(rbind.data.frame,
 ## 117               America/Fort_Wayne                    Eastern Standard Time
 ## 118                America/Fortaleza                   Brasilia Standard Time
 ## 119                America/Glace_Bay                   Atlantic Standard Time
-## 120                  America/Godthab                  Greenland Standard Time
+## 120                  America/Godthab             West Greenland Standard Time
 ## 121                America/Goose_Bay                   Atlantic Standard Time
 ## 122               America/Grand_Turk                    Eastern Standard Time
 ## 123                  America/Grenada                   Atlantic Standard Time
@@ -619,7 +619,7 @@ do.call(rbind.data.frame,
 ## 163                   America/Merida                    Central Standard Time
 ## 164               America/Metlakatla                     Alaska Standard Time
 ## 165              America/Mexico_City                    Central Standard Time
-## 166                 America/Miquelon      St. Pierre & Miquelon Standard Time
+## 166                 America/Miquelon       St Pierre & Miquelon Standard Time
 ## 167                  America/Moncton                   Atlantic Standard Time
 ## 168                America/Monterrey                    Central Standard Time
 ## 169               America/Montevideo                    Uruguay Standard Time
@@ -633,7 +633,7 @@ do.call(rbind.data.frame,
 ## 177      America/North_Dakota/Beulah                    Central Standard Time
 ## 178      America/North_Dakota/Center                    Central Standard Time
 ## 179   America/North_Dakota/New_Salem                    Central Standard Time
-## 180                     America/Nuuk                  Greenland Standard Time
+## 180                     America/Nuuk             West Greenland Standard Time
 ## 181                  America/Ojinaga                    Central Standard Time
 ## 182                   America/Panama                    Eastern Standard Time
 ## 183              America/Pangnirtung                    Eastern Standard Time
@@ -657,7 +657,7 @@ do.call(rbind.data.frame,
 ## 201                 America/Santiago                      Chile Standard Time
 ## 202            America/Santo_Domingo                   Atlantic Standard Time
 ## 203                America/Sao_Paulo                   Brasilia Standard Time
-## 204             America/Scoresbysund                  Greenland Standard Time
+## 204             America/Scoresbysund             East Greenland Standard Time
 ## 205                 America/Shiprock                   Mountain Standard Time
 ## 206                    America/Sitka                     Alaska Standard Time
 ## 207            America/St_Barthelemy                   Atlantic Standard Time
@@ -679,7 +679,7 @@ do.call(rbind.data.frame,
 ## 223                 America/Winnipeg                    Central Standard Time
 ## 224                  America/Yakutat                     Alaska Standard Time
 ## 225              America/Yellowknife                   Mountain Standard Time
-## 226                 Antarctica/Casey         Australian Western Standard Time
+## 226                 Antarctica/Casey                               Casey Time
 ## 227                 Antarctica/Davis                               Davis Time
 ## 228        Antarctica/DumontDUrville                    Dumont-d’Urville Time
 ## 229             Antarctica/Macquarie         Australian Eastern Standard Time
@@ -693,8 +693,8 @@ do.call(rbind.data.frame,
 ## 237                Antarctica/Vostok                              Vostok Time
 ## 238              Arctic/Longyearbyen           Central European Standard Time
 ## 239                              ART           Eastern European Standard Time
-## 240                        Asia/Aden                    Arabian Standard Time
-## 241                      Asia/Almaty                     West Kazakhstan Time
+## 240                        Asia/Aden                     Arabia Standard Time
+## 241                      Asia/Almaty                     East Kazakhstan Time
 ## 242                       Asia/Amman                                GMT+03:00
 ## 243                      Asia/Anadyr                     Anadyr Standard Time
 ## 244                       Asia/Aqtau                     West Kazakhstan Time
@@ -702,8 +702,8 @@ do.call(rbind.data.frame,
 ## 246                    Asia/Ashgabat               Turkmenistan Standard Time
 ## 247                   Asia/Ashkhabad               Turkmenistan Standard Time
 ## 248                      Asia/Atyrau                     West Kazakhstan Time
-## 249                     Asia/Baghdad                    Arabian Standard Time
-## 250                     Asia/Bahrain                    Arabian Standard Time
+## 249                     Asia/Baghdad                     Arabia Standard Time
+## 250                     Asia/Bahrain                     Arabia Standard Time
 ## 251                        Asia/Baku                 Azerbaijan Standard Time
 ## 252                     Asia/Bangkok                           Indochina Time
 ## 253                     Asia/Barnaul                                GMT+07:00
@@ -745,7 +745,7 @@ do.call(rbind.data.frame,
 ## 289                 Asia/Krasnoyarsk                Krasnoyarsk Standard Time
 ## 290                Asia/Kuala_Lumpur                            Malaysia Time
 ## 291                     Asia/Kuching                            Malaysia Time
-## 292                      Asia/Kuwait                    Arabian Standard Time
+## 292                      Asia/Kuwait                     Arabia Standard Time
 ## 293                       Asia/Macao                      China Standard Time
 ## 294                       Asia/Macau                      China Standard Time
 ## 295                     Asia/Magadan                    Magadan Standard Time
@@ -760,11 +760,11 @@ do.call(rbind.data.frame,
 ## 304                  Asia/Phnom_Penh                           Indochina Time
 ## 305                   Asia/Pontianak                   Western Indonesia Time
 ## 306                   Asia/Pyongyang                     Korean Standard Time
-## 307                       Asia/Qatar                    Arabian Standard Time
-## 308                    Asia/Qostanay                     West Kazakhstan Time
+## 307                       Asia/Qatar                     Arabia Standard Time
+## 308                    Asia/Qostanay                     East Kazakhstan Time
 ## 309                   Asia/Qyzylorda                     West Kazakhstan Time
 ## 310                     Asia/Rangoon                             Myanmar Time
-## 311                      Asia/Riyadh                    Arabian Standard Time
+## 311                      Asia/Riyadh                     Arabia Standard Time
 ## 312                      Asia/Saigon                           Indochina Time
 ## 313                    Asia/Sakhalin                   Sakhalin Standard Time
 ## 314                   Asia/Samarkand                 Uzbekistan Standard Time
@@ -852,7 +852,7 @@ do.call(rbind.data.frame,
 ## 396                          CST6CDT                    Central Standard Time
 ## 397                              CTT                      China Standard Time
 ## 398                             Cuba                       Cuba Standard Time
-## 399                              EAT                         East Africa Time
+## 399                              EAT                      Eastern Africa Time
 ## 400                              ECT           Central European Standard Time
 ## 401                              EET                                GMT+02:00
 ## 402                            Egypt           Eastern European Standard Time
@@ -970,16 +970,16 @@ do.call(rbind.data.frame,
 ## 514                              HST                                GMT-10:00
 ## 515                          Iceland                      Greenwich Mean Time
 ## 516                              IET                    Eastern Standard Time
-## 517              Indian/Antananarivo                         East Africa Time
+## 517              Indian/Antananarivo                      Eastern Africa Time
 ## 518                    Indian/Chagos                        Indian Ocean Time
 ## 519                 Indian/Christmas                    Christmas Island Time
 ## 520                     Indian/Cocos                       Cocos Islands Time
-## 521                    Indian/Comoro                         East Africa Time
+## 521                    Indian/Comoro                      Eastern Africa Time
 ## 522                 Indian/Kerguelen         French Southern & Antarctic Time
 ## 523                      Indian/Mahe                          Seychelles Time
 ## 524                  Indian/Maldives                            Maldives Time
 ## 525                 Indian/Mauritius                  Mauritius Standard Time
-## 526                   Indian/Mayotte                         East Africa Time
+## 526                   Indian/Mayotte                      Eastern Africa Time
 ## 527                   Indian/Reunion                             Réunion Time
 ## 528                             Iran                       Iran Standard Time
 ## 529                           Israel                     Israel Standard Time
@@ -1035,7 +1035,7 @@ do.call(rbind.data.frame,
 ## 579                  Pacific/Pohnpei                              Ponape Time
 ## 580                   Pacific/Ponape                              Ponape Time
 ## 581             Pacific/Port_Moresby                    Papua New Guinea Time
-## 582                Pacific/Rarotonga               Cook Islands Standard Time
+## 582                Pacific/Rarotonga                Cook Island Standard Time
 ## 583                   Pacific/Saipan                   Chamorro Standard Time
 ## 584                    Pacific/Samoa                      Samoa Standard Time
 ## 585                   Pacific/Tahiti                              Tahiti Time
@@ -1091,644 +1091,644 @@ do.call(rbind.data.frame,
 ## 635                             W-SU                     Moscow Standard Time
 ## 636                              WET                                      GMT
 ## 637                             Zulu               Coordinated Universal Time
-##                           Name.Daylight                    Name.Windows
-## 1                                  <NA>       AUS Central Standard Time
-## 2      Australian Eastern Daylight Time       AUS Eastern Standard Time
-## 3                                  <NA>         Greenwich Standard Time
-## 4                                  <NA>         Greenwich Standard Time
-## 5                                  <NA>         E. Africa Standard Time
-## 6                                  <NA> W. Central Africa Standard Time
-## 7                                  <NA>         E. Africa Standard Time
-## 8                                  <NA>         E. Africa Standard Time
-## 9                                  <NA>         Greenwich Standard Time
-## 10                                 <NA> W. Central Africa Standard Time
-## 11                                 <NA>         Greenwich Standard Time
-## 12                                 <NA>         Greenwich Standard Time
-## 13                                 <NA>      South Africa Standard Time
-## 14                                 <NA> W. Central Africa Standard Time
-## 15                                 <NA>      South Africa Standard Time
-## 16         Eastern European Summer Time             Egypt Standard Time
-## 17                            GMT+01:00           Morocco Standard Time
-## 18         Central European Summer Time           Romance Standard Time
-## 19                                 <NA>         Greenwich Standard Time
-## 20                                 <NA>         Greenwich Standard Time
-## 21                                 <NA>         E. Africa Standard Time
-## 22                                 <NA>         E. Africa Standard Time
-## 23                                 <NA> W. Central Africa Standard Time
-## 24                            GMT+01:00           Morocco Standard Time
-## 25                                 <NA>         Greenwich Standard Time
-## 26                                 <NA>      South Africa Standard Time
-## 27                                 <NA>      South Africa Standard Time
-## 28                                 <NA>      South Africa Standard Time
-## 29                                 <NA>       South Sudan Standard Time
-## 30                                 <NA>         E. Africa Standard Time
-## 31                                 <NA>             Sudan Standard Time
-## 32                                 <NA>      South Africa Standard Time
-## 33                                 <NA> W. Central Africa Standard Time
-## 34                                 <NA> W. Central Africa Standard Time
-## 35                                 <NA> W. Central Africa Standard Time
-## 36                                 <NA>         Greenwich Standard Time
-## 37                                 <NA> W. Central Africa Standard Time
-## 38                                 <NA>      South Africa Standard Time
-## 39                                 <NA>      South Africa Standard Time
-## 40                                 <NA> W. Central Africa Standard Time
-## 41                                 <NA>      South Africa Standard Time
-## 42                                 <NA>      South Africa Standard Time
-## 43                                 <NA>      South Africa Standard Time
-## 44                                 <NA>         E. Africa Standard Time
-## 45                                 <NA>         Greenwich Standard Time
-## 46                                 <NA>         E. Africa Standard Time
-## 47                                 <NA> W. Central Africa Standard Time
-## 48                                 <NA> W. Central Africa Standard Time
-## 49                                 <NA>         Greenwich Standard Time
-## 50                                 <NA>         Greenwich Standard Time
-## 51                                 <NA> W. Central Africa Standard Time
-## 52                                 <NA>          Sao Tome Standard Time
-## 53                                 <NA>         Greenwich Standard Time
-## 54                                 <NA>             Libya Standard Time
-## 55                                 <NA> W. Central Africa Standard Time
-## 56                                 <NA>           Namibia Standard Time
-## 57                                 <NA>         Argentina Standard Time
-## 58        Hawaii-Aleutian Daylight Time          Aleutian Standard Time
-## 59                 Alaska Daylight Time           Alaskan Standard Time
-## 60                                 <NA>        SA Western Standard Time
-## 61                                 <NA>        SA Western Standard Time
-## 62                                 <NA>         Tocantins Standard Time
-## 63                                 <NA>         Argentina Standard Time
-## 64                                 <NA>         Argentina Standard Time
-## 65                                 <NA>         Argentina Standard Time
-## 66                                 <NA>         Argentina Standard Time
-## 67                                 <NA>         Argentina Standard Time
-## 68                                 <NA>         Argentina Standard Time
-## 69                                 <NA>         Argentina Standard Time
-## 70                                 <NA>         Argentina Standard Time
-## 71                                 <NA>         Argentina Standard Time
-## 72                                 <NA>         Argentina Standard Time
-## 73                                 <NA>         Argentina Standard Time
-## 74                                 <NA>         Argentina Standard Time
-## 75                                 <NA>         Argentina Standard Time
-## 76                                 <NA>        SA Western Standard Time
-## 77                 Paraguay Summer Time          Paraguay Standard Time
-## 78                                 <NA>        SA Pacific Standard Time
-## 79        Hawaii-Aleutian Daylight Time          Aleutian Standard Time
-## 80                                 <NA>             Bahia Standard Time
-## 81                                 <NA>  Central Standard Time (Mexico)
-## 82                                 <NA>        SA Western Standard Time
-## 83                                 <NA>        SA Eastern Standard Time
-## 84                                 <NA>   Central America Standard Time
-## 85                                 <NA>        SA Western Standard Time
-## 86                                 <NA>        SA Western Standard Time
-## 87                                 <NA>        SA Pacific Standard Time
-## 88               Mountain Daylight Time          Mountain Standard Time
-## 89                                 <NA>         Argentina Standard Time
-## 90               Mountain Daylight Time          Mountain Standard Time
-## 91                                 <NA> Central Brazilian Standard Time
-## 92                                 <NA>  Eastern Standard Time (Mexico)
-## 93                                 <NA>         Venezuela Standard Time
-## 94                                 <NA>         Argentina Standard Time
-## 95                                 <NA>        SA Eastern Standard Time
-## 96                                 <NA>        SA Pacific Standard Time
-## 97                Central Daylight Time           Central Standard Time
-## 98                                 <NA>  Central Standard Time (Mexico)
-## 99               Mountain Daylight Time          Mountain Standard Time
-## 100                                <NA>        SA Pacific Standard Time
-## 101                                <NA>         Argentina Standard Time
-## 102                                <NA>   Central America Standard Time
-## 103                                <NA>       US Mountain Standard Time
-## 104                                <NA> Central Brazilian Standard Time
-## 105                                <NA>        SA Western Standard Time
-## 106                                <NA>         Greenwich Standard Time
-## 107                                <NA>             Yukon Standard Time
-## 108                                <NA>       US Mountain Standard Time
-## 109              Mountain Daylight Time          Mountain Standard Time
-## 110               Eastern Daylight Time           Eastern Standard Time
-## 111                                <NA>        SA Western Standard Time
-## 112              Mountain Daylight Time          Mountain Standard Time
-## 113                                <NA>        SA Pacific Standard Time
-## 114                                <NA>   Central America Standard Time
-## 115               Pacific Daylight Time  Pacific Standard Time (Mexico)
-## 116                                <NA>       US Mountain Standard Time
-## 117               Eastern Daylight Time        US Eastern Standard Time
-## 118                                <NA>        SA Eastern Standard Time
-## 119              Atlantic Daylight Time          Atlantic Standard Time
-## 120               Greenland Summer Time         Greenland Standard Time
-## 121              Atlantic Daylight Time          Atlantic Standard Time
-## 122               Eastern Daylight Time  Turks And Caicos Standard Time
-## 123                                <NA>        SA Western Standard Time
-## 124                                <NA>        SA Western Standard Time
-## 125                                <NA>   Central America Standard Time
-## 126                                <NA>        SA Pacific Standard Time
-## 127                                <NA>        SA Western Standard Time
-## 128              Atlantic Daylight Time          Atlantic Standard Time
-## 129                  Cuba Daylight Time              Cuba Standard Time
-## 130                                <NA>       US Mountain Standard Time
-## 131               Eastern Daylight Time        US Eastern Standard Time
-## 132               Central Daylight Time           Central Standard Time
-## 133               Eastern Daylight Time        US Eastern Standard Time
-## 134               Eastern Daylight Time           Eastern Standard Time
-## 135               Central Daylight Time           Central Standard Time
-## 136               Eastern Daylight Time        US Eastern Standard Time
-## 137               Eastern Daylight Time           Eastern Standard Time
-## 138               Eastern Daylight Time           Eastern Standard Time
-## 139               Eastern Daylight Time        US Eastern Standard Time
-## 140              Mountain Daylight Time          Mountain Standard Time
-## 141               Eastern Daylight Time           Eastern Standard Time
-## 142                                <NA>        SA Pacific Standard Time
-## 143                                <NA>         Argentina Standard Time
-## 144                Alaska Daylight Time           Alaskan Standard Time
-## 145               Eastern Daylight Time           Eastern Standard Time
-## 146               Eastern Daylight Time           Eastern Standard Time
-## 147               Central Daylight Time           Central Standard Time
-## 148                                <NA>        SA Western Standard Time
-## 149                                <NA>        SA Western Standard Time
-## 150                                <NA>        SA Pacific Standard Time
-## 151               Pacific Daylight Time           Pacific Standard Time
-## 152               Eastern Daylight Time           Eastern Standard Time
-## 153                                <NA>        SA Western Standard Time
-## 154                                <NA>        SA Eastern Standard Time
-## 155                                <NA>   Central America Standard Time
-## 156                                <NA>        SA Western Standard Time
-## 157                                <NA>        SA Western Standard Time
-## 158                                <NA>        SA Western Standard Time
-## 159               Central Daylight Time           Central Standard Time
-## 160                                <NA> Mountain Standard Time (Mexico)
-## 161                                <NA>         Argentina Standard Time
-## 162               Central Daylight Time           Central Standard Time
-## 163                                <NA>  Central Standard Time (Mexico)
-## 164                Alaska Daylight Time           Alaskan Standard Time
-## 165                                <NA>  Central Standard Time (Mexico)
-## 166 St. Pierre & Miquelon Daylight Time      Saint Pierre Standard Time
-## 167              Atlantic Daylight Time          Atlantic Standard Time
-## 168                                <NA>  Central Standard Time (Mexico)
-## 169                                <NA>        Montevideo Standard Time
-## 170               Eastern Daylight Time           Eastern Standard Time
-## 171                                <NA>        SA Western Standard Time
-## 172               Eastern Daylight Time           Eastern Standard Time
-## 173               Eastern Daylight Time           Eastern Standard Time
-## 174               Eastern Daylight Time           Eastern Standard Time
-## 175                Alaska Daylight Time           Alaskan Standard Time
-## 176                                <NA>                          UTC-02
-## 177               Central Daylight Time           Central Standard Time
-## 178               Central Daylight Time           Central Standard Time
-## 179               Central Daylight Time           Central Standard Time
-## 180               Greenland Summer Time         Greenland Standard Time
-## 181               Central Daylight Time           Central Standard Time
-## 182                                <NA>        SA Pacific Standard Time
-## 183               Eastern Daylight Time           Eastern Standard Time
-## 184                                <NA>        SA Eastern Standard Time
-## 185                                <NA>       US Mountain Standard Time
-## 186                                <NA>        SA Western Standard Time
-## 187               Eastern Daylight Time             Haiti Standard Time
-## 188                                <NA>        SA Pacific Standard Time
-## 189                                <NA>        SA Western Standard Time
-## 190                                <NA>        SA Western Standard Time
-## 191                                <NA>        Magallanes Standard Time
-## 192               Central Daylight Time           Central Standard Time
-## 193               Central Daylight Time           Central Standard Time
-## 194                                <NA>        SA Eastern Standard Time
-## 195                                <NA>    Canada Central Standard Time
-## 196               Central Daylight Time           Central Standard Time
-## 197                                <NA>        SA Pacific Standard Time
-## 198                                <NA>         Argentina Standard Time
-## 199               Pacific Daylight Time  Pacific Standard Time (Mexico)
-## 200                                <NA>        SA Eastern Standard Time
-## 201                   Chile Summer Time        Pacific SA Standard Time
-## 202                                <NA>        SA Western Standard Time
-## 203                                <NA>  E. South America Standard Time
-## 204               Greenland Summer Time            Azores Standard Time
-## 205              Mountain Daylight Time          Mountain Standard Time
-## 206                Alaska Daylight Time           Alaskan Standard Time
-## 207                                <NA>        SA Western Standard Time
-## 208          Newfoundland Daylight Time      Newfoundland Standard Time
-## 209                                <NA>        SA Western Standard Time
-## 210                                <NA>        SA Western Standard Time
-## 211                                <NA>        SA Western Standard Time
-## 212                                <NA>        SA Western Standard Time
-## 213                                <NA>    Canada Central Standard Time
-## 214                                <NA>   Central America Standard Time
-## 215              Atlantic Daylight Time          Atlantic Standard Time
-## 216               Eastern Daylight Time           Eastern Standard Time
-## 217               Pacific Daylight Time  Pacific Standard Time (Mexico)
-## 218               Eastern Daylight Time           Eastern Standard Time
-## 219                                <NA>        SA Western Standard Time
-## 220               Pacific Daylight Time           Pacific Standard Time
-## 221                                <NA>        SA Western Standard Time
-## 222                                <NA>             Yukon Standard Time
-## 223               Central Daylight Time           Central Standard Time
-## 224                Alaska Daylight Time           Alaskan Standard Time
-## 225              Mountain Daylight Time          Mountain Standard Time
-## 226                                <NA>   Central Pacific Standard Time
-## 227                                <NA>           SE Asia Standard Time
-## 228                                <NA>      West Pacific Standard Time
-## 229    Australian Eastern Daylight Time          Tasmania Standard Time
-## 230                                <NA>         West Asia Standard Time
-## 231           New Zealand Daylight Time       New Zealand Standard Time
-## 232                                <NA>        SA Eastern Standard Time
-## 233                                <NA>        SA Eastern Standard Time
-## 234           New Zealand Daylight Time       New Zealand Standard Time
-## 235                                <NA>         E. Africa Standard Time
-## 236                           GMT+02:00                            <NA>
-## 237                                <NA>      Central Asia Standard Time
-## 238        Central European Summer Time         W. Europe Standard Time
-## 239        Eastern European Summer Time             Egypt Standard Time
-## 240                                <NA>              Arab Standard Time
-## 241                                <NA>         West Asia Standard Time
-## 242                                <NA>            Jordan Standard Time
-## 243                                <NA>             Russia Time Zone 11
-## 244                                <NA>         West Asia Standard Time
-## 245                                <NA>         West Asia Standard Time
-## 246                                <NA>         West Asia Standard Time
-## 247                                <NA>         West Asia Standard Time
-## 248                                <NA>         West Asia Standard Time
-## 249                                <NA>            Arabic Standard Time
-## 250                                <NA>              Arab Standard Time
-## 251                                <NA>        Azerbaijan Standard Time
-## 252                                <NA>           SE Asia Standard Time
-## 253                                <NA>             Altai Standard Time
-## 254        Eastern European Summer Time       Middle East Standard Time
-## 255                                <NA>      Central Asia Standard Time
-## 256                                <NA>         Singapore Standard Time
-## 257                                <NA>             India Standard Time
-## 258                                <NA>       Transbaikal Standard Time
-## 259                                <NA>       Ulaanbaatar Standard Time
-## 260                                <NA>             China Standard Time
-## 261                                <NA>             China Standard Time
-## 262                                <NA>         Sri Lanka Standard Time
-## 263                                <NA>        Bangladesh Standard Time
-## 264                                <NA>             Syria Standard Time
-## 265                                <NA>        Bangladesh Standard Time
-## 266                                <NA>             Tokyo Standard Time
-## 267                                <NA>           Arabian Standard Time
-## 268                                <NA>         West Asia Standard Time
-## 269                           GMT+03:00               GTB Standard Time
-## 270        Eastern European Summer Time         West Bank Standard Time
-## 271                                <NA>             China Standard Time
-## 272        Eastern European Summer Time         West Bank Standard Time
-## 273                                <NA>           SE Asia Standard Time
-## 274                                <NA>             China Standard Time
-## 275                                <NA>       W. Mongolia Standard Time
-## 276                                <NA>   North Asia East Standard Time
-## 277                                <NA>            Turkey Standard Time
-## 278                                <NA>           SE Asia Standard Time
-## 279                                <NA>             Tokyo Standard Time
-## 280                Israel Daylight Time            Israel Standard Time
-## 281                                <NA>       Afghanistan Standard Time
-## 282                                <NA>             Russia Time Zone 11
-## 283                                <NA>          Pakistan Standard Time
-## 284                                <NA>      Central Asia Standard Time
-## 285                                <NA>             Nepal Standard Time
-## 286                                <NA>             Nepal Standard Time
-## 287                                <NA>           Yakutsk Standard Time
-## 288                                <NA>             India Standard Time
-## 289                                <NA>        North Asia Standard Time
-## 290                                <NA>         Singapore Standard Time
-## 291                                <NA>         Singapore Standard Time
-## 292                                <NA>              Arab Standard Time
-## 293                                <NA>             China Standard Time
-## 294                                <NA>             China Standard Time
-## 295                                <NA>           Magadan Standard Time
-## 296                                <NA>         Singapore Standard Time
-## 297                                <NA>         Singapore Standard Time
-## 298                                <NA>           Arabian Standard Time
-## 299        Eastern European Summer Time               GTB Standard Time
-## 300                                <NA>        North Asia Standard Time
-## 301                                <NA>   N. Central Asia Standard Time
-## 302                                <NA>              Omsk Standard Time
-## 303                                <NA>         West Asia Standard Time
-## 304                                <NA>           SE Asia Standard Time
-## 305                                <NA>           SE Asia Standard Time
-## 306                                <NA>       North Korea Standard Time
-## 307                                <NA>              Arab Standard Time
-## 308                                <NA>         West Asia Standard Time
-## 309                                <NA>         Qyzylorda Standard Time
-## 310                                <NA>           Myanmar Standard Time
-## 311                                <NA>              Arab Standard Time
-## 312                                <NA>           SE Asia Standard Time
-## 313                                <NA>          Sakhalin Standard Time
-## 314                                <NA>         West Asia Standard Time
-## 315                                <NA>             Korea Standard Time
-## 316                                <NA>             China Standard Time
-## 317                                <NA>         Singapore Standard Time
-## 318                                <NA>             Russia Time Zone 10
-## 319                                <NA>            Taipei Standard Time
-## 320                                <NA>         West Asia Standard Time
-## 321                                <NA>          Georgian Standard Time
-## 322                                <NA>              Iran Standard Time
-## 323                Israel Daylight Time            Israel Standard Time
-## 324                                <NA>        Bangladesh Standard Time
-## 325                                <NA>        Bangladesh Standard Time
-## 326                                <NA>             Tokyo Standard Time
-## 327                                <NA>             Tomsk Standard Time
-## 328                                <NA>         Singapore Standard Time
-## 329                                <NA>       Ulaanbaatar Standard Time
-## 330                                <NA>       Ulaanbaatar Standard Time
-## 331                                <NA>      Central Asia Standard Time
-## 332                                <NA>       Vladivostok Standard Time
-## 333                                <NA>           SE Asia Standard Time
-## 334                                <NA>       Vladivostok Standard Time
-## 335                                <NA>           Yakutsk Standard Time
-## 336                                <NA>           Myanmar Standard Time
-## 337                                <NA>      Ekaterinburg Standard Time
-## 338                                <NA>          Caucasus Standard Time
-## 339                Alaska Daylight Time           Alaskan Standard Time
-## 340                  Azores Summer Time            Azores Standard Time
-## 341              Atlantic Daylight Time          Atlantic Standard Time
-## 342        Western European Summer Time               GMT Standard Time
-## 343                                <NA>        Cape Verde Standard Time
-## 344        Western European Summer Time               GMT Standard Time
-## 345        Western European Summer Time               GMT Standard Time
-## 346        Central European Summer Time         W. Europe Standard Time
-## 347        Western European Summer Time               GMT Standard Time
-## 348                                <NA>         Greenwich Standard Time
-## 349                                <NA>                          UTC-02
-## 350                                <NA>         Greenwich Standard Time
-## 351                                <NA>        SA Eastern Standard Time
-## 352    Australian Eastern Daylight Time       AUS Eastern Standard Time
-## 353    Australian Central Daylight Time    Cen. Australia Standard Time
-## 354                                <NA>      E. Australia Standard Time
-## 355    Australian Central Daylight Time    Cen. Australia Standard Time
-## 356    Australian Eastern Daylight Time       AUS Eastern Standard Time
-## 357    Australian Eastern Daylight Time          Tasmania Standard Time
-## 358                                <NA>       AUS Central Standard Time
-## 359                                <NA>    Aus Central W. Standard Time
-## 360    Australian Eastern Daylight Time          Tasmania Standard Time
-## 361             Lord Howe Daylight Time         Lord Howe Standard Time
-## 362                                <NA>      E. Australia Standard Time
-## 363             Lord Howe Daylight Time         Lord Howe Standard Time
-## 364    Australian Eastern Daylight Time       AUS Eastern Standard Time
-## 365                                <NA>       AUS Central Standard Time
-## 366    Australian Eastern Daylight Time       AUS Eastern Standard Time
-## 367                                <NA>      W. Australia Standard Time
-## 368                                <NA>      E. Australia Standard Time
-## 369    Australian Central Daylight Time    Cen. Australia Standard Time
-## 370    Australian Eastern Daylight Time       AUS Eastern Standard Time
-## 371    Australian Eastern Daylight Time          Tasmania Standard Time
-## 372    Australian Eastern Daylight Time       AUS Eastern Standard Time
-## 373                                <NA>      W. Australia Standard Time
-## 374    Australian Central Daylight Time    Cen. Australia Standard Time
-## 375                                <NA>  E. South America Standard Time
-## 376                                <NA>        SA Pacific Standard Time
-## 377                                <NA>                          UTC-02
-## 378                                <NA>  E. South America Standard Time
-## 379                                <NA>        SA Western Standard Time
-## 380                                <NA>        Bangladesh Standard Time
-## 381              Atlantic Daylight Time          Atlantic Standard Time
-## 382               Central Daylight Time           Central Standard Time
-## 383                                <NA>    Canada Central Standard Time
-## 384               Eastern Daylight Time           Eastern Standard Time
-## 385              Mountain Daylight Time          Mountain Standard Time
-## 386          Newfoundland Daylight Time      Newfoundland Standard Time
-## 387               Pacific Daylight Time           Pacific Standard Time
-## 388                                <NA>    Canada Central Standard Time
-## 389                                <NA>             Yukon Standard Time
-## 390                                <NA>      South Africa Standard Time
-## 391                           GMT+02:00                            <NA>
-## 392                   Chile Summer Time        Pacific SA Standard Time
-## 393           Easter Island Summer Time     Easter Island Standard Time
-## 394          Newfoundland Daylight Time      Newfoundland Standard Time
-## 395               Central Daylight Time           Central Standard Time
-## 396               Central Daylight Time           Central Standard Time
-## 397                                <NA>             China Standard Time
-## 398                  Cuba Daylight Time              Cuba Standard Time
-## 399                                <NA>         E. Africa Standard Time
-## 400        Central European Summer Time           Romance Standard Time
-## 401                           GMT+03:00                            <NA>
-## 402        Eastern European Summer Time             Egypt Standard Time
-## 403                 Irish Standard Time               GMT Standard Time
-## 404                                <NA>        SA Pacific Standard Time
-## 405               Eastern Daylight Time           Eastern Standard Time
-## 406                                <NA>                             UTC
-## 407                                <NA>                             UTC
-## 408                                <NA> W. Central Africa Standard Time
-## 409                                <NA>      South Africa Standard Time
-## 410                                <NA>         E. Africa Standard Time
-## 411                                <NA>           Arabian Standard Time
-## 412                                <NA>         West Asia Standard Time
-## 413                                <NA>      Central Asia Standard Time
-## 414                                <NA>           SE Asia Standard Time
-## 415                                <NA>         Singapore Standard Time
-## 416                                <NA>             Tokyo Standard Time
-## 417                                <NA>      West Pacific Standard Time
-## 418                                <NA>   Central Pacific Standard Time
-## 419                                <NA>                          UTC+12
-## 420                                <NA>                          UTC+13
-## 421                                <NA>      Line Islands Standard Time
-## 422                                <NA>                             UTC
-## 423                                <NA>        Cape Verde Standard Time
-## 424                                <NA>                          UTC-02
-## 425                                <NA>        SA Eastern Standard Time
-## 426                                <NA>        SA Western Standard Time
-## 427                                <NA>        SA Pacific Standard Time
-## 428                                <NA>   Central America Standard Time
-## 429                                <NA>       US Mountain Standard Time
-## 430                                <NA>                          UTC-08
-## 431                                <NA>                          UTC-09
-## 432                                <NA>          Hawaiian Standard Time
-## 433                                <NA>                          UTC-11
-## 434                                <NA>          Dateline Standard Time
-## 435                                <NA>                             UTC
-## 436                                <NA>                             UTC
-## 437                                <NA>                             UTC
-## 438                                <NA>                             UTC
-## 439                                <NA>                             UTC
-## 440                                <NA>                             UTC
-## 441        Central European Summer Time         W. Europe Standard Time
-## 442        Central European Summer Time         W. Europe Standard Time
-## 443                                <NA>         Astrakhan Standard Time
-## 444        Eastern European Summer Time               GTB Standard Time
-## 445                 British Summer Time               GMT Standard Time
-## 446        Central European Summer Time    Central Europe Standard Time
-## 447        Central European Summer Time         W. Europe Standard Time
-## 448        Central European Summer Time    Central Europe Standard Time
-## 449        Central European Summer Time           Romance Standard Time
-## 450        Eastern European Summer Time               GTB Standard Time
-## 451        Central European Summer Time    Central Europe Standard Time
-## 452        Central European Summer Time         W. Europe Standard Time
-## 453        Eastern European Summer Time         E. Europe Standard Time
-## 454        Central European Summer Time           Romance Standard Time
-## 455                 Irish Standard Time               GMT Standard Time
-## 456        Central European Summer Time         W. Europe Standard Time
-## 457                           GMT+01:00               GMT Standard Time
-## 458        Eastern European Summer Time               FLE Standard Time
-## 459                           GMT+01:00               GMT Standard Time
-## 460                                <NA>            Turkey Standard Time
-## 461                           GMT+01:00               GMT Standard Time
-## 462                                <NA>       Kaliningrad Standard Time
-## 463        Eastern European Summer Time               FLE Standard Time
-## 464                                <NA>           Russian Standard Time
-## 465        Eastern European Summer Time               FLE Standard Time
-## 466        Western European Summer Time               GMT Standard Time
-## 467        Central European Summer Time    Central Europe Standard Time
-## 468                 British Summer Time               GMT Standard Time
-## 469        Central European Summer Time         W. Europe Standard Time
-## 470        Central European Summer Time           Romance Standard Time
-## 471        Central European Summer Time         W. Europe Standard Time
-## 472        Eastern European Summer Time               FLE Standard Time
-## 473                                <NA>           Belarus Standard Time
-## 474        Central European Summer Time         W. Europe Standard Time
-## 475                                <NA>           Russian Standard Time
-## 476        Eastern European Summer Time               GTB Standard Time
-## 477        Central European Summer Time         W. Europe Standard Time
-## 478        Central European Summer Time           Romance Standard Time
-## 479        Central European Summer Time    Central Europe Standard Time
-## 480        Central European Summer Time    Central Europe Standard Time
-## 481        Eastern European Summer Time               FLE Standard Time
-## 482        Central European Summer Time         W. Europe Standard Time
-## 483                                <NA>              Russia Time Zone 3
-## 484        Central European Summer Time         W. Europe Standard Time
-## 485        Central European Summer Time  Central European Standard Time
-## 486                                <NA>           Saratov Standard Time
-## 487                                <NA>           Russian Standard Time
-## 488        Central European Summer Time  Central European Standard Time
-## 489        Eastern European Summer Time               FLE Standard Time
-## 490        Central European Summer Time         W. Europe Standard Time
-## 491        Eastern European Summer Time               FLE Standard Time
-## 492        Central European Summer Time    Central Europe Standard Time
-## 493        Eastern European Summer Time         E. Europe Standard Time
-## 494                                <NA>         Astrakhan Standard Time
-## 495        Eastern European Summer Time               FLE Standard Time
-## 496        Central European Summer Time         W. Europe Standard Time
-## 497        Central European Summer Time         W. Europe Standard Time
-## 498        Central European Summer Time         W. Europe Standard Time
-## 499        Eastern European Summer Time               FLE Standard Time
-## 500                                <NA>         Volgograd Standard Time
-## 501        Central European Summer Time  Central European Standard Time
-## 502        Central European Summer Time  Central European Standard Time
-## 503        Eastern European Summer Time               FLE Standard Time
-## 504        Central European Summer Time         W. Europe Standard Time
-## 505                                <NA>                            <NA>
-## 506                 British Summer Time               GMT Standard Time
-## 507                 British Summer Time               GMT Standard Time
-## 508                                <NA>                             UTC
-## 509                                <NA>                             UTC
-## 510                                <NA>                             UTC
-## 511                                <NA>                             UTC
-## 512                                <NA>                             UTC
-## 513                                <NA>             China Standard Time
-## 514                                <NA>          Hawaiian Standard Time
-## 515                                <NA>         Greenwich Standard Time
-## 516               Eastern Daylight Time        US Eastern Standard Time
-## 517                                <NA>         E. Africa Standard Time
-## 518                                <NA>      Central Asia Standard Time
-## 519                                <NA>           SE Asia Standard Time
-## 520                                <NA>           Myanmar Standard Time
-## 521                                <NA>         E. Africa Standard Time
-## 522                                <NA>         West Asia Standard Time
-## 523                                <NA>         Mauritius Standard Time
-## 524                                <NA>         West Asia Standard Time
-## 525                                <NA>         Mauritius Standard Time
-## 526                                <NA>         E. Africa Standard Time
-## 527                                <NA>         Mauritius Standard Time
-## 528                                <NA>              Iran Standard Time
-## 529                Israel Daylight Time            Israel Standard Time
-## 530                                <NA>             India Standard Time
-## 531                                <NA>        SA Pacific Standard Time
-## 532                                <NA>             Tokyo Standard Time
-## 533                                <NA>             Tokyo Standard Time
-## 534                                <NA>                          UTC+12
-## 535                                <NA>             Libya Standard Time
-## 536                           GMT+02:00                            <NA>
-## 537               Pacific Daylight Time  Pacific Standard Time (Mexico)
-## 538                                <NA> Mountain Standard Time (Mexico)
-## 539                                <NA>  Central Standard Time (Mexico)
-## 540                                <NA>             Samoa Standard Time
-## 541                                <NA>       US Mountain Standard Time
-## 542              Mountain Daylight Time          Mountain Standard Time
-## 543              Mountain Daylight Time          Mountain Standard Time
-## 544                                <NA>          Caucasus Standard Time
-## 545           New Zealand Daylight Time       New Zealand Standard Time
-## 546           New Zealand Daylight Time       New Zealand Standard Time
-## 547               Chatham Daylight Time   Chatham Islands Standard Time
-## 548                                <NA>             Samoa Standard Time
-## 549           New Zealand Daylight Time       New Zealand Standard Time
-## 550                                <NA>      Bougainville Standard Time
-## 551               Chatham Daylight Time   Chatham Islands Standard Time
-## 552                                <NA>      West Pacific Standard Time
-## 553           Easter Island Summer Time     Easter Island Standard Time
-## 554                                <NA>   Central Pacific Standard Time
-## 555                                <NA>                          UTC+13
-## 556                                <NA>                          UTC+13
-## 557                                <NA>              Fiji Standard Time
-## 558                                <NA>                          UTC+12
-## 559                                <NA>   Central America Standard Time
-## 560                                <NA>                          UTC-09
-## 561                                <NA>   Central Pacific Standard Time
-## 562                                <NA>      West Pacific Standard Time
-## 563                                <NA>          Hawaiian Standard Time
-## 564                                <NA>          Hawaiian Standard Time
-## 565                                <NA>                          UTC+13
-## 566                                <NA>      Line Islands Standard Time
-## 567                                <NA>   Central Pacific Standard Time
-## 568                                <NA>                          UTC+12
-## 569                                <NA>                          UTC+12
-## 570                                <NA>         Marquesas Standard Time
-## 571                                <NA>                          UTC-11
-## 572                                <NA>                          UTC+12
-## 573                                <NA>                          UTC-11
-## 574        Norfolk Island Daylight Time           Norfolk Standard Time
-## 575                                <NA>   Central Pacific Standard Time
-## 576                                <NA>                          UTC-11
-## 577                                <NA>             Tokyo Standard Time
-## 578                                <NA>                          UTC-08
-## 579                                <NA>   Central Pacific Standard Time
-## 580                                <NA>   Central Pacific Standard Time
-## 581                                <NA>      West Pacific Standard Time
-## 582                                <NA>          Hawaiian Standard Time
-## 583                                <NA>      West Pacific Standard Time
-## 584                                <NA>                          UTC-11
-## 585                                <NA>          Hawaiian Standard Time
-## 586                                <NA>                          UTC+12
-## 587                                <NA>             Tonga Standard Time
-## 588                                <NA>      West Pacific Standard Time
-## 589                                <NA>                          UTC+12
-## 590                                <NA>                          UTC+12
-## 591                                <NA>      West Pacific Standard Time
-## 592                                <NA>          Pakistan Standard Time
-## 593                                <NA>       US Mountain Standard Time
-## 594        Central European Summer Time  Central European Standard Time
-## 595        Western European Summer Time               GMT Standard Time
-## 596                                <NA>             China Standard Time
-## 597                                <NA>        SA Western Standard Time
-## 598               Pacific Daylight Time           Pacific Standard Time
-## 599               Pacific Daylight Time           Pacific Standard Time
-## 600                                <NA>            Taipei Standard Time
-## 601                                <NA>             Korea Standard Time
-## 602                                <NA>         Singapore Standard Time
-## 603                                <NA>   Central Pacific Standard Time
-## 604                                <NA>                            <NA>
-## 605                           GMT-03:00                            <NA>
-## 606                                <NA>                            <NA>
-## 607                           GMT-05:00                            <NA>
-## 608                                <NA>                            <NA>
-## 609                           GMT-04:00                            <NA>
-## 610                                <NA>                            <NA>
-## 611                                <NA>                            <NA>
-## 612                           GMT-06:00                            <NA>
-## 613                                <NA>                            <NA>
-## 614                           GMT-07:00                            <NA>
-## 615                                <NA>                            <NA>
-## 616                           GMT-08:00                            <NA>
-## 617                                <NA>            Turkey Standard Time
-## 618                                <NA>                             UTC
-## 619                                <NA>                             UTC
-## 620                Alaska Daylight Time           Alaskan Standard Time
-## 621       Hawaii-Aleutian Daylight Time          Aleutian Standard Time
-## 622                                <NA>       US Mountain Standard Time
-## 623               Central Daylight Time           Central Standard Time
-## 624               Eastern Daylight Time        US Eastern Standard Time
-## 625               Eastern Daylight Time           Eastern Standard Time
-## 626                                <NA>          Hawaiian Standard Time
-## 627               Central Daylight Time           Central Standard Time
-## 628               Eastern Daylight Time           Eastern Standard Time
-## 629              Mountain Daylight Time          Mountain Standard Time
-## 630               Pacific Daylight Time           Pacific Standard Time
-## 631               Pacific Daylight Time           Pacific Standard Time
-## 632                                <NA>                          UTC-11
-## 633                                <NA>                             UTC
-## 634                                <NA>           SE Asia Standard Time
-## 635                                <NA>           Russian Standard Time
-## 636                           GMT+01:00                            <NA>
-## 637                                <NA>                             UTC
+##                          Name.Daylight                    Name.Windows
+## 1                                 <NA>       AUS Central Standard Time
+## 2     Australian Eastern Daylight Time       AUS Eastern Standard Time
+## 3                                 <NA>         Greenwich Standard Time
+## 4                                 <NA>         Greenwich Standard Time
+## 5                                 <NA>         E. Africa Standard Time
+## 6                                 <NA> W. Central Africa Standard Time
+## 7                                 <NA>         E. Africa Standard Time
+## 8                                 <NA>         E. Africa Standard Time
+## 9                                 <NA>         Greenwich Standard Time
+## 10                                <NA> W. Central Africa Standard Time
+## 11                                <NA>         Greenwich Standard Time
+## 12                                <NA>         Greenwich Standard Time
+## 13                                <NA>      South Africa Standard Time
+## 14                                <NA> W. Central Africa Standard Time
+## 15                                <NA>      South Africa Standard Time
+## 16        Eastern European Summer Time             Egypt Standard Time
+## 17                           GMT+01:00           Morocco Standard Time
+## 18        Central European Summer Time           Romance Standard Time
+## 19                                <NA>         Greenwich Standard Time
+## 20                                <NA>         Greenwich Standard Time
+## 21                                <NA>         E. Africa Standard Time
+## 22                                <NA>         E. Africa Standard Time
+## 23                                <NA> W. Central Africa Standard Time
+## 24                           GMT+01:00           Morocco Standard Time
+## 25                                <NA>         Greenwich Standard Time
+## 26                                <NA>      South Africa Standard Time
+## 27                                <NA>      South Africa Standard Time
+## 28                                <NA>      South Africa Standard Time
+## 29                                <NA>       South Sudan Standard Time
+## 30                                <NA>         E. Africa Standard Time
+## 31                                <NA>             Sudan Standard Time
+## 32                                <NA>      South Africa Standard Time
+## 33                                <NA> W. Central Africa Standard Time
+## 34                                <NA> W. Central Africa Standard Time
+## 35                                <NA> W. Central Africa Standard Time
+## 36                                <NA>         Greenwich Standard Time
+## 37                                <NA> W. Central Africa Standard Time
+## 38                                <NA>      South Africa Standard Time
+## 39                                <NA>      South Africa Standard Time
+## 40                                <NA> W. Central Africa Standard Time
+## 41                                <NA>      South Africa Standard Time
+## 42                                <NA>      South Africa Standard Time
+## 43                                <NA>      South Africa Standard Time
+## 44                                <NA>         E. Africa Standard Time
+## 45                                <NA>         Greenwich Standard Time
+## 46                                <NA>         E. Africa Standard Time
+## 47                                <NA> W. Central Africa Standard Time
+## 48                                <NA> W. Central Africa Standard Time
+## 49                                <NA>         Greenwich Standard Time
+## 50                                <NA>         Greenwich Standard Time
+## 51                                <NA> W. Central Africa Standard Time
+## 52                                <NA>          Sao Tome Standard Time
+## 53                                <NA>         Greenwich Standard Time
+## 54                                <NA>             Libya Standard Time
+## 55                                <NA> W. Central Africa Standard Time
+## 56                                <NA>           Namibia Standard Time
+## 57                                <NA>         Argentina Standard Time
+## 58       Hawaii-Aleutian Daylight Time          Aleutian Standard Time
+## 59                Alaska Daylight Time           Alaskan Standard Time
+## 60                                <NA>        SA Western Standard Time
+## 61                                <NA>        SA Western Standard Time
+## 62                                <NA>         Tocantins Standard Time
+## 63                                <NA>         Argentina Standard Time
+## 64                                <NA>         Argentina Standard Time
+## 65                                <NA>         Argentina Standard Time
+## 66                                <NA>         Argentina Standard Time
+## 67                                <NA>         Argentina Standard Time
+## 68                                <NA>         Argentina Standard Time
+## 69                                <NA>         Argentina Standard Time
+## 70                                <NA>         Argentina Standard Time
+## 71                                <NA>         Argentina Standard Time
+## 72                                <NA>         Argentina Standard Time
+## 73                                <NA>         Argentina Standard Time
+## 74                                <NA>         Argentina Standard Time
+## 75                                <NA>         Argentina Standard Time
+## 76                                <NA>        SA Western Standard Time
+## 77                Paraguay Summer Time          Paraguay Standard Time
+## 78                                <NA>        SA Pacific Standard Time
+## 79       Hawaii-Aleutian Daylight Time          Aleutian Standard Time
+## 80                                <NA>             Bahia Standard Time
+## 81                                <NA>  Central Standard Time (Mexico)
+## 82                                <NA>        SA Western Standard Time
+## 83                                <NA>        SA Eastern Standard Time
+## 84                                <NA>   Central America Standard Time
+## 85                                <NA>        SA Western Standard Time
+## 86                                <NA>        SA Western Standard Time
+## 87                                <NA>        SA Pacific Standard Time
+## 88              Mountain Daylight Time          Mountain Standard Time
+## 89                                <NA>         Argentina Standard Time
+## 90              Mountain Daylight Time          Mountain Standard Time
+## 91                                <NA> Central Brazilian Standard Time
+## 92                                <NA>  Eastern Standard Time (Mexico)
+## 93                                <NA>         Venezuela Standard Time
+## 94                                <NA>         Argentina Standard Time
+## 95                                <NA>        SA Eastern Standard Time
+## 96                                <NA>        SA Pacific Standard Time
+## 97               Central Daylight Time           Central Standard Time
+## 98                                <NA>  Central Standard Time (Mexico)
+## 99              Mountain Daylight Time          Mountain Standard Time
+## 100                               <NA>        SA Pacific Standard Time
+## 101                               <NA>         Argentina Standard Time
+## 102                               <NA>   Central America Standard Time
+## 103                               <NA>       US Mountain Standard Time
+## 104                               <NA> Central Brazilian Standard Time
+## 105                               <NA>        SA Western Standard Time
+## 106                               <NA>         Greenwich Standard Time
+## 107                               <NA>             Yukon Standard Time
+## 108                               <NA>       US Mountain Standard Time
+## 109             Mountain Daylight Time          Mountain Standard Time
+## 110              Eastern Daylight Time           Eastern Standard Time
+## 111                               <NA>        SA Western Standard Time
+## 112             Mountain Daylight Time          Mountain Standard Time
+## 113                               <NA>        SA Pacific Standard Time
+## 114                               <NA>   Central America Standard Time
+## 115              Pacific Daylight Time  Pacific Standard Time (Mexico)
+## 116                               <NA>       US Mountain Standard Time
+## 117              Eastern Daylight Time        US Eastern Standard Time
+## 118                               <NA>        SA Eastern Standard Time
+## 119             Atlantic Daylight Time          Atlantic Standard Time
+## 120         West Greenland Summer Time         Greenland Standard Time
+## 121             Atlantic Daylight Time          Atlantic Standard Time
+## 122              Eastern Daylight Time  Turks And Caicos Standard Time
+## 123                               <NA>        SA Western Standard Time
+## 124                               <NA>        SA Western Standard Time
+## 125                               <NA>   Central America Standard Time
+## 126                               <NA>        SA Pacific Standard Time
+## 127                               <NA>        SA Western Standard Time
+## 128             Atlantic Daylight Time          Atlantic Standard Time
+## 129                 Cuba Daylight Time              Cuba Standard Time
+## 130                               <NA>       US Mountain Standard Time
+## 131              Eastern Daylight Time        US Eastern Standard Time
+## 132              Central Daylight Time           Central Standard Time
+## 133              Eastern Daylight Time        US Eastern Standard Time
+## 134              Eastern Daylight Time           Eastern Standard Time
+## 135              Central Daylight Time           Central Standard Time
+## 136              Eastern Daylight Time        US Eastern Standard Time
+## 137              Eastern Daylight Time           Eastern Standard Time
+## 138              Eastern Daylight Time           Eastern Standard Time
+## 139              Eastern Daylight Time        US Eastern Standard Time
+## 140             Mountain Daylight Time          Mountain Standard Time
+## 141              Eastern Daylight Time           Eastern Standard Time
+## 142                               <NA>        SA Pacific Standard Time
+## 143                               <NA>         Argentina Standard Time
+## 144               Alaska Daylight Time           Alaskan Standard Time
+## 145              Eastern Daylight Time           Eastern Standard Time
+## 146              Eastern Daylight Time           Eastern Standard Time
+## 147              Central Daylight Time           Central Standard Time
+## 148                               <NA>        SA Western Standard Time
+## 149                               <NA>        SA Western Standard Time
+## 150                               <NA>        SA Pacific Standard Time
+## 151              Pacific Daylight Time           Pacific Standard Time
+## 152              Eastern Daylight Time           Eastern Standard Time
+## 153                               <NA>        SA Western Standard Time
+## 154                               <NA>        SA Eastern Standard Time
+## 155                               <NA>   Central America Standard Time
+## 156                               <NA>        SA Western Standard Time
+## 157                               <NA>        SA Western Standard Time
+## 158                               <NA>        SA Western Standard Time
+## 159              Central Daylight Time           Central Standard Time
+## 160                               <NA> Mountain Standard Time (Mexico)
+## 161                               <NA>         Argentina Standard Time
+## 162              Central Daylight Time           Central Standard Time
+## 163                               <NA>  Central Standard Time (Mexico)
+## 164               Alaska Daylight Time           Alaskan Standard Time
+## 165                               <NA>  Central Standard Time (Mexico)
+## 166 St Pierre & Miquelon Daylight Time      Saint Pierre Standard Time
+## 167             Atlantic Daylight Time          Atlantic Standard Time
+## 168                               <NA>  Central Standard Time (Mexico)
+## 169                               <NA>        Montevideo Standard Time
+## 170              Eastern Daylight Time           Eastern Standard Time
+## 171                               <NA>        SA Western Standard Time
+## 172              Eastern Daylight Time           Eastern Standard Time
+## 173              Eastern Daylight Time           Eastern Standard Time
+## 174              Eastern Daylight Time           Eastern Standard Time
+## 175               Alaska Daylight Time           Alaskan Standard Time
+## 176                               <NA>                          UTC-02
+## 177              Central Daylight Time           Central Standard Time
+## 178              Central Daylight Time           Central Standard Time
+## 179              Central Daylight Time           Central Standard Time
+## 180         West Greenland Summer Time         Greenland Standard Time
+## 181              Central Daylight Time           Central Standard Time
+## 182                               <NA>        SA Pacific Standard Time
+## 183              Eastern Daylight Time           Eastern Standard Time
+## 184                               <NA>        SA Eastern Standard Time
+## 185                               <NA>       US Mountain Standard Time
+## 186                               <NA>        SA Western Standard Time
+## 187              Eastern Daylight Time             Haiti Standard Time
+## 188                               <NA>        SA Pacific Standard Time
+## 189                               <NA>        SA Western Standard Time
+## 190                               <NA>        SA Western Standard Time
+## 191                               <NA>        Magallanes Standard Time
+## 192              Central Daylight Time           Central Standard Time
+## 193              Central Daylight Time           Central Standard Time
+## 194                               <NA>        SA Eastern Standard Time
+## 195                               <NA>    Canada Central Standard Time
+## 196              Central Daylight Time           Central Standard Time
+## 197                               <NA>        SA Pacific Standard Time
+## 198                               <NA>         Argentina Standard Time
+## 199              Pacific Daylight Time  Pacific Standard Time (Mexico)
+## 200                               <NA>        SA Eastern Standard Time
+## 201                  Chile Summer Time        Pacific SA Standard Time
+## 202                               <NA>        SA Western Standard Time
+## 203                               <NA>  E. South America Standard Time
+## 204         East Greenland Summer Time            Azores Standard Time
+## 205             Mountain Daylight Time          Mountain Standard Time
+## 206               Alaska Daylight Time           Alaskan Standard Time
+## 207                               <NA>        SA Western Standard Time
+## 208         Newfoundland Daylight Time      Newfoundland Standard Time
+## 209                               <NA>        SA Western Standard Time
+## 210                               <NA>        SA Western Standard Time
+## 211                               <NA>        SA Western Standard Time
+## 212                               <NA>        SA Western Standard Time
+## 213                               <NA>    Canada Central Standard Time
+## 214                               <NA>   Central America Standard Time
+## 215             Atlantic Daylight Time          Atlantic Standard Time
+## 216              Eastern Daylight Time           Eastern Standard Time
+## 217              Pacific Daylight Time  Pacific Standard Time (Mexico)
+## 218              Eastern Daylight Time           Eastern Standard Time
+## 219                               <NA>        SA Western Standard Time
+## 220              Pacific Daylight Time           Pacific Standard Time
+## 221                               <NA>        SA Western Standard Time
+## 222                               <NA>             Yukon Standard Time
+## 223              Central Daylight Time           Central Standard Time
+## 224               Alaska Daylight Time           Alaskan Standard Time
+## 225             Mountain Daylight Time          Mountain Standard Time
+## 226                               <NA>   Central Pacific Standard Time
+## 227                               <NA>           SE Asia Standard Time
+## 228                               <NA>      West Pacific Standard Time
+## 229   Australian Eastern Daylight Time          Tasmania Standard Time
+## 230                               <NA>         West Asia Standard Time
+## 231          New Zealand Daylight Time       New Zealand Standard Time
+## 232                               <NA>        SA Eastern Standard Time
+## 233                               <NA>        SA Eastern Standard Time
+## 234          New Zealand Daylight Time       New Zealand Standard Time
+## 235                               <NA>         E. Africa Standard Time
+## 236                          GMT+02:00                            <NA>
+## 237                               <NA>      Central Asia Standard Time
+## 238       Central European Summer Time         W. Europe Standard Time
+## 239       Eastern European Summer Time             Egypt Standard Time
+## 240                               <NA>              Arab Standard Time
+## 241                               <NA>      Central Asia Standard Time
+## 242                               <NA>            Jordan Standard Time
+## 243                               <NA>             Russia Time Zone 11
+## 244                               <NA>         West Asia Standard Time
+## 245                               <NA>         West Asia Standard Time
+## 246                               <NA>         West Asia Standard Time
+## 247                               <NA>         West Asia Standard Time
+## 248                               <NA>         West Asia Standard Time
+## 249                               <NA>            Arabic Standard Time
+## 250                               <NA>              Arab Standard Time
+## 251                               <NA>        Azerbaijan Standard Time
+## 252                               <NA>           SE Asia Standard Time
+## 253                               <NA>             Altai Standard Time
+## 254       Eastern European Summer Time       Middle East Standard Time
+## 255                               <NA>      Central Asia Standard Time
+## 256                               <NA>         Singapore Standard Time
+## 257                               <NA>             India Standard Time
+## 258                               <NA>       Transbaikal Standard Time
+## 259                               <NA>       Ulaanbaatar Standard Time
+## 260                               <NA>             China Standard Time
+## 261                               <NA>             China Standard Time
+## 262                               <NA>         Sri Lanka Standard Time
+## 263                               <NA>        Bangladesh Standard Time
+## 264                               <NA>             Syria Standard Time
+## 265                               <NA>        Bangladesh Standard Time
+## 266                               <NA>             Tokyo Standard Time
+## 267                               <NA>           Arabian Standard Time
+## 268                               <NA>         West Asia Standard Time
+## 269                          GMT+03:00               GTB Standard Time
+## 270       Eastern European Summer Time         West Bank Standard Time
+## 271                               <NA>             China Standard Time
+## 272       Eastern European Summer Time         West Bank Standard Time
+## 273                               <NA>           SE Asia Standard Time
+## 274                               <NA>             China Standard Time
+## 275                               <NA>       W. Mongolia Standard Time
+## 276                               <NA>   North Asia East Standard Time
+## 277                               <NA>            Turkey Standard Time
+## 278                               <NA>           SE Asia Standard Time
+## 279                               <NA>             Tokyo Standard Time
+## 280               Israel Daylight Time            Israel Standard Time
+## 281                               <NA>       Afghanistan Standard Time
+## 282                               <NA>             Russia Time Zone 11
+## 283                               <NA>          Pakistan Standard Time
+## 284                               <NA>      Central Asia Standard Time
+## 285                               <NA>             Nepal Standard Time
+## 286                               <NA>             Nepal Standard Time
+## 287                               <NA>           Yakutsk Standard Time
+## 288                               <NA>             India Standard Time
+## 289                               <NA>        North Asia Standard Time
+## 290                               <NA>         Singapore Standard Time
+## 291                               <NA>         Singapore Standard Time
+## 292                               <NA>              Arab Standard Time
+## 293                               <NA>             China Standard Time
+## 294                               <NA>             China Standard Time
+## 295                               <NA>           Magadan Standard Time
+## 296                               <NA>         Singapore Standard Time
+## 297                               <NA>         Singapore Standard Time
+## 298                               <NA>           Arabian Standard Time
+## 299       Eastern European Summer Time               GTB Standard Time
+## 300                               <NA>        North Asia Standard Time
+## 301                               <NA>   N. Central Asia Standard Time
+## 302                               <NA>              Omsk Standard Time
+## 303                               <NA>         West Asia Standard Time
+## 304                               <NA>           SE Asia Standard Time
+## 305                               <NA>           SE Asia Standard Time
+## 306                               <NA>       North Korea Standard Time
+## 307                               <NA>              Arab Standard Time
+## 308                               <NA>      Central Asia Standard Time
+## 309                               <NA>         Qyzylorda Standard Time
+## 310                               <NA>           Myanmar Standard Time
+## 311                               <NA>              Arab Standard Time
+## 312                               <NA>           SE Asia Standard Time
+## 313                               <NA>          Sakhalin Standard Time
+## 314                               <NA>         West Asia Standard Time
+## 315                               <NA>             Korea Standard Time
+## 316                               <NA>             China Standard Time
+## 317                               <NA>         Singapore Standard Time
+## 318                               <NA>             Russia Time Zone 10
+## 319                               <NA>            Taipei Standard Time
+## 320                               <NA>         West Asia Standard Time
+## 321                               <NA>          Georgian Standard Time
+## 322                               <NA>              Iran Standard Time
+## 323               Israel Daylight Time            Israel Standard Time
+## 324                               <NA>        Bangladesh Standard Time
+## 325                               <NA>        Bangladesh Standard Time
+## 326                               <NA>             Tokyo Standard Time
+## 327                               <NA>             Tomsk Standard Time
+## 328                               <NA>         Singapore Standard Time
+## 329                               <NA>       Ulaanbaatar Standard Time
+## 330                               <NA>       Ulaanbaatar Standard Time
+## 331                               <NA>      Central Asia Standard Time
+## 332                               <NA>       Vladivostok Standard Time
+## 333                               <NA>           SE Asia Standard Time
+## 334                               <NA>       Vladivostok Standard Time
+## 335                               <NA>           Yakutsk Standard Time
+## 336                               <NA>           Myanmar Standard Time
+## 337                               <NA>      Ekaterinburg Standard Time
+## 338                               <NA>          Caucasus Standard Time
+## 339               Alaska Daylight Time           Alaskan Standard Time
+## 340                 Azores Summer Time            Azores Standard Time
+## 341             Atlantic Daylight Time          Atlantic Standard Time
+## 342       Western European Summer Time               GMT Standard Time
+## 343                               <NA>        Cape Verde Standard Time
+## 344       Western European Summer Time               GMT Standard Time
+## 345       Western European Summer Time               GMT Standard Time
+## 346       Central European Summer Time         W. Europe Standard Time
+## 347       Western European Summer Time               GMT Standard Time
+## 348                               <NA>         Greenwich Standard Time
+## 349                               <NA>                          UTC-02
+## 350                               <NA>         Greenwich Standard Time
+## 351                               <NA>        SA Eastern Standard Time
+## 352   Australian Eastern Daylight Time       AUS Eastern Standard Time
+## 353   Australian Central Daylight Time    Cen. Australia Standard Time
+## 354                               <NA>      E. Australia Standard Time
+## 355   Australian Central Daylight Time    Cen. Australia Standard Time
+## 356   Australian Eastern Daylight Time       AUS Eastern Standard Time
+## 357   Australian Eastern Daylight Time          Tasmania Standard Time
+## 358                               <NA>       AUS Central Standard Time
+## 359                               <NA>    Aus Central W. Standard Time
+## 360   Australian Eastern Daylight Time          Tasmania Standard Time
+## 361            Lord Howe Daylight Time         Lord Howe Standard Time
+## 362                               <NA>      E. Australia Standard Time
+## 363            Lord Howe Daylight Time         Lord Howe Standard Time
+## 364   Australian Eastern Daylight Time       AUS Eastern Standard Time
+## 365                               <NA>       AUS Central Standard Time
+## 366   Australian Eastern Daylight Time       AUS Eastern Standard Time
+## 367                               <NA>      W. Australia Standard Time
+## 368                               <NA>      E. Australia Standard Time
+## 369   Australian Central Daylight Time    Cen. Australia Standard Time
+## 370   Australian Eastern Daylight Time       AUS Eastern Standard Time
+## 371   Australian Eastern Daylight Time          Tasmania Standard Time
+## 372   Australian Eastern Daylight Time       AUS Eastern Standard Time
+## 373                               <NA>      W. Australia Standard Time
+## 374   Australian Central Daylight Time    Cen. Australia Standard Time
+## 375                               <NA>  E. South America Standard Time
+## 376                               <NA>        SA Pacific Standard Time
+## 377                               <NA>                          UTC-02
+## 378                               <NA>  E. South America Standard Time
+## 379                               <NA>        SA Western Standard Time
+## 380                               <NA>        Bangladesh Standard Time
+## 381             Atlantic Daylight Time          Atlantic Standard Time
+## 382              Central Daylight Time           Central Standard Time
+## 383                               <NA>    Canada Central Standard Time
+## 384              Eastern Daylight Time           Eastern Standard Time
+## 385             Mountain Daylight Time          Mountain Standard Time
+## 386         Newfoundland Daylight Time      Newfoundland Standard Time
+## 387              Pacific Daylight Time           Pacific Standard Time
+## 388                               <NA>    Canada Central Standard Time
+## 389                               <NA>             Yukon Standard Time
+## 390                               <NA>      South Africa Standard Time
+## 391                          GMT+02:00                            <NA>
+## 392                  Chile Summer Time        Pacific SA Standard Time
+## 393          Easter Island Summer Time     Easter Island Standard Time
+## 394         Newfoundland Daylight Time      Newfoundland Standard Time
+## 395              Central Daylight Time           Central Standard Time
+## 396              Central Daylight Time           Central Standard Time
+## 397                               <NA>             China Standard Time
+## 398                 Cuba Daylight Time              Cuba Standard Time
+## 399                               <NA>         E. Africa Standard Time
+## 400       Central European Summer Time           Romance Standard Time
+## 401                          GMT+03:00                            <NA>
+## 402       Eastern European Summer Time             Egypt Standard Time
+## 403                Irish Standard Time               GMT Standard Time
+## 404                               <NA>        SA Pacific Standard Time
+## 405              Eastern Daylight Time           Eastern Standard Time
+## 406                               <NA>                             UTC
+## 407                               <NA>                             UTC
+## 408                               <NA> W. Central Africa Standard Time
+## 409                               <NA>      South Africa Standard Time
+## 410                               <NA>         E. Africa Standard Time
+## 411                               <NA>           Arabian Standard Time
+## 412                               <NA>         West Asia Standard Time
+## 413                               <NA>      Central Asia Standard Time
+## 414                               <NA>           SE Asia Standard Time
+## 415                               <NA>         Singapore Standard Time
+## 416                               <NA>             Tokyo Standard Time
+## 417                               <NA>      West Pacific Standard Time
+## 418                               <NA>   Central Pacific Standard Time
+## 419                               <NA>                          UTC+12
+## 420                               <NA>                          UTC+13
+## 421                               <NA>      Line Islands Standard Time
+## 422                               <NA>                             UTC
+## 423                               <NA>        Cape Verde Standard Time
+## 424                               <NA>                          UTC-02
+## 425                               <NA>        SA Eastern Standard Time
+## 426                               <NA>        SA Western Standard Time
+## 427                               <NA>        SA Pacific Standard Time
+## 428                               <NA>   Central America Standard Time
+## 429                               <NA>       US Mountain Standard Time
+## 430                               <NA>                          UTC-08
+## 431                               <NA>                          UTC-09
+## 432                               <NA>          Hawaiian Standard Time
+## 433                               <NA>                          UTC-11
+## 434                               <NA>          Dateline Standard Time
+## 435                               <NA>                             UTC
+## 436                               <NA>                             UTC
+## 437                               <NA>                             UTC
+## 438                               <NA>                             UTC
+## 439                               <NA>                             UTC
+## 440                               <NA>                             UTC
+## 441       Central European Summer Time         W. Europe Standard Time
+## 442       Central European Summer Time         W. Europe Standard Time
+## 443                               <NA>         Astrakhan Standard Time
+## 444       Eastern European Summer Time               GTB Standard Time
+## 445                British Summer Time               GMT Standard Time
+## 446       Central European Summer Time    Central Europe Standard Time
+## 447       Central European Summer Time         W. Europe Standard Time
+## 448       Central European Summer Time    Central Europe Standard Time
+## 449       Central European Summer Time           Romance Standard Time
+## 450       Eastern European Summer Time               GTB Standard Time
+## 451       Central European Summer Time    Central Europe Standard Time
+## 452       Central European Summer Time         W. Europe Standard Time
+## 453       Eastern European Summer Time         E. Europe Standard Time
+## 454       Central European Summer Time           Romance Standard Time
+## 455                Irish Standard Time               GMT Standard Time
+## 456       Central European Summer Time         W. Europe Standard Time
+## 457                          GMT+01:00               GMT Standard Time
+## 458       Eastern European Summer Time               FLE Standard Time
+## 459                          GMT+01:00               GMT Standard Time
+## 460                               <NA>            Turkey Standard Time
+## 461                          GMT+01:00               GMT Standard Time
+## 462                               <NA>       Kaliningrad Standard Time
+## 463       Eastern European Summer Time               FLE Standard Time
+## 464                               <NA>           Russian Standard Time
+## 465       Eastern European Summer Time               FLE Standard Time
+## 466       Western European Summer Time               GMT Standard Time
+## 467       Central European Summer Time    Central Europe Standard Time
+## 468                British Summer Time               GMT Standard Time
+## 469       Central European Summer Time         W. Europe Standard Time
+## 470       Central European Summer Time           Romance Standard Time
+## 471       Central European Summer Time         W. Europe Standard Time
+## 472       Eastern European Summer Time               FLE Standard Time
+## 473                               <NA>           Belarus Standard Time
+## 474       Central European Summer Time         W. Europe Standard Time
+## 475                               <NA>           Russian Standard Time
+## 476       Eastern European Summer Time               GTB Standard Time
+## 477       Central European Summer Time         W. Europe Standard Time
+## 478       Central European Summer Time           Romance Standard Time
+## 479       Central European Summer Time    Central Europe Standard Time
+## 480       Central European Summer Time    Central Europe Standard Time
+## 481       Eastern European Summer Time               FLE Standard Time
+## 482       Central European Summer Time         W. Europe Standard Time
+## 483                               <NA>              Russia Time Zone 3
+## 484       Central European Summer Time         W. Europe Standard Time
+## 485       Central European Summer Time  Central European Standard Time
+## 486                               <NA>           Saratov Standard Time
+## 487                               <NA>           Russian Standard Time
+## 488       Central European Summer Time  Central European Standard Time
+## 489       Eastern European Summer Time               FLE Standard Time
+## 490       Central European Summer Time         W. Europe Standard Time
+## 491       Eastern European Summer Time               FLE Standard Time
+## 492       Central European Summer Time    Central Europe Standard Time
+## 493       Eastern European Summer Time         E. Europe Standard Time
+## 494                               <NA>         Astrakhan Standard Time
+## 495       Eastern European Summer Time               FLE Standard Time
+## 496       Central European Summer Time         W. Europe Standard Time
+## 497       Central European Summer Time         W. Europe Standard Time
+## 498       Central European Summer Time         W. Europe Standard Time
+## 499       Eastern European Summer Time               FLE Standard Time
+## 500                               <NA>         Volgograd Standard Time
+## 501       Central European Summer Time  Central European Standard Time
+## 502       Central European Summer Time  Central European Standard Time
+## 503       Eastern European Summer Time               FLE Standard Time
+## 504       Central European Summer Time         W. Europe Standard Time
+## 505                               <NA>                            <NA>
+## 506                British Summer Time               GMT Standard Time
+## 507                British Summer Time               GMT Standard Time
+## 508                               <NA>                             UTC
+## 509                               <NA>                             UTC
+## 510                               <NA>                             UTC
+## 511                               <NA>                             UTC
+## 512                               <NA>                             UTC
+## 513                               <NA>             China Standard Time
+## 514                               <NA>          Hawaiian Standard Time
+## 515                               <NA>         Greenwich Standard Time
+## 516              Eastern Daylight Time        US Eastern Standard Time
+## 517                               <NA>         E. Africa Standard Time
+## 518                               <NA>      Central Asia Standard Time
+## 519                               <NA>           SE Asia Standard Time
+## 520                               <NA>           Myanmar Standard Time
+## 521                               <NA>         E. Africa Standard Time
+## 522                               <NA>         West Asia Standard Time
+## 523                               <NA>         Mauritius Standard Time
+## 524                               <NA>         West Asia Standard Time
+## 525                               <NA>         Mauritius Standard Time
+## 526                               <NA>         E. Africa Standard Time
+## 527                               <NA>         Mauritius Standard Time
+## 528                               <NA>              Iran Standard Time
+## 529               Israel Daylight Time            Israel Standard Time
+## 530                               <NA>             India Standard Time
+## 531                               <NA>        SA Pacific Standard Time
+## 532                               <NA>             Tokyo Standard Time
+## 533                               <NA>             Tokyo Standard Time
+## 534                               <NA>                          UTC+12
+## 535                               <NA>             Libya Standard Time
+## 536                          GMT+02:00                            <NA>
+## 537              Pacific Daylight Time  Pacific Standard Time (Mexico)
+## 538                               <NA> Mountain Standard Time (Mexico)
+## 539                               <NA>  Central Standard Time (Mexico)
+## 540                               <NA>             Samoa Standard Time
+## 541                               <NA>       US Mountain Standard Time
+## 542             Mountain Daylight Time          Mountain Standard Time
+## 543             Mountain Daylight Time          Mountain Standard Time
+## 544                               <NA>          Caucasus Standard Time
+## 545          New Zealand Daylight Time       New Zealand Standard Time
+## 546          New Zealand Daylight Time       New Zealand Standard Time
+## 547              Chatham Daylight Time   Chatham Islands Standard Time
+## 548                               <NA>             Samoa Standard Time
+## 549          New Zealand Daylight Time       New Zealand Standard Time
+## 550                               <NA>      Bougainville Standard Time
+## 551              Chatham Daylight Time   Chatham Islands Standard Time
+## 552                               <NA>      West Pacific Standard Time
+## 553          Easter Island Summer Time     Easter Island Standard Time
+## 554                               <NA>   Central Pacific Standard Time
+## 555                               <NA>                          UTC+13
+## 556                               <NA>                          UTC+13
+## 557                               <NA>              Fiji Standard Time
+## 558                               <NA>                          UTC+12
+## 559                               <NA>   Central America Standard Time
+## 560                               <NA>                          UTC-09
+## 561                               <NA>   Central Pacific Standard Time
+## 562                               <NA>      West Pacific Standard Time
+## 563                               <NA>          Hawaiian Standard Time
+## 564                               <NA>          Hawaiian Standard Time
+## 565                               <NA>                          UTC+13
+## 566                               <NA>      Line Islands Standard Time
+## 567                               <NA>   Central Pacific Standard Time
+## 568                               <NA>                          UTC+12
+## 569                               <NA>                          UTC+12
+## 570                               <NA>         Marquesas Standard Time
+## 571                               <NA>                          UTC-11
+## 572                               <NA>                          UTC+12
+## 573                               <NA>                          UTC-11
+## 574       Norfolk Island Daylight Time           Norfolk Standard Time
+## 575                               <NA>   Central Pacific Standard Time
+## 576                               <NA>                          UTC-11
+## 577                               <NA>             Tokyo Standard Time
+## 578                               <NA>                          UTC-08
+## 579                               <NA>   Central Pacific Standard Time
+## 580                               <NA>   Central Pacific Standard Time
+## 581                               <NA>      West Pacific Standard Time
+## 582                               <NA>          Hawaiian Standard Time
+## 583                               <NA>      West Pacific Standard Time
+## 584                               <NA>                          UTC-11
+## 585                               <NA>          Hawaiian Standard Time
+## 586                               <NA>                          UTC+12
+## 587                               <NA>             Tonga Standard Time
+## 588                               <NA>      West Pacific Standard Time
+## 589                               <NA>                          UTC+12
+## 590                               <NA>                          UTC+12
+## 591                               <NA>      West Pacific Standard Time
+## 592                               <NA>          Pakistan Standard Time
+## 593                               <NA>       US Mountain Standard Time
+## 594       Central European Summer Time  Central European Standard Time
+## 595       Western European Summer Time               GMT Standard Time
+## 596                               <NA>             China Standard Time
+## 597                               <NA>        SA Western Standard Time
+## 598              Pacific Daylight Time           Pacific Standard Time
+## 599              Pacific Daylight Time           Pacific Standard Time
+## 600                               <NA>            Taipei Standard Time
+## 601                               <NA>             Korea Standard Time
+## 602                               <NA>         Singapore Standard Time
+## 603                               <NA>   Central Pacific Standard Time
+## 604                               <NA>                            <NA>
+## 605                          GMT-03:00                            <NA>
+## 606                               <NA>                            <NA>
+## 607                          GMT-05:00                            <NA>
+## 608                               <NA>                            <NA>
+## 609                          GMT-04:00                            <NA>
+## 610                               <NA>                            <NA>
+## 611                               <NA>                            <NA>
+## 612                          GMT-06:00                            <NA>
+## 613                               <NA>                            <NA>
+## 614                          GMT-07:00                            <NA>
+## 615                               <NA>                            <NA>
+## 616                          GMT-08:00                            <NA>
+## 617                               <NA>            Turkey Standard Time
+## 618                               <NA>                             UTC
+## 619                               <NA>                             UTC
+## 620               Alaska Daylight Time           Alaskan Standard Time
+## 621      Hawaii-Aleutian Daylight Time          Aleutian Standard Time
+## 622                               <NA>       US Mountain Standard Time
+## 623              Central Daylight Time           Central Standard Time
+## 624              Eastern Daylight Time        US Eastern Standard Time
+## 625              Eastern Daylight Time           Eastern Standard Time
+## 626                               <NA>          Hawaiian Standard Time
+## 627              Central Daylight Time           Central Standard Time
+## 628              Eastern Daylight Time           Eastern Standard Time
+## 629             Mountain Daylight Time          Mountain Standard Time
+## 630              Pacific Daylight Time           Pacific Standard Time
+## 631              Pacific Daylight Time           Pacific Standard Time
+## 632                               <NA>                          UTC-11
+## 633                               <NA>                             UTC
+## 634                               <NA>           SE Asia Standard Time
+## 635                               <NA>           Russian Standard Time
+## 636                          GMT+01:00                            <NA>
+## 637                               <NA>                             UTC
 ##     RawOffset UsesDaylightTime
 ## 1        9.50            FALSE
 ## 2       10.00             TRUE
@@ -1933,7 +1933,7 @@ do.call(rbind.data.frame,
 ## 201     -4.00             TRUE
 ## 202     -4.00            FALSE
 ## 203     -3.00            FALSE
-## 204     -2.00             TRUE
+## 204     -1.00             TRUE
 ## 205     -7.00             TRUE
 ## 206     -9.00             TRUE
 ## 207     -4.00            FALSE
@@ -1955,7 +1955,7 @@ do.call(rbind.data.frame,
 ## 223     -6.00             TRUE
 ## 224     -9.00             TRUE
 ## 225     -7.00             TRUE
-## 226      8.00            FALSE
+## 226     11.00            FALSE
 ## 227      7.00            FALSE
 ## 228     10.00            FALSE
 ## 229     10.00             TRUE
@@ -1966,11 +1966,11 @@ do.call(rbind.data.frame,
 ## 234     12.00             TRUE
 ## 235      3.00            FALSE
 ## 236      0.00             TRUE
-## 237      5.00            FALSE
+## 237      6.00            FALSE
 ## 238      1.00             TRUE
 ## 239      2.00             TRUE
 ## 240      3.00            FALSE
-## 241      5.00            FALSE
+## 241      6.00            FALSE
 ## 242      3.00            FALSE
 ## 243     12.00            FALSE
 ## 244      5.00            FALSE
@@ -2037,7 +2037,7 @@ do.call(rbind.data.frame,
 ## 305      7.00            FALSE
 ## 306      9.00            FALSE
 ## 307      3.00            FALSE
-## 308      5.00            FALSE
+## 308      6.00            FALSE
 ## 309      5.00            FALSE
 ## 310      6.50            FALSE
 ## 311      3.00            FALSE

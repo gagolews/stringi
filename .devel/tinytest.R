@@ -1,5 +1,5 @@
 # This file is part of the 'stringi' project.
-# Copyright (c) 2013-2024, Marek Gagolewski <https://www.gagolewski.com/>
+# Copyright (c) 2013-2025, Marek Gagolewski <https://www.gagolewski.com/>
 # All rights reserved.
 
 # Runs all unit tests for the package:

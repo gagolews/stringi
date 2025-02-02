@@ -1,7 +1,7 @@
 # kate: hl Makefile
 
 ## 'stringi' Makevars
-## Copyright (C) 2013-2024, Marek Gagolewski <https://www.gagolewski.com/>
+## Copyright (C) 2013-2025, Marek Gagolewski <https://www.gagolewski.com/>
 
 
 @STRINGI_CXXSTD@

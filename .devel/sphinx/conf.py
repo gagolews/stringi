@@ -1,4 +1,4 @@
-# Copyleft (C) 2021-2024, Marek Gagolewski <https://www.gagolewski.com/>
+# Copyleft (C) 2021-2025, Marek Gagolewski <https://www.gagolewski.com/>
 # Configuration file for the Sphinx documentation builder.
 
 import sys, os
@@ -12,7 +12,7 @@ def get_package_version():
 pkg_name = "stringi"
 pkg_title = "stringi"
 pkg_version = get_package_version()
-copyright_year = "2013–2024"
+copyright_year = "2013–2025"
 html_baseurl = "https://stringi.gagolewski.com/"
 html_logo = "https://www.gagolewski.com/_static/img/stringi.png"
 html_favicon = "https://www.gagolewski.com/_static/img/stringi.png"
