@@ -2236,6 +2236,10 @@ ICUDT_DIR="icu${ICU_BUNDLE_VERSION}/data"
 
 
 
+#'  /systax highlighting bug/
+
+
+
 #AC_ARG_VAR([CC], [(ignored)])
 
 #AC_ARG_VAR([CFLAGS], [(ignored)])

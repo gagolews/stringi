@@ -1,6 +1,6 @@
 # kate: hl Makefile
 ## `stringi` Makevars.win
-## Copyright (c) 2013-2024, Marek Gagolewski <https://www.gagolewski.com/>
+## Copyright (c) 2013-2025, Marek Gagolewski <https://www.gagolewski.com/>
 
 PKG_CPPFLAGS=-I. -Iicu74/ -Iicu74/unicode -Iicu74/common -Iicu74/i18n \
 -DUCONFIG_USE_LOCAL \

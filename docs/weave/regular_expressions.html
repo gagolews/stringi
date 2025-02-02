@@ -8,10 +8,10 @@
 
     <link rel="shortcut icon" href="https://www.gagolewski.com/_static/img/stringi.png"/><!-- Generated with Sphinx 7.3.7 and Furo 2024.05.06 -->
         <title>Regular Expressions - R Package stringi</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=387cc868" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=5282ffc2" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=1981fb80" />
     
     
 
@@ -214,7 +214,7 @@
 <a class="sidebar-brand" href="../index.html">stringi</a>
 </span>
 <div class="sidebar-brand">
-1.8.4.9001
+1.8.4.9002
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -848,7 +848,7 @@ to exponential matching times (e.g., “<code class="docutils literal notranslat
 <code class="docutils literal notranslate"><span class="pre">time_limit</span></code> or <code class="docutils literal notranslate"><span class="pre">stack_limit</span></code> option is recommended.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">system.time</span><span class="p">(</span><span class="nf">tryCatch</span><span class="p">({</span>
 <span class="w">  </span><span class="nf">stri_detect_regex</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="w"> </span><span class="o">%s*%</span><span class="w"> </span><span class="m">1000</span><span class="w"> </span><span class="o">%s+%</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;(a+)+b&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">time_limit</span><span class="o">=</span><span class="m">1e5</span><span class="p">)</span>
-<span class="p">},</span><span class="w"> </span><span class="n">error</span><span class="o">=</span><span class="nf">function</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;stopped.&quot;</span><span class="p">)))</span>
+<span class="p">},</span><span class="w"> </span><span class="n">error</span><span class="o">=</span><span class="kr">function</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;stopped.&quot;</span><span class="p">)))</span>
 <span class="c1">## stopped.</span>
 <span class="c1">##    user  system elapsed </span>
 <span class="c1">##  11.135   0.000  11.135</span>
@@ -1074,11 +1074,11 @@ discussion and a workaround.</p>
             <div class="copyright">
               
               
-              Copyright &#169; 2013–2024 by <a href="https://www.gagolewski.com">Marek Gagolewski</a>.
+              Copyright &#169; 2013–2025 by <a href="https://www.gagolewski.com">Marek Gagolewski</a>.
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2024-07-11T12:31:23+0200.
+              Last updated on 2025-02-02T16:09:08+0100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -1143,7 +1143,7 @@ discussion and a workaround.</p>
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=0cf862ba"></script>
+</div><script src="../_static/documentation_options.js?v=3b00e8d0"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=4e2eecee"></script>

@@ -1,4 +1,4 @@
-# Copyright (c) 2013-2024, Marek Gagolewski <https://www.gagolewski.com/>
+# Copyright (c) 2013-2025, Marek Gagolewski <https://www.gagolewski.com/>
 
 .PHONY:  r check build clean purge html docs test
 
