@@ -31,6 +31,7 @@
 
 
 #include "stri_stringi.h"
+#include "stri_callables.h"
 #include <cstring>
 #include <cstdlib>
 #include <unicode/uclean.h>
@@ -316,6 +317,12 @@ extern "C" void R_init_stringi(DllInfo* dll)
 #endif
 
     const R_CallMethodDef* methods = cCallMethods;
+    while (methods->name) {
+        R_RegisterCCallable("stringi", methods->name, methods->fun);
+        methods++;
+    }
+
+    methods = stri_callables;
     while (methods->name) {
         R_RegisterCCallable("stringi", methods->name, methods->fun);
         methods++;
