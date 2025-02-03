@@ -1,4 +1,5 @@
 stri_brkiter.cpp \
+stri_callables.cpp \
 stri_collator.cpp \
 stri_common.cpp \
 stri_compare.cpp \
