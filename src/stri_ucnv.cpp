@@ -271,7 +271,7 @@ const char* StriUcnv::getFriendlyName(const char* canname)
  * Convert each ASCII character (1..127) to UTF-8
  * and checks whether it gets the same result
  *
- * This sould be used only on 8-bit converters
+ * This should be used only on 8-bit converters
  *
  * @param conv ICU charset converter
  *
@@ -335,7 +335,7 @@ bool StriUcnv::hasASCIIsubset()
  * Converts each character (23..255) to UTF-8 and then back to original enc
  * and checks whether it gets the same result
  *
- * This sould be used only on 8-bit converters
+ * This should be used only on 8-bit converters
  *
  * @param conv ICU charset converter
  *
@@ -395,7 +395,7 @@ bool StriUcnv::is1to1Unicode()
             return false;
         }
 
-        // character not convertable => ignore
+        // character not convertible => ignore
         status = U_ZERO_ERROR;
         if (c != UCHAR_REPLACEMENT) {
             ucnv_fromUChars(m_ucnv, buf, buflen, (UChar*)&c, 1, &status);

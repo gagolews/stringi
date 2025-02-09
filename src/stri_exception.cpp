@@ -214,7 +214,7 @@ const char* ICUError::getICUerrorName(UErrorCode status)
 //      case U_FMT_PARSE_ERROR_START:
 //         return "Start of format library errors.";
     case U_MULTIPLE_DECIMAL_SEPARATORS:
-//      case U_MULTIPLE_DECIMAL_SEPERATORS:
+//      case U_MULTIPLE_DECIMAL_SEPARATORS:
         return "More than one decimal separator in number pattern.";
     case U_MULTIPLE_EXPONENTIAL_SYMBOLS:
         return "More than one exponent symbol in number pattern.";
@@ -264,7 +264,7 @@ const char* ICUError::getICUerrorName(UErrorCode status)
         return "UnicodeSet witing an RBBI rule missing a closing ']'.";
     case U_BRK_ASSIGN_ERROR:
         return "Syntax error in RBBI rule assignment statement.";
-    case U_BRK_VARIABLE_REDFINITION:
+    case U_BRK_VARIABLE_REDEFINITION:
         return "RBBI rule $Variable redefined.";
     case U_BRK_MISMATCHED_PAREN:
         return "Mis-matched parentheses in an RBBI rule.";
