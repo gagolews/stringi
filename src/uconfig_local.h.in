@@ -47,13 +47,6 @@
  // do not turn on!
 */
 
-#if defined(__GNUC__) && __GNUC__ >= 3
-#define NORET __attribute__((noreturn))
-#else
-#define NORET
-#endif
-extern "C" void NORET Rf_error(const char *, ...);
-
 #define UPRV_UNREACHABLE_EXIT (Rf_error("ICU internal error: UPRV_UNREACHABLE"))
 #define DOUBLE_CONVERSION_UNIMPLEMENTED() (Rf_error("ICU internal error: DOUBLE_CONVERSION_UNIMPLEMENTED"))
 #define DOUBLE_CONVERSION_UNREACHABLE()   (Rf_error("ICU internal error: DOUBLE_CONVERSION_UNREACHABLE"))
