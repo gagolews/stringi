@@ -46,8 +46,9 @@
  //  #define U_DISABLE_RENAMING 1
  // do not turn on!
 */
-
-#if defined(__GNUC__) && __GNUC__ >= 3
+#ifdef  __cplusplus
+#define NORET [[noreturn]]
+#elif defined(__GNUC__) && __GNUC__ >= 3
 #define NORET __attribute__((noreturn))
 #else
 #define NORET
