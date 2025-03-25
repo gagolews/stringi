@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="References" href="z_bibliography.html" /><link rel="prev" title="stri_write_lines: Write Text Lines to a Text File" href="rapi/stri_write_lines.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="References" href="z_bibliography.html" /><link rel="prev" title="stringi-package: Fast and Portable Character String Processing in R" href="rapi/stringi-package.html" />
         <link rel="canonical" href="https://stringi.gagolewski.com/news.html" />
 
     <link rel="shortcut icon" href="https://www.gagolewski.com/_static/img/stringi.png"/><!-- Generated with Sphinx 7.3.7 and Furo 2024.05.06 -->
@@ -214,7 +214,7 @@
 <a class="sidebar-brand" href="index.html">stringi</a>
 </span>
 <div class="sidebar-brand">
-1.8.4.9002
+1.8.5
 </div>
 <form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -254,7 +254,6 @@
 <li class="toctree-l2"><a class="reference internal" href="rapi/about_search_fixed.html">about_search_fixed:</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rapi/about_search_regex.html">about_search_regex:</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rapi/about_search.html">about_search: String Searching</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rapi/about_stringi.html">about_stringi: Fast and Portable Character String Processing in R</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rapi/operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rapi/operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rapi/operator_dollar.html">operator_dollar: as a Binary Operator</a></li>
@@ -347,6 +346,7 @@
 <li class="toctree-l2"><a class="reference internal" href="rapi/stri_width.html">stri_width: Determine the Width of Code Points</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rapi/stri_wrap.html">stri_wrap: Word Wrap Text to Format Paragraphs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rapi/stri_write_lines.html">stri_write_lines: Write Text Lines to a Text File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rapi/stringi-package.html">stringi-package: Fast and Portable Character String Processing in R</a></li>
 </ul>
 </li>
 </ul>
@@ -397,28 +397,29 @@
         <article role="main">
           <section class="tex2jax_ignore mathjax_ignore" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Link to this heading">¶</a></h1>
-<section id="xxx-under-development">
-<h2>1.8.4.9xxx (under development)<a class="headerlink" href="#xxx-under-development" title="Link to this heading">¶</a></h2>
+<section id="id1">
+<h2>1.8.5 (2025-03-25)<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
 <ul class="simple">
+<li><p>[BUGFIX] Fixed build warnings.</p></li>
 <li><p>[BUGFIX] #512: Fixed PROTECT stack imbalance in <code class="docutils literal notranslate"><span class="pre">stri_encode_from_marked</span></code>.</p></li>
 </ul>
 </section>
-<section id="id1">
-<h2>1.8.4 (2024-05-06)<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<section id="id2">
+<h2>1.8.4 (2024-05-06)<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[BUILD TIME] [BUGFIX] #508: Fixed build errors on Windows
 (thanks to &#64;jeroen and &#64;kalibera).</p></li>
 </ul>
 </section>
-<section id="id2">
-<h2>1.8.3 (2023-12-10)<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<section id="id3">
+<h2>1.8.3 (2023-12-10)<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[BUILD TIME] [BUGFIX] Fixed the <em>format string is not a string literal
 (potentially insecure)</em> warnings.</p></li>
 </ul>
 </section>
-<section id="id3">
-<h2>1.8.2 (2023-11-22)<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<section id="id4">
+<h2>1.8.2 (2023-11-22)<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[BUILD TIME] [BUGFIX] #501: Fixed failing build on 32-bit Windows
 (Windows API <code class="docutils literal notranslate"><span class="pre">ResolveLocaleName</span></code> function not available).</p></li>
@@ -429,8 +430,8 @@ the <code class="docutils literal notranslate"><span class="pre">configure</span
 has been restored (see #463).</p></li>
 </ul>
 </section>
-<section id="id4">
-<h2>1.8.1 (2023-11-09)<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
+<section id="id5">
+<h2>1.8.1 (2023-11-09)<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[GENERAL] ICU bundle updated to version 74.1 (Unicode 15.1, CLDR 44).</p></li>
 <li><p>[BACKWARD INCOMPATIBILITY] [BUILD TIME] Support for Solaris has now been
@@ -462,8 +463,8 @@ object when parsing multiple dates.</p></li>
 858993457 characters on input.</p></li>
 </ul>
 </section>
-<section id="id5">
-<h2>1.7.12 (2023-01-09)<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
+<section id="id6">
+<h2>1.7.12 (2023-01-09)<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[BUGFIX] Fixed a few issues reported by <code class="docutils literal notranslate"><span class="pre">rchk</span></code>.</p></li>
 <li><p>[NOTE] [BACKWARD INCOMPATIBLE CHANGE IF ICU &gt;= 72]
@@ -472,8 +473,8 @@ If building against ICU &gt;= 72, note a backward incompatible change:
 <a class="reference external" href="https://github.com/unicode-org/cldr/pull/2256">https://github.com/unicode-org/cldr/pull/2256</a>.</p></li>
 </ul>
 </section>
-<section id="id6">
-<h2>1.7.8 (2022-07-11)<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h2>
+<section id="id7">
+<h2>1.7.8 (2022-07-11)<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[DOCUMENTATION] Paper on <strong><code class="docutils literal notranslate"><span class="pre">stringi</span></code></strong> has been published in
 the <em>Journal of Statistical Software</em>;
@@ -486,16 +487,16 @@ generate strings of length &gt;= 2^31 each.</p></li>
 does not handle negative numbers correctly is now mentioned in the manual.</p></li>
 </ul>
 </section>
-<section id="id7">
-<h2>1.7.6 (2021-11-29)<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h2>
+<section id="id8">
+<h2>1.7.6 (2021-11-29)<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[BUILD TIME] #463: Added Loongarch support in ICU’s double conversion
 (&#64;liuxiang88).</p></li>
 <li><p>[BUGFIX] #467: The UCRT build on Windows was not marking strings as <code class="docutils literal notranslate"><span class="pre">latin1</span></code>.</p></li>
 </ul>
 </section>
-<section id="id8">
-<h2>1.7.5 (2021-10-04)<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h2>
+<section id="id9">
+<h2>1.7.5 (2021-10-04)<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[DOCUMENTATION] Paper on <strong><code class="docutils literal notranslate"><span class="pre">stringi</span></code></strong> has been accepted for
 publication in the <em>Journal of Statistical Software</em>,
@@ -511,29 +512,29 @@ and <code class="docutils literal notranslate"><span class="pre">AC_TRY_COMPILE<
 ‘embeded nul in string’ errors.</p></li>
 </ul>
 </section>
-<section id="id9">
-<h2>1.7.4 (2021-08-12)<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h2>
+<section id="id10">
+<h2>1.7.4 (2021-08-12)<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[BUGFIX] #449: Fixed segfaults generated by <code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code>.</p></li>
 <li><p>[BUILD TIME] No longer defining <code class="docutils literal notranslate"><span class="pre">USE_RINTERNALS</span></code> and <code class="docutils literal notranslate"><span class="pre">R_NO_REMAP</span></code>.</p></li>
 </ul>
 </section>
-<section id="id10">
-<h2>1.7.3 (2021-07-15)<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h2>
+<section id="id11">
+<h2>1.7.3 (2021-07-15)<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[BUGFIX] Fixed the previous patch of ICU55 causing a build failure on,
 amongst others, CRAN’s Solaris-based target.</p></li>
 </ul>
 </section>
-<section id="id11">
-<h2>1.7.2 (2021-07-14)<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h2>
+<section id="id12">
+<h2>1.7.2 (2021-07-14)<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[BUGFIX] Workaround for a bug in <code class="docutils literal notranslate"><span class="pre">tools::checkFF</span></code> failing
 when <code class="docutils literal notranslate"><span class="pre">NA_character_</span></code> is passed to <code class="docutils literal notranslate"><span class="pre">.Call</span></code>.</p></li>
 </ul>
 </section>
-<section id="id12">
-<h2>1.7.1 (2021-07-14)<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h2>
+<section id="id13">
+<h2>1.7.1 (2021-07-14)<a class="headerlink" href="#id13" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[BACKWARD INCOMPATIBILITY] <code class="docutils literal notranslate"><span class="pre">%s$%</span></code> and <code class="docutils literal notranslate"><span class="pre">%stri$%</span></code> now use the new <code class="docutils literal notranslate"><span class="pre">stri_sprintf</span></code>
 (see below) function instead of <code class="docutils literal notranslate"><span class="pre">base::sprintf</span></code>.</p></li>
@@ -591,8 +592,8 @@ It has now been completely rewritten (in C).</p></li>
 correctly.</p></li>
 </ul>
 </section>
-<section id="id13">
-<h2>1.6.2 (2021-05-14)<a class="headerlink" href="#id13" title="Link to this heading">¶</a></h2>
+<section id="id14">
+<h2>1.6.2 (2021-05-14)<a class="headerlink" href="#id14" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[BACKWARD INCOMPATIBILITY] In <code class="docutils literal notranslate"><span class="pre">stri_enc_list()</span></code>,
 <code class="docutils literal notranslate"><span class="pre">simplify</span></code> now defaults to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>.</p></li>
@@ -610,8 +611,8 @@ General category <em>Sk</em> (Symbol, modifier) is no longer of width 0,
 garbage collected in the so-called meanwhile (with thanks to &#64;jimhester).</p></li>
 </ul>
 </section>
-<section id="id14">
-<h2>1.6.1 (2021-05-05)<a class="headerlink" href="#id14" title="Link to this heading">¶</a></h2>
+<section id="id15">
+<h2>1.6.1 (2021-05-05)<a class="headerlink" href="#id15" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[GENERAL] #401: stringi is now bundled with ICU4C 69.1 (upgraded from 61.1),
 which is used on most Windows and OS X builds as well as on *nix systems
@@ -638,8 +639,8 @@ in <code class="docutils literal notranslate"><span class="pre">stri_opts_collat
 directly (&#64;lukaszdaniel).</p></li>
 </ul>
 </section>
-<section id="id15">
-<h2>1.5.3 (2020-09-04)<a class="headerlink" href="#id15" title="Link to this heading">¶</a></h2>
+<section id="id16">
+<h2>1.5.3 (2020-09-04)<a class="headerlink" href="#id16" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[DOCUMENTATION] stringi home page has moved to
 <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a> and now includes a comprehensive reference
@@ -687,8 +688,8 @@ now can generate strings of much larger lengths.</p></li>
 <code class="docutils literal notranslate"><span class="pre">use_width</span></code> was <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>.</p></li>
 </ul>
 </section>
-<section id="id16">
-<h2>1.4.6 (2020-02-17)<a class="headerlink" href="#id16" title="Link to this heading">¶</a></h2>
+<section id="id17">
+<h2>1.4.6 (2020-02-17)<a class="headerlink" href="#id17" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[BACKWARD INCOMPATIBILITY] #369: <code class="docutils literal notranslate"><span class="pre">stri_c()</span></code> now returns an empty string
 when input is empty and <code class="docutils literal notranslate"><span class="pre">collapse</span></code> is set.</p></li>
@@ -698,14 +699,14 @@ reported by rchk.</p></li>
 documentation object <code class="docutils literal notranslate"><span class="pre">stri_datetime_format</span></code>: <code class="docutils literal notranslate"><span class="pre">...</span></code></p></li>
 </ul>
 </section>
-<section id="id17">
-<h2>1.4.5 (2020-01-11)<a class="headerlink" href="#id17" title="Link to this heading">¶</a></h2>
+<section id="id18">
+<h2>1.4.5 (2020-01-11)<a class="headerlink" href="#id18" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[BUGFIX] #366: fix for #363 required ICU &gt;= 55 .</p></li>
 </ul>
 </section>
-<section id="id18">
-<h2>1.4.4 (2020-01-06)<a class="headerlink" href="#id18" title="Link to this heading">¶</a></h2>
+<section id="id19">
+<h2>1.4.4 (2020-01-06)<a class="headerlink" href="#id19" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[BUGFIX] #348: Avoid copying 0 bytes to a nil-buffer in <code class="docutils literal notranslate"><span class="pre">stri_sub_all()</span></code>.</p></li>
 <li><p>[BUGFIX] #362: Removed <code class="docutils literal notranslate"><span class="pre">configure</span></code> variable <code class="docutils literal notranslate"><span class="pre">CXXCPP</span></code> as it is now deprecated.</p></li>
@@ -714,8 +715,8 @@ documentation object <code class="docutils literal notranslate"><span class="pre
 <li><p>[BUGFIX] #363: Status of <code class="docutils literal notranslate"><span class="pre">RegexMatcher</span></code> is now checked after its use.</p></li>
 </ul>
 </section>
-<section id="id19">
-<h2>1.4.3 (2019-03-12)<a class="headerlink" href="#id19" title="Link to this heading">¶</a></h2>
+<section id="id20">
+<h2>1.4.3 (2019-03-12)<a class="headerlink" href="#id20" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[NEW FEATURE] #30: New function <code class="docutils literal notranslate"><span class="pre">stri_sub_all()</span></code> - a version of
 <code class="docutils literal notranslate"><span class="pre">stri_sub()</span></code> accepting list <code class="docutils literal notranslate"><span class="pre">from</span></code>/<code class="docutils literal notranslate"><span class="pre">to</span></code>/<code class="docutils literal notranslate"><span class="pre">length</span></code> arguments for extracting
@@ -733,8 +734,8 @@ for overlapping pattern and replacement strings.</p></li>
 <li><p>[WARNFIX] #205: <code class="docutils literal notranslate"><span class="pre">configure.ac</span></code> is now included in the source bundle.</p></li>
 </ul>
 </section>
-<section id="id20">
-<h2>1.3.1 (2019-02-10)<a class="headerlink" href="#id20" title="Link to this heading">¶</a></h2>
+<section id="id21">
+<h2>1.3.1 (2019-02-10)<a class="headerlink" href="#id21" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[BACKWARD INCOMPATIBILITY] #335: A fix to #314 prevented (by design) the use
 of the system ICU if the library had been compiled with <code class="docutils literal notranslate"><span class="pre">U_CHARSET_IS_UTF8=1</span></code>.
@@ -759,8 +760,8 @@ under <code class="docutils literal notranslate"><span class="pre">/bin/dash</sp
 too many warnings on empty search patterns.</p></li>
 </ul>
 </section>
-<section id="id21">
-<h2>1.2.4 (2018-07-20)<a class="headerlink" href="#id21" title="Link to this heading">¶</a></h2>
+<section id="id22">
+<h2>1.2.4 (2018-07-20)<a class="headerlink" href="#id22" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[BUGFIX] #314: Testing <code class="docutils literal notranslate"><span class="pre">U_CHARSET_IS_UTF8</span></code> in <code class="docutils literal notranslate"><span class="pre">configure</span></code> when
 using <code class="docutils literal notranslate"><span class="pre">pkg-build</span></code>.</p></li>
@@ -770,15 +771,15 @@ and <code class="docutils literal notranslate"><span class="pre">windows-oldrel<
 errors were caused by a build chain bug).</p></li>
 </ul>
 </section>
-<section id="id22">
-<h2>1.2.3 (2018-05-16)<a class="headerlink" href="#id22" title="Link to this heading">¶</a></h2>
+<section id="id23">
+<h2>1.2.3 (2018-05-16)<a class="headerlink" href="#id23" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[BUGFIX] #296: Fixed the behaviour of the <code class="docutils literal notranslate"><span class="pre">configure</span></code> script on CentOS 6.</p></li>
 <li><p>[BUGFIX] Fixed broken Windows build by updating the <code class="docutils literal notranslate"><span class="pre">icudt</span></code> mirror list.</p></li>
 </ul>
 </section>
-<section id="id23">
-<h2>1.2.2 (2018-05-01)<a class="headerlink" href="#id23" title="Link to this heading">¶</a></h2>
+<section id="id24">
+<h2>1.2.2 (2018-05-01)<a class="headerlink" href="#id24" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[GENERAL] #193: stringi is now bundled with ICU4C 61.1,
 which is used on most Windows and OS X builds as well as on *nix systems
@@ -797,16 +798,16 @@ of atomic vectors, each of length 1) to an atomic vector now issues a warning.</
 and <code class="docutils literal notranslate"><span class="pre">icu55/i18n/windtfmt.cpp</span></code> in the ICU4C 55.1 bundle.</p></li>
 </ul>
 </section>
-<section id="id24">
-<h2>1.1.7 (2018-03-06)<a class="headerlink" href="#id24" title="Link to this heading">¶</a></h2>
+<section id="id25">
+<h2>1.1.7 (2018-03-06)<a class="headerlink" href="#id25" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[BUGFIX] Fixed ICU4C 55.1 generating some <em>significant warnings</em>
 (<code class="docutils literal notranslate"><span class="pre">icu55/i18n/winnmfmt.cpp</span></code>) and <em>suppressing important diagnostics</em>
 (<code class="docutils literal notranslate"><span class="pre">src/icu55/i18n/decNumber.c</span></code>).</p></li>
 </ul>
 </section>
-<section id="id25">
-<h2>1.1.6 (2017-11-10)<a class="headerlink" href="#id25" title="Link to this heading">¶</a></h2>
+<section id="id26">
+<h2>1.1.6 (2017-11-10)<a class="headerlink" href="#id26" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[WINDOWS SPECIFIC] #270: Strings marked with <code class="docutils literal notranslate"><span class="pre">latin1</span></code> encoding
 are now converted internally to UTF-8 using the WINDOWS-1252 codec.
@@ -819,8 +820,8 @@ values in any of the arguments provided.</p></li>
 as reported by <code class="docutils literal notranslate"><span class="pre">rchk</span></code>.</p></li>
 </ul>
 </section>
-<section id="id26">
-<h2>1.1.5 (2017-04-07)<a class="headerlink" href="#id26" title="Link to this heading">¶</a></h2>
+<section id="id27">
+<h2>1.1.5 (2017-04-07)<a class="headerlink" href="#id27" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[GENERAL] stringi now requires ICU4C &gt;= 52.</p></li>
 <li><p>[BUGFIX] Fixed errors pointed out by <code class="docutils literal notranslate"><span class="pre">clang-UBSAN</span></code> in <code class="docutils literal notranslate"><span class="pre">stri_brkiter.h</span></code>.</p></li>
@@ -831,8 +832,8 @@ to <code class="docutils literal notranslate"><span class="pre">pkg-config</span
 <li><p>[BUILD TIME, BUGFIX] #254: <code class="docutils literal notranslate"><span class="pre">dir.exists()</span></code> is R &gt;= 3.2.</p></li>
 </ul>
 </section>
-<section id="id27">
-<h2>1.1.3 (2017-03-21)<a class="headerlink" href="#id27" title="Link to this heading">¶</a></h2>
+<section id="id28">
+<h2>1.1.3 (2017-03-21)<a class="headerlink" href="#id28" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[REMOVE DEPRECATED] <code class="docutils literal notranslate"><span class="pre">stri_install_check()</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_install_icudt()</span></code>
 marked as deprecated in stringi 0.5-5 are no longer being exported.</p></li>
@@ -851,14 +852,14 @@ see <code class="docutils literal notranslate"><span class="pre">INSTALL</span><
 as of ICU 58.2, stringi code has been upgraded accordingly.</p></li>
 </ul>
 </section>
-<section id="id28">
-<h2>1.1.2 (2016-09-30)<a class="headerlink" href="#id28" title="Link to this heading">¶</a></h2>
+<section id="id29">
+<h2>1.1.2 (2016-09-30)<a class="headerlink" href="#id29" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[BUGFIX] <code class="docutils literal notranslate"><span class="pre">round()</span></code>, <code class="docutils literal notranslate"><span class="pre">snprintf()</span></code> is not C++98.</p></li>
 </ul>
 </section>
-<section id="id29">
-<h2>1.1.1 (2016-05-25)<a class="headerlink" href="#id29" title="Link to this heading">¶</a></h2>
+<section id="id30">
+<h2>1.1.1 (2016-05-25)<a class="headerlink" href="#id30" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[BUGFIX] #214: Allow a regex pattern like <code class="docutils literal notranslate"><span class="pre">.*</span></code>  to match an empty string.</p></li>
 <li><p>[BUGFIX] #210: <code class="docutils literal notranslate"><span class="pre">stri_replace_all_fixed(c(&quot;1&quot;,</span> <span class="pre">&quot;NULL&quot;),</span> <span class="pre">&quot;NULL&quot;,</span> <span class="pre">NA)</span></code>
@@ -875,8 +876,8 @@ in a list of character vectors. Useful in conjunction with, e.g.,
 <code class="docutils literal notranslate"><span class="pre">stri_extract_all_regex()</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_extract_all_words()</span></code>, etc.</p></li>
 </ul>
 </section>
-<section id="id30">
-<h2>1.0-1 (2015-10-22)<a class="headerlink" href="#id30" title="Link to this heading">¶</a></h2>
+<section id="id31">
+<h2>1.0-1 (2015-10-22)<a class="headerlink" href="#id31" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[GENERAL] #88: C API is now available for use in, e.g., Rcpp packages, see
 <a class="reference external" href="https://github.com/gagolews/ExampleRcppStringi">https://github.com/gagolews/ExampleRcppStringi</a> for an example.</p></li>
@@ -886,8 +887,8 @@ in a list of character vectors. Useful in conjunction with, e.g.,
 than two elements.</p></li>
 </ul>
 </section>
-<section id="id31">
-<h2>0.5-5 (2015-06-28)<a class="headerlink" href="#id31" title="Link to this heading">¶</a></h2>
+<section id="id32">
+<h2>0.5-5 (2015-06-28)<a class="headerlink" href="#id32" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[BACKWARD INCOMPATIBILITY] <code class="docutils literal notranslate"><span class="pre">stri_install_check()</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_install_icudt()</span></code>
 are now deprecated. From now on they are supposed to be used only
@@ -909,8 +910,8 @@ more similar across different platforms.</p></li>
 of ICU4C is in use (system or bundle).</p></li>
 </ul>
 </section>
-<section id="id32">
-<h2>0.5-2 (2015-06-21)<a class="headerlink" href="#id32" title="Link to this heading">¶</a></h2>
+<section id="id33">
+<h2>0.5-2 (2015-06-21)<a class="headerlink" href="#id33" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[BACKWARD INCOMPATIBILITY] The second argument to <code class="docutils literal notranslate"><span class="pre">stri_pad_*()</span></code> has
 been renamed <code class="docutils literal notranslate"><span class="pre">width</span></code>.</p></li>
@@ -977,8 +978,8 @@ were not coerced to the character type correctly.</p></li>
 corrected.</p></li>
 </ul>
 </section>
-<section id="id33">
-<h2>0.4-1 (2014-12-11)<a class="headerlink" href="#id33" title="Link to this heading">¶</a></h2>
+<section id="id34">
+<h2>0.4-1 (2014-12-11)<a class="headerlink" href="#id34" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[IMPORTANT CHANGE] <code class="docutils literal notranslate"><span class="pre">n_max</span></code> argument in <code class="docutils literal notranslate"><span class="pre">stri_split_*()</span></code> has been renamed <code class="docutils literal notranslate"><span class="pre">n</span></code>.</p></li>
 <li><p>[IMPORTANT CHANGE] <code class="docutils literal notranslate"><span class="pre">simplify=FALSE</span></code> in <code class="docutils literal notranslate"><span class="pre">stri_extract_all_*()</span></code> and
@@ -1031,8 +1032,8 @@ the ICU <code class="docutils literal notranslate"><span class="pre">UnicodeStri
 failures within ICU code.</p></li>
 </ul>
 </section>
-<section id="id34">
-<h2>0.3-1 (2014-11-06)<a class="headerlink" href="#id34" title="Link to this heading">¶</a></h2>
+<section id="id35">
+<h2>0.3-1 (2014-11-06)<a class="headerlink" href="#id35" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[IMPORTANT CHANGE] #87: <code class="docutils literal notranslate"><span class="pre">%&gt;%</span></code> overlapped with the pipe operator from
 the <code class="docutils literal notranslate"><span class="pre">magrittr</span></code> package; now each operator like <code class="docutils literal notranslate"><span class="pre">%&gt;%</span></code> has been renamed <code class="docutils literal notranslate"><span class="pre">%s&gt;%</span></code>.</p></li>
@@ -1078,22 +1079,22 @@ garbage collection - this could have led to spontaneous SEGFAULTS.</p></li>
 <li><p>[DOCUMENTATION] Significant extensions/clean ups in the stringi manual.</p></li>
 </ul>
 </section>
-<section id="id35">
-<h2>0.2-5 (2014-05-16)<a class="headerlink" href="#id35" title="Link to this heading">¶</a></h2>
+<section id="id36">
+<h2>0.2-5 (2014-05-16)<a class="headerlink" href="#id36" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Some examples are no longer run if <code class="docutils literal notranslate"><span class="pre">icudt</span></code> is not available
 (this was reverted in a future version though).</p></li>
 </ul>
 </section>
-<section id="id36">
-<h2>0.2-4 (2014-05-15)<a class="headerlink" href="#id36" title="Link to this heading">¶</a></h2>
+<section id="id37">
+<h2>0.2-4 (2014-05-15)<a class="headerlink" href="#id37" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[BUGFIX] Fixed issues with loading of misaligned addresses
 in <code class="docutils literal notranslate"><span class="pre">stri_*_fixed()</span></code>.</p></li>
 </ul>
 </section>
-<section id="id37">
-<h2>0.2-3 (2014-05-14)<a class="headerlink" href="#id37" title="Link to this heading">¶</a></h2>
+<section id="id38">
+<h2>0.2-3 (2014-05-14)<a class="headerlink" href="#id38" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[IMPORTANT CHANGE] <code class="docutils literal notranslate"><span class="pre">stri_cmp*()</span></code> now do not allow for passing
 <code class="docutils literal notranslate"><span class="pre">opts_collator=NA</span></code>. From now on, <code class="docutils literal notranslate"><span class="pre">stri_cmp_eq()</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_cmp_neq()</span></code>,
@@ -1180,15 +1181,15 @@ for <code class="docutils literal notranslate"><span class="pre">opts_collator=N
 <li><p>[BUGFIX] <code class="docutils literal notranslate"><span class="pre">stri_sort()</span></code> did not guarantee to return strings in UTF-8.</p></li>
 </ul>
 </section>
-<section id="id38">
-<h2>0.1-25 (2014-03-12)<a class="headerlink" href="#id38" title="Link to this heading">¶</a></h2>
+<section id="id39">
+<h2>0.1-25 (2014-03-12)<a class="headerlink" href="#id39" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>LICENSE tweaks.</p></li>
 <li><p>First CRAN release.</p></li>
 </ul>
 </section>
-<section id="id39">
-<h2>0.1-24 (2014-03-11)<a class="headerlink" href="#id39" title="Link to this heading">¶</a></h2>
+<section id="id40">
+<h2>0.1-24 (2014-03-11)<a class="headerlink" href="#id40" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Fixed bugs detected with <code class="docutils literal notranslate"><span class="pre">ASAN</span></code> and <code class="docutils literal notranslate"><span class="pre">UBSAN</span></code>,
 e.g., fixed <code class="docutils literal notranslate"><span class="pre">CharClass::gcmask</span></code> type (<code class="docutils literal notranslate"><span class="pre">enum</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">uint32_t</span></code>)
@@ -1198,8 +1199,8 @@ e.g., fixed <code class="docutils literal notranslate"><span class="pre">CharCla
 (reported by <code class="docutils literal notranslate"><span class="pre">valgrind</span></code>).</p></li>
 </ul>
 </section>
-<section id="id40">
-<h2>0.1-23 (2014-03-11)<a class="headerlink" href="#id40" title="Link to this heading">¶</a></h2>
+<section id="id41">
+<h2>0.1-23 (2014-03-11)<a class="headerlink" href="#id41" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>License changed to BSD-3-clause, COPYRIGHTS updated.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">icudt</span></code> is not shipped with stringi anymore;
@@ -1207,8 +1208,8 @@ it is now downloaded in <code class="docutils literal notranslate"><span class="
 <li><p>New functions: <code class="docutils literal notranslate"><span class="pre">stri_install_check()</span></code>, <code class="docutils literal notranslate"><span class="pre">stri_install_icudt()</span></code>.</p></li>
 </ul>
 </section>
-<section id="id41">
-<h2>0.1-22 (2014-02-20)<a class="headerlink" href="#id41" title="Link to this heading">¶</a></h2>
+<section id="id42">
+<h2>0.1-22 (2014-02-20)<a class="headerlink" href="#id42" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>System ICU is used on systems which do have one (version &gt;= 50 needed).
 ICU is auto-detected with <code class="docutils literal notranslate"><span class="pre">pkg-config</span></code> in <code class="docutils literal notranslate"><span class="pre">configure</span></code>.
@@ -1218,23 +1219,23 @@ ICU from sources.</p></li>
 (for big-endian, ASCII systems).</p></li>
 </ul>
 </section>
-<section id="id42">
-<h2>0.1-21 (2014-02-19)<a class="headerlink" href="#id42" title="Link to this heading">¶</a></h2>
+<section id="id43">
+<h2>0.1-21 (2014-02-19)<a class="headerlink" href="#id43" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Fixed some issues on Solaris while preparing stringi
 for CRAN submission.</p></li>
 </ul>
 </section>
-<section id="id43">
-<h2>0.1-20 (2014-02-17)<a class="headerlink" href="#id43" title="Link to this heading">¶</a></h2>
+<section id="id44">
+<h2>0.1-20 (2014-02-17)<a class="headerlink" href="#id44" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>ICU4C 52.1 sources included (common, i18n, stubdata + <code class="docutils literal notranslate"><span class="pre">icu52dt.dat</span></code>
 loaded dynamically). Compilation via Makevars.</p></li>
 <li><p>stringi does not depend on any external libraries anymore.</p></li>
 </ul>
 </section>
-<section id="id44">
-<h2>0.1-11 (2013-11-16)<a class="headerlink" href="#id44" title="Link to this heading">¶</a></h2>
+<section id="id45">
+<h2>0.1-11 (2013-11-16)<a class="headerlink" href="#id45" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>ICU4C is now statically linked on Windows.</p></li>
 <li><p>First OS X binary build.</p></li>
@@ -1242,14 +1243,14 @@ loaded dynamically). Compilation via Makevars.</p></li>
 University of Technology.</p></li>
 </ul>
 </section>
-<section id="id45">
-<h2>0.1-10 (2013-11-13)<a class="headerlink" href="#id45" title="Link to this heading">¶</a></h2>
+<section id="id46">
+<h2>0.1-10 (2013-11-13)<a class="headerlink" href="#id46" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Using <code class="docutils literal notranslate"><span class="pre">pkg-config</span></code> via <code class="docutils literal notranslate"><span class="pre">configure</span></code> to look for ICU4C libs.</p></li>
 </ul>
 </section>
-<section id="id46">
-<h2>0.1-6 (2013-07-05)<a class="headerlink" href="#id46" title="Link to this heading">¶</a></h2>
+<section id="id47">
+<h2>0.1-6 (2013-07-05)<a class="headerlink" href="#id47" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>First Windows binary build.</p></li>
 <li><p>Compilation passed on Oracle Sun Studio compiler collection.</p></li>
@@ -1257,8 +1258,8 @@ University of Technology.</p></li>
 scheduled for milestone 0.1.</p></li>
 </ul>
 </section>
-<section id="id47">
-<h2>0.1-1 (2013-01-05)<a class="headerlink" href="#id47" title="Link to this heading">¶</a></h2>
+<section id="id48">
+<h2>0.1-1 (2013-01-05)<a class="headerlink" href="#id48" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>The stringi project has been started.</p></li>
 </ul>
@@ -1279,14 +1280,14 @@ scheduled for milestone 0.1.</p></li>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="rapi/stri_write_lines.html">
+          <a class="prev-page" href="rapi/stringi-package.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">stri_write_lines: Write Text Lines to a Text File</div>
+                <div class="title">stringi-package: Fast and Portable Character String Processing in R</div>
                 
               </div>
             </a>
@@ -1300,7 +1301,7 @@ scheduled for milestone 0.1.</p></li>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2025-02-02T16:09:08+0100.
+              Last updated on 2025-03-25T14:37:22+0100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -1322,54 +1323,54 @@ scheduled for milestone 0.1.</p></li>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Changelog</a><ul>
-<li><a class="reference internal" href="#xxx-under-development">1.8.4.9xxx (under development)</a></li>
-<li><a class="reference internal" href="#id1">1.8.4 (2024-05-06)</a></li>
-<li><a class="reference internal" href="#id2">1.8.3 (2023-12-10)</a></li>
-<li><a class="reference internal" href="#id3">1.8.2 (2023-11-22)</a></li>
-<li><a class="reference internal" href="#id4">1.8.1 (2023-11-09)</a></li>
-<li><a class="reference internal" href="#id5">1.7.12 (2023-01-09)</a></li>
-<li><a class="reference internal" href="#id6">1.7.8 (2022-07-11)</a></li>
-<li><a class="reference internal" href="#id7">1.7.6 (2021-11-29)</a></li>
-<li><a class="reference internal" href="#id8">1.7.5 (2021-10-04)</a></li>
-<li><a class="reference internal" href="#id9">1.7.4 (2021-08-12)</a></li>
-<li><a class="reference internal" href="#id10">1.7.3 (2021-07-15)</a></li>
-<li><a class="reference internal" href="#id11">1.7.2 (2021-07-14)</a></li>
-<li><a class="reference internal" href="#id12">1.7.1 (2021-07-14)</a></li>
-<li><a class="reference internal" href="#id13">1.6.2 (2021-05-14)</a></li>
-<li><a class="reference internal" href="#id14">1.6.1 (2021-05-05)</a></li>
-<li><a class="reference internal" href="#id15">1.5.3 (2020-09-04)</a></li>
-<li><a class="reference internal" href="#id16">1.4.6 (2020-02-17)</a></li>
-<li><a class="reference internal" href="#id17">1.4.5 (2020-01-11)</a></li>
-<li><a class="reference internal" href="#id18">1.4.4 (2020-01-06)</a></li>
-<li><a class="reference internal" href="#id19">1.4.3 (2019-03-12)</a></li>
-<li><a class="reference internal" href="#id20">1.3.1 (2019-02-10)</a></li>
-<li><a class="reference internal" href="#id21">1.2.4 (2018-07-20)</a></li>
-<li><a class="reference internal" href="#id22">1.2.3 (2018-05-16)</a></li>
-<li><a class="reference internal" href="#id23">1.2.2 (2018-05-01)</a></li>
-<li><a class="reference internal" href="#id24">1.1.7 (2018-03-06)</a></li>
-<li><a class="reference internal" href="#id25">1.1.6 (2017-11-10)</a></li>
-<li><a class="reference internal" href="#id26">1.1.5 (2017-04-07)</a></li>
-<li><a class="reference internal" href="#id27">1.1.3 (2017-03-21)</a></li>
-<li><a class="reference internal" href="#id28">1.1.2 (2016-09-30)</a></li>
-<li><a class="reference internal" href="#id29">1.1.1 (2016-05-25)</a></li>
-<li><a class="reference internal" href="#id30">1.0-1 (2015-10-22)</a></li>
-<li><a class="reference internal" href="#id31">0.5-5 (2015-06-28)</a></li>
-<li><a class="reference internal" href="#id32">0.5-2 (2015-06-21)</a></li>
-<li><a class="reference internal" href="#id33">0.4-1 (2014-12-11)</a></li>
-<li><a class="reference internal" href="#id34">0.3-1 (2014-11-06)</a></li>
-<li><a class="reference internal" href="#id35">0.2-5 (2014-05-16)</a></li>
-<li><a class="reference internal" href="#id36">0.2-4 (2014-05-15)</a></li>
-<li><a class="reference internal" href="#id37">0.2-3 (2014-05-14)</a></li>
-<li><a class="reference internal" href="#id38">0.1-25 (2014-03-12)</a></li>
-<li><a class="reference internal" href="#id39">0.1-24 (2014-03-11)</a></li>
-<li><a class="reference internal" href="#id40">0.1-23 (2014-03-11)</a></li>
-<li><a class="reference internal" href="#id41">0.1-22 (2014-02-20)</a></li>
-<li><a class="reference internal" href="#id42">0.1-21 (2014-02-19)</a></li>
-<li><a class="reference internal" href="#id43">0.1-20 (2014-02-17)</a></li>
-<li><a class="reference internal" href="#id44">0.1-11 (2013-11-16)</a></li>
-<li><a class="reference internal" href="#id45">0.1-10 (2013-11-13)</a></li>
-<li><a class="reference internal" href="#id46">0.1-6 (2013-07-05)</a></li>
-<li><a class="reference internal" href="#id47">0.1-1 (2013-01-05)</a></li>
+<li><a class="reference internal" href="#id1">1.8.5 (2025-03-25)</a></li>
+<li><a class="reference internal" href="#id2">1.8.4 (2024-05-06)</a></li>
+<li><a class="reference internal" href="#id3">1.8.3 (2023-12-10)</a></li>
+<li><a class="reference internal" href="#id4">1.8.2 (2023-11-22)</a></li>
+<li><a class="reference internal" href="#id5">1.8.1 (2023-11-09)</a></li>
+<li><a class="reference internal" href="#id6">1.7.12 (2023-01-09)</a></li>
+<li><a class="reference internal" href="#id7">1.7.8 (2022-07-11)</a></li>
+<li><a class="reference internal" href="#id8">1.7.6 (2021-11-29)</a></li>
+<li><a class="reference internal" href="#id9">1.7.5 (2021-10-04)</a></li>
+<li><a class="reference internal" href="#id10">1.7.4 (2021-08-12)</a></li>
+<li><a class="reference internal" href="#id11">1.7.3 (2021-07-15)</a></li>
+<li><a class="reference internal" href="#id12">1.7.2 (2021-07-14)</a></li>
+<li><a class="reference internal" href="#id13">1.7.1 (2021-07-14)</a></li>
+<li><a class="reference internal" href="#id14">1.6.2 (2021-05-14)</a></li>
+<li><a class="reference internal" href="#id15">1.6.1 (2021-05-05)</a></li>
+<li><a class="reference internal" href="#id16">1.5.3 (2020-09-04)</a></li>
+<li><a class="reference internal" href="#id17">1.4.6 (2020-02-17)</a></li>
+<li><a class="reference internal" href="#id18">1.4.5 (2020-01-11)</a></li>
+<li><a class="reference internal" href="#id19">1.4.4 (2020-01-06)</a></li>
+<li><a class="reference internal" href="#id20">1.4.3 (2019-03-12)</a></li>
+<li><a class="reference internal" href="#id21">1.3.1 (2019-02-10)</a></li>
+<li><a class="reference internal" href="#id22">1.2.4 (2018-07-20)</a></li>
+<li><a class="reference internal" href="#id23">1.2.3 (2018-05-16)</a></li>
+<li><a class="reference internal" href="#id24">1.2.2 (2018-05-01)</a></li>
+<li><a class="reference internal" href="#id25">1.1.7 (2018-03-06)</a></li>
+<li><a class="reference internal" href="#id26">1.1.6 (2017-11-10)</a></li>
+<li><a class="reference internal" href="#id27">1.1.5 (2017-04-07)</a></li>
+<li><a class="reference internal" href="#id28">1.1.3 (2017-03-21)</a></li>
+<li><a class="reference internal" href="#id29">1.1.2 (2016-09-30)</a></li>
+<li><a class="reference internal" href="#id30">1.1.1 (2016-05-25)</a></li>
+<li><a class="reference internal" href="#id31">1.0-1 (2015-10-22)</a></li>
+<li><a class="reference internal" href="#id32">0.5-5 (2015-06-28)</a></li>
+<li><a class="reference internal" href="#id33">0.5-2 (2015-06-21)</a></li>
+<li><a class="reference internal" href="#id34">0.4-1 (2014-12-11)</a></li>
+<li><a class="reference internal" href="#id35">0.3-1 (2014-11-06)</a></li>
+<li><a class="reference internal" href="#id36">0.2-5 (2014-05-16)</a></li>
+<li><a class="reference internal" href="#id37">0.2-4 (2014-05-15)</a></li>
+<li><a class="reference internal" href="#id38">0.2-3 (2014-05-14)</a></li>
+<li><a class="reference internal" href="#id39">0.1-25 (2014-03-12)</a></li>
+<li><a class="reference internal" href="#id40">0.1-24 (2014-03-11)</a></li>
+<li><a class="reference internal" href="#id41">0.1-23 (2014-03-11)</a></li>
+<li><a class="reference internal" href="#id42">0.1-22 (2014-02-20)</a></li>
+<li><a class="reference internal" href="#id43">0.1-21 (2014-02-19)</a></li>
+<li><a class="reference internal" href="#id44">0.1-20 (2014-02-17)</a></li>
+<li><a class="reference internal" href="#id45">0.1-11 (2013-11-16)</a></li>
+<li><a class="reference internal" href="#id46">0.1-10 (2013-11-13)</a></li>
+<li><a class="reference internal" href="#id47">0.1-6 (2013-07-05)</a></li>
+<li><a class="reference internal" href="#id48">0.1-1 (2013-01-05)</a></li>
 </ul>
 </li>
 </ul>
@@ -1381,7 +1382,7 @@ scheduled for milestone 0.1.</p></li>
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=3b00e8d0"></script>
+</div><script src="_static/documentation_options.js?v=ed17f7cc"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=4e2eecee"></script>

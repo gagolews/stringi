@@ -34,4 +34,4 @@ Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character str
 
 Other search_fixed: [`about_search`](about_search.md), [`stri_opts_fixed()`](stri_opts_fixed.md)
 
-Other stringi_general_topics: [`about_arguments`](about_arguments.md), [`about_encoding`](about_encoding.md), [`about_locale`](about_locale.md), [`about_search`](about_search.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_charclass`](about_search_charclass.md), [`about_search_coll`](about_search_coll.md), [`about_search_regex`](about_search_regex.md), [`about_stringi`](about_stringi.md)
+Other stringi_general_topics: [`about_arguments`](about_arguments.md), [`about_encoding`](about_encoding.md), [`about_locale`](about_locale.md), [`about_search`](about_search.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_charclass`](about_search_charclass.md), [`about_search_coll`](about_search_coll.md), [`about_search_regex`](about_search_regex.md), [`stringi-package`](stringi-package.md)

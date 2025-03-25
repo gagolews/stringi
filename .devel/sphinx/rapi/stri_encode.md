@@ -33,7 +33,7 @@ However, if `from` is given explicitly, the internal encoding declarations are a
 
 For `to_raw=FALSE`, the output strings always have the encodings marked according to the target converter used (as specified by `to`) and the current default Encoding (`ASCII`, `latin1`, `UTF-8`, `native`, or `bytes` in all other cases).
 
-Note that some issues might occur if `to` indicates, e.g, UTF-16 or UTF-32, as the output strings may have embedded NULs. In such cases, please use `to_raw=TRUE` and consider specifying a byte order marker (BOM) for portability reasons (e.g., set `UTF-16` or `UTF-32` which automatically adds the BOMs).
+Note that some issues might occur if `to` indicates, e.g., UTF-16 or UTF-32, as the output strings may have embedded NULs. In such cases, please use `to_raw=TRUE` and consider specifying a byte order marker (BOM) for portability reasons (e.g., set `UTF-16` or `UTF-32` which automatically adds the BOMs).
 
 Note that `stri_encode(as.raw(data), 'encodingname')` is a clever substitute for [`rawToChar`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/rawConversion.html).
 

@@ -66,7 +66,7 @@
 #' or \code{bytes} in all other cases).
 #'
 #'
-#' Note that some issues might occur if \code{to} indicates, e.g,
+#' Note that some issues might occur if \code{to} indicates, e.g.,
 #' UTF-16 or UTF-32, as the output strings may have embedded NULs.
 #' In such cases, please use \code{to_raw=TRUE} and consider
 #' specifying a byte order marker (BOM) for portability reasons

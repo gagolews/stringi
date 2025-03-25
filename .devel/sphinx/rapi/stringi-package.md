@@ -1,4 +1,4 @@
-# about_stringi: Fast and Portable Character String Processing in R
+# stringi-package: Fast and Portable Character String Processing in R
 
 ## Description
 
@@ -85,5 +85,15 @@ Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character str
 The official online manual of <span class="pkg">stringi</span> at <https://stringi.gagolewski.com/>
 
 Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, *Journal of Statistical Software* 103(2), 2022, 1-59, [doi:10.18637/jss.v103.i02](https://doi.org/10.18637/jss.v103.i02)
+
+Useful links:
+
+-   <https://stringi.gagolewski.com/>
+
+-   <https://github.com/gagolews/stringi>
+
+-   <https://icu.unicode.org/>
+
+-   Report bugs at <https://github.com/gagolews/stringi/issues>
 
 Other stringi_general_topics: [`about_arguments`](about_arguments.md), [`about_encoding`](about_encoding.md), [`about_locale`](about_locale.md), [`about_search`](about_search.md), [`about_search_boundaries`](about_search_boundaries.md), [`about_search_charclass`](about_search_charclass.md), [`about_search_coll`](about_search_coll.md), [`about_search_fixed`](about_search_fixed.md), [`about_search_regex`](about_search_regex.md)

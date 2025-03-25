@@ -124,7 +124,7 @@ Other stringi_general_topics:
 \code{\link{about_search_coll}},
 \code{\link{about_search_fixed}},
 \code{\link{about_search_regex}},
-\code{\link{about_stringi}}
+\code{\link{stringi-package}}
 }
 \concept{search_charclass}
 \concept{search_coll}

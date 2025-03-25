@@ -140,10 +140,6 @@
 #' Note that each man page provides many further links to other
 #' interesting facilities and topics.
 #'
-#' @name about_stringi
-#' @rdname about_stringi
-#' @aliases about_stringi stringi stringi-package
-#'
 #' @docType package
 #' @author Marek Gagolewski,
 #' with contributions from Bartek Tartanus and many others.
@@ -177,4 +173,4 @@
 #' @importFrom utils unzip
 #' @importFrom stats runif
 #' @importFrom stats rnorm
-invisible(NULL)
+"_PACKAGE"

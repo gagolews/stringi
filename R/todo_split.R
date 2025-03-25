@@ -40,14 +40,13 @@ invisible(NULL)  # TO DO
 
 # #' Split the elements of a character vector by position
 # #'
-# #'
 # #' @param str character vector to split
 # #' @param split character element
 # #' @param from integer vector
 # #' @param to integer vector
 # #' @return A list of the same length as the longest of vectors:
 # #' str, split and omitempty. Shorter vectors are recycled. The i-th element
-# #' of list contains splitted str[i] character vectors
+# #' of the list contains split str[i] character vectors
 # #'
 # #' @examples
 # #' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'

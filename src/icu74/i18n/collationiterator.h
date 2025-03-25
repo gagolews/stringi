@@ -224,6 +224,17 @@ public:
 protected:
     CollationIterator(const CollationIterator &other);
 
+
+    CollationIterator() { }  // MG FIX
+    void __CollationIterator_init(const CollationData *d, UBool numeric) {  // MG FIX
+        trie = d->trie;
+        data = d;
+        cesIndex = 0;
+        skipped = nullptr;
+        numCpFwd = -1;
+        isNumeric = numeric;
+    }
+
     void reset();
 
     /**

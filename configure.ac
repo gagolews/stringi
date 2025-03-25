@@ -13,8 +13,8 @@
 #                      (minimal requirement since stringi-1.8.1)
 # 2021-04-07 ICU 69.1 (bundled with stringi 1.6.1)
 # 2023-10-31 ICU 74.1 (bundled with stringi 1.8.1,
-#    together with icudata; compressed with xz and included in the package
-#    source tarball as suggested by BR)
+#    together with icudata; compressed with xz and included
+#    in the package source tarball as suggested by BR)
 # 2024-04-xx ICU 75 will require C++17 (!)
 
 
