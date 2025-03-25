@@ -13,7 +13,6 @@ rapi/about_search_coll
 rapi/about_search_fixed
 rapi/about_search_regex
 rapi/about_search
-rapi/about_stringi
 rapi/operator_add
 rapi/operator_compare
 rapi/operator_dollar
@@ -106,4 +105,5 @@ rapi/stri_unique
 rapi/stri_width
 rapi/stri_wrap
 rapi/stri_write_lines
+rapi/stringi-package
 ```

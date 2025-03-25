@@ -10,7 +10,7 @@ autom4te.cache
 config.log
 config.status
 .lineno
-
+__pycache__
 
 # Local development environment:
 *.kdev4

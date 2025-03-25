@@ -1,7 +1,9 @@
 # Changelog
 
 
-## 1.8.4.9xxx (under development)
+## 1.8.5 (2025-03-25)
+
+* [BUGFIX] Fixed build warnings.
 
 * [BUGFIX] #512: Fixed PROTECT stack imbalance in `stri_encode_from_marked`.
 

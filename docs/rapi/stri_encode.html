@@ -214,7 +214,7 @@
 <a class="sidebar-brand" href="../index.html">stringi</a>
 </span>
 <div class="sidebar-brand">
-1.8.4.9002
+1.8.5
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -254,7 +254,6 @@
 <li class="toctree-l2"><a class="reference internal" href="about_search_fixed.html">about_search_fixed:</a></li>
 <li class="toctree-l2"><a class="reference internal" href="about_search_regex.html">about_search_regex:</a></li>
 <li class="toctree-l2"><a class="reference internal" href="about_search.html">about_search: String Searching</a></li>
-<li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: Fast and Portable Character String Processing in R</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: as a Binary Operator</a></li>
@@ -347,6 +346,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_width.html">stri_width: Determine the Width of Code Points</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_wrap.html">stri_wrap: Word Wrap Text to Format Paragraphs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_write_lines.html">stri_write_lines: Write Text Lines to a Text File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stringi-package.html">stringi-package: Fast and Portable Character String Processing in R</a></li>
 </ul>
 </li>
 </ul>
@@ -442,7 +442,7 @@
 <p>If <code class="docutils literal notranslate"><span class="pre">from</span></code> is either missing, <code class="docutils literal notranslate"><span class="pre">''</span></code>, or <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, and if <code class="docutils literal notranslate"><span class="pre">str</span></code> is a character vector then the marked encodings are used (see <a class="reference internal" href="stri_enc_mark.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_mark</span></code></span></a>) – in such a case <code class="docutils literal notranslate"><span class="pre">bytes</span></code>-declared strings are disallowed. Otherwise, i.e., if <code class="docutils literal notranslate"><span class="pre">str</span></code> is a <code class="docutils literal notranslate"><span class="pre">raw</span></code>-type vector or a list of raw vectors, we assume that the input encoding is the current default encoding as given by <a class="reference internal" href="stri_enc_set.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_get</span></code></span></a>.</p>
 <p>However, if <code class="docutils literal notranslate"><span class="pre">from</span></code> is given explicitly, the internal encoding declarations are always ignored.</p>
 <p>For <code class="docutils literal notranslate"><span class="pre">to_raw=FALSE</span></code>, the output strings always have the encodings marked according to the target converter used (as specified by <code class="docutils literal notranslate"><span class="pre">to</span></code>) and the current default Encoding (<code class="docutils literal notranslate"><span class="pre">ASCII</span></code>, <code class="docutils literal notranslate"><span class="pre">latin1</span></code>, <code class="docutils literal notranslate"><span class="pre">UTF-8</span></code>, <code class="docutils literal notranslate"><span class="pre">native</span></code>, or <code class="docutils literal notranslate"><span class="pre">bytes</span></code> in all other cases).</p>
-<p>Note that some issues might occur if <code class="docutils literal notranslate"><span class="pre">to</span></code> indicates, e.g, UTF-16 or UTF-32, as the output strings may have embedded NULs. In such cases, please use <code class="docutils literal notranslate"><span class="pre">to_raw=TRUE</span></code> and consider specifying a byte order marker (BOM) for portability reasons (e.g., set <code class="docutils literal notranslate"><span class="pre">UTF-16</span></code> or <code class="docutils literal notranslate"><span class="pre">UTF-32</span></code> which automatically adds the BOMs).</p>
+<p>Note that some issues might occur if <code class="docutils literal notranslate"><span class="pre">to</span></code> indicates, e.g., UTF-16 or UTF-32, as the output strings may have embedded NULs. In such cases, please use <code class="docutils literal notranslate"><span class="pre">to_raw=TRUE</span></code> and consider specifying a byte order marker (BOM) for portability reasons (e.g., set <code class="docutils literal notranslate"><span class="pre">UTF-16</span></code> or <code class="docutils literal notranslate"><span class="pre">UTF-32</span></code> which automatically adds the BOMs).</p>
 <p>Note that <code class="docutils literal notranslate"><span class="pre">stri_encode(as.raw(data),</span> <span class="pre">'encodingname')</span></code> is a clever substitute for <a class="reference external" href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/rawConversion.html"><code class="docutils literal notranslate"><span class="pre">rawToChar</span></code></a>.</p>
 <p>In the current version of <span class="pkg">stringi</span>, if an incorrect code point is found on input, it is replaced with the default (for that target encoding) ‘missing/erroneous’ character (with a warning), e.g., the SUBSTITUTE character (U+001A) or the REPLACEMENT one (U+FFFD). Occurrences thereof can be located in the output string to diagnose the problematic sequences, e.g., by calling: <code class="docutils literal notranslate"><span class="pre">stri_locate_all_regex(converted_string,</span> <span class="pre">'[\ufffd\u001a]'</span></code>.</p>
 <p>Because of the way this function is currently implemented, maximal size of a single string to be converted cannot exceed ~0.67 GB.</p>
@@ -502,7 +502,7 @@
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2025-02-02T16:09:08+0100.
+              Last updated on 2025-03-25T14:37:22+0100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -543,7 +543,7 @@
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=3b00e8d0"></script>
+</div><script src="../_static/documentation_options.js?v=ed17f7cc"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
