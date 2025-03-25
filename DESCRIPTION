@@ -31,5 +31,16 @@ Author: Marek Gagolewski [aut, cre, cph] (<https://orcid.org/0000-0003-0637-6028
     Bartek Tartanus [ctb], and others (stringi source code);
     Unicode, Inc. and others (ICU4C source code, Unicode Character Database)
 Maintainer: Marek Gagolewski <marek@gagolewski.com>
+Authors@R: c(person(given = "Marek",
+                      family = "Gagolewski",
+                      role = c("aut", "cre", "cph"),
+                      email = "marek@gagolewski.com",
+                      comment = c(ORCID = "0000-0003-0637-6028")),
+               person(given = "Bartek",
+                      family = "Tartanus",
+                      role = "ctb"),
+               person("Unicode, Inc.", role="ctb",
+                      comment = "ICU4C source code, Unicode Character Database")
+    )
 RoxygenNote: 7.3.2
 Encoding: UTF-8
