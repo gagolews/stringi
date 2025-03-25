@@ -138,19 +138,19 @@ void StriUcnv::STRI__UCNV_TO_U_CALLBACK_SUBSTITUTE_WARN (
         // substitute char was induced
         switch (length) {
         case 1:
-            Rf_warning(MSG__UNCONVERTABLE_BINARY_1, codeUnits[0]);
+            Rf_warning(MSG__UNCONVERTIBLE_BINARY_1, codeUnits[0]);
             break;
         case 2:
-            Rf_warning(MSG__UNCONVERTABLE_BINARY_2, codeUnits[0], codeUnits[1]);
+            Rf_warning(MSG__UNCONVERTIBLE_BINARY_2, codeUnits[0], codeUnits[1]);
             break;
         case 3:
-            Rf_warning(MSG__UNCONVERTABLE_BINARY_3, codeUnits[0], codeUnits[1], codeUnits[2]);
+            Rf_warning(MSG__UNCONVERTIBLE_BINARY_3, codeUnits[0], codeUnits[1], codeUnits[2]);
             break;
         case 4:
-            Rf_warning(MSG__UNCONVERTABLE_BINARY_4, codeUnits[0], codeUnits[1], codeUnits[2], codeUnits[3]);
+            Rf_warning(MSG__UNCONVERTIBLE_BINARY_4, codeUnits[0], codeUnits[1], codeUnits[2], codeUnits[3]);
             break;
         default:
-            Rf_warning(MSG__UNCONVERTABLE_BINARY_n);
+            Rf_warning(MSG__UNCONVERTIBLE_BINARY_n);
             break;
         }
     }
@@ -195,7 +195,7 @@ void StriUcnv::STRI__UCNV_FROM_U_CALLBACK_SUBSTITUTE_WARN (
 
     if (*err == U_ZERO_ERROR && wasSubstitute) {
         // substitute char was induced
-        Rf_warning(MSG__UNCONVERTABLE_CODE_POINT, codePoint);
+        Rf_warning(MSG__UNCONVERTIBLE_CODE_POINT, codePoint);
     }
 }
 
@@ -271,7 +271,7 @@ const char* StriUcnv::getFriendlyName(const char* canname)
  * Convert each ASCII character (1..127) to UTF-8
  * and checks whether it gets the same result
  *
- * This sould be used only on 8-bit converters
+ * This should be used only on 8-bit converters
  *
  * @param conv ICU charset converter
  *
@@ -335,7 +335,7 @@ bool StriUcnv::hasASCIIsubset()
  * Converts each character (23..255) to UTF-8 and then back to original enc
  * and checks whether it gets the same result
  *
- * This sould be used only on 8-bit converters
+ * This should be used only on 8-bit converters
  *
  * @param conv ICU charset converter
  *
@@ -395,7 +395,7 @@ bool StriUcnv::is1to1Unicode()
             return false;
         }
 
-        // character not convertable => ignore
+        // character not convertible => ignore
         status = U_ZERO_ERROR;
         if (c != UCHAR_REPLACEMENT) {
             ucnv_fromUChars(m_ucnv, buf, buflen, (UChar*)&c, 1, &status);

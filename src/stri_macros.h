@@ -133,7 +133,11 @@
 
 #ifndef IS_ASCII
 // #define IS_ASCII(x) (Rf_getCharCE(x) == CE_ANY) /* the function doesn't return this value... */
-#define IS_ASCII(x) (LEVELS(x) & ASCII_MASK)
+    #if R_VERSION >= R_Version(4, 5, 0)
+    #define IS_ASCII(x) Rf_charIsASCII(x)
+    #else
+    #define IS_ASCII(x) (LEVELS(x) & ASCII_MASK)
+    #endif
 #endif
 
 #ifndef IS_UTF8

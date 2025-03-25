@@ -1,7 +1,7 @@
 # Changelog
 
 
-## 1.8.5 (2025-03-25)
+## 1.8.6 (2025-03-25)
 
 * [BUGFIX] Fixed build warnings.
 

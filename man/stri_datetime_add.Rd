@@ -50,13 +50,17 @@ Note that, e.g., January, 31 + 1 month = February, 28 or 29.
 }
 \examples{
 x <- stri_datetime_now()
+print(x)
 stri_datetime_add(x, units='months') <- 2
 print(x)
-stri_datetime_add(x, -2, units='months')
-stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units='years')
-stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units='years', locale='@calendar=hebrew')
 
-stri_datetime_add(stri_datetime_create(2016, 1, 31), 1, units='months')
+x <- stri_datetime_create(2025, 4, 20)
+print(x)
+stri_datetime_add(x, -2, units='months')
+stri_datetime_add(x, 1, units='years')
+stri_datetime_add(x, 1, units='years', locale='@calendar=hebrew')
+
+stri_datetime_add(stri_datetime_create(2024, 1, 31), 1, units='months')
 
 }
 \references{
