@@ -47,7 +47,7 @@
  *          lastMatcher cache, supports auto-vectorization
  *
  * @version 0.1-?? (Marek Gagolewski)
- *          improved ASCII performance (seperate ucnv)
+ *          improved ASCII performance (separate ucnv)
  *
  * @version 0.1-?? (Marek Gagolewski)
  *          now NAs are marked as NULLs in str

@@ -119,7 +119,7 @@ public:
 
         openConverter(false);
         UErrorCode status = U_ZERO_ERROR;
-        // get "offical" encoder name
+        // get "official" encoder name
         const char* ucnv_name = ucnv_getName(m_ucnv, &status);
         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
         m_isutf8 = !strcmp(ucnv_name, "UTF-8");

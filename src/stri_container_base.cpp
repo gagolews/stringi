@@ -61,10 +61,10 @@ void StriContainerBase::init_Base(R_len_t _n, R_len_t _nrecycle, bool _shallowre
     this->isShallow = _shallowrecycle;
 #endif
 
-    STRI_ASSERT(_n >=0);
-    STRI_ASSERT(_nrecycle >=0);
+    STRI_ASSERT(_n >= 0);
+    STRI_ASSERT(_nrecycle >= 0);
 
-    if (_n == 0 || _nrecycle == 0) {
+    if (_n <= 0 || _nrecycle <= 0) {
         this->nrecycle = 0;
         this->n = 0;
         this->sexp = _sexp;

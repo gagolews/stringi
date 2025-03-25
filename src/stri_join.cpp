@@ -444,7 +444,7 @@ SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
  *          fixed bug #49
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-18)
- *          stri_join has been splitted to stri_join_nocollapse
+ *          stri_join has been split to stri_join_nocollapse
  *          and stri_join_withcollapse (for efficiency reasons)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)

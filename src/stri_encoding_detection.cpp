@@ -212,7 +212,7 @@ double stri__enc_check_utf8(const char* str_cur_s, R_len_t str_cur_n, bool get_c
             }
         }
 
-        // Cook up some sort of confidence score, based on presense of a BOM
+        // Cook up some sort of confidence score, based on BOM's presence
         //    and the existence of valid and/or invalid multi-byte sequences.
         if (hasBOM && numInvalid == 0)
             return 1.0;

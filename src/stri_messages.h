@@ -112,22 +112,22 @@
 #define MSG_REPLACEMENT_MULTIPLE \
    "number of items to replace is not a multiple of replacement length"
 
-#define MSG__UNCONVERTABLE_CODE_POINT \
+#define MSG__UNCONVERTIBLE_CODE_POINT \
    "the Unicode code point \\U%08x cannot be converted to destination encoding"
 
-#define MSG__UNCONVERTABLE_BINARY_1 \
+#define MSG__UNCONVERTIBLE_BINARY_1 \
    "input data \\x%02x in the current source encoding could not be converted to Unicode"
 
-#define MSG__UNCONVERTABLE_BINARY_2 \
+#define MSG__UNCONVERTIBLE_BINARY_2 \
    "input data \\x%02x\\x%02x in the current source encoding could not be converted to Unicode"
 
-#define MSG__UNCONVERTABLE_BINARY_3 \
+#define MSG__UNCONVERTIBLE_BINARY_3 \
    "input data \\x%02x\\x%02x\\x%02x in the current source encoding could not be converted to Unicode"
 
-#define MSG__UNCONVERTABLE_BINARY_4 \
+#define MSG__UNCONVERTIBLE_BINARY_4 \
    "input data \\x%02x\\x%02x\\x%02x\\x%02x in the current source encoding could not be converted to Unicode"
 
-#define MSG__UNCONVERTABLE_BINARY_n \
+#define MSG__UNCONVERTIBLE_BINARY_n \
    "some input data in the current source encoding could not be converted to Unicode"
 
 #define MSG__WARN_LIST_COERCION \

@@ -38,7 +38,7 @@
 /**
  * Create & set up an ICU Collator
  *
- * WARNING: this fuction is allowed to call the error() function.
+ * WARNING: this function is allowed to call the error() function.
  * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
  *
  * @param opts_collator named R list

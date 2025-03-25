@@ -480,7 +480,6 @@ SEXP stri_datetime_create(
 //  */
 // SEXP stri_c_posixst(SEXP x) {
 //     if (!Rf_isVectorList(x)) Rf_error(MSG__INTERNAL_ERROR);
-//     if (NAMED(x) != 0)  Rf_error(MSG__INTERNAL_ERROR);
 //     R_len_t n = LENGTH(x);
 //     R_len_t m = 0;
 //     for (R_len_t i=0; i<n; ++i) {

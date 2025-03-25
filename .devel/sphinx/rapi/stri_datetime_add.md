@@ -63,12 +63,29 @@ Other datetime: [`stri_datetime_create()`](stri_datetime_create.md), [`stri_date
 
 ``` r
 x <- stri_datetime_now()
+print(x)
+```
+
+```
+## [1] "2025-03-25 16:08:20 CET"
+```
+
+``` r
 stri_datetime_add(x, units='months') <- 2
 print(x)
 ```
 
 ```
-## [1] "2025-05-25 14:37:04 CEST"
+## [1] "2025-05-25 16:08:20 CEST"
+```
+
+``` r
+x <- stri_datetime_create(2025, 4, 20)
+print(x)
+```
+
+```
+## [1] "2025-04-20 CEST"
 ```
 
 ``` r
@@ -76,29 +93,29 @@ stri_datetime_add(x, -2, units='months')
 ```
 
 ```
-## [1] "2025-03-25 14:37:04 CET"
+## [1] "2025-02-20 CET"
 ```
 
 ``` r
-stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units='years')
+stri_datetime_add(x, 1, units='years')
 ```
 
 ```
-## [1] "2015-04-20 CEST"
-```
-
-``` r
-stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units='years', locale='@calendar=hebrew')
-```
-
-```
-## [1] "2015-04-09 CEST"
+## [1] "2026-04-20 CEST"
 ```
 
 ``` r
-stri_datetime_add(stri_datetime_create(2016, 1, 31), 1, units='months')
+stri_datetime_add(x, 1, units='years', locale='@calendar=hebrew')
 ```
 
 ```
-## [1] "2016-02-29 CET"
+## [1] "2026-04-09 CEST"
+```
+
+``` r
+stri_datetime_add(stri_datetime_create(2024, 1, 31), 1, units='months')
+```
+
+```
+## [1] "2024-02-29 CET"
 ```
