@@ -2269,7 +2269,7 @@ fi
 
 
 
-if test "x$enable_icu_bundle" != "xno" -a -z "${STRINGI_DISABLE_ICU_BUNDLE}"; then
+if test "x$enable_icu_bundle" != "xno" && test -z "${STRINGI_DISABLE_ICU_BUNDLE}"; then
     enable_icu_bundle="yes"
 else
     enable_icu_bundle="no"
@@ -2289,7 +2289,7 @@ fi
 
 
 
-if test "x$enable_pkg_config" != "xno" -a -z "${STRINGI_DISABLE_PKG_CONFIG}"; then
+if test "x$enable_pkg_config" != "xno" && test -z "${STRINGI_DISABLE_PKG_CONFIG}"; then
     enable_pkg_config="yes"
 else
     enable_pkg_config="no"
