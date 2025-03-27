@@ -96,7 +96,7 @@ AC_ARG_ENABLE([icu_bundle],
 AC_ARG_VAR([STRINGI_DISABLE_ICU_BUNDLE],
     [Enforce system ICU; see also --disable-icu-bundle.])
 
-if test "x$enable_icu_bundle" != "xno" -a -z "${STRINGI_DISABLE_ICU_BUNDLE}"; then
+if test "x$enable_icu_bundle" != "xno" && test -z "${STRINGI_DISABLE_ICU_BUNDLE}"; then
     enable_icu_bundle="yes"
 else
     enable_icu_bundle="no"
@@ -116,7 +116,7 @@ AC_ARG_ENABLE([pkg_config],
 AC_ARG_VAR([STRINGI_DISABLE_PKG_CONFIG],
     [Enforce our ICU source bundle; see also --disable-pkg-config.])
 
-if test "x$enable_pkg_config" != "xno" -a -z "${STRINGI_DISABLE_PKG_CONFIG}"; then
+if test "x$enable_pkg_config" != "xno" && test -z "${STRINGI_DISABLE_PKG_CONFIG}"; then
     enable_pkg_config="yes"
 else
     enable_pkg_config="no"
