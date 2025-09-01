@@ -188,6 +188,26 @@ SEXP stri_order_rank_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
             for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
                 SET_STRING_ELT(ret, j, NA_STRING);
         }
+
+        // Preserve and reorder names alongside values when available
+        SEXP in_names = Rf_getAttrib(str, R_NamesSymbol);
+        if (!Rf_isNull(in_names) && LENGTH(in_names) == LENGTH(str)) {
+            SEXP out_names;
+            STRI__PROTECT(out_names = Rf_allocVector(STRSXP, k+NA_pos.size()));
+            j = 0;
+            if (na_last_int != NA_LOGICAL && !na_last_int) {
+                for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
+                    SET_STRING_ELT(out_names, j, STRING_ELT(in_names, *it));
+            }
+            for (std::vector<int>::iterator it=order.begin(); it!=order.end(); ++it, ++j)
+                SET_STRING_ELT(out_names, j, STRING_ELT(in_names, *it));
+            if (na_last_int != NA_LOGICAL && na_last_int) {
+                for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
+                    SET_STRING_ELT(out_names, j, STRING_ELT(in_names, *it));
+            }
+            Rf_setAttrib(ret, R_NamesSymbol, out_names);
+            STRI__UNPROTECT(1); // out_names
+        }
     }
     else if (_type == STRI_SORTRANKORDER_ORDER) {
         STRI__PROTECT(ret = Rf_allocVector(INTSXP, k+NA_pos.size()));

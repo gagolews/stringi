@@ -1,5 +1,9 @@
 # Changelog
 
+* [GENERAL] Names preservation: Many vectorized functions now preserve the
+  `names` attribute when sensible, e.g., when the output length matches a
+  named input (most commonly `str`). Subsetting propagates names of selected
+  elements.
 
 ## 1.8.7 (2025-03-27)
 

@@ -122,6 +122,9 @@ SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool
         utext_close(str_text);
         str_text = NULL;
     }
+    // Preserve names from a sensible source
+    stri__preserve_names_from_sources(ret, str, pattern, vectorize_length);
+
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END(if (str_text) utext_close(str_text);)
@@ -255,6 +258,9 @@ SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP simplify, SEXP omit_no_
         utext_close(str_text);
         str_text = NULL;
     }
+
+    // Preserve names for list form (may be overwritten if simplified to matrix)
+    stri__preserve_names_from_sources(ret, str, R_NilValue, vectorize_length);
 
     if (LOGICAL(simplify)[0] == NA_LOGICAL || LOGICAL(simplify)[0]) {
         SEXP robj_TRUE, robj_zero, robj_na_strings, robj_empty_strings;

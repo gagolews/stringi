@@ -99,6 +99,9 @@ SEXP stri_count_charclass(SEXP str, SEXP pattern)
         ret_tab[i] = count;
     }
 
+    // Preserve names: prefer names of the argument that determines length
+    stri__preserve_names_from_sources(ret, str, pattern, vectorize_length);
+
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)

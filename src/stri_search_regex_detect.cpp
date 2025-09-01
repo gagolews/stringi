@@ -125,6 +125,9 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP negate,
 //      utext_close(str_text);
     }
 
+    // Preserve names: prefer names of the argument that determines length
+    stri__preserve_names_from_sources(ret, str, pattern, vectorize_length);
+
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)

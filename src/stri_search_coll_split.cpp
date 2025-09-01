@@ -188,6 +188,9 @@ SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n, SEXP omit_empty,
         collator=NULL;
     }
 
+    // Preserve names for list form
+    stri__preserve_names_from_sources(ret, str, R_NilValue, vectorize_length);
+
     if (LOGICAL(simplify)[0] == NA_LOGICAL || LOGICAL(simplify)[0]) {
         R_len_t n_min = 0;
         R_len_t n_length = LENGTH(n);

@@ -144,9 +144,11 @@ SEXP stri_replace_na(SEXP str, SEXP replacement) {
             SET_STRING_ELT(ret, i, na);
     }
 
+    // Preserve names from `str` when lengths match
+    stri__preserve_names_from_sources(ret, str, R_NilValue, str_len);
+
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
-
 

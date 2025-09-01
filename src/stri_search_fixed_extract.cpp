@@ -96,6 +96,9 @@ SEXP stri__extract_firstlast_fixed(SEXP str, SEXP pattern, SEXP opts_fixed, bool
         SET_STRING_ELT(ret, i, Rf_mkCharLenCE(str_cont.get(i).c_str()+start, len, CE_UTF8));
     }
 
+    // Preserve names from a sensible source
+    stri__preserve_names_from_sources(ret, str, pattern, vectorize_length);
+
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END({ /* no-op */ })
@@ -226,6 +229,9 @@ SEXP stri_extract_all_fixed(SEXP str, SEXP pattern, SEXP simplify, SEXP omit_no_
                                              :robj_empty_strings,
                                              robj_zero));
     }
+
+    // Preserve names for list form
+    stri__preserve_names_from_sources(ret, str, R_NilValue, vectorize_length);
 
     STRI__UNPROTECT_ALL
     return ret;

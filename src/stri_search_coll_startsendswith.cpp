@@ -122,6 +122,9 @@ SEXP stri_startswith_coll(SEXP str, SEXP pattern, SEXP from, SEXP negate, SEXP o
         ucol_close(collator);
         collator=NULL;
     }
+    // Preserve names from a sensible source
+    stri__preserve_names_from_sources(ret, str, pattern, vectorize_length);
+
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END(
@@ -217,6 +220,9 @@ SEXP stri_endswith_coll(SEXP str, SEXP pattern, SEXP to, SEXP negate, SEXP opts_
         ucol_close(collator);
         collator=NULL;
     }
+    // Preserve names from a sensible source
+    stri__preserve_names_from_sources(ret, str, pattern, vectorize_length);
+
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END(

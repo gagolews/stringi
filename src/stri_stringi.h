@@ -53,6 +53,7 @@ SEXP    stri__emptyList();
 SEXP    stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol, int filler=NA_INTEGER);  // TODO: other ones can be generalised too
 SEXP    stri__matrix_NA_STRING(R_len_t nrow, R_len_t ncol);
 int     stri__match_arg(const char* option, const char** set);
+void    stri__preserve_names_from_sources(SEXP ret, SEXP src1, SEXP src2, R_len_t out_len);
 
 // collator.cpp:
 struct UCollator;

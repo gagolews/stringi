@@ -126,6 +126,20 @@ SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate, SEXP op
     }
     SEXP ret;
     STRI__PROTECT(ret = stri__subset_by_logical(str_cont, which, result_counter));
+
+    // Preserve names from `str` where elements are kept (TRUE or NA)
+    SEXP in_names = Rf_getAttrib(str, R_NamesSymbol);
+    if (!Rf_isNull(in_names) && LENGTH(in_names) == str_cont.get_n()) {
+        SEXP out_names;
+        STRI__PROTECT(out_names = Rf_allocVector(STRSXP, result_counter));
+        for (R_len_t j=0, i=0; i<result_counter; ++j) {
+            if (which[j] != FALSE) {
+                SET_STRING_ELT(out_names, i++, STRING_ELT(in_names, j));
+            }
+        }
+        Rf_setAttrib(ret, R_NamesSymbol, out_names);
+        STRI__UNPROTECT(1); // out_names
+    }
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END(

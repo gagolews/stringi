@@ -116,6 +116,9 @@ SEXP stri_detect_charclass(SEXP str, SEXP pattern,
         if (max_count_1 > 0 && ret_tab[i]) --max_count_1;
     }
 
+    // Preserve names: prefer names of the argument that determines length
+    stri__preserve_names_from_sources(ret, str, pattern, vectorize_length);
+
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)

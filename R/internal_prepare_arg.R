@@ -91,8 +91,8 @@
 #'
 #' @section Preserving Object Attributes:
 #'
-#' Generally, all our functions drop input objects' attributes
-#' (e.g., \code{\link{names}}, \code{\link{dim}}, etc.).
+#' Generally, all our functions drop input objects' attributes except names
+#' (e.g., \code{\link{dim}}, etc.).
 #' This is due to deep vectorization as well as for efficiency reasons.
 #' If the preservation of attributes is needed,
 #' important attributes can be manually copied. Alternatively, the notation

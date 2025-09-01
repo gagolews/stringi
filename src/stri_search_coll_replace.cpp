@@ -152,8 +152,11 @@ SEXP stri__replace_allfirstlast_coll(SEXP str, SEXP pattern, SEXP replacement, S
         ucol_close(collator);
         collator=NULL;
     }
+    // Convert and preserve names from `str` when not recycled
+    SEXP ret = str_cont.toR();
+    stri__preserve_names_from_sources(ret, str, R_NilValue, vectorize_length);
     STRI__UNPROTECT_ALL
-    return str_cont.toR();
+    return ret;
     STRI__ERROR_HANDLER_END(
         if (collator) ucol_close(collator);
     )

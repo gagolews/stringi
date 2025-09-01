@@ -118,6 +118,9 @@ SEXP stri__extract_firstlast_charclass(SEXP str, SEXP pattern, bool first)
         }
     }
 
+    // Preserve names from a sensible source
+    stri__preserve_names_from_sources(ret, str, pattern, vectorize_length);
+
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
@@ -257,6 +260,9 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP simplif
                                              :robj_empty_strings,
                                              robj_zero));
     }
+
+    // Preserve names for list form
+    stri__preserve_names_from_sources(ret, str, R_NilValue, vectorize_length);
 
     STRI__UNPROTECT_ALL
     return ret;

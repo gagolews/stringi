@@ -175,6 +175,9 @@ SEXP stri_extract_all_boundaries(SEXP str, SEXP simplify, SEXP omit_no_match, SE
         STRI__UNPROTECT(1);
     }
 
+    // Preserve names for list form
+    stri__preserve_names_from_sources(ret, str, R_NilValue, str_length);
+
     if (LOGICAL(simplify)[0] == NA_LOGICAL || LOGICAL(simplify)[0]) {
         SEXP robj_TRUE, robj_zero, robj_na_strings, robj_empty_strings;
         STRI__PROTECT(robj_TRUE = Rf_ScalarLogical(TRUE));

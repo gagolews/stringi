@@ -80,6 +80,9 @@ SEXP stri_count_boundaries(SEXP str, SEXP opts_brkiter)
         INTEGER(ret)[i] = cur_count;
     }
 
+    // Preserve names from `str`
+    stri__preserve_names_from_sources(ret, str, R_NilValue, str_length);
+
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END({ /* no action */  })

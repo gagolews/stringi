@@ -264,6 +264,9 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
     }
 
     stri__locate_set_dimnames_list(ret, get_length1);  // all matrices get from&to colnames
+    // Preserve names for list form
+    stri__preserve_names_from_sources(ret, str, R_NilValue, vectorize_length);
+
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)

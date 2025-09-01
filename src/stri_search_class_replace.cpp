@@ -138,6 +138,9 @@ SEXP stri__replace_all_charclass_yes_vectorize_all(SEXP str, SEXP pattern, SEXP 
         SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_used, CE_UTF8));
     }
 
+    // Preserve names from `str` when not recycled
+    stri__preserve_names_from_sources(ret, str, R_NilValue, vectorize_length);
+
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
@@ -370,6 +373,9 @@ SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement,
         memcpy(buf.data()+jlast+replacement_cur_n, str_cur_s+j, (size_t)str_cur_n-j);
         SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_need, CE_UTF8));
     }
+
+    // Preserve names from `str` when not recycled
+    stri__preserve_names_from_sources(ret, str, R_NilValue, vectorize_length);
 
     STRI__UNPROTECT_ALL
     return ret;

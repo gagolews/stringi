@@ -251,6 +251,9 @@ SEXP stri_locate_all_boundaries(SEXP str, SEXP omit_no_match, SEXP opts_brkiter,
     }
 
     stri__locate_set_dimnames_list(ret, get_length1);
+    // Preserve names for list form
+    stri__preserve_names_from_sources(ret, str, R_NilValue, str_length);
+
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END({ /* nothing special t.b.d. on error */ })

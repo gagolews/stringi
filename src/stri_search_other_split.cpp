@@ -276,6 +276,9 @@ SEXP stri_split_lines(SEXP str, SEXP omit_empty)
         STRI__UNPROTECT(1);
     }
 
+    // Preserve names for list form
+    stri__preserve_names_from_sources(ret, str, R_NilValue, vectorize_length);
+
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)

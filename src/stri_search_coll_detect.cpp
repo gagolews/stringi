@@ -122,6 +122,9 @@ SEXP stri_detect_coll(SEXP str, SEXP pattern, SEXP negate,
         ucol_close(collator);
         collator=NULL;
     }
+    // Preserve names: prefer names of the argument that determines length
+    stri__preserve_names_from_sources(ret, str, pattern, vectorize_length);
+
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END(

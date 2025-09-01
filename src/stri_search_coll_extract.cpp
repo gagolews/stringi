@@ -108,6 +108,9 @@ SEXP stri__extract_firstlast_coll(SEXP str, SEXP pattern, SEXP opts_collator, bo
         ucol_close(collator);
         collator=NULL;
     }
+    // Preserve names from a sensible source
+    stri__preserve_names_from_sources(ret, str, pattern, vectorize_length);
+
     STRI__UNPROTECT_ALL
     return ret;
     STRI__ERROR_HANDLER_END(
@@ -258,6 +261,9 @@ SEXP stri_extract_all_coll(SEXP str, SEXP pattern, SEXP simplify, SEXP omit_no_m
                                              :robj_empty_strings,
                                              robj_zero));
     }
+
+    // Preserve names for list form
+    stri__preserve_names_from_sources(ret, str, R_NilValue, vectorize_length);
 
     STRI__UNPROTECT_ALL
     return ret;

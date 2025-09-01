@@ -326,3 +326,34 @@ int stri__match_arg(const char* option, const char** set) {
     }
     return which;
 }
+
+
+/**
+ * Preserve names on ret from either src1 or src2 when lengths match
+ *
+ * @param ret output vector whose names may be set
+ * @param src1 first source (preferred)
+ * @param src2 second source (fallback)
+ * @param out_len expected length of ret
+ *
+ * @version 1.8.0-preserve-names (2025-09-01)
+ */
+void stri__preserve_names_from_sources(SEXP ret, SEXP src1, SEXP src2, R_len_t out_len)
+{
+    if (!ret) return;
+    if (out_len <= 0) return;
+    if (src1) {
+        SEXP n1 = Rf_getAttrib(src1, R_NamesSymbol);
+        if (!Rf_isNull(n1) && LENGTH(n1) == out_len) {
+            Rf_setAttrib(ret, R_NamesSymbol, n1);
+            return;
+        }
+    }
+    if (src2) {
+        SEXP n2 = Rf_getAttrib(src2, R_NamesSymbol);
+        if (!Rf_isNull(n2) && LENGTH(n2) == out_len) {
+            Rf_setAttrib(ret, R_NamesSymbol, n2);
+            return;
+        }
+    }
+}
