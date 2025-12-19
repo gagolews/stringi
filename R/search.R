@@ -659,7 +659,7 @@ invisible(NULL)
 #' Avoid using POSIX character classes,
 #' e.g., \code{[:punct:]}. The ICU User Guide (see below)
 #' states that in general they are not well-defined, so you may end up
-#' with something different than you expect.
+#' with something different from you expect.
 #'
 #' In particular, in POSIX-like regex engines, \code{[:punct:]} stands for
 #' the character class corresponding to the \code{ispunct()} classification

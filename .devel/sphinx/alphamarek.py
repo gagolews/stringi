@@ -1,4 +1,4 @@
-# Copyleft (C) 2020-2023, Marek Gagolewski <https://www.gagolewski.com/>
+# Copyleft (C) 2020-2025, Marek Gagolewski <https://www.gagolewski.com/>
 
 # based on https://bitbucket.org/pybtex-devs/pybtex/src/HEAD/pybtex/style/formatting/unsrt.py
 

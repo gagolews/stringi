@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2020-2023, Marek Gagolewski <https://www.gagolewski.com/>
+# Copyright (C) 2020-2025, Marek Gagolewski <https://www.gagolewski.com/>
 
 set -e
 
@@ -63,7 +63,7 @@ then
         if [ "$f" -nt "${f/.pdf/.png}" ]
         then
             echo "Converting ${f} to png...."
-            convert -density 96 "$f" "${f/.pdf/.png}"
+            magick -density 96 "$f" "${f/.pdf/.png}"
         fi
     done
 fi
