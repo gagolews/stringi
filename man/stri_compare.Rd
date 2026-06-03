@@ -140,25 +140,25 @@ The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.c
 
 Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R, \emph{Journal of Statistical Software} 103(2), 2022, 1-59, \doi{10.18637/jss.v103.i02}
 
-Other locale_sensitive: 
-\code{\link{\%s<\%}()},
+Other locale_sensitive:
+\code{\link{\%s<\%}},
 \code{\link{about_locale}},
 \code{\link{about_search_boundaries}},
 \code{\link{about_search_coll}},
-\code{\link{stri_count_boundaries}()},
-\code{\link{stri_duplicated}()},
-\code{\link{stri_enc_detect2}()},
-\code{\link{stri_extract_all_boundaries}()},
-\code{\link{stri_locate_all_boundaries}()},
-\code{\link{stri_opts_collator}()},
-\code{\link{stri_order}()},
-\code{\link{stri_rank}()},
-\code{\link{stri_sort}()},
-\code{\link{stri_sort_key}()},
-\code{\link{stri_split_boundaries}()},
-\code{\link{stri_trans_tolower}()},
-\code{\link{stri_unique}()},
-\code{\link{stri_wrap}()}
+\code{\link[=stri_count_boundaries]{stri_count_boundaries()}},
+\code{\link[=stri_duplicated]{stri_duplicated()}},
+\code{\link[=stri_enc_detect2]{stri_enc_detect2()}},
+\code{\link[=stri_extract_all_boundaries]{stri_extract_all_boundaries()}},
+\code{\link[=stri_locate_all_boundaries]{stri_locate_all_boundaries()}},
+\code{\link[=stri_opts_collator]{stri_opts_collator()}},
+\code{\link[=stri_order]{stri_order()}},
+\code{\link[=stri_rank]{stri_rank()}},
+\code{\link[=stri_sort]{stri_sort()}},
+\code{\link[=stri_sort_key]{stri_sort_key()}},
+\code{\link[=stri_split_boundaries]{stri_split_boundaries()}},
+\code{\link[=stri_trans_tolower]{stri_trans_tolower()}},
+\code{\link[=stri_unique]{stri_unique()}},
+\code{\link[=stri_wrap]{stri_wrap()}}
 }
 \concept{locale_sensitive}
 \author{

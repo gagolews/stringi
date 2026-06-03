@@ -49,13 +49,13 @@ The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.c
 
 Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R, \emph{Journal of Statistical Software} 103(2), 2022, 1-59, \doi{10.18637/jss.v103.i02}
 
-Other length: 
-\code{\link{\%s$\%}()},
-\code{\link{stri_isempty}()},
-\code{\link{stri_length}()},
-\code{\link{stri_pad_both}()},
-\code{\link{stri_sprintf}()},
-\code{\link{stri_width}()}
+Other length:
+\code{\link{\%s$\%}},
+\code{\link[=stri_isempty]{stri_isempty()}},
+\code{\link[=stri_length]{stri_length()}},
+\code{\link[=stri_pad_both]{stri_pad_both()}},
+\code{\link[=stri_sprintf]{stri_sprintf()}},
+\code{\link[=stri_width]{stri_width()}}
 }
 \concept{length}
 \author{

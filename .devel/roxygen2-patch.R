@@ -1,4 +1,4 @@
-# Copyleft (C) 2021-2025, Marek Gagolewski <https://www.gagolewski.com>
+# Copyleft (C) 2021-2026, Marek Gagolewski <https://www.gagolewski.com>
 # Adding author and other metadata to every Rd file;
 # There is one and only one official manual. Ad- and tracker-free.
 # Enjoy the free internet.
@@ -73,8 +73,7 @@ write_if_different <- function (path, contents, command=NULL, check=TRUE)
     if (same_contents(path, contents))
         return(FALSE)
 
-
-    if (!str_detect(name, "^[a-zA-Z][a-zA-Z0-9_.-]*$")) {
+    if (!stringi::stri_detect_regex(name, "^[a-zA-Z][a-zA-Z0-9_.-]*$")) {
         cli::cli_inform(c(x = "Skipping {.path {name}}", i = "Invalid file name"))
         FALSE
     }

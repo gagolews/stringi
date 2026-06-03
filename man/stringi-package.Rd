@@ -147,7 +147,7 @@ Useful links:
 }
 
 
-Other stringi_general_topics: 
+Other stringi_general_topics:
 \code{\link{about_arguments}},
 \code{\link{about_encoding}},
 \code{\link{about_locale}},

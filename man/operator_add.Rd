@@ -43,11 +43,11 @@ The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.c
 
 Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R, \emph{Journal of Statistical Software} 103(2), 2022, 1-59, \doi{10.18637/jss.v103.i02}
 
-Other join: 
-\code{\link{stri_dup}()},
-\code{\link{stri_flatten}()},
-\code{\link{stri_join}()},
-\code{\link{stri_join_list}()}
+Other join:
+\code{\link[=stri_dup]{stri_dup()}},
+\code{\link[=stri_flatten]{stri_flatten()}},
+\code{\link[=stri_join]{stri_join()}},
+\code{\link[=stri_join_list]{stri_join_list()}}
 }
 \concept{join}
 \author{

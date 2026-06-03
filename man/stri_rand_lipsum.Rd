@@ -44,9 +44,9 @@ The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.c
 
 Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R, \emph{Journal of Statistical Software} 103(2), 2022, 1-59, \doi{10.18637/jss.v103.i02}
 
-Other random: 
-\code{\link{stri_rand_shuffle}()},
-\code{\link{stri_rand_strings}()}
+Other random:
+\code{\link[=stri_rand_shuffle]{stri_rand_shuffle()}},
+\code{\link[=stri_rand_strings]{stri_rand_strings()}}
 }
 \concept{random}
 \author{

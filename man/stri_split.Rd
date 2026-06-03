@@ -159,10 +159,10 @@ The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.c
 
 Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R, \emph{Journal of Statistical Software} 103(2), 2022, 1-59, \doi{10.18637/jss.v103.i02}
 
-Other search_split: 
+Other search_split:
 \code{\link{about_search}},
-\code{\link{stri_split_boundaries}()},
-\code{\link{stri_split_lines}()}
+\code{\link[=stri_split_boundaries]{stri_split_boundaries()}},
+\code{\link[=stri_split_lines]{stri_split_lines()}}
 }
 \concept{search_split}
 \author{

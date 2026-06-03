@@ -40,11 +40,11 @@ The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.c
 
 Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R, \emph{Journal of Statistical Software} 103(2), 2022, 1-59, \doi{10.18637/jss.v103.i02}
 
-Other search_fixed: 
+Other search_fixed:
 \code{\link{about_search}},
-\code{\link{stri_opts_fixed}()}
+\code{\link[=stri_opts_fixed]{stri_opts_fixed()}}
 
-Other stringi_general_topics: 
+Other stringi_general_topics:
 \code{\link{about_arguments}},
 \code{\link{about_encoding}},
 \code{\link{about_locale}},

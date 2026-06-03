@@ -43,11 +43,11 @@ The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.c
 
 Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R, \emph{Journal of Statistical Software} 103(2), 2022, 1-59, \doi{10.18637/jss.v103.i02}
 
-Other transform: 
-\code{\link{stri_trans_general}()},
-\code{\link{stri_trans_list}()},
-\code{\link{stri_trans_nfc}()},
-\code{\link{stri_trans_tolower}()}
+Other transform:
+\code{\link[=stri_trans_general]{stri_trans_general()}},
+\code{\link[=stri_trans_list]{stri_trans_list()}},
+\code{\link[=stri_trans_nfc]{stri_trans_nfc()}},
+\code{\link[=stri_trans_tolower]{stri_trans_tolower()}}
 }
 \concept{transform}
 \author{

@@ -51,10 +51,10 @@ The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.c
 
 Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R, \emph{Journal of Statistical Software} 103(2), 2022, 1-59, \doi{10.18637/jss.v103.i02}
 
-Other locale_management: 
+Other locale_management:
 \code{\link{about_locale}},
-\code{\link{stri_locale_info}()},
-\code{\link{stri_locale_list}()}
+\code{\link[=stri_locale_info]{stri_locale_info()}},
+\code{\link[=stri_locale_list]{stri_locale_list()}}
 }
 \concept{locale_management}
 \author{

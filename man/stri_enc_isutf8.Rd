@@ -47,12 +47,12 @@ The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.c
 
 Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R, \emph{Journal of Statistical Software} 103(2), 2022, 1-59, \doi{10.18637/jss.v103.i02}
 
-Other encoding_detection: 
+Other encoding_detection:
 \code{\link{about_encoding}},
-\code{\link{stri_enc_detect}()},
-\code{\link{stri_enc_detect2}()},
-\code{\link{stri_enc_isascii}()},
-\code{\link{stri_enc_isutf16be}()}
+\code{\link[=stri_enc_detect]{stri_enc_detect()}},
+\code{\link[=stri_enc_detect2]{stri_enc_detect2()}},
+\code{\link[=stri_enc_isascii]{stri_enc_isascii()}},
+\code{\link[=stri_enc_isutf16be]{stri_enc_isutf16be()}}
 }
 \concept{encoding_detection}
 \author{

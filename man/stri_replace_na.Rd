@@ -38,10 +38,10 @@ The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.c
 
 Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R, \emph{Journal of Statistical Software} 103(2), 2022, 1-59, \doi{10.18637/jss.v103.i02}
 
-Other utils: 
-\code{\link{stri_list2matrix}()},
-\code{\link{stri_na2empty}()},
-\code{\link{stri_remove_empty}()}
+Other utils:
+\code{\link[=stri_list2matrix]{stri_list2matrix()}},
+\code{\link[=stri_na2empty]{stri_na2empty()}},
+\code{\link[=stri_remove_empty]{stri_remove_empty()}}
 }
 \concept{utils}
 \author{

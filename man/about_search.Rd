@@ -58,64 +58,64 @@ The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.c
 
 Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R, \emph{Journal of Statistical Software} 103(2), 2022, 1-59, \doi{10.18637/jss.v103.i02}
 
-Other text_boundaries: 
+Other text_boundaries:
 \code{\link{about_search_boundaries}},
-\code{\link{stri_count_boundaries}()},
-\code{\link{stri_extract_all_boundaries}()},
-\code{\link{stri_locate_all_boundaries}()},
-\code{\link{stri_opts_brkiter}()},
-\code{\link{stri_split_boundaries}()},
-\code{\link{stri_split_lines}()},
-\code{\link{stri_trans_tolower}()},
-\code{\link{stri_wrap}()}
+\code{\link[=stri_count_boundaries]{stri_count_boundaries()}},
+\code{\link[=stri_extract_all_boundaries]{stri_extract_all_boundaries()}},
+\code{\link[=stri_locate_all_boundaries]{stri_locate_all_boundaries()}},
+\code{\link[=stri_opts_brkiter]{stri_opts_brkiter()}},
+\code{\link[=stri_split_boundaries]{stri_split_boundaries()}},
+\code{\link[=stri_split_lines]{stri_split_lines()}},
+\code{\link[=stri_trans_tolower]{stri_trans_tolower()}},
+\code{\link[=stri_wrap]{stri_wrap()}}
 
-Other search_regex: 
+Other search_regex:
 \code{\link{about_search_regex}},
-\code{\link{stri_opts_regex}()}
+\code{\link[=stri_opts_regex]{stri_opts_regex()}}
 
-Other search_fixed: 
+Other search_fixed:
 \code{\link{about_search_fixed}},
-\code{\link{stri_opts_fixed}()}
+\code{\link[=stri_opts_fixed]{stri_opts_fixed()}}
 
-Other search_coll: 
+Other search_coll:
 \code{\link{about_search_coll}},
-\code{\link{stri_opts_collator}()}
+\code{\link[=stri_opts_collator]{stri_opts_collator()}}
 
-Other search_charclass: 
+Other search_charclass:
 \code{\link{about_search_charclass}},
-\code{\link{stri_trim_both}()}
+\code{\link[=stri_trim_both]{stri_trim_both()}}
 
-Other search_detect: 
-\code{\link{stri_detect}()},
-\code{\link{stri_startswith}()}
+Other search_detect:
+\code{\link[=stri_detect]{stri_detect()}},
+\code{\link[=stri_startswith]{stri_startswith()}}
 
-Other search_count: 
-\code{\link{stri_count}()},
-\code{\link{stri_count_boundaries}()}
+Other search_count:
+\code{\link[=stri_count]{stri_count()}},
+\code{\link[=stri_count_boundaries]{stri_count_boundaries()}}
 
-Other search_locate: 
-\code{\link{stri_locate_all}()},
-\code{\link{stri_locate_all_boundaries}()}
+Other search_locate:
+\code{\link[=stri_locate_all]{stri_locate_all()}},
+\code{\link[=stri_locate_all_boundaries]{stri_locate_all_boundaries()}}
 
-Other search_replace: 
-\code{\link{stri_replace_all}()},
-\code{\link{stri_replace_rstr}()},
-\code{\link{stri_trim_both}()}
+Other search_replace:
+\code{\link[=stri_replace_all]{stri_replace_all()}},
+\code{\link[=stri_replace_rstr]{stri_replace_rstr()}},
+\code{\link[=stri_trim_both]{stri_trim_both()}}
 
-Other search_split: 
-\code{\link{stri_split}()},
-\code{\link{stri_split_boundaries}()},
-\code{\link{stri_split_lines}()}
+Other search_split:
+\code{\link[=stri_split]{stri_split()}},
+\code{\link[=stri_split_boundaries]{stri_split_boundaries()}},
+\code{\link[=stri_split_lines]{stri_split_lines()}}
 
-Other search_subset: 
-\code{\link{stri_subset}()}
+Other search_subset:
+\code{\link[=stri_subset]{stri_subset()}}
 
-Other search_extract: 
-\code{\link{stri_extract_all}()},
-\code{\link{stri_extract_all_boundaries}()},
-\code{\link{stri_match_all}()}
+Other search_extract:
+\code{\link[=stri_extract_all]{stri_extract_all()}},
+\code{\link[=stri_extract_all_boundaries]{stri_extract_all_boundaries()}},
+\code{\link[=stri_match_all]{stri_match_all()}}
 
-Other stringi_general_topics: 
+Other stringi_general_topics:
 \code{\link{about_arguments}},
 \code{\link{about_encoding}},
 \code{\link{about_locale}},

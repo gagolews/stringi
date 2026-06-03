@@ -220,7 +220,7 @@ The official online manual of \pkg{stringi} at \url{https://stringi.gagolewski.c
 
 Gagolewski M., \pkg{stringi}: Fast and portable character string processing in R, \emph{Journal of Statistical Software} 103(2), 2022, 1-59, \doi{10.18637/jss.v103.i02}
 
-Other stringi_general_topics: 
+Other stringi_general_topics:
 \code{\link{about_arguments}},
 \code{\link{about_locale}},
 \code{\link{about_search}},
@@ -231,26 +231,26 @@ Other stringi_general_topics:
 \code{\link{about_search_regex}},
 \code{\link{stringi-package}}
 
-Other encoding_management: 
-\code{\link{stri_enc_info}()},
-\code{\link{stri_enc_list}()},
-\code{\link{stri_enc_mark}()},
-\code{\link{stri_enc_set}()}
+Other encoding_management:
+\code{\link[=stri_enc_info]{stri_enc_info()}},
+\code{\link[=stri_enc_list]{stri_enc_list()}},
+\code{\link[=stri_enc_mark]{stri_enc_mark()}},
+\code{\link[=stri_enc_set]{stri_enc_set()}}
 
-Other encoding_detection: 
-\code{\link{stri_enc_detect}()},
-\code{\link{stri_enc_detect2}()},
-\code{\link{stri_enc_isascii}()},
-\code{\link{stri_enc_isutf16be}()},
-\code{\link{stri_enc_isutf8}()}
+Other encoding_detection:
+\code{\link[=stri_enc_detect]{stri_enc_detect()}},
+\code{\link[=stri_enc_detect2]{stri_enc_detect2()}},
+\code{\link[=stri_enc_isascii]{stri_enc_isascii()}},
+\code{\link[=stri_enc_isutf16be]{stri_enc_isutf16be()}},
+\code{\link[=stri_enc_isutf8]{stri_enc_isutf8()}}
 
-Other encoding_conversion: 
-\code{\link{stri_enc_fromutf32}()},
-\code{\link{stri_enc_toascii}()},
-\code{\link{stri_enc_tonative}()},
-\code{\link{stri_enc_toutf32}()},
-\code{\link{stri_enc_toutf8}()},
-\code{\link{stri_encode}()}
+Other encoding_conversion:
+\code{\link[=stri_enc_fromutf32]{stri_enc_fromutf32()}},
+\code{\link[=stri_enc_toascii]{stri_enc_toascii()}},
+\code{\link[=stri_enc_tonative]{stri_enc_tonative()}},
+\code{\link[=stri_enc_toutf32]{stri_enc_toutf32()}},
+\code{\link[=stri_enc_toutf8]{stri_enc_toutf8()}},
+\code{\link[=stri_encode]{stri_encode()}}
 }
 \concept{encoding_conversion}
 \concept{encoding_detection}
