@@ -207,9 +207,9 @@ uuuu-MM-dd'T'HH:mm:ssZ \tab 2015-12-31T23:59:59+0100 (the ISO 8601 guideline) \c
 }
 }
 \examples{
-x <- c('2015-02-28', '2015-02-29')
-stri_datetime_parse(x, 'yyyy-MM-dd')
-stri_datetime_parse(x, 'yyyy-MM-dd', lenient=TRUE)
+x <- '2015-02-28'
+stri_datetime_parse(x, 'yyyy-MM-dd')  # try '2015-02-29'
+stri_datetime_parse(x, 'yyyy-MM-dd', lenient=TRUE)  # try '2015-02-29'
 stri_datetime_parse(x \%s+\% " 17:13", "yyyy-MM-dd HH:mm")
 stri_datetime_parse('19 lipca 2015', 'date_long', locale='pl_PL')
 stri_datetime_format(stri_datetime_now(), 'datetime_relative_medium')
