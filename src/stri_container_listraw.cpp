@@ -60,12 +60,12 @@ StriContainerListRaw::StriContainerListRaw(SEXP rstr)
 
     if (Rf_isNull(rstr)) {
         this->init_Base(1, 1, true);
-        this->data = new String8[this->n]; // 1 string, NA
+        this->data = new String8[(unsigned int)this->n]; // 1 string, NA
         if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
     }
     else if (isRaw(rstr)) {
         this->init_Base(1, 1, true);
-        this->data = new String8[this->n];
+        this->data = new String8[(unsigned int)this->n];
         if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
         bool memalloc = ALTREP(rstr);  // #354: force copying of ALTREP data
         this->data[0].initialize((const char*)RAW(rstr), LENGTH(rstr),
@@ -74,7 +74,7 @@ StriContainerListRaw::StriContainerListRaw(SEXP rstr)
     else if (Rf_isVectorList(rstr)) {
         R_len_t nv = LENGTH(rstr);
         this->init_Base(nv, nv, true);
-        this->data = new String8[this->n];
+        this->data = new String8[(unsigned int)this->n];
         if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
         for (R_len_t i=0; i<this->n; ++i) {
             SEXP cur = VECTOR_ELT(rstr, i);
@@ -89,7 +89,7 @@ StriContainerListRaw::StriContainerListRaw(SEXP rstr)
     else { // it's surely a character vector (args have been checked)
         R_len_t nv = LENGTH(rstr);
         this->init_Base(nv, nv, true);
-        this->data = new String8[this->n];
+        this->data = new String8[(unsigned int)this->n];
         if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
         for (R_len_t i=0; i<this->n; ++i) {
             SEXP cur = STRING_ELT(rstr, i);
@@ -104,11 +104,11 @@ StriContainerListRaw::StriContainerListRaw(SEXP rstr)
 }
 
 
-StriContainerListRaw::StriContainerListRaw(StriContainerListRaw& container)
-    :    StriContainerBase((StriContainerBase&)container)
+StriContainerListRaw::StriContainerListRaw(const StriContainerListRaw& container)
+    :    StriContainerBase(container)
 {
     if (container.data) {
-        this->data = new String8[this->n];
+        this->data = new String8[(unsigned int)this->n];
         if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
         for (int i=0; i<this->n; ++i) {
             this->data[i] = container.data[i];
@@ -120,13 +120,13 @@ StriContainerListRaw::StriContainerListRaw(StriContainerListRaw& container)
 }
 
 
-StriContainerListRaw& StriContainerListRaw::operator=(StriContainerListRaw& container)
+StriContainerListRaw& StriContainerListRaw::operator=(const StriContainerListRaw& container)
 {
     this->~StriContainerListRaw();
-    (StriContainerBase&) (*this) = (StriContainerBase&)container;
+    StriContainerBase::operator=(container);
 
     if (container.data) {
-        this->data = new String8[this->n];
+        this->data = new String8[(unsigned int)this->n];
         if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
         for (int i=0; i<this->n; ++i) {
             this->data[i] = container.data[i];

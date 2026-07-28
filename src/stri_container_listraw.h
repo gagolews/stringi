@@ -60,9 +60,9 @@ public:
 
     StriContainerListRaw();
     StriContainerListRaw(SEXP rlist);
-    StriContainerListRaw(StriContainerListRaw& container);
+    StriContainerListRaw(const StriContainerListRaw& container);
     ~StriContainerListRaw();
-    StriContainerListRaw& operator=(StriContainerListRaw& container);
+    StriContainerListRaw& operator=(const StriContainerListRaw& container);
 
 
     /** check if the vectorized ith element is NA

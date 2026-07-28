@@ -74,7 +74,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
         return; /* nothing more to do */
 
     STRI_ASSERT(this->n > 0);
-    this->str = new String8[this->n];
+    this->str = new String8[(unsigned int)this->n];
     STRI_ASSERT(this->str);
     if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE,
                                             this->n*sizeof(String8));
@@ -231,11 +231,11 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
 }
 
 
-StriContainerUTF8::StriContainerUTF8(StriContainerUTF8& container)
-    :    StriContainerBase((StriContainerBase&)container)
+StriContainerUTF8::StriContainerUTF8(const StriContainerUTF8& container)
+    :    StriContainerBase(container)
 {
     if (container.str) {
-        this->str = new String8[this->n];
+        this->str = new String8[(unsigned int)this->n];
         STRI_ASSERT(this->str);
         if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE,
                                                 this->n*sizeof(String8));
@@ -249,13 +249,13 @@ StriContainerUTF8::StriContainerUTF8(StriContainerUTF8& container)
 }
 
 
-StriContainerUTF8& StriContainerUTF8::operator=(StriContainerUTF8& container)
+StriContainerUTF8& StriContainerUTF8::operator=(const StriContainerUTF8& container)
 {
     this->~StriContainerUTF8();
-    (StriContainerBase&) (*this) = (StriContainerBase&)container;
+    StriContainerBase::operator=(container);
 
     if (container.str) {
-        this->str = new String8[this->n];
+        this->str = new String8[(unsigned int)this->n];
         STRI_ASSERT(this->str);
         if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE,
                                                 this->n*sizeof(String8));

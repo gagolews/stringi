@@ -85,7 +85,7 @@ StriContainerUTF8_indexable::StriContainerUTF8_indexable(StriContainerUTF8_index
  */
 StriContainerUTF8_indexable& StriContainerUTF8_indexable::operator=(StriContainerUTF8_indexable& container)
 {
-    ((StriContainerUTF8*)this)->~StriContainerUTF8();
+    this->~StriContainerUTF8_indexable();
     (StriContainerUTF8&) (*this) = (StriContainerUTF8&)container;
 
     last_ind_back_str = NULL;

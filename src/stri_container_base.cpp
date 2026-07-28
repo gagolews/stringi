@@ -50,7 +50,7 @@ StriContainerBase::StriContainerBase()
 
 
 /**
- * Initialize object data
+ * Initialise object data
  *
  */
 void StriContainerBase::init_Base(R_len_t _n, R_len_t _nrecycle, bool _shallowrecycle, SEXP _sexp)
