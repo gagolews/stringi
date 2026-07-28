@@ -1,6 +1,6 @@
 # kate: hl bash
 # autoconf/configure script for stringi <https://stringi.gagolewski.com/>
-# Copyright (c) 2013-2025, Marek Gagolewski <https://www.gagolewski.com/>
+# Copyright (c) 2013-2026, Marek Gagolewski <https://www.gagolewski.com/>
 
 ##### COMPATIBILITY NOTES/CHANGELOG ############################################
 
@@ -44,8 +44,6 @@ m4_ifndef([AC_CONFIG_MACRO_DIRS], [
     m4_defun([_AM_CONFIG_MACRO_DIRS], [])
     m4_defun([AC_CONFIG_MACRO_DIRS], [_AM_CONFIG_MACRO_DIRS($@)])
 ])
-m4_include([tools/AC_CXX_HAVE_STL.m4])
-m4_include([tools/AC_CXX_NAMESPACES.m4])
 
 
 ##### OPTIONS #################################################################
@@ -271,35 +269,20 @@ fi
 
 ### AUXILIARY FUNCTIONS ########################################################
 
-enable_cxx11() {
-    echo "*** Trying with C++11 compiler disabled."
-    force_cxx11="yes"
-    # unset cached C++ compiler features:
-    unset ac_cv_cxx_compiler_gnu
-    unset ac_cv_c_compiler_gnu
-    unset ac_cv_prog_cxx_g
-    unset ac_cv_prog_cc_g
-    unset ac_cv_prog_cc_c89
-    unset ac_cv_prog_CPP
-    unset ac_cv_prog_CXX
-    unset ac_cv_prog_CC
-    unset ac_cv_header_stdc
-    unset ac_cv_prog_ac_ct_CXX
-    unset ac_cv_prog_ac_ct_CC
-    unset ac_cv_cxx_namespaces
-    unset ac_cv_cxx_have_stl
-    unset ac_cv_objext
-    return 0
-}
-
-
-# Basic C++ compiler checks: are long long type and stl data structures
-# available? These are absolutely necessary to compile ICU>=55.
+# Basic C++ compiler checks: are long long type and the C++ standard library
+# data structures available? These are absolutely necessary to compile ICU>=55.
 #
 # If this is the case, return 0
 check_cpp() {
     AC_LANG(C++)
-    AC_PROG_CXX
+
+    # AC_PROG_CXX  # we don't want to determine a C++ compiler to use as we rely on R CMD config
+
+    AC_LINK_IFELSE(
+        [AC_LANG_SOURCE([
+            int main() { return 0; }
+        ])]
+    )
 
     AC_MSG_CHECKING([whether the C++ compiler supports the 'long long' type])
     AC_LINK_IFELSE([AC_LANG_SOURCE([
@@ -322,11 +305,6 @@ check_cpp() {
         AC_MSG_RESULT([no])
         return 1
     ])
-
-    AC_CXX_HAVE_STL
-    if test "$ac_cv_cxx_have_stl" = not; then
-        return 1
-    fi
 
     AC_MSG_CHECKING([whether std::map is available])
     AC_LINK_IFELSE([AC_LANG_SOURCE([
@@ -434,7 +412,7 @@ check_icu_with_pkg_config() {
         AC_MSG_RESULT([yes])
     ],[
         AC_MSG_RESULT([no])
-        echo "*** This version of ICU4C cannot be used."
+        echo "*** The available ICU4C cannot be used."
         #echo "${MSG_CONFIG_FAIL}"
         return 1
     ])
@@ -454,7 +432,7 @@ check_icu_with_pkg_config() {
         AC_MSG_RESULT([yes])
     ],[
         AC_MSG_RESULT([no])
-        echo "*** This version of ICU4C cannot be used."
+        echo "*** The available ICU4C cannot be used."
         #echo "${MSG_CONFIG_FAIL}"
         return 1
     ])
@@ -607,10 +585,10 @@ check_flags_icu_bundle() {
     ICU_LDFLAGS=""
     ICU_LIBS=""
 
-    CXXFLAGS="${with_extra_cxxflags} ${R_CXXPICFLAGS} ${R_CXXFLAGS}"
-    CPPFLAGS="${with_extra_cppflags} ${ICU_CPPFLAGS} ${R_CPPFLAGS} -UUCONFIG_USE_LOCAL"  # don't use uconfig_local yet
-    LDFLAGS="${with_extra_ldflags} ${ICU_LDFLAGS} ${R_LDFLAGS}"
-    LIBS="${with_extra_libs} ${ICU_LIBS} ${R_LIBS}"
+    CXXFLAGS="${R_CXXPICFLAGS} ${R_CXXFLAGS} ${with_extra_cxxflags}"
+    CPPFLAGS="${ICU_CPPFLAGS} ${R_CPPFLAGS} ${with_extra_cppflags} -UUCONFIG_USE_LOCAL"  # don't use uconfig_local yet
+    LDFLAGS="${ICU_LDFLAGS} ${R_LDFLAGS} ${with_extra_ldflags}"
+    LIBS="${ICU_LIBS} ${R_LIBS} ${with_extra_libs}"
 
     # NOTE: One way for dealing with the *Compiler or options invalid for pre-UNIX 03
     # X/Open applications and pre-2001 POSIX applications* error on Solaris
@@ -658,7 +636,7 @@ check_flags_icu_bundle() {
         ],[
             AC_MSG_RESULT([no])
 
-            CPPFLAGS="${with_extra_cppflags} -DSTRINGI_MAX_ALIGN_T_STD ${ICU_CPPFLAGS} ${R_CPPFLAGS} -UUCONFIG_USE_LOCAL"
+            CPPFLAGS="-DSTRINGI_MAX_ALIGN_T_STD ${ICU_CPPFLAGS} ${R_CPPFLAGS} ${with_extra_cppflags} -UUCONFIG_USE_LOCAL"
             AC_MSG_CHECKING([whether alignof(::max_align_t) is available])
             AC_LINK_IFELSE([AC_LANG_SOURCE([
                 #include <iostream>
@@ -698,113 +676,23 @@ check_flags_icu_bundle() {
 
 ################################################################################
 
-force_cxx11="no"  # start by using the default 'CXX' compiler
+STRINGI_CXXSTD=""
+R_CXXFLAGS=`"${R_PATH}" CMD config CXXFLAGS`
+R_CPPFLAGS=`"${R_PATH}" CMD config CPPFLAGS`
+R_CXXPICFLAGS=`"${R_PATH}" CMD config CXXPICFLAGS`
+R_LDFLAGS=
+R_LIBS=
+CXX=`"${R_PATH}" CMD config CXX`
+LD=`"${R_PATH}" CMD config SHLIB_CXXLD`
+CXXFLAGS="${R_CXXFLAGS} ${with_extra_cxxflags}"
+CPPFLAGS="${R_CPPFLAGS} ${with_extra_cppflags}"
+LDFLAGS="${R_LDFLAGS} ${with_extra_ldflags}"
+LIBS="${R_LIBS} ${with_extra_libs}"
 
-while true; do
-    # Step 1.  force_cxx11="no"
-    # Step 2.  force_cxx11="yes"
-    # Step 3.  Fail.
-
-    LD=`"${R_PATH}" CMD config SHLIB_CXXLD`
-
-    R_CPPFLAGS=`"${R_PATH}" CMD config CPPFLAGS`
-    R_LIBS=
-    R_LDFLAGS=
-
-
-    if test $force_cxx11 = "no"; then
-        STRINGI_CXXSTD=""
-
-        CXX=`"${R_PATH}" CMD config CXX`
-
-        R_CXXFLAGS=`"${R_PATH}" CMD config CXXFLAGS`
-        R_CXXPICFLAGS=`"${R_PATH}" CMD config CXXPICFLAGS`
-    else
-        STRINGI_CXXSTD="CXX_STD=CXX11"
-
-        CXX_tmp1=`"${R_PATH}" CMD config CXX11`
-        CXX_tmp2=`"${R_PATH}" CMD config CXX11STD`
-        CXX="${CXX_tmp1} ${CXX_tmp2}"
-
-        R_CXXFLAGS=`"${R_PATH}" CMD config CXX11FLAGS`
-        R_CXXPICFLAGS=`"${R_PATH}" CMD config CXX11PICFLAGS`
-    fi
-
-
-    CXXFLAGS="${with_extra_cxxflags} ${R_CXXFLAGS}"
-    CPPFLAGS="${with_extra_cppflags} ${R_CPPFLAGS}"
-    LDFLAGS="${with_extra_ldflags} ${R_LDFLAGS}"
-    LIBS="${with_extra_libs} ${R_LIBS}"
-
-    if ! check_cpp; then
-        if test $force_cxx11 = "no"; then
-            enable_cxx11
-            continue
-        else
-            echo "${MSG_CONFIG_FAIL}"
-            exit 1
-        fi
-    fi
-
-    ##### CHECK FOR ICU4C ##########################################################
-
-    ICU_FOUND=0
-    if test $enable_pkg_config = "no"; then
-        # Use of pkg-config disabled, nothing to do
-        echo "*** System ICU4C has been disabled."
-    else
-        if ! detect_icu_with_pkg_config; then
-            echo "*** Trying with 'standard' fallback flags"
-            # (#238, #220) trying "standard" fallback flags
-            ICU_CPPFLAGS=""
-            ICU_LDFLAGS=""
-            ICU_LIBS="-licui18n -licuuc -licudata"
-        fi
-        if check_icu_with_pkg_config; then
-            ICU_FOUND=1  # success
-        fi
-    fi
-
-
-    if test $ICU_FOUND = 1; then
-        break  # all set!
-    fi
-
-    if test $enable_icu_bundle = "no"; then
-        echo "*** *********************************************************************"
-        echo "*** Failed to configure 'stringi' with the enforced use of the system ICU"
-        echo "*** Consider installing, e.g., libicu-devel (RHEL, Fedora)"
-        echo "*** or libicu-dev (Debian, Ubuntu) along with 'pkg-config'"
-        if test $force_cxx11 = "no"; then
-            enable_cxx11
-            continue
-        else
-            echo "${MSG_CONFIG_FAIL}"
-            exit 1
-        fi
-    fi
-
-    echo "*** Using the ICU ${ICU_BUNDLE_VERSION} bundle that comes with 'stringi'."
-
-    ICU_BUNDLE_OK=0
-    if check_flags_icu_bundle; then
-        ICU_BUNDLE_OK=1  # success
-    fi
-
-    if test $ICU_BUNDLE_OK = 1; then
-        break  # all set!
-    fi
-
-    echo "*** Failed to configure package build with the ICU bundle usage."
-    if test $force_cxx11 = "no"; then
-        enable_cxx11
-        continue
-    else
-        echo "${MSG_CONFIG_FAIL}"
-        exit 1
-    fi
-
-done # end while
+if ! check_cpp; then
+    echo "${MSG_CONFIG_FAIL}"
+    exit 1
+fi
 
 
 AC_CHECK_HEADER([elf.h], [
@@ -812,10 +700,45 @@ AC_CHECK_HEADER([elf.h], [
 ])
 
 
-###### DOWNLOAD ICUDT (IF NEEDED) ##############################################
+##### CHECK FOR ICU4C ##########################################################
+
+ICU_FOUND=0
+if test $enable_pkg_config = "no"; then
+    # Use of pkg-config disabled, nothing to do
+    echo "*** System ICU4C has been disabled."
+else
+    if ! detect_icu_with_pkg_config; then
+        echo "*** Trying 'standard' fallback flags"
+        # (#238, #220) trying "standard" fallback flags
+        ICU_CPPFLAGS=""
+        ICU_LDFLAGS=""
+        ICU_LIBS="-licui18n -licuuc -licudata"
+    fi
+    if check_icu_with_pkg_config; then
+        ICU_FOUND=1  # success
+    fi
+fi
 
 if test $ICU_FOUND = 0; then
-    # There are systems with no internet access
+
+    if test $enable_icu_bundle = "no"; then
+        echo "*** *********************************************************************"
+        echo "*** Failed to configure 'stringi' with the enforced use of the system ICU"
+        echo "*** Consider installing, e.g., libicu-devel (RHEL, Fedora)"
+        echo "*** or libicu-dev (Debian, Ubuntu) along with 'pkg-config'"
+        echo "${MSG_CONFIG_FAIL}"
+        exit 1
+    fi
+
+    echo "*** Using the ICU ${ICU_BUNDLE_VERSION} bundle that comes with 'stringi'."
+
+    if ! check_flags_icu_bundle; then
+        echo "${MSG_CONFIG_FAIL}"
+        exit 1
+    fi
+
+
+    # There are systems with no internet access - Download icudt if needed
     AC_MSG_CHECKING([whether the ICU data library is available])
     "${R_PATH}" --vanilla -s -e "setwd(\"src/\"); \
         source(\"../R/install.R\"); \
@@ -829,7 +752,11 @@ if test $ICU_FOUND = 0; then
         echo "*** *********************************************************************"
         exit 1
     fi
+
 fi
+
+
+
 
 
 ##### PREPARE SOURCE FILES LISTS ###############################################
@@ -870,10 +797,10 @@ else
     STRINGI_OBJECTS="\$(STRI_OBJECTS)"
 fi
 
-STRINGI_CXXFLAGS="${with_extra_cxxflags} ${R_CXXPICFLAGS}"
-STRINGI_CPPFLAGS="-I. ${with_extra_cppflags} ${ICU_CPPFLAGS}"
-STRINGI_LDFLAGS="${with_extra_ldflags} ${ICU_LDFLAGS}"
-STRINGI_LIBS="${with_extra_libs} ${ICU_LIBS}"
+STRINGI_CXXFLAGS="${R_CXXPICFLAGS} ${with_extra_cxxflags}"
+STRINGI_CPPFLAGS="-I. ${ICU_CPPFLAGS} ${with_extra_cppflags}"
+STRINGI_LDFLAGS="${ICU_LDFLAGS} ${with_extra_ldflags}"
+STRINGI_LIBS="${ICU_LIBS} ${with_extra_libs}"
 
 DISABLE_RESOLVE_LOCALE_NAME=1  # this does not apply on non-Windows platforms
 AC_SUBST(DISABLE_RESOLVE_LOCALE_NAME)

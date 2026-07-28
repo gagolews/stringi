@@ -26,14 +26,11 @@ Below we also describe some available build process tweaks.
 > from CRAN built precisely this way).
 
 
-
-
-
 ## ICU4C
 
 The stringi package depends on the ICU4C >= 61 library.
 
-ICU will be built together with stringi based on the customised
+ICU will be built together with stringi based on a customised
 ICU4C 74.1 source bundle that is shipped with the package
 if we install the package from sources and one of the following is true:
 
@@ -49,7 +46,6 @@ if we install the package from sources and one of the following is true:
     is set to non-zero or
     `install.packages("stringi", configure.args="--disable-pkg-config")`
     is executed.
-
 
 
 ## Customising the Build Process
@@ -68,7 +64,6 @@ Additional features and options of the `./configure` script:
 * `--with-extra-ldflags=FLAGS`: Additional linker flags.
 
 * `--with-extra-libs=FLAGS`: Additional libraries to link against.
-
 
 
 Some environment variables:
@@ -97,8 +92,6 @@ Some environment variables:
 * `STRINGI_LDFLAGS`: see `--with-extra-ldflags`.
 
 * `STRINGI_LIBS`: see `--with-extra-libs`.
-
-
 
 
 ## Getting Help
