@@ -1,6 +1,13 @@
 # Changelog
 
 
+## 1.8.8 (2026-07-28)
+
+* [BUGFIX] Fixed build/runtime warnings.
+
+* [BUILD TIME] The configure script no longer tries to fall back to C++11.
+
+
 ## 1.8.7 (2025-03-27)
 
 * [BUGFIX] Fixed build warnings.

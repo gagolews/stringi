@@ -1,16 +1,17 @@
 <!doctype html>
 <html class="no-js" lang="en" data-content_root="../">
-  <head><meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="stri_enc_fromutf32: Convert From UTF-32" href="stri_enc_fromutf32.html" /><link rel="prev" title="stri_enc_detect: Detect Character Set and Language" href="stri_enc_detect.html" />
-        <link rel="canonical" href="https://stringi.gagolewski.com/rapi/stri_enc_detect2.html" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="stri_enc_fromutf32: Convert From UTF-32" href="stri_enc_fromutf32.html"><link rel="prev" title="stri_enc_detect: Detect Character Set and Language" href="stri_enc_detect.html">
+        <link rel="canonical" href="https://stringi.gagolewski.com/rapi/stri_enc_detect2.html">
+        <link rel="prefetch" href="https://www.gagolewski.com/_static/img/stringi.png" as="image">
 
-    <link rel="shortcut icon" href="https://www.gagolewski.com/_static/img/stringi.png"/><!-- Generated with Sphinx 7.3.7 and Furo 2024.05.06 -->
+    <link rel="shortcut icon" href="https://www.gagolewski.com/_static/img/stringi.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
         <title>stri_enc_detect2: [DEPRECATED] Detect Locale-Sensitive Character Encoding - R Package stringi</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=387cc868" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=1981fb80" />
     
     
@@ -96,19 +97,6 @@
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
     </svg>
   </symbol>
-  <symbol id="svg-sun-half" viewBox="0 0 24 24">
-    <title>Auto light/dark mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M13 12h5" />
-      <path d="M13 15h4" />
-      <path d="M13 18h1" />
-      <path d="M13 9h4" />
-      <path d="M13 6h1" />
-    </svg>
-  </symbol>
   <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
     <title>Auto light/dark, in light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -149,7 +137,7 @@
       <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
       <path d="M13.5 6.5l4 4" />
       <path d="M20 21l2 -2l-2 -2" />
-      <path d="M17 17l-2 2l2 2" /
+      <path d="M17 17l-2 2l2 2" />
     </svg>
   </symbol>
   <symbol id="svg-eye" viewBox="0 0 24 24">
@@ -214,7 +202,7 @@
 <a class="sidebar-brand" href="../index.html">stringi</a>
 </span>
 <div class="sidebar-brand">
-1.8.7
+1.8.8
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -244,7 +232,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference Manual</span></p>
 <ul class="current">
-<li class="toctree-l1 current has-children"><a class="reference internal" href="../rapi.html">R Package <em>stringi</em> Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of R Package stringi Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../rapi.html">R Package <em>stringi</em> Reference</a><input aria-label="Toggle navigation of R Package stringi Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="about_arguments.html">about_arguments:</a></li>
 <li class="toctree-l2"><a class="reference internal" href="about_encoding.html">about_encoding:</a></li>
 <li class="toctree-l2"><a class="reference internal" href="about_locale.html">about_locale:</a></li>
@@ -377,7 +365,7 @@
         </a>
         <div class="content-icon-container">
           <div class="edit-this-page">
-  <a class="muted-link" href="https://github.com/gagolews/stringi/issues/" title="Edit this page">
+  <a class="muted-link" href="https://github.com/gagolews/stringi/issues/" rel="edit" title="Edit this page">
     <svg><use href="#svg-pencil"></use></svg>
     <span class="visually-hidden">Edit this page</span>
   </a>
@@ -453,7 +441,7 @@
 <h2>See Also<a class="headerlink" href="#see-also" title="Link to this heading">¶</a></h2>
 <p>The official online manual of <span class="pkg">stringi</span> at <a class="reference external" href="https://stringi.gagolewski.com/">https://stringi.gagolewski.com/</a></p>
 <p>Gagolewski M., <span class="pkg">stringi</span>: Fast and portable character string processing in R, <em>Journal of Statistical Software</em> 103(2), 2022, 1-59, <a class="reference external" href="https://doi.org/10.18637/jss.v103.i02">doi:10.18637/jss.v103.i02</a></p>
-<p>Other locale_sensitive: <a class="reference internal" href="#+25s+3C+25.md"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">%s&lt;%()</span></code></span></a>, <a class="reference internal" href="about_locale.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">about_locale</span></code></span></a>, <a class="reference internal" href="about_search_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_boundaries</span></code></span></a>, <a class="reference internal" href="about_search_coll.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_coll</span></code></span></a>, <a class="reference internal" href="stri_compare.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_compare()</span></code></span></a>, <a class="reference internal" href="stri_count_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_count_boundaries()</span></code></span></a>, <a class="reference internal" href="stri_duplicated.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_duplicated()</span></code></span></a>, <a class="reference internal" href="stri_extract_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_extract_all_boundaries()</span></code></span></a>, <a class="reference internal" href="stri_locate_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_locate_all_boundaries()</span></code></span></a>, <a class="reference internal" href="stri_opts_collator.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_opts_collator()</span></code></span></a>, <a class="reference internal" href="stri_order.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_order()</span></code></span></a>, <a class="reference internal" href="stri_rank.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_rank()</span></code></span></a>, <a class="reference internal" href="stri_sort.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_sort()</span></code></span></a>, <a class="reference internal" href="stri_sort_key.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_sort_key()</span></code></span></a>, <a class="reference internal" href="stri_split_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_split_boundaries()</span></code></span></a>, <a class="reference internal" href="stri_trans_casemap.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_tolower()</span></code></span></a>, <a class="reference internal" href="stri_unique.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_unique()</span></code></span></a>, <a class="reference internal" href="stri_wrap.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_wrap()</span></code></span></a></p>
+<p>Other locale_sensitive: <a class="reference internal" href="#+25s+3C+25.md"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">%s&lt;%</span></code></span></a>, <a class="reference internal" href="about_locale.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">about_locale</span></code></span></a>, <a class="reference internal" href="about_search_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_boundaries</span></code></span></a>, <a class="reference internal" href="about_search_coll.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">about_search_coll</span></code></span></a>, <a class="reference internal" href="stri_compare.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_compare()</span></code></span></a>, <a class="reference internal" href="stri_count_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_count_boundaries()</span></code></span></a>, <a class="reference internal" href="stri_duplicated.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_duplicated()</span></code></span></a>, <a class="reference internal" href="stri_extract_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_extract_all_boundaries()</span></code></span></a>, <a class="reference internal" href="stri_locate_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_locate_all_boundaries()</span></code></span></a>, <a class="reference internal" href="stri_opts_collator.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_opts_collator()</span></code></span></a>, <a class="reference internal" href="stri_order.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_order()</span></code></span></a>, <a class="reference internal" href="stri_rank.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_rank()</span></code></span></a>, <a class="reference internal" href="stri_sort.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_sort()</span></code></span></a>, <a class="reference internal" href="stri_sort_key.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_sort_key()</span></code></span></a>, <a class="reference internal" href="stri_split_boundaries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_split_boundaries()</span></code></span></a>, <a class="reference internal" href="stri_trans_casemap.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_trans_tolower()</span></code></span></a>, <a class="reference internal" href="stri_unique.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_unique()</span></code></span></a>, <a class="reference internal" href="stri_wrap.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_wrap()</span></code></span></a></p>
 <p>Other encoding_detection: <a class="reference internal" href="about_encoding.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">about_encoding</span></code></span></a>, <a class="reference internal" href="stri_enc_detect.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_detect()</span></code></span></a>, <a class="reference internal" href="stri_enc_isascii.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_isascii()</span></code></span></a>, <a class="reference internal" href="stri_enc_isutf16.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_isutf16be()</span></code></span></a>, <a class="reference internal" href="stri_enc_isutf8.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">stri_enc_isutf8()</span></code></span></a></p>
 </section>
 </section>
@@ -493,7 +481,7 @@
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2025-03-27T11:00:49+0100.
+              Last updated on 2026-07-28T16:16:52+0200.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -533,9 +521,9 @@
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=7e97f9bf"></script>
-    <script src="../_static/doctools.js?v=9a2dae69"></script>
+</div><script src="../_static/documentation_options.js?v=968d5a7d"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
     </body>
 </html>
