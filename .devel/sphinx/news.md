@@ -1,7 +1,7 @@
 # Changelog
 
 
-## 1.8.8 (2026-07-28)
+## 1.8.9 (2026-07-30)
 
 * [BUGFIX] Fixed build/runtime warnings.
 

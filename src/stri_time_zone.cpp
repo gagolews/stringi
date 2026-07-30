@@ -71,6 +71,9 @@ SEXP stri_timezone_list(SEXP region, SEXP offset)
     tz_enum = TimeZone::createTimeZoneIDEnumeration(UCAL_ZONE_TYPE_ANY, r, o, status);
     STRI__CHECKICUSTATUS_RFERROR(status, {/* do nothing special on err */})
 
+    STRI_ASSERT(tz_enum);
+    if (!tz_enum) throw StriException(MSG__RESOURCE_ERROR_GET);
+
     status = U_ZERO_ERROR;
     tz_enum->reset(status);
     STRI__CHECKICUSTATUS_RFERROR(status, {/* do nothing special on err */})

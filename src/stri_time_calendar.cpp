@@ -168,7 +168,8 @@ SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP tz, SEXP locale)
 
 
     cal = stri__get_calendar(locale_val);
-
+    STRI_ASSERT(cal);
+    if (!cal) throw StriException(MSG__RESOURCE_ERROR_GET);
     cal->adoptTimeZone(tz_val);
     tz_val = NULL; /* The Calendar takes ownership of the TimeZone. */
 
@@ -249,7 +250,8 @@ SEXP stri_datetime_fields(SEXP time, SEXP tz, SEXP locale)
     StriContainerDouble time_cont(time, vectorize_length);
 
     cal = stri__get_calendar(locale_val);
-
+    STRI_ASSERT(cal);
+    if (!cal) throw StriException(MSG__RESOURCE_ERROR_GET);
     cal->adoptTimeZone(tz_val);
     tz_val = NULL; /* The Calendar takes ownership of the TimeZone. */
 
@@ -417,7 +419,8 @@ SEXP stri_datetime_create(
     StriContainerDouble second_cont(second, vectorize_length);
 
     cal = stri__get_calendar(locale_val);
-
+    STRI_ASSERT(cal);
+    if (!cal) throw StriException(MSG__RESOURCE_ERROR_GET);
     cal->setLenient(lenient_val);
 
     cal->adoptTimeZone(tz_val);

@@ -170,7 +170,8 @@ SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale)
     StriContainerUTF8 format_cont(format, vectorize_length);
 
     cal = stri__get_calendar(locale_val);
-
+    STRI_ASSERT(cal);
+    if (!cal) throw StriException(MSG__RESOURCE_ERROR_GET);
     cal->adoptTimeZone(tz_val);
     tz_val = NULL; /* The Calendar takes ownership of the TimeZone. */
 
@@ -209,6 +210,8 @@ SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale)
 
         FieldPosition pos;
         UnicodeString out;
+        STRI_ASSERT(fmt);
+        if (!fmt) throw StriException(MSG__RESOURCE_ERROR_GET);
         fmt->format(*cal, out, pos);
 
         std::string s;
@@ -294,7 +297,8 @@ SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP lenient, SEXP tz, SEXP loca
     StriContainerUTF8 format_cont(format, vectorize_length);
 
     cal = stri__get_calendar(locale_val);
-
+    STRI_ASSERT(cal);
+    if (!cal) throw StriException(MSG__RESOURCE_ERROR_GET);
     cal->adoptTimeZone(tz_val);
     tz_val = NULL; /* The Calendar takes ownership of the TimeZone. */
 
@@ -345,6 +349,8 @@ SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP lenient, SEXP tz, SEXP loca
         cal->clear(UCAL_MILLISECONDS_IN_DAY);
 
         ParsePosition pos;
+        STRI_ASSERT(fmt);
+        if (!fmt) throw StriException(MSG__RESOURCE_ERROR_GET);
         fmt->parse(str_cont.get(i), *cal, pos);
 
         if (pos.getErrorIndex() >= 0)
