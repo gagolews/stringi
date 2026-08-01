@@ -333,6 +333,10 @@ SEXP stri_rank(SEXP str, SEXP opts_collator)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.8.9.9001 (Travers Ching, 2026-08-01)
+ *    the CHARSXPs gathered while looking for unique elements were not
+ *    PROTECTed from gc; store the corresponding indexes instead
  */
 SEXP stri_unique(SEXP str, SEXP opts_collator)
 {
@@ -351,19 +355,22 @@ SEXP stri_unique(SEXP str, SEXP opts_collator)
     StriSortComparer comp(&str_cont, col, true);
     set<int,StriSortComparer> uniqueset(comp);
 
+    // gather the indexes, not the CHARSXPs themselves: the latter would not
+    // be PROTECTed from gc (str_cont.toR() may allocate, e.g., if the input
+    // is ALTREP or not in UTF-8/ASCII already)
     bool was_na = false;
-    deque<SEXP> temp;
+    deque<R_len_t> temp;
     for (R_len_t i=0; i<vectorize_length; ++i) {
         if (str_cont.isNA(i)) {
             if (!was_na) {
                 was_na = true;
-                temp.push_back(NA_STRING);
+                temp.push_back(i);  // str_cont.toR(i) will give NA_STRING
             }
         }
         else {
             pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
             if (result.second) {
-                temp.push_back(str_cont.toR(i));
+                temp.push_back(i);
             }
         }
     }
@@ -371,8 +378,8 @@ SEXP stri_unique(SEXP str, SEXP opts_collator)
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocVector(STRSXP, temp.size()));
     R_len_t i = 0;
-    for (deque<SEXP>::iterator it = temp.begin(); it != temp.end(); it++) {
-        SET_STRING_ELT(ret, i++, *it);
+    for (deque<R_len_t>::iterator it = temp.begin(); it != temp.end(); it++) {
+        SET_STRING_ELT(ret, i++, str_cont.toR(*it));
     }
 
     if (col) {

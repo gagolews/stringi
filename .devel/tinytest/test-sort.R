@@ -94,6 +94,23 @@ expect_equivalent(stri_unique(c("abc", "aab", "a\u0105b", "\u0105bc", "ab\u0107"
 expect_equivalent(stri_unique(c("abc", "ABC"), opts_collator = list(strength = 1, locale="en")),
     c("abc"))
 
+# the returned CHARSXPs must be PROTECTed from gc; long, re-encoded (here:
+# latin-1) elements make stri_unique allocate a new CHARSXP for each unique
+# element, which - if left unprotected - is collected before the result vector
+# is filled in ("Value of SET_STRING_ELT() must be a 'CHARSXP'", or silently
+# corrupted data)
+local({
+    x <- paste0("caf\xe9", sprintf("%04d_", 1:300), strrep("abcdefghij", 200))
+    Encoding(x) <- "latin1"
+    gctorture(TRUE)
+    on.exit(gctorture(FALSE))
+    y <- stri_unique(x)
+    gctorture(FALSE)
+    # enc2utf8() must not be called earlier: it would keep the UTF-8 CHARSXPs
+    # alive and thus mask the missing protection
+    expect_equivalent(y, enc2utf8(x))
+})
+
 
 expect_equivalent(stri_duplicated(character(0)), logical(0))
 expect_equivalent(stri_duplicated(NA), FALSE)
