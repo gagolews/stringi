@@ -14,7 +14,12 @@ expect_identical({
     stri_rand_shuffle("\u0105\u0104")
 }, "\u0104\u0105")
 
-suppressWarnings(expect_identical(stri_rand_strings(0, 10), character(0)))
+expect_silent(stri_rand_strings(0, 10))
+expect_identical(stri_rand_strings(0, 10), character(0))
+expect_identical(stri_rand_strings(0, integer()), character(0))
+expect_identical(stri_rand_strings(0, integer(), character()), character(0))
+expect_error(stri_rand_strings(1, integer()))
+expect_error(stri_rand_strings(1, 1, character()))
 suppressWarnings(expect_warning(stri_rand_strings(5, 1:6)))
 expect_error(stri_rand_strings(10, 1:5, "dupa"))
 expect_error(stri_rand_strings(10, 1:5, "[]"))

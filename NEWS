@@ -3,6 +3,9 @@
 
 ## 1.8.9.9xxx (under development)
 
+* [BUGFIX] #524: `stri_rand_strings()` returns an empty character vector
+    without recycling warnings when asked to generate zero strings.
+
 * [BUGFIX] `stri_unique` no longer returns corrupted strings: the CHARSXPs
     it gathered were not protected from garbage collection.  This affected
     inputs whose elements had to be re-encoded (e.g., latin-1) as well as

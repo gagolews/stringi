@@ -154,7 +154,10 @@ SEXP stri_rand_strings(SEXP n, SEXP length, SEXP pattern)
     PROTECT(length    = stri__prepare_arg_integer(length, "length"));
     PROTECT(pattern   = stri__prepare_arg_string(pattern, "pattern"));
 
-    if (n_val < 0) n_val = 0; /* that's not NA for sure now */
+    if (n_val <= 0) {
+        UNPROTECT(2);
+        return Rf_allocVector(STRSXP, 0);
+    }
 
     R_len_t length_len = LENGTH(length);
     if (length_len <= 0) {

@@ -25,6 +25,8 @@ Vectorized over \code{length} and \code{pattern}.
 If length of \code{length} or \code{pattern} is greater than \code{n},
 then redundant elements are ignored. Otherwise,
 these vectors are recycled if necessary.
+When \code{n} is zero, the result is \code{character(0)} and both
+\code{length} and \code{pattern} may be empty.
 
 This operation may result in non-Unicode-normalized
 strings and may give peculiar outputs for bidirectional strings.
