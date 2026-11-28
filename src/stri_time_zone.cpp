@@ -174,7 +174,7 @@ SEXP stri_timezone_set(SEXP tz) {
  */
 SEXP stri_timezone_info(SEXP tz, SEXP locale, SEXP display_type)
 {
-    TimeZone* curtz = stri__prepare_arg_timezone(tz, "tz", R_NilValue);
+    TimeZone* curtz = stri__prepare_arg_timezone(tz, "tz", true/*allowdefault*/);
     const char* qloc = stri__prepare_arg_locale(locale, "locale"); /* this is R_alloc'ed */
     const char* dtype_str = stri__prepare_arg_string_1_notNA(display_type, "display_type"); /* this is R_alloc'ed */
     const char* dtype_opts[] = {
